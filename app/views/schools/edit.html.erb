@@ -1,0 +1,17 @@
+<div class = "header">
+
+    <% form_for(@school, :action => url(:school, @school)) do %>
+    
+        <%= text_control  :school_name,  :label => "School Name" %>
+	
+	   <p>Contact Information for Parents</p>
+	
+	<%= text_control  :phone,  :label => "phone" %>
+	<%= text_control  :email,  :label => "email" %>
+       
+        <%= submit_button "Save" %>
+	
+    <% end %>
+     
+    <%= link_to "Cancel", url(:school) %>
+</div>

@@ -52,7 +52,8 @@ Gem.path.unshift(Merb.root / "gems")
 # later part of your configuration relies on libraries specified
 # here.
 #
-# dependencies "RedCloth", "merb_helpers"
+require 'parse_tree'
+dependencies "merb-more", "merb_helpers"
 # OR
 # dependency "RedCloth", "> 3.0"
 # OR
@@ -75,7 +76,7 @@ end
 # use_orm :datamapper
 
 # Uncomment for ActiveRecord ORM
-# use_orm :activerecord
+  use_orm :activerecord
 
 # Uncomment for Sequel ORM
 # use_orm :sequel

@@ -1,0 +1,25 @@
+<div class= 'formcontainer' >
+   
+  <% form_for(@class_room, :action => url(:classroom)) do %>
+      <table>
+         <tr>
+	      <td>Type:</td>
+              <td><select name="classroom[type_id]">
+                      <% @class_types.each do |type| %>
+                          <option value="<%= type.id %>"> 
+                             <%= type.class_type %>
+                          </option>
+                      <% end %>
+                   </select>
+	       </td>
+	 </tr>      
+        <tr>
+           <td><%= text_control  :class_name,  :label => "Class Name" %></td>
+	</tr>
+	
+      </table>
+	       <%= submit_button "Save" %>
+	   <%= link_to "Cancel", url(:classroom) %>
+   <% end %>
+     
+  </div>
