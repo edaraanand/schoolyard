@@ -2,7 +2,7 @@ class Schools < Application
   
   def index
     @school = School.find(:first)
-    @class_room = Classroom.find(:all)
+   # @class_room = Classroom.find(:all)
     render
   end
   

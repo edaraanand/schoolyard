@@ -2,6 +2,8 @@
 	       font-family: Arial, Verdana, sans-serif;
                font-size: 12px;
                background-color: #fff;
+	       width: 970px;
+	       border: 1px solid #F00;
 	      }
 	
     #header ul {
@@ -10,7 +12,7 @@
 		margin: 0;
     }
     
-	#header li {
+    #header li {
 		float: left;
 		border: 1px solid #bbb;
 		border-bottom-width: 0;
@@ -44,13 +46,21 @@
 		font-weight: bold;
 	}
 	
-	#sidebar ul {
+	.clear {
 		clear: both;
+	}
+	
+	#sidebar {
+		border: 1px solid #000;
+		float: left;
+		width: 20%;
 	}
 	
 	#content {
 		border: 1px solid black;
-		clear: both;
+		width: 75%;
+		margin-left: 1.5%;
+		float: left;
 		padding: 0 1em;
 	}
 	

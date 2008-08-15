@@ -9,7 +9,6 @@
         <%= link_to "logout", url(:logout) %>
         <div id="header"> 
             <h1>School Name</h1>
-     
 	        <ul>
 		    <li><%= link_to "Home" %></li>
 		    <li><%= link_to "Class" %></li>
@@ -19,6 +18,8 @@
 		    <li><%= link_to "Events" %></li>
 		    <li><%= link_to "Administration", url(:school) %></li>
 		</ul>
+        </div>
+	<div class="clear">
         </div>
 	<div id="sidebar">
            <ul>
@@ -49,6 +50,7 @@
     <div id="content">
     	<%= catch_content :for_layout %>
     </div>
-   
+    	<div class="clear">
+        </div>
   </body>
 </html>

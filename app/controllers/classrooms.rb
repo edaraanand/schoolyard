@@ -2,15 +2,19 @@ class Classrooms < Application
   
   def index
     render
+    
   end
   
   def new
-     @class_room = Classroom.new
-     @class_types = Classtype.find(:all)
+     @classroom = Classroom.new
+     @classtypes = Classtype.find(:all)
+     @classrooms = Classroom.find(:all)
+     @teachers = @classroom.people.find(:all, :conditions => ['role=?', 'teacher'])
      render
   end
   
   def create
+     
      render
   end
   

@@ -1,23 +1,33 @@
-<div id = 'pagebody' class = 'column'>
-   <div class = 'formcontent align = 'center'>
+
+   <% if @school.nil? %> 
+       <div id = 'pagebody' class = 'column'>
+           <div class = 'formcontent'>
+               <h3>Basic Settings</h3> </br>
+	       <%= link_to "Add New", url(:new_school) %>
+	       <%= link_to "Edit", url(:edit_school, @school) %>
+	    </div>
+       </div>
+   <% else %>
+	 <div id = 'pagebody' class = 'column'>
+           <div class = 'formcontent'>
         
-         <h3>Basic Settings</h3> </br>
-	 <%= link_to "Add New", url(:new_school) %>
-	 <%= link_to "Edit", url(:edit_school, @school) %>
-	
-     <table>
-        <tr> 
-	   <th>School Name</th><td><%= @school.school_name %></td>
-	</tr>
-	<tr>
-	    <p> Contact Information For Parents </p>
-	</tr>
-	<tr> 
-	    <th>Phone</th><td><%= @school.phone %></td>
-	</tr> 
-	<tr> 
-	    <th>E-Mail</th><td><%= @school.email %></td>
-	</tr>
-     </table>
-   </div>
-</div>
+               <h3>Basic Settings</h3> </br>
+	       <%= link_to "Add New", url(:new_school) %>
+	       <%= link_to "Edit", url(:edit_school, @school) %>
+	      <table>
+		 <tr> 
+		    <th>School Name</th><td><%= @school.school_name %></td>
+		</tr>
+		<tr>
+		    <p> Contact Information For Parents </p>
+		</tr>
+		<tr> 
+		    <th>Phone</th><td><%= @school.phone %></td>
+		</tr> 
+		<tr> 
+		    <th>E-Mail</th><td><%= @school.email %></td>
+		</tr>
+	     </table>
+          </div>
+        </div>
+  <% end %>

@@ -1,17 +1,32 @@
-<div class = "header">
 
+<div class = 'formcontainer'>
+   <table>
     <% form_for(@school, :action => url(:school, @school)) do %>
     
-        <%= text_control  :school_name,  :label => "School Name" %>
+    
+       <tr>
+         <td> <%= text_control  :school_name,  :label => "School Name" %></td>
+       </tr>
 	
-	   <p>Contact Information for Parents</p>
-	
-	<%= text_control  :phone,  :label => "phone" %>
-	<%= text_control  :email,  :label => "email" %>
+	<tr>
+	    <td><b>Contact Information for Parents</b></td>
+	</tr>
+	<br></br>
+	<tr>
+	    <td><%= text_control  :phone,  :label => "phone" %></td>
+	</tr>
+	<tr>
+	    <td><%= text_control  :email,  :label => "email" %></td>
+	</tr>
        
-        <%= submit_button "Save" %>
-	
-    <% end %>
+        <tr>
+	  <td><%= submit_button "Save" %></td><td> or</td>
+	  <td><%= link_to "Cancel", url(:school) %></td>
+	</tr>
+	 <% end %>
+     </table>
+   
      
-    <%= link_to "Cancel", url(:school) %>
+    
+    
 </div>
