@@ -1,0 +1,8 @@
+<tr>
+    <th><label>Class Teacher :</label></th>
+    <td>
+        <select name="classroom[person_ids][]">
+	   <%= select_control(:person, :label => "Class teacher", :collection => @teachers) %>
+	</select>
+    </td>
+</tr>

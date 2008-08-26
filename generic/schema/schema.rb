@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 6) do
     t.string   "password_confirmation"
     t.string   "email"
     t.integer  "phone"
+    t.string   "role"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
