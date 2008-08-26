@@ -1,0 +1,28 @@
+
+<% if @calendars.nil? %> 
+      
+           <div class = 'formcontent'>
+               <h3>Calendar</h3> </br>
+	       <%= link_to "Add New", url(:new_calendar) %>
+	   </div>
+      
+<% else %>
+
+         <div class = 'formcontent'>
+        
+               <h3>Calendars</h3> </br>
+	       <%= link_to "Add New", url(:new_calendar) %>
+	   <table>  
+	       <% for calendar in @calendars %>
+	          <tr>
+		     <td><%= calendar.start_time.strftime("%B-%d") %><td>
+		  </tr>
+		  <tr>
+		     <td><%= calendar.start_time.strftime("%H:%M") %><td>
+		     <td><%= calendar.title %></td>
+		  </tr>
+		<% end %>
+	   </table>   
+	  </div>
+	    
+<% end %>	    

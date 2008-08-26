@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+  <head>
+    <title>Catholic school</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" media="screen" charset="utf-8" />
+  </head>
+  <body>
+        <%= link_to "logout", url(:logout) %>
+        <div id="header"> 
+            <h1>School Name</h1>
+	        <ul>
+		    <li><%= link_to "Home" %></li>
+		    <li><%= link_to "Announcements" %></li>
+		    <li><%= link_to "Calendar" %></li>
+		    <li><%= link_to "Files" %></li>
+		    <li><%= link_to "Directory" %></li>
+		    <li><%= link_to "Administration", url(:school) %></li>
+		</ul>
+        </div>
+	<div class="clear">
+        </div>
+	<div id="sidebar">
+           <ul>
+	        <li><b> Site Settings</b> </li>     
+		<li><%= link_to "Basic settings", url(:school) %></li>
+		<li><b> Access Rights </b></li>
+		<li><%= link_to "Add/Edit Access Rights" %></li>
+		<li><b> Content </b></li>
+		<li><%= link_to "Welcome Messages" %></li>
+		<li><%= link_to "Announcements" %></li>
+		<li><%= link_to "Calendar", url(:calendar) %></li>
+		<li><%= link_to "External Links" %></li>
+		<li><%= link_to "Files" %></li>
+	   </ul>
+     </div>
+    	
+    <div id="content">
+    	<%= catch_content :for_layout %>
+    </div>
+    	<div class="clear">
+        </div>
+  </body>
+</html>

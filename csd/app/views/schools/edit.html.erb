@@ -1,0 +1,20 @@
+<div class = 'formcontainer'>
+   <table>
+          <p> Basic Settings > Edit </p>
+	  
+    <% form_for(@school, :action => url(:school, @school)) do %>
+       
+       <tr>
+            <td> <%= text_control  :school_name,  :label => "School Name" %></td>
+       </tr>
+       <tr>
+	    <td><%= text_area_control  :contact_information,  :label => "Contact Information", :rows => "10", :cols => "25" %></td>
+       </tr>
+       <tr>
+	    <td><%= submit_button "Save" %></td><td> or</td>
+	    <td><%= link_to "Cancel", url(:school) %></td>
+	</tr>
+    <% end %>
+  </table>
+  
+</div>
