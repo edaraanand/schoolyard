@@ -1,1 +1,15 @@
-<%= params.inspect %>
+
+<div class='formcontainer'>
+   <table>
+        <tr>
+            <td>Title:<%= params[:announcement][:title] %> </td>
+	</tr>
+	<tr>
+            <td>Description:<%= params[:announcement][:content] %> </td>
+	</tr>
+        <tr>
+            <td>Expiration:<%= params[:announcement][:expiration] %> </td>
+	</tr>
+   </table>  
+   
+</div>

@@ -2,8 +2,9 @@
      
      <p><b> Announcements > Edit </b></p>
        
-      <% form_for :announcement, :action => url(:announcement, @announcement) do %>
-	  <table> 
+      <% form_for :announcement, :action => url(:announcement, @announcement), :id => 'announcement' do %>
+	 
+          <table> 
               <tr>
                    <td><%= text_control  :title,  :label => "Title" %></td>
               </tr>
@@ -18,9 +19,11 @@
                  <td><%= submit_button "Submit for Approval" %></br> Or <%= link_to "Cancel", url(:announcement) %></td>
               </tr>
 	      
-	  </table>  
-	    
-	<% end %>
+	   </table>
+
+       <% end %>
 	  
-    
 </div>
+
+
+

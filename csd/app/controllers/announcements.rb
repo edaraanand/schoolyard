@@ -40,8 +40,7 @@ class Announcements < Application
   end
   
   def preview
-   puts "Eshwar"
-    render
+     render
   end
   
          

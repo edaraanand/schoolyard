@@ -1,12 +1,12 @@
 
 <div class = 'formcontainer'>
    <div class = 'formcontent'>
-   <table>
+      <table>
    
-         <tr>
-              <td> <h3>Announcements</h3></td> </br> 
-	      <td> <%= link_to "Add New", url(:new_announcement) %></td>
-         </tr>         
+            <tr>
+                <td> <h3>Announcements</h3></td> </br> 
+	        <td> <%= link_to "Add New", url(:new_announcement) %></td>
+            </tr>         
        
        
 	    <% for announcement in @announcements %>
