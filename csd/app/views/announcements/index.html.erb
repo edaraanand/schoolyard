@@ -1,0 +1,29 @@
+
+<div class = 'formcontainer'>
+   <div class = 'formcontent'>
+   <table>
+   
+         <tr>
+              <td> <h3>Announcements</h3></td> </br> 
+	      <td> <%= link_to "Add New", url(:new_announcement) %></td>
+         </tr>         
+       
+       
+	    <% for announcement in @announcements %>
+   
+                 <tr>
+                      <td><%= announcement.expiration.strftime("%B-%d") %></td>
+                      <td><%= announcement.title %></td>
+                 </tr> 
+                 <tr>
+                     <td><%= announcement.content %></td>
+                     <td><%= link_to "Edit", url(:edit_announcement, announcement.id) %></td>
+                     <td><%= link_to "Delete", url(:delete_announcement, announcement.id) %></td>
+                 </tr>
+	      <% end %> 
+        </table>
+ 
+      
+    </div>
+</div>
+
