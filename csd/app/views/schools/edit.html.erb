@@ -1,9 +1,9 @@
 <div class = 'formcontainer'>
-   <table>
+   
           <p> Basic Settings > Edit </p>
 	  
     <% form_for(@school, :action => url(:school, @school)) do %>
-       
+     <table> 
        <tr>
             <td> <%= text_control  :school_name,  :label => "School Name" %></td>
        </tr>
@@ -14,7 +14,9 @@
 	    <td><%= submit_button "Save" %></td><td> or</td>
 	    <td><%= link_to "Cancel", url(:school) %></td>
 	</tr>
+	
+    </table>
     <% end %>
-  </table>
+  
   
 </div>

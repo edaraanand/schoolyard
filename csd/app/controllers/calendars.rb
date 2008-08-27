@@ -1,7 +1,7 @@
 class Calendars < Application
   
   def index
-    @calendars = Calendar.find(:all)
+    @calendars = Calendar.find(:all, :order => 'start_time')
     render
   end
   
@@ -16,6 +16,4 @@ class Calendars < Application
     redirect url(:calendar)
   end
   
- 
-  
-end
+ end

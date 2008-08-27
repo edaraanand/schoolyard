@@ -1,28 +1,29 @@
 
-<% if @calendars.nil? %> 
-      
-           <div class = 'formcontent'>
-               <h3>Calendar</h3> </br>
-	       <%= link_to "Add New", url(:new_calendar) %>
-	   </div>
-      
-<% else %>
-
-         <div class = 'formcontent'>
-        
-               <h3>Calendars</h3> </br>
-	       <%= link_to "Add New", url(:new_calendar) %>
-	   <table>  
-	       <% for calendar in @calendars %>
+<div class='formcontainer'>
+    <div class = 'formcontent'> 
+      <table>
+         
+          <tr>
+	      <td><h3>Calendars</h3> </br></td>
+	      <td><%= link_to "Add New", url(:new_calendar) %></td>
+	  </tr>
+	  
+	     <% for calendar in @calendars %>
 	          <tr>
-		     <td><%= calendar.start_time.strftime("%B-%d") %><td>
-		  </tr>
-		  <tr>
-		     <td><%= calendar.start_time.strftime("%H:%M") %><td>
-		     <td><%= calendar.title %></td>
-		  </tr>
-		<% end %>
-	   </table>   
-	  </div>
+	              <td><b><%= calendar.start_time.strftime("%B-%d-%y") %></b></td>
+	          </tr>
+		 <% cals = @calendars.select {|c| c.start_time.to_date == calendar.start_time.to_date } %>
+	         <% for cal in cals.compact  %>
+		        <tr>
+			   <td><%= cal.start_time.strftime("%B-%d") %></td>
+			   <td><%= cal.start_time.strftime("%H-%M") %></td>
+			   <td><%= cal.id %></td>
+			</tr>
+		 <% end %>
+		 <% @calendars.delete_if {|c| cals.include?(c) } %>
+            <% end %>
+		   
+	</table>   
+    </div>
 	    
-<% end %>	    
+</div>	 

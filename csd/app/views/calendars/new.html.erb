@@ -1,8 +1,8 @@
 <div class= 'formcontainer' >
    
-  <table>
-      <% form_for(@calendar, :action => url(:calendar)) do %>
-      
+    <% form_for(@calendar, :action => url(:calendar)) do %>
+    
+       <table>
            <tr>
                 <td><%= text_control  :title,  :label => "Title" %></td>
            </tr>
@@ -19,8 +19,10 @@
 	       <td><%= text_control :end_time, :label => "End Time" %></td>
 	   </tr>
 	   <tr>
-              <td><%= submit_button "Save" %></br>  <%= link_to "Cancel", url(:calendar) %></td>
+              <td><%= submit_button "Save" %></br> Or <%= link_to "Cancel", url(:calendar) %></td>
            </tr> 
-       <% end %>
-  </table>
+       </table>
+	
+    <% end %>
+  
 </div>
