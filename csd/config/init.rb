@@ -54,7 +54,7 @@ Gem.path.unshift(Merb.root / "gems")
 #
 require 'parse_tree'
 require 'activerecord'
-dependencies "merb-more", "merb_helpers"
+dependencies "merb-more", "merb_helpers", "merb_paginate"
 require Merb.root / 'lib/attachmerb_fu/activerecord-bindings'
 
 Merb::BootLoader.after_app_loads do
