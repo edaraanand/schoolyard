@@ -44,8 +44,19 @@ ActiveRecord::Schema.define(:version => 4) do
   end
 
   create_table "users", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
     t.string   "email"
+    t.string   "phone"
     t.string   "password"
+    t.boolean  "contentId"
+    t.boolean  "manageId"
+    t.boolean  "settingsId"
+    t.boolean  "eventId"
+    t.boolean  "messageId"
+    t.boolean  "linksId"
+    t.boolean  "announcementId"
+    t.boolean  "filesId"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

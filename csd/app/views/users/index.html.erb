@@ -1,0 +1,24 @@
+<div class='formcontainer'>
+   
+      <table>
+            <tr>
+	        <td><h3>AccessRights</h3> </br></td>
+	        <td><%= link_to "Add New", url(:new_user) %></td>
+	    </tr>
+	   <tr> 
+	       <td<h3>Last Name </h3></td>
+	       <td<h3>First Name </h3></td>
+	       <td<h3>Email </h3></td>
+	       <td<h3>Phone </h3></td>
+	   </tr> 
+	    <% for user in @users %>
+   
+                 <tr>
+                      <td><%= user.last_name %></td>
+                      <td><%= user.first_name %></td>
+		      <td><%= user.email %></td>
+		      <td><%= user.phone %></td>
+                 </tr> 
+                
+	   <% end %> 
+        </table>
