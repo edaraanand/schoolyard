@@ -1,57 +1,15 @@
 <div class='formcontainer'>
 
-    <% form_for :user, :action => url(:user), :id => 'user' do %>
+    <% form_for :user, :action => url(:user), :id => 'user', :name => 'user' do %>
 
-       <table>
-          <tr>
-              <td><%= text_control  :first_name,  :label => "First Name" %></td>
-          </tr>
-	  <tr>
-	       <td><%= text_control  :last_name,  :label => "Last Name" %></td>
-	  </tr>
-	  <tr>
-	       <td><%= text_control  :email,  :label => "Contact Email" %></td>
-	  </tr>
-	  <tr>
-	       <td><%= text_control  :phone,  :label => "Phone Number(optional)" %></td>
-	  </tr>
-	  <tr>
-	      <td>Rights:</td>
-	       <td>This person can:</td>
-	  </tr>
-	  <tr>
-	      <td></td>
-	      <td><%= checkbox_control :contentId, :value => true, :checked => 'checked' %></br> View all Content<td>
-	  <tr>
-	  <tr>
-	      <td></td>
-	      <td><%= checkbox_control :manageId,  :value => true %></br> Manage Access rights for others<td>
-          </tr> 
-	   <tr>
-	       <td></td>
-	       <td><b>Add/Edit Content for: (select all)</b></td>
-	   </tr>
-	   <tr>
-	      <td></td>
-	      <td><%= checkbox_control :settingsId,  :value => true %></br> Basic Settings<td>
-	      <td><%= checkbox_control :eventId,  :value => true %></br> Calendar Events<td>
-          </tr>
-	  <tr>
-	      <td></td>
-	      <td><%= checkbox_control :messageId,  :value => true %></br> Welcome Message<td>
-	      <td><%= checkbox_control :linksId, :value => true %></br> External Links<td>
-          </tr>
-	  <tr>
-	      <td></td>
-	      <td><%= checkbox_control :announcementId, :value => true %></br> Announcements<td>
-	      <td><%= checkbox_control :filesId,  :value => true %></br> Files<td>
-          </tr>
-          <tr>
-	       <td><%= submit_button "Save & Notify" %></br>  <%= link_to "Cancel", url(:users) %></td>
-	  </tr>
-	  
-       </table>
+        <%= partial 'form' %>
        
     <% end %>
     
 </div>
+
+
+
+
+
+

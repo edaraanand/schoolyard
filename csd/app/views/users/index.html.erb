@@ -14,11 +14,17 @@
 	    <% for user in @users %>
    
                  <tr>
-                      <td><%= user.last_name %></td>
+                      <td><%= link_to "#{user.last_name}", url(:edit_user, user.id) %> </td>
                       <td><%= user.first_name %></td>
 		      <td><%= user.email %></td>
 		      <td><%= user.phone %></td>
                  </tr> 
                 
 	   <% end %> 
+	   
+	    
         </table>
+	
+</div>
+
+
