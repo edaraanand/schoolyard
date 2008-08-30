@@ -4,7 +4,7 @@ class Sessions < Application
   
   def new
     @user = User.new
-    render
+    render 
   end
   
   def create

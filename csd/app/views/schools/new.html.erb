@@ -1,21 +1,23 @@
-<div class= 'formcontainer' >
-   
- 
-   <% form_for(:school, :action => url(:school), :html => { :multipart => true }) do  %>
-
-       <table>
-          <tr>
-              <td><%= text_control  :school_name,  :label => "School Name" %></td>
-          </tr>
-	  <tr>
-	       <td><%= text_area_control  :contact_information,  :label => "Contact Information",  :rows => "10", :cols => "25" %></td>
-	  </tr>
-	  <tr>
-              <td><%= submit_button "Save" %></br>  <%= link_to "Cancel", url(:school) %></td>
-          </tr> 
-	  
-       </table>
-    <% end %>
-  
-  
+<div class='formcontainer'>
+  <%= form_for :school, :action => url(:school) do  %>
+  <table>
+    <tr>
+      <td>
+        <%= text_field  :school_name,  :label => "School Name" %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= text_area  :contact_information,  :label => "Contact Information",  :rows => "10", :cols => "25" %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= submit "Save" %><br>
+        <%= link_to "Cancel", url(:school) %>
+      </td>
+    </tr>
+  </table>
+  <% end =%>
 </div>
+
