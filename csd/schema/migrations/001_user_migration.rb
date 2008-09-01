@@ -14,7 +14,6 @@ class UserMigration < ActiveRecord::Migration
       t.column :linksId, :boolean
       t.column :announcementId, :boolean
       t.column :filesId, :boolean
-      t.column :disable, :boolean
       t.timestamps
     end 
   end

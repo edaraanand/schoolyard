@@ -19,14 +19,14 @@
 	      <td></td>
 	      <td colspan="3">
 
-	      <input type="checkbox" id="user_contentId" class="checkbox" name= "user[contentId]" value="1" checked onchange="allcontent();"/>View all Content
+	      <%= check_box :contentId, :onclick => "allcontent()" %>View all Content
 	         <div id="check" style="visibility:hidden">
       
 	          Unchecking this will Disable Access for this user.
                         Are you sure you want to do this? 
 		   
-                   <a href= 'users/disable' id= 'disable'>Yes, Disable access for this user </a></br> Or
-		   <a href ='' id= 'cancel' return true >Cancel this action </a>
+                <%= link_to "Yes, Disable access for this user", url(:controller => "users", :action => "disable", :id => @user.id) %></br> Or
+		            <a href='' id='cancel' return true >Cancel this action </a>
 	          </div>
 	      </td>
           </tr>

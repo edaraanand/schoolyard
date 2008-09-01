@@ -1,13 +1,8 @@
 ---
 # This is a sample database file for the ActiveRecord ORM
 :development: &defaults
-  :adapter: mysql
-  :database: csd_development
-  :username: root
-  :password: 
-  :host: localhost
- # :socket: /tmp/mysql.sock
-  :encoding: utf8
+  :adapter: sqlite3
+  :database: db/csd_development
 
 :test:
   <<: *defaults

@@ -1,6 +1,6 @@
 class Sessions < Application
   
-  skip_before :authenticate
+  skip_before :authenticate# , :only => [:new, :create]
   
   def new
     @user = User.new
@@ -8,16 +8,12 @@ class Sessions < Application
   end
   
   def create
-     session[:user_id] = User.find_by_email(params[:user][:email]).id
-
-    @user = User.find(:first, :conditions => ['id=?', session[:user_id]])
-     if @user.disable == true
-        redirect url(:school)
+     session[:user_id] = User.authenticate(params[:user][:email]).id
+     if current_user && current_user.enabled
+        redirect url(:schools)
      else
         render :action => 'new'
      end
-   # @user.update_attribute(:disable, true)
-             
   end
   
   def destroy

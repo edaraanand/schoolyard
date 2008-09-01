@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 4) do
+ActiveRecord::Schema.define(:version => 5) do
 
   create_table "announcements", :force => true do |t|
     t.string   "title"
@@ -34,10 +34,10 @@ ActiveRecord::Schema.define(:version => 4) do
     t.text     "contact_information"
     t.string   "filename"
     t.string   "content_type"
-    t.integer  "size",                :limit => 11
-    t.integer  "width",               :limit => 11
-    t.integer  "height",              :limit => 11
-    t.integer  "parent_id",           :limit => 11
+    t.integer  "size"
+    t.integer  "width"
+    t.integer  "height"
+    t.integer  "parent_id"
     t.string   "thumbnail"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -57,9 +57,9 @@ ActiveRecord::Schema.define(:version => 4) do
     t.boolean  "linksId"
     t.boolean  "announcementId"
     t.boolean  "filesId"
-    t.boolean  "disable"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "disabled"
   end
 
 end
