@@ -30,7 +30,7 @@ Merb::Router.prepare do |r|
      to(:controller => 'sessions', :action => 'destroy').
      name(:logout)
    
-   r.resources :users
+   r.resources :users, :member => {:disable => :get}
    r.resources :schools
    r.resources :calendars
    r.resources :announcements, :member => {:preview => :get}

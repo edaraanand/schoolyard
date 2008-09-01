@@ -2,26 +2,11 @@
      
      <p><b> Announcements > Edit </b></p>
        
-      <% form_for :announcement, :action => url(:announcement, @announcement), :id => 'announcement' do %>
+       <%= form_for :announcement, :action => url(:announcement, @announcement), :id => 'announcement' do %>
 	 
-          <table> 
-              <tr>
-                   <td><%= text_control  :title,  :label => "Title" %></td>
-              </tr>
-	      <tr>
-	          <td><%= text_area_control  :content,  :label => "Description" %></td>
-	      </tr>
-	      <tr>
-	          <td><%= text_control  :expiration,  :label => "Expiration" %></td>
-	      </tr>
-	  
-	      <tr>
-                 <td><%= submit_button "Submit for Approval" %></br> Or <%= link_to "Cancel", url(:announcement) %></td>
-              </tr>
-	      
-	   </table>
+            <%= partial 'form' %>
 
-       <% end %>
+       <% end =%>
 	  
 </div>
 

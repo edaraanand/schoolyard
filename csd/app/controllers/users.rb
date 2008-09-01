@@ -11,8 +11,8 @@ class Users < Application
   end
   
   def create
-    
-     @user = User.new(params[:user])
+    @user = User.new(params[:user])
+    @user.disable = true
       puts @user.inspect
        @user.save
      redirect url(:users)
@@ -32,6 +32,13 @@ class Users < Application
       end
   end
   
+  def disable
+    puts "Eshwar"
+    @user = User.find(:first, :conditions => ['id=?', session[:user_id]])
+    @user.update_attribute(:disable, false)
+    redirect url(:new_user)
+        
+  end
       
   
 end

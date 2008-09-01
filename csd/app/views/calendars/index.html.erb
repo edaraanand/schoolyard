@@ -10,13 +10,13 @@
 	  
 	     <% for calendar in @calendars %>
 	          <tr>
-	              <td><b><%= calendar.start_time.strftime("%B-%d-%y") %></b></td>
+	              <td><b><%= calendar.start_time.strftime("%B-%d") %></b></td>
 	          </tr>
-		 <% cals = @calendars.select {|c| c.start_time.to_date == calendar.start_time.to_date } %>
-	         <% for cal in cals.compact  %>
+	    <% cals = @calendars.select {|c| c.start_time.to_date == calendar.start_time.to_date } %>
+	         <% for cal in cals.compact %>
 		        <tr>
-			   <td><%= cal.start_time.strftime("%B-%d") %></td>
 			   <td><%= cal.start_time.strftime("%H-%M") %></td>
+                           <td><%= cal.title %>
 			   <td><%= cal.id %></td>
 			</tr>
 		 <% end %>

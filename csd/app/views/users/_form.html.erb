@@ -1,15 +1,15 @@
 <table>
           <tr>
-              <td><%= text_control  :first_name,  :label => "First Name" %></td>
+              <td><%= text_field  :first_name,  :label => "First Name" %></td>
           </tr>
 	  <tr>
-	       <td><%= text_control  :last_name,  :label => "Last Name" %></td>
+	       <td><%= text_field  :last_name,  :label => "Last Name" %></td>
 	  </tr>
 	  <tr>
-	       <td><%= text_control  :email,  :label => "Contact Email" %></td>
+	       <td><%= text_field  :email,  :label => "Contact Email" %></td>
 	  </tr>
 	  <tr>
-	       <td><%= text_control  :phone,  :label => "Phone Number(optional)" %></td>
+	       <td><%= text_field  :phone,  :label => "Phone Number(optional)" %></td>
 	  </tr>
 	  <tr>
 	      <td>Rights:</td>
@@ -18,19 +18,21 @@
 	 <tr>
 	      <td></td>
 	      <td colspan="3">
-	      <%= checkbox_control :contentId, :value => true, :checked => 'checked', :onchange => "javascript:allcontent();" %></br> View all Content
+
+	      <input type="checkbox" id="user_contentId" class="checkbox" name= "user[contentId]" value="1" checked onchange="allcontent();"/>View all Content
 	         <div id="check" style="visibility:hidden">
       
 	          Unchecking this will Disable Access for this user.
-                        Are you sure you want to do this?
-		    <input type= "button" value= "Yes" />
-		   <a href ='' id= 'cancel' return true >Cancel </a>
+                        Are you sure you want to do this? 
+		   
+                   <a href= 'users/disable' id= 'disable'>Yes, Disable access for this user </a></br> Or
+		   <a href ='' id= 'cancel' return true >Cancel this action </a>
 	          </div>
 	      </td>
           </tr>
 	  <tr>
 	      <td></td>
-	      <td><%= checkbox_control :manageId,  :value => true %></br> Manage Access rights for others<td>
+	      <td><%= check_box :manageId %></br> Manage Access rights for others<td>
           </tr> 
 	   <tr>
 	       <td></td>
@@ -38,25 +40,25 @@
 	   </tr>
 	   <tr>
 	      <td></td>
-	      <td><%= checkbox_control :settingsId,  :value => true %></br> Basic Settings<td>
-	      <td><%= checkbox_control :eventId,  :value => true %></br> Calendar Events<td>
+	      <td><%= check_box :settingsId %></br> Basic Settings<td>
+	      <td><%= check_box :eventId %></br> Calendar Events<td>
           </tr>
 	  <tr>
 	      <td></td>
-	      <td><%= checkbox_control :messageId,  :value => true %></br> Welcome Message<td>
-	      <td><%= checkbox_control :linksId, :value => true %></br> External Links<td>
+	      <td><%= check_box :messageId %></br> Welcome Message<td>
+	      <td><%= check_box :linksId %></br> External Links<td>
           </tr>
 	  <tr>
 	      <td></td>
-	      <td><%= checkbox_control :announcementId, :value => true %></br> Announcements<td>
-	      <td><%= checkbox_control :filesId,  :value => true %></br> Files<td>
+	      <td><%= check_box :announcementId %></br> Announcements<td>
+	      <td><%= check_box :filesId %></br> Files<td>
           </tr>
           <tr>
-	       <td><%= submit_button "Save & Notify" %></br>  <%= link_to "Cancel", url(:users) %></td>
+	       <td><%= submit "Save & Notify" %></br>  <%= link_to "Cancel", url(:users) %></td>
 	  </tr>
 	  
        </table>
-       
+     
        
 <script type= "text/javascript">
 

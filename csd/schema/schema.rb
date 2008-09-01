@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 4) do
     t.boolean  "linksId"
     t.boolean  "announcementId"
     t.boolean  "filesId"
+    t.boolean  "disable"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

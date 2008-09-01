@@ -1,28 +1,28 @@
 <div class= 'formcontainer' >
    
-    <% form_for(@calendar, :action => url(:calendar)) do %>
+    <%= form_for(@calendar, :action => url(:calendar)) do %>
     
        <table>
            <tr>
-                <td><%= text_control  :title,  :label => "Title" %></td>
+                <td><%= text_field :title,  :label => "Title" %></td>
            </tr>
 	   <tr>
-	        <td><%= text_area_control  :description,  :label => "Description",  :rows => "10", :cols => "25" %></td>
+	        <td><%= text_area  :description,  :label => "Description",  :rows => "10", :cols => "25" %></td>
 	   </tr>
 	   <tr>
-                <td><%= text_control  :location,  :label => "Location" %></td>
+                <td><%= text_field  :location,  :label => "Location" %></td>
            </tr>
 	   <tr>
-	       <td><%= text_control :start_time, :label => "Start Time" %></td>
+	       <td><%= text_field :start_time, :label => "Start Time" %></td>
 	   </tr>
 	   <tr>
-	       <td><%= text_control :end_time, :label => "End Time" %></td>
+	       <td><%= text_field :end_time, :label => "End Time" %></td>
 	   </tr>
 	   <tr>
-              <td><%= submit_button "Save" %></br> Or <%= link_to "Cancel", url(:calendar) %></td>
+              <td><%= submit "Save" %></br> Or <%= link_to "Cancel", url(:calendar) %></td>
            </tr> 
        </table>
 	
-    <% end %>
+    <% end =%>
   
 </div>

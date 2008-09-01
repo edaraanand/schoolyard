@@ -8,8 +8,16 @@ class Sessions < Application
   end
   
   def create
-    session[:user_id] = User.find_by_email(params[:user][:email]).id
-    redirect url(:school)
+     session[:user_id] = User.find_by_email(params[:user][:email]).id
+
+    @user = User.find(:first, :conditions => ['id=?', session[:user_id]])
+     if @user.disable == true
+        redirect url(:school)
+     else
+        render :action => 'new'
+     end
+   # @user.update_attribute(:disable, true)
+             
   end
   
   def destroy

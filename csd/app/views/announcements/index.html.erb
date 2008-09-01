@@ -20,10 +20,11 @@
                      <td><%= link_to "Edit", url(:edit_announcement, announcement.id) %></td>
                      <td><%= link_to "Delete", url(:delete_announcement, announcement.id) %></td>
                  </tr>
-	      <% end %> 
+	    <% end %> 
+
         </table>
  
       
     </div>
 </div>
-       <%= merb_paginate @announcements %>
+       

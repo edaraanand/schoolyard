@@ -49,7 +49,7 @@ Gem.path.unshift(Merb.root / "gems")
 # another part of your configuration relies on libraries specified
 # here.
 
-
+require 'parse_tree'
 dependencies "merb-assets", "merb_helpers", "merb_paginate"
 # require Merb.root / 'lib/attachmerb_fu/activerecord-bindings'
 
