@@ -1,0 +1,22 @@
+<div class='formcontainer'>
+
+    <%= form_for :homelink, :action => url(:homelink) do %>
+        
+       <div id='links'>
+            <%= partial 'form' %>          
+       </div>
+
+        <%= link_to_function 'Add' do |page|
+             page.insert_html :bottom, :links, :partial => 'form'
+          end %>
+
+        <%= submit "Publish" %> </br> Or <%= link_to "Cancel", url(:homelinks) %>
+         
+     <% end =%>
+
+</div>
+
+
+
+  
+

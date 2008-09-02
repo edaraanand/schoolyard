@@ -5,6 +5,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" media="screen" charset="utf-8" />
     <script src='/javascripts/prototype.js'></script>
+      <%= include_required_js %>
   </head>
   <body>
         <%= link_to "logout", url(:logout) %>
@@ -31,7 +32,7 @@
 		<li><%= link_to "Welcome Messages" %></li>
 		<li><%= link_to "Announcements", url(:announcements) %></li>
 		<li><%= link_to "Calendar", url(:calendars) %></li>
-		<li><%= link_to "External Links" %></li>
+		<li><%= link_to "External Links", url(:homelinks) %></li>
 		<li><%= link_to "Files" %></li>
 	   </ul>
      </div>

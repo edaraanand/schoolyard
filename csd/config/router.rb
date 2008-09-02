@@ -34,6 +34,7 @@ Merb::Router.prepare do |r|
    r.resources :schools
    r.resources :calendars
    r.resources :announcements, :member => {:preview => :get}
+   r.resources :homelinks
 
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based

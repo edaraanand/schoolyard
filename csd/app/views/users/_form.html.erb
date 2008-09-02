@@ -18,8 +18,11 @@
 	 <tr>
 	      <td></td>
 	      <td colspan="3">
-
-	      <%= check_box :contentId, :onclick => "allcontent()" %>View all Content
+              <% if @user.id.nil? %>
+         	      <%= check_box :content_access, :disabled => 'disabled' %>View all Content
+              <% else %>
+                     <%= check_box :content_access, :onclick => "allcontent()" %>View all Content
+              <% end %>
 	         <div id="check" style="visibility:hidden">
       
 	          Unchecking this will Disable Access for this user.
@@ -32,7 +35,7 @@
           </tr>
 	  <tr>
 	      <td></td>
-	      <td><%= check_box :manageId %></br> Manage Access rights for others<td>
+	      <td><%= check_box :manage_access %></br> Manage Access rights for others<td>
           </tr> 
 	   <tr>
 	       <td></td>
@@ -40,18 +43,18 @@
 	   </tr>
 	   <tr>
 	      <td></td>
-	      <td><%= check_box :settingsId %></br> Basic Settings<td>
-	      <td><%= check_box :eventId %></br> Calendar Events<td>
+	      <td><%= check_box :settings_access %></br> Basic Settings<td>
+	      <td><%= check_box :event_access %></br> Calendar Events<td>
           </tr>
 	  <tr>
 	      <td></td>
-	      <td><%= check_box :messageId %></br> Welcome Message<td>
-	      <td><%= check_box :linksId %></br> External Links<td>
+	      <td><%= check_box :message_access %></br> Welcome Message<td>
+	      <td><%= check_box :links_access %></br> External Links<td>
           </tr>
 	  <tr>
 	      <td></td>
-	      <td><%= check_box :announcementId %></br> Announcements<td>
-	      <td><%= check_box :filesId %></br> Files<td>
+	      <td><%= check_box :announcement_access %></br> Announcements<td>
+	      <td><%= check_box :files_access %></br> Files<td>
           </tr>
           <tr>
 	       <td><%= submit "Save & Notify" %></br>  <%= link_to "Cancel", url(:users) %></td>
@@ -64,7 +67,7 @@
 
  function allcontent()
    {
-     if (document.getElementById('user_contentId').checked == false)
+     if (document.getElementById('user_content_access').checked == false)
 	{
 	   document.getElementById('check').style.visibility = "visible"; 
 	 }

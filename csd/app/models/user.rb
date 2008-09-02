@@ -5,6 +5,6 @@ class User < ActiveRecord::Base
   end
   
   def enabled
-    read_attribute(:contentId) 
+    read_attribute(:content_access) 
   end
 end

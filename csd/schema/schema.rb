@@ -29,15 +29,22 @@ ActiveRecord::Schema.define(:version => 5) do
     t.datetime "updated_at"
   end
 
+  create_table "homelinks", :force => true do |t|
+    t.string   "title"
+    t.string   "link"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "schools", :force => true do |t|
     t.string   "school_name"
     t.text     "contact_information"
     t.string   "filename"
     t.string   "content_type"
-    t.integer  "size"
-    t.integer  "width"
-    t.integer  "height"
-    t.integer  "parent_id"
+    t.integer  "size",                :limit => 11
+    t.integer  "width",               :limit => 11
+    t.integer  "height",              :limit => 11
+    t.integer  "parent_id",           :limit => 11
     t.string   "thumbnail"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -49,17 +56,16 @@ ActiveRecord::Schema.define(:version => 5) do
     t.string   "email"
     t.string   "phone"
     t.string   "password"
-    t.boolean  "contentId"
-    t.boolean  "manageId"
-    t.boolean  "settingsId"
-    t.boolean  "eventId"
-    t.boolean  "messageId"
-    t.boolean  "linksId"
-    t.boolean  "announcementId"
-    t.boolean  "filesId"
+    t.boolean  "content_access"
+    t.boolean  "manage_access"
+    t.boolean  "settings_access"
+    t.boolean  "event_access"
+    t.boolean  "message_access"
+    t.boolean  "links_access"
+    t.boolean  "announcement_access"
+    t.boolean  "files_access"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "disabled"
   end
 
 end

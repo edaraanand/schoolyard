@@ -6,14 +6,15 @@ class Users < Application
   end
   
   def new
-    @user = User.new(:contentId => true)
+    @user = User.new(:content_access => true)
     render
   end
   
-  def create
+  def create 
     @user = User.new(params[:user])
+    @user.content_access = true
     @user.save
-    redirect url(:users)
+      redirect url(:users)
   end
   
   def edit
@@ -32,8 +33,8 @@ class Users < Application
   
   def disable
     @user = User.find(params[:id])
-    @user.update_attribute(:contentId, false)
-    redirect url(:new_user)  
+    @user.update_attribute(:content_access, false)
+    redirect url(:edit_user, @user)  
   end
       
   

@@ -6,14 +6,14 @@ class UserMigration < ActiveRecord::Migration
       t.column :email, :string
       t.column :phone, :string
       t.column :password, :string
-      t.column :contentId, :boolean
-      t.column :manageId, :boolean
-      t.column :settingsId, :boolean
-      t.column :eventId, :boolean
-      t.column :messageId, :boolean
-      t.column :linksId, :boolean
-      t.column :announcementId, :boolean
-      t.column :filesId, :boolean
+      t.column :content_access, :boolean
+      t.column :manage_access, :boolean
+      t.column :settings_access, :boolean
+      t.column :event_access, :boolean
+      t.column :message_access, :boolean
+      t.column :links_access, :boolean
+      t.column :announcement_access, :boolean
+      t.column :files_access, :boolean
       t.timestamps
     end 
   end
