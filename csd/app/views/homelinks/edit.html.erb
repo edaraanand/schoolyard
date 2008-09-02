@@ -1,0 +1,21 @@
+<div class='formcontainer'>
+
+    <%= form_for :homelink, :action => url(:homelink, @homelinks) do %>
+         
+          <table id='ExternalLinks'>
+       
+                 <% for homelink in @homelinks %>
+
+                       <tr>
+                          <td><%= text_field  :title, :name => 'homelink[title][]' %></td>
+                          <td><%= text_field  :link, :name => 'homelink[link][]' %></td>
+	               </tr>
+
+                  <% end %>
+	  
+       </table>   
+       
+    
+    <% end =%>
+
+</div>
