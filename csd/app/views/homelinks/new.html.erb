@@ -2,21 +2,56 @@
 
     <%= form_for :homelink, :action => url(:homelink) do %>
         
-       <div id='links'>
-            <%= partial 'form' %>          
-       </div>
+        <table id='ExternalLinks'>
 
-        <%= link_to_function 'Add' do |page|
-             page.insert_html :bottom, :links, :partial => 'form'
-          end %>
-
-        <%= submit "Publish" %> </br> Or <%= link_to "Cancel", url(:homelinks) %>
+            <tr>
+                <td><%= text_field  :title, :title => 'homelink[title][]' %></td>
+                <td><%= text_field  :link, :link => 'homelink[link][]' %></td>
+	    </tr>
+	  
+       </table>    
+            
+              <%= link_to_function 'Add', "add();" %>
+             <%= submit "Publish" %> </br> Or <%= link_to "Cancel", url(:homelinks) %>
+            
          
+        
+
      <% end =%>
 
 </div>
 
+<script type= "text/javascript">
+ 
+  
 
+ function add()
+ {
+     
+
+   //alert("Eshwar");
+
+     var external = document.getElementById('ExternalLinks');
+
+     var tr = document.createElement('tr');
+         var td1 = document.createElement('td');  
+
+         td1.innerHTML = "<input type='text' id='homelink_title' name='homelink[title][]'/>";
+
+           var td2 = document.createElement('td');  
+
+         td2.innerHTML = "<input type='text' id='homelink_link' name='homelink[link][]'/>";
+         
+        
+         tr.appendChild(td1);
+         tr.appendChild(td2);
+        external.appendChild(tr);
+        
+
+
+ }
+
+</script>
 
   
 

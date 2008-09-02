@@ -12,6 +12,11 @@ class Homelinks < Application
   end
 
    def create
+     @homelink = Homelink.new(params[:homelink])
+      puts @homelink.inspect
+     raise "Eshwar"
+    # @homelink.save
+      redirect url(:homelinks)
      render
    end
     
