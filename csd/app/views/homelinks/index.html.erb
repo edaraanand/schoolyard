@@ -4,16 +4,16 @@
 
              <tr>
                  <td><h3>Home Page Links</h3></td>
-                 <td><%= link_to "Edit", url(:edit_homelink) %></td>
+                 <td><%= link_to "Edit", url(:edit) %></td>
              </tr>
            
-            <% for homelink in @homelinks %>
+           <% for homelink in @homelinks %>
 
-                <tr>
-                     <td><%= link_to ("#{homelink.title}", "http://#{homelink.link}", {'target' => '_blank'}) %></td>
-                </tr>
+              <tr>
+                 <td><%= link_to ("#{homelink.title}", "http://#{homelink.link}", {'target' => '_blank'}) %></td>
+              </tr>
 
-             <% end %> 
+           <% end %> 
 
         </table>
 
