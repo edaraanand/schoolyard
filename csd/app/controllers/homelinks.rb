@@ -60,7 +60,4 @@ class Homelinks < Application
    end
    
 
-
-
-
 end
