@@ -1,10 +1,17 @@
 class User < ActiveRecord::Base
   
-  def self.authenticate(email)
-    self.find_by_email(email)
-  end
+
+  validates_presence_of :first_name, :last_name, :email
+  validates_uniqueness_of :first_name, :last_name, :email
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+
+   def self.authenticate(email)
+       self.find_by_email(email)
+   end
   
-  def enabled
-    read_attribute(:content_access) 
-  end
+   def enabled
+       read_attribute(:content_access) 
+   end
+
+         
 end

@@ -1,6 +1,6 @@
 <div class='formcontainer'>
 
-    <%= form_for :homelink, :action => url(:update) do %>
+    <%= form_for :homelink, :action => url(:update), :id => 'home' do %>
          
           <table id='ExternalLinks'>
        
@@ -20,6 +20,10 @@
                   </tr>
 	  
            </table>   
+              <div class = 'submit'>
+                    <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+              </div>
+
     
       <% end =%>
 
@@ -47,6 +51,12 @@
          tr.appendChild(td2);
         external.appendChild(tr);
  
+ }
+
+function preview()
+ {
+   var s = $('home').serialize();
+   window.open('homelinks/preview/-/?' + s);
  }
 
 </script>

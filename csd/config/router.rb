@@ -33,8 +33,8 @@ Merb::Router.prepare do |r|
    r.resources :users, :member => {:disable => :get}
    r.resources :schools
    r.resources :calendars
-   r.resources :announcements, :member => {:preview => :get}
-   r.resources :homelinks
+   r.resources :announcements, :member => {:preview => :any} 
+   r.resources :homelinks,  :member => {:preview => :get}
       r.match("/edit").to(:controller => 'homelinks', :action => 'edit').name(:edit)
       r.match("/update").to(:controller => 'homelinks', :action => 'update').name(:update)
 

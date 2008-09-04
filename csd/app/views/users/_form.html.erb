@@ -18,7 +18,7 @@
 	 <tr>
 	      <td></td>
 	      <td colspan="3">
-              <% if @user.id.nil? %>
+              <% if @user.new_record? %>
          	      <%= check_box :content_access, :disabled => 'disabled' %>View all Content
               <% else %>
                      <%= check_box :content_access, :onclick => "allcontent()" %>View all Content

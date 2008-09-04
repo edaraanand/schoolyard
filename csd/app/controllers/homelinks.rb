@@ -1,5 +1,5 @@
 class Homelinks < Application
-
+     
   # ...and remember, everything returned from an action
   # goes to the client...
 
@@ -59,5 +59,10 @@ class Homelinks < Application
      redirect url(:homelinks)
    end
    
+   def preview
+        @title = params[:homelink][:title]
+        @link = params[:homelink][:link]
+      render
+   end
 
 end
