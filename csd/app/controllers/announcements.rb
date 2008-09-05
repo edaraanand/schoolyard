@@ -1,5 +1,5 @@
 class Announcements < Application
-  
+
   def index
      @announcements = Announcement.find(:all, :order => 'expiration')
      render
@@ -43,7 +43,7 @@ class Announcements < Application
   end
   
   def preview
-     render
+     render :layout => 'preview'
   end
   
          
