@@ -1,7 +1,7 @@
 class Users < Application
   
   def index
-     @users = User.find(:all, :order => 'last_name')
+     @users = User.paginate :page => params[:page], :order => 'last_name', :per_page => 2
      render
   end
   

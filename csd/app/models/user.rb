@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   
+  include MerbPaginate::Finders::Activerecord
 
   validates_presence_of :first_name, :last_name, :email
   validates_uniqueness_of :email
