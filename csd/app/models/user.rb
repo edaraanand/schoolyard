@@ -1,8 +1,10 @@
 class User < ActiveRecord::Base
   
+
   
   include MerbAuth::Adapter::ActiveRecord
   include MerbAuth::Adapter::ActiveRecord::DefaultModelSetup
+
 
   include MerbPaginate::Finders::Activerecord
 

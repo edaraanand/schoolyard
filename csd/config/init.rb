@@ -51,8 +51,10 @@ Gem.path.unshift(Merb.root / "gems")
 
 require 'parse_tree'
 dependencies "merb-assets", "merb_helpers", "merb_paginate"
+
 dependency "merb-slices"
 dependency "merb-auth"
+
 
 require Merb.root / 'lib/merb_paginate/lib/merb_paginate/finders/activerecord'
 # require Merb.root / 'lib/attachmerb_fu/activerecord-bindings'
