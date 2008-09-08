@@ -19,8 +19,7 @@ class Homelinks < Application
      
        s = title.zip(link)
        links = []
-       puts s.inspect
-          s.each do |l|
+           s.each do |l|
              links << Homelink.create!({:title => l[0], :link => l[1]})
            end
       
@@ -28,9 +27,7 @@ class Homelinks < Application
    end
     
    def edit
-       puts "Eshwar"
-          @homelinks = Homelink.find(:all)
-          
+      @homelinks = Homelink.find(:all)
       render
    end
 
@@ -62,7 +59,7 @@ class Homelinks < Application
    def preview
         @title = params[:homelink][:title]
         @link = params[:homelink][:link]
-      render
+      render :layout => 'preview'
    end
 
 end

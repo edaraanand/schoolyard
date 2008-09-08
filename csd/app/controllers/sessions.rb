@@ -1,6 +1,6 @@
 class Sessions < Application
   
-  skip_before :authenticate# , :only => [:new, :create]
+  skip_before :authenticate
   
   def new
     @user = User.new
@@ -9,6 +9,7 @@ class Sessions < Application
   
   def create
      session[:user_id] = User.authenticate(params[:user][:email]).id
+                 #current_user = User.authenticate(params[:email], params[:password])
      if current_user && current_user.enabled
         redirect url(:schools)
      else

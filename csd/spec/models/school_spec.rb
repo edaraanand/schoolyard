@@ -5,3 +5,8 @@ describe School do
   it "should have specs"
 
 end
+
+ #it "should be valid when new" do
+  #    school = School.new
+     # school.should be_valid
+  #end

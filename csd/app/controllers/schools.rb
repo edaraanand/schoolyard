@@ -1,5 +1,7 @@
 class Schools < Application
   
+  
+
   def index
     @school = School.find(:first)
     render

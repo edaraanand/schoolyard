@@ -51,11 +51,15 @@ Gem.path.unshift(Merb.root / "gems")
 
 require 'parse_tree'
 dependencies "merb-assets", "merb_helpers", "merb_paginate"
+dependency "merb-slices"
+dependency "merb-auth"
+
+require Merb.root / 'lib/merb_paginate/lib/merb_paginate/finders/activerecord'
 # require Merb.root / 'lib/attachmerb_fu/activerecord-bindings'
 
 Merb::BootLoader.after_app_loads do
   # Add dependencies here that must load after the application loads:
-
+  Merb::Slices::config[:merb_auth][:layout] = :application 
   # dependency "magic_admin" # this gem uses the app's model classes
 end
 
