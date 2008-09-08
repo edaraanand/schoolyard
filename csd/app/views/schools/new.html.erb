@@ -1,10 +1,12 @@
+  <%= error_messages_for @school %>
+
 <div class='formcontainer'>
 
-  <%= form_for :school, :action => url(:school) do  %>
+     <%= form_for :school, :action => url(:school) do  %>
 
-         <%= partial 'form' %>
+           <%= partial 'form' %>
 
-  <% end =%>
+     <% end =%>
 
 </div>
 

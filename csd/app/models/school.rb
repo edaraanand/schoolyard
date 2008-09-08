@@ -6,4 +6,8 @@ class School < ActiveRecord::Base
                   #  :thumbnails => { :thumb => '64x64', :tiny => '32x32'},
                   #  #:path_prefix => 'public/school',
                   #  :processor => 'Rmagick'
+
+   validates_presence_of :school_name
+   validates_presence_of :contact_information
+
 end

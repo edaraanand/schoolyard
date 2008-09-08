@@ -23,6 +23,9 @@ Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do |r|
   # RESTful routes
   # r.resources :posts
+
+   r.add_slice(:MerbAuth, :path => "", :default_routes => false) 
+
    r.match("/login").
      to(:controller => 'sessions', :action => 'new').
      name(:login)
@@ -33,8 +36,10 @@ Merb::Router.prepare do |r|
    r.resources :users, :member => {:disable => :get}
    r.resources :schools
    r.resources :calendars
-   r.resources :announcements, :member => {:preview => :get}
-   r.resources :homelinks
+   r.resources :announcements, :member => {:preview => :any} 
+   r.resources :homelinks,  :member => {:preview => :get}
+      r.match("/edit").to(:controller => 'homelinks', :action => 'edit').name(:edit)
+      r.match("/update").to(:controller => 'homelinks', :action => 'update').name(:update)
 
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based

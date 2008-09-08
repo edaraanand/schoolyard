@@ -1,3 +1,5 @@
+<%= error_messages_for @announcement %>
+
 <div class ='formcontainer'>
      
     <p><b> Announcements > Add New </b></p>
@@ -6,11 +8,7 @@
 	
          <%= partial 'form' %>          
 
-         <div class = 'submit'>
-               <input type = 'button' value = 'Preview' onclick="preview();return false;" />
-         </div>
-
-     <% end =%>
+    <% end =%>
 	   
     
 </div>

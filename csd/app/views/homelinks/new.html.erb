@@ -5,8 +5,8 @@
         <table id='ExternalLinks'>
 
             <tr>
-                <td><%= text_field  :title, :title => 'homelink[title][]' %></td>
-                <td><%= text_field  :link, :link => 'homelink[link][]' %></td>
+                <td><%= text_field  :title, :name => 'homelink[title][]' %></td>
+                <td><%= text_field  :link, :name => 'homelink[link][]' %></td>
 	    </tr>
 	  
        </table>    
@@ -23,14 +23,9 @@
 
 <script type= "text/javascript">
  
-  
-
- function add()
- {
-     
-
-   //alert("Eshwar");
-
+  function add()
+   {
+ 
      var external = document.getElementById('ExternalLinks');
 
      var tr = document.createElement('tr');
@@ -46,9 +41,7 @@
          tr.appendChild(td1);
          tr.appendChild(td2);
         external.appendChild(tr);
-        
-
-
+ 
  }
 
 </script>

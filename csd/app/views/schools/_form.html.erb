@@ -1,17 +1,17 @@
 <table>
     <tr>
       <td>
-        <%= text_field  :school_name,  :label => "School Name" %>
+        <%= text_field :school_name,  :label => "School Name" %>
       </td>
     </tr>
     <tr>
       <td>
-        <%= text_area  :contact_information,  :label => "Contact Information",  :rows => "10", :cols => "25" %>
+        <%= text_area :contact_information, :label => "Contact Information",  :rows => "10", :cols => "25" %>
       </td>
     </tr>
     <tr>
       <td>
-        <%= submit "Save" %><br>
+        <%= submit "Save" %></br> Or
         <%= link_to "Cancel", url(:school) %>
       </td>
     </tr>

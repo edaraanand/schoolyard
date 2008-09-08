@@ -10,7 +10,8 @@
 	 </tr>
 	  
 	 <tr>
-            <td><%= submit "Submit for Approval" %></br> Or <%= link_to "Cancel", url(:announcements) %></td>
+            <td><input type = 'button' value = 'Preview' onclick="preview();return false;" /></td>
+           <td><%= submit "Submit for Approval" %></br> Or <%= link_to "Cancel", url(:announcements) %></td>
          </tr>
 
 </table>

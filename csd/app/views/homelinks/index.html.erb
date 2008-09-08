@@ -1,1 +1,22 @@
-You're in index of the Homelinks controller.
+<div class='formcontainer'>
+
+       <table>
+
+             <tr>
+                 <td><h3>Home Page Links</h3></td></br>
+                 <td><%= link_to "Add New", url(:new_homelink) %></td></br>
+                 <td><%= link_to "Edit", url(:edit) %></td>
+             </tr>
+           
+           <% for homelink in @homelinks %>
+
+              <tr>
+                 <td><%= link_to ("#{homelink.title}", "http://#{homelink.link}", {'target' => '_blank'}) %></td>
+              </tr>
+
+           <% end %> 
+
+        </table>
+
+</div>
+

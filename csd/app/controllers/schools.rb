@@ -1,5 +1,7 @@
 class Schools < Application
   
+  
+
   def index
     @school = School.find(:first)
     render
@@ -12,21 +14,24 @@ class Schools < Application
   
   def create
     @school = School.new(params[:school])
-    @school.save
-    redirect url(:school)
+      if @school.save
+         redirect url(:schools)
+      else
+         render :new
+      end
   end
   
    def edit
-     @school = School.find(:first)
-     render
-  end
+      @school = School.find(:first)
+      render
+   end
   
   def update
     @school = School.find(:first)
        if @school.update_attributes(params[:school])     
-          redirect url(:school)
+          redirect url(:schools)
        else
-          render :action => 'edit'
+          render :edit
        end
   end
   
