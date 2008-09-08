@@ -1,0 +1,47 @@
+require 'rubygems'
+require 'rake/gempackagetask'
+require 'spec/rake/spectask'
+require 'merb-core/version'
+require 'merb-core/test/tasks/spectasks'
+
+PLUGIN = "merb-auth"
+NAME = "merb-auth"
+AUTHOR = "Cuong Tran"
+EMAIL = "ctran@pragmaquest.com"
+HOMEPAGE = "http://merb-slices.rubyforge.org/merb-auth/"
+SUMMARY = "Merb Slice that provides user authentication"
+SLICE_VERSION = "0.1.0"
+
+spec = Gem::Specification.new do |s|
+  s.name = NAME
+  s.version = SLICE_VERSION
+  s.platform = Gem::Platform::RUBY
+  s.has_rdoc = true
+  s.extra_rdoc_files = ["README", "LICENSE"]
+  s.summary = SUMMARY
+  s.description = s.summary
+  s.author = AUTHOR
+  s.email = EMAIL
+  s.homepage = HOMEPAGE
+  s.add_dependency('merb-slices', '>= 0.9.4')
+  s.require_path = 'lib'
+  s.files = %w(LICENSE README Rakefile) + Dir.glob("{lib,spec,app,public}/**/*")
+end
+
+Rake::GemPackageTask.new(spec) do |pkg|
+  pkg.gem_spec = spec
+end
+
+desc "Install Foo as a gem"
+task :install => [:package] do
+  sh %{sudo gem install pkg/#{NAME}-#{SLICE_VERSION} --no-update-sources --local}
+end
+
+namespace :jruby do
+
+  desc "Run :package and install the resulting .gem with jruby"
+  task :install => :package do
+    sh %{#{SUDO} jruby -S gem install pkg/#{NAME}-#{VERSION}.gem --no-rdoc --no-ri}
+  end
+
+end

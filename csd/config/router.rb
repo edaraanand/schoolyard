@@ -24,14 +24,14 @@ Merb::Router.prepare do |r|
   # RESTful routes
   # r.resources :posts
 
-   r.add_slice(:MerbAuth, :path => "", :default_routes => false) 
+   r.slice(:MerbAuth)
 
-   r.match("/login").
-     to(:controller => 'sessions', :action => 'new').
-     name(:login)
-   r.match("/logout").
-     to(:controller => 'sessions', :action => 'destroy').
-     name(:logout)
+   # r.match("/login").
+   #   to(:controller => 'sessions', :action => 'new').
+   #   name(:login)
+   # r.match("/logout").
+   #   to(:controller => 'sessions', :action => 'destroy').
+   #   name(:logout)
    
    r.resources :users, :member => {:disable => :get}
    r.resources :schools

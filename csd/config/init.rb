@@ -53,15 +53,10 @@ require 'parse_tree'
 dependencies "merb-assets", "merb_helpers", "merb_paginate"
 
 dependency "merb-slices"
-dependency "merb-auth"
-
-
-require Merb.root / 'lib/merb_paginate/lib/merb_paginate/finders/activerecord'
-# require Merb.root / 'lib/attachmerb_fu/activerecord-bindings'
 
 Merb::BootLoader.after_app_loads do
   # Add dependencies here that must load after the application loads:
-  Merb::Slices::config[:merb_auth][:layout] = :application 
+  Merb::Slices::config[:merb_auth][:layout] = :application
   # dependency "magic_admin" # this gem uses the app's model classes
 end
 
@@ -78,6 +73,7 @@ end
 
 # Uncomment for ActiveRecord ORM
 use_orm :activerecord
+dependency "merb-auth"
 
 # Uncomment for Sequel ORM
 # use_orm :sequel

@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+  <head>
+    <title>Auth::Slice Sample Layout</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/reset-fonts-grids/reset-fonts-grids.css"> 
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/base/base-min.css"> 
+    <link href="<%= public_path_for :stylesheet, 'master.css' %>" type="text/css" charset="utf-8" rel="stylesheet" media="all"/>    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+    <script type="text/javascript">
+      (function($) {
+        $(document).ready(function() {
+          $(":text:visible:enabled:first").focus(); 
+        });
+      })(jQuery);
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="header-container">
+        <span style="float:right;margin-right:50px">
+        <% if logged_in? %>
+          Welcome <%= current_user.name %>
+          | <a href="<%= url(:logout) %>">Sign out</a>
+        <% else %>
+          <a href="<%= url(:signup) %>">Join now</a>
+          | <a href="<%= url(:login) %>">Sign in</a>
+        <% end %>
+        </span>
+        <h1>Sample MerbAuth App</h1>
+        <hr />
+      </div>
+
+      <div id="main-container">
+        <%= catch_content :for_layout %>
+      </div>
+
+      <hr />
+      
+      <div id="footer-container">
+        <div class="left"><%= __FILE__ %></div>
+        <div class="right">&copy; 2008 PragmaQuest Inc.  All rights reserved.</div>
+      </div>
+    </div>
+  </body>
+</html>
+

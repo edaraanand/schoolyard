@@ -1,12 +1,5 @@
 class User < ActiveRecord::Base
-  
-
-  
   include MerbAuth::Adapter::ActiveRecord
-  include MerbAuth::Adapter::ActiveRecord::DefaultModelSetup
-
-
-  include MerbPaginate::Finders::Activerecord
 
   validates_presence_of :first_name, :last_name, :email
   validates_uniqueness_of :email
