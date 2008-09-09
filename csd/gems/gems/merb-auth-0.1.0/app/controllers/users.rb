@@ -5,6 +5,7 @@ class MerbAuth::Users < MerbAuth::Application
   
   def login
     if request.post?
+      
       self.current_user = verify_login(params[:username], params[:password])
       if logged_in?
         if params[:remember_me] == "1"
@@ -31,9 +32,9 @@ class MerbAuth::Users < MerbAuth::Application
   def signup
     cookies.delete :auth_token
     @user = MerbAuth::User.new(params['merb_auth::user'] || {})
-    
+   
     if request.post? && @user.save
-      return redirect_back_or_default('/')
+     return redirect_back_or_default('/')
     end
     
     render

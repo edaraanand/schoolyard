@@ -1,6 +1,5 @@
 class Announcements < Application
-  before :login_required
-  
+   
   def index
      @announcements = Announcement.paginate :page => params[:page], :order => 'expiration', :per_page => 2
      render

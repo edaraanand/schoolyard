@@ -1,5 +1,9 @@
 class Application < Merb::Controller
-  before :login_required
+    
+
+    include MerbAuth::ControllerMixin
+
+    before :login_required
   
   
 end

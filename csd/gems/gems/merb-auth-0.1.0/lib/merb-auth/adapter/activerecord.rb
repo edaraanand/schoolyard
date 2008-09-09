@@ -48,5 +48,5 @@ end
 
 MerbAuth.send(:remove_const, :User) if defined? MerbAuth::User
 class MerbAuth::User < ActiveRecord::Base
-  include MerbAuth::Adapter::Activerecord
+  include MerbAuth::Adapter::ActiveRecord
 end

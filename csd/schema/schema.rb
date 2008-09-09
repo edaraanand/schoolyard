@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 6) do
+ActiveRecord::Schema.define(:version => 7) do
 
   create_table "announcements", :force => true do |t|
     t.string   "title"
@@ -41,21 +41,21 @@ ActiveRecord::Schema.define(:version => 6) do
     t.text     "contact_information"
     t.string   "filename"
     t.string   "content_type"
-    t.integer  "size"
-    t.integer  "width"
-    t.integer  "height"
-    t.integer  "parent_id"
+    t.integer  "size",                :limit => 11
+    t.integer  "width",               :limit => 11
+    t.integer  "height",              :limit => 11
+    t.integer  "parent_id",           :limit => 11
     t.string   "thumbnail"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
-    t.string   "name",                      :limit => 40, :null => false
-    t.string   "username",                  :limit => 40, :null => false
-    t.string   "email",                                   :null => false
+    t.string   "name",                      :limit => 40, :default => "", :null => false
+    t.string   "username",                  :limit => 40, :default => "", :null => false
+    t.string   "email",                                   :default => "", :null => false
     t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40, :null => false
+    t.string   "salt",                      :limit => 40, :default => "", :null => false
     t.string   "remember_token"
     t.date     "remember_token_expires_at"
     t.string   "phone"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(:version => 6) do
     t.boolean  "files_access"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "enabled"
   end
 
 end

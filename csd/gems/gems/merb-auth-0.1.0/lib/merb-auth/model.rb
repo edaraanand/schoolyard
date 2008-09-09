@@ -17,7 +17,7 @@ module MerbAuth
     
     module InstanceMethods
       def authenticated?(password)
-        crypted_password == encrypt(password)
+         crypted_password == encrypt(password)
       end      
 
       # before filter 
@@ -72,8 +72,8 @@ module MerbAuth
       
       # Authenticates a user by their username and unencrypted password.  Returns the user or nil.
       def authenticate(username, password)
-        u = find_by_username(username) # need to get the salt
-        u && u.authenticated?(password) ? u : nil
+          u = find_by_username(username) # need to get the salt
+          u && u.authenticated?(password) ? u : nil
       end
     end
   end

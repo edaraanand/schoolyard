@@ -50,9 +50,11 @@ Gem.path.unshift(Merb.root / "gems")
 # here.
 
 require 'parse_tree'
-dependencies "merb-assets", "merb_helpers", "merb_paginate"
-
+dependencies "merb-assets", "merb_helpers"
+ #require 'merb_paginate/finders/activerecord'
+#require 'gems/gems/merb_paginate/lib/merb_paginate/finders/activerecord'
 dependency "merb-slices"
+
 
 Merb::BootLoader.after_app_loads do
   # Add dependencies here that must load after the application loads:
@@ -74,7 +76,8 @@ end
 # Uncomment for ActiveRecord ORM
 use_orm :activerecord
 dependency "merb-auth"
-
+dependency "merb_paginate"
+#require 'gems/gems/merb-auth-0.1.0/lib/merb-auth/adapter/activerecord'
 # Uncomment for Sequel ORM
 # use_orm :sequel
 

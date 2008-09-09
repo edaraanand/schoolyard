@@ -1,10 +1,10 @@
 module Merb
   module GlobalHelpers 
-     #before :login_required
+    # before :login_required
  
-    def current_user
-      @current_user ||= User.find_by_id(session[:user_id])
-    end
+    #def current_user
+      #@current_user ||= User.find_by_id(session[:user_id])
+    #end
     
     def link_to_function(content, options)
       unless options.is_a?(Hash)

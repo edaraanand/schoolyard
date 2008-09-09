@@ -24,22 +24,15 @@ Merb::Router.prepare do |r|
   # RESTful routes
   # r.resources :posts
 
-   r.slice(:MerbAuth)
-
-   # r.match("/login").
-   #   to(:controller => 'sessions', :action => 'new').
-   #   name(:login)
-   # r.match("/logout").
-   #   to(:controller => 'sessions', :action => 'destroy').
-   #   name(:logout)
+   r.add_slice(:MerbAuth, 'auth')
    
    r.resources :users, :member => {:disable => :get}
    r.resources :schools
    r.resources :calendars
    r.resources :announcements, :member => {:preview => :any} 
    r.resources :homelinks,  :member => {:preview => :get}
-      r.match("/edit").to(:controller => 'homelinks', :action => 'edit').name(:edit)
-      r.match("/update").to(:controller => 'homelinks', :action => 'update').name(:update)
+   r.match("/externallinks/edit").to(:controller => 'homelinks', :action => 'edit').name(:externallinks_edit)
+   r.match("/externallinks/update").to(:controller => 'homelinks', :action => 'update').name(:externallinks_update)
 
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
@@ -48,5 +41,5 @@ Merb::Router.prepare do |r|
   r.default_routes
   
   # Change this for your home page to be available at /
-  #r.match('/').to(:controller => 'whatever', :action =>'index')
+  r.match('/').to(:controller => 'schools', :action => 'index')
 end
