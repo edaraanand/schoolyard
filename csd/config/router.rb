@@ -30,7 +30,7 @@ Merb::Router.prepare do |r|
    r.resources :schools
    r.resources :calendars
    r.resources :announcements, :member => {:preview => :any} 
-   r.resources :homelinks,  :member => {:preview => :get}
+   r.resources :homelinks,  :member => {:preview => :any}
    r.match("/externallinks/edit").to(:controller => 'homelinks', :action => 'edit').name(:externallinks_edit)
    r.match("/externallinks/update").to(:controller => 'homelinks', :action => 'update').name(:externallinks_update)
 

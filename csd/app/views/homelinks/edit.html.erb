@@ -2,7 +2,7 @@
 
     <%= form_for :homelink, :action => url(:externallinks_update), :id => 'home' do %>
          
-          <table id='ExternalLinks'>
+          <table id='Links'>
        
              <% @homelinks.each do |f| %>
 
@@ -35,7 +35,7 @@
   function add()
    {
  
-     var external = document.getElementById('ExternalLinks');
+     var external = document.getElementById('Links');
 
      var tr = document.createElement('tr');
          var td1 = document.createElement('td');  
@@ -56,7 +56,7 @@
 function preview()
  {
    var s = $('home').serialize();
-   window.open('homelinks/preview/-/?' + s);
+   window.open('/homelinks/preview/-/?' + s);
  }
 
 </script>
