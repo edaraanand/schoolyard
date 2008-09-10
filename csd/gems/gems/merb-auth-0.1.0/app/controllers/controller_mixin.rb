@@ -106,8 +106,8 @@ module MerbAuth
 
       # Called from #current_user.  Now, attempt to login by basic authentication information.
       def login_from_basic_auth
-        username, passwd = get_auth_data
-        self.current_user = verify_login(username, passwd) if username && passwd
+        email, passwd = get_auth_data
+        self.current_user = verify_login(email, passwd) if email && passwd
       end
 
       # Called from #current_user.  Finaly, attempt to login by an expiring token in the cookie.
@@ -125,8 +125,8 @@ module MerbAuth
       end
 
     protected
-      def verify_login(username, password)
-        MerbAuth::User.authenticate(username, password)
+      def verify_login(email, password)
+        MerbAuth::User.authenticate(email, password)
       end
       
       def find_user_by_id(user_id)

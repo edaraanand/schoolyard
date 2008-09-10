@@ -40,5 +40,44 @@ class Users < Application
      redirect url(:edit_user, @user)  
   end
       
-  
+  def account
+     @user = User.find(:first, :conditions => ['id=?', current_user.id] ) 
+     render :layout => 'myaccount'
+  end
+
+  def account_edit
+     @user = User.find(:first, :conditions => ['id=?', current_user.id] ) 
+     render :layout => 'myaccount'
+  end
+
+  def account_update
+      @user = User.find(:first, :conditions => ['id=?', current_user.id] )
+      if  User.authenticate(params[:user][:email], params[:user][:old_password])
+           
+          if (( params[:password] == params[:password_confirmation]) && !params[:password_confirmation].blank?)
+              if @user.update_attributes(params[:user])
+               #current_user.name = params[:user][:name]
+               #current_user.email = params[:user][:email]
+               #current_user.phone = params[:user][:phone]
+               #current_user.password = params[:user][:password]
+              # current_user.password_confirmation = params[:user][:password_confirmation]
+               if current_user.save
+                  redirect url(:account)
+              else
+                  flash[:error1] = "Your Account Details is not updated"
+                  render :account_edit, :layout => 'myaccount'
+              end
+          else
+              flash[:error2] = "Your Password doesn't match"
+              render :account_edit, :layout => 'myaccount'
+          end 
+
+      else
+	  flash[:error3] = "Your current password doesn't match existing password"
+          render :account_edit, :layout => 'myaccount'
+      end
+    
+     
+  end
+
 end

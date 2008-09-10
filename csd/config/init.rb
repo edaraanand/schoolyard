@@ -51,6 +51,7 @@ Gem.path.unshift(Merb.root / "gems")
 
 require 'parse_tree'
 dependencies "merb-assets", "merb_helpers"
+dependency "merb_has_flash"
  #require 'merb_paginate/finders/activerecord'
 #require 'gems/gems/merb_paginate/lib/merb_paginate/finders/activerecord'
 dependency "merb-slices"

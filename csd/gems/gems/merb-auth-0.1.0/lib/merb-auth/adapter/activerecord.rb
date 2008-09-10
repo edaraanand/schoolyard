@@ -10,9 +10,9 @@ module MerbAuth
           validates_presence_of     :username
           validates_presence_of     :email
           validates_length_of       :username, :within => 3..40
-         #  validates_length_of       :password, :within => 4..40, :if => :password_required?
-         # validates_presence_of     :password_confirmation, :if => :password_required?
-         # validates_confirmation_of :password, :if => :password_required?
+          validates_length_of       :password, :within => 4..40, :if => :password_required?
+          validates_presence_of     :password_confirmation, :if => :password_required?
+          validates_confirmation_of :password, :if => :password_required?
           validates_uniqueness_of   :username, :case_sensitive => false, :if => lambda { |u| !u.username.blank? }
           validates_uniqueness_of   :email, :case_sensitive => false, :if => lambda { |u| !u.email.blank? }
 

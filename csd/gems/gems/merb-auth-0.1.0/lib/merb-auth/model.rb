@@ -71,8 +71,8 @@ module MerbAuth
       end
       
       # Authenticates a user by their username and unencrypted password.  Returns the user or nil.
-      def authenticate(username, password)
-          u = find_by_username(username) # need to get the salt
+      def authenticate(email, password)
+          u = find_by_email(email) # need to get the salt
           u && u.authenticated?(password) ? u : nil
       end
     end

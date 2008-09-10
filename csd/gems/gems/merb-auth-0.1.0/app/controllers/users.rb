@@ -6,7 +6,7 @@ class MerbAuth::Users < MerbAuth::Application
   def login
     if request.post?
       
-      self.current_user = verify_login(params[:username], params[:password])
+      self.current_user = verify_login(params[:email], params[:password])
       if logged_in?
         if params[:remember_me] == "1"
           self.current_user.remember_me
@@ -39,4 +39,14 @@ class MerbAuth::Users < MerbAuth::Application
     
     render
   end
+
+  def change_password
+    puts "Gouthama Naidu"
+     render
+  end
+
+  #def change_password_update
+     # render
+  #end
+
 end

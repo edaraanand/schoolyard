@@ -25,6 +25,8 @@ Merb::Router.prepare do |r|
   # r.resources :posts
 
    r.add_slice(:MerbAuth, 'auth')
+   r.add_slice('change_password')
+  
    
    r.resources :users, :member => {:disable => :get}
    r.resources :schools
@@ -33,6 +35,9 @@ Merb::Router.prepare do |r|
    r.resources :homelinks,  :member => {:preview => :any}
    r.match("/externallinks/edit").to(:controller => 'homelinks', :action => 'edit').name(:externallinks_edit)
    r.match("/externallinks/update").to(:controller => 'homelinks', :action => 'update').name(:externallinks_update)
+   r.match("/account").to(:controller => 'users', :action => 'account').name(:account)
+   r.match("/account/edit").to(:controller => 'users', :action => 'account_edit').name(:account_edit)
+   r.match("/update").to(:controller => 'users', :action => 'account_update').name(:account_update)
 
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based

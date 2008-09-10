@@ -7,12 +7,12 @@
   <form action="<%= url(:login) %>" method="post">
     <% if request.post? -%>
     <div class="error">
-      <h2>Incorrect username and password</h2>
+      <h2>Incorrect Email and password</h2>
     </div>
     <% end -%>
     
-    <p><label for="username">Username or e-mail</label>
-    <input type="text" name="username" value="<%= params[:username] %>"/></p>
+    <p><label for="email"> Email</label>
+    <input type="text" name="email" value="<%= params[:email] %>"/></p>
 
     <p><label for="password">Password</label>
     <input type="password" name="password"/></p>

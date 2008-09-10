@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+  <head>
+    <title>Catholic school</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" media="screen" charset="utf-8" />
+    <script src='/javascripts/prototype.js'></script>
+      <%= include_required_js %>
+  </head>
+  <body>
+       <div id="header"> 
+            <h1>Catholic School Department</h1>
+	        <ul>
+		    <li><%= link_to "Home" %></li>
+		    <li><%= link_to "Announcements" %></li>
+		    <li><%= link_to "Calendar" %></li>
+		    <li><%= link_to "Files" %></li>
+		    <li><%= link_to "Directory" %></li>
+		    <li><%= link_to "Administration", url(:schools) %></li>
+		</ul>
+        </div>
+        <% if logged_in? %>
+             Welcome <%= current_user.name %>
+        <% end %>
+              <%= link_to "logout", url(:logout) %>
+	<div class="clear"></div>
+        <div id="sidebar">
+           <ul>
+	        <li><%= link_to "My Profile", url(:account) %></li>
+                <li><%= link_to "Alert Settings" %></li>
+           </ul>
+        </div>
+        <div id="content">
+    	     <%= catch_content :for_layout %>
+        </div>
+    	<div class="clear">
+        </div>
+  </body>
+</html>
