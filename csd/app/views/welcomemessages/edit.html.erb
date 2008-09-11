@@ -2,7 +2,7 @@
      
     <p><b> Welcome Messages > Edit </b></p>
 
-    <%= form_for :welcomemessage, :action => url(:welcomemessage, @welcomemessage) do %>
+    <%= form_for :welcomemessage, :action => url(:welcomemessage, @welcomemessage), :id => 'welcomemessage' do %>
 	
          <table>
               <tr>
@@ -10,11 +10,22 @@
 	      </tr>
 
               <tr>
+                  <td><input type = 'button' value = 'Preview' onclick="preview();return false;" /></td>
                   <td><%= submit "Publish" %></br> Or <%= link_to "Cancel", url(:welcomemessages) %></td>
               </tr>
          </table>
 
      <% end =%>
-	   
     
 </div>
+
+<script type= "text/javascript">
+
+ function preview()
+ {
+   var s = $('welcomemessage').serialize();
+   window.open('/welcomemessages/preview/-/?' + s);
+ }
+  
+
+</script>

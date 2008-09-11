@@ -36,4 +36,8 @@ class Welcomemessages < Application
        end
   end
 
+  def preview
+     render :layout => 'preview'
+  end
+
 end
