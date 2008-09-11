@@ -19,9 +19,10 @@ class User < ActiveRecord::Base
        # self.password == self.class.sha1(pass)
     #end
   
-   def enabled
-       read_attribute(:content_access) 
-   end
+   #def enabled?
+    #   current_user.content_access != false
+       #read_attribute(:content_access) 
+   #end
 
          
 end

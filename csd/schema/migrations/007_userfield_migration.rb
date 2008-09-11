@@ -7,3 +7,5 @@ class UserfieldMigration < ActiveRecord::Migration
      remove_column :users, :enabled
   end
 end
+
+
