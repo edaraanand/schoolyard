@@ -1,0 +1,19 @@
+<table>
+
+              <tr>
+	           <td><%= check_box :announcement_alert %></br> New Announcement is posted<td>
+              </tr> 
+               <tr>
+	           <td><%= check_box :event_alert %></br> New Event is posted<td>
+              </tr> 
+               <tr>
+	           <td><%= check_box :message_alert %></br> New Message is posted<td>
+              </tr> 
+                <tr>
+	           <td><%= check_box :file_alert %></br> New File is posted<td>
+              </tr>
+              <tr>
+                   <td><%= submit "Save" %> </br> Or <%= link_to "Cancel", url(:alerts) %></td> 
+              </tr>
+       
+</table> 

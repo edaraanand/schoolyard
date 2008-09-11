@@ -38,6 +38,7 @@ Merb::Router.prepare do |r|
    r.match("/account").to(:controller => 'users', :action => 'account').name(:account)
    r.match("/account/edit").to(:controller => 'users', :action => 'account_edit').name(:account_edit)
    r.match("/update").to(:controller => 'users', :action => 'account_update').name(:account_update)
+   r.resources :alerts
 
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based

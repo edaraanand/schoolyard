@@ -54,14 +54,8 @@ class Users < Application
       @user = User.find(:first, :conditions => ['id=?', current_user.id] )
       if  User.authenticate(params[:user][:email], params[:user][:old_password])
            
-          if (( params[:password] == params[:password_confirmation]) && !params[:password_confirmation].blank?)
+    if (( params[:user][:password] == params[:user][:password_confirmation]) && !params[:user][:password_confirmation].blank?)
               if @user.update_attributes(params[:user])
-               #current_user.name = params[:user][:name]
-               #current_user.email = params[:user][:email]
-               #current_user.phone = params[:user][:phone]
-               #current_user.password = params[:user][:password]
-              # current_user.password_confirmation = params[:user][:password_confirmation]
-               if current_user.save
                   redirect url(:account)
               else
                   flash[:error1] = "Your Account Details is not updated"

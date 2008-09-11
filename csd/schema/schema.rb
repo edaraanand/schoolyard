@@ -9,7 +9,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 7) do
+ActiveRecord::Schema.define(:version => 8) do
+
+  create_table "alerts", :force => true do |t|
+    t.boolean  "announcement_alert"
+    t.boolean  "event_alert"
+    t.boolean  "message_alert"
+    t.boolean  "file_alert"
+    t.integer  "user_id",            :limit => 11
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "announcements", :force => true do |t|
     t.string   "title"

@@ -1,0 +1,28 @@
+<% if @alert.nil? %>
+     <div class = 'formcontainer'>
+          <div class = 'formcontent'>
+              <table>
+                    <tr>
+                        <td> <h3>Alert Settings</h3></td> </br> 
+	                <td> <%= link_to "Add New", url(:new_alert) %></td>
+                    </tr>        
+               </table>
+          </div>
+     </div>
+<% else %>
+      <div class = 'formcontainer'>
+          
+         <table>
+                <tr>
+                    <td> <h3>Alert Settings</h3></td> </br> 
+	            <td> <%= link_to "Edit", url(:edit_alert, @alert) %></td>
+                </tr> 
+
+                
+                  
+	  </table>
+            
+   
+     </div>
+<% end %>   
+   
