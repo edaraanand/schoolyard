@@ -18,9 +18,20 @@
 	            <td> <%= link_to "Edit", url(:edit_alert, @alert) %></td>
                 </tr> 
 
-                
-                  
-	  </table>
+                    <% if (@alert.announcement_alert == true) %>
+                         <tr><td>New Announcement is Posted</td></tr>
+                    <%  end %>
+                    <% if (@alert.event_alert == true) %>
+                        <tr><td>New Event is Posted</td></tr>
+                    <%  end %>
+                    <% if (@alert.message_alert == true) %>
+                        <tr><td>New Message is Posted</td></tr>
+                    <% end %>
+                    <% if (@alert.file_alert == true) %>
+                        <tr><td>New File is Posted</td></tr>
+                    <% end %>
+                             
+         </table>
             
    
      </div>
