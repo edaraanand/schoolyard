@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 10) do
+ActiveRecord::Schema.define(:version => 11) do
 
   create_table "alerts", :force => true do |t|
     t.boolean  "announcement_alert"
@@ -77,6 +77,12 @@ ActiveRecord::Schema.define(:version => 10) do
     t.boolean  "links_access"
     t.boolean  "announcement_access"
     t.boolean  "files_access"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "welcomemessages", :force => true do |t|
+    t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

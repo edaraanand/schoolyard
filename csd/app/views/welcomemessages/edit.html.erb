@@ -1,0 +1,20 @@
+<div class ='formcontainer'>
+     
+    <p><b> Welcome Messages > Edit </b></p>
+
+    <%= form_for :welcomemessage, :action => url(:welcomemessage, @welcomemessage) do %>
+	
+         <table>
+              <tr>
+	          <td><%= text_area  :message,  :rows => "10", :cols => "50" %></td>
+	      </tr>
+
+              <tr>
+                  <td><%= submit "Publish" %></br> Or <%= link_to "Cancel", url(:welcomemessages) %></td>
+              </tr>
+         </table>
+
+     <% end =%>
+	   
+    
+</div>
