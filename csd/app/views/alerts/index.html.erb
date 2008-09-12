@@ -17,22 +17,18 @@
                     <td> <h3>Alert Settings</h3></td> </br> 
 	            <td> <%= link_to "Edit", url(:edit_alert, @alert) %></td>
                 </tr> 
-
-                    <% if (@alert.announcement_alert == true) %>
-                         <tr><td>New Announcement is Posted</td></tr>
-                    <%  end %>
-                    <% if (@alert.event_alert == true) %>
-                        <tr><td>New Event is Posted</td></tr>
-                    <%  end %>
-                    <% if (@alert.message_alert == true) %>
-                        <tr><td>New Message is Posted</td></tr>
-                    <% end %>
-                    <% if (@alert.file_alert == true) %>
-                        <tr><td>New File is Posted</td></tr>
-                    <% end %>
+                      
+                 <% Alert.alert_msgs.keys.each do |key|  %>        
                              
+                    <% if @alert.key == true %>
+                       <%= "#{alert_msgs[key]}" %>
+                    <% end %>
+
+                 <% end %>          
+              <%= @alert.file_alert %>
+
          </table>
-            
+                         
    
      </div>
 <% end %>   

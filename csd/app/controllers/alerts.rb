@@ -8,6 +8,16 @@ class Alerts < Application
   def index
      @alert = @user.alerts.find(:first)
      puts @alert.inspect
+     @alert_keys = Alert.alert_msgs.keys
+     #alert.each do |k,v|
+       #    key = "#{k}"
+       #   puts key.inspect
+       #   if @alert.key ==
+     #end
+      
+
+    # puts alert.keys.inspect
+    # puts alert.inspect
      render
   end
 
