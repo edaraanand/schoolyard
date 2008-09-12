@@ -35,6 +35,8 @@ module MerbAuth
         logged_in?
       end
 
+     
+           
       # Filter method to enforce a login requirement.
       #
       # To require logins for all actions, use this in your controllers:
@@ -136,7 +138,9 @@ module MerbAuth
       def find_user_by_remember_token(token)
         MerbAuth::User.find_by_remember_token(token)
       end
-
+       
+      
+         
     private
       @@http_auth_headers = %w(Authorization HTTP_AUTHORIZATION X-HTTP_AUTHORIZATION X_HTTP_AUTHORIZATION REDIRECT_X_HTTP_AUTHORIZATION)
 

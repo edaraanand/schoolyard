@@ -1,5 +1,7 @@
 class Users < Application
-  
+
+    # skip_before :login_required, :only => [:forgot_password]
+
   def index
      @users = User.paginate :page => params[:page], :order => 'username', :per_page => 2
      render
@@ -72,6 +74,11 @@ class Users < Application
       end
     
      
-  end
+  end 
+
+   #def forgot_password
+   #   puts "Eshwar"
+    #  render :layout => 'merb_auth'
+   #end
 
 end

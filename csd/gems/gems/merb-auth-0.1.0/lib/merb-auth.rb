@@ -53,6 +53,7 @@ if defined?(Merb::Plugins)
       scope.match('/login').to(:controller => 'users', :action => 'login').name(:login)
       scope.match('/logout').to(:controller => 'users', :action => 'logout').name(:logout)
       scope.match('/signup').to(:controller => 'users', :action => 'signup').name(:signup)
+      scope.match('/forgot_password').to(:controller => 'users', :action => 'forgot_password').name(:forgot_password)
     end
   end
   

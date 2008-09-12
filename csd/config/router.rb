@@ -25,7 +25,7 @@ Merb::Router.prepare do |r|
   # r.resources :posts
 
    r.add_slice(:MerbAuth, 'auth')
-   r.add_slice('change_password')
+  
   
    
    r.resources :users, :member => {:disable => :get}
@@ -40,6 +40,7 @@ Merb::Router.prepare do |r|
    r.match("/update").to(:controller => 'users', :action => 'account_update').name(:account_update)
    r.resources :alerts
    r.resources :welcomemessages, :member => {:preview => :any}
+   #r.match("/forgot_password").to(:controller => 'users', :action => 'forgot_password').name(:forgot_password)
 
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based

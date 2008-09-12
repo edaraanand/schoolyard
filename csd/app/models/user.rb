@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
    include MerbAuth::Adapter::ActiveRecord
     attr_accessor :old_password
      has_many :alerts
-
+ #
+#validates_presence_of     :email
   #validates_presence_of :first_name, :last_name, :email
   #validates_uniqueness_of :email
 
@@ -19,9 +20,9 @@ class User < ActiveRecord::Base
        # self.password == self.class.sha1(pass)
     #end
   
-   #def enabled?
-    #   current_user.content_access != false
-       #read_attribute(:content_access) 
+   #def enabled
+     # self.current_user.content_access != false
+      # read_attribute(:content_access) 
    #end
 
          

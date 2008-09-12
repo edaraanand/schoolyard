@@ -20,12 +20,8 @@
     <p><input type="checkbox" name='remember_me' id='remember_me' value="1"/>
       <label id='remember_me_lb' for="remember_me">Keep me signed in</label></p>
     
-    <p><input type="submit" value="Sign in"/> <span style="margin-left:20px"><a href="#">Forgot password?</a></span></p>
+    <p><input type="submit" value="Sign in"/> <span style="margin-left:20px"><%= link_to "forgot_password?", url(:forgot_password) %> </span></p>
   </form>
   
-  <form action="#" method="post" style="display:none">
-    <p><label for="openid_url">OpenID</label>
-    <input type="text" value="" size="40" id="openid_url" name="openid_url"/>  <small>(e.g. http://username.myopenid.com)</small>
-    </p>
-  </form>
+  
 </div>

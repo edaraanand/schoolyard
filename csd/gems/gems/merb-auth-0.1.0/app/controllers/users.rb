@@ -5,8 +5,8 @@ class MerbAuth::Users < MerbAuth::Application
   
   def login
     if request.post?
-          @user = User.find_by_email(params[:email])
-       if @user.content_access == true
+         @user = MerbAuth::User.find_by_email(params[:email])
+        if @user.content_access == true
           self.current_user = verify_login(params[:email], params[:password])
              if logged_in?
                if params[:remember_me] == "1"
@@ -18,7 +18,7 @@ class MerbAuth::Users < MerbAuth::Application
                end
                  return redirect_back_or_default('/')
              end
-      end
+        end
     end
       
     render
@@ -42,6 +42,20 @@ class MerbAuth::Users < MerbAuth::Application
     render
   end
 
-  
+  def forgot_password
+      puts "Eshwar"
+      if request.post?
+         u = User.find_by_email(params[:email])
+            puts u.inspect
+        if u and u.send_new_password
+            flash[:message] = "Your password has been sent"
+            redirect url(:login)
+        else
+           flash[:warning]  = "Couldn't send password"
+        end
+       
+      end
+      render
+  end
 
 end

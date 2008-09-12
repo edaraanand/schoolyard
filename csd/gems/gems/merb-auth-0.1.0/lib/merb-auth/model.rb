@@ -15,10 +15,26 @@ module MerbAuth
       end
     end
     
+    
     module InstanceMethods
       def authenticated?(password)
          crypted_password == encrypt(password)
       end      
+      
+       def send_new_password
+          puts "Gouthama"
+          new_pass =  MerbAuth::User.random_string(10)
+             puts new_pass.inspect
+          self.password = self.password_confirmation = new_pass
+          self.save
+           puts new_pass.inspect
+       end
+
+      # def password=(pass)
+        #   password=pass
+        #   self.salt = User.random_string(10) if !self.salt?
+       #    self.hashed_password = User.encrypt(password, self.salt)
+      # end
 
       # before filter 
       def encrypt_password
@@ -52,6 +68,7 @@ module MerbAuth
         remember_me_for(14)
       end
 
+     
       def forget_me
         self.remember_token_expires_at = nil
         self.remember_token            = nil
@@ -69,7 +86,14 @@ module MerbAuth
       def encrypt(password, salt)
         Digest::SHA1.hexdigest("--#{salt}--#{password}--")
       end
-      
+
+      def random_string(len)
+          chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+          newpass = ""
+             1.upto(len) { |i| newpass << chars[rand(chars.size-1)] }
+          return newpass
+      end
+
       # Authenticates a user by their username and unencrypted password.  Returns the user or nil.
       def authenticate(email, password)
           u = find_by_email(email) # need to get the salt
