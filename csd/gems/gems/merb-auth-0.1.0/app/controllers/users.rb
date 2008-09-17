@@ -5,8 +5,8 @@ class MerbAuth::Users < MerbAuth::Application
   
   def login
     if request.post?
-         @user = MerbAuth::User.find_by_email(params[:email])
-        if @user.content_access == true
+       #  @user = MerbAuth::User.find_by_email(params[:email])
+      #  if @user.content_access == true
           self.current_user = verify_login(params[:email], params[:password])
              if logged_in?
                if params[:remember_me] == "1"
@@ -18,7 +18,7 @@ class MerbAuth::Users < MerbAuth::Application
                end
                  return redirect_back_or_default('/')
              end
-        end
+        #end
     end
       
     render
@@ -43,19 +43,92 @@ class MerbAuth::Users < MerbAuth::Application
   end
 
   def forgot_password
-      puts "Eshwar"
-      if request.post?
-         u = User.find_by_email(params[:email])
-            puts u.inspect
-        if u and u.send_new_password
-            flash[:message] = "Your password has been sent"
-            redirect url(:login)
-        else
-           flash[:warning]  = "Couldn't send password"
-        end
-       
-      end
+     render
+  end
+
+  def reset_password
+       email = params[:email]
+       @ivar = MerbAuth::User.find(:first, :conditions => ['email=?', email])
+         raise Notfound if @ivar.nil?
+         raise Unauthorized if logged_in? && @ivar != current_user
+         @ivar.reset_pass
+         set_ivar
+      puts "Ashwini"
+        return redirect_back_or_default('/')
+  end
+
+  def reset_password_edit
+      @user = self.current_user
+    # puts @ivar.inspect
+      #set_ivar
       render
   end
 
+  def reset_password_link
+     id = params[:id]
+     @user = MerbAuth::User.find(:first, :conditions => ['password_reset_key = ?', id])
+       if @user.nil?
+          redirect_back_or_default "/"
+       else
+          self.current_user = @user
+          #set_ivar
+          redirect url(:reset_password_edit)
+       end
+  end
+
+  def reset_password_update
+      @user = current_user
+      puts @user.inspect
+  
+
+    if !params[:user][:password].blank?
+    
+       if (( params[:user][:password] == params[:user][:password_confirmation]) && !params[:user][:password_confirmation].blank?)
+         
+           if !@user.has_forgotten_password?
+               if @user != MerbAuth::User.authenticate(@user.email, params[:current_password])
+                  message[:notice] = "Your current password is incorrect"
+                  return render(:reset_password_edit)
+               end
+           end
+
+          @user.password = params[:user][:password]
+          @user.password_confirmation = params[:user][:password_confirmation]
+    
+         if @user.save
+            redirect_back_or_default("/")
+         else
+            redirect url(:reset_password_edit)
+         end
+
+       else
+          flash[:error] = "Your current password doesn't match existing password"
+          return render(:reset_password_edit)
+       end
+    else
+        flash[:error1] = "You must enter a password"
+        return render(:reset_password_edit)
+     end
+  end
+
+  private
+
+    def set_ivar
+       instance_variable_set("@#{MerbAuth[:single_resource]}", @ivar)
+    end
+    
+
+
 end
+
+
+
+
+
+
+
+
+
+
+
+

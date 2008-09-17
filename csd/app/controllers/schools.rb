@@ -1,5 +1,9 @@
 class Schools < Application
-  
+   
+   layout 'admin'   
+   
+   before :access_rights
+    
   def index
     @school = School.find(:first)
     render
@@ -32,5 +36,20 @@ class Schools < Application
           render :edit
        end
   end
+
+  private
+
+   def access_rights
+      unless current_user.settings_access == true
+         redirect url(:homes)
+      end
+   end
   
 end
+
+
+
+
+
+
+

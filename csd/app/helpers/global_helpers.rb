@@ -13,10 +13,17 @@ module Merb
       tag(:a, content, :href => "javascript:;", :onclick => "#{options[:action]};return false;", :title => options[:title])
     end
 
-  def error_messages_for(object) 
- 	#return if !object.respond_to?(:errors) || object.errors.empty? 
-   "<ul class='error_messages'>#{object.errors.full_messages.map{|msg| "<li>#{msg}</li>" }.join}</ul>" 
-  end 
+    def link_to_if(condition, name, url = "")
+      #  condition ? link_to(name, url) :link_to(name, url) if condition ? end
+       if condition
+          link_to(name, url)
+       end
+    end
+
+    def error_messages_for(object) 
+    	#return if !object.respond_to?(:errors) || object.errors.empty? 
+      "<ul class='error_messages'>#{object.errors.full_messages.map{|msg| "<li>#{msg}</li>" }.join}</ul>" 
+    end 
 
   end
 

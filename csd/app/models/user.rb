@@ -1,29 +1,40 @@
 class User < ActiveRecord::Base
   
    include MerbAuth::Adapter::ActiveRecord
-    attr_accessor :old_password
+     attr_accessor :old_password
      has_many :alerts
- #
-#validates_presence_of     :email
-  #validates_presence_of :first_name, :last_name, :email
-  #validates_uniqueness_of :email
+     validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?} 
 
-  #validates_presence_of :password
-  #validates_presence_of :password_confirmation
-  #validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :allow_blank => :true
+    def reset_pass 
+       pwreset_key_success = false
+        until pwreset_key_success
+          self.password_reset_key = self.class.make_key
+          self.save
+          puts password_reset_key.inspect
+          pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false
+        end
+       send_forgot_password
+    end
+    
+    def self.make_key
+        Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+    end
+    
+    def has_forgotten_password?
+        !self.password_reset_key.nil?
+    end
 
-  # def self.authenticate(email)
-      # self.find_by_email(email)
-  # end
+    def send_forgot_password
+        puts "Eshwar"
+      deliver_email(:forgot_password, :subject => (MerbAuth[:password_request_subject] || "Request to change your password"))
+    end 
 
-    #def password_check?(pass)
-       # self.password == self.class.sha1(pass)
-    #end
-  
-   #def enabled
-     # self.current_user.content_access != false
-      # read_attribute(:content_access) 
-   #end
+    def deliver_email(action, params)
+        from = MerbAuth[:from_email]
+         puts "Gouthama"
+        MerbAuth::UserMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), MerbAuth[:single_resource] => self)
+    end
+   
+    
 
-         
 end

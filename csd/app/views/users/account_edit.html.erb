@@ -19,18 +19,6 @@
 	              <td><%= text_field  :phone,  :label => "Phone Number(optional)" %></td>
                   </tr>
                   <tr>
-                      <td><%= password_field :old_password,  :label => "Current Password" %></td>
-                      <td><%= flash[:error3] %></td>
-                  </tr>
-                  <tr>
-                      <td><%= password_field :password, :label => "New Password" %></td>
-                  </tr>
-                  <tr>
-                      <td><%= password_field :password_confirmation, :label => "Re Type New Password" %></td>
-                      <td> <%= flash[:error2] %></td>
-                  </tr>
-                    
-                  <tr>
                        <td><%= submit "Save" %> </br> Or <%= link_to "cancel", url(:account) %> </td>
                   </tr>
 

@@ -1,12 +1,14 @@
-
 <%= error_messages_for @user %>
 
 <div class='formcontainer'>
 
     <%= form_for :user, :action => url(:user, @user), :id => 'user', :name => 'users' do %>
     
-        <%= partial 'form' %>
+       <%= partial 'form' %>
 	
     <% end =%>
      
 </div>
+
+
+

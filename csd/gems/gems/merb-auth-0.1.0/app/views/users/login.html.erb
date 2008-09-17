@@ -20,7 +20,7 @@
     <p><input type="checkbox" name='remember_me' id='remember_me' value="1"/>
       <label id='remember_me_lb' for="remember_me">Keep me signed in</label></p>
     
-    <p><input type="submit" value="Sign in"/> <span style="margin-left:20px"><%= link_to "forgot_password?", url(:forgot_password) %> </span></p>
+    <p><input type="submit" value="Login"/> <span style="margin-left:20px"><a href="<%= url(:forgot_password) %>">Forgot Password?</a></span></p>
   </form>
   
   

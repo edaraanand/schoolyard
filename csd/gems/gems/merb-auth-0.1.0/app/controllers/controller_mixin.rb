@@ -123,7 +123,7 @@ module MerbAuth
       end
     
       def reset_session
-        session.data.each{|k,v| session.data.delete(k)}
+        session.each{|k,v| session.delete(k)}
       end
 
     protected

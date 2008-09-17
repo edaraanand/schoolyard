@@ -1,7 +1,7 @@
 class Welcomemessages < Application
 
-  # ...and remember, everything returned from an action
-  # goes to the client...
+  layout 'admin'
+   before :access_rights
 
   def index
      @welcomemessages = Welcomemessage.find(:all)
@@ -40,4 +40,18 @@ class Welcomemessages < Application
      render :layout => 'preview'
   end
 
+  private
+
+  def access_rights
+     unless current_user.message_access == true
+        redirect url(:homes)
+     end
+  end
+
 end
+
+
+
+
+
+

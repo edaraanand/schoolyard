@@ -50,7 +50,8 @@ Gem.path.unshift(Merb.root / "gems")
 # here.
 
 require 'parse_tree'
-dependencies "merb-assets", "merb_helpers"
+require 'tlsmail'
+dependencies "merb-assets", "merb_helpers", "merb_paginate"
 dependency "merb_has_flash"
  #require 'merb_paginate/finders/activerecord'
 #require 'gems/gems/merb_paginate/lib/merb_paginate/finders/activerecord'
@@ -60,7 +61,18 @@ dependency "merb-slices"
 Merb::BootLoader.after_app_loads do
   # Add dependencies here that must load after the application loads:
   Merb::Slices::config[:merb_auth][:layout] = :application
+  MerbAuth[:use_activation] = true
+  MerbAuth[:forgotten_password] = true
+  Net::SMTP.enable_tls(OpenSSL::SSL::VERIFY_NONE) 
   # dependency "magic_admin" # this gem uses the app's model classes
+
+  Merb::Mailer.config = {
+       :host   => 'smtp.gmail.com',
+       :port   => '587',
+       :user   => 'eshwar1314@gmail.com',
+       :pass   => 'ashwini13',
+       :auth   => :plain }
+ 
 end
 
 #
@@ -78,6 +90,7 @@ end
 use_orm :activerecord
 dependency "merb-auth"
 dependency "merb_paginate"
+dependency "merb-mailer"
 #require 'gems/gems/merb-auth-0.1.0/lib/merb-auth/adapter/activerecord'
 # Uncomment for Sequel ORM
 # use_orm :sequel

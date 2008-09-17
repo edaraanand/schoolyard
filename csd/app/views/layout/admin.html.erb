@@ -16,16 +16,15 @@
 		    <li><%= link_to "Calendar" %></li>
 		    <li><%= link_to "Files" %></li>
 		    <li><%= link_to "Directory" %></li>
-                    <% if ((current_user.manage_access == true) || (current_user.settings_access == true)) %>
+		    <% if ((current_user.manage_access == true) || (current_user.settings_access == true)) %>
                             <li><%= link_to "Administration",  url(:admin) %></li>
                         <% elsif ((current_user.event_access == true) || (current_user.message_access == true)) %>
                             <li><%= link_to "Administration",  url(:admin) %></li>
                         <% elsif ((current_user.announcement_access == true) || (current_user.links_access == true)) %>
                             <li><%= link_to "Administration",  url(:admin) %></li>
                         <% elsif current_user.files_access == true %>
-                           <li><%= link_to "Administration",  url(:admin) %></li>
+                            <li><%= link_to "Administration",  url(:admin) %></li>
                     <% end %>
-                    
 		</ul>
         </div>
             <% if logged_in? %>
@@ -37,11 +36,27 @@
 	<div class="clear">
         </div>
 
-	
-    	
-    <div id="content">
-    	<%= catch_content :for_layout %>
-    </div>
+        <div id="sidebar">
+           <ul>
+             <% @user = current_user  %>
+	        <li><b> Site Settings</b> </li>     
+		<li><%= link_to_if(@user.settings_access == true, "Basic settings", url(:schools)) %></li>
+                <li><b> Access Rights </b></li>
+		<li><%= link_to_if(@user.manage_access == true, "Add/Edit Access Rights", url(:users)) %></li>
+		<li><b> Content </b></li>
+                <li><%= link_to_if(@user.message_access == true, "Welcome Messages", url(:welcomemessages)) %></li>
+                <li><%= link_to_if(@user.announcement_access == true, "Announcements", url(:announcements)) %></li>
+                <li><%= link_to_if(current_user.event_access == true, "Calendar", url(:calendars)) %></li>
+                <li><%= link_to_if(@user.links_access == true, "External Links", url(:homelinks)) %></li>
+                 
+                 <% if @user.files_access == true %>
+		    <li><%= link_to "Files" %></li>
+                 <% end %>
+	   </ul>
+        </div>
+        <div id="content">
+    	    <%= catch_content :for_layout %>
+        </div>
     	<div class="clear">
         </div>
   </body>

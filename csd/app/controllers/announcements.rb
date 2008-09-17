@@ -1,7 +1,11 @@
 class Announcements < Application
-   
+     layout 'admin'
+
+    before :access_rights, :exclude => [:show_announcements, :show]
+
   def index
-     @announcements = Announcement.paginate :page => params[:page], :order => 'expiration', :per_page => 2
+   #  @announcements = Announcement.paginate :page => params[:page], :order => 'expiration', :per_page => 2
+      @announcements = Announcement.find(:all, :order => 'expiration')
      render
   end
   
@@ -46,5 +50,34 @@ class Announcements < Application
      render :layout => 'preview'
   end
   
+  def show_announcements
+     @announcements = Announcement.find(:all)
+     render :layout => 'application'
+  end
+
+  def show
+      puts "Eshwar Deep"
+     @announcement = Announcement.find(params[:id])
+     render :layout => 'application'
+  end
+  
+   private
+   
+   def access_rights
+      unless current_user.announcement_access == true
+        redirect url(:homes)
+      end
+   end       
          
 end
+
+
+
+
+
+
+
+
+
+
+

@@ -26,22 +26,23 @@ Merb::Router.prepare do |r|
 
    r.add_slice(:MerbAuth, 'auth')
   
-  
-   
    r.resources :users, :member => {:disable => :get}
+   r.resources :homes
    r.resources :schools
    r.resources :calendars
+   r.resources :alerts
    r.resources :announcements, :member => {:preview => :any} 
    r.resources :homelinks,  :member => {:preview => :any}
    r.match("/externallinks/edit").to(:controller => 'homelinks', :action => 'edit').name(:externallinks_edit)
    r.match("/externallinks/update").to(:controller => 'homelinks', :action => 'update').name(:externallinks_update)
    r.match("/account").to(:controller => 'users', :action => 'account').name(:account)
    r.match("/account/edit").to(:controller => 'users', :action => 'account_edit').name(:account_edit)
-   r.match("/update").to(:controller => 'users', :action => 'account_update').name(:account_update)
-   r.resources :alerts
+   r.match("/update_account").to(:controller => 'users', :action => 'account_update').name(:account_update)
    r.resources :welcomemessages, :member => {:preview => :any}
-   #r.match("/forgot_password").to(:controller => 'users', :action => 'forgot_password').name(:forgot_password)
-
+   r.match("/change_password").to(:controller => 'users', :action => 'change_password').name(:change_password)
+   r.match("/password_update").to(:controller => 'users', :action => 'password_update').name(:password_update)
+   r.match("/admin").to(:controller => 'homes', :action => 'admin').name(:admin)
+   r.match("/show_announcements").to(:controller => 'announcements', :action => 'show_announcements').name(:show_announcements)
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
   # routes, you may want to comment/remove this line to prevent
@@ -49,5 +50,5 @@ Merb::Router.prepare do |r|
   r.default_routes
   
   # Change this for your home page to be available at /
-  r.match('/').to(:controller => 'schools', :action => 'index')
+  r.match('/').to(:controller => 'homes', :action => 'index')
 end

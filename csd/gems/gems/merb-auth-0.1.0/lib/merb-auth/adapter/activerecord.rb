@@ -17,6 +17,8 @@ module MerbAuth
           validates_uniqueness_of   :email, :case_sensitive => false, :if => lambda { |u| !u.email.blank? }
 
           before_save :encrypt_password
+          #before_create :make_activation_code
+          #after_create :send_signup_notification
           
           def username=(value)
             self[:username] = value.downcase if value

@@ -54,6 +54,11 @@ if defined?(Merb::Plugins)
       scope.match('/logout').to(:controller => 'users', :action => 'logout').name(:logout)
       scope.match('/signup').to(:controller => 'users', :action => 'signup').name(:signup)
       scope.match('/forgot_password').to(:controller => 'users', :action => 'forgot_password').name(:forgot_password)
+      scope.match('/reset_password').to(:controller => 'users', :action => 'reset_password').name(:reset_password)
+      scope.match('/reset_password_edit').to(:controller => 'users', :action => 'reset_password_edit').name(:reset_password_edit)
+      scope.match('/reset_password_update').to(:controller => 'users', :action => 'reset_password_update').name(:reset_password_update)
+      scope.match('/reset_password_link').to(:controller => 'users', :action => 'reset_password_link').name(:reset_password_link)
+      #scope.match('/reset_password_show').to(:controller => 'users', :action => 'reset_password_show').name('reset_password_show')
     end
   end
   

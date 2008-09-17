@@ -1,7 +1,7 @@
 class Homelinks < Application
      
-  # ...and remember, everything returned from an action
-  # goes to the client...
+  layout 'admin'
+   before :access_rights
 
   def index
     @homelinks = Homelink.find(:all)
@@ -61,5 +61,13 @@ class Homelinks < Application
         @link = params[:homelink][:link]
       render :layout => 'preview'
    end
+
+   private
+   
+   def access_rights
+      unless current_user.links_access == true
+        redirect url(:homes)
+      end
+   end   
 
 end
