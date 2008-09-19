@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(:version => 12) do
     t.boolean  "event_alert"
     t.boolean  "message_alert"
     t.boolean  "file_alert"
-    t.integer  "user_id",            :limit => 11
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -51,21 +51,21 @@ ActiveRecord::Schema.define(:version => 12) do
     t.text     "contact_information"
     t.string   "filename"
     t.string   "content_type"
-    t.integer  "size",                :limit => 11
-    t.integer  "width",               :limit => 11
-    t.integer  "height",              :limit => 11
-    t.integer  "parent_id",           :limit => 11
+    t.integer  "size"
+    t.integer  "width"
+    t.integer  "height"
+    t.integer  "parent_id"
     t.string   "thumbnail"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
-    t.string   "name",                      :limit => 40, :default => "", :null => false
-    t.string   "username",                  :limit => 40, :default => "", :null => false
-    t.string   "email",                                   :default => "", :null => false
+    t.string   "name",                      :limit => 40, :null => false
+    t.string   "username",                  :limit => 40, :null => false
+    t.string   "email",                                   :null => false
     t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40, :default => "", :null => false
+    t.string   "salt",                      :limit => 40, :null => false
     t.string   "remember_token"
     t.date     "remember_token_expires_at"
     t.string   "phone"
