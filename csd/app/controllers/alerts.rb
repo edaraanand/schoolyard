@@ -4,9 +4,6 @@ class Alerts < Application
 
   def index
     @alert = @user.alerts.find(:first)
-    puts @alert.inspect
-    @alert_keys = Alert.alert_msgs.keys
-
     render
   end
 
