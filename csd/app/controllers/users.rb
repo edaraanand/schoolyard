@@ -19,6 +19,7 @@ class Users < Application
      @user = User.new(params[:user])
      @user.content_access = true
        if @user.save
+          @user.new_password_key
           redirect url(:users)
        else
           render :new
@@ -93,6 +94,7 @@ class Users < Application
    
   end
    
+  
   private
   
    def access_rights
@@ -101,5 +103,7 @@ class Users < Application
       end
    end
 
+ 
+   
   
 end

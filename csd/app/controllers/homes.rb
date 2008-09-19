@@ -10,5 +10,10 @@ class Homes < Application
    def admin
      render :layout => 'admin'
    end
+   
+   def directory
+     @users = User.find(:all, :order => 'username')
+     render
+   end
 
 end

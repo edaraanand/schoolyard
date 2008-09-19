@@ -43,6 +43,7 @@ Merb::Router.prepare do |r|
    r.match("/password_update").to(:controller => 'users', :action => 'password_update').name(:password_update)
    r.match("/admin").to(:controller => 'homes', :action => 'admin').name(:admin)
    r.match("/show_announcements").to(:controller => 'announcements', :action => 'show_announcements').name(:show_announcements)
+   r.match("/directory").to(:controller => 'homes', :action => 'directory').name(:directory)
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
   # routes, you may want to comment/remove this line to prevent

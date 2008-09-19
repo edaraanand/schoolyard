@@ -53,15 +53,7 @@ class MerbAuth::Users < MerbAuth::Application
          raise Unauthorized if logged_in? && @ivar != current_user
          @ivar.reset_pass
          set_ivar
-      puts "Ashwini"
-        return redirect_back_or_default('/')
-  end
-
-  def reset_password_edit
-      @user = self.current_user
-    # puts @ivar.inspect
-      #set_ivar
-      render
+       return redirect_back_or_default('/')
   end
 
   def reset_password_link
@@ -74,6 +66,11 @@ class MerbAuth::Users < MerbAuth::Application
           #set_ivar
           redirect url(:reset_password_edit)
        end
+  end
+
+  def reset_password_edit
+      @user = self.current_user
+      render
   end
 
   def reset_password_update
@@ -110,6 +107,48 @@ class MerbAuth::Users < MerbAuth::Application
         return render(:reset_password_edit)
      end
   end
+
+  def new_password_link
+     id = params[:id]
+     @user = MerbAuth::User.find(:first, :conditions => ['password_reset_key = ?', id])
+       if @user.nil?
+          redirect_back_or_default "/"
+       else
+          self.current_user = @user
+          #set_ivar
+          redirect url(:new_password)
+       end
+  end
+
+  def new_password
+      puts "eshwar"
+      @user = self.current_user
+      render
+  end
+
+  def new_password_create
+      @user = self.current_user
+      if !params[:user][:password].blank?
+         if (( params[:user][:password] == params[:user][:password_confirmation]) && !params[:user][:password_confirmation].blank?)
+
+             @user.password = params[:user][:password]
+             @user.password_confirmation = params[:user][:password_confirmation]
+              if @user.save
+                 return redirect_back_or_default("/")
+              else
+                 redirect url(:new_password)
+              end    
+         else
+             flash[:error] = "Your current password doesn't match existing password"
+             return render(:new_password)     
+         end
+      else
+           flash[:error1] = "You must enter a password"
+           return render(:new_password)    
+      end
+  end
+  
+
 
   private
 
