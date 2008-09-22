@@ -17,7 +17,7 @@ role :db,  "beta.insightmethods.com", :primary => true
 namespace :deploy do 
   desc "Change the database configuration file"
   task :after_update_code do
-    run "mv #{release_path}/config/database.yml.production #{release_path}/config/database.yml"
+    run "mv #{current_path}/config/database.yml.production #{current_path}/config/database.yml"
   end
   
   desc "Start Merb Instances"  
