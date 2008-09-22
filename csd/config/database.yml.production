@@ -6,8 +6,8 @@
 
 :test:
   <<: *defaults
-  :database: csd_test
+  :database: db/csd_test
 
 :production:
   <<: *defaults
-  :database: csd_production
+  :database: db/csd_production
