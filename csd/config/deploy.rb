@@ -31,9 +31,15 @@ namespace :deploy do
     run "cd #{current_path} && merb -a #{adapter} -K all"  
   end 
  
-  desc 'Custom restart task for Merb' 
+  desc "Custom restart task for Merb"
   task :restart, :roles => :app do 
     deploy.stop 
     deploy.start 
+<<<<<<< HEAD:csd/config/deploy.rb
   end 
 end
+=======
+  end
+
+end
+>>>>>>> c1166a95e348f309776d1ad6fae9617a83807d6a:csd/config/deploy.rb
