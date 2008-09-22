@@ -1,58 +1,44 @@
 class Alerts < Application
-    layout 'myaccount'
-    before :find_user, :exclude => [:update]
-
-  # ...and remember, everything returned from an action
-  # goes to the client...
+  layout 'myaccount'
+  before :find_user, :exclude => [:update]
 
   def index
-     @alert = @user.alerts.find(:first)
-     puts @alert.inspect
-     @alert_keys = Alert.alert_msgs.keys
-     #alert.each do |k,v|
-       #    key = "#{k}"
-       #   puts key.inspect
-       #   if @alert.key ==
-     #end
-      
-
-    # puts alert.keys.inspect
-    # puts alert.inspect
-     render
+    @alert = @user.alerts.find(:first)
+    render
   end
 
   def new
-     @alert = @user.alerts.build
-     render
+    @alert = @user.alerts.build
+    render
   end
-  
+
   def create
-     @alert = @user.alerts.build(params[:alert])
-       if @alert.save
-          redirect url(:alerts)
-       else
-          render :new
-       end
+    @alert = @user.alerts.build(params[:alert])
+    if @alert.save
+      redirect url(:alerts)
+    else
+      render :new
+    end
   end
 
   def edit
-     @alert = @user.alerts.find(:first)
-     render
+    @alert = @user.alerts.find(:first)
+    render
   end
 
   def update
-     @alert = Alert.find(:first, :conditions => ['user_id=?', current_user.id])
-         if @alert.update_attributes(params[:alert])
-            redirect url(:alerts)
-         else
-            render :edit
-         end
+    @alert = Alert.find(:first, :conditions => ['user_id=?', current_user.id])
+    if @alert.update_attributes(params[:alert])
+      redirect url(:alerts)
+    else
+      render :edit
+    end
   end
 
-   private
-      
-     def find_user
-         @user = User.find(:first, :conditions => ['id=?', current_user.id])
-     end
+  private
+
+  def find_user
+    @user = User.find(:first, :conditions => ['id=?', current_user.id])
+  end
 
 end
