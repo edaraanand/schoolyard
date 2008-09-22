@@ -5,7 +5,7 @@ set :use_sudo, false
 
 set :deploy_to, "/home/niket/#{application}"
 set :adapter, 'mongrel' # or 'thin' 
-set :start_port, 9000 
+set :start_port, 7000 
 set :processes, 1
 set :log_path, "#{shared_path}/log/production.log"
 
@@ -16,18 +16,19 @@ role :db,  "beta.insightmethods.com", :primary => true
 
 namespace :deploy do 
   desc "Change the database configuration file"
-  task :after_update_code do
-    run "mv #{current_path}/config/database.yml.production #{current_path}/config/database.yml"
+  task :after_update do
+    run "mv #{current_path}/csd/config/database.yml.production #{current_path}/csd/config/database.yml"
+    run "mkdir -p #{current_path}/csd/db"
   end
   
   desc "Start Merb Instances"  
   task :start do 
-    run "merb -a #{adapter} -e production -c #{processes} --port #{start_port} -m #{current_path} -L #{log_path}"  
-  end 
+    run "merb -a #{adapter} -e production -c #{processes} --port #{start_port} -m #{current_path}/csd -L #{log_path}"  
+  end
  
   desc "Stop Merb Instances"  
   task :stop do 
-    run "cd #{current_path} && merb -a #{adapter} -k all"  
+    run "cd #{current_path} && merb -a #{adapter} -K all"  
   end 
  
   desc 'Custom restart task for Merb' 
