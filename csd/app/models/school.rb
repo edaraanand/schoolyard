@@ -7,7 +7,6 @@ class School < ActiveRecord::Base
                   #  #:path_prefix => 'public/school',
                   #  :processor => 'Rmagick'
 
-   validates_presence_of :school_name
-   validates_presence_of :contact_information
+  validates_presence_of :contact_information
 
 end
