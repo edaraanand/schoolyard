@@ -35,6 +35,11 @@ namespace :deploy do
   task :restart, :roles => :app do 
     deploy.stop 
     deploy.start 
+
+  end 
+end
+
   end
 
 end
+

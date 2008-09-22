@@ -8,22 +8,20 @@
 	      <td><%= link_to "Add New", url(:new_calendar) %></td>
 	  </tr>
 	  
-	    <% for calendar in @calendars %>
-	          <tr>
-	              <td><b><%= calendar.start_time.strftime("%B-%d") %></b></td>
-	          </tr>
-	      <% cals = @calendars.select {|c| c.start_time.to_date == calendar.start_time.to_date } %>
-	         <% for cal in cals.compact %>
-		        <tr>
-			   <td><%= cal.start_time.strftime("%H-%M") %></td>
-                           <td><%= cal.title %>
-			   <td><%= cal.id %></td>
-			</tr>
-		 <% end %>
-		 <% @calendars.delete_if {|c| cals.include?(c) } %>
-            <% end %>
-
-   
+          <% for calendar in @calendars %>
+                <tr>
+	            <td><b><%= calendar.start_time.strftime("%B-%d") %></b></td>
+	        </tr>
+                <% cals = @calendars.select {|c| c.start_time.to_date == calendar.start_time.to_date }  %>
+                     <% for cal in cals.compact %>
+                          <tr>
+		              <td><%= calendar.start_time.strftime("%H-%M") %></td>
+                              <td><%= calendar.title %></td>
+                          </tr>
+                          
+                     <% end %>
+               <% cals.delete_if {|c| cals.include?(c) } %>
+          <% end %>
 		  
 	</table> 
     </div>
