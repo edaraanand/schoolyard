@@ -35,11 +35,11 @@ namespace :deploy do
   task :restart, :roles => :app do 
     deploy.stop 
     deploy.start 
-<<<<<<< HEAD:csd/config/deploy.rb
+
   end 
 end
-=======
+
   end
 
 end
->>>>>>> c1166a95e348f309776d1ad6fae9617a83807d6a:csd/config/deploy.rb
+
