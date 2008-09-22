@@ -25,8 +25,6 @@ namespace :deploy do
   task :start do 
     run "merb -a #{adapter} -e production -c #{processes} --port #{start_port} -m #{current_path}/csd -L #{log_path}"  
   end
-  
-  def
  
   desc "Stop Merb Instances"  
   task :stop do 
