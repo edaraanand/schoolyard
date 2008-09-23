@@ -16,9 +16,10 @@ class Users < Application
   end
 
   def create
-    @user = User.new(params[:user])
+    @user = User.new(params[:user].merge(:password => 'test'))
     @user.content_access = true
-    if @user.save
+     puts @user.inspect
+    if @user.save  
       @user.new_password_key
       redirect url(:users)
     else
