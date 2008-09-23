@@ -15,10 +15,13 @@ role :db,  "beta.insightmethods.com", :primary => true
 
 
 namespace :deploy do 
+  
   desc "Change the database configuration file"
   task :after_update do
     run "mv #{current_path}/csd/config/database.yml.production #{current_path}/csd/config/database.yml"
+    run "rm -fr #{current_path}/csd/db"
     run "mkdir -p #{current_path}/csd/db"
+    run "cd #{current_path}/csd && rake db:migrate"
   end
   
   desc "Start Merb Instances"  
@@ -35,11 +38,7 @@ namespace :deploy do
   task :restart, :roles => :app do 
     deploy.stop 
     deploy.start 
-
   end 
-end
-
-  end
-
+  
 end
 
