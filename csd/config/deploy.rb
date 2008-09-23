@@ -22,7 +22,8 @@ namespace :deploy do
     run "rm -fr #{current_path}/csd/db"
     run "mkdir -p #{current_path}/csd/db"
     run "cp #{current_path}/csd/lib/constantz.rb.sample #{current_path}/csd/lib/constantz.rb"
-    run "cd #{current_path}/csd && rake db:migrate"
+    run "cd #{current_path}/csd && rake db:migrate MERB_ENV=production"
+    run "cd #{current_path}/csd && rake bootstrap:app"
   end
   
   desc "Start Merb Instances"  
