@@ -11,3 +11,7 @@
 :production:
   <<: *defaults
   :database: db/csd_production
+
+:rake:
+  <<: *defaults
+  :database: db/csd_production
