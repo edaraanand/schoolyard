@@ -1,13 +1,13 @@
 ---
 # This is a sample database file for the ActiveRecord ORM
 :development: &defaults
-  :adapter: mysql
-  :database: csd_development
+  :adapter: sqlite3
+  :database: db/csd_development
 
 :test:
   <<: *defaults
-  :database: csd_test
+  :database: db/csd_test
 
 :production:
   <<: *defaults
-  :database: csd_production
+  :database: db/csd_production
