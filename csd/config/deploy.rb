@@ -21,6 +21,7 @@ namespace :deploy do
     run "mv #{current_path}/csd/config/database.yml.production #{current_path}/csd/config/database.yml"
     run "rm -fr #{current_path}/csd/db"
     run "mkdir -p #{current_path}/csd/db"
+    run "cp #{current_path}/csd/lib/constantz.rb.sample #{current_path}/csd/lib/constantz.rb"
     run "cd #{current_path}/csd && rake db:migrate"
   end
   

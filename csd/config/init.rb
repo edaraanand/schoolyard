@@ -3,6 +3,7 @@ Gem.clear_paths
 Gem.path.unshift(Merb.root / "gems")
 
 require  Merb.root / 'lib' / 'smtp_tls'
+require  Merb.root / 'lib' / 'constantz'
 dependencies "merb-assets", "merb_helpers", "merb_paginate"
 dependency "merb_has_flash"
 #require 'merb_paginate/finders/activerecord'
