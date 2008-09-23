@@ -30,26 +30,20 @@ class Schools < Application
   
   def update
     @school = School.find(:first)
-       if @school.update_attributes(params[:school])     
-          redirect url(:schools)
-       else
-          render :edit
-       end
+    if @school.update_attributes(params[:school])     
+       redirect url(:schools)
+    else
+       render :edit
+    end
   end
 
   private
 
-   def access_rights
-      unless current_user.settings_access == true
-         redirect url(:homes)
-      end
-   end
+  def access_rights
+     unless current_user.settings_access == true
+       redirect url(:homes)
+     end
+  end
   
 end
-
-
-
-
-
-
 

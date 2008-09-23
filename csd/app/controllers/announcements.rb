@@ -4,7 +4,6 @@ class Announcements < Application
   before :access_rights, :exclude => [:show_announcements, :show]
 
   def index
-    #  @announcements = Announcement.paginate :page => params[:page], :order => 'expiration', :per_page => 2
     @announcements = Announcement.find(:all, :order => 'expiration')
     render
   end
@@ -56,7 +55,6 @@ class Announcements < Application
   end
 
   def show
-    puts "Eshwar Deep"
     @announcement = Announcement.find(params[:id])
     render :layout => 'application'
   end
