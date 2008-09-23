@@ -10,12 +10,9 @@ class MerbAuth::UserMailer < Merb::MailController
   end 
    
   def signup
-      puts "Hip Hip"
-      puts @user.inspect
-      @ivar = params[MerbAuth[:single_resource]]
-      puts @ivar.inspect
-      instance_variable_set("@#{MerbAuth[:single_resource]}", @ivar )
-      render_mail :html => :signup, :layout => nil
+     @ivar = params[MerbAuth[:single_resource]]
+     instance_variable_set("@#{MerbAuth[:single_resource]}", @ivar )
+     render_mail :html => :signup, :layout => nil
   end 
 
 end
