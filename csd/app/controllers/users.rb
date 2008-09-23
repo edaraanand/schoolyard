@@ -3,9 +3,7 @@ class Users < Application
   layout 'admin'
   before :access_rights, :exclude => [:account, :account_update, :account_edit, :change_password, :password_update]
 
-
   def index
-    # @users = User.paginate :page => params[:page], :order => 'username', :per_page => 2
     @users = User.find(:all, :order => 'username')
     render
   end
@@ -18,7 +16,6 @@ class Users < Application
   def create
     @user = User.new(params[:user].merge(:password => 'test'))
     @user.content_access = true
-     puts @user.inspect
     if @user.save  
       @user.new_password_key
       redirect url(:users)
@@ -101,8 +98,5 @@ class Users < Application
       redirect url(:homes)
     end
   end
-
-
-
 
 end
