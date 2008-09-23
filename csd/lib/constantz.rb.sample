@@ -2,7 +2,7 @@ class Csd
   
   @@common_config = {
     :auth_mailman      => 'eshwar1314@gmail.com',
-    :mailman_password  => 'ashwini13',
+    :mailman_password  => 'ashwini1314',
     :bc_user => "basecamp user", 
     :bc_password => "basecamp password"
   }
