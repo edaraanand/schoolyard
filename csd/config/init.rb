@@ -23,8 +23,8 @@ Merb::BootLoader.after_app_loads do
   Merb::Mailer.config = {
     :host   => 'smtp.gmail.com',
     :port   => '587',
-    :user   => 'eshwar1314@gmail.com',
-    :pass   => 'ashwini13',
+    :user   => Csd.config(:auth_mailman),
+    :pass   => Csd.config(:mailman_password),
     :auth   => :plain 
   }
  

@@ -1,8 +1,8 @@
 class Csd
   
   @@common_config = {
-    :auth_mailman      => 'no-reply-csd@gmail.com',
-    :mailman_password  => 'password',
+    :auth_mailman      => 'eshwar1314@gmail.com',
+    :mailman_password  => 'ashwini13',
     :bc_user => "basecamp user", 
     :bc_password => "basecamp password"
   }
