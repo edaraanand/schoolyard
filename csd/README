@@ -1,0 +1,22 @@
+Install Gems
+
+  sudo gem install merb 0.9.5
+  sudo gem install merb-auth
+  sudo gem install merb_paginate
+  sudo gem install merb_has_flash
+  sudo gem install merb-mailer
+  sudo gem install merb-slices
+ 
+  Following instruction are for installing merb-auth for login functionality through GitHub.
+  
+  Grab the source in to the application and install the gem 
+
+    git clone git://github.com/hassox/merb-auth.git 
+    cd merb-auth 
+    sudo rake install
+
+  Copy missing files
+    cp lib/constantz.rb.sample lib/constantz.rb
+
+  Start Merb
+    merb -p 4000
