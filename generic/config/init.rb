@@ -112,7 +112,7 @@ Merb::Config.use do |c|
   # with the cookie session store. If not specified, defaults to '_session_id'.
   # c[:session_id_key] = '_session_id'
 
-  c[:session_secret_key]  = 'cb559b9d1afded91073666b345eebe8e8f41f213'
+  c[:scapp_key]  = 'cb559b9d1afded91073666b345eebe8e8f41f213'
   c[:session_store] = 'cookie'
 end
 
