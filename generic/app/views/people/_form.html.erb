@@ -1,0 +1,45 @@
+<table>
+          <tr>
+              <td><%= text_field  :first_name,  :label => "First Name" %></td>
+          </tr>
+	  <tr>
+	       <td><%= text_field  :last_name,  :label => "Last Name" %></td>
+	  </tr>
+	  <tr>
+	       <td><%= text_field  :email,  :label => "Contact Email" %></td>
+	  </tr>
+	  <tr>
+	       <td><%= text_field  :phone,  :label => "Phone Number(optional)" %></td>
+	  </tr>
+    
+	  <tr>
+	      <td>Rights:</td>
+	      <td>This person can:
+	      
+	           
+  <%= check_box :checked => true, :checked => true, :value => @access_view.id , :disabled => "disabled", :name => "view_all"  %>View all Content</td> 
+		    
+	  </tr>
+	  <tr>
+             <td><input type="checkbox" class="check" value="Select all" name="select_all" id="select_all" onclick="Form.getInputs('people', 'checkbox').each(function(box){box.checked= $('select_all').checked})" />Select all
+
+         </td>
+	  </tr>
+	   
+	 <% @accesses.each do |f| %>                        
+	      <tr>
+	         <td></td>
+		 <td><input type="checkbox" class="check" name="access[access_ids][]" value="<%= f.id %>" /><%= f.full_name %></td>
+	      </tr>
+	      <% @accesses.delete_if{|x| x.name == "view_all"} %>
+	 <% end %>
+
+  
+          <tr>
+	       <td><%= submit "Save & Notify" %></br>  <%= link_to "Cancel", url(:people) %></td>
+	  </tr>
+	  
+ </table>
+ 
+ 
+

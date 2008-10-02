@@ -1,29 +1,32 @@
 class Person < ActiveRecord::Base
-  has_many :class_students
-  #has_many :class_teachers
-  has_many :classrooms, :through => :class_students
-  #has_many :classrooms, :through => :class_teachers
+	has_many :access_peoples
+	has_many :accesses, :through => :access_peoples, :source => :access
+	
+	has_many :class_peoples
+        has_many :classrooms, :through => :class_peoples, :source => :classroom
+
+        belongs_to :user
+	has_many :announcements
+	has_many :welcome_messages
+	
+	def accesses_without_all
+	    accesses.delete_if{|x| x.name == "view_all"}
+	end
+end
   
-  @@roles = %w(teacher student parent admin principle)
-  
-  def is_teacher?
-    role == 'teacher'
-  end
-  
-  def is_student?
-    role == 'student'
-  end
-  
-  def is_parent?
-    role == 'parent'
-  end
-  
-  def is_admin?
-    role == 'admin'
-  end
-  
-  def is_principle?
-    role == 'principle'
-  end
+class Student < Person
+     belongs_to :parent
+end
+
+class Staff < Person
   
 end
+
+class Parent < Person
+     has_many :students
+end
+
+class Principle < Person
+end
+
+  

@@ -1,0 +1,42 @@
+<% if @people.empty? %>
+
+    <div class='formcontainer'>
+   
+      <table>
+            <tr>
+	        <td><h3>AccessRights</h3> </br></td>
+	        <td><%= link_to "Add New", url(:new_person) %></td>
+	    </tr>
+      </table>
+      </div>
+<% else %>
+  
+  <div class='formcontainer'>
+   
+      <table>
+            <tr>
+	        <td><h3>AccessRights</h3> </br></td>
+	        <td><%= link_to "Add New", url(:new_person) %></td>
+	    </tr>
+     	   <tr> 
+	       <td<h3>Last Name </h3></td>
+	       <td<h3>First Name </h3></td>
+	       <td<h3>Email </h3></td>
+	       <td<h3>Phone </h3></td>
+	   </tr> 
+	    <% for person in @people %>
+   
+                 <tr>
+                      <td><%= link_to "#{person.last_name}", url(:edit_person, person.id) %> </td>
+                      <td><%= person.first_name %></td>
+		      <td><%= person.email %></td>
+		      <td><%= person.phone %></td>
+                 </tr> 
+                
+	   <% end %> 
+	   
+	    
+        </table>
+	 
+  </div>
+<% end %>
