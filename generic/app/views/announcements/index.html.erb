@@ -1,0 +1,34 @@
+
+<div class = 'formcontainer'>
+          
+  <%= form_for :announcement, :action => url(:controller => 'announcements', :action => 'index'), :id => 'announcement' do %>
+         <table>
+                <tr>
+                    <td> <h3>Announcements</h3></td> </br> 
+	            <td> <%= link_to "Add New", url(:new_announcement) %></td>
+                </tr> 
+		<tr>
+		    <td><%= select :name => "access_name", :prompt => "Please Select", :collection => @access_rights.collect{|x| x.full_name} %></td>
+		    <td><%= submit ">>" %></td>
+	        </tr>
+	 </table>	
+  <% end =%> 	    
+        <table>
+	
+	      <% for announcement in @announcements %>
+    
+                   <tr>
+                        <td><%= announcement.expiration.strftime("%B-%d") %></td>
+                        <td><%= announcement.title %></td>
+                   </tr> 
+                   <tr>
+                        <td><%= announcement.content %></td>
+			<td><%= link_to "Edit", url(:edit_announcement, announcement.id) %></td>
+                        <td><%= link_to "Delete", url(:delete_announcement, announcement.id) %></td>
+                   </tr>
+
+	      <% end %>
+    
+     
+</div>
+ 

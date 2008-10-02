@@ -53,12 +53,17 @@ Gem.path.unshift(Merb.root / "gems")
 # here.
 #
 require 'parse_tree'
-dependencies "merb-more", "merb_helpers"
+dependencies "merb-assets", "merb_helpers"
+#dependency "merb-slices"  
+#dependency "merb-auth"  
 # OR
 # dependency "RedCloth", "> 3.0"
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
 Merb::BootLoader.after_app_loads do
+   
+    #Merb::Slices::config[:merb_auth][:layout] = :application
+   #MA[:forgotten_password] = true 
   # Add dependencies here that must load after the application loads:
 
   # dependency "magic_admin" # this gem uses the app's model classes

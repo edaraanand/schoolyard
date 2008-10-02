@@ -5,8 +5,6 @@
   :database: schoolapp_development
   :username: root
   :password: 
-  :host: localhost
- # :socket: /tmp/mysql.sock
   :encoding: utf8
 
 :test:
@@ -16,3 +14,7 @@
 :production:
   <<: *defaults
   :database: schoolapp_production
+  
+:rake:
+  <<: *defaults
+  :database: schoolapp_development
