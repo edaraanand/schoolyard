@@ -1,0 +1,36 @@
+
+<div class="formcontainer">
+
+    <%= form_for :welcome_message, :action => url(:controller => 'welcome_messages', :action => 'index') do %>
+         <table>
+                <tr>
+                    <td> <h3>Welcome Messages</h3></td> </br> 
+	            <td> <%= link_to "Add New", url(:new_welcome_message) %></td>
+                </tr> 
+		<tr>
+		   <td><%= select :name => "access_name", :prompt => "Please Select", :collection => @access_rights.collect{|x| x.full_name} %></td>
+		   <td><%= submit ">>" %></td>
+		</tr>
+	 </table>	
+     <% end =%>	
+	 
+    
+	 <table> 
+	       <% for message in @welcome_messages %>
+	     
+	           <tr>
+		        <td><%= message.created_at.strftime("%B-%d") %></td>
+		   </tr>
+		   <tr>
+                        <td><%= message.content %></td>
+			<td><%= link_to "Edit", url(:edit_welcome_message, message.id) %></td>
+                        <td><%= link_to "Delete", url(:delete_welcome_message, message.id) %></td>
+                   </tr>
+	       <% end %>
+
+	 </table>
+	
+</div> 
+
+	 
+	 

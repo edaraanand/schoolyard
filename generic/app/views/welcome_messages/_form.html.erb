@@ -1,0 +1,28 @@
+  <table>
+
+         <tr>
+	    <td>Welcome Message for:<%= select :access_name, :prompt => "Please Select", :collection => @access_rights.collect{|i| i.full_name} %></td>
+	 </tr>
+         <tr>
+              <td><%= text_field  :message,  :label => "Message" %></td>
+         </tr>
+	 <tr>
+	      <td><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></td>
+	 </tr>
+	 <tr>
+	      <td><input type = 'button' value = 'Preview' onclick="preview();return false;" /></td>
+	      <td><%= submit "Publish" %></br> Or <%= link_to "Cancel", url(:welcome_messages) %></td>
+	 </tr>
+	
+   </table>
+   
+<script type= "text/javascript">
+
+ function preview()
+ {
+   var s = $('welcome_message').serialize();
+   window.open('/welcome_messages/preview/-/?' + s);
+ }
+  
+
+</script>
