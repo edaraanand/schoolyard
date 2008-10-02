@@ -1,0 +1,3 @@
+lib/constantz.rb
+log/*.log
+log/*.pid
