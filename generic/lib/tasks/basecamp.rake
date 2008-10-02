@@ -12,7 +12,7 @@ namespace :basecamp do
   task :notify_new_build do
     git_log = `git-log --abbrev-commit --pretty=format:"%s%n<a href=https://github.com/bjbolz/schoolapp/commit/%H target=_blank>%h</a> by (%an: %ar)%n" ee874f7..HEAD --no-merges`
     build_msg = <<-EOF
-      <a href=http://csd.insightmethods.com target=_blank>New build ( http://schoolapp.insightmethods.com )</a> is just pushed to server. [DESIGNER]
+      <a href=http://schoolapp.insightmethods.com target=_blank>New build ( http://schoolapp.insightmethods.com )</a> is just pushed to server. [DESIGNER]
       ...
       <b>Change Log:</b>
       #{git_log}
