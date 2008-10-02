@@ -1,0 +1,15 @@
+Install Gems
+
+  sudo gem install merb 0.9.5
+  
+  Do these things before starting the server.
+  rake db:migrate
+  rake bootstrap:app
+
+  cre
+  
+  Copy missing files
+    cp lib/constantz.rb.sample lib/constantz.rb
+
+  Start Merb
+    merb -p 4000

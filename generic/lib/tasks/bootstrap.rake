@@ -23,4 +23,13 @@ namespace :bootstrap do
  
   end
  
+  desc "Creating a default person"
+  task :app do
+       Person.create({
+      :first_name => "Admin",
+      :last_name => "administration",
+      :email => "school@insight",
+      :type => "Staff"
+      })
+  end
 end
