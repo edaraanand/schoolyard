@@ -3,7 +3,7 @@
 :development: &defaults
   :adapter: sqlite3
   :database: db/schoolapp_development
- 
+
 :test:
   <<: *defaults
   :database: db/schoolapp_test
@@ -11,7 +11,7 @@
 :production:
   <<: *defaults
   :database: db/schoolapp_production
-  
+
 :rake:
   <<: *defaults
-  :database: db/schoolapp_development
+  :database: db/schoolapp_production

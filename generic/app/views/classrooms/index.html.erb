@@ -13,6 +13,8 @@
 		<% for classroom in @classrooms %>
 		     <tr>
 			   <td><b><%= classroom.class_type %></b></td>
+		      </tr>
+		      <tr>
 		           <td><%= classroom.class_name %></td>
 			   <td> <%= link_to "Edit",  url(:edit_classroom, classroom.id) %></td>
 		     </tr>

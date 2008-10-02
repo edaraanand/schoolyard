@@ -2,7 +2,7 @@ class Announcements < Application
 
  
   def index
-     @access_rights = @current_user.accesses_without_all
+     @access_rights = @current_user.accesses_without_all 
      @announcements = Announcement.find(:all, :conditions => ['access_name=?', params[:access_name] ])
      render
   end

@@ -78,6 +78,7 @@ class People < Application
 	   end
 	 
       end
+      @person.update_attributes(params[:person])
        redirect url(:people)	
   end
   

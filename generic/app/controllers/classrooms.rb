@@ -14,13 +14,17 @@ class Classrooms < Application
    end
    
    def create 
-       people = params[:classroom].delete(:people)
-       @classroom = Classroom.new(params[:classroom])
-       people[:ids].each_with_index do |id , n|
-	@classroom.class_peoples << ClassPeople.create(:person_id => people[:ids][n],
+      if params[:classroom][:people].nil?
+	 @classroom = Classroom.new(params[:classroom])
+      else
+         people = params[:classroom].delete(:people)
+         @classroom = Classroom.new(params[:classroom])
+         people[:ids].each_with_index do |id , n|
+	    @classroom.class_peoples << ClassPeople.create(:person_id => people[:ids][n],
 							:role => people[:role][n])
-	end
-	@classroom.save
+	 end
+      end
+      @classroom.save
       redirect url(:classrooms)
    end  
   
@@ -33,7 +37,10 @@ class Classrooms < Application
    
    def update
       @classroom = Classroom.find(params[:id])
-      @class_peoples = @classroom.class_peoples
+      if params[:classroom][:people].nil?
+	 @classroom.update_attributes(params[:classroom]) 
+      else
+         @class_peoples = @classroom.class_peoples
          id = params[:classroom][:people][:ids]
 	 role = params[:classroom][:people][:role]
 	   s = id.zip(role)
@@ -46,8 +53,7 @@ class Classrooms < Application
 		 @classroom.class_peoples << ClassPeople.update(l[2], {:person_id => l[0], :role => l[1] })
 	      end
          end
-	 classroom = params[:classroom].delete(:people)
-	    @classroom.update_attributes(params[:classroom])
+      end   
 	 redirect url(:classrooms)
    end                                      
    
