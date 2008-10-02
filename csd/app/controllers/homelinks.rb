@@ -17,6 +17,7 @@ class Homelinks < Application
     title = params[:homelink][:title]
     link = params[:homelink][:link]
     s = title.zip(link)
+    puts s.inspect
     links = []
       s.each do |l|
         links << Homelink.create!({:title => l[0], :link => l[1]})
