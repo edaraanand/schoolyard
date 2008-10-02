@@ -1,0 +1,51 @@
+<div class='formcontainer'>
+
+    <%= form_for :external_link, :action => url(:external_links_update) do %>
+         
+          <table id='Links'>
+       
+             <% @external_links.each do |f| %>
+
+    <tr>
+      <td> <%= text_field :id => 'external_link_title', :name => 'external_link[title][]', :value => "#{f.title}" %></td>
+      <td> <%= text_field :id => 'external_link_url', :name => 'external_link[url][]', :value => "#{f.url}" %></td>
+      <td> <td><%= link_to "Delete", url(:delete_external_link, f.id) %></td>
+    </tr>
+                    
+            <% end %>
+                   <%= hidden_field :name => "label", :value => params[:label] %>
+                  <tr>
+                      <td><%= link_to_function 'Add', "add();" %></td>
+                      <td><%= submit "Publish" %> </br> Or <%= link_to "Cancel", url(:external_links) %></td>
+                  </tr>
+	  
+           </table>   
+             
+      <% end =%>
+
+</div>
+
+
+<script type= "text/javascript">
+ 
+  function add()
+   {
+ 
+     var external = document.getElementById('Links');
+
+     var tr = document.createElement('tr');
+     var td1 = document.createElement('td');  
+
+     td1.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]'/>";
+     var td2 = document.createElement('td');  
+     td2.innerHTML = "<input type='text' id='external_link_url' name='external_link[url][]'/>";
+            
+         tr.appendChild(td1);
+         tr.appendChild(td2);
+        external.appendChild(tr);
+ 
+ }
+
+
+</script>
+

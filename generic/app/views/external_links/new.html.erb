@@ -1,0 +1,46 @@
+<div class='formcontainer'>
+
+    <%= form_for :external_link, :action => url(:external_link) do %>
+        
+        <table id='ExternalLinks'>
+
+            <tr>
+                <td><%= text_field  :title, :name => 'external_link[title][]' %></td>
+                <td><%= text_field  :url, :name => 'external_link[url][]' %></td>
+	    </tr>
+	  
+        </table>
+	
+	     <%= hidden_field :name => "label", :value => params[:label] %>
+	   
+             <%= link_to_function 'Add', "add();" %>
+             <%= submit "Publish" %> </br> Or <%= link_to "Cancel", url(:external_links) %>
+   
+     <% end =%>
+
+</div>
+
+<script type= "text/javascript">
+ 
+  function add()
+   {
+ 
+     var external = document.getElementById('ExternalLinks');
+
+     var tr = document.createElement('tr');
+         var td1 = document.createElement('td');  
+
+         td1.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]'/>";
+
+           var td2 = document.createElement('td');  
+
+         td2.innerHTML = "<input type='text' id='external_link_url' name='external_link[url][]'/>";
+         
+        
+         tr.appendChild(td1);
+         tr.appendChild(td2);
+        external.appendChild(tr);
+ 
+ }
+
+</script>

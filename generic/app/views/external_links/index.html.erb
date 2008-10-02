@@ -1,0 +1,38 @@
+<div class='formcontainer'>
+
+       <table>
+
+             <tr>
+                 <td><h4>Home Page</h4></td></br>
+                 <td><%= link_to "Add New", url(:new_external_link, :label => 'home_page') %></td></br>
+                 <td><%= link_to "Edit", url(:external_links_edit, :label => 'home_page') %></td></br>
+            
+                 <td><h4>Classroom</h4></td></br>
+                 <td><%= link_to "Add New", url(:new_external_link, :label => 'classrooms') %></td></br>
+                 <td><%= link_to "Edit", url(:external_links_edit, :label => 'classrooms') %></td>
+		 
+		 <td><h4>Sports</h4></td></br>
+                 <td><%= link_to "Add New", url(:new_external_link, :label => 'sports') %></td></br>
+                 <td><%= link_to "Edit", url(:external_links_edit, :label => 'sports') %></td></br>
+		 
+		 <td><h4>Events</h4></td></br>
+                 <td><%= link_to "Add New", url(:new_external_link, :label => 'events') %></td></br>
+                 <td><%= link_to "Edit", url(:external_links_edit, :label => 'events') %></td>
+             </tr>
+	     
+	     
+     <% unless @external_links.empty? %>
+       
+           <% for external_link in @external_links %>
+
+              <tr>
+                 <td><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></td>
+              </tr>
+
+           <% end %> 
+  
+      <% end %>
+
+        </table>
+
+</div>
