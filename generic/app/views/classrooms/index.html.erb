@@ -1,4 +1,35 @@
+ <% if @classrooms.empty? %>
   
-     <h3>Classrooms</h3> </br>
+       <h3>Classrooms</h3> </br>
     
-     <%= link_to "Add New", url(:new_classroom) %>
+       <%= link_to "Add New", url(:new_classroom) %>
+     
+ <% else %>
+          <table>
+		<td><h4>Classrooms</h4></td>
+		<td><%= link_to "Add New", url(:new_classroom) %></td>
+		
+		
+		<% for classroom in @classrooms %>
+		     <tr>
+			   <td><b><%= classroom.class_type %></b></td>
+		           <td><%= classroom.class_name %></td>
+			   <td> <%= link_to "Edit",  url(:edit_classroom, classroom.id) %></td>
+		     </tr>
+		     <tr>
+		          <th>Class Teacher:</th>
+			  <td><%= classroom.teacher_name %></td>
+		     </tr>
+			  <% classroom.class_peoples.each do |f| %>
+		     <tr>    <td> <%= f.role %> </td>
+		          <% end %> 
+			  <% classroom.people .each do |a| %>
+			    <td><%= a.first_name %></td> 
+			  <% end %>
+		     </tr>
+        	<% end %>
+		
+		 
+	</table> 
+	
+<% end %>

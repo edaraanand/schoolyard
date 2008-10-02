@@ -1,6 +1,6 @@
 <div class= 'formcontainer' >
    
-  <%= form_for :classroom, :action => url(:classroom) do %>
+  <%= form_for :classroom, :action => url(:classroom, @classroom) do %>
   
      <table id='classes'>
          <tr>
@@ -9,19 +9,36 @@
          <tr>
              <td><%= text_field  :class_name,  :label => "Class Name" %></td>
 	 </tr>
+	
 	 <tr>
-	     <td>Class Teacher: <%= select :teacher_name, :collection => @teachers.collect{|i| i.first_name} %></td>
-	     <td><a href="#" onclick="add();return false;">Add More</a>
+             <td>Class Teacher: <%= select :teacher_name, :collection => @teachers.collect{|i| i.first_name} %></td>
 	 </tr>
+	       <% @class_people.each do |f| %>
+	  <tr>
+	         <td><%= text_field :name => 'classroom[people][role][]', :id =>'classroom_class_people', :value => "#{f.role}" %></td>
+
+		 
+             <td>Class Teacher:<select name = "classroom[people][ids][]" id="classroom_person",>
+	                       <% @teachers.each do |teacher| %>
+		                      <option value="<%= teacher.id %>">
+			                   <%= teacher.first_name %>
+		                      </option>
+			        <% end %>
+	     </td>
+	       <% end %>
+	        <td><a href="#" onclick="add();return false;">Add More</a>
+	  </tr>
+	  
 	 <tr><td><%= submit "Save" %></td>
-	     <td><%= link_to "Cancel", url(:classroom) %></td>
+	     <td><%= link_to "Cancel", url(:classrooms) %></td>
 	 </tr>
       </table>
 	      
    <% end =%>
      
-  </div>
-  
+</div>
+
+
 <script type= "text/javascript">
  
   function add()
@@ -44,3 +61,6 @@
     }
      
 </script>
+
+
+
