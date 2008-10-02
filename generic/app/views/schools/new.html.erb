@@ -1,29 +1,11 @@
-  <div class= 'formcontainer' >
-   
-  <table>
-      <% form_for(@school, :action => url(:school)) do %>
-    
-        <tr>
-           <td><%= text_control  :school_name,  :label => "School Name" %></td>
-        </tr>
-	
-	<tr>
-	    <td><b>Contact Information for Parents</b></td>
-	</tr>
-	
-	<br></br>
-	<tr>
-	    <td><%= text_control  :phone,  :label => "phone" %></td>
-	</tr>
-	<tr>
-	    <td><%= text_control  :email,  :label => "email" %></td>
-	</tr>
-       
-       <tr>
-          <td><%= submit_button "Save" %></br>  <%= link_to "Cancel", url(:school) %></td>
-       </tr>
-	
-     <% end %>
-   </table> 
-  </div>
+<div class= 'formcontainer' >
+
+     <%= form_for :school, :action => url(:school) do  %>
+
+           <%= partial 'form' %>
+
+     <% end =%>
+
+  
+ </div>
 

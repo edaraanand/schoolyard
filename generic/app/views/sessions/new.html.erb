@@ -1,7 +1,7 @@
 
 
-   <% form_for(@user, :action => url(:controller => "sessions", :action => "create")) do %> 
-       <%= text_control  :email,  :label => "Login" %>
+   <%= form_for(@user, :action => url(:controller => "sessions", :action => "create")) do %> 
+       <%= text_field  :email,  :label => "Login" %>
        
-       <%= submit_button "Submit" %>
-    <% end %>
+       <%= submit "Submit" %>
+    <% end =%>

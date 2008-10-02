@@ -1,5 +1,24 @@
-
-
-   
-    
-
+<table>
+    <tr>
+      <td>
+        <%= text_field :school_name,  :label => "School Name" %>
+      </td>
+    </tr>
+     <b>Contact Information for parents</b>
+    <tr>
+      <td>
+        <%= text_field :phone,  :label => "Phone" %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= text_field :email,  :label => "E-mail" %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= submit "Save" %></br> Or
+        <%= link_to "Cancel", url(:schools) %>
+      </td>
+    </tr>
+</table>
