@@ -1,5 +1,5 @@
 # This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of ActiveRecord to incrementally modify your database, and
+# please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
 # Note that this schema.rb definition is the authoritative source for your database schema. If you need
@@ -9,14 +9,50 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 6) do
+ActiveRecord::Schema.define(:version => 21) do
+
+  create_table "access_peoples", :force => true do |t|
+    t.integer  "access_id"
+    t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "subject_id"
+    t.boolean  "home_page"
+    t.integer  "class_id"
+    t.boolean  "all"
+  end
+
+  create_table "accesses", :force => true do |t|
+    t.string   "name"
+    t.string   "full_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "announcements", :force => true do |t|
+    t.integer  "person_id"
+    t.string   "access_name"
+    t.string   "title"
+    t.text     "content"
+    t.date     "expiration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "class_peoples", :force => true do |t|
+    t.integer  "classroom_id"
+    t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "role"
+  end
 
   create_table "classrooms", :force => true do |t|
     t.string   "class_name"
     t.string   "teacher_name"
-    t.integer  "type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "class_type"
   end
 
   create_table "classtypes", :force => true do |t|
@@ -25,16 +61,24 @@ ActiveRecord::Schema.define(:version => 6) do
     t.datetime "updated_at"
   end
 
-  create_table "people", :force => true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "password"
-    t.string   "password_confirmation"
-    t.string   "email"
-    t.integer  "phone"
-    t.string   "role"
+  create_table "external_links", :force => true do |t|
+    t.string   "label"
+    t.string   "title"
+    t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "people", :force => true do |t|
+    t.string   "type"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "phone"
+    t.text     "person_bio"
+    t.text     "address"
   end
 
   create_table "schools", :force => true do |t|
@@ -48,6 +92,20 @@ ActiveRecord::Schema.define(:version => 6) do
   create_table "users", :force => true do |t|
     t.string   "email"
     t.string   "password"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "crypted_password"
+    t.string   "salt"
+    t.boolean  "active"
+    t.string   "identity_url"
+    t.string   "username"
+  end
+
+  create_table "welcome_messages", :force => true do |t|
+    t.string   "access_name"
+    t.integer  "person_id"
+    t.string   "message"
+    t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
