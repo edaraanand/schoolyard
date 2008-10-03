@@ -5,7 +5,7 @@ set :use_sudo, false
 
 set :deploy_to, "/home/niket/#{application}"
 set :adapter, 'mongrel' # or 'thin' 
-set :start_port, 7000 
+set :start_port, 7001
 set :processes, 1
 set :log_path, "#{shared_path}/log/production.log"
 
