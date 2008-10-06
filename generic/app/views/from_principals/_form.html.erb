@@ -1,0 +1,30 @@
+<table>
+
+         <tr>
+              <td><%= text_field  :title,  :label => "Title" %></td>
+         </tr>
+	 <tr>
+	      <td><%= text_area  :content,  :label => "Description", :rows => "10", :cols => "50" %></td>
+	 </tr>
+	 <tr>
+	      <td><%= text_field  :expiration,  :label => "Expiration" %></td>
+	 </tr>
+	 
+	 <tr>
+	      <td><input type = 'button' value = 'Preview' onclick="preview();return false;" /></td>
+	      <td><%= submit "Submit for Approval" %></br> Or <%= link_to "Cancel", url(:from_principals) %></td>
+	 </tr>
+	
+</table>
+
+
+<script type= "text/javascript">
+
+ function preview()
+ {
+   var s = $('announcement').serialize();
+   window.open('/from_principals/preview/-/?' + s);
+ }
+  
+
+</script>

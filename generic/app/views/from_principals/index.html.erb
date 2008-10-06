@@ -1,0 +1,31 @@
+<div class = 'formcontainer'>
+          
+ 
+         <table>
+                <tr>
+                    <td> <h3>From the Principal</h3></td> </br> 
+	            <td> <%= link_to "Add New", url(:new_from_principal) %></td>
+		    <td> <%= link_to "Settings" %></td>
+                </tr> 
+		
+	 </table>	
+   	    
+        <table>
+	
+	      <% for announcement in @announcements %>
+    
+                   <tr>
+                        <td><%= announcement.expiration.strftime("%B-%d") %></td>
+                         <td><%= link_to "#{announcement.title}", url(:from_principal, announcement.id) %></td>
+                   </tr> 
+                   <tr>
+                        <td><%= announcement.content %></td>
+			<td><%= link_to "Edit", url(:edit_from_principal, announcement.id) %></td>
+                        <td><%= link_to "Delete", url(:delete_from_principal, announcement.id) %></td>
+                   </tr>
+
+	      <% end %>
+    
+     
+</div>
+
