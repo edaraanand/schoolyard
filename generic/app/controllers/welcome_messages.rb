@@ -1,7 +1,20 @@
 class WelcomeMessages < Application
 
   def index
-     @access_rights = @current_user.accesses_without_all
+     @access_people = @current_user.access_peoples
+     @accesses = Access.find(:all)
+      @accesses.each do |f|
+	have_access = false
+        @access_people.each do |l|
+	  have_access = l.all || (f.id == l.access_id) 
+	  break if have_access	
+	end
+	if have_access
+	   @access_rights =  @accesses.delete_if{|x| x.name == "view_all"}
+	else
+	   @access_rights = @current_user.accesses_without_all
+	end
+      end
      @welcome_messages = WelcomeMessage.find(:all, :conditions => ['access_name =?', params[:access_name]])
      render
   end

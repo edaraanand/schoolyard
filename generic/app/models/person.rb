@@ -12,10 +12,16 @@ class Person < ActiveRecord::Base
 	def accesses_without_all
 	    accesses.delete_if{|x| x.name == "view_all"}
 	end
-end
+end            
   
 class Student < Person
-     belongs_to :parent
+	
+     has_many :guardians
+     has_many :parents, :through => :guardians, :source => :parent
+     
+     has_many :studies
+     has_many :classrooms, :through => :studies, :source => :classroom
+     
 end
 
 class Staff < Person
@@ -23,7 +29,8 @@ class Staff < Person
 end
 
 class Parent < Person
-     has_many :students
+     has_many :guardians
+     has_many :students, :through => :guardians, :source => :student
 end
 
 class Principle < Person

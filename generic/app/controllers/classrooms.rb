@@ -40,10 +40,11 @@ class Classrooms < Application
       if params[:classroom][:people].nil?
 	 @classroom.update_attributes(params[:classroom]) 
       else
-         @class_peoples = @classroom.class_peoples
+	 @class_peoples = @classroom.class_peoples
          id = params[:classroom][:people][:ids]
 	 role = params[:classroom][:people][:role]
 	   s = id.zip(role)
+	   puts s.inspect
 	 @class_p = @class_peoples.collect{|x| x.id}
 	 @classes = id.zip(role, @class_p)
 	 @classes.each do |l|
@@ -53,8 +54,10 @@ class Classrooms < Application
 		 @classroom.class_peoples << ClassPeople.update(l[2], {:person_id => l[0], :role => l[1] })
 	      end
          end
-      end   
-	 redirect url(:classrooms)
+	  people = params[:classroom].delete(:people)
+	  @classroom.update_attributes(params[:classroom])
+	 end
+	redirect url(:classrooms)
    end                                      
    
    def destroy

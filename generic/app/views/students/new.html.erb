@@ -1,0 +1,86 @@
+<div class='formcontainer'>
+
+    <%= form_for :student, :action => url(:students), :id => 'student' do %>
+
+          <table>
+          <tr>
+	      <td>Student for: <select name = "classroom_id" id="classroom_person",>
+	                       <% @class_rooms.each do |s| %>
+		                      <option value="<%= s.id %>">
+			                   <%= s.class_name %>
+		                      </option>
+			        <% end %>
+	      </td>
+	  </tr>
+          <tr>
+              <td><%= text_field  :first_name,  :label => "Student" %>
+              <td><%= text_field  :last_name %></td>
+	  </tr>
+	  
+	  <tr>
+              <td><%= text_field  :name => 'parent[first_name][]',  :label => "Parents/Guardian" %></td>
+              <td><%= text_field  :name => 'parent[last_name][]' %></td>
+	  </tr>
+	       <tr>
+	           <td><%= text_field :name => 'parent[email][]', :label => "Email" %></td>
+	       </tr>
+	       <tr id="students">
+	       </tr>
+	       <tr id="email">
+	       </tr>
+	       <tr><td><%= link_to_function 'Add', "add();" %></td></td>
+	       <tr>
+	          <td><%= text_field  :name => "parent[phone]",  :label => "Phone" %></td>
+	       </tr>
+	       <tr>
+	          <td><%= text_field  :name => "parent[address]",  :label => "Address" %></td>
+	       </tr>
+	                       
+	  <tr>
+	       <td> <input type = 'button' value = 'Preview' onclick="preview();return false;" /></td>
+	       <td><%= submit "Publish" %></br>  <%= link_to "Cancel", url(:students) %></td>
+	  </tr>
+	  
+       </table>
+   <% end =%>
+</div>
+ 
+ 
+<script type= "text/javascript">
+   var parent = 0;
+  function add()
+   {
+     
+     if (parent < 3)
+     {
+     var student = document.getElementById('students');
+     var email = document.getElementById('email');
+         var td1 = document.createElement('td');  
+         td1.innerHTML = "Parents/Guardian: <input type='text' id='parent_first_name' name='parent[first_name][]'/>";
+         var td2 = document.createElement('td');  
+         td2.innerHTML = "<input type='text' id='parent_last_name' name='parent[last_name][]'/>";
+         var td3 = document.createElement('td'); 
+	 td3.innerHTML = "Email: <input type='text' id='parent_last_name' name='parent[email][]'/>";
+        
+         student.appendChild(td1);
+         student.appendChild(td2);
+         email.appendChild(td3);
+	     parent = parent + 1;
+	 }
+     else
+	 {
+	    alert("You can't add more than that");
+	 }
+    
+ }
+ 
+ function preview()
+ {
+   var s = $('student').serialize();
+   window.open('/students/preview/-/?' + s);
+ }
+
+
+</script>
+   
+ 
