@@ -1,0 +1,23 @@
+ <table>
+       
+           <tr>
+	       <td>Add for:<%= select :class_name, :collection => @class_rooms.collect{|x| x.class_name} %></td>
+           <tr>
+                <td><%= text_field :title,  :label => "Event Title" %></td>
+           </tr>
+	   <tr>
+	        <td><%= text_area  :description,  :label => "Event Description",  :rows => "10", :cols => "25" %></td>
+	   </tr>
+	   <tr>
+                <td><%= text_field  :location,  :label => "Location" %></td>
+           </tr>
+	   <tr>
+	       <td><%= text_field :start_date, :label => "Starts:" %></td>
+	   </tr>
+	   <tr>
+	       <td><%= text_field :end_date, :label => "Ends:" %></td>
+	   </tr>
+	   <tr>
+              <td><%= submit "Publish" %></br> Or <%= link_to "Cancel", url(:calendars) %></td>
+           </tr> 
+</table>

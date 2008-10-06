@@ -1,0 +1,31 @@
+<div class='formcontainer'>
+    <div class = 'formcontent'> 
+      <table>
+         
+          <tr>
+	      <td><h3>Calendars</h3> </br></td>
+	      <td><%= link_to "Add New", url(:new_calendar) %></td>
+	  </tr>
+	  
+          <% for calendar in @calendars %>
+                <tr>
+	            <td><b><%= calendar.start_date.strftime("%B-%d") %></b></td>   
+		    <% s = calendar.start_date %>
+	        </tr>
+		<% cals = @calendars.select {|c| c.start_date.to_date == calendar.start_date.to_date }  %>
+                     <% for cal in cals.compact %>
+                          <tr>
+		              <td><%= cal.start_date.strftime("%H-%M") %></td>
+                              <td><%= cal.title %></td>
+			      <td><%= link_to "Edit", url(:edit_calendar, calendar.id) %></td>
+			      <td><%= link_to "Delete", url(:delete_calendar, calendar.id) %>
+                          </tr>
+                           <% @calendars.delete_if {|c| c.start_date ==  cal.start_date } %>
+                     <% end %>
+		
+           <% end %>
+		  
+	</table> 
+    </div>
+	    
+</div>	 
