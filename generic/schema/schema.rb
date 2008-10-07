@@ -46,8 +46,10 @@ ActiveRecord::Schema.define(:version => 26) do
     t.text     "description"
     t.string   "location"
     t.boolean  "day_event"
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.time     "start_time"
+    t.time     "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -6,8 +6,10 @@ class CalendarMigration < ActiveRecord::Migration
       t.column :description, :text
       t.column :location, :string
       t.column :day_event, :boolean
-      t.column :start_date, :datetime
-      t.column :end_date, :datetime	    
+      t.column :start_date, :date
+      t.column :end_date, :date
+      t.column :start_time, :time
+      t.column :end_time, :time
       t.timestamps
     end
   end
