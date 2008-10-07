@@ -12,12 +12,45 @@
                 <td><%= text_field  :location,  :label => "Location" %></td>
            </tr>
 	   <tr>
-	       <td><%= text_field :start_date, :label => "Starts:" %></td>
+	        <td><%= check_box :day_event, :onclick => "dayevent()" %>All Day Event</td>
 	   </tr>
 	   <tr>
-	       <td><%= text_field :end_date, :label => "Ends:" %></td>
+	       <td><%= text_field :start_date, :id => "start", :label => "Starts:" %></td>
+	       <td><%= text_field :start_time, :id => "start_time" %></td>
+	   </tr>
+	   <tr>
+	       <td><%= text_field :end_date, :id => "end", :label => "Ends:" %></td>
+	       <td><%= text_field :end_time, :id => "end_time" %></td>
 	   </tr>
 	   <tr>
               <td><%= submit "Publish" %></br> Or <%= link_to "Cancel", url(:calendars) %></td>
            </tr> 
 </table>
+ 
+
+<script type= "text/javascript">
+
+   
+  $j("#start").datepicker();
+  $j("#end").datepicker();
+  
+  $j("#start_time").clockpick(); 
+  $j("#end_time").clockpick();
+ 
+  function dayevent()
+  {
+     if (document.getElementById('calendar_day_event').checked == true)
+      {
+         document.getElementById('start_time').disabled = true;
+	 document.getElementById('end_time').disabled = true;
+       }
+      else if(document.getElementById('calendar_day_event').checked == false)
+       {
+         document.getElementById('start_time').disabled = false;
+	 document.getElementById('end_time').disabled = false;
+       }
+  }
+  
+</script>
+
+
