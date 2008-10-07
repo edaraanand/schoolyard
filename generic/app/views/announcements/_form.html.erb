@@ -10,7 +10,7 @@
 	      <td><%= text_area  :content,  :label => "Description", :rows => "10", :cols => "50" %></td>
 	 </tr>
 	 <tr>
-	      <td><%= text_field  :expiration,  :label => "Expiration" %></td>
+	      <td><%= text_field  :expiration, :id => "expiration", :label => "Expiration" %></td>
 	 </tr>
 	 
 	 <tr>
@@ -23,11 +23,17 @@
 
 <script type= "text/javascript">
 
+   
  function preview()
  {
    var s = $('announcement').serialize();
    window.open('/announcements/preview/-/?' + s);
+   
  }
-  
-
+ 
+  $j("#expiration").datepicker();
+ 
 </script>
+ 
+ 
+  

@@ -57,6 +57,9 @@ class Announcements < Application
    end
    
    def preview
+	   @title = params[:announcement][:title]
+	   puts @title.inspect
+	   @content = params[:announcement][:content]
       render :layout => 'preview'
    end
   
