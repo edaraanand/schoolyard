@@ -34,7 +34,6 @@ class People < Application
       @person = Person.find(params[:id]) 
       @accesses = Access.find(:all)
       @access_people = @person.access_peoples
-      puts @access_people.inspect
       render
   end
   
@@ -43,43 +42,37 @@ class People < Application
       @a = Access.find(:all)
       @acc = @a.delete_if{|x| x.name == "view_all"}
       @acc = @a.collect{|x| x.id}
-      
       @access_view = Access.find(:first, :conditions => ['name=?', "view_all"])
       @access = params[:access][:access_ids]
-     
       @access_peoples = @person.access_peoples
       @access_all = @access_peoples.collect{|x| x.all}
       @access_id = @access_peoples.collect{ |x| x.id }
       @access_people_id = @access_peoples.collect{|x| x.access_id}
-    
-         
       if @acc.length == @access.length
 	   AccessPeople.destroy(@access_id)
 	   AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
 	   AccessPeople.create({:person_id => @person.id, :all => true})
-   elsif (params[:select_all] == "Select all")
+      elsif (params[:select_all] == "Select all")
 	   AccessPeople.destroy(@access_id)
 	   AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
 	   AccessPeople.create({:person_id => @person.id, :all => true})
       else
 	   s = @access.zip(@access_id, @access_people_id)
-	   AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
+	    AccessPeople.destroy(@access_id)
+	     AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
 	   s.each do |l|
-		   
 		   if l[1].nil?
-			AccessPeople.create({:person_id => @person.id, :access_id => l[0]})	  
+		      AccessPeople.create({:person_id => @person.id, :access_id => l[0] })
 		   elsif ((l[2].nil?) && l[1].nil?)
-			AccessPeople.create({:person_id => @person.id, :access_id => l[0]})
+			AccessPeople.create({:person_id => @person.id, :access_id => l[0] })
 		   else
-		       # AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
-			AccessPeople.update(l[1], {:person_id => @person.id, :access_id => l[0], :all => false})
-		   end
-			   
+			AccessPeople.create({:person_id => @person.id, :access_id => l[0]})
+		   end		   
 	   end
 	 
       end
-      @person.update_attributes(params[:person])
-       redirect url(:people)	
+       @person.update_attributes(params[:person])
+       redirect url(:people)	  
   end
   
   def disable

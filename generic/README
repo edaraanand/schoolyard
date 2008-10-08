@@ -6,7 +6,7 @@ Install Gems
   rake db:migrate
   rake bootstrap:app
 
-  cre
+  
   
   Copy missing files
     cp lib/constantz.rb.sample lib/constantz.rb

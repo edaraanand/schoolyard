@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 21) do
+ActiveRecord::Schema.define(:version => 26) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -35,6 +35,21 @@ ActiveRecord::Schema.define(:version => 21) do
     t.string   "title"
     t.text     "content"
     t.date     "expiration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "label"
+  end
+
+  create_table "calendars", :force => true do |t|
+    t.string   "class_name"
+    t.string   "title"
+    t.text     "description"
+    t.string   "location"
+    t.boolean  "day_event"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.time     "start_time"
+    t.time     "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -69,14 +84,21 @@ ActiveRecord::Schema.define(:version => 21) do
     t.datetime "updated_at"
   end
 
+  create_table "guardians", :force => true do |t|
+    t.integer  "student_id"
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "people", :force => true do |t|
     t.string   "type"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
+    t.string   "phone"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "phone"
     t.text     "person_bio"
     t.text     "address"
   end
@@ -85,6 +107,13 @@ ActiveRecord::Schema.define(:version => 21) do
     t.string   "school_name"
     t.string   "phone"
     t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "studies", :force => true do |t|
+    t.integer  "student_id"
+    t.integer  "classroom_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

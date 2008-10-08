@@ -7,7 +7,7 @@ class PersonMigration < ActiveRecord::Migration
       t.column :password, :string
       t.column :password_confirmation, :string
       t.column :email, :string
-      t.column :phone, :integer
+      t.column :phone, :string
       t.timestamps
     end 
   end

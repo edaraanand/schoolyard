@@ -1,0 +1,29 @@
+<div class='formcontainer'>
+
+
+   <table>
+           <b>Student</b>
+	 
+	   <tr>
+	       <td>First Name :</td>
+	       <td><%= @first %></td>
+	   </tr>
+	    <tr>
+	       <td>Last Name :</td>
+	       <td><%= @last %></td>
+	   </tr>
+	  
+	    
+	    <b>Parent</b>
+	    
+            <% @parent.each do |f| %>
+	       <tr>
+	           <td>First Name:<%= f[0] %></td>
+		   <td>Last Name:<%= f[1] %></td>
+		   <td>Email:<%= f[2] %></td>
+	       </tr>
+	    <% end %>
+   </table>
+
+
+</div>                                                 

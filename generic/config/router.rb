@@ -37,8 +37,9 @@ Merb::Router.prepare do |r|
   r.resources :classrooms
   r.resources :announcements
   r.resources :welcome_messages
+  r.resources :calendars
   r.resources :students
-  r.resources :admin
+  r.resources :from_principals
   r.resources :external_links
   r.match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
   r.match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
