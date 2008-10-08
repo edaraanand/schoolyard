@@ -20,6 +20,7 @@
                    <tr>
                         <td><%= announcement.expiration.strftime("%B-%d") %></td>
                         <td><%= announcement.title %></td>
+			  <%= image_tag announcement.file.url(:thumb) %>
                    </tr> 
                    <tr>
                         <td><%= announcement.content %></td>

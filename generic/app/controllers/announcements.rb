@@ -2,39 +2,29 @@ class Announcements < Application
 
  
   def index
-     @access_people = @current_user.access_peoples
-     @accesses = Access.find(:all)
-      @accesses.each do |f|
-	have_access = false
-        @access_people.each do |l|
-	  have_access = l.all || (f.id == l.access_id) 
-	  break if have_access	
-	end
-	if have_access
-	   @access_rights =  @accesses.delete_if{|x| x.name == "view_all"}
-	else
-	   @access_rights = @current_user.accesses_without_all
-	end
-      end
+     access_rights
      @announcements = Announcement.find(:all, :conditions => ['access_name=?', params[:access_name] ])
      render
   end
   
   def new
      @announcement = Announcement.new
-     @access_rights = @current_user.accesses_without_all
+     access_rights   
      render
   end
   
   def create
+	  #raise params[:announcement]
      @announcement = Announcement.new(params[:announcement])
      @announcement.person_id = @current_user.id
+    # @announcement.file = params[:announcement][:file]
+    # @announcement.file.url(:thumb)
      @announcement.save
      redirect url(:announcements)
   end       
   
   def edit
-     @access_rights = @current_user.accesses_without_all
+     access_rights
      @announcement = Announcement.find(params[:id])
      render
   end
@@ -48,19 +38,36 @@ class Announcements < Application
      else
 	render :edit
      end
-                                  
   end
   
-   def delete
+  def delete
       Announcement.find(params[:id]).destroy
       redirect url(:announcements)
    end
    
    def preview
-	   @title = params[:announcement][:title]
-	   puts @title.inspect
-	   @content = params[:announcement][:content]
+      @title = params[:announcement][:title]
+      @content = params[:announcement][:content]
       render :layout => 'preview'
    end
+  
+   private
+   
+   def access_rights
+      @access_people = @current_user.access_peoples
+      @accesses = Access.find(:all)
+      @accesses.each do |f|
+	have_access = false
+        @access_people.each do |l|
+	   have_access = l.all || (f.id == l.access_id) 
+	   break if have_access	
+	end
+	if have_access
+	   @access_rights =  @accesses.delete_if{|x| x.name == "view_all"}
+   	else
+	   @access_rights = @current_user.accesses_without_all
+	end
+      end
+  end
   
 end
