@@ -5,4 +5,7 @@ class Classroom < ActiveRecord::Base
 	
 	has_many :studies
 	has_many :students, :through => :studies, :source => :student
+	
+	has_many :class_peoples
+	has_many :teams, :through => :class_peoples, :source => :team
 end
