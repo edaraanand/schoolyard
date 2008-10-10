@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 26) do
+ActiveRecord::Schema.define(:version => 29) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -38,6 +38,9 @@ ActiveRecord::Schema.define(:version => 26) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "label"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
   end
 
   create_table "calendars", :force => true do |t|
@@ -60,6 +63,7 @@ ActiveRecord::Schema.define(:version => 26) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "role"
+    t.integer  "team_id"
   end
 
   create_table "classrooms", :force => true do |t|
@@ -114,6 +118,14 @@ ActiveRecord::Schema.define(:version => 26) do
   create_table "studies", :force => true do |t|
     t.integer  "student_id"
     t.integer  "classroom_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "teams", :force => true do |t|
+    t.string   "team_name"
+    t.integer  "classroom_id"
+    t.string   "year"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
