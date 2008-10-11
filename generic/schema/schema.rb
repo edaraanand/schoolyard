@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 29) do
+ActiveRecord::Schema.define(:version => 30) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -68,10 +68,10 @@ ActiveRecord::Schema.define(:version => 29) do
 
   create_table "classrooms", :force => true do |t|
     t.string   "class_name"
-    t.string   "teacher_name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "class_type"
+    t.integer  "person_id"
   end
 
   create_table "classtypes", :force => true do |t|
