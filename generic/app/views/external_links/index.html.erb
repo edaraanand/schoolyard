@@ -1,38 +1,80 @@
-<div class='formcontainer'>
 
+   <div class='formcontainer'>
+   
        <table>
 
-             <tr>
-                 <td><h4>Home Page</h4></td></br>
-                 <td><%= link_to "Add New", url(:new_external_link, :label => 'home_page') %></td></br>
-                 <td><%= link_to "Edit", url(:external_links_edit, :label => 'home_page') %></td></br>
-            
-                 <td><h4>Classroom</h4></td></br>
-                 <td><%= link_to "Add New", url(:new_external_link, :label => 'classrooms') %></td></br>
-                 <td><%= link_to "Edit", url(:external_links_edit, :label => 'classrooms') %></td>
+                <% if @home_links.empty? %>
+		  <tr>
+		      <td><h4>Home Page</h4></td></br>
+                      <td>"Home Page Links are not specified, <%= link_to "Add New", url(:new_external_link, :label => 'Home Page') %></td></br>"
+		  </tr>
+		<% else %>
+		    <tr>
+		       <td><h4>Home Page</h4></td></br>
+		       <td><%= link_to "Edit", url(:external_links_edit, :label => 'Home Page') %></td></br>
+		    </tr>
+		     <% for external_link in @home_links %>
+                        <tr>
+                          <td><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></td>
+                       </tr>
+                     <% end %> 
+                <% end %>    
+                
+		 <% if @class_links.empty? %>
+		   <tr>
+                    <td><h4>Classrooms</h4></td></br>
+                    <td>"Classroom links are not specified, <%= link_to "Add New", url(:new_external_link, :label => 'Classrooms') %></td></br>
+		   </tr>
+		 <% else %>
+		     <tr>
+		         <td><h4>Classrooms</h4></td></br>
+		         <td><%= link_to "Edit", url(:external_links_edit, :label => 'Classrooms') %></td>
+		     </tr>
+		     <% for external_link in @class_links %>
+                        <tr>
+                          <td><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></td>
+                       </tr>
+                     <% end %> 
+                 <% end %>
 		 
-		 <td><h4>Sports</h4></td></br>
-                 <td><%= link_to "Add New", url(:new_external_link, :label => 'sports') %></td></br>
-                 <td><%= link_to "Edit", url(:external_links_edit, :label => 'sports') %></td></br>
-		 
-		 <td><h4>Events</h4></td></br>
-                 <td><%= link_to "Add New", url(:new_external_link, :label => 'events') %></td></br>
-                 <td><%= link_to "Edit", url(:external_links_edit, :label => 'events') %></td>
+		 <% if  @sport_links.empty? %>
+		   <tr>
+		      <td><h4>Sports</h4></td></br>
+                      <td>"Sports Links are not specified, <%= link_to "Add New", url(:new_external_link, :label => 'Sports') %></td></br>
+		   </tr>
+		 <% else %>
+		    <tr>
+		       <td><h4>Sports</h4></td></br>
+		       <td><%= link_to "Edit", url(:external_links_edit, :label => 'Sports') %></td></br>
+		     </tr>  
+		     <% for external_link in @sport_links %>
+                        <tr>
+                          <td><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></td>
+                        </tr>
+                     <% end %> 
+                <% end %>
+		
+		<% if @event_links.empty? %> 
+		   <tr>
+		      <td><h4>Events</h4></td></br>
+                      <td>"Event Links are not specified, <%= link_to "Add New", url(:new_external_link, :label => 'Events') %></td></br>
+		   </tr>
+		<% else %>
+		    <tr>
+		       <td><h4>Events</h4></td></br>
+		       <td><%= link_to "Edit", url(:external_links_edit, :label => 'Events') %></td>
+		    </tr>
+		     <% for external_link in @event_links %>
+                        <tr>
+                          <td><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></td>
+                       </tr>
+                     <% end %> 
+               <% end %>
              </tr>
 	     
-	     
-     <% unless @external_links.empty? %>
-       
-           <% for external_link in @external_links %>
+	</table>
+	</div>
 
-              <tr>
-                 <td><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></td>
-              </tr>
-
-           <% end %> 
+      
   
-      <% end %>
-
-        </table>
-
-</div>
+    
