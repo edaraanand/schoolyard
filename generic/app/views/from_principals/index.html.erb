@@ -15,7 +15,9 @@
 	      <% for announcement in @announcements %>
     
                    <tr>
-                        <td><%= announcement.expiration.strftime("%B-%d") %></td>
+		        <% unless announcement.expiration.nil? %>
+                           <td><%= announcement.expiration.strftime("%B-%d") %></td>
+			<% end %> 
                          <td><%= link_to "#{announcement.title}", url(:from_principal, announcement.id) %></td>
                    </tr> 
                    <tr>

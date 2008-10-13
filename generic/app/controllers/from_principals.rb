@@ -13,9 +13,12 @@ class FromPrincipals < Application
   def create
      @announcement = Announcement.new(params[:announcement])
      @announcement.label = "from_principal"
-     @announcement.save
-     redirect url(:from_principals)
-  end
+     if @announcement.save
+        redirect url(:from_principals)
+     else
+	render :new
+     end
+   end
 
   def edit
      @announcement = Announcement.find(params[:id])
@@ -24,10 +27,13 @@ class FromPrincipals < Application
   
   def update
      @announcement = Announcement.find(params[:id])
-     @announcement.update_attributes(params[:announcement])
-     @announcement.label = "from_principal"
-     @announcement.save
-     redirect url(:from_principals)
+     if @announcement.update_attributes(params[:announcement])
+        @announcement.label = "from_principal"
+        @announcement.save
+        redirect url(:from_principals)
+     else
+	render :edit
+     end
   end
   
   def show
