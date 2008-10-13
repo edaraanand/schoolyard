@@ -14,13 +14,14 @@ class Announcements < Application
   end
   
   def create
-	  #raise params[:announcement]
      @announcement = Announcement.new(params[:announcement])
      @announcement.person_id = @current_user.id
-    # @announcement.file = params[:announcement][:file]
-    # @announcement.file.url(:thumb)
-     @announcement.save
-     redirect url(:announcements)
+     access_rights
+     if @announcement.save
+        redirect url(:announcements)
+     else
+	render :new
+     end
   end       
   
   def edit
@@ -31,6 +32,7 @@ class Announcements < Application
   
   def update 
      @announcement = Announcement.find(params[:id])
+     access_rights
      if @announcement.update_attributes(params[:announcement])
 	@announcement.person_id = @current_user.id
 	@announcement.save

@@ -18,9 +18,11 @@
 	      <% for announcement in @announcements %>
     
                    <tr>
+		        <% unless announcement.expiration.nil? %>
                         <td><%= announcement.expiration.strftime("%B-%d") %></td>
+			<% end %>
                         <td><%= announcement.title %></td>
-			  <%= image_tag announcement.file.url(:thumb) %>
+			  
                    </tr> 
                    <tr>
                         <td><%= announcement.content %></td>
