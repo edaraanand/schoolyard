@@ -9,14 +9,19 @@ class WelcomeMessages < Application
   def new
      @welcome_message = WelcomeMessage.new
      access_rights
+     puts @access_rights.inspect
      render                            
   end
 
   def create
      @welcome_message = WelcomeMessage.new(params[:welcome_message])
      @welcome_message.person_id = @current_user.id
-     @welcome_message.save
-     redirect url(:welcome_messages)
+     access_rights
+     if @welcome_message.save
+        redirect url(:welcome_messages)
+     else
+	render :new
+     end
   end
   
   def edit
@@ -27,13 +32,13 @@ class WelcomeMessages < Application
   
   def update
      @welcome_message = WelcomeMessage.find(params[:id])
+     access_rights
      if @welcome_message.update_attributes(params[:welcome_message])
 	@welcome_message.person_id = @current_user.id
 	redirect url(:welcome_messages)
      else
 	render :edit
      end
-	 
   end
   
   def delete

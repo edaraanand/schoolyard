@@ -9,6 +9,9 @@ class Person < ActiveRecord::Base
 	has_many :announcements
 	has_many :welcome_messages
 	
+	has_many :class_peoples
+	has_many :teams, :through => :class_peoples, :source => :team
+	
 	def accesses_without_all
 	    accesses.delete_if{|x| x.name == "view_all"}
 	end

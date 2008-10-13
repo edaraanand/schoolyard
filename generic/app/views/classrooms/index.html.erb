@@ -11,27 +11,24 @@
 		
 		
 		<% for classroom in @classrooms %>
-		     <tr>
+		      <tr>
 			   <td><b><%= classroom.class_type %></b></td>
 		      </tr>
 		      <tr>
 		           <td><%= classroom.class_name %></td>
-			   <td> <%= link_to "Edit",  url(:edit_classroom, classroom.id) %></td>
-		     </tr>
-		     <tr>
-		          <th>Class Teacher:</th>
-			  <td><%= classroom.teacher_name %></td>
-		     </tr>
-			  <% classroom.class_peoples.each do |f| %>
-		     <tr>    <td> <%= f.role %> </td>
-		          <% end %> 
-			  <% classroom.people .each do |a| %>
-			    <td><%= a.first_name %></td> 
-			  <% end %>
-		     </tr>
+			   <td><%= link_to "Edit",  url(:edit_classroom, classroom.id) %></td>
+		      </tr>
+		           <% s = classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
+			  
+			   <% s.each do |f| %>
+			  
+			      <tr><td><%= f.role %></td></tr>
+			   
+			   <% end %> 
+			  
         	<% end %>
 		
 		 
 	</table> 
-	
+	                                          
 <% end %>

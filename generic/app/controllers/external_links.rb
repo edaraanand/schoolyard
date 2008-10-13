@@ -1,7 +1,10 @@
 class ExternalLinks < Application
 
   def index
-     @external_links = ExternalLink.find(:all)
+     @class_links = ExternalLink.find(:all, :conditions => ['label=?', "Classrooms"])
+     @home_links = ExternalLink.find(:all, :conditions => ['label=?', "Home Page"])
+     @sport_links = ExternalLink.find(:all, :conditions => ['label=?', "Sports"])
+     @event_links = ExternalLink.find(:all, :conditions => ['label=?', "Events"])
      render
   end
   
@@ -36,7 +39,7 @@ class ExternalLinks < Application
 		links << ExternalLink.update(l[2], {:title => l[0], :url => l[1], :label => params[:label]})
 	    end
         end
-	redirect url(:external_links)
+     redirect url(:external_links)
   end
   
   def delete
@@ -44,4 +47,10 @@ class ExternalLinks < Application
      redirect url(:external_links)
   end
   
+  def preview
+     @title = params[:external_link][:title]
+     @url = params[:external_link][:url]
+     render :layout => 'preview'
+  end
+	  
 end

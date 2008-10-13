@@ -39,6 +39,7 @@ Merb::Router.prepare do |r|
   r.resources :welcome_messages
   r.resources :calendars
   r.resources :students
+  r.resources :teams
   r.resources :from_principals
   r.resources :external_links
   r.match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
@@ -50,5 +51,5 @@ Merb::Router.prepare do |r|
   r.default_routes
   
   # Change this for your home page to be available at /
-  #r.match('/').to(:controller => 'schools', :action =>'index')
+  r.match('/').to(:controller => 'schools', :action =>'index')
 end

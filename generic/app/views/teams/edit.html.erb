@@ -1,0 +1,74 @@
+<div class= 'formcontainer' >
+   
+  <%= form_for :team, :action => url(:team, @team) do %>
+  
+     <table id='teams'>
+         <tr>
+             <td><%= text_field  :team_name,  :label => "Name of the Team" %></td>
+	 </tr>      
+         <tr>
+             <td><%= select  :classroom_id,  :collection => @classrooms.collect{|x| x.class_name }, :label => "Classroom" %></td>
+	 </tr>
+	 <tr>
+	     <td><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year" %> </td>
+         </tr>
+	 <tr>
+             <td>Coach:<select name = "classroom[people][ids][]" id="classroom_person",>
+	                       <% @teachers.each do |teacher| %>
+		                      <option value="<%= teacher.id %>">
+			                   <%= teacher.first_name %>
+		                      </option>
+			        <% end %>
+	     </td>
+	 </tr>
+	 
+	 <% @team_peoples.each do |f| %>
+	      <tr>
+	         <td><%= text_field :name => 'classroom[people][role][]', :id =>'classroom_class_people', :value => "#{f.role}" %></td>
+                  <td><select name = "classroom[people][ids][]" id="classroom_person",>
+	                       <% @teachers.each do |teacher| %>
+		                      <option value="<%= teacher.id %>">
+			                   <%= teacher.first_name %>
+		                      </option>
+			        <% end %>
+	           </td>
+	      </tr>
+	 <% end %>
+	    <tr>
+	       <td><a href="#" onclick="add();return false;">Add More</a></td>
+	    </tr>
+	    <tr><td><%= submit "Save" %></td>
+	        <td><%= link_to "Cancel", url(:teams) %></td>
+	    </tr>
+      </table>
+	      
+   <% end =%>
+     
+</div>
+
+
+<script type= "text/javascript">
+ 
+  function add()
+   {
+      var table = document.getElementById('teams');
+	var tr = document.createElement('tr');
+        var td1 = document.createElement('td');
+	var td2 = document.createElement('td');
+	td1.innerHTML = "<input type='text' name='classroom[people][role][]' id='classroom_class_people' />";
+	td2.innerHTML = <select name="classroom[people][ids][]" id="classroom_person"> 
+	                                <% @teachers.each do |teacher| %>
+		                           <option value="<%= teacher.id %>">
+					   <%= teacher.first_name %>
+					   </option>
+			                <% end %>
+			      </select>
+	 tr.appendChild(td1);
+	 tr.appendChild(td2);
+	 table.appendChild(tr);
+    }
+     
+</script>
+
+
+

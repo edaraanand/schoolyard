@@ -10,25 +10,23 @@
           <% for calendar in @calendars %>
                 <tr>
 	            <td><b><%= calendar.start_date.strftime("%B-%d") %></b></td>   
-		    <% s = calendar.start_date %>
-	        </tr>
-		<% cals = @calendars.select {|c| c.start_date.to_date == calendar.start_date.to_date }  %>
-                     <% for cal in cals.compact %>
-                          <tr>
-		              <% unless cal.start_time.nil? %>
-			         <td><%= cal.start_time.strftime("%H-%M") %></td>
-			      <% end %>
-                              <td><%= cal.title %></td>
-			      <td><%= link_to "Edit", url(:edit_calendar, calendar.id) %></td>
-			      <td><%= link_to "Delete", url(:delete_calendar, calendar.id) %>
-                          </tr>
-                           <% cals.delete_if {|c| c.start_date ==  cal.start_date } %>
-			     
-                     <% end %>
-		
-           <% end %>
-		  
+		</tr>
+		    
+		<% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
+		  <% cals.each do |cal| %> 
+		        <tr>
+		             <% unless cal.start_time.nil? %> 
+			        <td><%= cal.start_time.strftime("%H-%M") %></td>
+			     <% end %>
+			     <td><%= cal.title %></td>
+			     <td><%= link_to "Edit", url(:edit_calendar, calendar.id) %></td>
+			     <td><%= link_to "Delete", url(:delete_calendar, calendar.id) %></td>
+	                </tr>
+			
+		  <% end %>
+		     <% @calendars.delete_if{|c| cals.include?(c)} %>
+  	  <% end %>
 	</table> 
     </div>
-	    
-</div>	 
+	 
+</div>	                            
