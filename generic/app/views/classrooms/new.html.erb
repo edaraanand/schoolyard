@@ -1,22 +1,26 @@
+<%= error_messages_for @classroom %>
+
 <div class= 'formcontainer' >
    
   <%= form_for :classroom, :action => url(:classroom) do %>
   
      <table id='classes'>
          <tr>
-	     <td>Type:<%= select :class_type, :collection => %W(Classes Sports Extracirrcular) %> </td>
-         </tr>      
-         <tr>
-             <td><%= text_field  :class_name,  :label => "Class Name" %></td>
-	 </tr>
-	 <tr>
-	     <td>Class Teacher: <select name = "class[people][ids][]" id="class_person",>
+	     <td><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular} %></td>
+	 </tr> 
+	  <tr>
+             <td><%= text_field :class_name,  :label => "Class Name" %></td>
+	   </tr>
+	
+	<tr><td> Class Teacher: <select name = "class[people][ids][]" id="class_person",>
 	                       <% @teachers.each do |teacher| %>
 		                      <option value="<%= teacher.id %>">
-			                   <%= teacher.first_name %>
+			                   <%= teacher.name %>
 		                      </option>
 			        <% end %>
-	     </td>
+	    </td>
+	    </tr>
+	 
 	     <td><a href="#" onclick="add();return false;">Add More</a>
 	 </tr>
 	 <tr><td><%= submit "Save" %></td>
@@ -40,7 +44,7 @@
 	td2.innerHTML = <select name="class[people][ids][]" id="classroom_person"> 
 	                                <% @teachers.each do |teacher| %>
 		                           <option value="<%= teacher.id %>">
-					   <%= teacher.first_name %>
+					   <%= teacher.name %>
 					   </option>
 			                <% end %>
 			      </select>
@@ -49,4 +53,7 @@
 	 table.appendChild(tr);
     }
      
+ 
+  
 </script>
+

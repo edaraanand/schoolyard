@@ -13,20 +13,27 @@ class Classrooms < Application
    
    def create 
       @classroom = Classroom.create(params[:classroom])
+       @teachers = Staff.find(:all)
       id = params[:class][:people][:ids]
       role = params[:class][:people][:role]
+      #raise "Eshwar".inspect
       @class_peoples = []
-      if role.nil?
-	 ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
-      else
-	 role_id = id.delete_at(0)
-	 @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => role_id, :role => "class_teacher"})
-	 s = id.zip(role)
-	 s.each do |f|
-	     @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
-         end
-      end
-      redirect url(:classrooms)
+    #  if @classroom.save
+         if role.nil?
+	    ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
+         else
+	    role_id = id.delete_at(0)
+	    @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => role_id, :role => "class_teacher"})
+	    s = id.zip(role)
+	    s.each do |f|
+	       @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
+            end
+          end
+         redirect url(:classrooms)
+     # else
+	# render :new
+     # end
+      
    end  
   
    def edit
@@ -67,7 +74,7 @@ class Classrooms < Application
       redirect url(:classrooms)
    end                                      
    
-   def destroy
+   def delete
       Classroom.find(params[:id]).destroy
       redirect url(:classrooms) 
    end

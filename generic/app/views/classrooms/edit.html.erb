@@ -1,19 +1,22 @@
 <div class= 'formcontainer' >
+<p> Classrooms > Edit </p>
    
   <%= form_for :classroom, :action => url(:classroom, @classroom) do %>
   
      <table id='classes'>
-         <tr>
-	     <td>Type:<%= select :class_type, :collection => %W(Classes Sports Extracirrcular) %> </td>
-         </tr>      
-         <tr>
-             <td><%= text_field  :class_name,  :label => "Class Name" %></td>
+          <tr>
+	     <td><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular} %></td>
+	 </tr>  
+	 <tr> 
+	   
+            <td><%= text_field :class_name,  :label => "Class Name" %></td>
+	 
 	 </tr>
 	 <tr>
              <td>Class Teacher: <select name = "class[people][ids][]" id="class_person",>
 	                       <% @teachers.each do |teacher| %>
 		                      <option value="<%= teacher.id %>">
-			                   <%= teacher.first_name %>
+			                   <%= teacher.name %>
 		                      </option>
 			        <% end %>
 	     </td>
@@ -24,7 +27,7 @@
              <td>Class Teacher:<select name = "class[people][ids][]" id="class_person",>
 	                       <% @teachers.each do |teacher| %>
 		                      <option value="<%= teacher.id %>">
-			                   <%= teacher.first_name %>
+			                   <%= teacher.name %>
 		                      </option>
 			        <% end %>
 	     </td>
@@ -54,7 +57,7 @@
 	td2.innerHTML = <select name="class[people][ids][]" id="class_person"> 
 	                                <% @teachers.each do |teacher| %>
 		                           <option value="<%= teacher.id %>">
-					      <%= teacher.first_name %>
+					      <%= teacher.name %>
 					   </option>
 			                <% end %>
 			      </select>
