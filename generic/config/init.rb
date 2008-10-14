@@ -55,6 +55,7 @@ Gem.path.unshift(Merb.root / "gems")
 require 'parse_tree'
 #dependency 'paperclip'
 dependencies "merb-assets", "merb_helpers"
+dependency "merb_has_flash"
 #dependency "universal-paperclip/pkg/universal_paperclip-0.0.1/lib/paperclip.rb"
 #dependency "universal-paperclip/pkg/universal_paperclip-0.0.1/lib/paperclip/attachment.rb"
 #dependency "merb-slices"  
