@@ -1,3 +1,5 @@
+<%= error_messages_for @person %>
+
 <div class='formcontainer'>
 
     <%= form_for :person, :action => url(:person, @person) , :id => 'people' do %>
@@ -15,7 +17,8 @@
 	  <tr>
 	       <td><%= text_field  :phone,  :label => "Phone Number(optional)" %></td>
 	  </tr>
-    
+          <tr>
+	       <td> <%= flash[:error] %></td>
 	  <tr>
 	      <td>Rights:</td>
 	      <td>This person can:
@@ -30,8 +33,9 @@
 	          </div>
 	      </td>
 	  <tr>
-	    <td><input type="checkbox" class="check" value="Select all" name="select_all" id="select_all" onclick="Form.getInputs('people', 'checkbox').each(function(box){box.checked= $('select_all').checked})" />Select all</td>
-          </tr>
+	     <td>Select All:<input type="checkbox" checked="true" onclick="checkAll(this)"></td>
+	  </tr>
+	  
         <% @accesses.each do |f| %>
             <% have_access = false %>
               <% @access_people.each do |l| 
@@ -69,11 +73,23 @@
      if (document.getElementById('all').checked == false)
 	{
 	   document.getElementById('check').style.visibility = "visible"; 
+	  
 	 }
  
    }  
-
-  
+   
+   
+   function checkAll(select_all)
+   {
+     var checked = select_all.checked;
+     var s =  document.getElementById('all')
+     var col = document.getElementsByTagName("INPUT");
+      for (var i=0;i<col.length;i++) 
+      {
+          col[i].checked= checked;
+	  s.checked = true;
+       }
+     }
 
 </script>
  

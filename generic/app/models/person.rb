@@ -15,6 +15,14 @@ class Person < ActiveRecord::Base
 	def accesses_without_all
 	    accesses.delete_if{|x| x.name == "view_all"}
 	end
+	
+ 	def name
+           "#{first_name}" "#{last_name}"
+        end
+	
+	validates_presence_of :first_name, :last_name
+	validates_presence_of :email, :if => :email
+	validates_uniqueness_of :email
 end            
   
 class Student < Person
@@ -25,10 +33,13 @@ class Student < Person
      has_many :studies
      has_many :classrooms, :through => :studies, :source => :classroom
      
+   
 end
 
 class Staff < Person
+	
   
+   
 end
 
 class Parent < Person

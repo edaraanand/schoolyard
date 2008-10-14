@@ -1,7 +1,7 @@
   <table>
 
          <tr>
-	    <td>Welcome Message for:<%= select :access_name, :prompt => "Please Select", :collection => @access_rights.collect{|i| i.full_name} %></td>
+	    <td>Welcome Message for:<%= select :access_name, :collection => @classrooms %></td>
 	 </tr>
          <tr>
 	      <td><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></td>

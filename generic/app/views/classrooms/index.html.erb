@@ -15,8 +15,11 @@
 			   <td><b><%= classroom.class_type %></b></td>
 		      </tr>
 		      <tr>
-		           <td><%= classroom.class_name %></td>
+		          <% unless classroom.class_name.nil? %>
+		             <td><%= classroom.class_name %></td>
+			  <% end %>
 			   <td><%= link_to "Edit",  url(:edit_classroom, classroom.id) %></td>
+			   <td><%= link_to "Delete",  url(:delete_classroom, classroom.id) %></td>
 		      </tr>
 		           <% s = classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
 			  

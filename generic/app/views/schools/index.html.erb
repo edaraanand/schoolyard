@@ -2,16 +2,16 @@
    <% if @school.nil? %> 
        <div id = 'pagebody' class = 'column'>
            <div class = 'formcontent'>
-               <h3>Basic Settings</h3> </br>
+               <h3>School Profile</h3> </br>
 	       
-	     "Basic Setting are not specified, <%= link_to "Add Now", url(:new_school) %>"  
+	     "Basic Settings are not specified, <%= link_to "Add Now", url(:new_school) %>"  
 	   </div>
        </div>
    <% else %>
 	 <div id = 'pagebody' class = 'column'>
            <div class = 'formcontent'>
         
-               <h3>Basic Settings</h3> </br>
+               <h3>School Profile</h3> </br>
 	       <%= link_to "Edit", url(:edit_school, @school) %>
 	      <table>
 		 <tr> 

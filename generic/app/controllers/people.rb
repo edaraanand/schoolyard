@@ -15,19 +15,28 @@ class People < Application
   end
   
   def create
-     @access = params[:access][:access_ids]
-     puts @access.inspect
-     @access_view = Access.find(:first, :conditions => ['name=?', "view_all"])
-     @person = Staff.create(params[:person])
-     @access_view_all = AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
-     if params[:select_all] == "Select all"
-	 AccessPeople.create({:person_id => @person.id, :all => true})
-     else
-	@access.each do |f|
-          @access_people = AccessPeople.create({:person_id => @person.id, :access_id => f })
-        end
-     end
-     redirect url(:people)
+     @accesses = Access.find(:all)
+     @person = Staff.new(params[:person])
+    if params[:access].nil?
+       flash[:error]  = "You should check one of the checkboxes"
+       render :new
+    else
+       if @person.save
+	  @access = params[:access][:access_ids]
+          @access_view = Access.find(:first, :conditions => ['name=?', "view_all"])
+          @access_view_all = AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
+           if params[:select_all] == "Select all"
+	      AccessPeople.create({:person_id => @person.id, :all => true})
+           else
+	      @access.each do |f|
+                @access_people = AccessPeople.create({:person_id => @person.id, :access_id => f })
+              end
+           end
+          redirect url(:people)
+       else
+	  render :new
+       end
+    end
   end
   
   def edit
@@ -39,28 +48,35 @@ class People < Application
   
   def update
       @person = Person.find(params[:id])
-      @a = Access.find(:all)
-      @acc = @a.delete_if{|x| x.name == "view_all"}
-      @acc = @a.collect{|x| x.id}
-      @access_view = Access.find(:first, :conditions => ['name=?', "view_all"])
-      @access = params[:access][:access_ids]
-      @access_peoples = @person.access_peoples
-      @access_all = @access_peoples.collect{|x| x.all}
-      @access_id = @access_peoples.collect{ |x| x.id }
-      @access_people_id = @access_peoples.collect{|x| x.access_id}
-      if @acc.length == @access.length
-	   AccessPeople.destroy(@access_id)
-	   AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
-	   AccessPeople.create({:person_id => @person.id, :all => true})
-      elsif (params[:select_all] == "Select all")
-	   AccessPeople.destroy(@access_id)
-	   AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
-	   AccessPeople.create({:person_id => @person.id, :all => true})
-      else
-	   s = @access.zip(@access_id, @access_people_id)
-	    AccessPeople.destroy(@access_id)
-	     AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
-	   s.each do |l|
+      @accesses = Access.find(:all)
+      @access_people = @person.access_peoples
+   if params[:access].nil?
+      flash[:error]  = "You should check one of the checkboxes"
+      render :edit
+   else
+      if @person.update_attributes(params[:person])   
+         @a = Access.find(:all)
+         @acc = @a.delete_if{|x| x.name == "view_all"}
+         @acc = @a.collect{|x| x.id}
+         @access_view = Access.find(:first, :conditions => ['name=?', "view_all"])
+         @access = params[:access][:access_ids]
+         @access_peoples = @person.access_peoples
+         @access_all = @access_peoples.collect{|x| x.all}
+         @access_id = @access_peoples.collect{ |x| x.id }
+         @access_people_id = @access_peoples.collect{|x| x.access_id}
+            if @acc.length == @access.length
+	       AccessPeople.destroy(@access_id)
+	       AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
+	       AccessPeople.create({:person_id => @person.id, :all => true})
+            elsif (params[:select_all] == "Select all")
+	       AccessPeople.destroy(@access_id)
+	       AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
+	       AccessPeople.create({:person_id => @person.id, :all => true})
+            else
+	       s = @access.zip(@access_id, @access_people_id)
+	       AccessPeople.destroy(@access_id)
+	       AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
+	       s.each do |l|
 		   if l[1].nil?
 		      AccessPeople.create({:person_id => @person.id, :access_id => l[0] })
 		   elsif ((l[2].nil?) && l[1].nil?)
@@ -68,12 +84,17 @@ class People < Application
 		   else
 			AccessPeople.create({:person_id => @person.id, :access_id => l[0]})
 		   end		   
-	   end
-	 
-      end
-       @person.update_attributes(params[:person])
-       redirect url(:people)	  
+	       end
+            end
+	  redirect url(:people)
+       else
+	  render :edit  
+       end  
+      
+    end
+    
   end
+
   
   def disable
       render

@@ -1,22 +1,21 @@
 class WelcomeMessages < Application
 
   def index
-     access_rights
+     classrooms
      @welcome_messages = WelcomeMessage.find(:all, :conditions => ['access_name =?', params[:access_name]])
      render
   end
   
   def new
      @welcome_message = WelcomeMessage.new
-     access_rights
-     puts @access_rights.inspect
+     classrooms
      render                            
   end
 
   def create
      @welcome_message = WelcomeMessage.new(params[:welcome_message])
      @welcome_message.person_id = @current_user.id
-     access_rights
+     classrooms
      if @welcome_message.save
         redirect url(:welcome_messages)
      else
@@ -26,13 +25,13 @@ class WelcomeMessages < Application
   
   def edit
      @welcome_message = WelcomeMessage.find(params[:id])
-     access_rights
+     classrooms
      render
   end
   
   def update
      @welcome_message = WelcomeMessage.find(params[:id])
-     access_rights
+     classrooms
      if @welcome_message.update_attributes(params[:welcome_message])
 	@welcome_message.person_id = @current_user.id
 	redirect url(:welcome_messages)
@@ -67,6 +66,12 @@ class WelcomeMessages < Application
 	   @access_rights = @current_user.accesses_without_all
 	end
       end
+  end
+  
+  def classrooms
+     @class = Classroom.find(:all)
+     room = @class.collect{|x| x.class_name }
+     @classrooms = room.insert(0, "HomePage")
   end
   
 end

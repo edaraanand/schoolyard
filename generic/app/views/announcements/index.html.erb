@@ -8,7 +8,7 @@
 	            <td> <%= link_to "Add New", url(:new_announcement) %></td>
                 </tr> 
 		<tr>
-		    <td><%= select :name => "access_name", :prompt => "Please Select", :collection => @access_rights.collect{|x| x.full_name} %></td>
+		    <td><%= select :name => "access_name", :collection => classrooms %></td>
 		    <td><%= submit ">>" %></td>
 	        </tr>
 	 </table>	
