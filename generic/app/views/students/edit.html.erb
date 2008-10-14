@@ -27,14 +27,24 @@
 	           <tr>
 	              <td><%= text_field :name => 'parent[email][]', :label => "Email", :value => "#{f.email}" %></td>
 	           </tr>
-	      <% end %> 
+	
+	      <% end %>
+	      
 	         <tr id="students">
 	         </tr>
 	         <tr id="email">
 	         </tr>
 	         <tr><td><%= link_to_function 'Add', "add();" %></td></td>
+		 
+		 <tr>
+	            <td><%= text_field :name => 'parent[phone][]', :label => "Phone", :value => "#{@p.phone}" %></td>
+	         </tr>
+		 <tr>
+	            <td><%= text_field :name => 'parent[address][]', :label => "Address", :value => "#{@p.address}" %></td>
+	         </tr>
+		
 	         <tr>
-		    <td> <input type = 'button' value = 'Preview' onclick="preview();return false;" /></td>
+		     <td><input type = 'button' value = 'Preview' onclick="preview();return false;" /></td>
 	             <td><%= submit "Publish" %></br>  <%= link_to "Cancel", url(:students) %></td>
 	         </tr>
 	  
