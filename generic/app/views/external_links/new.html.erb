@@ -1,4 +1,8 @@
-
+<div id="errors">
+    <ul>      
+      <li><%= @external_link.errors.full_messages.join('</li><li>') %></li>
+    </ul>
+</div>
 <p> <%= params[:label] %> > new </p>
 
 <div class='formcontainer'>

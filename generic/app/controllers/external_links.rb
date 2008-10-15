@@ -15,9 +15,13 @@ class ExternalLinks < Application
   
   def create
       params[:external_link][:title].each_with_index do |l, i|
-	ExternalLink.create!({:title => l, :url => params[:external_link][:url][i], :label => params[:label]})
+	      @external_link = ExternalLink.create({:title => l, :url => params[:external_link][:url][i], :label => params[:label]})
       end
-      redirect url(:external_links)
+      if @external_link.valid?
+        redirect url(:external_links)
+      else
+        render :new
+      end
   end     
 	  
   def edit
