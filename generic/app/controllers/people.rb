@@ -97,7 +97,15 @@ class People < Application
 
   
   def disable
-      render
+    # @person = Person.find(params[:id])
+     # @acc = @current_user.access_peoples
+      #@access = Access.find(:first, :conditions => ['name=?', "view_all"])
+      #@acc.each do |f|
+       #  if f.access_id == @access.id
+	#    AccessPeople.delete(f)
+	 #end
+      #end
+      redirect url(:people)
   end
   
 end

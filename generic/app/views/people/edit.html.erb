@@ -72,11 +72,20 @@
    {
      if (document.getElementById('all').checked == false)
 	{
-	   document.getElementById('check').style.visibility = "visible"; 
-	  
-	 }
- 
-   }  
+	    var s =  document.getElementById('all')
+	   var message = "You want to disable this user";
+           var return_value = confirm(message);
+	   if (return_value == true) 
+	   {
+	      s.checked = false;
+	    }
+	   else 
+	   {
+	     s.checked = true;
+	   }
+	  // document.getElementById('check').style.visibility = "visible"; 
+	}
+    }  
    
    
    function checkAll(select_all)
