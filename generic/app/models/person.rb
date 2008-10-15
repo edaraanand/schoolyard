@@ -33,13 +33,13 @@ class Student < Person
      has_many :studies
      has_many :classrooms, :through => :studies, :source => :classroom
      
+    # validates_presence_of :first_name, :last_name
    
 end
 
 class Staff < Person
 	
-  
-   
+
 end
 
 class Parent < Person

@@ -8,17 +8,18 @@ class Classrooms < Application
    def new
       @classroom = Classroom.new 
       @teachers = Staff.find(:all)
+      # teachers
       render
    end
    
    def create 
-      @classroom = Classroom.create(params[:classroom])
+      @classroom = Classroom.new(params[:classroom])
        @teachers = Staff.find(:all)
       id = params[:class][:people][:ids]
       role = params[:class][:people][:role]
-      #raise "Eshwar".inspect
+     # raise "Eshwar".inspect
       @class_peoples = []
-    #  if @classroom.save
+     if @classroom.save
          if role.nil?
 	    ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
          else
@@ -30,9 +31,9 @@ class Classrooms < Application
             end
           end
          redirect url(:classrooms)
-     # else
-	# render :new
-     # end
+     else
+	 render :new
+     end
       
    end  
   
@@ -78,5 +79,12 @@ class Classrooms < Application
       Classroom.find(params[:id]).destroy
       redirect url(:classrooms) 
    end
+   
+  # private 
+    
+   #def teachers
+	#   @t = Staff.find(:all)
+	#   @tea = @t.collect{|x| x.name }
+  # end
   
 end
