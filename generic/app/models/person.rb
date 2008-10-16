@@ -22,7 +22,7 @@ class Person < ActiveRecord::Base
 	
 	validates_presence_of :first_name, :last_name
 	validates_presence_of :email, :if => :email
-	validates_uniqueness_of :email
+	validates_uniqueness_of :email, :if => :email
 end            
   
 class Student < Person
@@ -32,9 +32,7 @@ class Student < Person
      
      has_many :studies
      has_many :classrooms, :through => :studies, :source => :classroom
-     
-    # validates_presence_of :first_name, :last_name
-   
+      
 end
 
 class Staff < Person
@@ -45,9 +43,15 @@ end
 class Parent < Person
      has_many :guardians
      has_many :students, :through => :guardians, :source => :student
+     
+     validates_presence_of :first_name, :message => "Parent First Name cant be blank"
+     validates_presence_of :last_name, :message => "Parent Last Name cant be blank"
+     validates_presence_of :address, :message => "Parent Address cant be blank"
+     
 end
 
 class Principle < Person
+	
 end
 
   

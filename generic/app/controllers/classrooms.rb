@@ -47,12 +47,17 @@ class Classrooms < Application
    end
    
    def update
-      @classroom = Classroom.find(params[:id])
+       @teachers = Staff.find(:all)
+       @classroom = Classroom.find(params[:id])
+       @class_people = @classroom.class_peoples
+       @class = @class_people.delete_if{|x| x.team_id != nil}
+      @class_p = @class.delete_if{|x| x.role == "class_teacher"}
       id = params[:class][:people][:ids]
       role = params[:class][:people][:role] 
-      @classrooms = []
-      @classrooms << @classroom.update_attributes(params[:classroom])
-      @class_peoples = @classroom.class_peoples
+     # @classrooms = []
+    #  @classrooms << @classroom.update_attributes(params[:classroom])
+    if @classroom.update_attributes(params[:classroom])
+       @class_peoples = @classroom.class_peoples
       @cla = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
       @class = @class_peoples.delete_if{|x| x.team_id != nil}
       @class_p = @class.delete_if{|x| x.role == "class_teacher"}
@@ -73,6 +78,10 @@ class Classrooms < Application
          end
       end
       redirect url(:classrooms)
+   else
+	render :edit
+   end
+   
    end                                      
    
    def delete

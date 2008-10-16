@@ -1,5 +1,8 @@
 
+
+
 <p> <%= params[:label] %> > Edit </p>
+
 <div class='formcontainer'>
 
     <%= form_for :external_link, :action => url(:external_links_update), :id => 'links' do %>
@@ -21,7 +24,9 @@
 		      <td><input type = 'button' value = 'Preview' onclick="preview();return false;" /></td> 
                       <td><%= submit "Publish" %> </br> Or <%= link_to "Cancel", url(:external_links) %></td>
                   </tr>
-	  
+		  <% if flash[:error] %>
+	             <tr><td><%= flash[:error] %></td></tr>
+		 <% end %>
            </table>   
              
       <% end =%>

@@ -8,6 +8,7 @@ class Students < Application
   def new
      @student = Student.new
      @class_rooms = Classroom.find(:all, :conditions => ['class_type=?', "Classes"])
+     @parent = Parent.new
      render
   end
   
@@ -16,15 +17,21 @@ class Students < Application
      first = params[:parent][:first_name]
      last = params[:parent][:last_name]
      email = params[:parent][:email]
+     s = first.zip(last, email)
+     @guardians = []
      @student = Student.new(params[:student])
-     if @student.save
-        @study = Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id]})
-        s = first.zip(last, email)
-        @guardians = []
-        s.each do |p|
-	   @parent = Parent.create({:first_name => p[0], :last_name => p[1], :email => p[2],
+     if @student.valid?
+	if @parent.valid?
+		     render :new     
+	     #raise "Eshwar".inspect
+        else
+	     @student = Student.create(params[:student])
+             @study = Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id]})
+          s.each do |p|
+	      @parent = Parent.create({:first_name => p[0], :last_name => p[1], :email => p[2],
 		            :phone => params[:parent][:phone], :address => params[:parent][:address]  })
-	   @guardians << Guardian.create({:parent_id => @parent.id, :student_id => @student.id } )
+	      @guardians << Guardian.create({:parent_id => @parent.id, :student_id => @student.id } )
+           end
         end
         redirect url(:students)
      else
