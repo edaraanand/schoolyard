@@ -1,32 +1,38 @@
 <div class= 'formcontainer' >
+<p> Classrooms > Edit </p>
    
   <%= form_for :classroom, :action => url(:classroom, @classroom) do %>
   
      <table id='classes'>
-         <tr>
-	     <td>Type:<%= select :class_type, :collection => %W(Classes Sports Extracirrcular) %> </td>
-         </tr>      
-         <tr>
-             <td><%= text_field  :class_name,  :label => "Class Name" %></td>
+          <tr>
+	     <td><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular} %></td>
+	 </tr>  
+	 <tr> 
+	   
+            <td><%= text_field :class_name,  :label => "Class Name" %></td>
+	 
 	 </tr>
-	
 	 <tr>
-             <td>Class Teacher: <%= select :teacher_name, :collection => @teachers.collect{|i| i.first_name} %></td>
-	 </tr>
-	       <% @class_people.each do |f| %>
-	  <tr>
-	         <td><%= text_field :name => 'classroom[people][role][]', :id =>'classroom_class_people', :value => "#{f.role}" %></td>
-
-		 
-             <td>Class Teacher:<select name = "classroom[people][ids][]" id="classroom_person",>
+             <td>Class Teacher: <select name = "class[people][ids][]" id="class_person",>
 	                       <% @teachers.each do |teacher| %>
 		                      <option value="<%= teacher.id %>">
-			                   <%= teacher.first_name %>
+			                   <%= teacher.name %>
+		                      </option>
+			        <% end %>
+	     </td>
+	 </tr>
+	       <% @class_people.each do |f| %>
+	 <tr>
+	     <td><%= text_field :name => 'class[people][role][]', :id =>'class_class_people', :value => "#{f.role}" %></td>
+             <td>Class Teacher:<select name = "class[people][ids][]" id="class_person",>
+	                       <% @teachers.each do |teacher| %>
+		                      <option value="<%= teacher.id %>">
+			                   <%= teacher.name %>
 		                      </option>
 			        <% end %>
 	     </td>
 	       <% end %>
-	        <td><a href="#" onclick="add();return false;">Add More</a>
+	     <td><a href="#" onclick="add();return false;">Add More</a>
 	  </tr>
 	  
 	 <tr><td><%= submit "Save" %></td>
@@ -47,11 +53,11 @@
 	var tr = document.createElement('tr');
         var td1 = document.createElement('td');
 	var td2 = document.createElement('td');
-	td1.innerHTML = "<input type='text' name='classroom[people][role][]' id='classroom_class_people' />";
-	td2.innerHTML = <select name="classroom[people][ids][]" id="classroom_person"> 
+	td1.innerHTML = "<input type='text' name='class[people][role][]' id='class_class_people' />";
+	td2.innerHTML = <select name="class[people][ids][]" id="class_person"> 
 	                                <% @teachers.each do |teacher| %>
 		                           <option value="<%= teacher.id %>">
-					   <%= teacher.first_name %>
+					      <%= teacher.name %>
 					   </option>
 			                <% end %>
 			      </select>

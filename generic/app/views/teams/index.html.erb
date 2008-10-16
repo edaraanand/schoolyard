@@ -1,0 +1,33 @@
+<% if @teams.empty? %>
+  
+       <h3>Teams</h3> </br>
+    
+       <%= link_to "Add New", url(:new_team) %>
+     
+ <% else %>
+          <table>
+		<tr>
+		    <td><h4>Teams</h4></td>
+		    <td><%= link_to "Add New", url(:new_team) %></td>
+	        </tr> 
+	        <tr>
+		    <td<h3>Team </h3></td>
+	           
+	         </tr> 
+		
+		<% for team in @teams %>
+		        <tr>
+			    <td><%= link_to "#{team.team_name}", url(:edit_team, team.id) %> </td>
+			    <td><h4>Roles</h4></td>
+			</tr>
+			<% s = team.class_peoples.delete_if{|x| x.role == "coach"} %>
+		             <% s.each do |f| %>
+			   <tr>
+			        <td></td>
+			       <td><%= f.role %></td>
+			   </tr>
+			  <% end %>
+		<% end %>                  
+	   </table> 
+	
+<% end %>

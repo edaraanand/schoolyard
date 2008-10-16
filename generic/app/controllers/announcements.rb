@@ -2,35 +2,37 @@ class Announcements < Application
 
  
   def index
-     access_rights
+     classrooms
      @announcements = Announcement.find(:all, :conditions => ['access_name=?', params[:access_name] ])
      render
   end
   
   def new
      @announcement = Announcement.new
-     access_rights   
+     classrooms
      render
   end
   
   def create
-	  #raise params[:announcement]
      @announcement = Announcement.new(params[:announcement])
      @announcement.person_id = @current_user.id
-    # @announcement.file = params[:announcement][:file]
-    # @announcement.file.url(:thumb)
-     @announcement.save
-     redirect url(:announcements)
+     classrooms
+     if @announcement.save
+        redirect url(:announcements)
+     else
+	render :new
+     end
   end       
   
   def edit
-     access_rights
+     classrooms
      @announcement = Announcement.find(params[:id])
      render
   end
   
   def update 
      @announcement = Announcement.find(params[:id])
+     classrooms
      if @announcement.update_attributes(params[:announcement])
 	@announcement.person_id = @current_user.id
 	@announcement.save
@@ -68,6 +70,12 @@ class Announcements < Application
 	   @access_rights = @current_user.accesses_without_all
 	end
       end
+  end
+  
+  def classrooms
+     @class = Classroom.find(:all)
+     room = @class.collect{|x| x.class_name }
+     @classrooms = room.insert(0, "HomePage")
   end
   
 end

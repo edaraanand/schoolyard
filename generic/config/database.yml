@@ -3,7 +3,7 @@
 :development: &defaults
   :adapter: sqlite3
   :database: db/schoolapp_development
- 
+
 :test:
   <<: *defaults
   :database: db/schoolapp_test

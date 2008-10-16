@@ -1,6 +1,13 @@
+<div id="errors">
+    <ul>      
+      <li><%= @external_link.errors.full_messages.join('</li><li>') %></li>
+    </ul>
+</div>
+<p> <%= params[:label] %> > new </p>
+
 <div class='formcontainer'>
 
-    <%= form_for :external_link, :action => url(:external_link) do %>
+    <%= form_for :external_link, :action => url(:external_link), :id => 'links' do %>
         
         <table id='ExternalLinks'>
 
@@ -8,15 +15,18 @@
                 <td><%= text_field  :title, :name => 'external_link[title][]' %></td>
                 <td><%= text_field  :url, :name => 'external_link[url][]' %></td>
 	    </tr>
+	    <tr>
+                <td><%= link_to_function 'Add', "add();" %></td>
+		<td><input type = 'button' value = 'Preview' onclick="preview();return false;" /></td> 
+                <td><%= submit "Publish" %> </br> Or <%= link_to "Cancel", url(:external_links) %></td>
+            </tr>
 	  
         </table>
-	
 	     <%= hidden_field :name => "label", :value => params[:label] %>
 	   
-             <%= link_to_function 'Add', "add();" %>
-             <%= submit "Publish" %> </br> Or <%= link_to "Cancel", url(:external_links) %>
-   
+             
      <% end =%>
+      
 
 </div>
 
@@ -42,5 +52,13 @@
         external.appendChild(tr);
  
  }
+ 
+ function preview()
+ {
+   var s = $('links').serialize();
+   window.open('/external_links/preview/-/?' + s);
+   
+ }
+ 
 
 </script>

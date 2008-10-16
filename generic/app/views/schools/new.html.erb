@@ -1,5 +1,10 @@
+
+<%= error_messages_for @school %>
+
 <div class= 'formcontainer' >
 
+    <p> School Profile > New </p>
+    
      <%= form_for :school, :action => url(:school) do  %>
 
            <%= partial 'form' %>
