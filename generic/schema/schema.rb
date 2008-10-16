@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 26) do
+ActiveRecord::Schema.define(:version => 30) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -38,6 +38,9 @@ ActiveRecord::Schema.define(:version => 26) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "label"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
   end
 
   create_table "calendars", :force => true do |t|
@@ -46,10 +49,8 @@ ActiveRecord::Schema.define(:version => 26) do
     t.text     "description"
     t.string   "location"
     t.boolean  "day_event"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.time     "start_time"
-    t.time     "end_time"
+    t.datetime "start_date"
+    t.datetime "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -60,14 +61,15 @@ ActiveRecord::Schema.define(:version => 26) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "role"
+    t.integer  "team_id"
   end
 
   create_table "classrooms", :force => true do |t|
     t.string   "class_name"
-    t.string   "teacher_name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "class_type"
+    t.integer  "person_id"
   end
 
   create_table "classtypes", :force => true do |t|
@@ -96,9 +98,9 @@ ActiveRecord::Schema.define(:version => 26) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
-    t.string   "phone"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "phone"
     t.text     "person_bio"
     t.text     "address"
   end
@@ -114,6 +116,14 @@ ActiveRecord::Schema.define(:version => 26) do
   create_table "studies", :force => true do |t|
     t.integer  "student_id"
     t.integer  "classroom_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "teams", :force => true do |t|
+    t.string   "team_name"
+    t.integer  "classroom_id"
+    t.string   "year"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

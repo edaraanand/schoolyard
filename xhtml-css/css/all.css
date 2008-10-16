@@ -217,6 +217,13 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 
 #footer{clear:both;}
 
+.lightbox{width:400px; border:10px solid #ccc; padding:20px; margin:10px;}
+.lightbox .close{float:right}
+.lightbox form{width:400px;}
+.lightbox input{padding:0 12px;}
+span.cancel{padding:0 8px;}
+span.cancel a{color:#eb3f2c;}
+span.cancel a:hover{text-decoration:underline;}
 
 
 
