@@ -51,8 +51,7 @@
           </ul>
         </li>
         <li>Access Rights<ul>
-          <li><a href="#">Add/Edit Access Rights</a></li>
-          		<li><%= link_to "Add/Edit Access Rights", url(:people) %></li>
+              <li><%= link_to "Add/Edit Access Rights", url(:people) %></li>
 		          <li class="count"><%= link_to "Parent Registration <span><b>8</b></span>" %></li>
           </ul>
         </li>
@@ -78,46 +77,12 @@
       </ul>
     </div><!-- Sidebar Ends -->
     <div id="content-wrap"><!--Wraps The content Area-->
-      <ul id="crumbtrail"><!--BreadCrumbs -->
-        <li><a href="#">Standards</a><span>&gt;</span></li>
-        <li class="last"><a href="#">Add New</a></li>
-      </ul>
-      <div class="hrule clear"><hr /></div>
+      <div class="hrule clear hidden "><hr /></div>
       <div id="content"><!--Content Area Starts here-->
         <%= catch_content :for_layout %>
       </div><!--Content End-->
     </div><!--Content Wrap End -->
-    <div class="right-sidebar">
-      <h3>
-        <span class="main">Heading Here</span>
-        <span class="desc">Description</span>
-      </h3><!--Two Spans, Main and Desc. Desc shouldnt be very long.-->
-      <p >Eget magna. Donec quis massa. Quisque ac arcu et mauris convallis cursus. Sed viverra, ligula ac congue ultrices, lectus dolor fermentum massa.</p>
-      <ul>
-        <li>Step1: Do Something</li>
-        <li>Step2: Do Something Else</li>
-        <li>Step3: Nothing Here</li>
-        <li>Step4: Good Idea</li>
-      </ul>
-      <p class="last">Nullam eget magna. Donec quis massa. Quisque ac arcu et mauris convallis cursus. Sed viverra, ligula ac congue ultrices, lectus dolor fermentum massa.</p>
-    </div><!--Right Sidebar ends-->
-
-    <div class="right-sidebar">
-      <h3>
-        <span class="main">Heading Here</span>
-        <span class="desc">Description, sometimes</span>
-      </h3><!--Two Spans, Main and Desc. Desc shouldnt be very long.-->
-      <p >Nullam eget magna. Donec quis massa. Quisque ac arcu et mauris convallis cursus. Sed viverra, ligula ac congue ultrices, lectus dolor fermentum massa.</p>
-      <p >Donec quis massa. Quisque ac arcu et mauris convallis cursus. Sed viverra, ligula ac congue ultrices, lectus dolor fermentum massa.</p>
-      <ol>
-        <li>Do Something</li>
-        <li>Do Something Else</li>
-        <li>Nothing Here</li>
-        <li>Good Idea</li>
-      </ol>
-      <p >Eget magna. Donec quis massa. Quisque ac arcu et mauris convallis cursus. Sed viverra, ligula ac congue ultrices, lectus dolor fermentum massa.</p>
-      <p class="last">Nullam eget magna. Donec quis massa. Quisque ac arcu et mauris convallis cursus. Sed viverra, ligula ac congue ultrices, lectus dolor fermentum massa.</p>
-    </div><!--Right Sidebar II ends-->
+    <!--Right Sidebar to be inserted here-->    
   </div><!--Pagewrap End -->
 </body>
 </html>

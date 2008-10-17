@@ -7,13 +7,14 @@
 	      <td><%= link_to "Add New", url(:new_calendar) %></td>
 	  </tr>
 	  
-          <% for calendar in @calendars %>
-                <tr>
+    <% for calendar in @calendars %>
+      <% if calendar.start_date %>
+            <tr>
 	            <td><b><%= calendar.start_date.strftime("%B-%d") %></b></td>   
-		</tr>
+		        </tr>
 		    
-		<% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
-		  <% cals.each do |cal| %> 
+		    <% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
+		    <% cals.each do |cal| %> 
 		        <tr>
 		             <% unless cal.start_time.nil? %> 
 			        <td><%= cal.start_time.strftime("%H-%M") %></td>
@@ -23,9 +24,10 @@
 			     <td><%= link_to "Delete", url(:delete_calendar, calendar.id) %></td>
 	                </tr>
 			
+		    <% end %>
+		    <% @calendars.delete_if{|c| cals.include?(c)} %>
 		  <% end %>
-		     <% @calendars.delete_if{|c| cals.include?(c)} %>
-  	  <% end %>
+  	<% end %>
 	</table> 
     </div>
 	 
