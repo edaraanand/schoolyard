@@ -1,26 +1,7 @@
-<table>
-    <tr>
-      <td>
-        <%= text_field :school_name,  :label => "School Name" %>
-      </td>
-    </tr>
-    <tr>
-       <td><h4>Contact Information for parents</h4> </td>
-    </tr>
-    <tr>
-      <td>
-        <%= text_field :phone,  :label => "Phone" %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <%= text_field :email,  :label => "E-mail" %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <%= submit "Save" %></br> Or
-        <%= link_to "Cancel", url(:schools) %>
-      </td>
-    </tr>
-</table>
+<ul>
+  <li><%= text_field :school_name,  :label => "School Name" %></li>
+  <li><h4>Contact Information for parents</h4></li>
+  <li><%= text_field :phone,  :label => "Phone" %></li>
+  <li><%= text_field :email,  :label => "E-mail" %></li>
+  <li><%= submit "Save" %> Or <%= link_to "Cancel", url(:schools) %></li>
+</ul>

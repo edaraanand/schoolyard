@@ -1,49 +1,33 @@
-<div class= 'formcontainer' >
-<p> Classrooms > Edit </p>
-   
+<fieldset>
+<h2 class="current-page"> Classrooms &gt; Edit </h2>
   <%= form_for :classroom, :action => url(:classroom, @classroom) do %>
+  <ul>
+    <li><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular} %></li>
+    <li><%= text_field :class_name,  :label => "Class Name" %></li>
+    <li><label>Class Teacher: </label> <select name = "class[people][ids][]" id="class_person",>
+      <% @teachers.each do |teacher| %>
+        <option value="<%= teacher.id %>">
+          <%= teacher.name %>
+        </option>
+      <% end %>
+    </li>
+      <% @class_people.each do |f| %>
+    <li>
+      <%= text_field :name => 'class[people][role][]', :id =>'class_class_people', :value => "#{f.role}" %>
+    </li>
+    <li><label>Class Teacher: </label><select name = "class[people][ids][]" id="class_person",>
+      <% @teachers.each do |teacher| %>
+        <option value="<%= teacher.id %>">
+          <%= teacher.name %>
+        </option>
+      <% end %>
+    </li>
+	<% end %>
+	  <li><a href="#" onclick="add();return false;">Add More</a></li>
   
-     <table id='classes'>
-          <tr>
-	     <td><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular} %></td>
-	 </tr>  
-	 <tr> 
-	   
-            <td><%= text_field :class_name,  :label => "Class Name" %></td>
-	 
-	 </tr>
-	 <tr>
-             <td>Class Teacher: <select name = "class[people][ids][]" id="class_person",>
-	                       <% @teachers.each do |teacher| %>
-		                      <option value="<%= teacher.id %>">
-			                   <%= teacher.name %>
-		                      </option>
-			        <% end %>
-	     </td>
-	 </tr>
-	       <% @class_people.each do |f| %>
-	 <tr>
-	     <td><%= text_field :name => 'class[people][role][]', :id =>'class_class_people', :value => "#{f.role}" %></td>
-             <td>Class Teacher:<select name = "class[people][ids][]" id="class_person",>
-	                       <% @teachers.each do |teacher| %>
-		                      <option value="<%= teacher.id %>">
-			                   <%= teacher.name %>
-		                      </option>
-			        <% end %>
-	     </td>
-	       <% end %>
-	     <td><a href="#" onclick="add();return false;">Add More</a>
-	  </tr>
-	  
-	 <tr><td><%= submit "Save" %></td>
-	     <td><%= link_to "Cancel", url(:classrooms) %></td>
-	 </tr>
-      </table>
-	      
-   <% end =%>
-     
-</div>
-
+  <%= submit "Save" %> Or <%= link_to "Cancel", url(:classrooms) %>
+  <% end =%>
+</fieldset>
 
 <script type= "text/javascript">
  
