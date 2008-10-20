@@ -21,8 +21,10 @@ class Person < ActiveRecord::Base
         end
 	
 	validates_presence_of :first_name, :last_name
+	validates_presence_of :address, :if => :address
 	validates_presence_of :email, :if => :email
 	validates_uniqueness_of :email, :if => :email
+	
 end            
   
 class Student < Person
@@ -41,13 +43,12 @@ class Staff < Person
 end
 
 class Parent < Person
+	
      has_many :guardians
      has_many :students, :through => :guardians, :source => :student
      
-     validates_presence_of :first_name, :message => "Parent First Name cant be blank"
-     validates_presence_of :last_name, :message => "Parent Last Name cant be blank"
-     validates_presence_of :address, :message => "Parent Address cant be blank"
-     
+    # validates_presence_of :first_name, :on => :update
+
 end
 
 class Principle < Person
