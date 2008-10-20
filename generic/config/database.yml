@@ -1,4 +1,3 @@
----
 # This is a sample database file for the ActiveRecord ORM
 :development: &defaults
   :adapter: mysql
@@ -15,3 +14,4 @@
 :rake:
   <<: *defaults
   :database: schoolapp_production
+

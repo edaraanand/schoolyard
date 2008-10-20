@@ -8,15 +8,20 @@ class Announcements < Application
   end
   
   def new
+      #only_provides :html
      @announcement = Announcement.new
      classrooms
-     render
+     render 
   end
   
   def create
      @announcement = Announcement.new(params[:announcement])
      @announcement.person_id = @current_user.id
+    # @announcement.file_file_name = params[:announcement][:file][:filename]
+    # @announcement.file_content_type = params[:announcement][:file][:content_type]
+     #@announcement.file_file_size = params[:announcement][:file][:size]
      classrooms
+     #raise "Eshwar".inspect
      if @announcement.save
         redirect url(:announcements)
      else

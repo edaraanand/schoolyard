@@ -1,0 +1,238 @@
+@charset "utf-8";
+/*Development Stage CSS - To be Optimized*/
+
+/*-------------Table Of Contents------------!!!
+
+    01. Reset
+    02. Base Layout
+    03. Header
+    04. User Control Panel
+    05. Sidebar Menu
+    06. Navigation
+    07. Breadcrumbs
+    08. Tables-1
+    09. Tables-2
+    10. Forms
+    11. Right Sidebar
+    
+!!!-----------------------------------------*/
+
+/* Full Reset */
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, font, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td {margin:0; padding:0; border:0; outline:0; font-weight:inherit;	font-style: inherit; font-size: 100%; font-family:inherit; vertical-align:baseline;}
+:focus{outline:0;}
+body{line-height:1; color:black; background:white;}
+ol, ul{list-style:none;}
+table{border-collapse:separate; border-spacing:0;}
+caption, th, td{text-align:left; font-weight:normal;}
+blockquote:before, blockquote:after,q:before, q:after{content:"";}
+blockquote, q{quotes:"" "";}
+  /*End Reset*/
+
+
+
+
+/*Base Layout*/
+body{ font-size:12px; font-family:Lucida, "Lucida Sans Unicode", Verdana, Arial Sans serif; background:url(../images/header-bg.gif) repeat-x;}
+body.fixed-width{width:1000px; margin:0 auto;}
+#pagewrap{width:980px}
+  /*Wraps Everything*/
+#content{ width:480px; float:left; margin-left:1em;}
+  /*The center Content Area*/
+#sidebar{float:left; clear:both;}
+  /*Left Side Menu. term 'Sidebar' defaults for LEFT SIDEBAR/MENU*/
+#content p{font:14px/16px Calibri, Arial, Helvetica, sans-serif; margin:.5em 0 2em 0;}
+#content-wrap{float:left; padding:0 0 0 10px; margin:20px 0 0 0; border-left:1px solid #e8e8e8;}
+  /*Wraps the content section*/
+
+
+/*
+a{}
+a:link{}
+a:visited{}
+a:hover{}
+a:active{}
+*/
+
+
+
+/*Header*/
+#header{}
+#header h1{width:600px; padding:12px 0 12px 20px; height:26px; position:relative;}
+#header h1 span{width:100%; height:100%; position:absolute; top:0; left:0; display:block;}
+  /*In case of School Logo, if any, do a Background-image on the span*/
+#header h1 a{font-size:16px; color:#2F8843; text-decoration:none; font-weight:bold;}
+#header h1 a:hover{border-bottom:1px solid #2f8843;}
+
+
+
+
+/*User Control Panel Section*/
+#user-cp{position:absolute; top:6px; right:6px;}
+#user-cp .welcome{}
+#user-cp ul li{display:inline;}
+#user-cp{float:right; background:url(../images/usercp-bg.gif) no-repeat top center; font-size:10px; padding:10px; width:302px; margin-top:6px;}
+#user-cp p{float:left; padding:0 6px 0 12px; color:#949490;}
+#user-cp em{font-style:normal;}
+#user-cp ul{float:right; margin-right:10px; display:inline;}
+  /*[Display] To fix IE6 doubled float margin*/
+#user-cp ul li{display:inline; border-left:1px solid #ccc; padding-left:3px; }
+#user-cp ul li.first{border:none;}
+#user-cp a:hover{color:#000;}
+
+
+  
+
+/*Sidebar Menu*/
+ul#menu{ padding:16px 16px 0 16px; width:160px; font-size:12px; line-height:15px;}
+ul#menu a{text-decoration:none;}
+ul#menu li{padding:4px 0 4px 0; font-weight:bold;}
+ul#menu li ul{margin:2px 0 4px;}
+ul#menu li ul li{font-weight:normal; padding:0;}
+ul#menu li ul li a{display:block; width:100%; padding:2px 0 4px 0; border-bottom:1px dotted #ccc; color:#486290;}
+ul#menu li ul li a:link{}
+ul#menu li ul li a:visited{}
+ul#menu li ul li a:hover, ul#menu li ul li a:active{text-decoration:underline}
+
+ul#menu span.count{background:url(../images/menu-count.gif) no-repeat left top; padding:2px 0px 4px 4px; margin:0 0 0 2px; color:#fff; font: normal 11px/12px Arial, Helvetica, sans-serif;}
+ul#menu span.count b{background:url(../images/menu-count.gif) no-repeat right top; padding:2px 5px 4px 2px;}
+  /*That yellow dot which contains numbers*/
+
+
+
+/* Top Navigation*/
+#navigation{font-size:12px; margin-left:60px; position:relative; top:1px;} 
+  /* Positioned Top:1px To create the open end bottom for Current Li*/
+#navigation li{display:inline;}
+  /* Layout Rules for navigation*/
+#navigation li a{float:left; padding:0 0 0 20px; margin:0 4px 0 0; text-decoration:none; color:#285564;}
+#navigation li a span{float:left; display:block; padding:7px 20px 5px 0px; cursor:pointer;}
+  /*Background*/
+#navigation li a{background:url(../images/nav-bg.gif) no-repeat left top;}
+#navigation li a span{background:url(../images/nav-bg.gif) no-repeat right top;}
+  /*Hover*/
+#navigation li a:hover{background:url(../images/nav-bg-hover.gif) no-repeat left top;}
+#navigation li a:hover span{background:url(../images/nav-bg-hover.gif) no-repeat right top; color:#000;}
+  /*Active*/
+#navigation li a:active{background-image:url(../images/nav-bg-active.gif);border-bottom:1px solid #a8c2da;}
+#navigation li a:active span{background-image:url(../images/nav-bg-active.gif);color:#000; } 
+  /*Current*/
+#navigation li.current a{color:#999; background-image:url(../images/nav-bg-current.gif); color:#000; border-bottom:1px solid #fff;}
+#navigation li.current a span{background-image:url(../images/nav-bg-current.gif); cursor:pointer;}
+  /*Admin's*/
+#navigation li a.admin{background-image:url(../images/nav-bg-admin.gif);border-bottom:1px solid #94c6a6;}
+#navigation li a.admin span{background-image:url(../images/nav-bg-admin.gif); color:#000;}
+  /*Admin + Hover*/
+#navigation li a.admin:hover{background-image:url(../images/nav-bg-admin-current.gif);border-bottom:1px solid #eafff1;}
+#navigation li a.admin:hover span{background-image:url(../images/nav-bg-admin-current.gif); color:#000;}
+  /*Admin + Current*/
+#navigation li.current a.admin{background-image:url(../images/nav-bg-admin-current.gif);}
+#navigation li.current a.admin span{background-image:url(../images/nav-bg-admin-current.gif); color:#060;}
+  /*Admin + Current + Hover*/
+#navigation li.current a.admin:hover{}
+#navigation li.current a.admin:hover span{}/*------------------Whoa! that was fun!!*/
+
+
+
+
+/*Breadcrumbs*/
+#crumbtrail{margin:0 0 4px 0; padding:0 0 4px 4px; font-size:13px; }
+#crumbtrail li{display:inline;padding:0 2px 0 0px;}
+#crumbtrail span{padding:0 2px 0 6px;}
+#crumbtrail a{text-decoration:none;}
+#crumbtrail a:hover{text-decoration:underline;}
+
+
+
+
+/*Horizontal Rule*/
+.hrule{height:0; border-bottom:1px solid #e8e8e8;}
+.hrule hr{display:none;}
+.clear{clear:both;}
+
+
+
+
+/*Tables*/
+#mytable {width:480px; padding:0; margin:0 0 20px 0; font-size:12px; }/*Set Table width here if needed*/
+#mytable caption{padding: 0 0 5px 0; font:italic 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; text-align:right;}
+#mytable th {font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; color:#4f6b72; border: 1px solid #c1dad7; border-left:0; letter-spacing: 1px; text-transform:uppercase; text-align: left; padding:6px 6px 6px 12px; background:#cae8ea url(../images/mytable/bg_header.jpg) no-repeat;}
+#mytable th.thead1, #mytable th.thead2{border-left: 1px solid #c1dad7; border-top: 0; background: #fff url(../images/mytable/bullet1.gif) no-repeat; font:bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;}
+#mytable th.thead2{background: #f5fafa url(../images/mytable/bullet2.gif) no-repeat; color: #797268;}
+#mytable th.firsthead{border-left:1px solid #C1DAD7;}/*First TH*/
+#mytable td{border-right:1px solid #C1DAD7; border-bottom:1px solid #C1DAD7; background:#fff; padding:6px 6px 6px 12px; color: #4f6b72;}
+#mytable td.alt{background: #f5fafa; color: #797268;}/*Zebra style*/
+#mytable tbody tr:hover td{background-color:#E1F0EF;}
+
+
+  /*Simple Table*/
+#simple-table{width:480px; padding:0; margin:0 0 20px 0; border-top: 1px solid #69c; border-bottom: 1px solid #69c; font-family: "Lucida Sans Unicode","Lucida Grande",Sans-Serif; font-size: 12px;  text-align: left; border-collapse: collapse; }
+#simple-table caption{padding:0 0 5px 0; font:italic 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; text-align:right;}
+#simple-table th{padding:15px 10px 10px; font-weight: normal; font-size: 13px; color:#003399;}
+#simple-table tbody{background:#e8edff none repeat scroll 0% 0%;}
+#simple-table td{border-top:1px dashed #fff; padding:10px; color:#669;}
+#simple-table tbody tr:hover td{background:#d0dafd none repeat scroll 0% 0%; color:#333399;}
+
+
+
+/*Forms*/
+fieldset{border-bottom:1px solid #ededed; margin-bottom:20px; padding-bottom:20px; }
+fieldset h3{margin-bottom:16px; border-bottom:1px solid #e8e8e8; padding-bottom:6px; font-size:13px; color:#486290;}
+fieldset h4{margin-bottom:16px; font-size:12px; color:#486290;}
+fieldset li{display:block; float:left; padding-bottom:10px;}
+
+fieldset input.text{display:block; width:280px; float:left; border:1px solid #9e9e9e; padding:2px; font:normal 13px/14px Arial, Helvetica, sans-serif;}
+fieldset label{display:block; width:180px; padding:0 10px 0 0 ; float:left;}
+fieldset span.hint{display:block; float:left; clear:left; width:184px; padding:4px 6px 0 0; color:#949494;}
+fieldset textarea{display:block; width:280px; float:left; border:1px solid #9e9e9e; padding:3px 2px; height:100px;font:normal 13px/14px Arial, Helvetica, sans-serif;}
+
+  /*Want the labels Right Aligned?
+  fieldset label{ text-align:right;}
+  fieldset span.hint{text-align:right;}*/
+  
+fieldset #checkboxes{width:480px;}
+fieldset #checkboxes span.check-all{float:left;}
+fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic Fieldset Labels*/
+
+#checkboxes #check-fields{ float:left;}
+#checkboxes span.check-all{float:left; display:block;}
+
+#checkboxes #check-fields span{display:block;}
+
+/*Rules for Right Sidebar*/
+.right-sidebar{width:270px; float:left; margin:30px 0 0 20px;  background:url(../images/right-sidebar-mid.gif) repeat-y bottom center}
+.right-sidebar h3{ height:14px; font-weight:bold ; background:url(../images/right-sidebar-top.gif) no-repeat top center; padding:12px;}
+.right-sidebar p.last{background:url(../images/right-sidebar-bottom.gif) no-repeat bottom center; }
+  /*Styles applied to these three elements provide chrome for the right sidebar*/
+
+.right-sidebar h3 span.main{float:left;}
+.right-sidebar h3 span.desc{float:right; font-weight:normal;}
+
+.right-sidebar p{padding:10px 8px 10px 12px}
+
+.right-sidebar ul{padding:10px 8px 6px 20px; text-indent:20px;}
+.right-sidebar ul li{padding:0 0 6px 0; background:url(../images/bullet-dash.gif) no-repeat left center;}
+.right-sidebar ol{padding:10px 8px 6px 20px; list-style:decimal inside;}
+.right-sidebar ol li{padding:0 0 6px 0;}
+
+
+#footer{clear:both;}
+
+.lightbox{width:400px; border:10px solid #ccc; padding:20px; margin:10px;}
+.lightbox .close{float:right}
+.lightbox form{width:400px;}
+.lightbox input{padding:0 12px;}
+span.cancel{padding:0 8px;}
+span.cancel a{color:#eb3f2c;}
+span.cancel a:hover{text-decoration:underline;}
+
+
+
+
+
+
+
+
+
+
+
+

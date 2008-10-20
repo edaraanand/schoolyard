@@ -1,5 +1,6 @@
 generic/tmp
 csd/tmp
 *~
-
-
+*.psd
+Wireframes.pdf
+*.zip

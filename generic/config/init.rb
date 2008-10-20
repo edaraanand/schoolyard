@@ -52,7 +52,7 @@ Gem.path.unshift(Merb.root / "gems")
 # later part of your configuration relies on libraries specified
 # here.
 #
-require 'parse_tree'
+
 #dependency 'paperclip'
 dependencies "merb-assets", "merb_helpers"
 dependency "merb_has_flash"
@@ -119,6 +119,7 @@ Merb::Config.use do |c|
 
   c[:session_secret_key]  = 'cb559b9d1afded91073666b345eebe8e8f41f213'
   c[:session_store] = 'cookie'
+  c[:disabled_components] = [:signals]
 end
 
 
