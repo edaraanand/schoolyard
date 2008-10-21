@@ -3,7 +3,7 @@
   <li class="last"><%= link_to "Add New", url(:new_classroom) %></li>
 </ul>
 <% unless @classrooms.empty? %>
-<div class="data-block">
+<div class="data-block short-block">
   <% for classroom in @classrooms %>
   <div class="data">
     <%# classroom.class_type %>

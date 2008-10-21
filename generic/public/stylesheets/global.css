@@ -38,13 +38,15 @@ body{ font-size:12px; font-family:Lucida, "Lucida Sans Unicode", Verdana, Arial 
 body.fixed-width{width:1000px; margin:0 auto;}
 #pagewrap{width:980px}
   /*Wraps Everything*/
-#content{ width:480px; float:left; margin-left:1em; min-height:500px;}
+#content{ min-width:480px; float:left; margin-left:1em; min-height:500px;}
   /*The center Content Area*/
 #sidebar{float:left; clear:both;}
   /*Left Side Menu. term 'Sidebar' defaults for LEFT SIDEBAR/MENU*/
 #content p{font:14px/16px Calibri, Arial, Helvetica, sans-serif; margin:.5em 0 1em 0;}
 #content-wrap{float:left; padding:0 0 0 10px; margin:20px 0 0 0; border-left:1px solid #e8e8e8;}
   /*Wraps the content section*/
+#fullpage{width:700px;}
+
 
 
 /*Generic Link Colors*/
@@ -56,7 +58,10 @@ a:active{color:#000;}
 
 content h3{font-size:14px; font-weight:bold; padding:4px 0; margin:0 0 8px 0; }
 h2.current-page{font-size:12px; font-weight:bold; padding:4px 0; margin:0 0 8px 0; border-bottom:1px solid #e8e8e8;}
-.current-page .edit-btn{float:none; margin:0 0 10px 16px;}
+h2.current-page .edit-btn{float:none; margin:0 0 10px 16px;}
+
+h2 span.actions {padding-left:12px; font-weight:normal;}
+h2 span.actions a{font-weight:normal;}
 
 dl{width:480px; border-bottom:1px  dashed #e8e8e8;  float:left; padding:4px 0; margin:4px 0; }
 dt{width:120px; padding:4px 0; margin:0 3px 0 3px; float:left; }
@@ -66,7 +71,7 @@ dl.check-box-set{ margin:0 0 0 180px;}
 dl.check-box-set dt{width:38px; padding:0; margin:0; text-align:right;}
 dl.check-box-set dd{width:420px; padding:4px 0; margin:0 0 0 12px;}
 
-.save-cancel{clear:both; text-indent:100px; padding:4px; margin:4px;}
+.save-cancel{clear:both; text-indent:180px; padding:12px; border-top:4px solid #e8e8e8; text-align:right}
 
 
 
@@ -204,7 +209,7 @@ ul#menu li.count span b{background:url(../images/menu-count.gif) no-repeat right
 
 
 /*Forms*/
-fieldset{ margin-bottom:20px; padding-bottom:20px; }
+fieldset{ margin-bottom:20px; padding-bottom:20px; width:480px; }
 fieldset h3{margin-bottom:16px; border-bottom:1px solid #e8e8e8; padding-bottom:6px; font-size:13px; color:#486290;}
 fieldset h4{margin-bottom:16px; font-size:12px; color:#486290;}
 fieldset li{display:block; float:left; padding-bottom:10px; width:480px;}
@@ -257,6 +262,10 @@ span.cancel a:hover{text-decoration:underline;}
 
 /*Data Block*/
 .data-block{padding:8px 0;}
+.short-block{width:480px;}
+.long-block{width:640px;}
+.post-content{width:480px; float:left;}
+
 .data{width:400px;}
 .ddmmm{width:36px; height:42px; border:1px solid #C1DAD7; margin:0px 10px 10px 0; float:left;}
 .ddmmm .date{display:block; text-align:center; padding:5px 0 6px 0; font-size:14px; font-weight:bold; color:#333}
@@ -269,6 +278,7 @@ span.cancel a:hover{text-decoration:underline;}
 
 .data-block .data{float:left;}
 .data-block h3{font-weight:bold; margin-bottom:6px;}
+.data-block h3 a { margin:6px 0 12px 0!important;}
 #content h3 a{margin:0 0 0 10px;}
 .data-block li{padding:0 0 4px 0;}
 
