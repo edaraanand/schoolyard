@@ -7,6 +7,7 @@ class Calendars < Application
   end
   
   def new
+	  
      @calendar = Calendar.new
      @class_rooms = Classroom.find(:all)
      render

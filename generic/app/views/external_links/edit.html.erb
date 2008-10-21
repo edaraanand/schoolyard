@@ -20,7 +20,7 @@
             <% end %>
                    <%= hidden_field :name => "label", :value => params[:label] %>
                   <tr>
-                      <td><%= link_to_function 'Add', "add();" %></td>
+                      <td><%= link_to_function 'Add More', "add();" %></td>
 		      <td><input type = 'button' value = 'Preview' onclick="preview();return false;" /></td> 
                       <td><%= submit "Publish" %> </br> Or <%= link_to "Cancel", url(:external_links) %></td>
                   </tr>

@@ -43,6 +43,7 @@ class People < Application
       @person = Person.find(params[:id]) 
       @accesses = Access.find(:all)
       @access_people = @person.access_peoples
+      puts @access_people.inspect
       render
   end
   
@@ -50,6 +51,9 @@ class People < Application
       @person = Person.find(params[:id])
       @accesses = Access.find(:all)
       @access_people = @person.access_peoples
+      puts "deep"
+      puts params[:access].inspect
+     # raise "Eshwar".inspect
    if params[:access].nil?
       flash[:error]  = "You should check one of the checkboxes"
       render :edit
