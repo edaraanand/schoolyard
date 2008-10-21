@@ -54,7 +54,7 @@ Gem.path.unshift(Merb.root / "gems")
 #
 #require 'config/dependencies.rb'
 #dependency 'paperclip'
-dependencies "merb-assets", "merb_helpers"
+dependencies "merb-assets", "merb-helpers"
 dependency "merb_has_flash"
 
 #dependency 'gems/merb_upload/core/pkg/merb_upload-0.0.1.gem'
