@@ -52,7 +52,7 @@ Gem.path.unshift(Merb.root / "gems")
 # later part of your configuration relies on libraries specified
 # here.
 #
-
+#require 'config/dependencies.rb'
 #dependency 'paperclip'
 dependencies "merb-assets", "merb_helpers"
 dependency "merb_has_flash"
