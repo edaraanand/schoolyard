@@ -4,7 +4,7 @@
    <table>
           <p> School Profile > Edit </p>
 	  
-    <%= form_for :school, :action => url(:school, @school) do %>
+    <%= form_for(@school, :action => resource(@school)) do %>
        
        <%= partial 'form' %>
         

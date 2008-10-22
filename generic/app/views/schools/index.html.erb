@@ -4,7 +4,7 @@
            <div class = 'formcontent'>
                <h3>School Profile</h3> </br>
 	       
-	     "Basic Settings are not specified, <%= link_to "Add Now", url(:new_school) %>"  
+	     "Basic Settings are not specified, <%= link_to "Add Now", resource(:schools, :new) %>"  
 	   </div>
        </div>
    <% else %>
@@ -12,7 +12,7 @@
            <div class = 'formcontent'>
         
                <h3>School Profile</h3> </br>
-	       <%= link_to "Edit", url(:edit_school, @school) %>
+	       <%= link_to "Edit", resource(@school, :edit) %>
 	      <table>
 		 <tr> 
 		    <th>School Name</th><td><%= @school.school_name %></td>
