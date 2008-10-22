@@ -4,7 +4,7 @@
      
     <p><b> Welcome Messages > Edit </b></p>
 
-    <%= form_for :welcome_message, :action => url(:welcome_message, @welcome_message), :id => 'welcome_message' do %>
+    <%= form_for(@welcome_message, :action => resource(@welcome_message), :id => 'welcome_message') do %>
 	
         <%= partial 'form' %>
 	

@@ -1,11 +1,11 @@
 
 <div class="formcontainer">
 
-    <%= form_for :welcome_message, :action => url(:controller => 'welcome_messages', :action => 'index') do %>
+    <%= form_for(@welcome_message, :action => url(:controller => 'welcome_messages', :action => 'index'), :id => 'welcome_message') do %>
          <table>
                 <tr>
                     <td> <h3>Welcome Messages</h3></td> </br> 
-	            <td> <%= link_to "Add New", url(:new_welcome_message) %></td>
+	            <td> <%= link_to "Add New", resource(:welcome_messages, :new) %></td>
                 </tr> 
 		<tr>
 		   <td><%= select :name => "access_name", :collection => @classrooms %></td>
@@ -23,8 +23,8 @@
 		   </tr>
 		   <tr>
                         <td><%= message.content %></td>
-			<td><%= link_to "Edit", url(:edit_welcome_message, message.id) %></td>
-                        <td><%= link_to "Delete", url(:delete_welcome_message, message.id) %></td>
+			<td><%= link_to "Edit", resource(message, :edit) %></td>
+                        <td><%= link_to "Delete", resource(message, :delete) %></td>
                    </tr>
 	       <% end %>
             

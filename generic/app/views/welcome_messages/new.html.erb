@@ -4,11 +4,11 @@
      
     <p><b> Welcome Messages > Add New </b></p>
 
-    <%= form_for :welcome_message, :action => url(:welcome_message), :id => 'welcome_message' do %>
+    <%= form_for(@welcome_message, :action => resource(:welcome_messages), :id => 'welcome_message') do %>
 	
          <%= partial 'form' %> 
 
     <% end =%>
 	   
     
-</div>
+</div>             

@@ -17,7 +17,7 @@ class WelcomeMessages < Application
      @welcome_message.person_id = @current_user.id
      classrooms
      if @welcome_message.save
-        redirect url(:welcome_messages)
+	redirect resource(:welcome_messages)
      else
 	render :new
      end
@@ -34,7 +34,7 @@ class WelcomeMessages < Application
      classrooms
      if @welcome_message.update_attributes(params[:welcome_message])
 	@welcome_message.person_id = @current_user.id
-	redirect url(:welcome_messages)
+	redirect resource(:welcome_messages)
      else
 	render :edit
      end
@@ -42,7 +42,7 @@ class WelcomeMessages < Application
   
   def delete
       WelcomeMessage.find(params[:id]).destroy
-      redirect url(:welcome_messages)
+      redirect resource(:welcome_messages)
   end
   
   def preview
