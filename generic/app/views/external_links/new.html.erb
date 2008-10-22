@@ -1,33 +1,28 @@
-<div id="errors">
-    <ul>      
-      <li><%= @external_link.errors.full_messages.join('</li><li>') %></li>
+<div class=" data-block short-block">
+  <div id="errors">
+      <ul>      
+        <li><%= @external_link.errors.full_messages.join('</li><li>') %></li>
+      </ul>
+  </div>
+  <h2 class="current-page"><%= params[:label] %> &gt; New</h2>
+  <%= form_for :external_link, :action => url(:external_link), :id => 'links' do %>
+    <ul class="edit-ext-links">
+      <li>
+        <%= text_field  :title, :name => 'external_link[title][]', :class=>"long text"%>
+        <%= text_field  :url, :name => 'external_link[url][]', :class=>"short text"%>
+        <a href="" class="delete-btn">Delete</a>
+      </li>
     </ul>
-</div>
-<p> <%= params[:label] %> > new </p>
-
-<div class='formcontainer'>
-
-    <%= form_for :external_link, :action => url(:external_link), :id => 'links' do %>
-        
-        <table id='ExternalLinks'>
-
-            <tr>
-                <td><%= text_field  :title, :name => 'external_link[title][]' %></td>
-                <td><%= text_field  :url, :name => 'external_link[url][]' %></td>
-	    </tr>
-	    <tr>
-                <td><%= link_to_function 'Add', "add();" %></td>
-		<td><input type = 'button' value = 'Preview' onclick="preview();return false;" /></td> 
-                <td><%= submit "Publish" %> </br> Or <%= link_to "Cancel", url(:external_links) %></td>
-            </tr>
-	  
-        </table>
-	     <%= hidden_field :name => "label", :value => params[:label] %>
-	   
-             
-     <% end =%>
+    <%= link_to_function 'Add',"add();"%>
+    <div class="save-cancel">
       
-
+      <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+      <%= submit "Publish" %> Or <%= link_to "Cancel", url(:external_links), :class=>"cancel"  %>
+      <%= hidden_field :name => "label", :value => params[:label] %>
+    </div>
+  
+  <% end =%>
+  </div>
 </div>
 
 <script type= "text/javascript">
