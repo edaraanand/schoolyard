@@ -7,7 +7,7 @@
 
       <p><b> Students > Edit </b></p>
 
-    <%= form_for :student, :action => url(:student, @student), :id => 'student' do %>
+    <%= form_for(@student, :action => resource(@student), :id => 'student') do %>
 
          <table>
               <tr>
@@ -58,7 +58,7 @@
 	         </tr>
 		 <tr>
 		     <td><input type = 'button' value = 'Preview' onclick="preview();return false;" /></td>
-	             <td><%= submit "Publish" %></br>  <%= link_to "Cancel", url(:students) %></td>
+	             <td><%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %></td>
 	         </tr>
 	  
           </table>

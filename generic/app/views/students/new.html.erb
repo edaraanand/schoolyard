@@ -1,5 +1,4 @@
 
-
 <%= error_messages_for @student %>
 <hr />
 <%= error_messages_for @parent %>
@@ -7,7 +6,8 @@
 <div class='formcontainer'>
 
    <p> Students > Add New </p>
-    <%= form_for :student, :action => url(:students), :id => 'student' do %>
+   
+    <%= form_for(@student, :action => resource(:students), :id => 'student') do %>
 
           <table>
           <tr>
@@ -46,7 +46,7 @@
 	       <tr><td><%= link_to_function 'Add', "add();" %></td></td>
 	       <tr>
 	          <td> <input type = 'button' value = 'Preview' onclick="preview();return false;" /></td>
-	          <td><%= submit "Publish" %></br>  <%= link_to "Cancel", url(:students) %></td>
+	          <td><%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %></td>
 	       </tr>
 	  
        </table>
@@ -90,5 +90,3 @@
 
 
 </script>
-   
- 

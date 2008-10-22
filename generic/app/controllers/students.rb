@@ -8,7 +8,8 @@ class Students < Application
   def new
      @student = Student.new
      @class_rooms = Classroom.find(:all, :conditions => ['class_type=?', "Classes"])
-     @parent = Parent.new
+    # 4.times{ @student.parents.build }
+    @parent = Parent.new
      render
   end
   
@@ -16,6 +17,7 @@ class Students < Application
      @class_rooms = Classroom.find(:all, :conditions => ['class_type=?', "Classes"])
      @student = Student.new(params[:student]) 
      @parent = @student.parents.build(params[:parent])
+     #raise "Eshwar".inspect
      unless params[:sp].nil?
         s = params[:sp][:first].zip(params[:sp][:last], params[:sp][:mail])
 	s.each do |p|
@@ -24,17 +26,17 @@ class Students < Application
      end
      if @student.save
 	Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })
-       	redirect url(:students)
+       	redirect resource(:students)
      else
+	#3.times{ @student.parents.build }
 	render :new
      end
   end
-  
+ 
   def edit
      @student = Student.find(params[:id])
      @class_rooms = Classroom.find(:all)
-    # @student.parents.build
-   #  @parent = Parent.new
+     #@parent = @student.parents
      render
   end
   
@@ -60,7 +62,7 @@ class Students < Application
 	   if @p.valid?
               @student.save
 	      Study.update(@study_id.id, {:student_id => @student.id, :classroom_id => params[:classroom_id]})
-	      redirect url(:students)
+	      redirect resource(:students)
            else
 	      flash[:error1] = "Please enter the Parent details"
 	      render :edit
