@@ -6,7 +6,7 @@
                 <% if @home_links.empty? %>
 		  <tr>
 		      <td><h4>Home Page</h4></td></br>
-                      <td>"Home Page Links are not specified, <%= link_to "Add New", url(:new_external_link, :label => 'Home Page') %></td></br>"
+                      <td>"Home Page Links are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Home Page') %></td></br>"
 		  </tr>
 		<% else %>
 		    <tr>
@@ -23,7 +23,7 @@
 		 <% if @class_links.empty? %>
 		   <tr>
                     <td><h4>Classrooms</h4></td></br>
-                    <td>"Classroom links are not specified, <%= link_to "Add New", url(:new_external_link, :label => 'Classrooms') %></td></br>
+                    <td>"Classroom links are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Classrooms') %></td></br>
 		   </tr>
 		 <% else %>
 		     <tr>
@@ -40,7 +40,7 @@
 		 <% if  @sport_links.empty? %>
 		   <tr>
 		      <td><h4>Sports</h4></td></br>
-                      <td>"Sports Links are not specified, <%= link_to "Add New", url(:new_external_link, :label => 'Sports') %></td></br>
+                      <td>"Sports Links are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Sports') %></td></br>
 		   </tr>
 		 <% else %>
 		    <tr>
@@ -57,7 +57,7 @@
 		<% if @event_links.empty? %> 
 		   <tr>
 		      <td><h4>Events</h4></td></br>
-                      <td>"Event Links are not specified, <%= link_to "Add New", url(:new_external_link, :label => 'Events') %></td></br>
+                      <td>"Event Links are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Events') %></td></br>
 		   </tr>
 		<% else %>
 		    <tr>

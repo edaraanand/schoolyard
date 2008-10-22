@@ -1,11 +1,8 @@
-
-
-
 <p> <%= params[:label] %> > Edit </p>
 
 <div class='formcontainer'>
 
-    <%= form_for :external_link, :action => url(:external_links_update), :id => 'links' do %>
+    <%= form_for(@external_link, :action => url(:external_links_update), :id => 'links') do %>
          
           <table id='Links'>
        
@@ -22,7 +19,7 @@
                   <tr>
                       <td><%= link_to_function 'Add More', "add();" %></td>
 		      <td><input type = 'button' value = 'Preview' onclick="preview();return false;" /></td> 
-                      <td><%= submit "Publish" %> </br> Or <%= link_to "Cancel", url(:external_links) %></td>
+                      <td><%= submit "Publish" %> </br> Or <%= link_to "Cancel", resource(:external_links) %></td>
                   </tr>
 		  <% if flash[:error] %>
 	             <tr><td><%= flash[:error] %></td></tr>
