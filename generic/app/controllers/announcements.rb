@@ -8,7 +8,6 @@ class Announcements < Application
   end
   
   def new
-      #only_provides :html
      @announcement = Announcement.new
      classrooms
      render 
@@ -23,7 +22,7 @@ class Announcements < Application
      classrooms
      #raise "Eshwar".inspect
      if @announcement.save
-        redirect url(:announcements)
+	redirect resource(:announcements)
      else
 	render :new
      end
@@ -41,7 +40,7 @@ class Announcements < Application
      if @announcement.update_attributes(params[:announcement])
 	@announcement.person_id = @current_user.id
 	@announcement.save
-	redirect url(:announcements)
+	redirect resource(:announcements)
      else
 	render :edit
      end
@@ -49,7 +48,7 @@ class Announcements < Application
   
   def delete
       Announcement.find(params[:id]).destroy
-      redirect url(:announcements)
+      redirect resource(:announcements)
    end
    
    def preview

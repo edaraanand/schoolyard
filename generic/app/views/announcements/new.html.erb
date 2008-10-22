@@ -5,7 +5,7 @@
      
     <p><b> Announcements > Add New </b></p>
 
-    <%= form_for :announcement, :action => url(:announcement), :id => 'announcement' do %>
+     <%= form_for (@announcement, :action => resource(:announcements), :id => 'announcement') do %>
 	
          <%= partial 'form' %>          
 

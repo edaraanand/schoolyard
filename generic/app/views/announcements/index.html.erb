@@ -1,11 +1,11 @@
 
 <div class = 'formcontainer'>
           
-  <%= form_for :announcement, :action => url(:controller => 'announcements', :action => 'index'), :id => 'announcement' do %>
+  <%= form_for(@announcement, :action => url(:controller => 'announcements', :action => 'index'), :id => 'announcement') do %>
          <table>
                 <tr>
                     <td> <h3>Announcements</h3></td> </br> 
-	            <td> <%= link_to "Add New", url(:new_announcement) %></td>
+	            <td> <%= link_to "Add New", resource(:announcements, :new) %></td>
                 </tr> 
 		<tr>
 		    <td><%= select :name => "access_name", :collection => classrooms %></td>
@@ -27,8 +27,8 @@
                    </tr> 
                    <tr>
                         <td><%= announcement.content %></td>
-			<td><%= link_to "Edit", url(:edit_announcement, announcement.id) %></td>
-                        <td><%= link_to "Delete", url(:delete_announcement, announcement.id) %></td>
+			<td><%= link_to "Edit", resource(announcement, :edit) %></td>
+			<td><%= link_to "Delete", resource(announcement, :delete) %></td>
                    </tr>
 
 	      <% end %>

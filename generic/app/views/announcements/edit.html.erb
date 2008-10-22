@@ -4,7 +4,7 @@
      
     <p><b> Announcements > Edit </b></p>
 
-    <%= form_for :announcement, :action => url(:announcement, @announcement), :id => 'announcement' do %>
+    <%= form_for(@announcement, :action => resource(@announcement), :id => 'announcement' ) do %>
 	
          <%= partial 'form' %>          
 
