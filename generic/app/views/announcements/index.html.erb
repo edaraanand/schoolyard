@@ -1,37 +1,26 @@
-
-<div class = 'formcontainer'>
-          
+<h2 class="current-page">Announcements: <%= link_to "Add New", url(:new_announcement) %></h2>
+<div class="fullpage announcemt">
   <%= form_for :announcement, :action => url(:controller => 'announcements', :action => 'index'), :id => 'announcement' do %>
-         <table>
-                <tr>
-                    <td> <h3>Announcements</h3></td> </br> 
-	            <td> <%= link_to "Add New", url(:new_announcement) %></td>
-                </tr> 
-		<tr>
-		    <td><%= select :name => "access_name", :collection => classrooms %></td>
-		    <td><%= submit ">>" %></td>
-	        </tr>
-	 </table>	
-  <% end =%> 	    
-        <table>
-	
-	      <% for announcement in @announcements %>
-    
-                   <tr>
-		        <% unless announcement.expiration.nil? %>
-                        <td><%= announcement.expiration.strftime("%B-%d") %></td>
-			<% end %>
-                        <td><%= announcement.title %></td>
-			  
-                   </tr> 
-                   <tr>
-                        <td><%= announcement.content %></td>
-			<td><%= link_to "Edit", url(:edit_announcement, announcement.id) %></td>
-                        <td><%= link_to "Delete", url(:delete_announcement, announcement.id) %></td>
-                   </tr>
+    <span class="select-announce"><%= select :name => "access_name", :collection => classrooms %><%= submit ">>" %></span>
+  <% end =%>
 
-	      <% end %>
-    
-     
+  <% for announcement in @announcements %>
+    <div class="data-block long-block">
+      <span class="hidden">
+      <% unless announcement.expiration.nil? %>
+        <%= announcement.expiration.strftime("%B-%d") %>
+      <% end %>
+      </span>
+      <div class="ddmmm">
+        <span class="date">24</span>
+        <span class="month">Oct</span>
+      </div>
+      <h3><%= announcement.title %></h3>
+      <p class="post-content"><%= announcement.content %></p>
+      <%= link_to "Edit", url(:edit_announcement, announcement.id), :class=>"edit-btn" %>
+      <%= link_to "Delete", url(:delete_announcement, announcement.id), :class=>"delete-btn"  %>
+      <div class="hrule clear"><hr /></div>
+    </div>
+  <% end %>
 </div>
  

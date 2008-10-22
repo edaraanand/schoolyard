@@ -309,6 +309,9 @@ ul.edit-ext-links li{background:url(../images/link-bullet.gif) no-repeat left ce
 #errors ul, ul.error_messages{ color:red; margin:4px 0 10px 0; }
 #errors ul li , ul.error_messages li{padding:10px;  text-indent:12px; float:none; background:url(../images/exclamation-bullet.gif) no-repeat left center;}
 
+.announcemt select{width:200px;}
+.announcemt{width:700px!important;}
+.select-announce{padding:10px 0 20px 0; display:block;}
 
 
 

@@ -1,18 +1,8 @@
-
 <%= error_messages_for @announcement %>
-
-<div class ='formcontainer'>
-     
-    <p><b> Announcements > Add New </b></p>
-
-    <%= form_for :announcement, :action => url(:announcement), :id => 'announcement' do %>
-	
-         <%= partial 'form' %>          
-
-    <% end =%>
-	   
-    
-</div>
+<h2 class="current-page">Announcements &gt; Add New </h2>
+<%= form_for :announcement, :action => url(:announcement), :id => 'announcement' do %>
+  <%= partial 'form' %>          
+<% end =%>
 
 
 
