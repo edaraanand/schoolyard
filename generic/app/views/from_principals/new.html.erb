@@ -4,7 +4,7 @@
      
     <p><b> From the Principal > Add New </b></p>
 
-    <%= form_for :announcement, :action => url(:from_principal), :id => 'announcement' do %>
+    <%= form_for(@announcement, :action => url(:from_principals), :id => 'announcement') do %>
 	
          <%= partial 'form' %>          
 

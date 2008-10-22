@@ -14,7 +14,7 @@ class FromPrincipals < Application
      @announcement = Announcement.new(params[:announcement])
      @announcement.label = "from_principal"
      if @announcement.save
-        redirect url(:from_principals)
+	redirect resource(:from_principals)
      else
 	render :new
      end
@@ -30,7 +30,7 @@ class FromPrincipals < Application
      if @announcement.update_attributes(params[:announcement])
         @announcement.label = "from_principal"
         @announcement.save
-        redirect url(:from_principals)
+        redirect resource(:from_principals)
      else
 	render :edit
      end
@@ -43,7 +43,7 @@ class FromPrincipals < Application
   
   def delete
      Announcement.find(params[:id]).destroy
-     redirect url(from_principals)
+     redirect resource(:from_principals)
   end
   
    def preview
