@@ -1,35 +1,24 @@
-<p> <%= params[:label] %> > Edit </p>
-
-<div class='formcontainer'>
-
-    <%= form_for(@external_link, :action => url(:external_links_update), :id => 'links') do %>
-         
-          <table id='Links'>
-       
-             <% @external_links.each do |f| %>
-
-    <tr>
-      <td> <%= text_field :id => 'external_link_title', :name => 'external_link[title][]', :value => "#{f.title}" %></td>
-      <td> <%= text_field :id => 'external_link_url', :name => 'external_link[url][]', :value => "#{f.url}" %></td>
-      <td> <td><%= link_to "Delete", url(:delete_external_link, f.id) %></td>
-    </tr>
-                    
-            <% end %>
-                   <%= hidden_field :name => "label", :value => params[:label] %>
-                  <tr>
-                      <td><%= link_to_function 'Add More', "add();" %></td>
-		      <td><input type = 'button' value = 'Preview' onclick="preview();return false;" /></td> 
-                      <td><%= submit "Publish" %> </br> Or <%= link_to "Cancel", resource(:external_links) %></td>
-                  </tr>
-		  <% if flash[:error] %>
-	             <tr><td><%= flash[:error] %></td></tr>
-		 <% end %>
-           </table>   
-             
-      <% end =%>
-
+<div class=" data-block short-block">
+  <h2 class="current-page"> <%= params[:label] %> &gt; Edit </h2>
+  <%= form_for(@external_link, :action => url(:external_links_update), :id => 'links') do %>
+    <ul class="edit-ext-links">
+      <% @external_links.each do |f| %>
+        <li>
+          <%= text_field :id => 'external_link_title', :name => 'external_link[title][]', :value => "#{f.title}", :class=>"long text" %>
+          <%= text_field :id => 'external_link_url', :name => 'external_link[url][]', :value => "#{f.url}", :class=>"short text" %>
+          <%= link_to "Delete", url(:delete_external_link, f.id), :class=>"delete-btn" %>
+        </li>
+      <% end %>
+    </ul>
+    <%= hidden_field :name => "label", :value => params[:label] %>
+    
+    <div class="save-cancel">
+      <span class="add-link"><%= link_to_function 'Add',"add();"%></span>
+      <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+      <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
+    </div>
+  <% end =%>
 </div>
-
 
 <script type= "text/javascript">
  

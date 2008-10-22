@@ -14,8 +14,8 @@
 		</tr>
 		<% end %>
 		    
-		<% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
-		  <% cals.each do |cal| %> 
+		    <% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
+		    <% cals.each do |cal| %> 
 		        <tr>
 		             <% unless cal.start_time.nil? %> 
 			        <td><%= cal.start_time.strftime("%H-%M") %></td>
@@ -25,9 +25,10 @@
 			     <td><%= link_to "Delete", resource(calendar, :delete) %></td>
 	                </tr>
 			
+		    <% end %>
+		    <% @calendars.delete_if{|c| cals.include?(c)} %>
 		  <% end %>
-		     <% @calendars.delete_if{|c| cals.include?(c)} %>
-  	  <% end %>
+  	<% end %>
 	</table> 
     </div>
 	 

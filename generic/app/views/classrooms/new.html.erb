@@ -1,37 +1,24 @@
-<%= error_messages_for @classroom %>
-
-<div class= 'formcontainer' >
-   
+<fieldset>
+  <%= error_messages_for @classroom %>
   <%= form_for(@classroom, :action => resource(:classrooms)) do %>
-  
-     <table id='classes'>
-         <tr>
-	     <td><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular} %></td>
-	 </tr> 
-	  <tr>
-             <td><%= text_field :class_name,  :label => "Class Name" %></td>
-	   </tr>
-	
-	<tr><td> Class Teacher: <select name = "class[people][ids][]" id="class_person",>
-	                       <% @teachers.each do |teacher| %>
-		                      <option value="<%= teacher.id %>">
-			                   <%= teacher.name %>
-		                      </option>
-			        <% end %>
-	    </td>
-        </tr>
-	 
-	     <td><a href="#" onclick="add();return false;">Add More</a>
-	 </tr>
-	 <tr><td><%= submit "Save" %></td>
-	     <td><%= link_to "Cancel", resource(:classrooms) %></td>
-	 </tr>
-      </table>
-	      
-   <% end =%>
-     
-  </div>
-  
+  <ul>
+    <li><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular} %></td>
+    <li><%= text_field :class_name,  :label => "Class Name" %></li>
+    <li><label>Class Teacher:</label><select name = "class[people][ids][]" id="class_person",>
+      <% @teachers.each do |teacher| %>
+      <option value="<%= teacher.id %>">
+      <%= teacher.name %>
+      </option>
+      <% end %>
+    </li>
+    <li><a href="#" onclick="add();return false;">Add More</a></li>
+    </ul>
+    <div class="save-cancel">
+      <%= submit "Save" %> Or <%= link_to "Cancel", resource(:classrooms) %>
+    </div>
+  <% end =%>
+</fieldset>
+
 <script type= "text/javascript">
  
   function add()
@@ -52,8 +39,5 @@
 	 tr.appendChild(td2);
 	 table.appendChild(tr);
     }
-     
- 
-  
 </script>
 

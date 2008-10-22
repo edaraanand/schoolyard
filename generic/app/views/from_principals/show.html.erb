@@ -1,22 +1,18 @@
-<div class = 'formcontainer'>
-          
-         <table>
-                <tr>
-                    <td> <h3>From the Principal > <%= @announcement.title %></h3></td> </br> 
-	        </tr> 
-	   
-                <tr>
-		    <% unless @announcement.expiration.nil? %>
-                        <td><%= @announcement.expiration.strftime("%B-%d") %></td>
-		    <% end %>
-                      <td><%= @announcement.title %></td>
-                 </tr> 
-                 <tr>
-                     <td><%= @announcement.content %></td>
-		     <td><%= link_to "Edit", url(:edit_from_principal, @announcement.id) %></td>
-                     <td><%= link_to "Delete", url(:delete_from_principal, @announcement.id) %></td>
-                 </tr>
+<div id="fullpage">
+  <h2 class="current-page">From the Principal <span class="actions"><%= @announcement.title %></span></h2>
+  <div class="data-block long-block">
+    <% unless @announcement.expiration.nil? %>
+      <span class="hidden"><%= @announcement.expiration.strftime("%B-%d") %></span>
+    <% end %>
+    <div class="ddmmm">
+      <span class="date">24</span>
+      <span class="month">Oct</span>
+    </div>
+    <h3><%= @announcement.title %></h3>
+    <p><%= @announcement.content %></p>
+    <%= link_to "Edit", url(:edit_from_principal, @announcement.id), :class=>"edit-btn" %>
+    <%= link_to "Delete", url(:delete_from_principal, @announcement.id), :class=>"delete-btn"  %>
+    <div class="hrule clear"><hr /></div>
+  </div>
+</div>
 
-	    
-        </table>
- </div>                                                    

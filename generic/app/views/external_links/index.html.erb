@@ -1,80 +1,59 @@
+<div class=" data-block long-block">
+  <div class="external-links">
+  <h2 class="current-page">External Links</h2>
+  <div class="section">
+    <% if @home_links.empty? %>
+      <p><em>Home Page Links</em> are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Home Page') %></p> 
+    <% else %>
+      <h4>Home Page<%= link_to "Edit", url(:external_links_edit, :label => 'Home Page'), :class=>"edit-btn" %></h4>
+      <ul>
+        <% for external_link in @home_links %>
+          <li><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+  <div class="section">
+    <% if @class_links.empty? %>
+      <p><em>Classroom links</em> are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Classrooms') %></p>
+    <% else %>
+    <h4>Classrooms<%= link_to "Edit", url(:external_links_edit, :label => 'Classrooms'), :class=>"edit-btn"%></h4>
+    <ul>
+      <% for external_link in @class_links %>
+        <li><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></li>
+      <% end %>
+    </ul>
+    <% end %>
+  </div>
 
-   <div class='formcontainer'>
+  <div class="section">
+    <% if  @sport_links.empty? %>
+      <p><em>Sports Links</em> are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Sports') %></p>
+    <% else %>
+    <h4>Sports<%= link_to "Edit", url(:external_links_edit, :label => 'Sports'), :class=>"edit-btn" %></h4>
+    <ul>
+      <% for external_link in @sport_links %>
+        <li><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></li>
+      <% end %> 
+    </ul>
+    <% end %>
+  </div>
+  
+   <div class="hrule dashed clear"><hr /></div>
    
-       <table>
-
-                <% if @home_links.empty? %>
-		  <tr>
-		      <td><h4>Home Page</h4></td></br>
-                      <td>"Home Page Links are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Home Page') %></td></br>"
-		  </tr>
-		<% else %>
-		    <tr>
-		       <td><h4>Home Page</h4></td></br>
-		       <td><%= link_to "Edit", url(:external_links_edit, :label => 'Home Page') %></td></br>
-		    </tr>
-		     <% for external_link in @home_links %>
-                        <tr>
-                          <td><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></td>
-                       </tr>
-                     <% end %> 
-                <% end %>    
-                
-		 <% if @class_links.empty? %>
-		   <tr>
-                    <td><h4>Classrooms</h4></td></br>
-                    <td>"Classroom links are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Classrooms') %></td></br>
-		   </tr>
-		 <% else %>
-		     <tr>
-		         <td><h4>Classrooms</h4></td></br>
-		         <td><%= link_to "Edit", url(:external_links_edit, :label => 'Classrooms') %></td>
-		     </tr>
-		     <% for external_link in @class_links %>
-                        <tr>
-                          <td><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></td>
-                       </tr>
-                     <% end %> 
-                 <% end %>
-		 
-		 <% if  @sport_links.empty? %>
-		   <tr>
-		      <td><h4>Sports</h4></td></br>
-                      <td>"Sports Links are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Sports') %></td></br>
-		   </tr>
-		 <% else %>
-		    <tr>
-		       <td><h4>Sports</h4></td></br>
-		       <td><%= link_to "Edit", url(:external_links_edit, :label => 'Sports') %></td></br>
-		     </tr>  
-		     <% for external_link in @sport_links %>
-                        <tr>
-                          <td><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></td>
-                        </tr>
-                     <% end %> 
-                <% end %>
-		
-		<% if @event_links.empty? %> 
-		   <tr>
-		      <td><h4>Events</h4></td></br>
-                      <td>"Event Links are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Events') %></td></br>
-		   </tr>
-		<% else %>
-		    <tr>
-		       <td><h4>Events</h4></td></br>
-		       <td><%= link_to "Edit", url(:external_links_edit, :label => 'Events') %></td>
-		    </tr>
-		     <% for external_link in @event_links %>
-                        <tr>
-                          <td><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></td>
-                       </tr>
-                     <% end %> 
-               <% end %>
-             </tr>
-	     
-	</table>
-	</div>
-
+  <div class="section">
+    <% if @event_links.empty? %> 
+      <p><em>Event Links</em> are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Events') %></p>
+    <% else %>
+    <h4>Events<%= link_to "Edit", url(:external_links_edit, :label => 'Events'), :class=>"edit-btn" %></h4>
+      <ul>
+        <% for external_link in @event_links %>
+          <li><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></li>
+        <% end %>
+    </ul>
+    <% end %>
+  </div>
+</div>
       
   
     

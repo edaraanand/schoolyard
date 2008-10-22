@@ -1,66 +1,88 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
-  <head>
-    <title>Catholic school</title>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="/stylesheets/ui.datepicker.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="/stylesheets/clockpick.1.2.4.css" type="text/css" media="screen" charset="utf-8" />
-    <script src='/javascripts/prototype.js'></script>
-    <script src='/javascripts/jquery.js'></script>
-    <script src='/javascripts/ui-datepicker-1.5.2.min.js'></script>
-    <script src='/javascripts/jquery.clockpick.1.2.4.js'></script>
-    <script>  jQuery.noConflict(); </script>
-    <script>  var $j = jQuery; </script>
-          <%= include_required_js %>
-  </head>
-  <body>
-        <%= link_to "logout", url(:logout) %>
-        <div id="header"> 
-            <h1>School Name</h1>
-	        <ul>
-		    <li><%= link_to "Home" %></li>
-		    <li><%= link_to "Class" %></li>
-		    <li><%= link_to "Sport" %></li>
-		    <li><%= link_to "Form" %></li>
-		    <li><%= link_to "Directory" %></li>
-		    <li><%= link_to "Events" %></li>
-		    <li><%= link_to "Administration", url(:schools) %></li>
-		</ul>
-        </div>
-	<div class="clear">
-        </div>
-	<div id="sidebar">
-           <ul>
-	        <li><b> Site Settings</b> </li>  
-		
-		<li><%= link_to "School Profile", url(:schools) %></li>
-		<li><%= link_to "Class Rooms", url(:classrooms) %></li>
-		<li><b> Access Rights </b></li>
-		<li><%= link_to "Add/Edit Access Rights", url(:people) %></li>
-		<li><%= link_to "Parent Registration" %></li>
-		<li><b> Content </b></li>
-		<li><%= link_to "Pending Your Approval" %></li>
-		<li><%= link_to "From the principal", url(:from_principals) %></li>
-		<li><%= link_to "Announcements", url(:announcements) %></li>
-		<li><%= link_to "Welcome Messages", url(:welcome_messages) %></li>
-		<li><%= link_to "Calendar", url(:calendars) %></li>
-		<li><%= link_to "Spotlight" %></li>
-		<li><%= link_to "Home work" %></li>
-		<li><%= link_to "Grades/Reports" %></li>
-		<li><%= link_to "External Links", url(:external_links) %></li>
-		<li><%= link_to "Sports Teams", url(:teams) %></li>
-		<li><%= link_to "Forms" %></li>
-		<li><%= link_to "Advertising" %></li>
-		<li><b> Directories </b></li>
-		<li><%= link_to "students", url(:students) %></li>
-          </ul>
-      </div>
+<head>
+  <title>Catholic school</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-    <div id="content">
-    	<%= catch_content :for_layout %>
-    </div>
-    	<div class="clear">
-        </div>
-  </body>
+  <link rel="stylesheet" href="/stylesheets/ui.datepicker.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="/stylesheets/clockpick.1.2.4.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="/stylesheets/global.css" type="text/css" media="screen" />
+  
+  <script src='/javascripts/prototype.js'></script>
+  <script src='/javascripts/jquery.js'></script>
+  <script src='/javascripts/ui-datepicker-1.5.2.min.js'></script>
+  <script src='/javascripts/jquery.clockpick.1.2.4.js'></script>
+  <script>  jQuery.noConflict(); </script>
+  <script>  var $j = jQuery; </script>
+        <%= include_required_js %>
+</head>
+<body class="fixed-width">
+  <div id="page-wrap"><!-- Wraps everything -->
+    <div id="header"><!--The Header -->
+      <h1><a href="#"><span></span>School Name Appears Here</a></h1><!--Logo-->
+      <div id="user-cp"><!--User Control Panel -->
+        <p class="welcome">Welcome <em>Albert Q. School</em></p>
+        <ul>
+          <li class="first"><a href="#">My Account</a></li>
+          <li><%= link_to "logout", url(:logout) %></li>
+        </ul>
+      </div>
+      <div id="navbar"><!--The Main Navigation -->
+        <ul id="navigation">
+		      <li><%= link_to "<span>Home</span>" %></li>
+		      <li><%= link_to "<span>Classrooms</span>" %></li>
+          <li class="current"><li><%= link_to "<span>Sports</span>" %></li>
+          <li><%= link_to "<span>Forms</span>" %></li>
+          <li><%= link_to "<span>Directory</span>" %></li>
+          <li><%= link_to "<span>Events</span>" %></li>
+          <li><%= link_to "<span>Administration</span>", url(:schools), :class=> "admin" %></li>
+          <li><a href="#" class="help-contact"><span>help/contact</span></a></li>
+        </ul>
+        <div class="hrule clear"><hr /></div><!-- gives bottom border to the Navigation.-->
+      </div><!--Navbar End-->
+    </div><!--Header End -->
+    
+    <div id="sidebar">
+      <ul id="menu"><!-- Nested Lists -->
+        <li>Site Settings<ul>
+          <li><%= link_to "Basic Settings", url(:schools) %></li>
+      		<li><%= link_to "Class Rooms", url(:classrooms) %></li>
+
+          </ul>
+        </li>
+        <li>Access Rights<ul>
+              <li><%= link_to "Add/Edit Access Rights", url(:people) %></li>
+		          <li class="count"><%= link_to "Parent Registration <span><b>8</b></span>", url(:parents)%></li>
+          </ul>
+        </li>
+        <li>Content<ul>
+          <li class="count"><%= link_to "Pending your approval<span><b>55</b></span>"%></li>
+      		<li><%= link_to "From the principal", url(:from_principals) %></li>
+      		<li><%= link_to "Announcements", url(:announcements) %></li>
+      		<li><%= link_to "Welcome Messages", url(:welcome_messages) %></li>
+      		<li><%= link_to "Calendar", url(:calendars) %></li>
+      		<li><%= link_to "Spotlight" %></li>
+      		<li><%= link_to "Home work" %></li>
+      		<li><%= link_to "Grades/Reports" %></li>
+      		<li><%= link_to "External Links", url(:external_links) %></li>
+      		<li><%= link_to "Sports Teams", url(:teams) %></li>
+      		<li><%= link_to "Forms" %></li>
+      		<li><%= link_to "Advertising" %></li>
+          </ul>
+        </li>
+        <li>Directories<ul>
+		      <li><%= link_to "students", url(:students) %></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- Sidebar Ends -->
+    <div id="content-wrap"><!--Wraps The content Area-->
+      <div class="hrule clear hidden "><hr /></div>
+      <div id="content"><!--Content Area Starts here-->
+        <%= catch_content :for_layout %>
+      </div><!--Content End-->
+    </div><!--Content Wrap End -->
+    <!--Right Sidebar to be inserted here-->    
+  </div><!--Pagewrap End -->
+</body>
 </html>

@@ -1,13 +1,7 @@
 <%= error_messages_for @school %>
-
-<div class = 'formcontainer'>
-   <table>
-          <p> School Profile > Edit </p>
-	  
-    <%= form_for(@school, :action => resource(@school)) do %>
-       
-       <%= partial 'form' %>
-        
-    <% end =%>
-        
-</div>
+<fieldset>
+  <h2 class="current-page">School Profile &gt; Edit</h2>
+  <%= form_for(@school, :action => resource(@school)) do %>
+  <%= partial 'form' %>
+  <% end =%>
+</fieldset>
