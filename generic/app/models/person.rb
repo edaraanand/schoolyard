@@ -17,7 +17,7 @@ class Person < ActiveRecord::Base
 	end
 	
  	def name
-           "#{first_name}" "#{last_name}"
+            "#{first_name}"  "     "    "#{last_name}" 
         end
 	
 	validates_presence_of :first_name, :last_name
@@ -34,6 +34,21 @@ class Student < Person
      
      has_many :studies
      has_many :classrooms, :through => :studies, :source => :classroom
+     
+     #def parent_attributes=(parent_attributes)
+	# parent_attributes.each do |attributes|
+	 #    parents.build(attributes)
+         #end
+     #end
+     
+     # def f_for(array_or_object, *args, &block)
+        #  raise ArgumentError, "Missing block" unless block_given?
+	#  if Enumerable === array_or_object
+	#     f_for_enumerable(array_or_object, *args, &block)
+        #  else
+        #     f_for_object(array_or_object, *args, &block)
+        #  end
+     # end
       
 end
 
