@@ -1,16 +1,6 @@
 <%= error_messages_for @welcome_message %>
-
-<div class ='formcontainer'>
-     
-    <p><b> Welcome Messages > Edit </b></p>
-
-    <%= form_for :welcome_message, :action => url(:welcome_message, @welcome_message), :id => 'welcome_message' do %>
-	
-        <%= partial 'form' %>
-	
-    <% end =%>
-	   
-    
-</div>
+<%= form_for :welcome_message, :action => url(:welcome_message, @welcome_message), :id => 'welcome_message' do %>
+  <%= partial 'form' %>
+<% end =%>
 
 

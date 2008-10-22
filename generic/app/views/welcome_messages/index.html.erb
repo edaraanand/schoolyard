@@ -1,34 +1,26 @@
+<h2 class="current-page">Welcome Messages  <%= link_to "Add New", url(:new_welcome_message) %></h2>
+<div class="fullpage announcemt">
+<%= form_for :welcome_message, :action => url(:controller => 'welcome_messages', :action => 'index') do %>
+  <%= select :name => "access_name", :collection => @classrooms %>
+  <%= submit ">>" %>
+<% end =%>
 
-<div class="formcontainer">
+<% for message in @welcome_messages %>
+  <div class="data-block long-block">
+    <span class="hidden">
+      <%= message.created_at.strftime("%B-%d") %>
+    </span>
+    <div class="ddmmm">
+          <span class="date">24</span>
+          <span class="month">Oct</span>
+    </div>
+    <p class="post-content"><%= message.content %></p>
+    <%= link_to "Edit", url(:edit_welcome_message, message.id), :class=>"edit-btn" %>
+    <%= link_to "Delete", url(:delete_welcome_message, message.id), :class=>"delete-btn" %>
+    <div class="hrule clear"><hr /></div>
+  </div>
+<% end %>
 
-    <%= form_for :welcome_message, :action => url(:controller => 'welcome_messages', :action => 'index') do %>
-         <table>
-                <tr>
-                    <td> <h3>Welcome Messages</h3></td> </br> 
-	            <td> <%= link_to "Add New", url(:new_welcome_message) %></td>
-                </tr> 
-		<tr>
-		   <td><%= select :name => "access_name", :collection => @classrooms %></td>
-		   <td><%= submit ">>" %></td>
-		</tr>
-	 </table>	
-     <% end =%>	
-	 
-    
-	 <table> 
-	       <% for message in @welcome_messages %>
-	     
-	           <tr>
-		        <td><%= message.created_at.strftime("%B-%d") %></td>
-		   </tr>
-		   <tr>
-                        <td><%= message.content %></td>
-			<td><%= link_to "Edit", url(:edit_welcome_message, message.id) %></td>
-                        <td><%= link_to "Delete", url(:delete_welcome_message, message.id) %></td>
-                   </tr>
-	       <% end %>
-            
-	 </table>
 	
 </div> 
 
