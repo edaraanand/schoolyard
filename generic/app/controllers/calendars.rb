@@ -8,7 +8,6 @@ class Calendars < Application
   def new
      @calendar = Calendar.new
      @class_rooms = Classroom.find(:all)
-     @current_d = Date.today
      render
   end
   
