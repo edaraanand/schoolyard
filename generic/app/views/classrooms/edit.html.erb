@@ -3,7 +3,7 @@
 <div class= 'formcontainer' >
 <p> Classrooms > Edit </p>
    
-  <%= form_for :classroom, :action => url(:classroom, @classroom) do %>
+  <%= form_for(@classroom, :action => resource(@classroom)) do %>
   
      <table id='classes'>
           <tr>
@@ -38,7 +38,7 @@
 	  </tr>
 	  
 	 <tr><td><%= submit "Save" %></td>
-	     <td><%= link_to "Cancel", url(:classrooms) %></td>
+	     <td><%= link_to "Cancel", resource(:classrooms) %></td>
 	 </tr>
       </table>
 	      

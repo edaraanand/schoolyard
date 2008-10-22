@@ -30,7 +30,7 @@ class Classrooms < Application
 	       @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
             end
           end
-         redirect url(:classrooms)
+	  redirect resource(:classrooms)
      else
 	 render :new
      end
@@ -77,7 +77,7 @@ class Classrooms < Application
             end
          end
       end
-      redirect url(:classrooms)
+      redirect resource(:classrooms)
    else
 	render :edit
    end
@@ -86,14 +86,8 @@ class Classrooms < Application
    
    def delete
       Classroom.find(params[:id]).destroy
-      redirect url(:classrooms) 
+      redirect resource(:classrooms) 
    end
-   
-  # private 
-    
-   #def teachers
-	#   @t = Staff.find(:all)
-	#   @tea = @t.collect{|x| x.name }
-  # end
+  
   
 end

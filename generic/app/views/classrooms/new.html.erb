@@ -2,7 +2,7 @@
 
 <div class= 'formcontainer' >
    
-  <%= form_for :classroom, :action => url(:classroom) do %>
+  <%= form_for(@classroom, :action => resource(:classrooms)) do %>
   
      <table id='classes'>
          <tr>
@@ -24,7 +24,7 @@
 	     <td><a href="#" onclick="add();return false;">Add More</a>
 	 </tr>
 	 <tr><td><%= submit "Save" %></td>
-	     <td><%= link_to "Cancel", url(:classrooms) %></td>
+	     <td><%= link_to "Cancel", resource(:classrooms) %></td>
 	 </tr>
       </table>
 	      

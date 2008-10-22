@@ -2,12 +2,12 @@
   
        <h3>Classrooms</h3> </br>
     
-       <%= link_to "Add New", url(:new_classroom) %>
+       <%= link_to "Add New", resource(:classrooms, :new) %>
      
  <% else %>
           <table>
 		<td><h4>Classrooms</h4></td>
-		<td><%= link_to "Add New", url(:new_classroom) %></td>
+		<td><%= link_to "Add New", resource(:classrooms, :new) %></td>
 		
 		
 		<% for classroom in @classrooms %>
@@ -18,8 +18,8 @@
 		          <% unless classroom.class_name.nil? %>
 		             <td><%= classroom.class_name %></td>
 			  <% end %>
-			   <td><%= link_to "Edit",  url(:edit_classroom, classroom.id) %></td>
-			   <td><%= link_to "Delete",  url(:delete_classroom, classroom.id) %></td>
+			   <td><%= link_to "Edit",  resource(classroom, :edit) %></td>
+			   <td><%= link_to "Delete", resource(classroom, :delete) %></td>
 		      </tr>
 		           <% s = classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
 			  
