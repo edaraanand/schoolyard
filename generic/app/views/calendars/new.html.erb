@@ -1,6 +1,8 @@
+<%= error_messages_for @calendar %>
+
 <div class= 'formcontainer'>
    
-    <%= form_for :calendar, :action => url(:calendar) do %>
+    <%= form_for(@calendar, :action => resource(:calendars)) do %>
     
           <%= partial 'form' %>  
 	
