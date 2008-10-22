@@ -1,4 +1,6 @@
 class Teams < Application
+	
+    before :team_values, :exclude => [:index]
 
   def index
      @teams = Team.find(:all)
@@ -7,36 +9,34 @@ class Teams < Application
   
   def new
      @team = Team.new 
-     @teachers = Staff.find(:all)
-     @classrooms = Classroom.find(:all)
-     @years = (1999..2020).to_a
      render
   end
   
   def create
      classroom = Classroom.find(:first, :conditions => ['class_name=?', params[:team][:classroom_id] ])
-     @team = Team.create(params[:team])
+     @team = Team.new(params[:team])
      id = params[:classroom][:people][:ids]
      role = params[:classroom][:people][:role]
      @class_people = []
-     if role.nil?
-	@class_people << ClassPeople.create({:person_id => "#{id}", :classroom_id => classroom.id, :team_id => @team.id, :role => "coach" })
-     else
-	role_id = id.delete_at(0)
-	@class_people << ClassPeople.create({:person_id => role_id, :team_id => @team.id, :classroom_id => classroom.id, :role => "coach"})
-        s = id.zip(role)
-     	s.each do |r|
-	   @class_people << ClassPeople.create({:person_id => r[0], :classroom_id => classroom.id, :team_id => @team.id, :role => r[1] })
+     if @team.save
+        if role.nil?
+	   @class_people << ClassPeople.create({:person_id => "#{id}", :classroom_id => classroom.id, :team_id => @team.id, :role => "coach" })
+        else
+	   role_id = id.delete_at(0)
+	   @class_people << ClassPeople.create({:person_id => role_id, :team_id => @team.id, :classroom_id => classroom.id, :role => "coach"})
+           s = id.zip(role)
+     	   s.each do |r|
+	      @class_people << ClassPeople.create({:person_id => r[0], :classroom_id => classroom.id, :team_id => @team.id, :role => r[1] })
+           end
         end
+        redirect resource(:teams)
+     else
+	render :new
      end
-     redirect url(:teams)
   end
 
   def edit     
      @team = Team.find(params[:id])
-     @teachers = Staff.find(:all)
-     @classrooms = Classroom.find(:all)
-     @years = (1999..2020).to_a
      team_peoples = @team.class_peoples
      @team_peoples = team_peoples.delete_if{|x| x.role == "coach" }
      render
@@ -47,6 +47,7 @@ class Teams < Application
      classroom = Classroom.find(:first, :conditions => ['class_name=?', params[:team][:classroom_id] ])
      id = params[:classroom][:people][:ids]
      role = params[:classroom][:people][:role]
+    # raise "Eshwar".inspect
      @team_p =  Team.update(@team.id, {:classroom_id => classroom.id, :year => params[:team][:year], :team_name => params[:team][:team_name]})
      @class_teams = @team.class_peoples
      @cls_ts = @team.class_peoples.find(:first, :conditions => ['role=?', "coach"])
@@ -68,8 +69,16 @@ class Teams < Application
 	  end
 	end
      end
-     redirect url(:teams)
+     redirect resource(:teams)
   end
   
-
+  private
+  
+  def team_values
+     @teachers = Staff.find(:all)
+     @classrooms = Classroom.find(:all)
+     @years = (1999..2020).to_a 
+  end
+  
+  
 end
