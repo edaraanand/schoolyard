@@ -16,7 +16,7 @@
     </tfoot>
     <% for person in @people %>
       <tr>
-        <td><%= link_to "#{person.last_name}", url(:edit_person, person.id) %> </td>
+        <td class="click-block"><%= link_to "#{person.last_name}", url(:edit_person, person.id) %> </td>
         <td><%= person.first_name %></td>
       	<td><%= person.email %></td>
       	<td><%= person.phone %></td>

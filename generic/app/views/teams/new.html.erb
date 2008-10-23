@@ -1,37 +1,28 @@
-<div class= 'formcontainer' >
-   
-  <%= form_for :team, :action => url(:team) do %>
+<h2 class="current-page">From the Principal &gt; Add New</h2>
+<%= form_for :team, :action => url(:team) do %>
+  <fieldset>
+    <ul>
+      <li><%= text_field  :team_name,  :label => "Name of the Team" %></li>
+      <li><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name }, :label => "Classroom" %></li>
+      <li><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year" %></li>
+      <li>
+        <label>Coach:</label>
+        <select name = "classroom[people][ids][]" id="classroom_person",>
+          <% @teachers.each do |teacher| %>
+            <option value="<%= teacher.id %>">
+              <%= teacher.first_name %>
+            </option>
+  			  <% end %>
+  		</li>
+  		<li><a href="#" onclick="add();return false;" class="add-more">Add More</a></li>
+    </ul>
+  </fieldset>
   
-     <table id='teams'>
-         <tr>
-             <td><%= text_field  :team_name,  :label => "Name of the Team" %></td>
-	 </tr>
-	 <tr>
-	     <td><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name }, :label => "Classroom" %> </td>
-         </tr>
-	 <tr>
-	     <td><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year" %> </td>
-         </tr>
-	 <tr><td>Coach:<select name = "classroom[people][ids][]" id="classroom_person",>
-	                       <% @teachers.each do |teacher| %>
-		                      <option value="<%= teacher.id %>">
-			                   <%= teacher.first_name %>
-		                      </option>
-			        <% end %>
-	     </td>
-	     <td><a href="#" onclick="add();return false;">Add More</a></td>
-	 </tr>
-	 
-	 <tr>
-	     <td><%= submit "Save" %>  Or</td></br>
-	     <td><%= link_to "Cancel", url(:teams) %></td>
-	 </tr>
-      </table>
-	      
-   <% end =%>
-     
+  <div class="save-cancel">
+    <%= submit "Save" %>  Or <%= link_to "Cancel", url(:teams) %>
   </div>
-  
+<% end =%>
+
 
 <script type= "text/javascript">
  
