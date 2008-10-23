@@ -25,6 +25,7 @@ class Calendars < Application
   def edit
      @calendar = Calendar.find(params[:id])
      @class_rooms = Classroom.find(:all) 
+     @cal = Calendar.find(:first, :conditions => ['day_event=?', true])
      render
   end
   

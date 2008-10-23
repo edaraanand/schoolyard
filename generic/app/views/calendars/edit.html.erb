@@ -24,11 +24,19 @@
 	   </tr>
 	   <tr>
 	       <td><%= text_field :start_date, :id => "start", :label => "Starts:" %></td>
-	       <td><%= text_field :start_time, :id => "start_time" %></td>
+	       <% if @cal.day_event == true %>
+	          <td><%= text_field :start_time, :id => "start_time", :disabled => true %></td>
+	       <% else %>
+		   <td><%= text_field :start_time, :id => "start_time" %></td>
+	       <% end %>
 	   </tr>
 	   <tr>
 	       <td><%= text_field :end_date, :id => "end", :label => "Ends:" %></td>
-	       <td><%= text_field :end_time, :id => "end_time" %></td>
+	       <% if @cal.day_event == true %>
+	          <td><%= text_field :end_time, :id => "end_time", :disabled => true %></td>
+	       <% else %>
+		   <td><%= text_field :end_time, :id => "end_time" %></td>
+	       <% end %>
 	   </tr>
 	   <tr>
               <td><%= submit "Publish" %></br> Or <%= link_to "Cancel", resource(:calendars) %></td>
@@ -43,20 +51,24 @@
 <script type= "text/javascript">
 
    
-  $j("#start").datepicker();
-  $j("#end").datepicker();
+  $j("#start").datepicker({minDate:'today'});
+  $j("#end").datepicker({minDate:'today'});
   
-  $j("#start_time").clockpick(); 
-  $j("#end_time").clockpick();
+  $j("#start_time").clockpick({starthour : 0, endhour : 23 }); 
+  $j("#end_time").clockpick({starthour : 0, endhour : 23 }); 
  
+       <% s = Calendar.find(:first, :conditions => ['day_event=?', true]) %>
+       <% day = s.day_event %>
+     var day = true;
+     
   function dayevent()
   {
-     if (document.getElementById('calendar_day_event').checked == true)
+    if (document.getElementById('calendar_day_event').checked == true)
       {
          document.getElementById('start_time').disabled = true;
 	 document.getElementById('end_time').disabled = true;
        }
-      else if(document.getElementById('calendar_day_event').checked == false)
+     else if(document.getElementById('calendar_day_event').checked == false)
        {
          document.getElementById('start_time').disabled = false;
 	 document.getElementById('end_time').disabled = false;
