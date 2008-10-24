@@ -30,7 +30,7 @@ class Classrooms < Application
 	       @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
             end
           end
-         redirect url(:classrooms)
+	  redirect resource(:classrooms)
      else
 	 render :new
      end
@@ -47,12 +47,17 @@ class Classrooms < Application
    end
    
    def update
-      @classroom = Classroom.find(params[:id])
+       @teachers = Staff.find(:all)
+       @classroom = Classroom.find(params[:id])
+       @class_people = @classroom.class_peoples
+       @class = @class_people.delete_if{|x| x.team_id != nil}
+      @class_p = @class.delete_if{|x| x.role == "class_teacher"}
       id = params[:class][:people][:ids]
       role = params[:class][:people][:role] 
-      @classrooms = []
-      @classrooms << @classroom.update_attributes(params[:classroom])
-      @class_peoples = @classroom.class_peoples
+     # @classrooms = []
+    #  @classrooms << @classroom.update_attributes(params[:classroom])
+    if @classroom.update_attributes(params[:classroom])
+       @class_peoples = @classroom.class_peoples
       @cla = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
       @class = @class_peoples.delete_if{|x| x.team_id != nil}
       @class_p = @class.delete_if{|x| x.role == "class_teacher"}
@@ -72,19 +77,17 @@ class Classrooms < Application
             end
          end
       end
-      redirect url(:classrooms)
+      redirect resource(:classrooms)
+   else
+	render :edit
+   end
+   
    end                                      
    
    def delete
       Classroom.find(params[:id]).destroy
-      redirect url(:classrooms) 
+      redirect resource(:classrooms) 
    end
-   
-  # private 
-    
-   #def teachers
-	#   @t = Staff.find(:all)
-	#   @tea = @t.collect{|x| x.name }
-  # end
+  
   
 end

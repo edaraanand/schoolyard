@@ -1,6 +1,6 @@
 <fieldset>
   <%= error_messages_for @classroom %>
-  <%= form_for :classroom, :action => url(:classroom) do %>
+  <%= form_for(@classroom, :action => resource(:classrooms)) do %>
   <ul>
     <li><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular} %></td>
     <li><%= text_field :class_name,  :label => "Class Name" %></li>
@@ -14,7 +14,7 @@
     <li><a href="#" onclick="add();return false;">Add More</a></li>
     </ul>
     <div class="save-cancel">
-      <%= submit "Save" %> Or <%= link_to "Cancel", url(:classrooms) %>
+      <%= submit "Save" %> Or <%= link_to "Cancel", resource(:classrooms) %>
     </div>
   <% end =%>
 </fieldset>

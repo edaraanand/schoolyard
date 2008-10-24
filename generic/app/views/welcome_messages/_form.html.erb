@@ -7,7 +7,9 @@
 </fieldset>
 
 <div class="save-cancel">
-    <input type = 'button' value = 'Preview' onclick="preview();return false;" /><%= submit "Publish" %> Or <%= link_to "Cancel", url(:welcome_messages) %>
+    <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+    <%= submit "Publish" %> Or 
+    <%= link_to "Cancel", resource(:welcome_messages) %>
 </div>
 
 <script type= "text/javascript">

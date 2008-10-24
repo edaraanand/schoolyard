@@ -5,7 +5,7 @@
       <table>
             <tr>
 	        <td><h3>Students</h3> </br></td>
-	        <td><%= link_to "Add New", url(:new_student) %></td>
+	        <td><%= link_to "Add New", resource(:students, :new) %></td>
 	    </tr>
       </table>
       </div>
@@ -16,7 +16,7 @@
       <table>
             <tr>
 	        <td><h3>Students</h3> </br></td>
-	        <td><%= link_to "Add New", url(:new_student) %></td>
+	        <td><%= link_to "Add New", resource(:students, :new) %></td>
 	    </tr>
      	    <tr> 
 	        <td<h3>Last Name </h3></td>
@@ -27,7 +27,7 @@
 	    <% for student in @students %>
    
                  <tr>
-		     <td><%= link_to "#{student.last_name}", url(:edit_student, student.id) %> </td>
+		     <td><%= link_to "#{student.last_name}", resource(student, :edit) %> </td>
                      <td><%= student.first_name %></td>
 		 </tr> 
                 

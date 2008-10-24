@@ -17,12 +17,14 @@ class Person < ActiveRecord::Base
 	end
 	
  	def name
-           "#{first_name}" "#{last_name}"
+            "#{first_name}"  "     "    "#{last_name}" 
         end
 	
 	validates_presence_of :first_name, :last_name
+	validates_presence_of :address, :if => :address
 	validates_presence_of :email, :if => :email
-	validates_uniqueness_of :email
+	validates_uniqueness_of :email, :if => :email
+	
 end            
   
 class Student < Person
@@ -33,8 +35,21 @@ class Student < Person
      has_many :studies
      has_many :classrooms, :through => :studies, :source => :classroom
      
-    # validates_presence_of :first_name, :last_name
-   
+     #def parent_attributes=(parent_attributes)
+	# parent_attributes.each do |attributes|
+	 #    parents.build(attributes)
+         #end
+     #end
+     
+     # def f_for(array_or_object, *args, &block)
+        #  raise ArgumentError, "Missing block" unless block_given?
+	#  if Enumerable === array_or_object
+	#     f_for_enumerable(array_or_object, *args, &block)
+        #  else
+        #     f_for_object(array_or_object, *args, &block)
+        #  end
+     # end
+      
 end
 
 class Staff < Person
@@ -43,11 +58,16 @@ class Staff < Person
 end
 
 class Parent < Person
+	
      has_many :guardians
      has_many :students, :through => :guardians, :source => :student
+     
+    # validates_presence_of :first_name, :on => :update
+
 end
 
 class Principle < Person
+	
 end
 
   

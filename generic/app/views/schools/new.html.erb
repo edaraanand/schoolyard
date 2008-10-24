@@ -5,9 +5,9 @@
 
     <p> School Profile > New </p>
     
-     <%= form_for :school, :action => url(:school) do  %>
-
-           <%= partial 'form' %>
+     <%= form_for(@school, :action => resource(:schools)) do  %>
+    
+         <%= partial 'form' %>
 
      <% end =%>
 

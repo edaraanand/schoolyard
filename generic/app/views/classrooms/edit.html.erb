@@ -1,6 +1,8 @@
+<%= error_messages_for @classroom %>
+   
 <fieldset>
 <h2 class="current-page"> Classrooms &gt; Edit </h2>
-  <%= form_for :classroom, :action => url(:classroom, @classroom) do %>
+  <%= form_for(@classroom, :action => resource(@classroom)) do %>
   <ul>
     <li><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular} %></li>
     <li><%= text_field :class_name,  :label => "Class Name" %></li>

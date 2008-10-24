@@ -1,5 +1,6 @@
+<%= error_messages_for @team %>
 <h2 class="current-page">From the Principal &gt; Add New</h2>
-<%= form_for :team, :action => url(:team) do %>
+<%= form_for(@team, :action => resource(:teams)) do %>
   <fieldset>
     <ul>
       <li><%= text_field  :team_name,  :label => "Name of the Team" %></li>
@@ -19,7 +20,7 @@
   </fieldset>
   
   <div class="save-cancel">
-    <%= submit "Save" %>  Or <%= link_to "Cancel", url(:teams) %>
+    <%= submit "Save" %>  Or <%= link_to "Cancel", resource(:teams) %>
   </div>
 <% end =%>
 

@@ -1,17 +1,17 @@
 ---
 # This is a sample database file for the ActiveRecord ORM
 :development: &defaults
-  :adapter: sqlite3
-  :database: db/schoolapp_development
+  :adapter: mysql
+  :database: schoolapp_development
 
 :test:
   <<: *defaults
-  :database: db/schoolapp_test
+  :database: schoolapp_test
 
 :production:
   <<: *defaults
-  :database: db/schoolapp_production
+  :database: schoolapp_production
 
 :rake:
   <<: *defaults
-  :database: db/schoolapp_production
+  :database: schoolapp_production

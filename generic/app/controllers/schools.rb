@@ -13,7 +13,7 @@ class Schools < Application
   def create
     @school = School.new(params[:school])
     if @school.save
-       redirect url(:schools)
+       redirect resource(:schools)
     else
 	render :new
     end
@@ -27,7 +27,7 @@ class Schools < Application
   def update
     @school = School.find(params[:id])
       if @school.update_attributes(params[:school])     
-         redirect url(:schools)
+         redirect resource(:schools)                                     
       else
 	 render :edit
       end

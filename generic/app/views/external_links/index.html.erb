@@ -3,7 +3,7 @@
   <h2 class="current-page">External Links</h2>
   <div class="section">
     <% if @home_links.empty? %>
-      <p><em>Home Page Links</em> are not specified, <%= link_to "Add New", url(:new_external_link, :label => 'Home Page') %></p> 
+      <p><em>Home Page Links</em> are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Home Page') %></p> 
     <% else %>
       <h4>Home Page<%= link_to "Edit", url(:external_links_edit, :label => 'Home Page'), :class=>"edit-btn" %></h4>
       <ul>
@@ -15,7 +15,7 @@
   </div>
   <div class="section">
     <% if @class_links.empty? %>
-      <p><em>Classroom links</em> are not specified, <%= link_to "Add New", url(:new_external_link, :label => 'Classrooms') %></p>
+      <p><em>Classroom links</em> are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Classrooms') %></p>
     <% else %>
     <h4>Classrooms<%= link_to "Edit", url(:external_links_edit, :label => 'Classrooms'), :class=>"edit-btn"%></h4>
     <ul>
@@ -28,7 +28,7 @@
 
   <div class="section">
     <% if  @sport_links.empty? %>
-      <p><em>Sports Links</em> are not specified, <%= link_to "Add New", url(:new_external_link, :label => 'Sports') %></p>
+      <p><em>Sports Links</em> are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Sports') %></p>
     <% else %>
     <h4>Sports<%= link_to "Edit", url(:external_links_edit, :label => 'Sports'), :class=>"edit-btn" %></h4>
     <ul>
@@ -43,7 +43,7 @@
    
   <div class="section">
     <% if @event_links.empty? %> 
-      <p><em>Event Links</em> are not specified, <%= link_to "Add New", url(:new_external_link, :label => 'Events') %></p>
+      <p><em>Event Links</em> are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Events') %></p>
     <% else %>
     <h4>Events<%= link_to "Edit", url(:external_links_edit, :label => 'Events'), :class=>"edit-btn" %></h4>
       <ul>

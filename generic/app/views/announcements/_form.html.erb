@@ -8,10 +8,8 @@
 </fieldset>
 <div class="save-cancel">
 	<input type = 'button' value = 'Preview' onclick="preview();return false;" />
-	<%= submit "Submit for Approval" %></br> Or <%= link_to "Cancel", url(:announcements) %>
+	<%= submit "Submit for Approval" %></br> Or <%= link_to "Cancel", resource(:announcements) %>
 </div>
-	
-</table>
 
 
 <script type= "text/javascript">
@@ -24,7 +22,7 @@
    
  }
  
-  $j("#expiration").datepicker();
+  $j("#expiration").datepicker({minDate:'today'});
  
 </script>
  

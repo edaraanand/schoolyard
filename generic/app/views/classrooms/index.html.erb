@@ -1,6 +1,6 @@
 <ul id="crumbtrail">
   <li>Classrooms<span>&gt;</span></li>
-  <li class="last"><%= link_to "Add New", url(:new_classroom) %></li>
+  <li class="last"><%= link_to "Add New", resource(:classrooms, :new) %></li>
 </ul>
 <% unless @classrooms.empty? %>
 <div class="data-block short-block">
@@ -17,8 +17,8 @@
     
   </div>
 
-  <%= link_to "Edit",  url(:edit_classroom, classroom.id), :class=> "edit-btn" %>
-  <%= link_to "Delete",  url(:delete_classroom, classroom.id), :class=> "delete-btn" %>
+  <%= link_to "Edit",  resource(classroom, :edit), :class=> "edit-btn" %>
+  <%= link_to "Delete", resource(classroom, :delete), :class=> "delete-btn" %>
   <div class="clear dashed separate"></div>
   <% end %>
 </div>

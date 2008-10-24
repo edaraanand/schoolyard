@@ -1,9 +1,9 @@
 <fieldset>
   <% if @school.nil? %>
   <h3>School Profile</h3>
-	<p>"Basic Settings are not specified, <%= link_to "Add Now", url(:new_school) %>"</p>
+	<p>"Basic Settings are not specified, <%= link_to "Add Now", resource(:schools, :new) %>"</p>
   <% else %>
-  <h2 class="current-page">School Profile<%= link_to "Edit", url(:edit_school, @school), :class=> "edit-btn" %></h2>
+  <h2 class="current-page">School Profile<%= link_to "Edit", resource(@school, :edit), :class=> "edit-btn" %></h2>
   <dl>
     <dt>School Name</dt>
     <dd><%= @school.school_name %></dd>

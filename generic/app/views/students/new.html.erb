@@ -1,10 +1,13 @@
 
 <%= error_messages_for @student %>
+<hr />
+<%= error_messages_for @parent %>
 
 <div class='formcontainer'>
 
    <p> Students > Add New </p>
-    <%= form_for :student, :action => url(:students), :id => 'student' do %>
+   
+    <%= form_for(@student, :action => resource(:students), :id => 'student') do %>
 
           <table>
           <tr>
@@ -20,30 +23,31 @@
               <td><%= text_field  :first_name,  :label => "Student" %>
               <td><%= text_field  :last_name %></td>
 	  </tr>
-	  
-	  <tr>
-              <td><%= text_field  :name => 'parent[first_name][]',  :label => "Parents/Guardian" %></td>
-              <td><%= text_field  :name => 'parent[last_name][]' %></td>
-	  </tr>
+	<% fields_for :parent do %>  
+	     <tr>
+                 <td><%= text_field  :first_name,  :label => "Parents/Guardian" %></td>
+                 <td><%= text_field  :last_name %></td>
+	     </tr>
+	 
 	       <tr>
-	           <td><%= text_field :name => 'parent[email][]', :label => "Email" %></td>
+	           <td><%= text_field :email, :label => "Email" %></td>
 	       </tr>
+	       <tr>
+	          <td><%= text_field  :phone,  :label => "Phone" %></td>
+	       </tr>
+	       <tr>
+	          <td><%= text_field  :address,  :label => "Address" %></td>
+	       </tr>
+	<% end %>        
 	       <tr id="students">
 	       </tr>
 	       <tr id="email">
 	       </tr>
 	       <tr><td><%= link_to_function 'Add', "add();" %></td></td>
 	       <tr>
-	          <td><%= text_field  :name => "parent[phone]",  :label => "Phone" %></td>
+	          <td> <input type = 'button' value = 'Preview' onclick="preview();return false;" /></td>
+	          <td><%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %></td>
 	       </tr>
-	       <tr>
-	          <td><%= text_field  :name => "parent[address]",  :label => "Address" %></td>
-	       </tr>
-	                       
-	  <tr>
-	       <td> <input type = 'button' value = 'Preview' onclick="preview();return false;" /></td>
-	       <td><%= submit "Publish" %></br>  <%= link_to "Cancel", url(:students) %></td>
-	  </tr>
 	  
        </table>
    <% end =%>
@@ -60,11 +64,11 @@
      var student = document.getElementById('students');
      var email = document.getElementById('email');
          var td1 = document.createElement('td');  
-         td1.innerHTML = "Parents/Guardian: <input type='text' id='parent_first_name' name='parent[first_name][]'/>";
+         td1.innerHTML = "Parents/Guardian: <input type='text' id='sp_first' name='sp[first][]'/>";
          var td2 = document.createElement('td');  
-         td2.innerHTML = "<input type='text' id='parent_last_name' name='parent[last_name][]'/>";
+         td2.innerHTML = "<input type='text' id='sp_last' name='sp[last][]'/>";
          var td3 = document.createElement('td'); 
-	 td3.innerHTML = "Email: <input type='text' id='parent_last_name' name='parent[email][]'/>";
+	 td3.innerHTML = "Email: <input type='text' id='sp_mail' name='sp[mail][]'/>";
         
          student.appendChild(td1);
          student.appendChild(td2);
@@ -76,7 +80,7 @@
 	    alert("You can't add more than that");
 	 }
     
- }
+ }   
  
  function preview()
  {
@@ -86,5 +90,3 @@
 
 
 </script>
-   
- 

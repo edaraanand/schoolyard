@@ -1,6 +1,6 @@
 <div class=" data-block short-block">
   <h2 class="current-page"> <%= params[:label] %> &gt; Edit </h2>
-  <%= form_for :external_link, :action => url(:external_links_update), :id => 'links' do %>
+  <%= form_for(@external_link, :action => url(:external_links_update), :id => 'links') do %>
     <ul class="edit-ext-links">
       <% @external_links.each do |f| %>
         <li>
@@ -15,7 +15,7 @@
     <div class="save-cancel">
       <span class="add-link"><%= link_to_function 'Add',"add();"%></span>
       <input type = 'button' value = 'Preview' onclick="preview();return false;" />
-      <%= submit "Publish" %> Or <%= link_to "Cancel", url(:external_links), :class=>"cancel" %>
+      <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
     </div>
   <% end =%>
 </div>

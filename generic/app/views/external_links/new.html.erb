@@ -5,7 +5,7 @@
       </ul>
   </div>
   <h2 class="current-page"><%= params[:label] %> &gt; New</h2>
-  <%= form_for :external_link, :action => url(:external_link), :id => 'links' do %>
+  <%= form_for(@external_link, :action => resource(:external_links), :id => 'links') do %>
     <ul class="edit-ext-links">
       <li>
         <%= text_field  :title, :name => 'external_link[title][]', :class=>"long text"%>
@@ -17,7 +17,7 @@
     <div class="save-cancel">
       
       <input type = 'button' value = 'Preview' onclick="preview();return false;" />
-      <%= submit "Publish" %> Or <%= link_to "Cancel", url(:external_links), :class=>"cancel"  %>
+      <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel"  %>
       <%= hidden_field :name => "label", :value => params[:label] %>
     </div>
   

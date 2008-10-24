@@ -1,5 +1,13 @@
+
 <h2 class="current-page">From the Principal &gt; Add New</h2>
-  <%= form_for :team, :action => url(:team, @team) do %>
+ 
+
+<%= error_messages_for @team %>
+
+
+   
+  <%= form_for(@team, :action => resource(@team)) do %>
+
   
      <table id='teams'>
          <tr>
@@ -15,7 +23,7 @@
              <td>Coach:<select name = "classroom[people][ids][]" id="classroom_person",>
 	                       <% @teachers.each do |teacher| %>
 		                      <option value="<%= teacher.id %>">
-			                   <%= teacher.first_name %>
+			                   <%= teacher.name %>
 		                      </option>
 			        <% end %>
 	     </td>
@@ -37,7 +45,7 @@
 	       <td><a href="#" onclick="add();return false;">Add More</a></td>
 	    </tr>
 	    <tr><td><%= submit "Save" %></td>
-	        <td><%= link_to "Cancel", url(:teams) %></td>
+	        <td><%= link_to "Cancel", resource(:teams) %></td>
 	    </tr>
       </table>
 	      

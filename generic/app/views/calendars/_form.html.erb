@@ -1,5 +1,5 @@
  <table>
-       
+         <%= Date.today %>
            <tr>
 	       <td>Add for:<%= select :class_name, :collection => @class_rooms.collect{|x| x.class_name} %></td>
            <tr>
@@ -11,9 +11,10 @@
 	   <tr>
                 <td><%= text_field  :location,  :label => "Location" %></td>
            </tr>
-	   <tr>
+	    <tr>
 	        <td><%= check_box :day_event, :onclick => "dayevent()" %>All Day Event</td>
-	   </tr>
+	    </tr>
+	   
 	   <tr>
 	       <td><%= text_field :start_date, :id => "start", :label => "Starts:" %></td>
 	       <td><%= text_field :start_time, :id => "start_time" %></td>
@@ -23,7 +24,7 @@
 	       <td><%= text_field :end_time, :id => "end_time" %></td>
 	   </tr>
 	   <tr>
-              <td><%= submit "Publish" %></br> Or <%= link_to "Cancel", url(:calendars) %></td>
+              <td><%= submit "Publish" %></br> Or <%= link_to "Cancel", resource(:calendars) %></td>
            </tr> 
 </table>
  
@@ -31,11 +32,11 @@
 <script type= "text/javascript">
 
    
-  $j("#start").datepicker();
-  $j("#end").datepicker();
+  $j("#start").datepicker({minDate:'today'});
+  $j("#end").datepicker({minDate:'today'});
   
-  $j("#start_time").clockpick(); 
-  $j("#end_time").clockpick();
+  $j("#start_time").clockpick({starthour : 0, endhour : 23 }); 
+  $j("#end_time").clockpick({starthour : 0, endhour : 23 });
  
   function dayevent()
   {
@@ -44,7 +45,7 @@
          document.getElementById('start_time').disabled = true;
 	 document.getElementById('end_time').disabled = true;
        }
-      else if(document.getElementById('calendar_day_event').checked == false)
+     else if(document.getElementById('calendar_day_event').checked == false)
        {
          document.getElementById('start_time').disabled = false;
 	 document.getElementById('end_time').disabled = false;

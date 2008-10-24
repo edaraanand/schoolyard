@@ -43,7 +43,9 @@ class ExternalLinks < Application
 		links << ExternalLink.update(l[2], {:title => l[0], :url => l[1], :label => params[:label]})
 	    end
         end
-     redirect url(:external_links)
+	
+        redirect url(:external_links)
+     
   end
   
   def delete

@@ -52,12 +52,15 @@ Gem.path.unshift(Merb.root / "gems")
 # later part of your configuration relies on libraries specified
 # here.
 #
-
+#require 'config/dependencies.rb'
 #dependency 'paperclip'
-dependencies "merb-assets", "merb_helpers"
+dependencies "merb-assets", "merb-helpers"
 dependency "merb_has_flash"
+
+#dependency 'gems/merb_upload/core/pkg/merb_upload-0.0.1.gem'
 #dependency "universal-paperclip/pkg/universal_paperclip-0.0.1/lib/paperclip.rb"
 #dependency "universal-paperclip/pkg/universal_paperclip-0.0.1/lib/paperclip/attachment.rb"
+
 #dependency "merb-slices"  
 #dependency "merb-auth"  
 # OR
@@ -66,7 +69,7 @@ dependency "merb_has_flash"
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
 Merb::BootLoader.after_app_loads do
 	
-   #Paperclip::Configure::enable_ar!
+  # Paperclip::Configure::enable_ar!
     #Merb::Slices::config[:merb_auth][:layout] = :application
    #MA[:forgotten_password] = true 
   # Add dependencies here that must load after the application loads:
