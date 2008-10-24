@@ -19,9 +19,9 @@
 <body class="fixed-width">
   <div id="page-wrap"><!-- Wraps everything -->
     <div id="header"><!--The Header -->
-      <h1><a href="#"><span></span>School Name Appears Here</a></h1><!--Logo-->
+      <h1><%= link_to "Catholic School Department", url(:schools) %></h1>
       <div id="user-cp"><!--User Control Panel -->
-        <p class="welcome">Welcome <em>Albert Q. School</em></p>
+      <p class="welcome">Welcome <em><%= @current_user.first_name %></em></p>
         <ul>
           <li class="first"><a href="#">My Account</a></li>
           <li><%= link_to "logout", url(:logout) %></li>

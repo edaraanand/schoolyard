@@ -3,7 +3,11 @@ class Announcements < Application
  
   def index
      classrooms
+     puts params[:access_name].inspect
      @announcements = Announcement.find(:all, :conditions => ['access_name=?', params[:access_name] ])
+     if params[:access_name].nil?
+	@announce = Announcement.find(:all)
+     end
      render
   end
   

@@ -3,6 +3,9 @@ class WelcomeMessages < Application
   def index
      classrooms
      @welcome_messages = WelcomeMessage.find(:all, :conditions => ['access_name =?', params[:access_name]])
+     if params[:access_name].nil?
+	@welcome = WelcomeMessage.find(:all)
+     end
      render
   end
   
