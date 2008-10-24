@@ -1,16 +1,14 @@
 <%= error_messages_for @student %>
 <h2 class="current-page">Students &gt; <span class="add-link">Edit</span></h2>
+<fieldset>
     <%= form_for(@student, :action => resource(@student), :id => 'student') do %>
-
 	         Student for: <select name = "classroom_id" id="classroom_person",>
 	                       <% @class_rooms.each do |s| %>
 		                      <option value="<%= s.id %>">
 			                   <%= s.class_name %>
 		                      </option>
 			        <% end %>
-	          
-	      
-              
+
                   <%= text_field  :first_name,  :label => "Student" %>
                   <%= text_field  :last_name %>
 	      
@@ -54,6 +52,7 @@
 
 	      
     <% end =%>
+    </fieldset>
     
 </div>
 
