@@ -2,23 +2,46 @@
 <div class="fullpage announcemt">
 <%= form_for(@welcome_message, :action => url(:controller => 'welcome_messages', :action => 'index'), :id => 'welcome_message') do %>
   <%= select :name => "access_name", :collection => @classrooms %>
-  <%= submit ">>" %>
+  <%= submit ">>" %><span class="add-link"><%= link_to "All Messages", resource(:welcome_messages) %></span>
 <% end =%>
+<% if params[:access_name].nil? %>
+    <% for mess in @welcome %>
+       <div class="data-block long-block">
+          <% if mess.created_at.nil? %>
+	      <div class="ddmmm-x">
+	      </div>
+          <% else %>
+             <div class="ddmmm">
+	        <span class="date"><%= mess.created_at.strftime("%d") %></span>
+	        <span class="month"><%= mess.created_at.strftime("%b") %></span>
+	     </div>
+	  <% end %>
+          <p class="post-content"><%= mess.content %></p>
+            <%= link_to "Edit", resource(mess, :edit), :class=>"edit-btn" %>
+            <%= link_to "Delete", resource(mess, :delete), :class=>"delete-btn" %>
+          <div class="hrule clear"><hr /></div>
+        </div>
+     <% end %>
+<% else %>
 
-<% for message in @welcome_messages %>
-  <div class="data-block long-block">
-    <span class="hidden">
-      <%= message.created_at.strftime("%B-%d") %>
-    </span>
-    <div class="ddmmm">
-          <span class="date">24</span>
-          <span class="month">Oct</span>
-    </div>
-    <p class="post-content"><%= message.content %></p>
-    <%= link_to "Edit", resource(message, :edit), :class=>"edit-btn" %>
-    <%= link_to "Delete", resource(message, :delete), :class=>"delete-btn" %>
-    <div class="hrule clear"><hr /></div>
-  </div>
+     <% for message in @welcome_messages %>
+        <div class="data-block long-block">
+          <% if message.created_at.nil? %>
+	      <div class="ddmmm-x">
+	      </div>
+          <% else %>
+              <div class="ddmmm">
+	          <span class="date"><%= message.created_at.strftime("%d") %></span>
+	          <span class="month"><%= message.created_at.strftime("%b") %></span>
+	      </div>
+	  <% end %>
+          <p class="post-content"><%= message.content %></p>
+          <%= link_to "Edit", resource(message, :edit), :class=>"edit-btn" %>
+          <%= link_to "Delete", resource(message, :delete), :class=>"delete-btn" %>
+          <div class="hrule clear"><hr /></div>
+        </div>
+    <% end %>
+    
 <% end %>
 
 	

@@ -17,16 +17,17 @@ class Sessions < Application
     #  @access_id.each do |f|
         # if f.access_id == @access.id
             session[:user_id] = Person.find_by_email(params[:user][:email]).id
-            redirect url(:schools)
+            #redirect url(:schools)
         # else
-	#	 redirect '/'
+		 redirect '/'
 	# end
        #end
   end
   
   def destroy
      session[:user_id] = nil
-     redirect '/'
+     #redirect '/'
+     redirect url(:login)
   end
   
 end
