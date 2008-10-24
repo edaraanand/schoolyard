@@ -5,6 +5,7 @@
 
     01. Reset
     02. Base Layout
+      b.Generic Links
     03. Header
     04. User Control Panel
     05. Sidebar Menu
@@ -36,7 +37,7 @@ body{ font-size:12px; font-family:Lucida, "Lucida Sans Unicode", Verdana, Arial 
 body.fixed-width{width:1000px; margin:0 auto;}
 #pagewrap{width:980px}
   /*Wraps Everything*/
-#content{ width:480px; float:left; margin-left:1em;}
+#content{ width:480px; float:left; margin-left:1em; min-height:500px;}
   /*The center Content Area*/
 #sidebar{float:left; clear:both;}
   /*Left Side Menu. term 'Sidebar' defaults for LEFT SIDEBAR/MENU*/
@@ -45,13 +46,15 @@ body.fixed-width{width:1000px; margin:0 auto;}
   /*Wraps the content section*/
 
 
-/*
-a{}
-a:link{}
-a:visited{}
-a:hover{}
-a:active{}
-*/
+/*Generic Link Colors*/
+a{color:#445978; text-decoration:none;}
+a:link{color:#1a3e8f;}
+a:visited{color:#445978;}
+a:hover{color:#08225c; text-decoration:underline;}
+a:active{#000}
+
+#content h3{font-size:13px; font-weight:bold; padding:4px 0; margin:0 0 8px 0; }
+
 
 
 
@@ -93,8 +96,8 @@ ul#menu li ul li a:link{}
 ul#menu li ul li a:visited{}
 ul#menu li ul li a:hover, ul#menu li ul li a:active{text-decoration:underline}
 
-ul#menu span.count{background:url(../images/menu-count.gif) no-repeat left top; padding:2px 0px 4px 4px; margin:0 0 0 2px; color:#fff; font: normal 11px/12px Arial, Helvetica, sans-serif;}
-ul#menu span.count b{background:url(../images/menu-count.gif) no-repeat right top; padding:2px 5px 4px 2px;}
+ul#menu li.count span{background:url(../images/menu-count.gif) no-repeat left top; padding:2px 0px 4px 4px; margin:0 0 0 2px; color:#fff; font: normal 11px/12px Arial, Helvetica, sans-serif;}
+ul#menu li.count span b{background:url(../images/menu-count.gif) no-repeat right top; padding:2px 5px 4px 2px;}
   /*That yellow dot which contains numbers*/
 
 
@@ -135,6 +138,8 @@ ul#menu span.count b{background:url(../images/menu-count.gif) no-repeat right to
 
 
 /*Breadcrumbs*/
+#crumbtrail{visibility:hidden;}
+
 #crumbtrail{margin:0 0 4px 0; padding:0 0 4px 4px; font-size:13px; }
 #crumbtrail li{display:inline;padding:0 2px 0 0px;}
 #crumbtrail span{padding:0 2px 0 6px;}
@@ -188,7 +193,7 @@ fieldset textarea{display:block; width:280px; float:left; border:1px solid #9e9e
   /*Want the labels Right Aligned?
   fieldset label{ text-align:right;}
   fieldset span.hint{text-align:right;}*/
-  
+
 fieldset #checkboxes{width:480px;}
 fieldset #checkboxes span.check-all{float:left;}
 fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic Fieldset Labels*/
@@ -224,6 +229,21 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 span.cancel{padding:0 8px;}
 span.cancel a{color:#eb3f2c;}
 span.cancel a:hover{text-decoration:underline;}
+
+/*End Now*/
+
+/*Data Block*/
+.data-block{width:480px;}
+.ddmmm{width:36px; height:42px; border:1px solid #ccc; margin:6px 10px 10px 0; float:left;}
+.ddmmm .date{display:block; text-align:center; padding:5px 0 6px 0; font-size:14px; font-weight:bold; color:#333}
+.ddmmm .month{display:block; text-align:center; background:#e8e8e8; padding:2px 0;font-size:12px; border-top:1px solid #ccc;}
+
+
+
+
+
+
+
 
 
 

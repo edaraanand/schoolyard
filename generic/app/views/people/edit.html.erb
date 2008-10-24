@@ -1,41 +1,27 @@
-<%= error_messages_for @person %>
-
-<div class='formcontainer'>
-
-    <%= form_for :person, :action => url(:person, @person) , :id => 'people' do %>
-    
-        <table>
-          <tr>
-              <td><%= text_field  :first_name,  :label => "First Name" %></td>
-          </tr>
-	  <tr>
-	       <td><%= text_field  :last_name,  :label => "Last Name" %></td>
-	  </tr>
-	  <tr>
-	       <td><%= text_field  :email,  :label => "Contact Email" %></td>
-	  </tr>
-	  <tr>
-	       <td><%= text_field  :phone,  :label => "Phone Number(optional)" %></td>
-	  </tr>
-          <tr>
-	       <td> <%= flash[:error] %></td>
-	  <tr>
-	      <td>Rights:</td>
-	      <td>This person can:
-	        <%= check_box :name => "view_all", :checked => true, :id => "all", :onclick => "viewall()" %>View all Content 
-		<div id="check" style="visibility:hidden">
-      
-	          Unchecking this will Disable Access for this user.
-                        Are you sure you want to do this? 
-		   
-                <%= link_to "Yes, Disable access for this user", url(:controller => "people", :action => "disable", :id => @person.id) %></br> Or
-		            <a href='' id='cancel' return true >Cancel this action </a>
-	          </div>
-	      </td>
-	  <tr>
-	     <td>Select All:<input type="checkbox" checked="true" onclick="checkAll(this)"></td>
-	  </tr>
-	  
+<fieldset>
+  <h2 class="current-page">Access Rights &gt; Add New</h2>
+  <%= form_for :person, :action => url(:person, @person) , :id => 'people' do %>
+  <ul>
+    <li><%= text_field  :first_name,  :label => "First Name" %></li>
+    <li><%= text_field  :last_name,  :label => "Last Name" %></li>
+    <li><%= text_field  :email,  :label => "Contact Email" %></li>
+    <li><%= text_field  :phone,  :label => "Phone Number(optional)" %></li>
+    <li><%= flash[:errr] %></li>
+  </ul>
+  <dl>
+    <dt>Rights:</dt>
+	  <dd>This person can:</dd>
+	</dl>
+	    <div id="check" style="visibility:hidden">
+    <p>Unchecking this will Disable Access for this user.
+    Are you sure you want to do this? </p>
+      <%= link_to "Yes, Disable access for this user", url(:controller => "people", :action => "disable", :id => @person.id) %> Or <a href='' id='cancel' return true >Cancel this action </a>
+    </div>
+	<dl class="check-box-set">
+    <dt><%= check_box :name => "view_all", :checked => true, :id => "all", :onclick => "viewall()" %></dt>
+    <dd>View all Content</dd>
+	  <dt><input type="checkbox" checked="true" onclick="checkAll(this)"></dt>
+	  <dd>Select All:</dd>
         <% @accesses.each do |f| %>
             <% have_access = false %>
               <% @access_people.each do |l| 
@@ -44,27 +30,29 @@
                end %>
 	
         <% if have_access %>
-     	     <tr>
-	          <td></td>
-		  <td><input type="checkbox" class="check" checked="true" name="access[access_ids][]" value="<%= f.id %>" /><%= f.full_name %></td>
-	     </tr>
+    <dt><input type="checkbox" class="check" checked="true" name="access[access_ids][]" value="<%= f.id %>" /></dt><dd><%= f.full_name %></dd>
        <% else %>
-    	    <tr>
-	        <td></td>
-	        <td><input type="checkbox" class="check" name="access[access_ids][]" value="<%= f.id %>" /><%= f.full_name %></td>
-	    </tr>
+    <dt><input type="checkbox" class="check" name="access[access_ids][]" value="<%= f.id %>" /></dt><dd><%= f.full_name %></dd>
        <% end %>
              <% @accesses.delete_if{|x| x.name == "view_all"} %>
    <% end %>
-         
-          <tr>
-	       <td><%= submit "Save & Notify" %></br>  <%= link_to "Cancel", url(:people) %></td>
-	  </tr>
-	 
+<fieldset>
+  <div class="save-cancel"><%= submit "Save & Notify" %> Or <%= link_to "Cancel", url(:people) %></div>
     <% end =%>
-     
-</div>
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 <script type= "text/javascript">
 

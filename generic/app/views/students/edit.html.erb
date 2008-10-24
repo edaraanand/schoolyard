@@ -1,68 +1,57 @@
-
 <%= error_messages_for @student %>
-
-
-
-<div class='formcontainer'>
-
-      <p><b> Students > Edit </b></p>
-
+<h2 class="current-page">Students &gt; <span class="add-link">Edit</span></h2>
     <%= form_for(@student, :action => resource(@student), :id => 'student') do %>
 
-         <table>
-              <tr>
-	         <td>Student for: <select name = "classroom_id" id="classroom_person",>
+	         Student for: <select name = "classroom_id" id="classroom_person",>
 	                       <% @class_rooms.each do |s| %>
 		                      <option value="<%= s.id %>">
 			                   <%= s.class_name %>
 		                      </option>
 			        <% end %>
-	          </td>
-	      </tr>
-              <tr>
-                  <td><%= text_field  :first_name,  :label => "Student" %>
-                  <td><%= text_field  :last_name %></td>
-	      </tr>
+	          
+	      
+              
+                  <%= text_field  :first_name,  :label => "Student" %>
+                  <%= text_field  :last_name %>
+	      
 	     	      
 	      
 	     <% for parent in @student.parents %>
 	         
-	           <tr>
-                      <td><%= text_field  :name => 'parent[first_name][]', :label => "Parents/Guardian", :value => "#{parent.first_name}" %></td>
-		      <td><%= text_field  :name => 'parent[last_name][]', :value => "#{parent.last_name}" %></td>
-		   </tr>
-		   <tr>
-	              <td><%= text_field :name => 'parent[email][]', :label => "Email", :value => "#{parent.email}" %></td>
-	           </tr>
+	           
+                      <%= text_field  :name => 'parent[first_name][]', :label => "Parents/Guardian", :value => "#{parent.first_name}" %>
+		      <%= text_field  :name => 'parent[last_name][]', :value => "#{parent.last_name}" %>
+		   
+		   
+	              <%= text_field :name => 'parent[email][]', :label => "Email", :value => "#{parent.email}" %>
+	           
 	
 	      <% end %>
 	      
 	        <% if flash[:error1] %> 
-		    <tr><td><%= flash[:error1] %></td></tr>
+		    <%= flash[:error1] %>
 		<% end %>
 	       		
 	         <tr id="students">
-	         </tr>
+	         
 		 <tr id="email">
-	         </tr>
+	         
 		 
-	         <tr><td><%= link_to_function 'Add', "add();" %></td></td>
+	         <%= link_to_function 'Add', "add();" %>
 		   
 		     <% s = @student.parents.find(:first) %>
 		     
-		 <tr>
-	            <td><%= text_field :name => 'parent[phone][]', :label => "Phone", :value => "#{s.phone}" %></td>
-	         </tr>
-		 <tr>
-	            <td><%= text_field :name => 'parent[address][]', :label => "Address", :value => "#{s.address}" %></td>
-	         </tr>
-		 <tr>
-		     <td><input type = 'button' value = 'Preview' onclick="preview();return false;" /></td>
-	             <td><%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %></td>
-	         </tr>
-	  
-          </table>
-	      
+		 
+	            <%= text_field :name => 'parent[phone][]', :label => "Phone", :value => "#{s.phone}" %>
+	         
+		 
+	            <%= text_field :name => 'parent[address][]', :label => "Address", :value => "#{s.address}" %>
+	         
+		 
+		     <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+	             <%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %>
+	         
+
 	      
     <% end =%>
     

@@ -1,4 +1,4 @@
-<div class='formcontainer'>
+<div class='fullpage'>
     <div class = 'formcontent'> 
       <table>
          
@@ -10,10 +10,12 @@
           <% for calendar in @calendars %>
 	         <% unless calendar.start_date.nil? %> 
                 <tr>
-	            <td><b><%= calendar.start_date.strftime("%B-%d") %></b></td>   
+	            <td><b><%= calendar.start_date.strftime("%B-%d") %></b></td>  
+	        <% end %> 
 		</tr>
 		<% end %>
 		    
+
 		    <% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
 		    <% cals.each do |cal| %> 
 		        <tr>
@@ -32,4 +34,6 @@
 	</table> 
     </div>
 	 
-</div>	                            
+
+                          
+</div>
