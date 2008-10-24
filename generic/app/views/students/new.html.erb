@@ -1,92 +1,194 @@
 
 <%= error_messages_for @student %>
-<hr />
+<hr/>
 <%= error_messages_for @parent %>
 
 <div class='formcontainer'>
 
    <p> Students > Add New </p>
    
+  
     <%= form_for(@student, :action => resource(:students), :id => 'student') do %>
-
-          <table>
-          <tr>
-	      <td>Student for: <select name = "classroom_id" id="classroom_person",>
+    
+        <table>
+	     <tr>
+	         <td>Student for: <select name = "classroom_id" id="classroom_person",>
 	                       <% @class_rooms.each do |s| %>
 		                      <option value="<%= s.id %>">
 			                   <%= s.class_name %>
 		                      </option>
 			        <% end %>
-	      </td>
-	  </tr>
-          <tr>
-              <td><%= text_field  :first_name,  :label => "Student" %>
-              <td><%= text_field  :last_name %></td>
-	  </tr>
-	<% fields_for :parent do %>  
+	          </td>
+	      </tr>
+              <tr>
+                  <td><%= text_field  :first_name,  :label => "Student" %>
+                  <td><%= text_field  :last_name %></td>
+	      </tr>
+	</table><br/><br/>
+	
+	<% fields_for @parent do %>
+	
+	<table>
 	     <tr>
-                 <td><%= text_field  :first_name,  :label => "Parents/Guardian" %></td>
-                 <td><%= text_field  :last_name %></td>
-	     </tr>
-	 
-	       <tr>
-	           <td><%= text_field :email, :label => "Email" %></td>
-	       </tr>
-	       <tr>
-	          <td><%= text_field  :phone,  :label => "Phone" %></td>
-	       </tr>
-	       <tr>
-	          <td><%= text_field  :address,  :label => "Address" %></td>
-	       </tr>
-	<% end %>        
-	       <tr id="students">
-	       </tr>
-	       <tr id="email">
-	       </tr>
-	       <tr><td><%= link_to_function 'Add', "add();" %></td></td>
-	       <tr>
-	          <td> <input type = 'button' value = 'Preview' onclick="preview();return false;" /></td>
-	          <td><%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %></td>
-	       </tr>
+	         <td><b> Parent Details </b></td>
+	     </tr><br/>
+	      <tr>
+	          <td><%= text_field  :first_name,  :label => "First Name" %></td>
+	          <td><%= text_field  :last_name %></td>
+	      </tr>
+	      <tr>
+	          <td><%= text_field  :email,  :label => "E-Mail" %></td>
+	      </tr>
+	     
+	 </table>     
+		
 	  
-       </table>
-   <% end =%>
+    <% if ((@fname != nil || @lname != nil ) || (@mail != nil) ) %>
+    
+      <div id="parent2" style="visibility:visible">
+	   <table>
+	       <tr>
+	          <td><%= text_field  :name => "f_name_parent2",  :label => "First Name", :value => "#{@fname2}" %></td>
+	          <td><%= text_field  :name => "l_name_parent2", :value => "#{@lname2}" %></td>
+	      </tr>
+	      <tr>
+	          <td><%= text_field  :name => "email_parent2",  :label => "E-Mail", :value => "#{@mail2}" %></td>
+	      </tr>
+	   </table>
+       </div>
+         <div id="am1" style="visibility:hidden">
+	      <a onclick="add_parent2();return false;" href="#">Add More</a>
+	  </div>
+	  <div id="am2" style="visibility:visible">
+	      <a onclick="add_parent3();return false;" href="#">Add More</a>
+	  </div>
+	  
+    <% else %>
+        <div id="parent2" style="visibility:hidden">
+	
+	   <table>
+	       <tr>
+	          <td><%= text_field  :name => "f_name_parent2",  :label => "First Name" %></td>
+	          <td><%= text_field  :name => "l_name_parent2" %></td>
+	      </tr>
+	      <tr>
+	          <td><%= text_field  :name => "email_parent2",  :label => "E-Mail" %></td>
+	      </tr>
+	   </table>
+        </div>
+	  <div id="am1" style="visibility:visible">
+	      <a onclick="add_parent2();return false;" href="#">Add More</a>
+	  </div>
+	
+    <% end %>
+    
+         <div id="am2" style="visibility:hidden">
+	     <a onclick="add_parent3();return false;" href="#">Add More</a>
+	 </div>
+    
+	  <% if flash[:error] %>
+	     <%= flash[:error] %>
+	 <% end %>
+	 
+    <% if ((@fname != nil || @lname != nil ) || (@mail != nil) ) %>
+    
+       <div id="parent3" style="visibility:visible">
+	
+	   <table>
+	     <tr>
+	          <td><%= text_field  :name => "f_name_parent3",  :label => "First Name" %></td>
+	          <td><%= text_field  :name => "l_name_parent3" %></td>
+	      </tr>
+	      <tr>
+	          <td><%= text_field  :name => "email_parent3",  :label => "E-Mail" %></td>
+	      </tr>
+	   </table>
+       </div>
+          <div id="am2" style="visibility:hidden">
+	      <a onclick="add_parent3();return false;" href="#">Add More</a>
+	  </div>
+	  <div id="am3" style="visibility:visible">
+	      <a onclick="add_parent3();return false;" href="#">Add More</a>
+	  </div>
+   <% else %>
+         <div id="parent3" style="visibility:hidden">
+	
+	   <table>
+	     <tr>
+	          <td><%= text_field  :name => "f_name_parent3",  :label => "First Name" %></td>
+	          <td><%= text_field  :name => "l_name_parent3" %></td>
+	      </tr>
+	      <tr>
+	          <td><%= text_field  :name => "email_parent3",  :label => "E-Mail" %></td>
+	      </tr>
+	   </table>
+       </div>
+    <% end %>
+         <div id="am3" style="visibility:hidden">
+	     <a onclick="add_parent4();return false;" href="#">Add More</a>
+	 </div>
+       <div id="parent4" style="visibility:hidden">
+	
+	   <table>
+	     <tr>
+	          <td><%= text_field  :name => "f_name_parent4",  :label => "First Name" %></td>
+	          <td><%= text_field  :name => "l_name_parent4" %></td>
+	      </tr>
+	      <tr>
+	          <td><%= text_field  :name => "email_parent4",  :label => "E-Mail" %></td>
+	      </tr>
+	   </table>
+       </div>
+    
+        <table>
+             <tr>
+	           <td><%= text_field  :phone,  :label => "Phone" %></td>
+	      </tr>
+	      <tr>
+	           <td><%= text_field  :address,  :label => "Address" %></td>
+	      </tr>
+	</table>
+	
+   <% end %>
+	
+	 
+		 
+	  <input type="submit" name="submit" value="Save"/>    
+	   
+	       <%= link_to "Cancel", resource(:students) %>
+
+       
+  <% end =%>
 </div>
  
  
 <script type= "text/javascript">
-   var parent = 0;
-  function add()
+
+   var parent2_obj = document.getElementById('parent2');
+   var parent3_obj = document.getElementById('parent3');
+   var parent4_obj = document.getElementById('parent4');
+   var am1_obj     = document.getElementById('am1');
+   var am2_obj     = document.getElementById('am2');
+   var am3_obj     = document.getElementById('am3');
+   
+   function add_parent2()
    {
-     
-     if (parent < 3)
-     {
-     var student = document.getElementById('students');
-     var email = document.getElementById('email');
-         var td1 = document.createElement('td');  
-         td1.innerHTML = "Parents/Guardian: <input type='text' id='sp_first' name='sp[first][]'/>";
-         var td2 = document.createElement('td');  
-         td2.innerHTML = "<input type='text' id='sp_last' name='sp[last][]'/>";
-         var td3 = document.createElement('td'); 
-	 td3.innerHTML = "Email: <input type='text' id='sp_mail' name='sp[mail][]'/>";
-        
-         student.appendChild(td1);
-         student.appendChild(td2);
-         email.appendChild(td3);
-	     parent = parent + 1;
-	 }
-     else
-	 {
-	    alert("You can't add more than that");
-	 }
-    
- }   
- 
- function preview()
- {
-   var s = $('student').serialize();
-   window.open('/students/preview/-/?' + s);
- }
+      parent2_obj.style.visibility  =  "visible";
+      am1_obj.style.visibility      =  "hidden";
+      am2_obj.style.visibility      =  "visible";
+   }
 
-
+   function add_parent3()
+   {
+       parent3_obj.style.visibility =  "visible";
+       am2_obj.style.visibility     =  "hidden";
+       am3_obj.style.visibility     =  "visible";
+   }
+  
+   function add_parent4()
+   {
+       parent4_obj.style.visibility =  "visible";
+       am3_obj.style.visibility     =  "hidden";
+   }
+       
 </script>
