@@ -22,10 +22,6 @@
     <dd>View all Content</dd>
 	  <dt><input type="checkbox" checked="true" onclick="checkAll(this)"></dt>
 	  <dd>Select All:</dd>
-	     
-
-
-	  
         <% @accesses.each do |f| %>
             <% have_access = false %>
               <% @access_people.each do |l| 
@@ -34,15 +30,29 @@
                end %>
 	
         <% if have_access %>
-    <dt></dt><dd><input type="checkbox" class="check" checked="true" name="access[access_ids][]" value="<%= f.id %>" /><%= f.full_name %></dd>
+    <dt><input type="checkbox" class="check" checked="true" name="access[access_ids][]" value="<%= f.id %>" /></dt><dd><%= f.full_name %></dd>
        <% else %>
-    <dt><input type="checkbox" class="check" name="access[access_ids][]" value="<%= f.id %>" /><%= f.full_name %></dt>
+    <dt><input type="checkbox" class="check" name="access[access_ids][]" value="<%= f.id %>" /></dt><dd><%= f.full_name %></dd>
        <% end %>
              <% @accesses.delete_if{|x| x.name == "view_all"} %>
    <% end %>
-         
+<fieldset>
   <div class="save-cancel"><%= submit "Save & Notify" %> Or <%= link_to "Cancel", url(:people) %></div>
     <% end =%>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 <script type= "text/javascript">
 

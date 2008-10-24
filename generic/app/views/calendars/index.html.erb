@@ -10,7 +10,8 @@
           <% for calendar in @calendars %>
 	         <% unless calendar.start_date.nil? %> 
                 <tr>
-	            <td><b><%= calendar.start_date.strftime("%B-%d") %></b></td>   
+	            <td><b><%= calendar.start_date.strftime("%B-%d") %></b></td>  
+	        <% end %> 
 		</tr>
 		<% end %>
 		    

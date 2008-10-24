@@ -4,6 +4,7 @@ class Teams < Application
 
   def index
      @teams = Team.find(:all)
+       
      render
   end
   

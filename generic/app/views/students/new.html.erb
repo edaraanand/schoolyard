@@ -1,55 +1,44 @@
-
-<%= error_messages_for @student %>
-<hr />
-<%= error_messages_for @parent %>
-
-<div class='formcontainer'>
-
-   <p> Students > Add New </p>
-   
-    <%= form_for(@student, :action => resource(:students), :id => 'student') do %>
-
-          <table>
-          <tr>
-	      <td>Student for: <select name = "classroom_id" id="classroom_person",>
-	                       <% @class_rooms.each do |s| %>
-		                      <option value="<%= s.id %>">
-			                   <%= s.class_name %>
-		                      </option>
-			        <% end %>
-	      </td>
-	  </tr>
-          <tr>
-              <td><%= text_field  :first_name,  :label => "Student" %>
-              <td><%= text_field  :last_name %></td>
-	  </tr>
-	<% fields_for :parent do %>  
-	     <tr>
-                 <td><%= text_field  :first_name,  :label => "Parents/Guardian" %></td>
-                 <td><%= text_field  :last_name %></td>
-	     </tr>
-	 
-	       <tr>
-	           <td><%= text_field :email, :label => "Email" %></td>
-	       </tr>
-	       <tr>
-	          <td><%= text_field  :phone,  :label => "Phone" %></td>
-	       </tr>
-	       <tr>
-	          <td><%= text_field  :address,  :label => "Address" %></td>
-	       </tr>
-	<% end %>        
-	       <tr id="students">
-	       </tr>
-	       <tr id="email">
-	       </tr>
-	       <tr><td><%= link_to_function 'Add', "add();" %></td></td>
-	       <tr>
-	          <td> <input type = 'button' value = 'Preview' onclick="preview();return false;" /></td>
-	          <td><%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %></td>
-	       </tr>
-	  
-       </table>
+<h2 class="current-page">Students &gt; <span class="add-link">Add New</span></h2>
+  
+  <%= error_messages_for @student %>
+  <%= error_messages_for @parent %>
+  
+  <%= form_for(@student, :action => resource(:students), :id => 'student') do %>
+<fieldset>
+  <ul>
+    <li>
+      <label>Student for:</label>
+      <select name = "classroom_id" id="classroom_person",>
+	      <% @class_rooms.each do |s| %>
+		      <option value="<%= s.id %>">
+			      <%= s.class_name %>
+		      </option>
+			  <% end %>
+    </li>
+    <li>
+      <%= text_field  :first_name, :label => "Student", :class=> "semi-short" %><%= text_field  :last_name, :class=> "semi-short apart" %>
+    </li>
+    <% fields_for :parent do %>  
+  	  <li>
+  	    <%= text_field  :first_name,  :label => "Parents/Guardian", :class=> "semi-short" %><%= text_field  :last_name, :class=> "semi-short apart" %>
+  	  </li>
+      <li>
+        <%= text_field :email, :label => "Email" %>
+      </li>
+      <li>
+        <%= text_field  :phone,  :label => "Phone" %>
+      </li>
+      <li>
+        <%= text_field  :address,  :label => "Address" %>
+      </li>
+	  <% end %>
+	  </ul>
+	<fieldset>
+  <div class="save-cancel">
+    <%= link_to_function 'Add', "add();" %>
+    <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+    <%= submit "Publish" %>
+    <span class="cancel"><%= link_to "Cancel", resource(:students) %></span>
    <% end =%>
 </div>
  

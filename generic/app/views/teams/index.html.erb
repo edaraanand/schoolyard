@@ -1,34 +1,26 @@
-
-  
-       <h3>Teams</h3> </br>
-    
-       <%= link_to "Add New", resource(:teams, :new) %>
-     
- <% else %>
-          <table>
-		<tr>
-		    <td><h4>Teams</h4></td>
-		    <td><%= link_to "Add New", resource(:teams, :new) %></td>
-	        </tr> 
-	        <tr>
-		    <td<h3>Team </h3></td>
-	           
-	         </tr> 
-		
-		<% for team in @teams %>
-		        <tr>
-			    <td><%= link_to "#{team.team_name}", resource(team, :edit) %> </td>
-			    <td><h4>Roles</h4></td>
-			</tr>
-			<% s = team.class_peoples.delete_if{|x| x.role == "coach"} %>
-		             <% s.each do |f| %>
-			   <tr>
-			        <td></td>
-			       <td><%= f.role %></td>
-			   </tr>
-			  <% end %>
-		<% end %>                  
-	   </table> 
+<h2 class="current-page">Sports Teams &gt; <%= link_to "Add New", resource(:teams, :new) %></h2>
+<% unless @teams.empty? %>
+  <table id="mytable">
+    <thead>
+      <tr >
+        <th colspan="2" scope="col">
+          Teams
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for team in @teams %>
+      <tr>
+        <td><%= link_to "#{team.team_name}", resource(team, :edit) %></td>
+        <td>
+          <% s = team.class_peoples %>
+		        <% s.each do |f| %>
+		      <%= f.role %>
+		    </td>
+        <% end %>
+      </tr>
+      <% end %> 
+    </tbody>
+  </table>
+<% end %>    
 	
-
-<% end %>
