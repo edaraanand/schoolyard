@@ -182,7 +182,7 @@ ul#menu li.count span b{background:url(../images/menu-count.gif) no-repeat right
 .hidden{visibility:hidden;}
 .dashed{border-bottom:1px dashed #e8e8e8;}
 .separate{margin:8px 0;}
-.semi-short{width:134px!important;}
+.semi-short{width:120px!important;}
 .short{width:100px!important;}
 .apart{margin-left:6px;}
 input.long{width:200px}
@@ -223,7 +223,7 @@ fieldset li{display:block; float:left; padding-bottom:10px; width:480px;}
 
 .text{ border:1px solid #9e9e9e; padding:2px; font:normal 13px/14px Arial, Helvetica, sans-serif;}
 
-fieldset input.text{display:block; width:280px; float:left; border:1px solid #9e9e9e; padding:2px; font:normal 13px/14px Arial, Helvetica, sans-serif;}
+#class-room input, fieldset input.text{display:block; width:280px; float:left; border:1px solid #9e9e9e; padding:2px; font:normal 13px/14px Arial, Helvetica, sans-serif;}
 fieldset label{display:block; width:180px; padding:0 10px 0 0 ; float:left;}
 fieldset span.hint{display:block; float:left; width:184px; padding:4px 6px 0 0; color:#949494;}
 fieldset textarea{display:block; width:280px; float:left; border:1px solid #9e9e9e; padding:3px 2px; height:100px;font:normal 13px/14px Arial, Helvetica, sans-serif;}
