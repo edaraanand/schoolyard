@@ -21,8 +21,8 @@
 			        <td><%= cal.start_time.strftime("%H-%M") %></td>
 			     <% end %>
 			     <td><%= cal.title %></td>
-			     <td><%= link_to "Edit", resource(calendar, :edit) %></td>
-			     <td><%= link_to "Delete", resource(calendar, :delete) %></td>
+			     <td><%= link_to "Edit", resource(cal, :edit) %></td>
+			     <td><%= link_to "Delete", resource(cal, :delete) %></td>
 	                </tr>
 			
 		    <% end %>

@@ -1,7 +1,7 @@
 class Calendars < Application
 
   def index
-     @calendars = Calendar.find(:all, :order => 'start_date')
+     @calendars = Calendar.find(:all)
      render
   end
   
@@ -17,7 +17,6 @@ class Calendars < Application
      if @calendar.save
 	redirect resource(:calendars)
      else
-	@day_event = false
 	render :new 
      end
   end
@@ -25,7 +24,6 @@ class Calendars < Application
   def edit
      @calendar = Calendar.find(params[:id])
      @class_rooms = Classroom.find(:all) 
-     @cal = Calendar.find(:first, :conditions => ['day_event=?', true])
      render
   end
   
@@ -33,6 +31,11 @@ class Calendars < Application
      @class_rooms = Classroom.find(:all)
      @calendar = Calendar.find(params[:id])
      if @calendar.update_attributes(params[:calendar])
+	if @calendar.day_event == true
+	   @calendar.start_time = nil
+	   @calendar.end_time = nil
+        end
+	@calendar.save
 	redirect resource(:calendars)
      else
 	render :edit
