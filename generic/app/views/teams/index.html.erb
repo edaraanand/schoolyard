@@ -3,7 +3,7 @@
   <table id="mytable">
     <thead>
       <tr >
-        <th colspan="2" scope="col">
+        <th colspan="3" scope="col">
           Teams
         </th>
       </tr>
@@ -12,11 +12,10 @@
       <% for team in @teams %>
       <tr>
         <td><%= link_to "#{team.team_name}", resource(team, :edit) %></td>
-        <td>
-          <% s = team.class_peoples %>
+      
+             <% s = team.class_peoples %>
 		        <% s.each do |f| %>
-		      <%= f.role %>
-		    </td>
+		    <td>  <%= f.role %> : <%= f.person.name %>   </td>
         <% end %>
       </tr>
       <% end %> 

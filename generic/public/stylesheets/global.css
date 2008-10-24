@@ -182,7 +182,7 @@ ul#menu li.count span b{background:url(../images/menu-count.gif) no-repeat right
 .hidden{visibility:hidden;}
 .dashed{border-bottom:1px dashed #e8e8e8;}
 .separate{margin:8px 0;}
-.semi-short{width:134px!important;}
+.semi-short{width:120px!important;}
 .short{width:100px!important;}
 .apart{margin-left:6px;}
 input.long{width:200px}

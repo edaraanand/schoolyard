@@ -1,7 +1,7 @@
 <div class=" data-block short-block">
   <h2 class="current-page"> <%= params[:label] %> &gt; Edit </h2>
   <%= form_for(@external_link, :action => url(:external_links_update), :id => 'links') do %>
-    <ul class="edit-ext-links">
+    <ul id="link" class="edit-ext-links">
       <% @external_links.each do |f| %>
         <li>
           <%= text_field :id => 'external_link_title', :name => 'external_link[title][]', :value => "#{f.title}", :class=>"long text" %>
@@ -24,21 +24,13 @@
  
   function add()
    {
+      var links = document.getElementById('link');
+    	var li = document.createElement('li');
+	li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]'/>"  + "<input type='text' id='external_link_url' name='external_link[url][]'/>";
+	 links.appendChild(li);
+	
+    }
  
-     var external = document.getElementById('Links');
-
-     var tr = document.createElement('tr');
-     var td1 = document.createElement('td');  
-
-     td1.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]'/>";
-     var td2 = document.createElement('td');  
-     td2.innerHTML = "<input type='text' id='external_link_url' name='external_link[url][]'/>";
-            
-         tr.appendChild(td1);
-         tr.appendChild(td2);
-        external.appendChild(tr);
- 
- }
  
   function preview()
  {

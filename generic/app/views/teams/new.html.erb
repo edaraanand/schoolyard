@@ -1,8 +1,8 @@
 <%= error_messages_for @team %>
-<h2 class="current-page">From the Principal &gt; Add New</h2>
+<h2 class="current-page">Sports Teams &gt; Add New</h2>
 <%= form_for(@team, :action => resource(:teams)) do %>
   <fieldset>
-    <ul>
+    <ul id="team">
       <li><%= text_field  :team_name,  :label => "Name of the Team" %></li>
       <li><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name }, :label => "Classroom" %></li>
       <li><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year" %></li>
@@ -11,7 +11,7 @@
         <select name = "classroom[people][ids][]" id="classroom_person",>
           <% @teachers.each do |teacher| %>
             <option value="<%= teacher.id %>">
-              <%= teacher.first_name %>
+              <%= teacher.name %>
             </option>
   			  <% end %>
   		</li>
@@ -29,21 +29,16 @@
  
   function add()
    {
-      var table = document.getElementById('teams');
-	var tr = document.createElement('tr');
-        var td1 = document.createElement('td');
-	var td2 = document.createElement('td');
-	td1.innerHTML = "<input type='text' name='classroom[people][role][]' id='classroom_class_people' />";
-	td2.innerHTML = <select name="classroom[people][ids][]" id="classroom_person"> 
+      var class_room = document.getElementById('team');
+    	var li = document.createElement('li');
+	li.innerHTML = "<input type='text' name='classroom[people][role][]' id='classroom_class_people' />"  + <select name="classroom[people][ids][]" id="classroom_person"> 
 	                                <% @teachers.each do |teacher| %>
 		                           <option value="<%= teacher.id %>">
-					   <%= teacher.first_name %>
+					   <%= teacher.name %>
 					   </option>
 			                <% end %>
-			      </select>
-	 tr.appendChild(td1);
-	 tr.appendChild(td2);
-	 table.appendChild(tr);
+			      </select> ;
+	 class_room.appendChild(li);
+	
     }
-     
 </script>
