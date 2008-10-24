@@ -8,16 +8,14 @@ class Classrooms < Application
    def new
       @classroom = Classroom.new 
       @teachers = Staff.find(:all)
-      # teachers
       render
    end
    
    def create 
       @classroom = Classroom.new(params[:classroom])
-       @teachers = Staff.find(:all)
+      @teachers = Staff.find(:all)
       id = params[:class][:people][:ids]
       role = params[:class][:people][:role]
-     # raise "Eshwar".inspect
       @class_peoples = []
      if @classroom.save
          if role.nil?

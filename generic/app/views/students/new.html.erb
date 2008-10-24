@@ -1,4 +1,4 @@
-<h2 class="current-page">Students &gt; <span class="add-link">Add New</span></h2>
+ <h2 class="current-page">Students &gt; <span class="add-link">Add New</span></h2>
   
   <%= error_messages_for @student %>
   <%= error_messages_for @parent %>
@@ -9,31 +9,31 @@
     <li>
       <label>Student for:</label>
       <select name = "classroom_id" id="classroom_person",>
-	      <% @class_rooms.each do |s| %>
-		      <option value="<%= s.id %>">
-			      <%= s.class_name %>
-		      </option>
-			  <% end %>
+       <% @class_rooms.each do |s| %>
+        <option value="<%= s.id %>">
+         <%= s.class_name %>
+        </option>
+     <% end %>
     </li>
     <li>
       <%= text_field  :first_name, :label => "Student", :class=> "semi-short" %><%= text_field  :last_name, :class=> "semi-short apart" %>
     </li>
-    <% fields_for :parent do %>  
-  	  <li>
-  	    <%= text_field  :first_name,  :label => "Parents/Guardian", :class=> "semi-short" %><%= text_field  :last_name, :class=> "semi-short apart" %>
-  	  </li>
+    <% fields_for :Parent do %>  
+     <li>
+       <%= text_field  :first_name,  :label => "Parents/Guardian", :class=> "semi-short" %><%= text_field  :last_name, :class=> "semi-short apart" %>
+     </li>
       <li>
         <%= text_field :email, :label => "Email" %>
       </li>
       <li>
-        <%= text_field  :phone,  :label => "Phone" %>
+        <%= text_field  :Phone,  :label => "Phone" %>
       </li>
       <li>
         <%= text_field  :address,  :label => "Address" %>
       </li>
-	  <% end %>
-	  </ul>
-	<fieldset>
+   <% end %>
+   </ul>
+ <fieldset>
   <div class="save-cancel">
     <%= link_to_function 'Add', "add();" %>
     <input type = 'button' value = 'Preview' onclick="preview();return false;" />
@@ -57,17 +57,17 @@
          var td2 = document.createElement('td');  
          td2.innerHTML = "<input type='text' id='sp_last' name='sp[last][]'/>";
          var td3 = document.createElement('td'); 
-	 td3.innerHTML = "Email: <input type='text' id='sp_mail' name='sp[mail][]'/>";
+  td3.innerHTML = "Email: <input type='text' id='sp_mail' name='sp[mail][]'/>";
         
          student.appendChild(td1);
          student.appendChild(td2);
          email.appendChild(td3);
-	     parent = parent + 1;
-	 }
+      parent = parent + 1;
+  }
      else
-	 {
-	    alert("You can't add more than that");
-	 }
+  {
+     alert("You can't add more than that");
+  }
     
  }   
  
