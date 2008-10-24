@@ -1,29 +1,30 @@
+<fieldset>
 <%= error_messages_for @student %>
 <h2 class="current-page">Students &gt; <span class="add-link">Edit</span></h2>
     <%= form_for(@student, :action => resource(@student), :id => 'student') do %>
 
-	         Student for: <select name = "classroom_id" id="classroom_person",>
+	<ul><li><label>Student for:</label> <select name = "classroom_id" id="classroom_person",>
 	                       <% @class_rooms.each do |s| %>
 		                      <option value="<%= s.id %>">
 			                   <%= s.class_name %>
 		                      </option>
-			        <% end %>
+			        <% end %></li>
 	          
 	      
-              
-                  <%= text_field  :first_name,  :label => "Student" %>
-                  <%= text_field  :last_name %>
-	      
+              <li>
+                  <%= text_field  :first_name,:class=>"short",  :label => "Student" %>
+                  <%= text_field  :last_name, :class=>"short apart"  %>
+	      </li>
 	     	      
 	      
 	     <% for parent in @student.parents %>
 	         
-	           
-                      <%= text_field  :name => 'parent[first_name][]', :label => "Parents/Guardian", :value => "#{parent.first_name}" %>
-		      <%= text_field  :name => 'parent[last_name][]', :value => "#{parent.last_name}" %>
+	      <li>     
+                      <%= text_field  :name => 'parent[first_name][]', :class=>"short", :label => "Parents/Guardian", :value => "#{parent.first_name}" %>
+		      <%= text_field  :name => 'parent[last_name][]', :class=>"short apart", :value => "#{parent.last_name}" %></li>
+		   <li>
 		   
-		   
-	              <%= text_field :name => 'parent[email][]', :label => "Email", :value => "#{parent.email}" %>
+	              <%= text_field :name => 'parent[email][]', :label => "Email", :value => "#{parent.email}" %></li>
 	           
 	
 	      <% end %>
@@ -32,60 +33,28 @@
 		    <%= flash[:error1] %>
 		<% end %>
 	       		
-	         <tr id="students">
-	         
-		 <tr id="email">
-	         
+	        
+		  <% s = @student.parents.find(:first) %>
+		<li>     
 		 
-	         <%= link_to_function 'Add', "add();" %>
-		   
-		     <% s = @student.parents.find(:first) %>
-		     
+	            <%= text_field :name => 'parent[phone][]', :label => "Phone", :value => "#{s.phone}" %></li>
+	         <li>
 		 
-	            <%= text_field :name => 'parent[phone][]', :label => "Phone", :value => "#{s.phone}" %>
+	            <%= text_field :name => 'parent[address][]', :label => "Address", :value => "#{s.address}" %></li>
 	         
-		 
-	            <%= text_field :name => 'parent[address][]', :label => "Address", :value => "#{s.address}" %>
 	         
-		 
-		     <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+<div class="save-cancel">		 
+	        
+		    <input type = 'button' value = 'Preview' onclick="preview();return false;" />
 	             <%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %>
 	         
-
+</div>
 	      
     <% end =%>
-    
-</div>
-
+</fieldset>
 
 <script type= "text/javascript">
-   var parent =  <%= @student.parents.length %>;
-  function add()
-   {
-     
-     if ( parent <= 3)
-     {
-     var student = document.getElementById('students');
-     var email = document.getElementById('email');
-         var td1 = document.createElement('td');  
-         td1.innerHTML = "Parents/Guardian: <input type='text' id='parent_first_name' name='parent[first_name][]'/>";
-         var td2 = document.createElement('td');  
-         td2.innerHTML = "<input type='text' id='parent_last_name' name='parent[last_name][]'/>";
-         var td3 = document.createElement('td'); 
-	 td3.innerHTML = "Email: <input type='text' id='parent_last_name' name='parent[email][]'/>";
-        
-         student.appendChild(td1);
-         student.appendChild(td2);
-         email.appendChild(td3);
-	     parent = parent + 1;
-	 }
-     else
-	 {
-	    alert("You can't add more than that");
-	 }
-    
- }
- 
+  
  function preview()
  {
    var s = $('student').serialize();

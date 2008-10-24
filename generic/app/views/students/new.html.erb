@@ -1,47 +1,51 @@
- <h2 class="current-page">Students &gt; <span class="add-link">Add New</span></h2>
-  
-  <%= error_messages_for @student %>
-  <%= error_messages_for @parent %>
-  
-  <%= form_for(@student, :action => resource(:students), :id => 'student') do %>
-<fieldset>
-  <ul>
-    <li>
-      <label>Student for:</label>
-      <select name = "classroom_id" id="classroom_person",>
-       <% @class_rooms.each do |s| %>
-        <option value="<%= s.id %>">
-         <%= s.class_name %>
-        </option>
-     <% end %>
-    </li>
-    <li>
-      <%= text_field  :first_name, :label => "Student", :class=> "semi-short" %><%= text_field  :last_name, :class=> "semi-short apart" %>
-    </li>
-    <% fields_for :Parent do %>  
-     <li>
-       <%= text_field  :first_name,  :label => "Parents/Guardian", :class=> "semi-short" %><%= text_field  :last_name, :class=> "semi-short apart" %>
-     </li>
-      <li>
-        <%= text_field :email, :label => "Email" %>
-      </li>
-      <li>
-        <%= text_field  :Phone,  :label => "Phone" %>
-      </li>
-      <li>
-        <%= text_field  :address,  :label => "Address" %>
-      </li>
-   <% end %>
-   </ul>
- <fieldset>
-  <div class="save-cancel">
-    <%= link_to_function 'Add', "add();" %>
-    <input type = 'button' value = 'Preview' onclick="preview();return false;" />
-    <%= submit "Publish" %>
-    <span class="cancel"><%= link_to "Cancel", resource(:students) %></span>
+
+<%= error_messages_for @student %>
+<hr />
+<%= error_messages_for @parent %>
+
+<h2 class="current-page">Students &gt; <span class="add-link">Add New</span></h2>
+
+
+<fieldset> 
+    <%= form_for(@student, :action => resource(:students), :id => 'student') do %>
+
+        <ul>
+	    <li>
+	      <td>Student for: <select name = "classroom_id" id="classroom_person",>
+	                       <% @class_rooms.each do |s| %>
+		                      <option value="<%= s.id %>">
+			                   <%= s.class_name %>
+		                      </option>
+			        <% end %>
+	     </li>
+	  
+         <li>
+            <%= text_field  :first_name,  :label => "Student", :class => "short " %>
+              <%= text_field  :last_name, :class => "short apart" %>
+	  </li>
+	<% fields_for :parent do %>  
+	     <li>
+                 <%= text_field  :first_name, :class => "short", :label => "Parents/Guardian" %>
+                 <%= text_field  :last_name, :class => "short apart" %>
+	     </li>
+	 
+	       <li>
+	           <%= text_field :email, :label => "Email" %>
+	       </li>
+	        <li>
+	          <%= text_field  :phone,  :label => "Phone" %>	        </li>
+	        <li>
+	          <%= text_field  :address,  :label => "Address" %>
+		  </li>
+	<% end %>        
+	     <li>
+	        <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+	       <%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %>
+	      </li>
+	  
+      </ul>
    <% end =%>
-</div>
- 
+</fieldset>
  
 <script type= "text/javascript">
    var parent = 0;
@@ -57,17 +61,17 @@
          var td2 = document.createElement('td');  
          td2.innerHTML = "<input type='text' id='sp_last' name='sp[last][]'/>";
          var td3 = document.createElement('td'); 
-  td3.innerHTML = "Email: <input type='text' id='sp_mail' name='sp[mail][]'/>";
+	 td3.innerHTML = "Email: <input type='text' id='sp_mail' name='sp[mail][]'/>";
         
          student.appendChild(td1);
          student.appendChild(td2);
          email.appendChild(td3);
-      parent = parent + 1;
-  }
+	     parent = parent + 1;
+	 }
      else
-  {
-     alert("You can't add more than that");
-  }
+	 {
+	    alert("You can't add more than that");
+	 }
     
  }   
  
@@ -79,3 +83,4 @@
 
 
 </script>
+   
