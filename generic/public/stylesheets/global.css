@@ -320,12 +320,13 @@ ul.edit-ext-links li{background:url(../images/link-bullet.gif) no-repeat left ce
 .select-announce{padding:10px 0 20px 0; display:block;}
 
 .calendar-block{border-bottom:1px solid #e8e8e8; float:left; clear:left;}
-.calendar-block h3{Background:#aaaaff; padding:4px 0 4px 2px;}
-.calendar-block a{padding:2px 0 2px 16px!important; float:right}
+.calendar-block h3{Background:#aaaaff; padding:4px 0 8px 2px; background:#f4f4f4;}
+.calendar-block h3.today{color:#ff7b00;}
+.calendar-block a{padding:2px 0 2px 18px!important; float:right}
 .calendar-block .cal-time{display:block; width:100px; float:left;}
-.cal-title{float:left;}
+.cal-title{float:left; display:block; width:240px;}
 ul.calendar-items{clear:both;}
-ul.calendar-items li{clear:both; display:block; float:left;}
+ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding:4px 0 2px 2px;}
 
 
 

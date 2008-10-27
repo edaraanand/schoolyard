@@ -1,11 +1,7 @@
-<%= error_messages_for @calendar %>
-
-<div class= 'formcontainer'>
-   
+<h2 class="current-page">Calendars &gt; New</h2>
+<fieldset>
+  <%= error_messages_for @calendar %>
     <%= form_for(@calendar, :action => resource(:calendars)) do %>
-    
-          <%= partial 'form' %>  
-	
-    <% end =%>
-  
-</div>
+      <%= partial 'form' %>
+  <% end =%>
+</fieldset>

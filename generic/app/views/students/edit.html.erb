@@ -3,31 +3,25 @@
 <h2 class="current-page">Students &gt; <span class="add-link">Edit</span></h2>
 <fieldset>
     <%= form_for(@student, :action => resource(@student), :id => 'student') do %>
-	         Student for: <select name = "classroom_id" id="classroom_person",>
-	     <ul><li><label>Student for:</label> <select name = "classroom_id" id="classroom_person",>
+	           <ul><li><label>Student for:</label> <select name = "classroom_id" id="classroom_person",>
 	                       <% @class_rooms.each do |s| %>
 		                      <option value="<%= s.id %>">
 			                   <%= s.class_name %>
 		                      </option>
 			        <% end %>
+			        </li>
 
-                  <%= text_field  :first_name,  :label => "Student" %>
-                  <%= text_field  :last_name %>
-	      
-
-			        <% end %></li>
+              <li><label>Student</label>
+                  <%= text_field  :first_name, :class=>"short" %>
+                  <%= text_field  :last_name, :class=>"short apart" %>
+	            </li>
 	          
-	      
-              <li>
-                  <%= text_field  :first_name,:class=>"short",  :label => "Student" %>
-                  <%= text_field  :last_name, :class=>"short apart"  %>
-	      </li>
-	     	      
+	          	      
 	      
 	     <% for parent in @student.parents %>
 	         
 	      <li>     
-                      <%= text_field  :name => 'parent[first_name][]', :class=>"short", :label => "Parents/Guardian", :value => "#{parent.first_name}" %>
+                <%= text_field  :name => 'parent[first_name][]', :class=>"short", :label => "Parents/Guardian", :value => "#{parent.first_name}" %>
 		      <%= text_field  :name => 'parent[last_name][]', :class=>"short apart", :value => "#{parent.last_name}" %></li>
 		   <li>
 		   
