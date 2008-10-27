@@ -1,6 +1,5 @@
 
 <%= error_messages_for @student %>
-<hr />
 <%= error_messages_for @parent %>
 
 <h2 class="current-page">Students &gt; <span class="add-link">Add New</span></h2>
@@ -11,18 +10,19 @@
 
         <ul>
 	    <li>
-	      <td>Student for: <select name = "classroom_id" id="classroom_person",>
-	                       <% @class_rooms.each do |s| %>
-		                      <option value="<%= s.id %>">
-			                   <%= s.class_name %>
-		                      </option>
-			        <% end %>
+	      <label>Student for:</label>
+	      <select name = "classroom_id" id="classroom_person",>
+           <% @class_rooms.each do |s| %>
+            <option value="<%= s.id %>">
+              <%= s.class_name %>
+            </option>
+			  <% end %>
 	     </li>
 	  
-         <li>
-            <%= text_field  :first_name,  :label => "Student", :class => "short " %>
-              <%= text_field  :last_name, :class => "short apart" %>
-	  </li>
+         <li> <label>Student</label>
+              <%= text_field  :first_name, :class => "short" %>
+              <%= text_field  :last_name, :class=> "short apart" %>
+	      </li>
 	<% fields_for :parent do %>  
 	     <li>
                  <%= text_field  :first_name, :class => "short", :label => "Parents/Guardian" %>
@@ -37,13 +37,14 @@
 	        <li>
 	          <%= text_field  :address,  :label => "Address" %>
 		  </li>
-	<% end %>        
-	     <li>
+	<% end %>  
+	</ul>      
+      <div class="save-cancel">
 	        <input type = 'button' value = 'Preview' onclick="preview();return false;" />
-	       <%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %>
-	      </li>
+	       <%= submit "Publish" %><%= link_to "Cancel", resource(:students), :class=>"cancel" %>
+	    </div>
 	  
-      </ul>
+      
    <% end =%>
 </fieldset>
  
