@@ -49,8 +49,10 @@ ActiveRecord::Schema.define(:version => 30) do
     t.text     "description"
     t.string   "location"
     t.boolean  "day_event"
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.time     "start_time"
+    t.time     "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -98,9 +100,9 @@ ActiveRecord::Schema.define(:version => 30) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
+    t.string   "phone"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "phone"
     t.text     "person_bio"
     t.text     "address"
   end

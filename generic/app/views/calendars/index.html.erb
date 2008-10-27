@@ -13,6 +13,7 @@
 	            <td><b><%= calendar.start_date.strftime("%B-%d") %></b></td>  
 	        <% end %> 
 		</tr>
+		
 		   <% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
 		    <% cals.each do |cal| %> 
 		        <tr>
