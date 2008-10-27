@@ -7,7 +7,7 @@
   <h2 class="current-page"><%= params[:label] %> &gt; New</h2>
   <%= form_for(@external_link, :action => resource(:external_links), :id => 'links') do %>
     <ul class="edit-ext-links">
-      <li>
+      <li id="link">
         <%= text_field  :title, :name => 'external_link[title][]', :class=>"long text"%>
         <%= text_field  :url, :name => 'external_link[url][]', :class=>"short text"%>
         <a href="" class="delete-btn">Delete</a>
@@ -27,27 +27,16 @@
 
 <script type= "text/javascript">
  
-  function add()
+ function add()
    {
+      var links = document.getElementById('link');
+    	var li = document.createElement('li');
+	li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]'/>"  + "<input type='text' id='external_link_url' name='external_link[url][]'/>";
+	links.appendChild(li);
+	
+    }
  
-     var external = document.getElementById('ExternalLinks');
-
-     var tr = document.createElement('tr');
-         var td1 = document.createElement('td');  
-
-         td1.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]'/>";
-
-           var td2 = document.createElement('td');  
-
-         td2.innerHTML = "<input type='text' id='external_link_url' name='external_link[url][]'/>";
-         
-        
-         tr.appendChild(td1);
-         tr.appendChild(td2);
-        external.appendChild(tr);
- 
- }
- 
+  
  function preview()
  {
    var s = $('links').serialize();
@@ -57,3 +46,5 @@
  
 
 </script>
+
+

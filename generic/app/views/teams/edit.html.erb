@@ -2,7 +2,7 @@
 <h2 class="current-page">Sports Teams &gt; Edit</h2>
   <%= form_for(@team, :action => resource(@team)) do %>
   <fieldset>
-    <ul>
+    <ul id="team">
       <li><%= text_field  :team_name,  :label => "Name of the Team" %></li>
       <li><%= select  :classroom_id,  :collection => @classrooms.collect{|x| x.class_name }, :label => "Classroom" %></li>
       <li><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year" %></li>
@@ -15,20 +15,23 @@
           </option>
 			  <% end %>
 			</li>
-    </ul>
-  </fieldset>
-  
-<% @team_peoples.each do |f| %>
-  <%= text_field :name => 'classroom[people][role][]', :id =>'classroom_class_people', :value => "#{f.role}" %>
-  <select name = "classroom[people][ids][]" id="classroom_person",>
+	<% @team_peoples.each do |f| %>
+           <li> <%= text_field :name => 'classroom[people][role][]', :id =>'classroom_class_people', :value => "#{f.role}" %>
+              	 <select name = "classroom[people][ids][]" id="classroom_person",>
 	                       <% @teachers.each do |teacher| %>
 		                      <option value="<%= teacher.id %>">
 			                   <%= teacher.first_name %>
 		                      </option>
-			        <% end %>
+			        <% end %></li>
+				
 	 <% end %>
 
-  <a href="#" onclick="add();return false;">Add More</a>
+	<li><a href="#" onclick="add();return false;" class="add-more">Add More</a></li>
+    </ul>
+  </fieldset>
+  
+
+ 
 <div class="save-cancel">
   <%= submit "Save" %>
   <%= link_to "Cancel", resource(:teams) %>
@@ -43,23 +46,18 @@
  
   function add()
    {
-      var table = document.getElementById('teams');
-	var tr = document.createElement('tr');
-        var td1 = document.createElement('td');
-	var td2 = document.createElement('td');
-	td1.innerHTML = "<input type='text' name='classroom[people][role][]' id='classroom_class_people' />";
-	td2.innerHTML = <select name="classroom[people][ids][]" id="classroom_person"> 
+      var class_room = document.getElementById('team');
+      var li = document.createElement('li');
+	li.innerHTML = "<input type='text' name='classroom[people][role][]' id='classroom_class_people' />"  + <select name="classroom[people][ids][]" id="classroom_person"> 
 	                                <% @teachers.each do |teacher| %>
 		                           <option value="<%= teacher.id %>">
-					   <%= teacher.first_name %>
+					   <%= teacher.name %>
 					   </option>
 			                <% end %>
-			      </select>
-	 tr.appendChild(td1);
-	 tr.appendChild(td2);
-	 table.appendChild(tr);
+			      </select> ;
+	 class_room.appendChild(li);
+	
     }
-     
 </script>
 
 

@@ -13,90 +13,24 @@ class Students < Application
   end
   
   def create
-	 # raise params.inspect
      @class_rooms = Classroom.find(:all, :conditions => ['class_type=?', "Classes"])
-     @student = Student.new(params[:student])
-     @parent = Parent.new(params[:parent])
-   
-     if ( params[:f_name_parent2].nil? && params[:l_name_parent2].nil? && params[:email].nil? )
-        if @student.valid?
-	   if @parent.valid? 
-	      @student.save
-	      @parent.save
-	      Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
-	      Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })
-	      redirect resource(:students)
-	   else
-	      render :new
-	   end
-        else
-	   render :new
-	end
+     @student = Student.new(params[:student]) 
+     @parent = @student.parents.build(params[:parent])
+     unless params[:sp].nil?
+        s = params[:sp][:first].zip(params[:sp][:last], params[:sp][:mail])
+	s.each do |p|
+	   @p = @student.parents.build({ :first_name => p[0], :last_name => p[1], :email => p[2] }) 
+        end  
+     end
+    
+     if @student.save
+	Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })
+       	redirect resource(:students)
      else
-	 #   params["f_name_parent#{i}"]
-	  if f_name_parent2.nil?
-		 flash[:error] = "P2 first Name1"
-		 render :new
-	    elsif l_name_parent2.nil?
-		  flash[:error] = "P2 lastname"
-		  render :new
-	    elsif email_parent2.nil?
-		  flash[:error] = "P2 email"
-		  render :new
-	  else
-	     @p = Parent.create({:first_name => params["f_name_parent#{i}".to_sym], :last_name => params["l_name_parent#{i}".to_sym], :email => params["email_parent#{i}".to_sym], :phone => @parent.phone, :address => @parent.address })
-	     Guardian.create({:student_id => @student.id, :parent_id => @p.id }) 
-	  end
-	  
-	  unless (f_name_parent3 != nil || l_name_parent3 != nil || email_parent3 != nil)
-	     if f_name_parent3 != nil
-		 flash[:error] = "P3-FN"
-		 render :new
-	     elsif l_name_parent3.nil?
-		  flash[:error] = "P3 lastname"
-		  render :new
-	     elsif email_parent3.nil?
-		 flash[:error] = "P3- email"
-		  render :new
-	     else
-	       @p = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3], :phone => @parent.phone, :address => @parent.address })
-	       Guardian.create({:student_id => @student.id, :parent_id => @p.id }) 
-	     end
-           end
-		  
-		  
-	 [2,3,4].each do |i|
-	         if (params["f_name_parent#{i}"].nil?) && params["l_name_parent#{i}"].nil?
-		    flash[:error] = "dont u hAve pArents, enter the detAils" 
-		    @fname = params["f_name_parent#{i}".to_sym]
-	            @lname = params["l_name_parent#{i}".to_sym]
-	            @mail = params["email_parent#{i}".to_sym]
-		    render :new
-	          else
-		    if @student.valid?
-                      if @parent.valid?
-			puts "#{i}".inspect
-			puts params["f_name_parent#{i}".to_sym].inspect
-		        @student.save
-	                @parent.save
-	                Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
-	                Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })	
-		        @p = Parent.create({:first_name => params["f_name_parent#{i}".to_sym], :last_name => params["l_name_parent#{i}".to_sym], :email => params["email_parent#{i}".to_sym], :phone => @parent.phone, :address => @parent.address })
-		        Guardian.create({:student_id => @student.id, :parent_id => @p.id })
-		        redirect resource(:students)
-		      else
-			render :new
-		      end
-	           else
-		     render :new
-	           end
-	        end
-          end
-      
-    end  
-       
+	render :new
+     end
   end
- 
+  
   def edit
      @student = Student.find(params[:id])
      @class_rooms = Classroom.find(:all)
@@ -149,5 +83,3 @@ class Students < Application
   
   
 end
-
-

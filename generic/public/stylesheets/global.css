@@ -121,8 +121,9 @@ ul#menu li ul{margin:2px 0 4px;}
 ul#menu li ul li{font-weight:normal; padding:0;}
 ul#menu li ul li a{display:block; width:100%; padding:2px 0 4px 0; border-bottom:1px dotted #ccc; color:#486290;}
 ul#menu li ul li a:link{}
-ul#menu li ul li a:visited{}
-ul#menu li ul li a:hover, ul#menu li ul li a:active{text-decoration:underline}
+ul#menu li ul li a:visited{color:#7e91b3;}
+ul#menu li ul li a:hover{text-decoration:underline}
+ul#menu li ul li a:active{color:#1b67ed;}
 
 ul#menu li.count span{background:url(../images/menu-count.gif) no-repeat left top; padding:2px 0px 4px 4px; margin:0 0 0 2px; color:#fff; font: normal 11px/12px Arial, Helvetica, sans-serif;}
 ul#menu li.count span b{background:url(../images/menu-count.gif) no-repeat right top; padding:2px 5px 4px 2px;}
@@ -318,9 +319,13 @@ ul.edit-ext-links li{background:url(../images/link-bullet.gif) no-repeat left ce
 .announcemt{width:700px!important;}
 .select-announce{padding:10px 0 20px 0; display:block;}
 
-
-
-
+.calendar-block{border-bottom:1px solid #e8e8e8; float:left; clear:left;}
+.calendar-block h3{Background:#aaaaff; padding:4px 0 4px 2px;}
+.calendar-block a{padding:2px 0 2px 16px!important; float:right}
+.calendar-block .cal-time{display:block; width:100px; float:left;}
+.cal-title{float:left;}
+ul.calendar-items{clear:both;}
+ul.calendar-items li{clear:both; display:block; float:left;}
 
 
 
