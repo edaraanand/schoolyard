@@ -1,36 +1,29 @@
-<div class='fullpage'>
-    <div class = 'formcontent'> 
-      <table>
-         
-          <tr>
-	      <td><h3>Calendars</h3> </br></td>
-	      <td><%= link_to "Add New", resource(:calendars, :new) %></td>
-	  </tr>
-	  
-          <% for calendar in @calendars %>
-	         <% unless calendar.start_date.nil? %> 
-                <tr>
-	            <td><b><%= calendar.start_date.strftime("%B-%d") %></b></td>  
-	        <% end %> 
-		</tr>
-		   <% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
-		    <% cals.each do |cal| %> 
-		        <tr>
-		             <% unless cal.start_time.nil? %> 
-			        <td><%= cal.start_time.strftime("%H-%M") %></td>
-			     <% end %>
-			     <td><%= cal.title %></td>
-			     <td><%= link_to "Edit", resource(cal, :edit) %></td>
-			     <td><%= link_to "Delete", resource(cal, :delete) %></td>
-	                </tr>
-			
-		    <% end %>
-		    <% @calendars.delete_if{|c| cals.include?(c)} %>
-		  
-  	<% end %>
-	</table> 
+<div class="short-block">
+  <h2 class="current-page"> Calendars &gt; <%= link_to "Add New", resource(:calendars, :new) %></h2>
+  <% for calendar in @calendars %>
+    <div class="calendar-block">
+      <% unless calendar.start_date.nil? %> 
+        <h3><%= calendar.start_date.strftime("%B-%d") %></h3>
+      <% end %>
+      <% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
+      <ul class="calendar-items">
+        <% cals.each do |cal| %>
+          <li>
+            <span class="cal-time">
+                <% unless cal.start_time.nil? %>
+                  <%= cal.start_time.strftime("%H-%M") %>
+                <% end %>
+               &nbsp;
+            </span>
+            <span class="cal-title">
+              <%= cal.title %>
+            </span>
+            <%= link_to "Edit", resource(cal, :edit), :class=>"edit-btn" %>
+            <%= link_to "Delete", resource(cal, :delete), :class=>"delete-btn" %>
+          </li>
+        <% end %>
+      </ul>
     </div>
-	 
-
-                          
+  <% @calendars.delete_if{|c| cals.include?(c)} %>
+  <% end %>
 </div>

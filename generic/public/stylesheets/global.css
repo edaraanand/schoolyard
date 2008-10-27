@@ -318,9 +318,13 @@ ul.edit-ext-links li{background:url(../images/link-bullet.gif) no-repeat left ce
 .announcemt{width:700px!important;}
 .select-announce{padding:10px 0 20px 0; display:block;}
 
-
-
-
+.calendar-block{border-bottom:1px solid #e8e8e8; float:left; clear:left;}
+.calendar-block h3{Background:#aaaaff; padding:4px 0 4px 2px;}
+.calendar-block a{padding:2px 0 2px 16px!important; float:right}
+.calendar-block .cal-time{display:block; width:100px; float:left;}
+.cal-title{float:left;}
+ul.calendar-items{clear:both;}
+ul.calendar-items li{clear:both; display:block; float:left;}
 
 
 

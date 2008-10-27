@@ -1,7 +1,4 @@
-<ul id="crumbtrail">
-  <li>Classrooms<span>&gt;</span></li>
-  <li class="last"><%= link_to "Add New", resource(:classrooms, :new) %></li>
-</ul>
+<h2 class="current-page">Classrooms &gt; <%= link_to "Add New", resource(:classrooms, :new) %></h2>
 <% unless @classrooms.empty? %>
 <div class="data-block short-block">
   <% for classroom in @classrooms %>
