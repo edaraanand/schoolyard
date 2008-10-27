@@ -9,11 +9,6 @@
        <th>Email</th>
        <th>Phone</th>
     </thead>
-    <tfoot>
-      <tr>
-        <td colspan="4"><em></em></td>
-      </tr>
-    </tfoot>
     <% for person in @people %>
       <tr>
         <td class="click-block"><%= link_to "#{person.last_name}", url(:edit_person, person.id) %> </td>
