@@ -18,16 +18,16 @@ class Students < Application
      @parent = @student.parents.build(params[:parent])
      unless params[:sp].nil?
         s = params[:sp][:first].zip(params[:sp][:last], params[:sp][:mail])
-	s.each do |p|
-	   @p = @student.parents.build({ :first_name => p[0], :last_name => p[1], :email => p[2] }) 
+	      s.each do |p|
+	         @p = @student.parents.build({ :first_name => p[0], :last_name => p[1], :email => p[2] }) 
         end  
      end
     
      if @student.save
-	Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })
+	      Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })
        	redirect resource(:students)
      else
-	render :new
+	      render :new
      end
   end
   
