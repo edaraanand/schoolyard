@@ -21,7 +21,9 @@
     <div id="header"><!--The Header -->
       <h1><%= link_to "Catholic School Department", url(:schools) %></h1>
       <div id="user-cp"><!--User Control Panel -->
+      <% unless @current_user.nil? %>
       <p class="welcome">Welcome <em><%= @current_user.first_name %></em></p>
+      <% end %>
         <ul>
           <li class="first"><a href="#">My Account</a></li>
           <li><%= link_to "logout", url(:logout) %></li>

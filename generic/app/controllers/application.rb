@@ -10,9 +10,5 @@ class Application < Merb::Controller
       redirect url(:login) unless current_user
   end
 
-      
- # include MerbAuth::ControllerMixin
-
-   # before :login_required
-    
+ 
 end
