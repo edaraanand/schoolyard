@@ -14,21 +14,105 @@ class Students < Application
   
   def create
      @class_rooms = Classroom.find(:all, :conditions => ['class_type=?', "Classes"])
-     @student = Student.new(params[:student]) 
-     @parent = @student.parents.build(params[:parent])
-     unless params[:sp].nil?
-        s = params[:sp][:first].zip(params[:sp][:last], params[:sp][:mail])
-	      s.each do |p|
-	         @p = @student.parents.build({ :first_name => p[0], :last_name => p[1], :email => p[2] }) 
-        end  
-     end
-    
-     if @student.save
-	      Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })
-       	redirect resource(:students)
+     @student = Student.new(params[:student])
+     @parent = Parent.new(params[:parent])
+     if (params[:f_name_parent2] == "")
+       if @student.valid?
+	        if @parent.valid? 
+	           @student.save
+	           @parent.save
+	           Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
+	           Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })
+	           redirect resource(:students)
+	        else
+	           render :new
+	        end
+        else
+	         render :new
+	      end
      else
-	      render :new
+	      if @student.valid?
+           if @parent.valid?
+	            if( (params[:f_name_parent2] != "") && (params[:l_name_parent2] != "") )
+                 if ( (params[:f_name_parent3] != "") || (params[:l_name_parent3] != "") )
+                   
+                     if ( (params[:f_name_parent4] !="") || (params[:l_name_parent4] != "") )
+                        if ( (params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") )
+                           @student.save
+	                         @parent.save
+                           Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
+	                         Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })	
+		                       @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2], :phone => @parent.phone, :address => @parent.address })
+		                       Guardian.create({:student_id => @student.id, :parent_id => @p.id })
+                           @p3 = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3], :phone => @parent.phone, :address => @parent.address })
+                           Guardian.create({:student_id => @student.id, :parent_id => @p3.id })
+                           @p4 = Parent.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4], :phone => @parent.phone, :address => @parent.address })
+                           Guardian.create({:student_id => @student.id, :parent_id => @p4.id })
+                           redirect resource(:students)
+                        else
+                           flash[:error4] = "Please enter the Parent4 details"
+                           @fname4 = params[:f_name_parent4]
+	                         @lname4 = params[:l_name_parent4]
+	                         @mail4 = params[:email_parent4]
+	                         @fname3 = params[:f_name_parent3]
+	                         @lname3 = params[:l_name_parent3]
+	                         @mail3 = params[:email_parent3]
+                           @fname2 = params[:f_name_parent2]
+	                         @lname2 = params[:l_name_parent2]
+	                         @mail2 = params[:email_parent2]
+		                       render :new      
+                         end
+                         
+                    else
+                        if ( (params[:f_name_parent3] != "") && (params[:l_name_parent3] != "") )
+                           @student.save
+	                         @parent.save
+                           Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
+	                         Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })	
+		                       @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2], :phone => @parent.phone, :address => @parent.address })
+		                       Guardian.create({:student_id => @student.id, :parent_id => @p.id })
+                           @p3 = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3], :phone => @parent.phone, :address => @parent.address })
+                           Guardian.create({:student_id => @student.id, :parent_id => @p3.id })
+                           redirect resource(:students)
+                        else
+                           puts "hurray"
+                           flash[:error3] = "Please enter the Parent3 details"
+	                         @fname3 = params[:f_name_parent3]
+	                         @lname3 = params[:l_name_parent3]
+	                         @mail3 = params[:email_parent3]
+                           @fname2 = params[:f_name_parent2]
+	                         @lname2 = params[:l_name_parent2]
+	                         @mail2 = params[:email_parent2]
+		                       render :new
+                        end
+                     end
+                else
+                    @student.save
+	                  @parent.save
+                    Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
+	                  Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })	
+		                @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2], :phone => @parent.phone, :address => @parent.address })
+		                Guardian.create({:student_id => @student.id, :parent_id => @p.id })
+                    redirect resource(:students)
+                end
+               
+	            else
+                puts "Deep"
+		            flash[:error] = "Please enter the Parent2 details"
+	              @fname2 = params[:f_name_parent2]
+	              @lname2 = params[:l_name_parent2]
+	              @mail2 = params[:email_parent2]
+		            render :new
+	            end
+          else
+		         render :new
+	        end
+       else
+	        render :new
+	     end
+       
      end
+     
   end
   
   def edit
@@ -38,36 +122,88 @@ class Students < Application
   end
   
   def update
-    # @parent = Parent.new
-     @class_rooms = Classroom.find(:all)
      @student = Student.find(params[:id])
+     parents = @student.parents
+     @class_rooms = Classroom.find(:all)
+     #raise "Eshwar".inspect
+     phone = params[:parent][:phone]
+     address = params[:parent][:address]
+     parent_id =  parents.collect{|x| x.id }
      @study_id = Study.find_by_student_id(@student.id)
-     @student.attributes = params[:student]
-      phone = params[:parent][:phone]
-      address = params[:parent][:address]
-      parents = @student.parents
-      parent_id =  parents.collect{|x| x.id }
-      s = params[:parent][:first_name].zip(params[:parent][:last_name], params[:parent][:email], parent_id)
-           s.each do |s|
-              if s[3].nil?
-	         @student.parents << @student.parents.build({:first_name => s[0], :last_name => s[1], :email => s[2], :phone => "#{phone}", :address => "#{address}" })
-              else   
-	      @p =  Parent.update(s[3],{:first_name => s[0], :last_name => s[1], :email => s[2], :phone => "#{phone}", :address => "#{address}" } )
-	      end
-           end
-       if @student.valid? 
-	   if @p.valid?
-              @student.save
-	      Study.update(@study_id.id, {:student_id => @student.id, :classroom_id => params[:classroom_id]})
-	      redirect resource(:students)
-           else
-	      flash[:error1] = "Please enter the Parent details"
-	      render :edit
-           end
+  if @student.update_attributes(params[:student])
+     Study.update(@study_id.id, {:student_id => @student.id, :classroom_id => params[:classroom_id]})
+     sp = params[:parent][:first_name].zip(params[:parent][:last_name], params[:parent][:email], parent_id)
+     if parents.length == 1
+      # puts params[:f_name_parent2].inspect
+        if ( params[:f_name_parent2] != "" || params[:l_name_parent2] != "" )  
+          puts "Hello"
+          if ( (params[:f_name_parent2] != "") && (params[:l_name_parent2] != "") )
+             puts "Eshwar"
+             @a = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:mail_parent2], :phone => "#{phone}", :address => "#{address}" })
+             Guardian.create({:student_id => @student.id, :parent_id => @a.id })
+             if ((params[:f_name_parent3] != "") && (params[:l_name_parent3] != "") )
+                @b = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:mail_parent3], :phone => "#{phone}", :address => "#{address}" })  
+                Guardian.create({:student_id => @student.id, :parent_id => @b.id })
+             end
+             if ((params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") )
+               @c = Parent.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:mail_parent4], :phone => "#{phone}", :address => "#{address}" })
+               Guardian.create({:student_id => @student.id, :parent_id => @c.id })
+             end
+            # raise "Eshwar".inspect
+             redirect resource(:students)
+          else
+            # raise "raja".inspect
+             puts "Raja"
+             flash[:error2] = "Please enter parent2 details"
+              @fname2 = params[:f_name_parent2]
+	            @lname2 = params[:l_name_parent2]
+	            @mail2 = params[:mail_parent2]
+             render :edit
+          end
        else
-          render :edit
+           sp.each do |f|
+              Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2], :phone => "#{phone}", :address => "#{address}" } )
+           end
+           puts "Ashwini"
+           redirect resource(:students)
        end
-  end
+          
+     elsif parents.length == 2
+           sp.each do |f|
+             Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2], :phone => "#{phone}", :address => "#{address}" } )
+           end
+           if ((params[:f_name_parent3] != "") && (params[:l_name_parent3] != "") )
+             @d = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:mail_parent3], :phone => "#{phone}", :address => "#{address}" })  
+             Guardian.create({:student_id => @student.id, :parent_id => @d.id })
+           end
+           if ((params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") )
+             @e = Parent.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:mail_parent4], :phone => "#{phone}", :address => "#{address}" })
+             Guardian.create({:student_id => @student.id, :parent_id => @e.id })
+           end
+           redirect resource(:students)
+     elsif parents.length == 3
+           sp.each do |f|
+             Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2], :phone => "#{phone}", :address => "#{address}" } )
+           end
+           if ((params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") )
+             @f = Parent.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:mail_parent4], :phone => "#{phone}", :address => "#{address}" })
+             Guardian.create({:student_id => @student.id, :parent_id => @f.id })
+           end
+           redirect resource(:students)
+     elsif parents.length == 4
+           puts "Eshwar"
+           sp.each do |f|
+             Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2], :phone => "#{phone}", :address => "#{address}" } )
+           end
+           redirect resource(:students)
+     else
+       render :edit
+     end
+     #redirect resource(:students)
+   else
+     render :edit
+   end
+  end                      
   
   
    def preview

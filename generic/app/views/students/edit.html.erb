@@ -1,60 +1,183 @@
-<fieldset>
+
 <%= error_messages_for @student %>
+<fieldset>
+
+<ul class='error_messages'>
+     <% if flash[:error2] %> 
+		    <li><%= flash[:error2] %></li>
+     <% end %>
+</ul>	       		
+
 <h2 class="current-page">Students &gt; <span class="add-link">Edit</span></h2>
     <%= form_for(@student, :action => resource(@student), :id => 'student') do %>
 
-	<ul><li><label>Student for:</label> <select name = "classroom_id" id="classroom_person",>
+	   <ul>
+          <li><label>Student for:</label> <select name = "classroom_id" id="classroom_person",>
 	                       <% @class_rooms.each do |s| %>
 		                      <option value="<%= s.id %>">
 			                   <%= s.class_name %>
 		                      </option>
-			        <% end %></li>
-	          
-	      
-              <li>
-                  <%= text_field  :first_name,:class=>"short",  :label => "Student" %>
-                  <%= text_field  :last_name, :class=>"short apart"  %>
-	      </li>
-	     	      
-	      
-	     <% for parent in @student.parents %>
+			           <% end %>
+          </li>
+	        <li>
+               <%= text_field  :first_name,:class=>"short",  :label => "Student" %>
+               <%= text_field  :last_name, :class=>"short apart"  %>
+	        </li>
+	     	                  
+	      <% for parent in @student.parents %>
 	         
-	      <li>     
-                      <%= text_field  :name => 'parent[first_name][]', :class=>"short", :label => "Parents/Guardian", :value => "#{parent.first_name}" %>
-		      <%= text_field  :name => 'parent[last_name][]', :class=>"short apart", :value => "#{parent.last_name}" %></li>
-		   <li>
-		   
-	              <%= text_field :name => 'parent[email][]', :label => "Email", :value => "#{parent.email}" %></li>
+	         <li>     
+               <%= text_field  :name => 'parent[first_name][]', :class=>"short", :label => "Parents/Guardian", :value => "#{parent.first_name}" %>
+		           <%= text_field  :name => 'parent[last_name][]', :class=>"short apart", :value => "#{parent.last_name}" %>
+           </li>
+		       <li><%= text_field :name => 'parent[email][]', :label => "Email", :value => "#{parent.email}" %></li>
 	           
-	
 	      <% end %>
-	      
-	        <% if flash[:error1] %> 
-		    <%= flash[:error1] %>
-		<% end %>
-	       		
-	        
-		  <% s = @student.parents.find(:first) %>
-		<li>     
-		 
-	            <%= text_field :name => 'parent[phone][]', :label => "Phone", :value => "#{s.phone}" %></li>
-	         <li>
-		 
-	            <%= text_field :name => 'parent[address][]', :label => "Address", :value => "#{s.address}" %></li>
-	         
-	         
-<div class="save-cancel">		 
-	        
-		    <input type = 'button' value = 'Preview' onclick="preview();return false;" />
-	             <%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %>
-	         
-</div>
+        
+           <% sp = @student.parents.length %>
+           <% if sp == 1 %>
+               <% if ((@fname2 != nil || @lname2 != nil ) || (@mail2 != nil) ) %> 
+                   <div id="parent2" style="visibility:visible">
+                       <li>
+                         <%= text_field  :name => 'f_name_parent2', :class => "short", :label => "Parents/Guardian", :value => "#{@fname2}" %>
+                         <%= text_field  :name => 'l_name_parent2', :class => "short apart", :value => "#{@lname2}" %>
+                       </li> 
+                       <li>
+                         <%= text_field  :name => 'mail_parent2',  :label => "E-Mail", :value => "#{@mail2}" %> 
+                       </li>
+                   </div>  
+                  <div id="am2" style="visibility:hidden">
+	                   <a onclick="add_parent2();return false;" href="#">Add More</a>
+	                </div>
+                  <div id="am3" style="visibility:visible">
+	                   <a onclick="add_parent3();return false;" href="#">Add More</a>
+	                </div>
+              <% else %>
+                 <div id="parent2" style="visibility:hidden">
+                   <li>
+                     <%= text_field  :name => 'f_name_parent2', :class => "short", :label => "Parents/Guardian" %>
+                     <%= text_field  :name => 'l_name_parent2', :class => "short apart" %>
+                   </li> 
+                   <li>
+                      <%= text_field  :name => 'mail_parent2',  :label => "E-Mail" %> 
+                   </li>
+                 </div> 
+                  <div id="am2" style="visibility:visible">
+	                   <a onclick="add_parent2();return false;" href="#">Add More</a>
+	                </div>
+              <% end %>
+          <% end %>
+            
+        <% if sp == 2 %>
+           <div id="parent3" style="visibility:hidden">
+                   <li>
+                       <%= text_field  :name => 'f_name_parent3', :class => "short", :label => "Parents/Guardian" %>
+                       <%= text_field  :name => 'l_name_parent3', :class => "short apart" %>
+                   </li> 
+                   <li>
+                       <%= text_field  :name => 'mail_parent3',  :label => "E-Mail" %> 
+                   </li>
+               </div>
+                <div id="am3" style="visibility:hidden">
+	                <a onclick="add_parent3();return false;" href="#">Add More</a>
+	             </div>
+        <% end %>
+         <% if ((@fname3 != nil || @lname3 != nil ) || (@mail3 != nil) ) %>
+               <div id="parent3" style="visibility:visible">
+                   <li>
+                       <%= text_field  :name => 'f_name_parent3', :class => "short", :label => "Parents/Guardian" %>
+                       <%= text_field  :name => 'l_name_parent3', :class => "short apart" %>
+                   </li> 
+                   <li>
+                       <%= text_field  :name => 'mail_parent3',  :label => "E-Mail" %> 
+                   </li>
+               </div>
+               <div id="am3" style="visibility:hidden">
+	                <a onclick="add_parent3();return false;" href="#">Add More</a>
+	             </div>
+               <div id="am4" style="visibility:visible">
+	                <a onclick="add_parent4();return false;" href="#">Add More</a>
+	             </div>
+           <% else %>
+               <div id="parent3" style="visibility:hidden">
+                   <li>
+                       <%= text_field  :name => 'f_name_parent3', :class => "short", :label => "Parents/Guardian" %>
+                       <%= text_field  :name => 'l_name_parent3', :class => "short apart" %>
+                   </li> 
+                   <li>
+                       <%= text_field  :name => 'mail_parent3',  :label => "E-Mail" %> 
+                   </li>
+               </div>
+               <div id="am3" style="visibility:visible">
+	                <a onclick="add_parent3();return false;" href="#">Add More</a>
+	             </div>
+            <% end %>
+            
+            <% if sp == 3 %>
+               <div id="am4" style="visibility:visible">
+	                <a onclick="add_parent4();return false;" href="#">Add More</a>
+	             </div>
+            <% end %>
+       
+         
+       
+           
+          
+            <div id="parent4" style="visibility:hidden">
+                  <li>
+                      <%= text_field  :name => 'f_name_parent4', :class => "short", :label => "Parents/Guardian" %>
+                      <%= text_field :name => 'l_name_parent4', :class => "short apart" %>
+                  </li>
+                  <li>
+                      <%= text_field  :name => 'mail_parent4',  :label => "E-Mail" %> 
+                  </li>
+            </div>
+            <div id="am4" style="visibility:hidden">
+	              <a onclick="add_parent4();return false;" href="#">Add More</a>
+	          </div>
+            
+        <% s = @student.parents.find(:first) %>
+        
+		       <li><%= text_field :name => 'parent[phone][]', :label => "Phone", :value => "#{s.phone}" %></li>
+	         <li><%= text_field :name => 'parent[address][]', :label => "Address", :value => "#{s.address}" %></li>
+	    
+        <div class="save-cancel">		 
+	          <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+	          <%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %>
+	      </div>
 	      
     <% end =%>
+    
 </fieldset>
 
 <script type= "text/javascript">
-  
+
+   var parent2_obj = document.getElementById('parent2');
+   var parent3_obj = document.getElementById('parent3');
+   var parent4_obj = document.getElementById('parent4');
+   var am2_obj     = document.getElementById('am2');
+   var am3_obj     = document.getElementById('am3');
+   var am4_obj     = document.getElementById('am4');
+ 
+ function add_parent2()
+   {
+      parent2_obj.style.visibility  =  "visible";
+      am2_obj.style.visibility      =  "hidden";
+      am3_obj.style.visibility      =  "visible";
+   }
+ function add_parent3()
+   {
+      parent3_obj.style.visibility  =  "visible";
+      am3_obj.style.visibility      =  "hidden";
+      am4_obj.style.visibility      =  "visible"; 
+    }
+ function add_parent4()
+   {
+      parent4_obj.style.visibility  =  "visible";
+      am4_obj.style.visibility      =  "hidden";
+     
+    }
+    
  function preview()
  {
    var s = $('student').serialize();
