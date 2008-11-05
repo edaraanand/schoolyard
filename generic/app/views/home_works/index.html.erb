@@ -1,0 +1,77 @@
+<h2 class="current-page">Home Work: <%= link_to "Add New", resource(:home_works, :new) %></h2>
+
+<div class="fullpage announcemt">
+   <%= form_for(@home_work, :action => resource(:home_works), :method => 'get', :id => 'home_work') do %>
+       <span class="select-announce">
+             <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name } %>
+             <%= submit ">>" %>
+       <span class="add-link">
+             <%= link_to "All Home Works", resource(:home_works) %>
+       </span>
+       </span>
+     
+   <% end =%>
+
+  <% if params[:classroom_id].nil? %>
+      <% for work in @h_works %>
+          <div class="data-block long-block">
+          <% if work.due_date.nil? %>
+	            <div class="ddmmm-x">
+	            </div>
+	        <% else %>
+              <div class="ddmmm">
+                  <span class="date"><%= work.due_date.strftime("%d") %></span>
+	                <span class="month"><%= work.due_date.strftime("%b") %></span>
+	            </div>
+	        <% end %>
+              <h3><%= work.title %></h3>
+              <% s = work.classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
+                <% s.each do |f| %>
+                   <% if f.role == 'class_teacher' %>
+                   Assigned : <%= work.created_at.strftime("%b %d, %Y") %>  by <%= f.person.name %>
+                   <% end %>
+                <% end %>
+              <p class="post-content"><%= work.content %></p>
+              <%= link_to "Edit", resource(work, :edit), :class=>"edit-btn" %>
+              <%= link_to "Delete", resource(work, :delete), :class=>"delete-btn"  %>
+              <div class="hrule clear"><hr /></div>
+              </div>
+      <% end %>	
+   <% else %>   
+        <% if @home_works.empty? %>
+            <%= @error %>
+        <% else %>
+           <% for homework in @home_works %>
+           <div class="data-block long-block">
+              <span class="hidden">
+              <% unless homework.due_date.nil? %>
+                  <%= homework.due_date.strftime("%B-%d") %>
+              <% end %>
+              </span>
+          <% if homework.due_date.nil? %>
+	            <div class="ddmmm-x">
+	            </div>
+	        <% else %>
+              <div class="ddmmm">
+                 <span class="date"><%= homework.due_date.strftime("%d") %></span>
+                 <span class="month"><%= homework.due_date.strftime("%b") %></span>
+              </div>
+          <% end %>
+              <h3><%= homework.title %></h3>
+               <% s = homework.classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
+                <% s.each do |f| %>
+                   <% if f.role == 'class_teacher' %>
+                   Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= f.person.name %>
+                   <% end %>
+                <% end %>
+              <p class="post-content"><%= homework.content %></p>
+              <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
+              <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
+              <div class="hrule clear"><hr /></div>
+           </div>
+      <% end %>
+      <% end %>
+   <% end %>
+ 
+</div>
+ 

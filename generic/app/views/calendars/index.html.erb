@@ -21,9 +21,13 @@
             <%= link_to "Edit", resource(cal, :edit), :class=>"edit-btn" %>
             <%= link_to "Delete", resource(cal, :delete), :class=>"delete-btn" %>
           </li>
+           <%# @calendars.delete_if{|c| c.start_date.to_date == cal.start_date.to_date } %>
+             <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
         <% end %>
       </ul>
     </div>
-  <% @calendars.delete_if{|c| cals.include?(c)} %>
+   <% @calendars.delete_if{|c| cals.include?(c)} %>
+   <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
+   
   <% end %>
 </div>

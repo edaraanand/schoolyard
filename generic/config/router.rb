@@ -41,6 +41,7 @@ Merb::Router.prepare do
   resources :students
   resources :teams
   resources :from_principals
+  resources :home_works
   resources :external_links
   match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
   match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
