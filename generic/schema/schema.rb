@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 30) do
+ActiveRecord::Schema.define(:version => 31) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -49,8 +49,10 @@ ActiveRecord::Schema.define(:version => 30) do
     t.text     "description"
     t.string   "location"
     t.boolean  "day_event"
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.time     "start_time"
+    t.time     "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -93,14 +95,23 @@ ActiveRecord::Schema.define(:version => 30) do
     t.datetime "updated_at"
   end
 
+  create_table "home_works", :force => true do |t|
+    t.integer  "classroom_id"
+    t.string   "title"
+    t.text     "content"
+    t.date     "due_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "people", :force => true do |t|
     t.string   "type"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
+    t.string   "phone"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "phone"
     t.text     "person_bio"
     t.text     "address"
   end

@@ -13,5 +13,6 @@ class Homes < Application
     @users = User.find(:all, :order => 'username')
     render
   end
+  
 
 end
