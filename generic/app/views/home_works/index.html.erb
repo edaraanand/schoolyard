@@ -39,7 +39,7 @@
       <% end %>	
    <% else %>   
         <% if @home_works.empty? %>
-            <%= @error %>
+            <%= @error %><h2 class="current-page"><%= link_to "Add New", resource(:home_works, :new) %></h2>
         <% else %>
            <% for homework in @home_works %>
            <div class="data-block long-block">
