@@ -1,6 +1,6 @@
 class Announcements < Application
-
- 
+   layout 'default'
+   
   def index
      classrooms
      @announcements = Announcement.find(:all, :conditions => ['access_name=?', params[:access_name] ])

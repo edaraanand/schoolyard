@@ -1,5 +1,6 @@
 class Calendars < Application
-
+ layout 'default'
+ 
   def index
      @calendars = Calendar.find(:all)
      render

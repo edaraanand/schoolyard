@@ -1,6 +1,7 @@
 class Teams < Application
 	
-    before :team_values, :exclude => [:index]
+  layout 'default'
+  before :team_values, :exclude => [:index]
 
   def index
      @teams = Team.find(:all)

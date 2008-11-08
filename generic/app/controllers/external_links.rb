@@ -1,5 +1,6 @@
 class ExternalLinks < Application
-
+  layout 'default'
+  
   def index
      @class_links = ExternalLink.find(:all, :conditions => ['label=?', "Classrooms"])
      @home_links = ExternalLink.find(:all, :conditions => ['label=?', "Home Page"])
