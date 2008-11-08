@@ -1,5 +1,5 @@
 class Admin < Application
-  
+  layout 'default'
   
   
   

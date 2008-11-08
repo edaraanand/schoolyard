@@ -1,0 +1,28 @@
+
+
+
+<h2 class="current-page"> My Profile > Edit </h2>
+
+<fieldset>                  
+
+<%= form_for :person, :action => url(:staff_account_update), :id => @person  do  %>
+    
+        <ul>
+            <li>
+                <%= text_field  :first_name,  :label => "Student", :class => "short " %>
+                <%= text_field  :last_name, :class => "short apart" %>
+	          </li>
+             <li>Contact Email:  <%= @person.email %> </li>
+            <li><%= text_field :phone,  :label => "Phone Number" %></li>
+            <li><%= text_area :person_bio,  :label => "Brief Bio" %></li>
+        </ul>
+            <div class="save-cancel">
+            <%= submit "Save" %> Or <%= link_to "Cancel", url(:staff_account) %>
+            </div>
+
+     <% end =%>
+   
+</fieldset>   
+   
+   
+

@@ -3,23 +3,28 @@ class Person < ActiveRecord::Base
 	has_many :accesses, :through => :access_peoples, :source => :access
 	
 	has_many :class_peoples
-        has_many :classrooms, :through => :class_peoples, :source => :classroom
+  has_many :classrooms, :through => :class_peoples, :source => :classroom
 
-        belongs_to :user
+  belongs_to :user
 	has_many :announcements
 	has_many :welcome_messages
 	
 	has_many :class_peoples
 	has_many :teams, :through => :class_peoples, :source => :team
 	
+  has_many :alert_peoples
+  has_many :alerts, :through => :alert_peoples
+  
 	def accesses_without_all
 	    accesses.delete_if{|x| x.name == "view_all"}
 	end
 	
  	def name
-            "#{first_name}"  "     "    "#{last_name}" 
-        end
+     "#{first_name}"  "     "    "#{last_name}" 
+  end
 	
+  attr_accessor :old_password
+  
 	validates_presence_of :first_name, :last_name
 	validates_presence_of :address, :if => :address
 	validates_presence_of :email, :if => :email
