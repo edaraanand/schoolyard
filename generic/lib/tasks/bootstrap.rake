@@ -32,4 +32,29 @@ namespace :bootstrap do
       :type => 'Staff'
       })
   end
+  
+  desc "creating alerts for both parents and staff"
+  task :app do
+     alerts = {
+       :announcements => "Announcement is Posted",
+       :home_work => "Home Work Assignment",
+       :from_principal => "From the Principal",
+       :first_grade => "1st Grade",
+       :second_grade => "2nd Grade",
+       :third_grade => "3rd Grade",
+       :fourth_grade => "4th Grade",
+       :fifth_grade => "5th Grade",
+       :sixth_grade => "6th Grade",
+       :seventh_grade => "7th Grade",
+       :eighth_grade => "8th Grade",
+       :sports => "Sports"
+     }
+     
+     alerts.each_pair do |key, value|
+        Alert.create({:name => "#{key}", :full_name => "#{value}"})
+     end
+     
+   end
+
+   
 end
