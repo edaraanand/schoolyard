@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 31) do
+ActiveRecord::Schema.define(:version => 34) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -23,6 +23,21 @@ ActiveRecord::Schema.define(:version => 31) do
   end
 
   create_table "accesses", :force => true do |t|
+    t.string   "name"
+    t.string   "full_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "alert_peoples", :force => true do |t|
+    t.integer  "alert_id"
+    t.integer  "person_id"
+    t.boolean  "all"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "alerts", :force => true do |t|
     t.string   "name"
     t.string   "full_name"
     t.datetime "created_at"
@@ -114,6 +129,8 @@ ActiveRecord::Schema.define(:version => 31) do
     t.datetime "updated_at"
     t.text     "person_bio"
     t.text     "address"
+    t.string   "crypted_password"
+    t.string   "salt"
   end
 
   create_table "schools", :force => true do |t|
