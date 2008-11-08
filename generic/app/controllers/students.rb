@@ -1,5 +1,7 @@
 class Students < Application
-
+  
+  layout 'default'
+  
   def index 
      @students = Student.find(:all)
      render

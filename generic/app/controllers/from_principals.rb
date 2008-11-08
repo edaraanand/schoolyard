@@ -1,4 +1,5 @@
 class FromPrincipals < Application
+  layout 'default'
 
   def index
      @announcements = Announcement.find(:all, :conditions => ['label=?', "from_principal"])

@@ -1,5 +1,6 @@
 class HomeWorks < Application
-
+  
+  layout 'default'
   before :classrooms, :exclude => [:delete, :preview]
   
   def index

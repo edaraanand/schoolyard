@@ -1,5 +1,7 @@
 class WelcomeMessages < Application
-
+ 
+  layout 'default'
+  
   def index
      classrooms
      @welcome_messages = WelcomeMessage.find(:all, :conditions => ['access_name =?', params[:access_name]])

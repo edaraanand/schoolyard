@@ -1,5 +1,6 @@
 class People < Application
 	
+  layout 'default'
        
   def index
      @people = Person.find(:all)
@@ -22,19 +23,19 @@ class People < Application
        render :new
     else
        if @person.save
-	  @access = params[:access][:access_ids]
+	        @access = params[:access][:access_ids]
           @access_view = Access.find(:first, :conditions => ['name=?', "view_all"])
           @access_view_all = AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
            if params[:select_all] == "Select all"
-	      AccessPeople.create({:person_id => @person.id, :all => true})
+	             AccessPeople.create({:person_id => @person.id, :all => true})
            else
-	      @access.each do |f|
-                @access_people = AccessPeople.create({:person_id => @person.id, :access_id => f })
+	            @access.each do |f|
+                  @access_people = AccessPeople.create({:person_id => @person.id, :access_id => f })
               end
            end
           redirect url(:people)
        else
-	  render :new
+	        render :new
        end
     end
   end
@@ -51,9 +52,6 @@ class People < Application
       @person = Person.find(params[:id])
       @accesses = Access.find(:all)
       @access_people = @person.access_peoples
-      puts "deep"
-      puts params[:access].inspect
-     # raise "Eshwar".inspect
    if params[:access].nil?
       flash[:error]  = "You should check one of the checkboxes"
       render :edit
@@ -68,31 +66,31 @@ class People < Application
          @access_all = @access_peoples.collect{|x| x.all}
          @access_id = @access_peoples.collect{ |x| x.id }
          @access_people_id = @access_peoples.collect{|x| x.access_id}
-            if @acc.length == @access.length
+       if @acc.length == @access.length
 	       AccessPeople.destroy(@access_id)
 	       AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
 	       AccessPeople.create({:person_id => @person.id, :all => true})
-            elsif (params[:select_all] == "Select all")
+       elsif (params[:select_all] == "Select all")
 	       AccessPeople.destroy(@access_id)
 	       AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
 	       AccessPeople.create({:person_id => @person.id, :all => true})
-            else
+       else
 	       s = @access.zip(@access_id, @access_people_id)
 	       AccessPeople.destroy(@access_id)
 	       AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
 	       s.each do |l|
-		   if l[1].nil?
-		      AccessPeople.create({:person_id => @person.id, :access_id => l[0] })
-		   elsif ((l[2].nil?) && l[1].nil?)
-			AccessPeople.create({:person_id => @person.id, :access_id => l[0] })
-		   else
-			AccessPeople.create({:person_id => @person.id, :access_id => l[0]})
-		   end		   
+		        if l[1].nil?
+		           AccessPeople.create({:person_id => @person.id, :access_id => l[0] })
+		        elsif ((l[2].nil?) && l[1].nil?)
+		     	     AccessPeople.create({:person_id => @person.id, :access_id => l[0] })
+		        else
+			         AccessPeople.create({:person_id => @person.id, :access_id => l[0]})
+		        end		   
 	       end
-            end
-	  redirect url(:people)
+        end
+	        redirect url(:people)
        else
-	  render :edit  
+	         render :edit  
        end  
       
     end
