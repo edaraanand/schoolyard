@@ -1,0 +1,6 @@
+<%= error_messages_for @announcement %>
+<h2 class="current-page">Submit Announcement &gt; Edit </h2>
+<%= form_for (@announcement, :action => url(:parent, @announcement), :id => 'announcement') do %>
+  <%= partial 'form' %>          
+<% end =%>
+
