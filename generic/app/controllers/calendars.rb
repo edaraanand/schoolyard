@@ -1,6 +1,6 @@
 class Calendars < Application
  layout 'default'
- 
+  
   def index
      @calendars = Calendar.find(:all)
      render
@@ -47,5 +47,7 @@ class Calendars < Application
       Calendar.find(params[:id]).destroy
       redirect resource(:calendars)
   end
+  
+  
   
 end
