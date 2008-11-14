@@ -18,10 +18,11 @@ class Students < Application
      @class_rooms = Classroom.find(:all, :conditions => ['class_type=?', "Classes"])
      @student = Student.new(params[:student])
      @parent = Parent.new(params[:parent])
-     if (params[:f_name_parent2] == "")
+     if ( ( (params[:f_name_parent2] == "") && (params[:l_name_parent2] == "") ) && (params[:email_parent2] == "") )
+    # if (params[:f_name_parent2] == "") && (params[:email_parent2] == "" )
        if @student.valid?
 	        if @parent.valid? 
-	           @student.save
+             @student.save
 	           @parent.save
 	           Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
 	           Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })
@@ -35,11 +36,12 @@ class Students < Application
      else
 	      if @student.valid?
            if @parent.valid?
-	            if( (params[:f_name_parent2] != "") && (params[:l_name_parent2] != "") )
-                 if ( (params[:f_name_parent3] != "") || (params[:l_name_parent3] != "") )
+             if ( ( (params[:f_name_parent2] != "") && (params[:l_name_parent2] != "") ) && (params[:email_parent2] != "") )
+                 if ( ( (params[:f_name_parent3] != "") || (params[:l_name_parent3] != "") ) || (params[:email_parent3] != "") )
                    
-                     if ( (params[:f_name_parent4] !="") || (params[:l_name_parent4] != "") )
-                        if ( (params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") )
+                    if ( ( (params[:f_name_parent4] !="") || (params[:l_name_parent4] != "") ) || (params[:email_parent4] != "") )
+                      
+                        if ( ( (params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") ) && (params[:email_parent4] != "") )
                            @student.save
 	                         @parent.save
                            Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
@@ -66,7 +68,7 @@ class Students < Application
                          end
                          
                     else
-                        if ( (params[:f_name_parent3] != "") && (params[:l_name_parent3] != "") )
+                        if( ( (params[:f_name_parent3] != "") && (params[:l_name_parent3] != "") ) && (params[:email_parent3] != "") )
                            @student.save
 	                         @parent.save
                            Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
@@ -77,7 +79,6 @@ class Students < Application
                            Guardian.create({:student_id => @student.id, :parent_id => @p3.id })
                            redirect resource(:students)
                         else
-                           puts "hurray"
                            flash[:error3] = "Please enter the Parent3 details"
 	                         @fname3 = params[:f_name_parent3]
 	                         @lname3 = params[:l_name_parent3]
@@ -99,8 +100,7 @@ class Students < Application
                 end
                
 	            else
-                puts "Deep"
-		            flash[:error] = "Please enter the Parent2 details"
+                flash[:error] = "Please enter the Parent2 details"
 	              @fname2 = params[:f_name_parent2]
 	              @lname2 = params[:l_name_parent2]
 	              @mail2 = params[:email_parent2]

@@ -23,7 +23,10 @@ class Person < ActiveRecord::Base
      "#{first_name}"  "     "    "#{last_name}" 
   end
 	
-  #validates_presence_of :password, :if => :password_required?
+  def password_required?
+    false
+  end
+  
   attr_accessor :old_password
   
   validates_presence_of :first_name, :last_name
