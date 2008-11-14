@@ -1,0 +1,5 @@
+<%= error_messages_for @home_work %>
+<h2 class="current-page">Home Work &gt; Edit</h2>
+<%= form_for(@home_work, :action => resource(@home_work), :id => 'home_work') do %>
+    <%= partial 'form' %>          
+<% end =%>

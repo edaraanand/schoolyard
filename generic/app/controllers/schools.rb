@@ -1,5 +1,8 @@
 class Schools < Application
   
+  layout 'default'
+  before :ensure_authenticated
+   
   def index
     @school = School.find(:first)
     render

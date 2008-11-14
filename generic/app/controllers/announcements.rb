@@ -1,12 +1,11 @@
 class Announcements < Application
-
- 
+   layout 'default'
+   
   def index
      classrooms
-     puts params[:access_name].inspect
      @announcements = Announcement.find(:all, :conditions => ['access_name=?', params[:access_name] ])
      if params[:access_name].nil?
-	@announce = Announcement.find(:all)
+	      @announce = Announcement.find(:all)
      end
      render
   end
@@ -20,15 +19,11 @@ class Announcements < Application
   def create
      @announcement = Announcement.new(params[:announcement])
      @announcement.person_id = @current_user.id
-    # @announcement.file_file_name = params[:announcement][:file][:filename]
-    # @announcement.file_content_type = params[:announcement][:file][:content_type]
-     #@announcement.file_file_size = params[:announcement][:file][:size]
      classrooms
-     #raise "Eshwar".inspect
      if @announcement.save
-	redirect resource(:announcements)
+	      redirect resource(:announcements)
      else
-	render :new
+	      render :new
      end
   end       
   

@@ -1,7 +1,7 @@
 class Classroom < ActiveRecord::Base
   
 	has_many :class_peoples
-        has_many :people, :through => :class_peoples, :source => :person
+  has_many :people, :through => :class_peoples, :source => :person
 	
 	has_many :studies
 	has_many :students, :through => :studies, :source => :student
@@ -9,6 +9,8 @@ class Classroom < ActiveRecord::Base
 	has_many :class_peoples
 	has_many :teams, :through => :class_peoples, :source => :team
 	
+  has_many :home_works
+  
 	validates_presence_of :class_name
 	
 end

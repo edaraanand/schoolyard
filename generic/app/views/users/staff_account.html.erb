@@ -1,0 +1,12 @@
+
+<fieldset>
+  
+  <h2 class="current-page"> My Profile 
+       <%= link_to "Edit", url(:staff_account_edit), :id => @person, :class=> "edit-btn" %>
+       <%= link_to "Change Password", url(:staff_password), :class=> "edit-btn" %> 
+  </h2>
+      <%= session.user.person_bio %>
+      
+</fieldset>
+   
+    

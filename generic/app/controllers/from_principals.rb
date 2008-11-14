@@ -1,4 +1,5 @@
 class FromPrincipals < Application
+  layout 'default'
 
   def index
      @announcements = Announcement.find(:all, :conditions => ['label=?', "from_principal"])
@@ -14,9 +15,9 @@ class FromPrincipals < Application
      @announcement = Announcement.new(params[:announcement])
      @announcement.label = "from_principal"
      if @announcement.save
-	redirect resource(:from_principals)
+	      redirect resource(:from_principals)
      else
-	render :new
+	      render :new
      end
    end
 
@@ -32,7 +33,7 @@ class FromPrincipals < Application
         @announcement.save
         redirect resource(:from_principals)
      else
-	render :edit
+	      render :edit
      end
   end
   

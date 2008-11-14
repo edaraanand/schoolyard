@@ -25,15 +25,18 @@ Merb::Router.prepare do
   
  #r.add_slice(:MerbAuth, 'auth')
   
-  match("/login").
-    to(:controller => 'sessions', :action => 'new').
-    name(:login)
-  match("/logout").
-    to(:controller => 'sessions', :action => 'destroy').
-    name(:logout)
+  #match("/login").
+   # to(:controller => 'sessions', :action => 'new').
+    #name(:login)
+  #match("/logout").
+   # to(:controller => 'sessions', :action => 'destroy').
+    #name(:logout)
+    slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "") 
+authenticate do
   resources :parents
   resources :schools
   resources :people
+  resources :alerts
   resources :classrooms
   resources :announcements
   resources :welcome_messages
@@ -41,9 +44,19 @@ Merb::Router.prepare do
   resources :students
   resources :teams
   resources :from_principals
+  resources :home_works
   resources :external_links
   match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
   match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
+  match("/alerts_edit").to(:controller => 'alerts', :action => 'edit').name(:alert_edit)
+  match("/alerts_update").to(:controller => 'alerts', :action => 'update').name(:alert_update)
+  match("/staff_account").to(:controller => 'users', :action => 'staff_account').name(:staff_account)
+  match("/staff_account_edit").to(:controller => 'users', :action => 'staff_account_edit').name(:staff_account_edit)
+  match("/staff_account_update").to(:controller => 'users', :action => 'staff_account_update').name(:staff_account_update)
+  match("/staff_password").to(:controller => 'users', :action => 'staff_password').name(:staff_password)
+  match("/staff_password_update").to(:controller => 'users', :action => 'staff_password_update').name(:staff_password_update)
+  
+end
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
   # routes, you may want to comment/remove this line to prevent
@@ -51,5 +64,7 @@ Merb::Router.prepare do
   default_routes
   
   # Change this for your home page to be available at /
-  match('/').to(:controller => 'schools', :action =>'index')
+  #authenticate do
+      match('/').to(:controller => 'schools')
+  #end
 end

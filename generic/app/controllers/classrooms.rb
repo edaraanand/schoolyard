@@ -1,4 +1,5 @@
 class Classrooms < Application
+   layout 'default'
   
    def index
       @classrooms = Classroom.find(:all)

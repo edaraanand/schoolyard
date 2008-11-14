@@ -1,0 +1,24 @@
+
+
+<%= form_for :alert, :action => url(:alerts), :id => 'alert', :name => 'alert_form' do %>
+    <fieldset>
+    <h2 class="current-page">Alerts &gt; Add New </h2>
+    <p> my current email Alerts include: </p>
+   <dl class="check-box-set">
+   <%= flash[:error] %>
+      <% @alerts.each do |f| %>
+           <dt>                       
+             <input type="checkbox" class="check" name="alert[alert_ids][]" value="<%= f.id %>" />
+           </dt>
+           <dd>
+               <%= f.full_name %>
+  	       </dd>
+  	  <% end %>
+  	       <dt></dt>
+           
+   </dl>
+    <div class="save-cancel">
+          <%= submit "Save & Notify" %> <span>Or <%= link_to "Cancel", url(:alerts) %></span>
+	  </div>
+    </fieldset> 
+<% end =%>

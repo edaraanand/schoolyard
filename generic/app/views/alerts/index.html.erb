@@ -1,0 +1,19 @@
+ 
+<fieldset>
+   <% if @alerts.empty? %>
+ 
+        <h2 class="current-page">Alerts > <%= link_to "Add New", url(:new_alert) %> </h2>
+        
+   <% else %>
+   
+   <h2 class="current-page">Alerts <%= link_to "Edit", url(:alert_edit), :class=> "edit-btn" %> </h2>
+   
+   <p> My current email alerts include:</p>
+   
+      <% @alerts.each do |f| %>
+          <ul>
+           <li><%= f.full_name %> </li>
+           </ul>
+      <% end %>
+    <% end %>
+</fieldset>
