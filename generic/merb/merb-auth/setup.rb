@@ -4,7 +4,7 @@
 #
 # To change the parameter names for the password or login field you may set either of these two options
 #
- Merb::Plugins.config[:"merb-auth"][:login_param]    = :email 
+  Merb::Plugins.config[:"merb-auth"][:login_param]    = :email 
 # Merb::Plugins.config[:"merb-auth"][:password_param] = :my_password_field_name
 
 begin
@@ -12,14 +12,18 @@ begin
   # Plugins and the default strategies
   Merb::Authentication.user_class = Person
   
-  
+   # validates_presence_of :password, :if => :password_required?
   # Mixin the salted user mixin
   require 'merb-auth-more/mixins/salted_user'
   Merb::Authentication.user_class.class_eval{ include Merb::Authentication::Mixins::SaltedUser }
     
+ 
   # Setup the session serialization
   class Merb::Authentication
-
+    
+   
+    #validates_presence_of :password_confirmation, :if => :password_confirmation
+    
     def fetch_user(session_user_id)
       Merb::Authentication.user_class.find(session_user_id)
     end

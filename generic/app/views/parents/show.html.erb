@@ -1,5 +1,5 @@
-    
-    <h2 class="current-page">Pending Approval </h2>
+  
+  <h2 class="current-page">Your Announcements > <%= @announcement.title %> </h2>
   <div class="fullpage announcemt"> 
    
            <div class="data-block long-block">
@@ -12,14 +12,14 @@
                       <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
 	                 </div>
               <% end %>
-              <h3><%= @announcement.title %></h3> <%= link_to "Edit", url(:edit_approval, @announcement.id), :class=>"edit-btn" %>
+              <h3><%= @announcement.title %></h3> 
               <p class="post-content"><%= @announcement.content %></p>
-            
-                         
+              
+                
               <div class="hrule clear"><hr /></div>
-                <%= link_to "Approve & Publish", url(:publish, :id => @announcement ) %> ||
-                <%= link_to "Reject", url(:reject, :id => @announcement ) %>    
-              </div>  
+                <%= link_to "Back", resource(:parents) %> 
+              </div>   
+              Approved By <%= @announcement.person_id %>
+             
    </div>     
-   
    

@@ -19,6 +19,11 @@ class Parents < Application
     render
   end
   
+  def show
+    @announcement = Announcement.find(params[:id])
+    render
+  end
+  
   def create
     @announcement = session.user.announcements.build(params[:announcement])
     @announcement.approved = false
