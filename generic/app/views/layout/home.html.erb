@@ -41,7 +41,8 @@
              <% @accesses.each do |f| %>
                <% have_access = false %>
                <% @a_p.each do |l| 
-                   have_access = l.all || (f.id == l.access_id) 
+               puts l.all.inspect
+                   have_access =  l.all || (f.id == l.access_id) 
                    break if have_access	  
                    end %>
                     <% @accesses.delete_if{ have_access } %>
@@ -50,10 +51,10 @@
                      <li><%= link_to "<span>Administration</span>", url(:schools), :class=> "admin" %></li>
                  <% end %>
              <% end %>
-           <% @accesses.each do |f| %>
+             <% @accesses.each do |f| %>
            <% have_access = true %>
                <% @a_p.each do |l| 
-                 have_access = l.access_id == @view.id 
+                 have_access = (l.access_id == @view.id) 
                    break if have_access	  
                    end %>
                     <% @accesses.delete_if{ have_access } %>
