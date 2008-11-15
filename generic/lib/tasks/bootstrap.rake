@@ -1,7 +1,7 @@
 Merb.start_environment(:environment => ENV['MERB_ENV'] || 'rake')
 namespace :bootstrap do
   desc "creating Access for the people"
-  task :app do
+  task :access do
     accesses = {
       :announcements => "Add/Edit Announcements",
       :approve_announcement => "Approve Announcements",
@@ -14,27 +14,36 @@ namespace :bootstrap do
       :manage_directory => "Manage Directories",
       :rights_others => "Add/Edit Access Rights for others",
       :parent_registration => "Approve Parent Registration",
-      :view_all => "View all Content"
+      :view_all => "View all Content",
+      :welcome_messages => "Add/Edit Welcome Message",
+      :external_links => "Add/Edit External Links",
+      :forms => "Add/Edit Forms",
+      
     }
       
       accesses.each_pair do |key, value|
-         Access.create({:name => "#{key}", :full_name => "#{value}"})
+        @admin =  Access.create({:name => "#{key}", :full_name => "#{value}"})
       end
+      @view = Access.find_by_name('view_all')
+      AccessPeople.create({:person_id => @admin.id, :access_id => @view.id })
+      AccessPeople.create({:person_id => @admin.id, :all => true })
  
   end
  
   desc "Creating a default person"
-  task :app do
+  task :person => :access do
        Staff.create({
       :first_name => "Admin",
       :last_name => "administration",
       :email => "school@insight",
-      :type => 'Staff'
+      :type => 'Staff',
+      :password => 'admin',
+      :password_confirmation => 'admin'
       })
   end
   
   desc "creating alerts for both parents and staff"
-  task :app do
+  task :alerts => :person do
      alerts = {
        :announcements => "Announcement is Posted",
        :home_work => "Home Work Assignment",
