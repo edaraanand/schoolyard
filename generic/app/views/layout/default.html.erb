@@ -86,14 +86,14 @@
           <li class="count"><%= link_to_if((right = "approve_announcement"), "Pending approval", url(:approvals) ) %><span><b><%= @announcements.length %></b></span></li>
         <li><%= link_to_if((right = "from_principal"), "From the principal", url(:from_principals)) %></li>
       		<li><%= link_to_if((right = "announcements"), "Announcements", url(:announcements)) %></li>
-      		<li><%= link_to "Welcome Messages", url(:welcome_messages) %></li>
+      		<li><%= link_to_if( (right = "welcome_messages"), "Welcome Messages", url(:welcome_messages) ) %></li>
       	  <li><%= link_to_if((right = "calendar"), "Calendars", url(:calendars) )  %></li>
       		<li><%= link_to_if((right = "spotlight"), "Spotlight" ) %></li>
           <li><%= link_to_if((right = "homework"), "Home work", url(:home_works) )  %></li>
       		<li><%= link_to_if((right = "grades"), "Grades/Reports" ) %></li>
-      		<li><%= link_to "External Links", url(:external_links) %></li>
+      		<li><%= link_to_if((right = "external_links"), "External Links", url(:external_links) ) %></li>
       		<li><%= link_to_if((right = "teams"), "Sports Teams", url(:teams)) %></li>
-      		<li><%= link_to "Forms" %></li>
+      		<li><%= link_to_if((right = "forms"), "Forms"  ) %></li>
       		<li><%= link_to "Advertising" %></li>
           </ul>
         </li>
