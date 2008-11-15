@@ -34,10 +34,12 @@ Merb::Router.prepare do
     slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "") 
 authenticate do
   resources :parents
+  resources :approvals
   resources :schools
   resources :people
   resources :alerts
   resources :classrooms
+  resources :homes
   resources :announcements
   resources :welcome_messages
   resources :calendars
@@ -55,7 +57,8 @@ authenticate do
   match("/staff_account_update").to(:controller => 'users', :action => 'staff_account_update').name(:staff_account_update)
   match("/staff_password").to(:controller => 'users', :action => 'staff_password').name(:staff_password)
   match("/staff_password_update").to(:controller => 'users', :action => 'staff_password_update').name(:staff_password_update)
-  
+  match("/publish").to(:controller => 'approvals', :action => 'publish').name(:publish)
+  match("/reject").to(:controller => 'approvals', :action => 'reject').name(:reject)
 end
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
@@ -65,6 +68,6 @@ end
   
   # Change this for your home page to be available at /
   #authenticate do
-      match('/').to(:controller => 'schools')
+  match('/').to(:controller => 'homes')
   #end
 end

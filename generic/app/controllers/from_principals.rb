@@ -19,7 +19,7 @@ class FromPrincipals < Application
      else
 	      render :new
      end
-   end
+  end
 
   def edit
      @announcement = Announcement.find(params[:id])

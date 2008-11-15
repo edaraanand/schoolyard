@@ -29,14 +29,40 @@
       </div>
       <div id="navbar"><!--The Main Navigation -->
         <ul id="navigation">
-		      <li><%= link_to "<span>Home</span>" %></li>
+          <li><%= link_to "<span>Home</span>", url(:homes) %></li>
 		      <li><%= link_to "<span>Classrooms</span>" %></li>
           <li class="current"><li><%= link_to "<span>Sports</span>" %></li>
           <li><%= link_to "<span>Forms</span>" %></li>
           <li><%= link_to "<span>Directory</span>" %></li>
           <li><%= link_to "<span>Events</span>" %></li>
-          <li><%= link_to "<span>Administration</span>", url(:schools), :class=> "admin" %></li>
-          <li><a href="#" class="help-contact"><span>help/contact</span></a></li>
+          <% @view = Access.find_by_name('view_all') %>
+          <% @accesses = Access.find(:all).delete_if{|x| x.name == "view_all" } %>
+             <% @a_p = session.user.access_peoples.delete_if{|x| x.access_id == @view.id } %>
+             <% @accesses.each do |f| %>
+               <% have_access = false %>
+               <% @a_p.each do |l| 
+                   have_access = l.all || (f.id == l.access_id) 
+                   break if have_access	  
+                   end %>
+                    <% @accesses.delete_if{ have_access } %>
+                    
+                 <% if have_access %>
+                     <li><%= link_to "<span>Administration</span>", url(:schools), :class=> "admin" %></li>
+                 <% end %>
+             <% end %>
+           <% @accesses.each do |f| %>
+           <% have_access = true %>
+               <% @a_p.each do |l| 
+                 have_access = l.access_id == @view.id 
+                   break if have_access	  
+                   end %>
+                    <% @accesses.delete_if{ have_access } %>
+                    
+                 <% if have_access %>
+                 <li><%= link_to "<span>Your Announcements</span>", url(:parents), :class=> "admin" %></li>
+                 <% end %>
+           <% end %>
+           <li><a href="#" class="help-contact"><span>help/contact</span></a></li>
         </ul>
         <div class="hrule clear"><hr /></div><!-- gives bottom border to the Navigation.-->
       </div><!--Navbar End-->
@@ -51,27 +77,28 @@
           </ul>
         </li>
         <li>Access Rights<ul>
-              <li><%= link_to "Add/Edit Access Rights", url(:people) %></li>
-		          <li class="count"><%= link_to "Parent Registration <span><b>8</b></span>", url(:parents)%></li>
+            <li><%= link_to_if((right = "rights_others"), "Add/Edit Access Rights", url(:people) ) %></li>
+            <li class="count"><%= link_to_if((right = "parent_registration"), "Parent Registration <span><b>8</b></span>" ) %></li>
           </ul>
         </li>
+          <% @announcements = Announcement.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ]) %>
         <li>Content<ul>
-          <li class="count"><%= link_to "Pending your approval<span><b>55</b></span>"%></li>
-      		<li><%= link_to "From the principal", url(:from_principals) %></li>
-      		<li><%= link_to "Announcements", url(:announcements) %></li>
-      		<li><%= link_to "Welcome Messages", url(:welcome_messages) %></li>
-      		<li><%= link_to "Calendar", url(:calendars) %></li>
-      		<li><%= link_to "Spotlight" %></li>
-      		<li><%= link_to "Home work", url(:home_works) %></li>
-      		<li><%= link_to "Grades/Reports" %></li>
-      		<li><%= link_to "External Links", url(:external_links) %></li>
-      		<li><%= link_to "Sports Teams", url(:teams) %></li>
-      		<li><%= link_to "Forms" %></li>
+          <li class="count"><%= link_to_if((right = "approve_announcement"), "Pending approval", url(:approvals) ) %><span><b><%= @announcements.length %></b></span></li>
+        <li><%= link_to_if((right = "from_principal"), "From the principal", url(:from_principals)) %></li>
+      		<li><%= link_to_if((right = "announcements"), "Announcements", url(:announcements)) %></li>
+      		<li><%= link_to_if( (right = "welcome_messages"), "Welcome Messages", url(:welcome_messages) ) %></li>
+      	  <li><%= link_to_if((right = "calendar"), "Calendars", url(:calendars) )  %></li>
+      		<li><%= link_to_if((right = "spotlight"), "Spotlight" ) %></li>
+          <li><%= link_to_if((right = "homework"), "Home work", url(:home_works) )  %></li>
+      		<li><%= link_to_if((right = "grades"), "Grades/Reports" ) %></li>
+      		<li><%= link_to_if((right = "external_links"), "External Links", url(:external_links) ) %></li>
+      		<li><%= link_to_if((right = "teams"), "Sports Teams", url(:teams)) %></li>
+      		<li><%= link_to_if((right = "forms"), "Forms"  ) %></li>
       		<li><%= link_to "Advertising" %></li>
           </ul>
         </li>
         <li>Directories<ul>
-		      <li><%= link_to "students", url(:students) %></li>
+          <li><%= link_to_if((right = "manage_directories"), "students", url(:students)) %></li>
           </ul>
         </li>
       </ul>

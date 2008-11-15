@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 34) do
+ActiveRecord::Schema.define(:version => 36) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -56,6 +56,9 @@ ActiveRecord::Schema.define(:version => 34) do
     t.string   "file_file_name"
     t.string   "file_content_type"
     t.integer  "file_file_size"
+    t.boolean  "approved"
+    t.boolean  "approve_announcement"
+    t.text     "comments"
   end
 
   create_table "calendars", :force => true do |t|
