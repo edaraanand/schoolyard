@@ -28,12 +28,16 @@ class Person < ActiveRecord::Base
   end
   
   attr_accessor :old_password
+  attr_accessor :month
+  attr_accessor :year
+  
   
   validates_presence_of :first_name, :last_name
 	validates_presence_of :address, :if => :address
 	validates_presence_of :email, :if => :email
 	validates_uniqueness_of :email, :if => :email
 	
+  
 end            
   
 class Student < Person
@@ -43,7 +47,9 @@ class Student < Person
      
      has_many :studies
      has_many :classrooms, :through => :studies, :source => :classroom
-  
+     validates_presence_of :month, :if => :month
+     validates_presence_of :year, :if => :year
+     
 end
 
 class Staff < Person
