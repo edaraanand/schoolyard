@@ -118,8 +118,9 @@
                     <div id="am3" style="display:none">
                         <a onclick="add_student3();return false;" href="#">Add More</a>
 	                   </div>
-            <% if ( ( (@fname3 != nil) || ( @lname3 != nil ) ) || (@classroom_id3 != nil) ) %>
-            
+                   
+                   <% if ( ( (@fname3 != nil) || ( @lname3 != nil ) ) || (@classroom_id3 != nil) ) %>
+                  <%= 10 %>
                   <div id="student3" style="display:block">
                          <li>
                              <%= text_field  :name => "f_name_student3", :class => "short", :label => "Name", :value => "#{@fname3}" %>
@@ -138,14 +139,23 @@
                        </li>
                    </div>
                    <% if( ( (@fname3 != "") && (@lname3 != "") ) && (@classroom_id3 != "") )   %>
-                           <% if ( ( (@fname4 != "") || (@lname4 != "" ) ) || (@classroom_id4 != "") ) %>
-                                  <div id="am3" style="display:none">
-                                     <a onclick="add_student3();return false;" href="#">Add More</a>
-	                                </div>
-                                  <div id="am4" style="display:none">
-                                      <a onclick="add_student4();return false;" href="#">Add More</a>
-	                                </div>
-                            <% end %>
+                         <% if (@month3 != "") && (@year3 != "") %>
+                              <% if ( ( (@fname4 != "") || (@lname4 != "" ) ) || (@classroom_id4 != "") ) %>
+                                    <div id="am3" style="display:none">
+                                       <a onclick="add_student3();return false;" href="#">Add More</a>
+	                                  </div>
+                                    <div id="am4" style="display:none">
+                                       <a onclick="add_student4();return false;" href="#">Add More</a>
+	                                  </div>
+                              <% end %>
+                         <% else %>
+                              <div id="am3" style="display:none">
+                                  <a onclick="add_student3();return false;" href="#">Add More</a>
+	                             </div>
+                               <div id="am4" style="display:block">
+                                   <a onclick="add_student4();return false;" href="#">Add More</a>
+	                             </div>
+                         <% end %>
                       <% else %>
                             <div id="am3" style="display:none">
                                 <a onclick="add_student3();return false;" href="#">Add More</a>

@@ -33,35 +33,16 @@ class Registrations < Application
           if ( ( ( (params[:f_name_student2] != "") && (params[:l_name_student2] != "") ) &&  ( (params[:classroom_id2] != "") &&  (params[:month2] != "") ) ) ) && (params[:year2] != "")
          # if ( ( (params[:f_name_student2] != "") && (params[:l_name_student2] != "") ) && (params[:classroom_id2] != "") )
         # raise "Naidu".inspect 
-         if ( ( ( (params[:f_name_student3] != "") || (params[:l_name_student3] != "") ) ||  ( (params[:classroom_id3] != "") ||  (params[:month3] != "") ) ) ) || (params[:year3] != "")
-        # if ( ( (params[:f_name_student3] != "") || (params[:l_name_student3] != "") ) || (params[:classroom_id3] != "") )
+         #if ( ( ( (params[:f_name_student3] != "") || (params[:l_name_student3] != "") ) ||  ( (params[:classroom_id3] != "") ||  (params[:month3] != "") ) ) ) || (params[:year3] != "")
+              if ( ( (params[:f_name_student3] != "") || (params[:l_name_student3] != "") ) || (params[:classroom_id3] != "") )
                   if ( ( (params[:f_name_student4] !="") || (params[:l_name_student4] != "") ) || (params[:classroom_id4] != "") )
-                      if ( ( (params[:f_name_student4] != "") && (params[:l_name_student4] != "") ) && (params[:classroom_id4] != "") )
-                          if ( params[:year4] != "" ) && (params[:month4] != "")
+                    if ( ( ( (params[:f_name_student4] != "") && (params[:l_name_student4] != "") ) &&  ( (params[:classroom_id4] != "") &&  (params[:month4] != "") ) ) ) && (params[:year4] != "")
+                      #if ( ( (params[:f_name_student4] != "") && (params[:l_name_student4] != "") ) && (params[:classroom_id4] != "") )
+                         
                               puts "Eshwar".inspect
                               raise "Eshwar".inspect
-                          else
-                             flash[:error4] = "Please enter the Student4 details"
-                             @fname4 = params[:f_name_student4]
-	                           @lname4 = params[:l_name_student4]
-	                           @classroom_id4 = params[:classroom_id4]
-                             @year4 = params[:year4]
-                             @month4 = params[:month4]
-	                           @fname3 = params[:f_name_student3]
-	                           @lname3 = params[:l_name_student3]
-	                           @classroom_id3 = params[:classroom_id3]
-                             @year3 = params[:year3]
-                             @month3 = params[:month3]
-                             @fname2 = params[:f_name_student2]
-	                           @lname2 = params[:l_name_student2]
-	                           @classroom_id2 = params[:classroom_id2]
-                             @year2 = params[:year2]
-                             @month2 = params[:month2]
-		                         render :new  
-                           end
-                           
                       else
-                        flash[:error4] = "Please enter the Student4 details"
+                         flash[:error4] = "Please enter the Student4 details"
                          @fname4 = params[:f_name_student4]
 	                       @lname4 = params[:l_name_student4]
 	                       @classroom_id4 = params[:classroom_id4]
