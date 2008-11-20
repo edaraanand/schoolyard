@@ -32,6 +32,7 @@ Merb::Router.prepare do
    # to(:controller => 'sessions', :action => 'destroy').
     #name(:logout)
     slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "") 
+    resources :registrations
 authenticate do
   resources :parents
   resources :approvals

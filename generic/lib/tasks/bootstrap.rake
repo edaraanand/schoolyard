@@ -22,17 +22,15 @@ namespace :bootstrap do
     }
       
       accesses.each_pair do |key, value|
-        @admin =  Access.create({:name => "#{key}", :full_name => "#{value}"})
+         Access.create({:name => "#{key}", :full_name => "#{value}"})
       end
-      @view = Access.find_by_name('view_all')
-      AccessPeople.create({:person_id => @admin.id, :access_id => @view.id })
-      AccessPeople.create({:person_id => @admin.id, :all => true })
+     
  
   end
  
   desc "Creating a default person"
   task :person => :access do
-       Staff.create({
+    @staff = Staff.create({
       :first_name => "Admin",
       :last_name => "administration",
       :email => "school@insight",
@@ -40,6 +38,10 @@ namespace :bootstrap do
       :password => 'admin',
       :password_confirmation => 'admin'
       })
+       
+      @view = Access.find_by_name('view_all')
+      AccessPeople.create({:person_id => @staff.id, :access_id => @view.id })
+      AccessPeople.create({:person_id => @staff.id, :all => true })
   end
   
   desc "creating alerts for both parents and staff"
