@@ -37,6 +37,7 @@ namespace :bootstrap do
       :type => 'Staff',
       :password => 'admin',
       :password_confirmation => 'admin'
+      
       })
        
       @view = Access.find_by_name('view_all')

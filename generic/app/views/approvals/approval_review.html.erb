@@ -1,0 +1,82 @@
+
+<ul class='error_messages'>
+     <% if flash[:error] %>
+        <li><%= flash[:error] %> </li>
+     <% end %>
+</ul>
+ 
+<h2 class="current-page">Parent Registrations </h2>
+
+  
+<div class="fullpage announcemt">
+  
+    <dl>
+       <dt>Name</dt>
+         <dd> <%= @parent.name %></dd>
+       </dl>
+    <dl>
+    <dt>EmailId</dt>
+       <dd> <%= @parent.email %></dd>
+    </dl>
+    <h5> Student Details :</h5>  
+            
+      
+  <%= form_for :parent, :action => url(:parent_grant, :id => @parent), :name => "approveform" do %> 
+
+      <% @registrations.each do |f| %>
+             
+         <% @class = Classroom.find(:first, :conditions => ['class_name = ?', f.current_class ] ) %> 
+           
+            <% @studs = Student.find( :all, :joins => :studies, :conditions => ["first_name = ? AND last_name = ? AND studies.classroom_id = ?" , f.first_name, f.last_name, @class.id ] ) %>
+             
+            <% if @studs.empty? %>
+              <dt></dt>
+              <ul class='error_messages'>
+                <dd><%= @not_exist %></dd>
+              </ul>
+                <dd><%= select :name => "student_not_found[]", :prompt => "Please Select", :collection => @students.collect{|x| x.name } %></dd>
+                <dd><%= select :name => "class_not_found[]", :prompt => "Please Select", :collection => @classrooms.collect{|x| x.class_name } %></dd>
+            <% else %>
+                 <dd><%= @exist %></dd>
+                 <dd><%= select :name => "student_found[]", :prompt => "Please Select", :collection => @students.collect{|x| x.name } %></dd>
+                 <dd><%= select :name => "class_found[]", :prompt => "Please Select", :collection => @classrooms.collect{|x| x.class_name } %></dd>
+              <% end %> 
+               
+            <dl>                                                                                        
+               <dt>Name</dt>
+               <dd> <%= f.name %> </dd>
+               
+            </dl> 
+          </dl>    
+           
+          <dl> 
+             <dt>Current Class</dt>
+             <dd><%= f.current_class %> </dd>
+              
+               </dl> 
+          </dl> 
+            
+     <% end %>
+   
+      <div class="hrule clear"><hr /></div>
+            <input type="hidden" name="approvetype" />
+            <a href="javascript:getsupport('Approve & Grant Access')">Approve & Grant Access </a> or
+            <a href="javascript:getsupport('Reject')">Reject</a> 
+      </div>
+      
+ 
+  <% end =%>   
+    
+       
+</div>
+   
+  
+<script language="JavaScript" type="text/javascript">
+
+   function getsupport ( selectedtype )
+   {
+      document.approveform.approvetype.value = selectedtype ;
+      document.approveform.submit() ;
+    }
+
+</script> 

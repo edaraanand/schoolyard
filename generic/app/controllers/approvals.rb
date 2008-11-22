@@ -4,6 +4,7 @@ class Approvals < Application
   before :classrooms, :only => [:edit, :update]
   before :ensure_authenticated
   before :access_rights
+  before :parent_registration, :only => [:parent_approvals, :approval_review, :parent_grant, :parent_reject]
   
   def index
      @announcements = Announcement.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ])
@@ -49,10 +50,59 @@ class Approvals < Application
   end
   
   def preview
-      @title = params[:announcement][:title]
-      @content = params[:announcement][:content]
-      render :layout => 'preview'
+     @title = params[:announcement][:title]
+     @content = params[:announcement][:content]
+     render :layout => 'preview'
   end
+  
+  def parent_approvals
+    @parents = Parent.find(:all, :conditions => ['approved = ?', false] )
+    render
+  end
+  
+  def approval_review
+     @parent = Parent.find(params[:id])
+     @students = Student.find(:all)
+     @classrooms = Classroom.find(:all)
+     @registrations = Registration.find(:all, :conditions => ['parent_id = ?', @parent.id])
+     @exist = "Following Student was found"
+     @not_exist = "Following Student was not found"
+     render
+  end
+  
+  def parent_grant
+    @parent = Parent.find(params[:id])
+    @registrations = Registration.find(:all, :conditions => ['parent_id = ?', @parent.id])
+    if params[:approvetype] == "Approve & Grant Access"
+       if (params[:class_not_found] == [""]) || (params[:student_not_found] == [""])
+          flash[:error] = "Please select the student and classroom"
+          redirect url(:approval_review, :id => @parent)
+       else
+          #@studes = @parent.students
+          #raise @studes.inspect
+          #raise params.inspect
+          @parent.approved = true
+          @parent.save
+          @parent.send_password_approve
+          redirect url(:parent_approvals)
+       end
+                       
+    else
+      redirect url(:approval_review)
+    end
+   
+  end
+  
+  def parent_reject
+    raise "Eshwar".inspect
+     @parent = Parent.find(params[:id])
+     @students = Registration.find(:all, :conditions => ['parent_id = ?', @parent.id])
+     @students.each do |f|
+        f.destroy
+     end
+     redirect url(:parent_approvals)   
+  end
+ 
   
   private
   
@@ -70,6 +120,20 @@ class Approvals < Application
      end  
   end
   
+  def parent_registration
+     have_access = false
+     @view = Access.find_by_name('view_all')
+     @ann = Access.find_by_name('parent_registration')
+     @access_people = session.user.access_peoples.delete_if{|x| x.access_id == @view.id }
+     @access_people.each do |f|
+       have_access = (f.all == true) || (f.access_id == @ann.id)
+       break if have_access
+     end
+     unless have_access
+       redirect resource(:homes)
+     end  
+  end
+   
   def classrooms
      @class = Classroom.find(:all)
      room = @class.collect{|x| x.class_name }
