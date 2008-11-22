@@ -78,7 +78,7 @@
         </li>
         <li>Access Rights<ul>
             <li><%= link_to_if((right = "rights_others"), "Add/Edit Access Rights", url(:people) ) %></li>
-            <li class="count"><%= link_to_if((right = "parent_registration"), "Parent Registration <span><b>8</b></span>" ) %></li>
+          <li class="count"><%= link_to_if((right = "parent_registration"), "Parent Registration <span><b>8</b></span>", url(:parent_approvals) ) %></li>
           </ul>
         </li>
           <% @announcements = Announcement.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ]) %>

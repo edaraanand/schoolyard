@@ -1,0 +1,27 @@
+<h2 class="current-page">Parent Registrations </h2>
+<% unless @parents.empty? %>
+  <table id="mytable">
+    <thead>
+      <th>Name</th>
+        <th>Student</th>
+        <th>Date of Birth</th>
+    </thead>
+    <tbody>
+    <% for parent in @parents %>
+        <tr>
+        <td><%= link_to "#{parent.name}", url(:approval_review, :id => parent) %> </td>
+        <% @students = Registration.find(:all, :conditions => ['parent_id = ?', parent.id]) %>
+        <% @students.each do |f| %>
+            <td><%= f.name %></td>
+            <td><%= f.birth_date %></td>
+        <% end %>
+        </tr>
+    <% end %>
+     
+    </tbody>
+  </table>
+
+<% end %>
+
+ 
+       

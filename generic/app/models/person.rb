@@ -1,4 +1,14 @@
 class Person < ActiveRecord::Base
+  
+  attr_accessor :old_password
+  
+  validates_presence_of :first_name, :last_name
+	validates_presence_of :address, :if => :address
+	validates_presence_of :email, :if => :email
+	#validates_uniqueness_of :email, :if => :email
+	#validates_presence_of :birth_date, :if => :birth_date
+  validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}
+  
 	has_many :access_peoples
 	has_many :accesses, :through => :access_peoples, :source => :access
 	
@@ -27,16 +37,7 @@ class Person < ActiveRecord::Base
     false
   end
   
-  attr_accessor :old_password
-  attr_accessor :month
-  attr_accessor :year
   
-  
-  validates_presence_of :first_name, :last_name
-	validates_presence_of :address, :if => :address
-	validates_presence_of :email, :if => :email
-	validates_uniqueness_of :email, :if => :email
-	
   
 end            
   
@@ -47,20 +48,45 @@ class Student < Person
      
      has_many :studies
      has_many :classrooms, :through => :studies, :source => :classroom
-     validates_presence_of :month, :if => :month
-     validates_presence_of :year, :if => :year
+        
      
 end
 
 class Staff < Person
 	
-
+                            
 end
 
 class Parent < Person
 	
      has_many :guardians
      has_many :students, :through => :guardians, :source => :student
+     
+  def self.make_key
+      Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+  end
+    
+  def send_password_approve
+     pwreset_key_success = false
+     until pwreset_key_success
+        self.password_reset_key = self.class.make_key
+        puts self.password_reset_key.inspect
+        puts "Naidu".inspect
+        self.save
+        pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false
+     end
+     send_approve_password
+  end
+  
+  def send_approve_password
+      deliver_email(:new_password, :subject => "Choose your Password to login in to schoolapps" )
+  end
+ 
+  def deliver_email(action, params)
+      from = "no-reply@insightmethods.com"
+      PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
+  end
+ 
      
 end
 
