@@ -36,17 +36,17 @@ class Approvals < Application
   end
   
   def publish
-    @announcement = Announcement.find(params[:id])
-    @announcement.approved = @announcement.approve_announcement = true
-    @announcement.save 
-    redirect resource(:approvals)
-  end
-  
-  def reject
-    @announcement = Announcement.find(params[:id])
-    @announcement.approved = @announcement.approve_announcement = false
-    @announcement.save 
-    redirect resource(:approvals)
+     @announcement = Announcement.find(params[:id])
+     if params[:approvetype] == "Approve & Publish"
+        @announcement.comments = params[:announcement][:comments]
+        @announcement.approved = @announcement.approve_announcement = true
+        @announcement.save 
+        redirect resource(:approvals)
+      else
+        @announcement.approved = @announcement.approve_announcement = false
+        @announcement.save 
+        redirect resource(:approvals)
+      end
   end
   
   def preview
@@ -71,38 +71,38 @@ class Approvals < Application
   end
   
   def parent_grant
-    @parent = Parent.find(params[:id])
-    @registrations = Registration.find(:all, :conditions => ['parent_id = ?', @parent.id])
-    if params[:approvetype] == "Approve & Grant Access"
-       if (params[:class_not_found] == [""]) || (params[:student_not_found] == [""])
-          flash[:error] = "Please select the student and classroom"
-          redirect url(:approval_review, :id => @parent)
-       else
-          #@studes = @parent.students
-          #raise @studes.inspect
-          #raise params.inspect
-          @parent.approved = true
-          @parent.save
-          @parent.send_password_approve
-          redirect url(:parent_approvals)
-       end
-                       
-    else
-      redirect url(:approval_review)
-    end
+     @parent = Parent.find(params[:id])
+     @registrations = Registration.find(:all, :conditions => ['parent_id = ?', @parent.id])
+     if params[:approvetype] == "Approve & Grant Access"
+          if (params[:class_not_found] == [""]) || (params[:student_not_found] == [""])
+             flash[:error] = "Please select the student and classroom"
+             redirect url(:approval_review, :id => @parent)
+          else
+             params[:student_not_found].each do |f|
+                 params[:class_not_found].each do |c|
+                     @st = f.split
+                     @student = Student.find(:first, :conditions => [" first_name in (?) AND last_name in (?)", @st, @st ] )
+                     puts @student.inspect
+                     @class = Classroom.find_by_class_name("#{c}")
+                     @studs = Student.find(:all, :joins => :studies, :conditions => [" first_name in (?) AND last_name in (?) AND studies.classroom_id = ?" , @st, @st, @class.id ] )
+                     Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
+                 end
+             end
+             @parent.approved = true
+             @parent.save
+             @parent.send_password_approve
+             redirect url(:parent_approvals)
+          end
+     else
+        @parent.approved = nil
+        @parent.save
+        Guardian.delete_all(["parent_id = ?", @parent.id])
+        redirect url(:approval_review)
+     end
    
   end
   
-  def parent_reject
-    raise "Eshwar".inspect
-     @parent = Parent.find(params[:id])
-     @students = Registration.find(:all, :conditions => ['parent_id = ?', @parent.id])
-     @students.each do |f|
-        f.destroy
-     end
-     redirect url(:parent_approvals)   
-  end
- 
+  
   
   private
   

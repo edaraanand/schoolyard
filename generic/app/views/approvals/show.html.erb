@@ -14,12 +14,31 @@
               <% end %>
               <h3><%= @announcement.title %></h3> <%= link_to "Edit", url(:edit_approval, @announcement.id), :class=>"edit-btn" %>
               <p class="post-content"><%= @announcement.content %></p>
+              
+      <%= form_for :announcement, :action => url(:publish, :id => @announcement), :name => "approveform" do %>      
+           
+            <ul>
+            <li><%= text_area  :comments,  :label => "Comments", :rows => "10", :cols => "50" %></li>
+            </ul>
             
-                         
               <div class="hrule clear"><hr /></div>
-                <%= link_to "Approve & Publish", url(:publish, :id => @announcement ) %> ||
-                <%= link_to "Reject", url(:reject, :id => @announcement ) %>    
-              </div>  
+                  <input type="hidden" name="approvetype" />
+                  <a href="javascript:getsupport('Approve & Publish')">Approve & Publish </a> or
+                  <a href="javascript:getsupport('Reject')">Reject</a> 
+             </div>
+      <% end =%>        
+              
    </div>     
+ 
+   
+<script language="JavaScript" type="text/javascript">
+
+   function getsupport ( selectedtype )
+   {
+      document.approveform.approvetype.value = selectedtype ;
+      document.approveform.submit() ;
+    }
+
+</script>
    
    
