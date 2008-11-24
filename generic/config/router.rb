@@ -38,6 +38,11 @@ Merb::Router.prepare do
     match("/password_save").to(:controller => 'registrations', :action => 'password_save').name(:password_save)
     match("/new_password").to(:controller => 'registrations', :action => 'new_password').name(:new_password)
     match("/password_new").to(:controller => 'registrations', :action => 'password_new').name(:password_new)
+    match("/forgot_password").to(:controller => 'registrations', :action => 'forgot_password').name(:forgot_password)
+    match("/get_password").to(:controller => 'registrations', :action => 'get_password').name(:get_password)
+    match("/reset_password").to(:controller => 'registrations', :action => 'reset_password').name(:reset_password)
+    match("/reset_password_edit").to(:controller => 'registrations', :action => 'reset_password_edit').name(:reset_password_edit)
+    match("/reset_password_update").to(:controller => 'registrations', :action => 'reset_password_update').name(:reset_password_update)
 authenticate do
   resources :parents
   resources :approvals
@@ -64,12 +69,10 @@ authenticate do
   match("/staff_password").to(:controller => 'users', :action => 'staff_password').name(:staff_password)
   match("/staff_password_update").to(:controller => 'users', :action => 'staff_password_update').name(:staff_password_update)
   match("/publish").to(:controller => 'approvals', :action => 'publish').name(:publish)
-  match("/reject").to(:controller => 'approvals', :action => 'reject').name(:reject)
   match("/parent_approvals").to(:controller => 'approvals', :action => 'parent_approvals').name(:parent_approvals)
   match("/approval_review").to(:controller => 'approvals', :action => 'approval_review').name(:approval_review)
   match("/parent_grant").to(:controller => 'approvals', :action => 'parent_grant').name(:parent_grant)
-  match("/parent_reject").to(:controller => 'approvals', :action => 'parent_reject').name(:parent_reject)
-  
+    
 end
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
