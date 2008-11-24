@@ -37,7 +37,30 @@ class Person < ActiveRecord::Base
     false
   end
   
+  def self.make_key
+      Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+  end
   
+  def reset_password
+     pwreset_key_success = false
+     until pwreset_key_success
+        self.password_reset_key = self.class.make_key
+        puts self.password_reset_key.inspect
+        puts "Naidu".inspect
+        self.save
+        pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false
+     end
+     send_forgot_password
+  end
+  
+  def send_forgot_password
+      deliver_email(:forgot_password, :subject => "Choose a Password to login" )
+  end
+ 
+  def deliver_email(action, params)
+      from = "no-reply@insightmethods.com"
+      PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
+  end
   
 end            
   
