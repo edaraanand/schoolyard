@@ -220,6 +220,54 @@ class Registrations < Application
     end
   end
   
+  def forgot_password
+     render
+  end
+  
+  def get_password
+    if params[:email].nil?
+       flash[:error] = "You must enter a email to get new Password"
+       redirect url(:forgot_password)
+    else
+       @person = Person.find_by_email(params[:email])
+       @person.reset_password
+       redirect url(:login)
+    end
+  end
+  
+  def reset_password
+    id = params[:id]
+    @person = Person.find(:first, :conditions => ['password_reset_key = ?', id])
+    # raise @person.inspect
+    redirect url(:reset_password_edit, :id => @person.id )
+  end
+  
+  def reset_password_edit
+     @person = Person.find(params[:id])
+     render
+  end
+  
+  def reset_password_update
+    @person = Person.find(params[:id])
+    if ( !params[:person][:password].blank? ) && (!params[:person][:password_confirmation].blank? )
+        if ( params[:person][:password] == params[:person][:password_confirmation] )
+          @person.password = params[:person][:password]
+          @person.password_confirmation = params[:person][:password_confirmation]
+            if @person.save
+              redirect url(:login)
+            else
+              redirect url(:reset_password_edit, :id => @person.id )
+            end
+         else
+            flash[:error1] = "Your Password doesn't match"
+            redirect url(:reset_password_edit, :id => @person.id )
+         end
+    else
+       flash[:error2] = "Password cant be blank"
+       redirect url(:reset_password_edit, :id => @person.id )
+    end
+  end
+  
   
   private
   
