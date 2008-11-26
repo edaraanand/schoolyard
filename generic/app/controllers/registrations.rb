@@ -186,7 +186,7 @@ class Registrations < Application
   
   def registration_last
     @parent = Parent.find(params[:id])
-    @parent.approved = false
+    @parent.approved = 2
     @parent.save
     render
   end
@@ -238,7 +238,6 @@ class Registrations < Application
   def reset_password
     id = params[:id]
     @person = Person.find(:first, :conditions => ['password_reset_key = ?', id])
-    # raise @person.inspect
     redirect url(:reset_password_edit, :id => @person.id )
   end
   
@@ -268,7 +267,7 @@ class Registrations < Application
     end
   end
   
-  
+                               
   private
   
   def month_year

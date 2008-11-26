@@ -56,8 +56,19 @@ class Approvals < Application
   end
   
   def parent_approvals
-    @parents = Parent.find(:all, :conditions => ['approved = ?', false] )
-    render
+     if params[:approve_status] == "Approved"
+        @approved_parents = Parent.find(:all, :conditions => ['approved = ?', 1] )
+     end
+     if params[:approve_status] == "PendingApproval"
+        @pending_parents = Parent.find(:all, :conditions => ['approved = ?', 2] )
+     end
+     if params[:approve_status] == "Rejected"
+       @reject_parents = Parent.find(:all, :conditions => ['approved = ?', 3 ] )
+     end
+     if params[:approve_status].nil?
+        @parents = Parent.find(:all, :conditions => ['approved = ?', 2] )
+     end
+     render
   end
   
   def approval_review
@@ -85,16 +96,22 @@ class Approvals < Application
                      puts @student.inspect
                      @class = Classroom.find_by_class_name("#{c}")
                      @studs = Student.find(:all, :joins => :studies, :conditions => [" first_name in (?) AND last_name in (?) AND studies.classroom_id = ?" , @st, @st, @class.id ] )
-                     Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
+                     @guardian = Guardian.find_by_student_id(@student.id)
+                     if @guardian.nil?
+                        Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
+                     else
+                        Guardian.update(@guardian.id, {:student_id => @student.id, :parent_id => @parent.id })
+                     end
                  end
              end
-             @parent.approved = true
+             @parent.approved = 1
              @parent.save
              @parent.send_password_approve
              redirect url(:parent_approvals)
           end
      else
-        @parent.approved = nil
+       raise @parent.inspect
+        @parent.approved = 3
         @parent.save
         Guardian.delete_all(["parent_id = ?", @parent.id])
         redirect url(:approval_review)

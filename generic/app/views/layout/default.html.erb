@@ -78,7 +78,8 @@
         </li>
         <li>Access Rights<ul>
             <li><%= link_to_if((right = "rights_others"), "Add/Edit Access Rights", url(:people) ) %></li>
-          <li class="count"><%= link_to_if((right = "parent_registration"), "Parent Registration <span><b>8</b></span>", url(:parent_approvals) ) %></li>
+              <% @parents = Parent.find(:all, :conditions => ["approved = ?", 2 ]) %>
+              <li class="count"><%= link_to_if((right = "parent_registration"), "Parent Registration", url(:parent_approvals) ) %><span><b><%= @parents.length %></b></span></li>
           </ul>
         </li>
           <% @announcements = Announcement.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ]) %>
@@ -93,9 +94,9 @@
       		<li><%= link_to_if((right = "grades"), "Grades/Reports" ) %></li>
       		<li><%= link_to_if((right = "external_links"), "External Links", url(:external_links) ) %></li>
       		<li><%= link_to_if((right = "teams"), "Sports Teams", url(:teams)) %></li>
-      		<li><%= link_to_if((right = "forms"), "Forms"  ) %></li>
+      		<li><%= link_to_if((right = "forms"), "Forms", url(:forms)  ) %></li>
       		<li><%= link_to "Advertising" %></li>
-          </ul>
+          </ul>                                                                                                      
         </li>
         <li>Directories<ul>
           <li><%= link_to_if((right = "manage_directories"), "students", url(:students)) %></li>
