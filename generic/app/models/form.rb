@@ -1,14 +1,14 @@
 class Form < ActiveRecord::Base
   
-  require 'ftools'
-  include FileUtils
-
-  def url
-    "/uploads/#{self.id}/#{self.filename}"
-  end
+  #has_one :attachment
+  validates_presence_of :title
+  validates_presence_of :attachment, :message => 'Please Upload a Form'
   
+   require 'ftools'
+   include FileUtils
+
   def attachments
-    @attachments = Form.all(:attachable_type => self.class, :attachable_id => self.id)
+    @attachments = Attachment.all(:attachable_type => "Form", :attachable_id => self.id)
   end
   
   def attachment
@@ -18,14 +18,12 @@ class Form < ActiveRecord::Base
   def attachment=(value)
     @attachment = value
     unless value.empty?
-      puts "Eshwar".inspect
-      attachment = Form.create( :attachable_type => self.class,
-                                      :attachable_id => self.id,
+      attachment = Attachment.create( :attachable_type => "Form",
+                                      :attachable_id => self.id,      
                                       :filename => @attachment[:filename],
                                       :content_type => @attachment[:content_type],
                                       :size => @attachment[:size]
       )
- 
       File.makedirs("public/uploads/#{attachment.id}")
       mv(@attachment[:tempfile].path, "public/uploads/#{attachment.id}/#{attachment.filename}")
  
@@ -42,5 +40,5 @@ class Form < ActiveRecord::Base
     ("%06d" % id).scan(/.../)
   end
 
-
-end
+             
+  end

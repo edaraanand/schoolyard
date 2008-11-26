@@ -16,11 +16,28 @@ class Forms < Application
   end
   
   def create
-    puts "Naidu".inspect
-    #raise params.inspect
     @form = Form.new(params[:form])
-    raise @form.inspect
+    if @form.save
+       redirect resource(:forms)
+    else
+      render :new
+    end
+  end
+   
+  def edit
+    @form = Form.find(params[:id])
     render
+  end
+  
+  def update
+    @form = Form.find(params[:id])
+     Attachment.delete_all(['attachable_id = ?', @form.id])
+    if @form.update_attributes(params[:form])
+       redirect resource(:forms)
+    else
+       render :edit
+    end
+    
   end
   
   
