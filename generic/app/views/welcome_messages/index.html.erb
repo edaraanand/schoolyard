@@ -1,4 +1,6 @@
 <h2 class="current-page">Welcome Messages  <%= link_to "Add New", url(:new_welcome_message) %></h2>
+
+<% unless @welcome.empty? %>
 <div class="fullpage announcemt">
 <%= form_for(@welcome_message, :action => url(:controller => 'welcome_messages', :action => 'index'), :id => 'welcome_message') do %>
   <%= select :name => "access_name", :collection => @classrooms %>
@@ -47,5 +49,5 @@
 	
 </div> 
 
-	 
+<% end %> 
 	 

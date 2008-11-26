@@ -1,4 +1,6 @@
 <h2 class="current-page">Announcements: <%= link_to "Add New", resource(:announcements, :new) %></h2>
+
+<% unless @announce.empty? %>
 <div class="fullpage announcemt">
   <%= form_for(@announcement, :action => resource(:announcements), :method => 'get', :id => 'announcement') do %>
     <span class="select-announce"><%= select :name => "access_name", :collection => classrooms %><%= submit ">>" %><span class="add-link"><%= link_to "All Announcements", resource(:announcements) %></span></span>
@@ -67,4 +69,4 @@
          <% end %>
   <% end %>
 </div>
- 
+<% end %>

@@ -11,6 +11,7 @@ class Classroom < ActiveRecord::Base
 	
   has_many :home_works
   
+  
 	validates_presence_of :class_name
 	
 end
