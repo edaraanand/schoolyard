@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 43) do
+ActiveRecord::Schema.define(:version => 44) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -61,6 +61,16 @@ ActiveRecord::Schema.define(:version => 43) do
     t.text     "comments"
   end
 
+  create_table "attachments", :force => true do |t|
+    t.string   "filename"
+    t.string   "content_type"
+    t.integer  "size"
+    t.integer  "attachable_id"
+    t.string   "attachable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "calendars", :force => true do |t|
     t.string   "class_name"
     t.string   "title"
@@ -110,11 +120,6 @@ ActiveRecord::Schema.define(:version => 43) do
     t.string   "title"
     t.string   "class_name"
     t.string   "year"
-    t.string   "filename"
-    t.string   "content_type"
-    t.integer  "size"
-    t.integer  "attachable_id"
-    t.string   "attachable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
