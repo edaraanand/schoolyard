@@ -3,7 +3,7 @@
 
 <h2 class="current-page">Forms &gt; <span class="add-link">Add New</span></h2>
   
-  <%= form_for(@form, :action => resource(:forms)) do %>
+  <%= form_for(@form, :action => resource(@form)) do %>
      <ul>
          <li><%= text_field :title,  :label => "Title" %></li>
          <li><%= select :class_name, :collection => @classrooms, :label => "Classroom" %></li>

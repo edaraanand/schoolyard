@@ -12,7 +12,7 @@
         <tr>
           <td><%= link_to "#{form.title}", resource(form, :edit) %> </td>
           <td><%= form.class_name %></td>
-          <td><%= form.updated_at %></td>
+          <td><%= form.updated_at.strftime("%b %d %Y") %></td>
         </tr>
     <% end %>
     </tbody>
