@@ -5,7 +5,7 @@ Gem.path.unshift(Merb.root / "gems")
 
 # ==== Dependencies
 
-
+require 'ftools'
 require 'config/dependencies.rb'
 require  Merb.root / 'lib' / 'smtp_tls'
 require  Merb.root / 'lib' / 'constantz'
