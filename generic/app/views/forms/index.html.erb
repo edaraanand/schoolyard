@@ -1,0 +1,21 @@
+<h2 class="current-page">Forms &gt; <span class="add-link"><%= link_to "Add New", resource(:forms, :new) %></span></h2>
+
+<% unless @forms.empty? %>
+  <table id="mytable">
+    <thead>
+      <th>Form</th>
+      <th>for</th>
+      <th>Last Updated</th>
+    </thead>
+    <tbody>
+    <% for form in @forms %>
+        <tr>
+          <td><%= link_to "#{form.title}", resource(form, :edit) %> </td>
+          <td><%= form.class_name %></td>
+          <td><%= form.updated_at %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+<% end %>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 42) do
+ActiveRecord::Schema.define(:version => 43) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -106,6 +106,19 @@ ActiveRecord::Schema.define(:version => 42) do
     t.datetime "updated_at"
   end
 
+  create_table "forms", :force => true do |t|
+    t.string   "title"
+    t.string   "class_name"
+    t.string   "year"
+    t.string   "filename"
+    t.string   "content_type"
+    t.integer  "size"
+    t.integer  "attachable_id"
+    t.string   "attachable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "guardians", :force => true do |t|
     t.integer  "student_id"
     t.integer  "parent_id"
@@ -135,7 +148,7 @@ ActiveRecord::Schema.define(:version => 42) do
     t.string   "crypted_password"
     t.string   "salt"
     t.date     "birth_date"
-    t.boolean  "approved"
+    t.integer  "approved"
     t.string   "password_reset_key"
   end
 

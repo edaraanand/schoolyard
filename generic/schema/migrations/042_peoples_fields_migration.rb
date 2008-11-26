@@ -1,7 +1,7 @@
 class PeoplesFieldsMigration < ActiveRecord::Migration
   def self.up
     add_column :people, :birth_date, :date
-    add_column :people, :approved, :boolean
+    add_column :people, :approved, :integer
     add_column :people, :password_reset_key, :string
   end
 
