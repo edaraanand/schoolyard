@@ -16,9 +16,17 @@ class Forms < Application
   end
   
   def create
-    @form = Form.new(params[:form])
-    if @form.save
-       redirect resource(:forms)
+     @form = Form.new(params[:form])
+     if @form.save
+        @attachment = Attachment.create( :attachable_type => "Form",
+                                        :attachable_id => @form.id,
+                                        :filename => params[:form][:attachment][:filename],
+                                        :content_type => params[:form][:attachment][:content_type],
+                                        :size => params[:form][:attachment][:size]
+       )
+      File.makedirs("public/uploads/#{@attachment.id}")
+      FileUtils.mv(params[:form][:attachment][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+      redirect resource(:forms)
     else
       render :new
     end

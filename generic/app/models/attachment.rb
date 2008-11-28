@@ -1,14 +1,5 @@
 class Attachment < ActiveRecord::Base
   
-  #belongs_to :form
-  
-  
-  
-  def url
-    "/uploads/#{self.id}/#{self.filename}"
-  end
-  
-  
-    
+  #has_attached_file :attachment, :styles => { :medium => "300x300>", :thumb => "100x100>" }
 
-end
+end                         
