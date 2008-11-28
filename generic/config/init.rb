@@ -9,6 +9,8 @@ require 'ftools'
 require 'config/dependencies.rb'
 require  Merb.root / 'lib' / 'smtp_tls'
 require  Merb.root / 'lib' / 'constantz'
+require  Merb.root / 'lib' / 'attachable'
+
 
   use_orm :activerecord
   use_test :rspec

@@ -60,6 +60,7 @@ authenticate do
   resources :home_works
   resources :external_links
   resources :forms
+  resources :spot_lights
   match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
   match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
   match("/alerts_edit").to(:controller => 'alerts', :action => 'edit').name(:alert_edit)

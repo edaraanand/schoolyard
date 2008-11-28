@@ -1,0 +1,32 @@
+ <%= error_messages_for @spot_light %>
+ 
+ <h2 class="current-page">Spot Light &gt; Add New</h2>
+ 
+<%= form_for(@spot_light, :action => resource(:spot_lights, :new), :html => { :multipart => true }, :id => 'spot_light') do %>
+    <fieldset>
+         <ul>
+            <li><label>Spotlight for:</label><%= select :class_name, :collection => @classrooms %></li>
+            <li><label>Student </label><%= select :student_name, :collection => @students.collect{|x| x.name }, :prompt => "Please Select" %></li>
+            <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
+            <li><%= file_field :name => "file",  :label => "Upload Picture" %></li>
+         </ul>
+    </fieldset>
+ 
+           <div class="save-cancel">
+               <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+               <%= submit "Publish" %> Or 
+               <%= link_to "Cancel", resource(:spot_lights) %>
+           </div>
+ 
+<% end =%>
+
+<script type= "text/javascript">
+
+ function preview()
+ {
+   var s = $('spot_light').serialize();
+   window.open('/spot_lights/preview/-/?' + s);
+ }
+  
+
+</script>                                                                                                    
