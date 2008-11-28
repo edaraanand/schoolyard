@@ -7,4 +7,6 @@ class Team < ActiveRecord::Base
 	has_many :people, :through => :class_peoples, :source => :person
 	
 	validates_presence_of :team_name
+  validates_presence_of :classroom_id, :message => "Please Select the Classroom"
+  
 end
