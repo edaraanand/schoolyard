@@ -73,13 +73,13 @@ class Teams < Application
      end
      redirect resource(:teams)
   
-  ends
+  end
   
   private
   
   def team_values
      @teachers = Staff.find(:all)
-     @classrooms = Classroom.find(:all)
+     @classrooms = Classroom.find(:all, :conditions => ['class_type != ?', "Sports"])
      @years = (1999..2020).to_a 
   end
   
