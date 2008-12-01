@@ -5,9 +5,8 @@ class Person < ActiveRecord::Base
   validates_presence_of :first_name, :last_name
 	validates_presence_of :address, :if => :address
 	validates_presence_of :email, :if => :email
-	#validates_uniqueness_of :email, :if => :email
-	#validates_presence_of :birth_date, :if => :birth_date
-  validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}
+	validates_uniqueness_of :email, :if => :email
+	validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}
   
 	has_many :access_peoples
 	has_many :accesses, :through => :access_peoples, :source => :access
@@ -46,7 +45,6 @@ class Person < ActiveRecord::Base
      until pwreset_key_success
         self.password_reset_key = self.class.make_key
         puts self.password_reset_key.inspect
-        puts "Naidu".inspect
         self.save
         pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false
      end
