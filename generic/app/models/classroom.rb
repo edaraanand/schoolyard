@@ -1,5 +1,8 @@
 class Classroom < ActiveRecord::Base
   
+  
+  validates_presence_of :class_name, :if => Proc.new{|c| c.class_type != "Sports" }
+ 
 	has_many :class_peoples
   has_many :people, :through => :class_peoples, :source => :person
 	
@@ -11,7 +14,5 @@ class Classroom < ActiveRecord::Base
 	
   has_many :home_works
   
-  
-	validates_presence_of :class_name
-	
+ 	
 end
