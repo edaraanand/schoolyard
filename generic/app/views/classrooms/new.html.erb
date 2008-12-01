@@ -1,17 +1,22 @@
 <fieldset>
   <%= error_messages_for @classroom %>
+  
+  
   <%= form_for(@classroom, :action => resource(:classrooms)) do %>
   <ul id="class_room">
-    <li><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular} %></li>
-    <li><%= text_field :class_name,  :label => "Class Name" %></li>
-    <li><label>Class Teacher:</label><select name = "class[people][ids][]" id="class_person",>
-      <% @teachers.each do |teacher| %>
-      <option value="<%= teacher.id %>">
-      <%= teacher.name %>
-      </option>
-      <% end %>
-    </li>
-    <li><a href="#" onclick="add();return false;">Add More</a></li>
+    <li><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular}, :onchange => "class_type();return false;" %></li>
+    <div id="class_name" style="display:block">
+        <li><%= text_field :class_name,  :label => "Class Name" %></li>
+    </div>
+           <li><label>Class Teacher:</label><select name = "class[people][ids][]" id="class_person",>
+              <% @teachers.each do |teacher| %>
+                <option value="<%= teacher.id %>">
+                  <%= teacher.name %>
+                </option>
+             <% end %>
+          </li>
+          <li><a href="#" onclick="add();return false;">Add More</a></li>
+          
     </ul>
     <div class="save-cancel">
       <%= submit "Save" %> Or <%= link_to "Cancel", resource(:classrooms) %>
@@ -23,17 +28,30 @@
  
   function add()
    {
-      var class_room = document.getElementById('class_room');
+     var class_room = document.getElementById('class_room');
     	var li = document.createElement('li');
-	li.innerHTML = "<input type='text' name='class[people][role][]' id='class_class_people' />"  + <select name="class[people][ids][]" id="classroom_person"> 
-	                                <% @teachers.each do |teacher| %>
-		                           <option value="<%= teacher.id %>">
-					   <%= teacher.name %>
-					   </option>
-			                <% end %>
-			      </select> ;
-	 class_room.appendChild(li);
-	
-    }
+      li.innerHTML = "<input type='text' name='class[people][role][]' id='class_class_people' />"  + <select name="class[people][ids][]" id="classroom_person"> 
+                                  <% @teachers.each do |teacher| %>
+		                                   <option value="<%= teacher.id %>">
+					                                 <%= teacher.name %>
+					                             </option>
+			                            <% end %>
+                                  </select> 
+	    class_room.appendChild(li);
+   }
+    
+    function class_type()
+    {
+        var class_name = document.getElementById('class_name')
+        if (document.getElementById('classroom_class_type').value == "Sports" )
+        {
+           class_name.style.display      =  "none";
+        }
+        else
+           {
+             class_name.style.display      =  "block";
+         }
+     }
+ 
 </script>
 
