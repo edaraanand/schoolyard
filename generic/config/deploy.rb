@@ -1,6 +1,6 @@
 set :application, "schoolapp"
 set :scm, "git"
-set :repository, "git@github.com:eshwardeep/schoolapp.git"
+set :repository, "git clone git@github.com:eshwardeep/schoolapp.git"
 set :revision, "HEAD"
 set :use_sudo, false
 
