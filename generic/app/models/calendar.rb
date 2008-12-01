@@ -1,8 +1,10 @@
 class Calendar < ActiveRecord::Base
 	
       validates_presence_of :title
-      validates_presence_of :start_date, :if => Proc.new{|c| c.day_event != true }
-      validates_presence_of :end_date, :if => Proc.new{|c| c.day_event != true }	
+      validates_presence_of :start_date 
+      validates_presence_of :end_date  
+      validates_presence_of :start_time, :if =>  Proc.new{|c| c.day_event != true }
+      validates_presence_of :end_time, :if => Proc.new{|c| c.day_event != true }	
       
         def validate
 	         if ((self.start_date != nil) && (self.end_date != nil))
