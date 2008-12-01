@@ -3,7 +3,7 @@ class Homes < Application
     before :ensure_authenticated
     
   def index
-    @announcement = Announcement.find(:first, :conditions => ['access_name =?', 'HomePage'])
+    @announcements = Announcement.find(:all, :conditions => ['access_name =?', 'HomePage'], :limit => 2 )
     render :layout => 'home'
   end
   
