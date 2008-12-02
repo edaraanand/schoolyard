@@ -1,12 +1,15 @@
 set :application, "schoolapp"
 set :scm, "git"
+set :repository, "git@github.com:eshwardeep/schoolapp.git"
 set :revision, "HEAD"
 set :use_sudo, false
-set :git_account, 'eshwardeep'
-set :scm_passphrase,  Proc.new { Capistrano::CLI.password_prompt('Git Password: ') }
-set :branch, "origin/master"
-set :repository, "git@github.com:eshwardeep/schoolapp.git"
+set :scm_passphrase, 'eshwar'
+set :branch, 'master'
+
+
 default_run_options[:pty] = true
+set :ssh_options, { :forward_agent => true }
+set :user, 'deployer'
 
 set :domain,   "eshwar@beta.insightmethods.com"
 set :deploy_to,  "/home/eshwar/schoolapp"
