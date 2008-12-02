@@ -1,35 +1,53 @@
-<div class='formcontainer'>
+
+
+<% for principal in @from_principals %>
+<div id="sidebar2">
+             <% if principal.expiration.nil? %>
+                   <div class="ddmmm-x">
+	                 </div>
+              <% else %>
+                   <div class="ddmmm">
+                      <span class="date"><%= principal.expiration.strftime("%d") %></span>
+                      <span class="month"><%= principal.expiration.strftime("%b") %></span>
+	                 </div>
+              <% end %>
+              <h3><%= principal.title %></h3>
+              <p class="post-content-sidebar"><%= principal.content %></p>
+      </div>
+            <div class="hrule clear"><hr /></div>
+   <% end %>
+ </div>
+
+
+
+
+<h3 class="current-page">
+  
   This site was developed as the communication gateway between our School and their student’s families. Simply point Upcoming Events and click to review the various topics and features provided. If needed, visit the QUICK HELP link on the lower left side of the page to learn a little more about how the site works. Thanks for visiting!
-  <h4>
-    Announcements:
-  </h4>
 
+  </h3>
   
+
+ <div>
    <% for announcement in @announcements %>
-  <table>
-    <tr>
-      <td></td>
-    </tr>
-    <tr> 
-   
-          <% unless announcement.expiration.nil? %>
-              <td>
-                  <%= announcement.expiration.strftime("%B-%d") %>
-              </td>
-          <% end %>
-              <td>
-                  <%= announcement.title %>
-              </td>
-    </tr>
-    <tr>
-      <td>
-        <%= announcement.content %>
-      </td>
-    
-    </tr>
-  </table>
-      <% end %>
-  
-</div><%= link_to "All Announcements" %> <br/> 
+      <div class="data-block long-block">
+             <% if announcement.expiration.nil? %>
+                   <div class="ddmmm-x">
+	                 </div>
+              <% else %>
+                   <div class="ddmmm">
+                      <span class="date"><%= announcement.expiration.strftime("%d") %></span>
+                      <span class="month"><%= announcement.expiration.strftime("%b") %></span>
+	                 </div>
+              <% end %>
+              <h3><%= announcement.title %></h3>
+              <p class="post-content"><%= announcement.content %></p>
+              </div>
+            <div class="hrule clear"><hr /></div>
+   <% end %>
+        <%= link_to "All Announcements" %> <br/>
+        
+ 
+        
+</div>
 
-<%= link_to "submit an Announcement", resource(:parents, :new) %> 
