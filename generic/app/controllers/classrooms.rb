@@ -18,21 +18,24 @@ class Classrooms < Application
       id = params[:class][:people][:ids]
       role = params[:class][:people][:role]
       @class_peoples = []
+      if @classroom.class_type == "Sports"
+         @classroom.class_name = "Sports"
+      end
        if @classroom.save
-               if role.nil?
-	                ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
-               else
-	                role_id = id.delete_at(0)
-	                @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => role_id, :role => "class_teacher"})
-	                s = id.zip(role)
-	                s.each do |f|
-	                   @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
-                  end
-               end
-	             redirect resource(:classrooms)
+           if role.nil?
+	             ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
            else
-	            render :new
+	             role_id = id.delete_at(0)
+	             @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => role_id, :role => "class_teacher"})
+	             s = id.zip(role)
+	             s.each do |f|
+	                @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
+               end
            end
+	         redirect resource(:classrooms)
+       else
+	         render :new
+       end
    end  
   
    def edit
