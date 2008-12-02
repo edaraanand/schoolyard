@@ -1,6 +1,7 @@
 set :application, "schoolapp"
 set :scm, "git"
 set :repository, "git@github.com:eshwardeep/schoolapp.git"
+set :scm_passphrase, "ashwini" #This is your custom users password
 set :revision, "HEAD"
 set :use_sudo, false
 
