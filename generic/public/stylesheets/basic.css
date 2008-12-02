@@ -30,6 +30,7 @@ body{width:100%; font-size:14px; font-family:Lucida, "Lucida Sans Unicode", Verd
 
 #content{width:100%; float:left;}
 #sidebar{width:200px; float:left; clear:both; border-right:1px solid #e8e8e8; padding-right:20px;}
+#sidebar2{width:260px; float:left; clear:both; border-right:1px solid #e8e8e8; padding-right:20px;}
 
 ul#menu{width:170px; padding:20px 0 0 15px; font-size:13px; line-height:15px;}
 	/*[Line Height] To fix truncation of 'Descenders' in IE7*/
