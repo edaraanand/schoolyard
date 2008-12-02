@@ -1,19 +1,21 @@
 set :application, "schoolapp"
 set :scm, "git"
-set :repository, "git@github.com:bjbolz/schoolapp.git"
+set :repository, "git@github.com:eshwardeep/schoolapp.git"
 set :revision, "HEAD"
 set :use_sudo, false
- 
-set :domain, "niket@beta.insightmethods.com"
-set :deploy_to, "/home/niket/#{application}"
-set :adapter, 'mongrel' # or 'thin'
+set :branch, "origin/master"
+
+set :domain,   "eshwar@beta.insightmethods.com"
+set :deploy_to,  "/home/eshwar/schoolapp"
+set :adapter, 'mongrel' # or 'thin' 
 set :start_port, 7001
 set :processes, 1
 set :log_path, "#{shared_path}/log/production.log"
- 
+
 role :app, "beta.insightmethods.com"
 role :web, "beta.insightmethods.com"
-role :db, "beta.insightmethods.com", :primary => true
+role :db,  "beta.insightmethods.com", :primary => true
+
 
 namespace :deploy do 
   
