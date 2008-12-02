@@ -5,6 +5,7 @@ set :revision, "HEAD"
 set :use_sudo, false
 set :scm_passphrase, "ashwini"
 set :branch, "origin/master"
+set :user, "deployer"
 
 set :domain,   "eshwar@beta.insightmethods.com"
 set :deploy_to,  "/home/eshwar/schoolapp"
