@@ -9,7 +9,7 @@ set :branch, 'master'
 
 default_run_options[:pty] = true
 set :ssh_options, { :forward_agent => true }
-set :user, 'deployer'
+#set :user, 'deployer'
 
 set :domain,   "eshwar@beta.insightmethods.com"
 set :deploy_to,  "/home/eshwar/schoolapp"
