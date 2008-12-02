@@ -3,9 +3,7 @@ set :scm, "git"
 set :repository, "git@github.com:eshwardeep/schoolapp.git"
 set :revision, "HEAD"
 set :use_sudo, false
-set :scm_passphrase, "ashwini"
 set :branch, "origin/master"
-
 
 set :domain,   "eshwar@beta.insightmethods.com"
 set :deploy_to,  "/home/eshwar/schoolapp"
