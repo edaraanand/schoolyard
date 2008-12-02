@@ -55,7 +55,12 @@ class Classrooms < Application
       @class_p = @class.delete_if{|x| x.role == "class_teacher"}
       id = params[:class][:people][:ids]
       role = params[:class][:people][:role] 
+      
     if @classroom.update_attributes(params[:classroom])
+       if @classroom.class_type == "Sports"
+          @classroom.class_name = "Sports"
+          @classroom.save
+       end
        @class_peoples = @classroom.class_peoples
       @cla = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
       @class = @class_peoples.delete_if{|x| x.team_id != nil}

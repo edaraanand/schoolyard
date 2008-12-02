@@ -15,7 +15,14 @@
              </div>
        <% end %>
       
-    <li><label>Class Teacher: </label> <select name = "class[people][ids][]" id="class_person",>
+    <li>
+          <div id="teacher" style="display:block">
+               <label>Class Teacher:</label>
+           </div>
+           <div id="sport" style="display:none">
+              <label>Athletic Director:</label>
+           </div>
+        <select name = "class[people][ids][]" id="class_person",>
       <% @teachers.each do |teacher| %>
         <option value="<%= teacher.id %>">
           <%= teacher.name %>
@@ -60,15 +67,22 @@
     
    function class_type()
     {
+         var class_name = document.getElementById('class_name')
+        var teacher = document.getElementById('teacher')
+        var sport = document.getElementById('sport')
        if (document.getElementById('classroom_class_type').value == "Sports" )
         {
-           var class_name = document.getElementById('class_name')
+          
            class_name.style.display      =  "none";
+            teacher.style.display      =  "none";
+           sport.style.display      =  "block";
          }
         else
            {
              var class_name = document.getElementById('class_name')
              class_name.style.display      =  "block";
+              teacher.style.display      =  "block";
+             sport.style.display      =  "none";
          }
      }
 </script>
