@@ -1,9 +1,10 @@
 set :application, "schoolapp"
 set :scm, "git"
 set :repository, "git@github.com:eshwardeep/schoolapp.git"
-set :scm_passphrase, "ashwini" #This is your custom users password
 set :revision, "HEAD"
 set :use_sudo, false
+set :scm_passphrase, "ashwini"
+set :branch, "origin/master"
 
 set :domain,   "eshwar@beta.insightmethods.com"
 set :deploy_to,  "/home/eshwar/schoolapp"
@@ -26,7 +27,7 @@ namespace :deploy do
 	  run "mkdir -p #{current_path}/generic/db"
 	  run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
 	  run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
-	  run "cd #{current_path}/generic && rake bootstrap:app"
+	  run "cd #{current_path}/generic && rake bootstrap:alerts"
   end
   
   desc "Start Merb Instances"  
