@@ -19,181 +19,187 @@
     </ul>
    
 
-   <%= form_for(@parent, :action => resource(:registrations) ) do %>
-        
+<%= form_for(@parent, :action => resource(:registrations) ) do %>
+      
        <ul>
            <li>
                <%= text_field  :first_name,  :label => "Your Name", :class => "short " %>
                <%= text_field  :last_name, :class => "short apart" %>
 	         </li>
-           <li><%= text_field  :email,  :label => "Your Email ID", :class => "short " %></li>
-         </ul>
-         <p> Student Details </p>
-                   
-        <% fields_for :registration do %> 
-           <ul>
-             <li>
-                 <%= text_field  :first_name,  :label => "Name", :class => "short " %>
-                 <%= text_field  :last_name, :class => "short apart" %>
-	           <li>
-             <li>
-                 <label>Current Class:</label>
-                 <%= select :current_class, :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select" %>
-             </li>
-             <li><%= text_field  :birth_date, :id => "DOB1", :label => "Date of Birth" %></li>
-          </ul>
-         <% if ( ( (@fname2 != nil) || (@lname2 != nil) ) || (@current_class2 != nil) ) %>
-                <div id="student2" style="display:block">
-                       <li>
-                           <%= text_field  :name => "f_name_student2", :class => "short", :label => "Name", :value => "#{@fname2}" %>
-                           <%= text_field  :name => "l_name_student2", :class => "short apart", :value => "#{@lname2}" %>
-                       </li> 
-                       <li>
-                           <label>Current Class:</label>
-                         <%= select :name => "current_class2", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select", :selected => "#{@current_class2}" %>
-                       </li>   
-                       <li><%= text_field  :name => "birth_date2", :id => "DOB2", :label => "Date of Birth", :value => "#{@birth_date2}" %></li>
-                  </div>
-                  <% if( ( (@fname2 != "") && (@lname2 != "") ) && (@current_class2 != "") )   %>
-                       <% if (@birth_date2 != "")  %> 
-                            <% if ( ( (@fname3 != "") || (@lname3 != "" ) ) || (@current_class3 != "") ) %>
-                            <div id="am2" style="display:none">
-                                      <a onclick="add_student2();return false;" href="#">Add More</a>
+           <li>
+               <%= text_field  :email,  :label => "Your Email ID", :class => "short " %>
+           </li>
+       </ul>
+       
+            <p> Student Details </p>
+        <%= fields_for @registration do %>
+              <ul>
+                  <li>
+                     <%= text_field  :first_name,  :label => "Name", :class => "short " %>
+                     <%= text_field  :last_name, :class => "short apart" %>
+	                <li>
+                  <li>
+                      <label>Current Class:</label>
+                      <%= select :current_class, :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select" %>
+                  </li>
+                  <li><%= text_field  :birth_date, :id => "DOB1", :label => "Date of Birth" %></li>
+              </ul>
+              <% if ( ( (@fname2 != nil) || (@lname2 != nil) ) || (@current_class2 != nil) ) %>
+                    <div id="student2" style="display:block">
+                          <li>
+                              <%= text_field  :name => "f_name_student2", :class => "short", :label => "Name", :value => "#{@fname2}" %>
+                              <%= text_field  :name => "l_name_student2", :class => "short apart", :value => "#{@lname2}" %>
+                          </li> 
+                          <li>
+                              <label>Current Class:</label>
+                              <%= select :name => "current_class2", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select", :selected => "#{@current_class2}" %>
+                          </li>   
+                          <li>
+                              <%= text_field  :name => "birth_date2", :id => "DOB2", :label => "Date of Birth", :value => "#{@birth_date2}" %>
+                          </li>
+                    </div>
+                    <% if( ( (@fname2 != "") && (@lname2 != "") ) && (@current_class2 != "") )   %>
+                           <% if (@birth_date2 != "")  %> 
+                                  <% if ( ( (@fname3 != "") || (@lname3 != "" ) ) || (@current_class3 != "") ) %>
+                                       <div id="am2" style="display:none">
+                                           <a onclick="add_student2();return false;" href="#">Add More</a>
+	                                     </div>
+                                       <div id="am3" style="display:none">
+                                           <a onclick="add_student3();return false;" href="#">Add More</a>
+	                                     </div>
+                                   <% end %>
+                           <% else %>
+                                 <div id="am2" style="display:none">
+                                    <a onclick="add_student2();return false;" href="#">Add More</a>
 	                               </div>
-                                 <div id="am3" style="display:none">
-                                      <a onclick="add_student3();return false;" href="#">Add More</a>
+                                 <div id="am3" style="display:block">
+                                    <a onclick="add_student3();return false;" href="#">Add More</a>
 	                               </div>
-                            <% end %>
-                       <% else %>
-                               <div id="am2" style="display:none">
-                                  <a onclick="add_student2();return false;" href="#">Add More</a>
-	                             </div>
-                               <div id="am3" style="display:block">
-                                  <a onclick="add_student3();return false;" href="#">Add More</a>
-	                             </div>
-                       <% end %>
-                 <% else %>
-                      <div id="am2" style="display:none">
-                         <a onclick="add_student2();return false;" href="#">Add More</a>
+                           <% end %>
+                     <% else %>
+                           <div id="am2" style="display:none">
+                              <a onclick="add_student2();return false;" href="#">Add More</a>
+	                         </div> 
+                           <div id="am3" style="display:block">
+                              <a onclick="add_student3();return false;" href="#">Add More</a>
+	                         </div>
+                     <% end %>
+              <% else %>
+                     <div id="student2" style="display:none">
+                          <li>
+                              <%= text_field  :name => "f_name_student2", :class => "short", :label => "Name" %>
+                              <%= text_field  :name => "l_name_student2", :class => "short apart" %>
+                          </li>
+                          <li>
+                              <label>Current Class:</label>
+                              <%= select :name => "current_class2", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select" %>
+                           </li>    
+                           <li>
+                               <%= text_field  :name => "birth_date2", :id => "DOB2", :label => "Date of Birth" %>
+                           </li>
+                      </div>
+                      <div id="am2" style="display:block">
+                           <a onclick="add_student2();return false;" href="#">Add More</a>
 	                    </div>
-                      <div id="am3" style="display:block">
-                         <a onclick="add_student3();return false;" href="#">Add More</a>
-	                    </div>
-                 <% end %>
-               
-          <% else %>
-                   <div id="student2" style="display:none">
-                       <li>
-                           <%= text_field  :name => "f_name_student2", :class => "short", :label => "Name" %>
-                           <%= text_field  :name => "l_name_student2", :class => "short apart" %>
-                       </li>
-                       <li>
-                           <label>Current Class:</label>
-                           <%= select :name => "current_class2", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select" %>
-                       </li>    
-                       <li><%= text_field  :name => "birth_date2", :id => "DOB2", :label => "Date of Birth" %></li>
-                   </div>
-                    <div id="am2" style="display:block">
-                        <a onclick="add_student2();return false;" href="#">Add More</a>
-	                  </div>
-            <% end %>
-                    <div id="am3" style="display:none">
-                        <a onclick="add_student3();return false;" href="#">Add More</a>
-	                   </div>
+                <% end %>
+                      <div id="am3" style="display:none">
+                          <a onclick="add_student3();return false;" href="#">Add More</a>
+	                     </div>
                    
-            <% if ( ( (@fname3 != nil) || ( @lname3 != nil ) ) || (@current_class3 != nil) ) %>
-                 
-                  <div id="student3" style="display:block">
-                         <li>
-                             <%= text_field  :name => "f_name_student3", :class => "short", :label => "Name", :value => "#{@fname3}" %>
-                             <%= text_field  :name => "l_name_student3", :class => "short apart", :value => "#{@lname3}" %>
-                         </li>
-                        <li>
-                            <label>Current Class:</label>
-                            <%= select :name => "current_class3", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select", :selected => "#{@current_class3}" %>
-                        </li>  
-                        <li><%= text_field  :name => "birth_date3", :id => "DOB3", :label => "Date of Birth" %></li>
-                   </div>
-                   <% if( ( (@fname3 != "") && (@lname3 != "") ) && (@current_class3 != "") )   %>
-                         <% if (@birth_date3 != "")  %>
-                              <% if ( ( (@fname4 != "") || (@lname4 != "" ) ) || (@current_class4 != "") ) %>
+                <% if ( ( (@fname3 != nil) || ( @lname3 != nil ) ) || (@current_class3 != nil) ) %>
+                        <div id="student3" style="display:block">
+                              <li>
+                                  <%= text_field  :name => "f_name_student3", :class => "short", :label => "Name", :value => "#{@fname3}" %>
+                                  <%= text_field  :name => "l_name_student3", :class => "short apart", :value => "#{@lname3}" %>
+                              </li>
+                              <li>
+                                  <label>Current Class:</label>
+                                  <%= select :name => "current_class3", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select", :selected => "#{@current_class3}" %>
+                              </li>  
+                              <li>
+                                  <%= text_field  :name => "birth_date3", :id => "DOB3", :label => "Date of Birth" %>
+                              </li>
+                        </div>
+                        <% if( ( (@fname3 != "") && (@lname3 != "") ) && (@current_class3 != "") )   %>
+                              <% if (@birth_date3 != "")  %>
+                                    <% if ( ( (@fname4 != "") || (@lname4 != "" ) ) || (@current_class4 != "") ) %>
+                                          <div id="am3" style="display:none">
+                                              <a onclick="add_student3();return false;" href="#">Add More</a>
+	                                        </div>
+                                          <div id="am4" style="display:none">
+                                              <a onclick="add_student4();return false;" href="#">Add More</a>
+	                                        </div>
+                                     <% end %>
+                              <% else %>
                                     <div id="am3" style="display:none">
                                        <a onclick="add_student3();return false;" href="#">Add More</a>
 	                                  </div>
-                                    <div id="am4" style="display:none">
+                                    <div id="am4" style="display:block">
                                        <a onclick="add_student4();return false;" href="#">Add More</a>
 	                                  </div>
                               <% end %>
-                         <% else %>
+                        <% else %>
                               <div id="am3" style="display:none">
                                   <a onclick="add_student3();return false;" href="#">Add More</a>
-	                             </div>
-                               <div id="am4" style="display:block">
-                                   <a onclick="add_student4();return false;" href="#">Add More</a>
-	                             </div>
-                         <% end %>
-                      <% else %>
-                            <div id="am3" style="display:none">
-                                <a onclick="add_student3();return false;" href="#">Add More</a>
-	                          </div>
-                            <div id="am4" style="display:block">
-                                <a onclick="add_student4();return false;" href="#">Add More</a>
-	                          </div>
-                      <% end %>
-           <% else %>
-                 <div id="student3" style="display:none">
-                      <li>
-                         <%= text_field  :name => "f_name_student3", :class => "short", :label => "Name" %>
-                         <%= text_field  :name => "l_name_student3", :class => "short apart" %>
-                      </li>
-                      <li>
-                          <label>Current Class:</label>
-                          <%= select :name => "current_class3", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select" %>
-                      </li>
-                      <li><%= text_field  :name => "birth_date3", :id => "DOB3", :label => "Date of Birth" %></li>
-                  </div>
-              
-           <% end %>
-                 <div id="am4" style="display:none">
-                    <a onclick="add_student4();return false;" href="#">Add More</a>
-	               </div>
-            
-               <% if ( ( (@fname4 != nil) || (@lname4 != nil) ) || (@current_class4 != nil) ) %>
-         
-                 <div id="student4" style="display:block">
-                     <li>
-                         <%= text_field  :name => "f_name_student4", :class => "short", :label => "Name", :value => "#{@fname4}" %>
-                         <%= text_field  :name => "l_name_student4", :class => "short apart", :value => "#{@lname4}" %>
-                     </li>
-                       <li><label>Current Class:</label><%= select :name => "current_class4", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select", :selected => "#{@current_class4}" %></li>
-                     
-                        <li><%= text_field  :name => "birth_date4", :id => "DOB4", :label => "Date of Birth" %></li>
-                  </div>
-                  
-            <% else %>
-                   <div id="student4" style="display:none">
-                        <li>
-                            <%= text_field  :name => "f_name_student4", :class => "short", :label => "Name" %>
-                            <%= text_field  :name => "l_name_student4", :class => "short apart" %>
-                         </li>
-                         <li>
-                             <label>Current Class:</label>
-                           <%= select :name => "current_class4", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select" %>
-                         </li>
-                       
-                       <li><%= text_field  :name => "birth_date4", :id => "DOB4", :label => "Date of Birth" %></li>
-                   </div>
-            <% end %>
-            
-      <% end %>
-                     
-               
-            
-         <%= submit "Save" %> Or <%= link_to "Cancel", url(:login) %>
-         
+	                            </div>
+                              <div id="am4" style="display:block">
+                                  <a onclick="add_student4();return false;" href="#">Add More</a>
+	                            </div>
+                        <% end %>
+                <% else %>
+                        <div id="student3" style="display:none">
+                            <li>
+                                <%= text_field  :name => "f_name_student3", :class => "short", :label => "Name" %>
+                                <%= text_field  :name => "l_name_student3", :class => "short apart" %>
+                            </li>
+                            <li>
+                                <label>Current Class:</label>
+                                <%= select :name => "current_class3", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select" %>
+                            </li>
+                             <li>
+                                 <%= text_field  :name => "birth_date3", :id => "DOB3", :label => "Date of Birth" %>
+                             </li>
+                        </div>
+                <% end %>
+                        <div id="am4" style="display:none">
+                            <a onclick="add_student4();return false;" href="#">Add More</a>
+	                      </div>
+                <% if ( ( (@fname4 != nil) || (@lname4 != nil) ) || (@current_class4 != nil) ) %>
+                        <div id="student4" style="display:block">
+                            <li>
+                                <%= text_field  :name => "f_name_student4", :class => "short", :label => "Name", :value => "#{@fname4}" %>
+                                <%= text_field  :name => "l_name_student4", :class => "short apart", :value => "#{@lname4}" %>
+                            </li>
+                            <li>
+                                <label>Current Class:</label><%= select :name => "current_class4", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select", :selected => "#{@current_class4}" %>
+                            </li>
+                            <li>
+                                <%= text_field  :name => "birth_date4", :id => "DOB4", :label => "Date of Birth" %>
+                            </li>
+                         </div>
+                <% else %>
+                       <div id="student4" style="display:none">
+                            <li>
+                                <%= text_field  :name => "f_name_student4", :class => "short", :label => "Name" %>
+                                <%= text_field  :name => "l_name_student4", :class => "short apart" %>
+                            </li>
+                            <li>
+                                <label>Current Class:</label>
+                                <%= select :name => "current_class4", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select" %>
+                            </li>
+                            <li>
+                                 <%= text_field  :name => "birth_date4", :id => "DOB4", :label => "Date of Birth" %>
+                            </li>
+                       </div>
+                <% end %>
          <% end =%>
-
+                     
+             <%= submit "Save" %> Or <%= link_to "Cancel", url(:login) %>
          
+ <% end =%>
+
+      
+ 
 <script type= "text/javascript">
 
   var student2_obj = document.getElementById('student2');
