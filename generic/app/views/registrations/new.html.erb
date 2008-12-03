@@ -43,7 +43,7 @@
              <li><%= text_field  :birth_date, :id => "DOB1", :label => "Date of Birth" %></li>
           </ul>
          <% if ( ( (@fname2 != nil) || (@lname2 != nil) ) || (@current_class2 != nil) ) %>
-                <div id="student2" style="visibility:block">
+                <div id="student2" style="display:block">
                        <li>
                            <%= text_field  :name => "f_name_student2", :class => "short", :label => "Name", :value => "#{@fname2}" %>
                            <%= text_field  :name => "l_name_student2", :class => "short apart", :value => "#{@lname2}" %>
@@ -81,7 +81,7 @@
 	                    </div>
                  <% end %>
                
-            <% else %>
+          <% else %>
                    <div id="student2" style="display:none">
                        <li>
                            <%= text_field  :name => "f_name_student2", :class => "short", :label => "Name" %>
