@@ -1,6 +1,3 @@
-
-
-
 dependency "merb-assets"
 dependency "merb-cache"
 dependency "merb-helpers"
