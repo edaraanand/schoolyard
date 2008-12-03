@@ -33,7 +33,7 @@
               <%= text_field  :last_name, :class => "short apart" %>
 	       </li>
          
-	   <% fields_for :parent do %>  
+	   <%= fields_for @parent do %>  
 	       <li>
              <%= text_field  :first_name, :class => "short", :label => "Parents/Guardian" %>
              <%= text_field  :last_name, :class => "short apart" %>
@@ -164,7 +164,7 @@
 	       <li> <%= text_field  :address,  :label => "Address" %> </li>
         
             
-	   <% end %>        
+	   <% end =%>        
 	       <li>
 	          <input type = 'button' value = 'Preview' onclick="preview();return false;" />
 	          <%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %>
