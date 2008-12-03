@@ -31,7 +31,8 @@ namespace :deploy do
 	  run "rm -fr #{current_path}/generic/db"
 	  run "mkdir -p #{current_path}/generic/db"
 	  run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
-	  run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
+	  run "cd #{current_path}/generic && rake db:migrate VERSION=0 MERB_ENV=production"
+    run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
 	  run "cd #{current_path}/generic && rake bootstrap:alerts"
   end
   
