@@ -26,7 +26,11 @@ class Classrooms < Application
 	             ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
            else
 	             role_id = id.delete_at(0)
-	             @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => role_id, :role => "class_teacher"})
+               if @classroom.class_type == "Sports"
+                  @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => role_id, :role => "Athletic Director"})
+               else 
+                  @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => role_id, :role => "class_teacher"})
+               end
 	             s = id.zip(role)
 	             s.each do |f|
 	                @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
@@ -43,16 +47,18 @@ class Classrooms < Application
       @class_people = @classroom.class_peoples
       @class = @class_people.delete_if{|x| x.team_id != nil}
       @class_p = @class.delete_if{|x| x.role == "class_teacher"}
+      @class_sport = @class.delete_if{|x| x.role == "Athletic Director"}
       @teachers = Staff.find(:all)
       render                          
    end
    
    def update
-       @teachers = Staff.find(:all)
-       @classroom = Classroom.find(params[:id])
-       @class_people = @classroom.class_peoples
-       @class = @class_people.delete_if{|x| x.team_id != nil}
+      @teachers = Staff.find(:all)
+      @classroom = Classroom.find(params[:id])
+      @class_people = @classroom.class_peoples
+      @class = @class_people.delete_if{|x| x.team_id != nil}
       @class_p = @class.delete_if{|x| x.role == "class_teacher"}
+      @class_sport = @class.delete_if{|x| x.role == "Athletic Director"}
       id = params[:class][:people][:ids]
       role = params[:class][:people][:role] 
       
@@ -93,5 +99,5 @@ class Classrooms < Application
       redirect resource(:classrooms) 
    end
   
-  
+    
 end
