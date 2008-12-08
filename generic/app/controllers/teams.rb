@@ -21,6 +21,8 @@ class Teams < Application
      role = params[:classroom][:people][:role]
      @class_people = []
      if @team.save
+        @team.classroom_id = classroom.id
+        @team.save
         if role.nil?
 	         @class_people << ClassPeople.create({:person_id => "#{id}", :classroom_id => classroom.id, :team_id => @team.id, :role => "coach" })
         else
@@ -79,7 +81,7 @@ class Teams < Application
   
   def team_values
      @teachers = Staff.find(:all)
-     @classrooms = Classroom.find(:all, :conditions => ['class_type != ?', "Sports"])
+     @classrooms = Classroom.find(:all)
      @years = (1999..2020).to_a 
   end
   
