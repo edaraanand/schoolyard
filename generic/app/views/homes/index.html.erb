@@ -14,8 +14,10 @@
               <h3><%= principal.title %></h3>
               <p class="post-content-sidebar"><%= principal.content %></p>
       </div>
+           
             <div class="hrule clear"><hr /></div>
    <% end %>
+       <%= link_to "All Articles", url(:principal_articles, :label => 'principal')  %> <br/>
 </div>
 
 
@@ -26,8 +28,6 @@
   This site was developed as the communication gateway between our School and their student’s families. Simply point Upcoming Events and click to review the various topics and features provided. If needed, visit the QUICK HELP link on the lower left side of the page to learn a little more about how the site works. Thanks for visiting!
 
   </h3>
-  
-
  
    <% for announcement in @announcements %>
       <div class="data-block long-block">
@@ -45,7 +45,7 @@
               </div>
             <div class="hrule clear"><hr /></div>
    <% end %>
-        <%= link_to "All Announcements" %> <br/>
+       <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements')  %> <br/>
+     
         
-
 

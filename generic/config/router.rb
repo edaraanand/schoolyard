@@ -74,6 +74,7 @@ authenticate do
   match("/parent_approvals").to(:controller => 'approvals', :action => 'parent_approvals').name(:parent_approvals)
   match("/approval_review").to(:controller => 'approvals', :action => 'approval_review').name(:approval_review)
   match("/parent_grant").to(:controller => 'approvals', :action => 'parent_grant').name(:parent_grant)
+  match("/principal_articles").to(:controller => 'homes', :action => 'principal_articles').name(:principal_articles)
     
 end
   # This is the default route for /:controller/:action/:id
