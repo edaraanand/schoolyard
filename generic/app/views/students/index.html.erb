@@ -12,8 +12,10 @@
         <tr>
           <td><%= link_to "#{student.last_name}", resource(student, :edit) %> </td>
           <td><%= student.first_name %></td>
-          <td>Email</td>
-          <td>Address</td>
+          <% student.parents.each do |f| %>
+          <td><%= f.email %></td>
+          <td><%= f.address %></td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
