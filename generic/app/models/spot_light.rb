@@ -2,7 +2,7 @@ class SpotLight < ActiveRecord::Base
   
    attr_accessor :tempfile
    #has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }
-  
+    
     def url
       puts "Naidu".inspect
       #(Merb.root, "/uploads/#{ self.id }")
@@ -36,7 +36,7 @@ class SpotLight < ActiveRecord::Base
 
     def move_file
        FileUtils.makedirs(spot_light_dir_path)
-       FileUtils.cp(tempfile.path, spot_light_file_path)  
+      # FileUtils.cp(tempfile.path, spot_light_file_path)  
     end
 
     def create_thumbnails

@@ -14,7 +14,7 @@ class SpotLights < Application
      when :get
         @spot_light = SpotLight.new
         render
-       when :post
+     when :post
           @spot = SpotLight.from(params[:file])
           @spot.class_name = params[:spot_light][:class_name]
           @spot.student_name = params[:spot_light][:student_name]
@@ -45,7 +45,10 @@ class SpotLights < Application
   end
    
   def preview
-    render
+    @student_name = params[:spot_light][:student_name]
+    @content = params[:spot_light][:content]
+    @class_name = params[:spot_light][:class_name]
+    render :layout => 'preview'
   end
   
   
