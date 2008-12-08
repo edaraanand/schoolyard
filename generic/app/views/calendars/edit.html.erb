@@ -35,7 +35,7 @@
 	       <% if @calendar.day_event == true %>
 	          <td><%= text_field :end_time, :id => "end_time", :disabled => true %></td>
 	       <% else %>
-         <td><%= text_field :end_time, :id => "end_time", :value => "#{@calendar.end_time.strftime("%H:%M")}" %></td>
+            <td><%= text_field :end_time, :id => "end_time", :value => "#{@calendar.end_time.strftime("%H:%M")}" %></td>
 	       <% end %>
 	   </tr>
 	   <tr>
