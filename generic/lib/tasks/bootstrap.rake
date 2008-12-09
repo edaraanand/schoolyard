@@ -18,14 +18,13 @@ namespace :bootstrap do
       :welcome_messages => "Add/Edit Welcome Message",
       :external_links => "Add/Edit External Links",
       :forms => "Add/Edit Forms",
-      
-    }
+      :classes => "Classes"
+     }
       
       accesses.each_pair do |key, value|
          Access.create({:name => "#{key}", :full_name => "#{value}"})
       end
      
- 
   end
  
   desc "Creating a default person"
