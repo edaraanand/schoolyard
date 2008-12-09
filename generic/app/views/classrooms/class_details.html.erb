@@ -63,7 +63,7 @@
                <div class="hrule clear"><hr /></div>
        <% end %>
 <% elsif params[:label] == "announcements" %>
-
+          <h2 class="current-page"> Announcements </h2>
             <% for announcement in @announcements %>
                    <div class="data-block long-block">
                       <% if announcement.expiration.nil? %>

@@ -94,7 +94,9 @@
            <% @classrooms.each do |f| %>
          <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
            <% end %>
-           
+           <div class="save-cancel">
+               Or <%= link_to "Cancel", url(:class_details, :id =>  @classroom.id) %>
+           </div>
     </div> 
     
     
