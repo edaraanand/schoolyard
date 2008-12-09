@@ -75,7 +75,9 @@ authenticate do
   match("/approval_review").to(:controller => 'approvals', :action => 'approval_review').name(:approval_review)
   match("/parent_grant").to(:controller => 'approvals', :action => 'parent_grant').name(:parent_grant)
   match("/principal_articles").to(:controller => 'homes', :action => 'principal_articles').name(:principal_articles)
-    
+  match("/classrooms_home").to(:controller => 'classrooms', :action => 'classrooms_home').name(:classrooms_home)
+  match("/class_change").to(:controller => 'classrooms', :action => 'class_change').name(:class_change)
+  match("/class_details").to(:controller => 'classrooms', :action => 'class_details').name(:class_details)
 end
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based

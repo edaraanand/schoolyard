@@ -30,7 +30,7 @@
       <div id="navbar"><!--The Main Navigation -->
         <ul id="navigation">
           <li><%= link_to "<span>Home</span>", url(:homes) %></li>
-		      <li><%= link_to "<span>Classrooms</span>" %></li>
+          <li><%= link_to "<span>Classrooms</span>", url(:classrooms_home) %></li>
           <li class="current"><li><%= link_to "<span>Sports</span>" %></li>
           <li><%= link_to "<span>Forms</span>" %></li>
           <li><%= link_to "<span>Directory</span>" %></li>
@@ -72,8 +72,7 @@
       <ul id="menu"><!-- Nested Lists -->
         <li>Site Settings<ul>
           <li><%= link_to "Basic Settings", url(:schools) %></li>
-      		<li><%= link_to "Class Rooms", url(:classrooms) %></li>
-
+          <li><%= link_to_if((right = "classes"), "Classrooms", url(:classrooms) )  %></li>
           </ul>
         </li>
         <li>Access Rights<ul>
