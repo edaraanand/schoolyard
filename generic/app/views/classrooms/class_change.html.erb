@@ -1,0 +1,38 @@
+     A Summary message from the teacher appears here. Lorem ipsum eos modo tincidunt
+      appellantur at. Ne causae laoreet vim, homero aperiri sed ne. Ad qui quod oporteat
+       neglegentur. Ex eam inani omnium facilisis, mea cu clita omittantur.
+       Lorem ipsum eos modo tincidunt appellantur at. Ne causae laoreet vim, homero
+        aperiri sed ne. Ad qui quod oporteat neglegentur. Ex eam inani omnium facilisis, mea
+         cu clita omittantur.
+
+     <h2 class="current-page">Announcements: </h2>
+   
+      <% for announcement in @announcements %>
+           <div class="data-block long-block">
+             <% if announcement.expiration.nil? %>
+                   <div class="ddmmm-x">
+	                 </div>
+              <% else %>
+                   <div class="ddmmm">
+                      <span class="date"><%= announcement.expiration.strftime("%d") %></span>
+                      <span class="month"><%= announcement.expiration.strftime("%b") %></span>
+	                 </div>
+              <% end %>
+              <h3><%= announcement.title %></h3>
+              <p class="post-content"><%= announcement.content %></p>
+               <div class="hrule clear"><hr /></div>
+           </div>
+      <% end %>
+      <span class="add-link"><%= link_to "All Announcements" %></span></span>
+      
+      
+<script type= "text/javascript">
+
+  jQuery(document).ready(function($)
+     {
+       $('a[rel*=facebox]').facebox()
+       
+     } 
+ ) 
+
+</script>
