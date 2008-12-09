@@ -1,5 +1,8 @@
 class Classrooms < Application
+   
    layout 'default'
+   before :access_rights, :exclude => [:classrooms_home, :class_change, :class_details]
+  
   
    def index
       @classrooms = Classroom.find(:all)
@@ -99,5 +102,41 @@ class Classrooms < Application
       redirect resource(:classrooms) 
    end
   
-    
+   def classrooms_home
+     @announcements = Announcement.find(:all, :conditions => ['access_name = ?', '1st Grade'], :limit => 2 )
+     render :layout => 'classrooms'
+   end
+   
+   def class_change
+     @classroom = Classroom.find(params[:id])
+     @announcements = Announcement.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
+     render :layout => 'class_change', :id => @classroom.id
+   end
+   
+   def class_details
+      @classroom = Classroom.find(params[:id])
+      @calendars = Calendar.find(:all, :conditions => ['class_name = ?', @classroom.class_name])
+      @home_works = @classroom.home_works.find(:all)
+      @announcements = Announcement.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
+      render :layout => 'class_change', :id => @classroom.id
+   end
+   
+   
+   private
+   
+    def access_rights
+     have_access = false
+     @view = Access.find_by_name('view_all')
+     @ann = Access.find_by_name('classes')
+     @access_people = session.user.access_peoples.delete_if{|x| x.access_id == @view.id }
+     @access_people.each do |f|
+       have_access = (f.all == true) || (f.access_id == @ann.id)
+       break if have_access
+     end
+     unless have_access
+       redirect resource(:homes)
+     end
+  end  
+  
+  
 end
