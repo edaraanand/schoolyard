@@ -2,7 +2,8 @@
 <%  if params[:label] == "calendars" %>
 
         <div class="short-block">
-           <h2 class="current-page"> Calendars </h2>
+          
+        <h3 class="current-page"> Calendar for <%= @classroom.class_name %></h3>
              <% for calendar in @calendars %>
               <div class="calendar-block">
                  <% unless calendar.start_date.nil? %> 
@@ -18,11 +19,10 @@
                      <% end %>
                     &nbsp;
                  </span>
-                 <span class="cal-title">
+                <span class="cal-title">
                     <%= cal.title %>
                 </span>
-                    <%= link_to "Edit", resource(cal, :edit), :class=>"edit-btn" %>
-                    <%= link_to "Delete", resource(cal, :delete), :class=>"delete-btn" %>
+                   
                  </li>
                   <%# @calendars.delete_if{|c| c.start_date.to_date == cal.start_date.to_date } %>
                   <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
