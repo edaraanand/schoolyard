@@ -5,7 +5,7 @@
   <%= form_for(@announcement, :action => resource(:announcements), :method => 'get', :id => 'announcement') do %>
     <span class="select-announce"><%= select :name => "access_name", :collection => classrooms %><%= submit ">>" %><span class="add-link"><%= link_to "All Announcements", resource(:announcements) %></span></span>
      
-  <% end =%>
+  <% end =%> 
 
   <% if params[:access_name].nil? %>
         <% for a in @announce %>

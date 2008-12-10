@@ -1,7 +1,7 @@
 class Classrooms < Application
    
    layout 'default'
-   before :access_rights, :exclude => [:classrooms_home, :class_change, :class_details]
+   before :access_rights, :exclude => [:class_details]
   
   
    def index
@@ -101,18 +101,7 @@ class Classrooms < Application
       Classroom.find(params[:id]).destroy
       redirect resource(:classrooms) 
    end
-  
-   def classrooms_home
-     @announcements = Announcement.find(:all, :conditions => ['access_name = ?', '1st Grade'], :limit => 2 )
-     render :layout => 'classrooms'
-   end
-   
-   def class_change
-     @classroom = Classroom.find(params[:id])
-     @announcements = Announcement.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
-     render :layout => 'class_change', :id => @classroom.id
-   end
-   
+    
    def class_details
       @classroom = Classroom.find(params[:id])
       @calendars = Calendar.find(:all, :conditions => ['class_name = ?', @classroom.class_name])
@@ -121,6 +110,13 @@ class Classrooms < Application
       render :layout => 'class_change', :id => @classroom.id
    end
    
+   #def class_calendar
+      #@classroom = Classroom.find(params[:id])
+     # @calendar = Calendar.find(params[:id])
+      #@classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
+      #raise @classroom.inspect
+     # render :layout => 'class_change', :id => @classroom.id
+   #end
    
    private
    
