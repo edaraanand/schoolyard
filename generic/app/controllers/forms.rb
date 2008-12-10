@@ -3,10 +3,17 @@ class Forms < Application
   layout 'default'
   
   before :classrooms
-  before :access_rights
+  before :access_rights, :exclude => [:form_files]
+  before :forms
   
   def index
-    @forms = Form.find(:all)
+    if params[:class_name].nil?
+       @forms = Form.find(:all)
+    end
+    if params[:class_name] == "All Forms"
+      @forms_f = Form.find(:all)
+    end
+    @files = Form.find(:all, :conditions => ['class_name = ?', params[:class_name] ] )
     render
   end
   
@@ -49,7 +56,25 @@ class Forms < Application
   end
   
   
+  def form_files
+     if params[:class_name].nil?
+        @forms = Form.find(:all)
+     end
+     if params[:class_name] == "All Forms"
+        @forms_f = Form.find(:all)
+     end
+     @files = Form.find(:all, :conditions => ['class_name = ?', params[:class_name] ] )
+     render :layout => 'home'
+  end
+  
+  
   private
+  
+  def forms
+     @class = Classroom.find(:all)
+     room = @class.collect{|x| x.class_name }
+     @classrooms = room.insert(0, "All Forms")
+  end
   
   def classrooms
     classes = Classroom.find(:all)

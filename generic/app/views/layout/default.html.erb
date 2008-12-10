@@ -7,11 +7,14 @@
   <link rel="stylesheet" href="/stylesheets/ui.datepicker.css" type="text/css" media="screen" charset="utf-8" />
   <link rel="stylesheet" href="/stylesheets/clockpick.1.2.4.css" type="text/css" media="screen" charset="utf-8" />
   <link rel="stylesheet" href="/stylesheets/global.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="/stylesheets/facebox.css" type="text/css" media="screen" charset="utf-8" />
   
   <script src='/javascripts/prototype.js'></script>
   <script src='/javascripts/jquery.js'></script>
   <script src='/javascripts/ui-datepicker-1.5.2.min.js'></script>
   <script src='/javascripts/jquery.clockpick.1.2.4.js'></script>
+  <script src='/javascripts/facebox.js'></script>
+  <script src='/javascripts/face.js'></script>
   <script>  jQuery.noConflict(); </script>
   <script>  var $j = jQuery; </script>
         <%= include_required_js %>
@@ -30,9 +33,9 @@
       <div id="navbar"><!--The Main Navigation -->
         <ul id="navigation">
           <li><%= link_to "<span>Home</span>", url(:homes) %></li>
-          <li><%= link_to "<span>Classrooms</span>", url(:classrooms_home) %></li>
+          <li><a rel="facebox" href="#info"><span>Classrooms</span></a></li>
           <li class="current"><li><%= link_to "<span>Sports</span>" %></li>
-          <li><%= link_to "<span>Forms</span>" %></li>
+          <li><%= link_to "<span>Forms</span>", url(:form_files) %></li>
           <li><%= link_to "<span>Directory</span>" %></li>
           <li><%= link_to "<span>Events</span>" %></li>
           <% @view = Access.find_by_name('view_all') %>
@@ -109,6 +112,19 @@
         <%= catch_content :for_layout %>
       </div><!--Content End-->
     </div><!--Content Wrap End -->
+    
+        <% @classrooms = Classroom.find(:all) %>
+    <div id="info" style="display:none;">
+         <h3>Please Select the classroom you would like to visit</h3>
+          Classes:  
+           <% @classrooms.each do |f| %>
+                  <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
+           <% end %>
+         <div class="save-cancel">
+             Or <%= link_to "Cancel" %>
+         </div>
+    </div> 
+    
     <!--Right Sidebar to be inserted here-->    
   </div><!--Pagewrap End -->
 </body>
