@@ -1,6 +1,6 @@
-<h2 class="current-page">Forms &gt; <span class="add-link"><%= link_to "Add New", resource(:forms, :new) %></span></h2>
+<h2 class="current-page">Forms </h2>
 
-<%= form_for(@form, :action => resource(:forms), :method => 'get') do %>
+<%= form_for(@form, :action => url(:form_files), :method => 'get') do %>
     <span class="select-announce"><%= select :name => "class_name", :collection => forms %> <%= submit ">>" %>
      
 <% end =%>
@@ -17,7 +17,7 @@
              <tbody>
                    <% for form in @forms %>
                         <tr>
-                            <td><%= link_to "#{form.title}", resource(form, :edit) %> </td>
+                            <td><%= form.title %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
                         </tr>
@@ -36,7 +36,7 @@
              <tbody>
                    <% for form in @forms_f %>
                         <tr>
-                            <td><%= link_to "#{form.title}", resource(form, :edit) %> </td>
+                             <td><%= form.title %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
                         </tr>
@@ -56,7 +56,7 @@
              <tbody>
                    <% for form in @files %>
                         <tr>
-                            <td><%= link_to "#{form.title}", resource(form, :edit) %> </td>
+                            <td><%= form.title %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
                         </tr>
