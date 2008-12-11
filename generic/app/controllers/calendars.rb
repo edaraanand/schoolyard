@@ -13,7 +13,6 @@ class Calendars < Application
   end
   
   def create
-     #raise params.inspect
      @class_rooms = Classroom.find(:all)
      @calendar = Calendar.new(params[:calendar])
      if @calendar.save
@@ -42,6 +41,8 @@ class Calendars < Application
 	      @calendar.save
 	      redirect resource(:calendars)
      else
+        @start_time = params[:calendar][:start_time]
+        @end_time = params[:calendar][:end_time]
 	      render :edit
      end
   end

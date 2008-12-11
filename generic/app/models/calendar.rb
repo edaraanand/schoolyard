@@ -14,10 +14,6 @@ class Calendar < ActiveRecord::Base
 	             self.errors.add(:end_time, "must be greater than start time") if self.end_time <= self.start_time
            end
         end
-         if ((self.day_event == false) && ((self.end_time != nil) && (self.start_time != nil)) )
-           self.errors.add(:end_time, "must be greater than start time") if self.end_time <= self.start_time
-         end
-      end
   
 end
  

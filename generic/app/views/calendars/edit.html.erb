@@ -9,26 +9,32 @@
     <li><%= text_field  :location,  :label => "Location" %></li>
     <li><label>&nbsp;</label><%= check_box :day_event, :onclick => "dayevent()" %>All Day Event</li>
     <li>
-      <%= text_field :start_date, :id => "start", :label => "Starts:", :class=>"short" %>
+         <%= text_field :start_date, :id => "start", :label => "Starts:", :class=>"short" %>
 	       <% if @calendar.day_event == true %>
-	          <%= text_field :start_time, :id => "start_time", :disabled => true, :class=>"short apart"  %>
+	          <%= text_field :start_time, :id => "start_time", :disabled => true, :class => "short apart"  %>
 	       <% else %>
-         <td><%= text_field :start_time, :id => "start_time", :value => "#{@calendar.start_time.strftime("%H:%M")}" %></td>
+            <% if @start_time == "" %>
+                 <%= text_field :start_time, :id => "start_time", :class=>"short apart" %>
+            <% else %>
+                 <%= text_field :start_time, :id => "start_time", :class=>"short apart", :value => "#{@calendar.start_time.strftime("%H:%M")}" %>
+            <% end %>
 	       <% end %>
-	   </tr>
-	   <tr>
-	       <td><%= text_field :end_date, :id => "end", :label => "Ends:" %></td>
+    </li>
+	   <li>
+	       <%= text_field :end_date, :id => "end", :label => "Ends:", :class=>"short apart" %>
 	       <% if @calendar.day_event == true %>
-	          <td><%= text_field :end_time, :id => "end_time", :disabled => true %></td>
+	            <%= text_field :end_time, :id => "end_time", :disabled => true, :class=>"short apart" %>
 	       <% else %>
-            <td><%= text_field :end_time, :id => "end_time", :value => "#{@calendar.end_time.strftime("%H:%M")}" %></td>
-	       <% end %>
-	   </tr>
-	   <tr>
-              <td><%= submit "Publish" %></br> Or <%= link_to "Cancel", resource(:calendars) %></td>
-           </tr> 
-	   
-     </table>
+               <% if @end_time == "" %>
+                    <%= text_field :end_time, :id => "end_time", :class=>"short apart"  %>
+               <% else %>
+                    <%= text_field :end_time, :id => "end_time", :class=>"short apart", :value => "#{@calendar.end_time.strftime("%H:%M")}" %>
+	             <% end %>
+         <% end %>
+	   </li>
+       <div class="save-cancel">
+             <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:calendars), :class=>"cancel" %>
+       </div>
  <% end =%>
 	   
     
