@@ -329,6 +329,8 @@ ul.edit-ext-links li{background:url(../images/link-bullet.gif) no-repeat left ce
 ul.calendar-items{clear:both;}
 ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding:4px 0 2px 2px;}
 
+.defaultText { width: 300px; }
+.defaultTextActive { color: #a1a1a1; font-style: italic; }
 
 
 /*TEmp Edits*/
