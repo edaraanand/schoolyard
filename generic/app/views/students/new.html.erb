@@ -15,7 +15,7 @@
 <h2 class="current-page">Students &gt; <span class="add-link">Add New</span></h2>
 
 <fieldset> 
-    <%= form_for(@student, :action => resource(:students), :id => 'student') do %>
+<%= form_for(@student, :action => resource(:students), :id => 'student', :name => "studs",  :onsubmit => "ClearAll()")  do %>
    
      <ul>
          <li>
@@ -26,16 +26,16 @@
 		                      </option>
 			        <% end %>
 	       </li>
-	  
+	    
          <li>
-              <%= text_field  :first_name,  :label => "Student", :class => "short " %>
-              <%= text_field  :last_name, :class => "short apart" %>
+              <%= text_field  :first_name,  :label => "Student", :class => "short defaultText", :title => "First" %>
+              <%= text_field  :last_name, :class => "short apart defaultText", :title => "Last" %>
 	       </li>
          
 	   <%= fields_for @parent do %>  
 	       <li>
-             <%= text_field  :first_name, :class => "short", :label => "Parents/Guardian" %>
-             <%= text_field  :last_name, :class => "short apart" %>
+             <%= text_field  :first_name, :class => "short defaultText", :label => "Parents/Guardian", :title => "First" %>
+             <%= text_field  :last_name, :class => "short apart defaultText", :title => "Last" %>
 	       </li>
 	       <li> <%= text_field :email, :label => "Email" %> </li>
          
@@ -208,6 +208,56 @@
    window.open('/students/preview/-/?' + s);
  }
 
+  $j(document).ready(function()
+{
+    $j(".defaultText").focus(function(srcc)
+    {
+        if ($j(this).val() == $j(this)[0].title)
+        {
+            $j(this).removeClass("defaultTextActive");
+            $j(this).val("");
+        }
+    });
+    
+    $j(".defaultText").blur(function()
+    {
+        if ($j(this).val() == "")
+        {
+            $j(this).addClass("defaultTextActive");
+            $j(this).val($j(this)[0].title);
+        }
+    });
+    
+    $j(".defaultText").blur();        
+});
 
+
+function ClearAll()
+{
+   var student_f = document.getElementById('student_first_name');
+   var student_l = document.getElementById('student_last_name');
+   var parent_f = document.getElementById('parent_first_name');
+   var parent_l = document.getElementById('parent_last_name');
+   
+   if (student_f.value == student_f.title) 
+   {
+     student_f.value = ""
+    }
+  if (student_l.value == student_l.title) 
+   {
+     student_l.value = ""
+    }
+    if (parent_f.value == parent_f.title) 
+   {
+     parent_f.value = ""
+    }
+  if (parent_l.value == parent_l.title) 
+   {
+     parent_l.value = ""
+    }
+    
+}
+
+  
 </script>
    
