@@ -25,11 +25,13 @@
 	            </div>
 	        <% end %>
               <h3><%= work.title %></h3>
+              <% unless work.classroom.nil? %>
               <% s = work.classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
                 <% s.each do |f| %>
                    <% if f.role == 'class_teacher' %>
                    Assigned : <%= work.created_at.strftime("%b %d, %Y") %>  by <%= f.person.name %>
                    <% end %>
+                <% end %>
                 <% end %>
               <p class="post-content"><%= work.content %></p>
               <%= link_to "Edit", resource(work, :edit), :class=>"edit-btn" %>
