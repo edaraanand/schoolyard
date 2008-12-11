@@ -5,7 +5,6 @@ class Teams < Application
 
   def index
      @teams = Team.find(:all)
-       
      render
   end
   
@@ -82,7 +81,7 @@ class Teams < Application
   def team_values
      @teachers = Staff.find(:all)
      @classrooms = Classroom.find(:all)
-     @years = (1999..2020).to_a 
+     @years = (2008..2020).to_a 
   end
   
   
