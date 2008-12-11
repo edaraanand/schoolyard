@@ -1,0 +1,17 @@
+<fieldset>
+  <%= error_messages_for @form %>
+
+<h2 class="current-page">Forms &gt; <span class="add-link">Add New</span></h2>
+  
+  <%= form_for(@form, :action => resource(@form)) do %>
+     <ul>
+         <li><%= text_field :title,  :label => "Title" %></li>
+         <li><%= select :class_name, :collection => @classrooms, :label => "Classroom" %></li>
+         <li><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year" %></li>
+         <li><%= file_field :attachment,  :label => "Upload Form" %></li>
+     </ul>
+     <div class="save-cancel">
+        <%= submit "Save" %> Or <%= link_to "Cancel", resource(:forms) %>
+     </div>
+<% end =%>
+</fieldset>

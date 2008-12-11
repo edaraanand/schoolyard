@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 36) do
+ActiveRecord::Schema.define(:version => 45) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -61,6 +61,16 @@ ActiveRecord::Schema.define(:version => 36) do
     t.text     "comments"
   end
 
+  create_table "attachments", :force => true do |t|
+    t.string   "filename"
+    t.string   "content_type"
+    t.integer  "size"
+    t.integer  "attachable_id"
+    t.string   "attachable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "calendars", :force => true do |t|
     t.string   "class_name"
     t.string   "title"
@@ -106,6 +116,14 @@ ActiveRecord::Schema.define(:version => 36) do
     t.datetime "updated_at"
   end
 
+  create_table "forms", :force => true do |t|
+    t.string   "title"
+    t.string   "class_name"
+    t.string   "year"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "guardians", :force => true do |t|
     t.integer  "student_id"
     t.integer  "parent_id"
@@ -134,12 +152,36 @@ ActiveRecord::Schema.define(:version => 36) do
     t.text     "address"
     t.string   "crypted_password"
     t.string   "salt"
+    t.date     "birth_date"
+    t.integer  "approved"
+    t.string   "password_reset_key"
+  end
+
+  create_table "registrations", :force => true do |t|
+    t.integer  "parent_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.date     "birth_date"
+    t.string   "current_class"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "schools", :force => true do |t|
     t.string   "school_name"
     t.string   "phone"
     t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "spot_lights", :force => true do |t|
+    t.string   "class_name"
+    t.string   "student_name"
+    t.text     "content"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

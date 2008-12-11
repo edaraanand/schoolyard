@@ -276,6 +276,7 @@ span.cancel a:hover{text-decoration:underline;}
 .short-block{width:480px;}
 .long-block{width:640px;}
 .post-content{width:480px; float:left;}
+.post-content-sidebar{width:220px; float:left;}
 
 .data{width:400px;}
 .ddmmm{width:36px; height:42px; border:1px solid #C1DAD7; margin:0px 10px 10px 0; float:left;}
@@ -330,8 +331,8 @@ ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding
 
 
 
-
-
+/*TEmp Edits*/
+#class_person{margin:0 0 0 8px;}
 
 
 

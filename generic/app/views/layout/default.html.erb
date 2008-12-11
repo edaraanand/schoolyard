@@ -7,11 +7,14 @@
   <link rel="stylesheet" href="/stylesheets/ui.datepicker.css" type="text/css" media="screen" charset="utf-8" />
   <link rel="stylesheet" href="/stylesheets/clockpick.1.2.4.css" type="text/css" media="screen" charset="utf-8" />
   <link rel="stylesheet" href="/stylesheets/global.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="/stylesheets/facebox.css" type="text/css" media="screen" charset="utf-8" />
   
   <script src='/javascripts/prototype.js'></script>
   <script src='/javascripts/jquery.js'></script>
   <script src='/javascripts/ui-datepicker-1.5.2.min.js'></script>
   <script src='/javascripts/jquery.clockpick.1.2.4.js'></script>
+  <script src='/javascripts/facebox.js'></script>
+  <script src='/javascripts/face.js'></script>
   <script>  jQuery.noConflict(); </script>
   <script>  var $j = jQuery; </script>
         <%= include_required_js %>
@@ -30,9 +33,9 @@
       <div id="navbar"><!--The Main Navigation -->
         <ul id="navigation">
           <li><%= link_to "<span>Home</span>", url(:homes) %></li>
-		      <li><%= link_to "<span>Classrooms</span>" %></li>
+          <li><a rel="facebox" href="#info"><span>Classrooms</span></a></li>
           <li class="current"><li><%= link_to "<span>Sports</span>" %></li>
-          <li><%= link_to "<span>Forms</span>" %></li>
+          <li><%= link_to "<span>Forms</span>", url(:form_files) %></li>
           <li><%= link_to "<span>Directory</span>" %></li>
           <li><%= link_to "<span>Events</span>" %></li>
           <% @view = Access.find_by_name('view_all') %>
@@ -72,13 +75,13 @@
       <ul id="menu"><!-- Nested Lists -->
         <li>Site Settings<ul>
           <li><%= link_to "Basic Settings", url(:schools) %></li>
-      		<li><%= link_to "Class Rooms", url(:classrooms) %></li>
-
+          <li><%= link_to_if((right = "classes"), "Classrooms", url(:classrooms) )  %></li>
           </ul>
         </li>
         <li>Access Rights<ul>
             <li><%= link_to_if((right = "rights_others"), "Add/Edit Access Rights", url(:people) ) %></li>
-            <li class="count"><%= link_to_if((right = "parent_registration"), "Parent Registration <span><b>8</b></span>" ) %></li>
+              <% @parents = Parent.find(:all, :conditions => ["approved = ?", 2 ]) %>
+              <li class="count"><%= link_to_if((right = "parent_registration"), "Parent Registration", url(:parent_approvals) ) %><span><b><%= @parents.length %></b></span></li>
           </ul>
         </li>
           <% @announcements = Announcement.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ]) %>
@@ -88,14 +91,14 @@
       		<li><%= link_to_if((right = "announcements"), "Announcements", url(:announcements)) %></li>
       		<li><%= link_to_if( (right = "welcome_messages"), "Welcome Messages", url(:welcome_messages) ) %></li>
       	  <li><%= link_to_if((right = "calendar"), "Calendars", url(:calendars) )  %></li>
-      		<li><%= link_to_if((right = "spotlight"), "Spotlight" ) %></li>
+      		<li><%= link_to_if((right = "spotlight"), "Spotlight", url(:spot_lights) ) %></li>
           <li><%= link_to_if((right = "homework"), "Home work", url(:home_works) )  %></li>
       		<li><%= link_to_if((right = "grades"), "Grades/Reports" ) %></li>
       		<li><%= link_to_if((right = "external_links"), "External Links", url(:external_links) ) %></li>
       		<li><%= link_to_if((right = "teams"), "Sports Teams", url(:teams)) %></li>
-      		<li><%= link_to_if((right = "forms"), "Forms"  ) %></li>
+      		<li><%= link_to_if((right = "forms"), "Forms", url(:forms)  ) %></li>
       		<li><%= link_to "Advertising" %></li>
-          </ul>
+          </ul>                                                                                                      
         </li>
         <li>Directories<ul>
           <li><%= link_to_if((right = "manage_directories"), "students", url(:students)) %></li>
@@ -109,6 +112,19 @@
         <%= catch_content :for_layout %>
       </div><!--Content End-->
     </div><!--Content Wrap End -->
+    
+        <% @classrooms = Classroom.find(:all) %>
+    <div id="info" style="display:none;">
+         <h3>Please Select the classroom you would like to visit</h3>
+          Classes:  
+           <% @classrooms.each do |f| %>
+                  <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
+           <% end %>
+         <div class="save-cancel">
+             Or <%= link_to "Cancel" %>
+         </div>
+    </div> 
+    
     <!--Right Sidebar to be inserted here-->    
   </div><!--Pagewrap End -->
 </body>

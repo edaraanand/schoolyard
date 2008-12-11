@@ -1,4 +1,5 @@
 <%= error_messages_for @person %>
+
 <%= form_for :person, :action => url(:people), :id => 'people', :name => 'people_form' do %>
   <%= partial 'form' %>
 <% end =%>

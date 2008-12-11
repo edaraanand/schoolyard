@@ -3,6 +3,13 @@ set :scm, "git"
 set :repository,  "git@github.com:bjbolz/schoolapp.git"
 set :revision, "HEAD"
 set :use_sudo, false
+set :scm_passphrase, 'eshwar'
+set :branch, 'master'
+#set :deploy_via, :remote_cache
+
+default_run_options[:pty] = true
+set :ssh_options, { :forward_agent => true }
+#set :user, 'deployer'
 
 set :domain,   "niket@beta.insightmethods.com"
 set :deploy_to, "/home/niket/#{application}"
@@ -25,7 +32,7 @@ namespace :deploy do
 	  run "mkdir -p #{current_path}/generic/db"
 	  run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
 	  run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
-	  run "cd #{current_path}/generic && rake bootstrap:app"
+    run "cd #{current_path}/generic && rake bootstrap:alerts"
   end
   
   desc "Start Merb Instances"  

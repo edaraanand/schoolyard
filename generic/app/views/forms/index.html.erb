@@ -1,0 +1,68 @@
+<h2 class="current-page">Forms &gt; <span class="add-link"><%= link_to "Add New", resource(:forms, :new) %></span></h2>
+
+<%= form_for(@form, :action => resource(:forms), :method => 'get') do %>
+    <span class="select-announce"><%= select :name => "class_name", :collection => forms %> <%= submit ">>" %>
+     
+<% end =%>
+
+
+ <% if params[:class_name].nil? %>
+     <% unless @forms.empty? %>
+        <table id="mytable">
+             <thead>
+                  <th>Form</th>
+                  <th>for</th>
+                  <th>Last Updated</th>
+             </thead>
+             <tbody>
+                   <% for form in @forms %>
+                        <tr>
+                            <td><%= link_to "#{form.title}", resource(form, :edit) %> </td>
+                            <td><%= form.class_name %></td>
+                            <td><%= form.updated_at.strftime("%b %d %Y") %></td>
+                        </tr>
+                   <% end %>
+             </tbody>
+         </table>
+     <% end %> 
+ <% elsif  params[:class_name] == "All Forms" %>
+     <% unless @forms_f.empty? %>
+         <table id="mytable">
+             <thead>
+                  <th>Form</th>
+                  <th>for</th>
+                  <th>Last Updated</th>
+             </thead>
+             <tbody>
+                   <% for form in @forms_f %>
+                        <tr>
+                            <td><%= link_to "#{form.title}", resource(form, :edit) %> </td>
+                            <td><%= form.class_name %></td>
+                            <td><%= form.updated_at.strftime("%b %d %Y") %></td>
+                        </tr>
+                   <% end %>
+             </tbody>
+         </table>
+     <% end %>  
+ <% else %>
+ 
+      <% unless @files.empty? %>
+         <table id="mytable">
+             <thead>
+                  <th>Form</th>
+                  <th>for</th>
+                  <th>Last Updated</th>
+             </thead>
+             <tbody>
+                   <% for form in @files %>
+                        <tr>
+                            <td><%= link_to "#{form.title}", resource(form, :edit) %> </td>
+                            <td><%= form.class_name %></td>
+                            <td><%= form.updated_at.strftime("%b %d %Y") %></td>
+                        </tr>
+                   <% end %>
+             </tbody>
+         </table>
+     <% end %>  
+
+<% end %>

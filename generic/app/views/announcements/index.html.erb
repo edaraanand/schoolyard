@@ -1,9 +1,11 @@
 <h2 class="current-page">Announcements: <%= link_to "Add New", resource(:announcements, :new) %></h2>
+
+
 <div class="fullpage announcemt">
   <%= form_for(@announcement, :action => resource(:announcements), :method => 'get', :id => 'announcement') do %>
     <span class="select-announce"><%= select :name => "access_name", :collection => classrooms %><%= submit ">>" %><span class="add-link"><%= link_to "All Announcements", resource(:announcements) %></span></span>
      
-  <% end =%>
+  <% end =%> 
 
   <% if params[:access_name].nil? %>
         <% for a in @announce %>
@@ -49,15 +51,15 @@
               <% end %>
               <h3><%= announcement.title %></h3>
               <p class="post-content"><%= announcement.content %></p>
-                <% if ( (a.approved) && (a.approve_announcement)) %>
+              <% if ( (announcement.approved) && (announcement.approve_announcement)) %>
                        <%= @message1 %>
                        <%= link_to "Edit", resource(announcement, :edit), :class=>"edit-btn" %>
                        <%= link_to "Delete", resource(announcement, :delete), :class=>"delete-btn"  %>
-                <% elsif ((a.approve_announcement == true) && (a.approved == false )) %>
+                <% elsif ((announcement.approve_announcement == true) && (announcement.approved == false )) %>
                       <%= @message2 %>
                       <%= link_to "Edit", resource(announcement, :edit), :class=>"edit-btn" %>
                       <%= link_to "Delete", resource(announcement, :delete), :class=>"delete-btn"  %>
-                <% elsif ((a.approve_announcement == false) && (a.approved == false )) %>
+                <% elsif ((announcement.approve_announcement == false) && (announcement.approved == false )) %>
                        <%= @message3 %>
                        <%= link_to "Edit", resource(announcement, :edit), :class=>"edit-btn" %>
                        <%= link_to "Delete", resource(announcement, :delete), :class=>"delete-btn"  %>
@@ -67,4 +69,4 @@
          <% end %>
   <% end %>
 </div>
- 
+

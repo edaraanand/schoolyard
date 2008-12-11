@@ -5,8 +5,12 @@ Gem.path.unshift(Merb.root / "gems")
 
 # ==== Dependencies
 
-
+require 'ftools'
 require 'config/dependencies.rb'
+require  Merb.root / 'lib' / 'smtp_tls'
+require  Merb.root / 'lib' / 'constantz'
+require  Merb.root / 'lib' / 'attachable'
+
 
   use_orm :activerecord
   use_test :rspec
@@ -20,6 +24,17 @@ Merb::BootLoader.after_app_loads do
   # Add dependencies here that must load after the application loads:
     
   # dependency "magic_admin" # this gem uses the app's model classes
+  Merb::Mailer.config = {
+    :host   => 'smtp.gmail.com',
+    :port   => '587',
+    :user   => Schoolapp.config(:auth_mailman),
+    :pass   => Schoolapp.config(:mailman_password),
+    :auth   => :plain 
+  }
+  
+  #Merb::Mailer.config = { :sendmail_path => /usr/sbin/sendmail}
+  #Merb::Mailer.delivery_method = :sendmail
+
 end
 
 # ==== Set up your basic configuration

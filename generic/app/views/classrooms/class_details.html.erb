@@ -1,0 +1,127 @@
+
+<%  if params[:label] == "calendars" %>
+
+        <div class="short-block">
+          
+        <h3 class="current-page"> Calendar for <%= @classroom.class_name %></h3>
+             <% for calendar in @calendars %>
+              <div class="calendar-block">
+                 <% unless calendar.start_date.nil? %> 
+                     <h3><%= calendar.start_date.strftime("%B-%d") %></h3>
+                 <% end %>
+                  <% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
+                  <ul class="calendar-items">
+                  <% cals.each do |cal| %>
+                  <li>
+                 <span class="cal-time">
+                   <% unless cal.start_time.nil? %>
+                        <%= cal.start_time.strftime("%H-%M") %>
+                     <% end %>
+                    &nbsp;
+                 </span>
+                <span class="cal-title">
+                    <%= cal.title %>
+                </span>
+                   
+                 </li>
+                  <%# @calendars.delete_if{|c| c.start_date.to_date == cal.start_date.to_date } %>
+                  <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
+           <% end %>
+          </ul>
+        </div>
+           <% @calendars.delete_if{|c| cals.include?(c)} %>
+          <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
+        <% end %>
+      </div>
+      
+<% elsif params[:label] == "homeworks" %>
+       <h2 class="current-page"> Homeworks </h2>
+       <% for homework in @home_works %>
+             <div class="data-block long-block">
+              <span class="hidden">
+                  <% unless homework.due_date.nil? %>
+                      <%= homework.due_date.strftime("%B-%d") %>
+                  <% end %>
+              </span>
+              <% if homework.due_date.nil? %>
+	                <div class="ddmmm-x">
+	                </div>
+	            <% else %>
+                   <div class="ddmmm">
+                       <span class="date"><%= homework.due_date.strftime("%d") %></span>
+                       <span class="month"><%= homework.due_date.strftime("%b") %></span>
+                    </div>
+               <% end %>
+              <h3><%= homework.title %></h3>
+               <% s = homework.classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
+                <% s.each do |f| %>
+                   <% if f.role == 'class_teacher' %>
+                       Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= f.person.name %>
+                   <% end %>
+                <% end %>
+              <p class="post-content"><%= homework.content %></p>
+               <div class="hrule clear"><hr /></div>
+       <% end %>
+<% elsif params[:label] == "announcements" %>
+          <h2 class="current-page"> Announcements </h2>
+            <% for announcement in @announcements %>
+                   <div class="data-block long-block">
+                      <% if announcement.expiration.nil? %>
+                          <div class="ddmmm-x">
+	                        </div>
+                      <% else %>
+                           <div class="ddmmm">
+                               <span class="date"><%= announcement.expiration.strftime("%d") %></span>
+                               <span class="month"><%= announcement.expiration.strftime("%b") %></span>
+	                          </div>
+                      <% end %>
+                            <h3><%= announcement.title %></h3>
+                            <p class="post-content"><%= announcement.content %></p>
+                           <div class="hrule clear"><hr /></div>
+                   </div>
+             <% end %>
+
+<% else %>
+
+          A Summary message from the teacher appears here. Lorem ipsum eos modo tincidunt
+          appellantur at. Ne causae laoreet vim, homero aperiri sed ne. Ad qui quod oporteat
+          neglegentur. Ex eam inani omnium facilisis, mea cu clita omittantur.
+          Lorem ipsum eos modo tincidunt appellantur at. Ne causae laoreet vim, homero
+          aperiri sed ne. Ad qui quod oporteat neglegentur. Ex eam inani omnium facilisis, mea
+          cu clita omittantur.
+
+           <h2 class="current-page">Announcements: </h2>
+   
+            <% for announcement in @announcements %>
+                   <div class="data-block long-block">
+                      <% if announcement.expiration.nil? %>
+                          <div class="ddmmm-x">
+	                        </div>
+                      <% else %>
+                           <div class="ddmmm">
+                               <span class="date"><%= announcement.expiration.strftime("%d") %></span>
+                               <span class="month"><%= announcement.expiration.strftime("%b") %></span>
+	                          </div>
+                      <% end %>
+                            <h3><%= announcement.title %></h3>
+                            <p class="post-content"><%= announcement.content %></p>
+                           <div class="hrule clear"><hr /></div>
+                   </div>
+            <% end %>
+                   <span class="add-link"><%= link_to "All Announcements" %></span></span>
+
+
+<% end %>   
+
+
+
+<script type= "text/javascript">
+
+  jQuery(document).ready(function($)
+     {
+       $('a[rel*=facebox]').facebox()
+       
+     } 
+ ) 
+
+</script>

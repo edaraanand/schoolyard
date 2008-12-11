@@ -4,9 +4,25 @@
 <h2 class="current-page"> Classrooms &gt; Edit </h2>
   <%= form_for(@classroom, :action => resource(@classroom)) do %>
   <ul id="class_room">
-    <li><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular} %></li>
-    <li><%= text_field :class_name,  :label => "Class Name" %></li>
-    <li><label>Class Teacher: </label> <select name = "class[people][ids][]" id="class_person",>
+    <li><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular}, :onchange => "class_type();return false;" %></li>
+       <% if (@classroom.class_type == "Sports") %>
+            <div id="class_name" style="display:none">
+              <li><%= text_field :class_name,  :label => "Class Name" %></li>
+            </div>
+       <% else %>
+             <div id="class_name" style="display:block">
+                 <li><%= text_field :class_name,  :label => "Class Name" %></li>
+             </div>
+       <% end %>
+      
+    <li>
+          <div id="teacher" style="display:block">
+               <label>Class Teacher:</label>
+           </div>
+           <div id="sport" style="display:none">
+              <label>Athletic Director:</label>
+           </div>
+        <select name = "class[people][ids][]" id="class_person",>
       <% @teachers.each do |teacher| %>
         <option value="<%= teacher.id %>">
           <%= teacher.name %>
@@ -48,6 +64,27 @@
 	 class_room.appendChild(li);
 	
     }
+    
+   function class_type()
+    {
+         var class_name = document.getElementById('class_name')
+        var teacher = document.getElementById('teacher')
+        var sport = document.getElementById('sport')
+       if (document.getElementById('classroom_class_type').value == "Sports" )
+        {
+          
+           class_name.style.display      =  "none";
+            teacher.style.display      =  "none";
+           sport.style.display      =  "block";
+         }
+        else
+           {
+             var class_name = document.getElementById('class_name')
+             class_name.style.display      =  "block";
+              teacher.style.display      =  "block";
+             sport.style.display      =  "none";
+         }
+     }
 </script>
 
 

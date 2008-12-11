@@ -13,22 +13,23 @@
 	       <% if @calendar.day_event == true %>
 	          <%= text_field :start_time, :id => "start_time", :disabled => true, :class=>"short apart"  %>
 	       <% else %>
-		  <%= text_field :start_time, :id => "start_time" , :class=>"short apart"  %>
+         <td><%= text_field :start_time, :id => "start_time", :value => "#{@calendar.start_time.strftime("%H:%M")}" %></td>
 	       <% end %>
-	  </li>
-	  <li>
-      <%= text_field :end_date, :id => "end", :label => "Ends:" , :class=>"short" %>
-      <% if @calendar.day_event == true %>
-        <%= text_field :end_time, :id => "end_time", :disabled => true , :class=>"short apart" %>
-      <% else %>
-        <%= text_field :end_time, :id => "end_time" , :class=>"short apart" %>
-      <% end %>
-    </li>
-  </ul>
-  <div class="save-cancel">
-    <%= submit "Publish" %></br> Or <%= link_to "Cancel", resource(:calendars), :class=>"cancel"%>
-  </div>
-<% end =%>
+	   </tr>
+	   <tr>
+	       <td><%= text_field :end_date, :id => "end", :label => "Ends:" %></td>
+	       <% if @calendar.day_event == true %>
+	          <td><%= text_field :end_time, :id => "end_time", :disabled => true %></td>
+	       <% else %>
+            <td><%= text_field :end_time, :id => "end_time", :value => "#{@calendar.end_time.strftime("%H:%M")}" %></td>
+	       <% end %>
+	   </tr>
+	   <tr>
+              <td><%= submit "Publish" %></br> Or <%= link_to "Cancel", resource(:calendars) %></td>
+           </tr> 
+	   
+     </table>
+ <% end =%>
 	   
     
 
@@ -47,12 +48,14 @@
     if (document.getElementById('calendar_day_event').checked == true)
       {
          document.getElementById('start_time').disabled = true;
-	 document.getElementById('end_time').disabled = true;
+         document.getElementById('end_time').disabled = true;
+         document.getElementById('start_time').value = ""
+	       document.getElementById('end_time').value = ""
        }
      else if(document.getElementById('calendar_day_event').checked == false)
        {
          document.getElementById('start_time').disabled = false;
-	 document.getElementById('end_time').disabled = false;
+	       document.getElementById('end_time').disabled = false;
        }
   }
   

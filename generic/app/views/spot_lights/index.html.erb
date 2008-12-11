@@ -1,0 +1,13 @@
+<h2 class="current-page">Spot Light &gt; <span class="add-link"><%= link_to "Add New", resource(:spot_lights, :new) %></span></h2>
+<% unless @spot_lights.empty? %>
+  
+      <% for spot in @spot_lights %>
+        <tr>
+          
+             <td> <%= spot.student_name %></td>
+        
+         </tr>
+      <% end %>
+    
+
+<% end %>

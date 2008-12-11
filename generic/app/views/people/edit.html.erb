@@ -1,3 +1,13 @@
+
+<%= error_messages_for @person %>
+
+<ul class='error_messages'>
+    <% if flash[:error] %>
+        <li><%= flash[:error] %> </li>
+    <% end %>
+</ul>
+
+
 <fieldset>
   <h2 class="current-page">Access Rights &gt; Add New</h2>
   <%= form_for :person, :action => url(:person, @person) , :id => 'people' do %>
@@ -6,21 +16,17 @@
     <li><%= text_field  :last_name,  :label => "Last Name" %></li>
     <li><%= text_field  :email,  :label => "Contact Email" %></li>
     <li><%= text_field  :phone,  :label => "Phone Number(optional)" %></li>
-    <li><%= flash[:errr] %></li>
+   
   </ul>
   <dl>
     <dt>Rights:</dt>
 	  <dd>This person can:</dd>
 	</dl>
-	    <div id="check" style="visibility:hidden">
-    <p>Unchecking this will Disable Access for this user.
-    Are you sure you want to do this? </p>
-      <%= link_to "Yes, Disable access for this user", url(:controller => "people", :action => "disable", :id => @person.id) %> Or <a href='' id='cancel' return true >Cancel this action </a>
-    </div>
+	   
 	<dl class="check-box-set">
     <dt><%= check_box :name => "view_all", :checked => true, :id => "all", :onclick => "viewall()" %></dt>
     <dd>View all Content</dd>
-	  <dt><input type="checkbox" checked="true" onclick="checkAll(this)"></dt>
+	  <dt><input type="checkbox" onclick="checkAll(this)"></dt>
 	  <dd>Select All:</dd>
         <% @accesses.each do |f| %>
             <% have_access = false %>
@@ -43,16 +49,6 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
 <script type= "text/javascript">
 
@@ -71,10 +67,10 @@
 	   {
 	     s.checked = true;
 	   }
-	  // document.getElementById('check').style.visibility = "visible"; 
+	  
 	}
     }  
-   
+   s
    
    function checkAll(select_all)
    {
@@ -84,7 +80,7 @@
       for (var i=0;i<col.length;i++) 
       {
           col[i].checked= checked;
-	  s.checked = true;
+	        s.checked = true;
        }
      }
 

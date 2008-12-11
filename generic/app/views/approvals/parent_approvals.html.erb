@@ -1,0 +1,74 @@
+<h2 class="current-page">Parent Registrations </h2>
+
+
+<% unless @parents.empty? %>
+<%= form_for(@parent, :action => url(:parent_approvals), :method => 'get') do %>
+<span class="select-announce"><%= select :name => "approve_status", :collection => %W{PendingApproval Approved Rejected } %><%= submit ">>" %><span class="add-link"><%= link_to "All Registrations", url(:parent_approvals) %></span></span>
+     
+<% end =%>
+
+
+  <table id="mytable">
+    <thead>
+      <th>Name</th>
+        <th>Student</th>
+        <th>Date of Birth</th>
+    </thead>
+    <tbody>
+    
+    <% if params[:approve_status].nil? %>
+           <% for parent in @parents %>
+                  <tr>
+                      <td><%= link_to "#{parent.name}", url(:approval_review, :id => parent) %> </td>
+                      <% @students = Registration.find(:all, :conditions => ['parent_id = ?', parent.id]) %>
+                        <% @students.each do |f| %>
+                            <td><%= f.name %></td>
+                            <td><%= f.birth_date %></td>
+                        <% end %>
+                  </tr>
+             <% end %>
+    <% else %>
+             <% unless @approved_parents.nil? %>
+                   <% for ap in @approved_parents %>
+                        <tr>
+                            <td><%= link_to "#{ap.name}", url(:approval_review, :id => ap) %> </td>
+                            <% @students = Registration.find(:all, :conditions => ['parent_id = ?', ap.id]) %>
+                            <% @students.each do |f| %>
+                               <td><%= f.name %></td>
+                               <td><%= f.birth_date %></td>
+                            <% end %>
+                        </tr>
+                   <% end %>
+              <% end %>
+              <% unless @pending_parents.nil? %>
+                     <% for pp in @pending_parents %>
+                          <tr>
+                              <td><%= link_to "#{pp.name}", url(:approval_review, :id => pp) %> </td>
+                              <% @students = Registration.find(:all, :conditions => ['parent_id = ?', pp.id]) %>
+                              <% @students.each do |f| %>
+                                  <td><%= f.name %></td>
+                                  <td><%= f.birth_date %></td>
+                              <% end %>
+                          </tr>
+                     <% end %>
+              <% end %>
+              <% unless @reject_parents.nil? %>
+                     <% for rp in @reject_parents %>
+                          <tr>
+                              <td><%= link_to "#{rp.name}", url(:approval_review, :id => rp) %> </td>
+                              <% @students = Registration.find(:all, :conditions => ['parent_id = ?', rp.id]) %>
+                              <% @students.each do |f| %>
+                                  <td><%= f.name %></td>
+                                  <td><%= f.birth_date %></td>
+                              <% end %>
+                          </tr>
+                     <% end %>
+              <% end %>
+     <% end %>
+    
+    </tbody>
+  </table>
+
+
+  <% end %> 
+       

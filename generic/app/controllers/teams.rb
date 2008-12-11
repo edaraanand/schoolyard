@@ -21,24 +21,27 @@ class Teams < Application
      role = params[:classroom][:people][:role]
      @class_people = []
      if @team.save
+        @team.classroom_id = classroom.id
+        @team.save
         if role.nil?
-	   @class_people << ClassPeople.create({:person_id => "#{id}", :classroom_id => classroom.id, :team_id => @team.id, :role => "coach" })
+	         @class_people << ClassPeople.create({:person_id => "#{id}", :classroom_id => classroom.id, :team_id => @team.id, :role => "coach" })
         else
-	   role_id = id.delete_at(0)
-	   @class_people << ClassPeople.create({:person_id => role_id, :team_id => @team.id, :classroom_id => classroom.id, :role => "coach"})
+	         role_id = id.delete_at(0)
+	         @class_people << ClassPeople.create({:person_id => role_id, :team_id => @team.id, :classroom_id => classroom.id, :role => "coach"})
            s = id.zip(role)
-     	   s.each do |r|
-	      @class_people << ClassPeople.create({:person_id => r[0], :classroom_id => classroom.id, :team_id => @team.id, :role => r[1] })
+     	     s.each do |r|
+	            @class_people << ClassPeople.create({:person_id => r[0], :classroom_id => classroom.id, :team_id => @team.id, :role => r[1] })
            end
         end
         redirect resource(:teams)
      else
-	render :new
+	      render :new
      end
   end
 
   def edit     
      @team = Team.find(params[:id])
+     @class = Classroom.find_by_id(@team.classroom_id)
      team_peoples = @team.class_peoples
      @team_peoples = team_peoples.delete_if{|x| x.role == "coach" }
      render
@@ -49,7 +52,6 @@ class Teams < Application
      classroom = Classroom.find(:first, :conditions => ['class_name=?', params[:team][:classroom_id] ])
      id = params[:classroom][:people][:ids]
      role = params[:classroom][:people][:role]
-    # raise "Eshwar".inspect
      @team_p =  Team.update(@team.id, {:classroom_id => classroom.id, :year => params[:team][:year], :team_name => params[:team][:team_name]})
      @class_teams = @team.class_peoples
      @cls_ts = @team.class_peoples.find(:first, :conditions => ['role=?', "coach"])
@@ -58,20 +60,21 @@ class Teams < Application
      @team_people = @cla_tea.collect{|x| x.id }
      if role.nil?
         @class_t = ClassPeople.find(:first, :conditions => ['team_id=?', @team.id] )
-	ClassPeople.update(@class_t.id, {:classroom_id => classroom.id, :person_id => "#{id}", :role => "coach", :team_id => @team.id })
+	      ClassPeople.update(@class_t.id, {:classroom_id => classroom.id, :person_id => "#{id}", :role => "coach", :team_id => @team.id })
      else
-	role_id = id.delete_at(0)
-	@c = ClassPeople.find(:first, :conditions => ['person_id=?', role_id])
-	s = id.zip(role, @team_people)
-	s.each do |f|
-	  if f[2].nil?
-	     @team.class_peoples << ClassPeople.create({:person_id => f[0], :classroom_id => classroom.id, :role => f[1], :team_id => @team.id })
-	  else
-	     @team.class_peoples << ClassPeople.update(f[2],{ :person_id => f[0], :classroom_id => classroom.id, :role => f[1], :team_id => @team.id })
-	  end
-	end
+	      role_id = id.delete_at(0)
+       	@c = ClassPeople.find(:first, :conditions => ['person_id=?', role_id])
+	      s = id.zip(role, @team_people)
+	      s.each do |f|
+	         if f[2].nil?
+	             @team.class_peoples << ClassPeople.create({:person_id => f[0], :classroom_id => classroom.id, :role => f[1], :team_id => @team.id })
+	         else
+	             @team.class_peoples << ClassPeople.update(f[2],{ :person_id => f[0], :classroom_id => classroom.id, :role => f[1], :team_id => @team.id })
+	         end
+	      end
      end
      redirect resource(:teams)
+  
   end
   
   private
