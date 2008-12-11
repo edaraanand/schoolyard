@@ -23,7 +23,7 @@
       
        <ul>
            <li>
-               <%= text_field  :first_name,  :label => "Your Name", :class => "short " %>
+               <%= text_field  :first_name,  :label => "Your Name", :class => "short" %>
                <%= text_field  :last_name, :class => "short apart" %>
 	         </li>
            <li>
@@ -35,7 +35,7 @@
         <%= fields_for @registration do %>
               <ul>
                   <li>
-                     <%= text_field  :first_name,  :label => "Name", :class => "short " %>
+                     <%= text_field  :first_name,  :label => "Name", :class => "short" %>
                      <%= text_field  :last_name, :class => "short apart" %>
 	                <li>
                   <li>
@@ -233,6 +233,8 @@
     $j("#DOB2").datepicker();
      $j("#DOB3").datepicker();
       $j("#DOB4").datepicker();
+      
+      
  
 
 </script>
