@@ -7,11 +7,10 @@ class HomeWorks < Application
      if params[:classroom_id].nil?
         @h_works = HomeWork.find(:all)
      else
-        puts "Eshwar"
         @classroom = Classroom.find_by_class_name(params[:classroom_id])
         @home_works = @classroom.home_works.find(:all)
      end
-     @error = "No Messages Yet"
+     @error = "No Homeworks Yet"
      render
   end
   
