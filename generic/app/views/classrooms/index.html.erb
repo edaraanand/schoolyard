@@ -13,10 +13,24 @@
     </ul>
     
   </div>
-
-  <%= link_to "Edit",  resource(classroom, :edit), :class=> "edit-btn" %>
-  <%= link_to "Delete", resource(classroom, :delete), :class=> "delete-btn" %>
-  <div class="clear dashed separate"></div>
+  
+     <%= link_to "Edit",  resource(classroom, :edit), :class=> "edit-btn" %>
+     <%#= link_to "Delete", resource(classroom, :delete), :class=> "delete-btn" %>
+     <a rel="facebox" href="#class" class="delete-btn"> Delete</a>
+   
+      <div class="clear dashed separate"></div>
+        
   <% end %>
+
 </div>
+     <div id="class" style="display:none;">
+          <h4> Are you sure u want to delete the classroom </h4>
+          <%= link_to "Delete", resource(classroom, :delete), :class=> "delete-btn" %>
+         
+    </div>
+
 <% end %>
+
+
+
+
