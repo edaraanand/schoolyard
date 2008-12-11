@@ -1,6 +1,6 @@
 set :application, "schoolapp"
 set :scm, "git"
-set :repository,  "git@github.com:bjbolz/schoolapp.git"
+set :repository,  "git@github.com:eshwardeep/schoolapp.git"
 set :revision, "HEAD"
 set :use_sudo, false
 set :scm_passphrase, 'eshwar'
@@ -11,8 +11,8 @@ default_run_options[:pty] = true
 set :ssh_options, { :forward_agent => true }
 #set :user, 'deployer'
 
-set :domain,   "niket@beta.insightmethods.com"
-set :deploy_to, "/home/niket/#{application}"
+set :domain,   "eshwar@beta.insightmethods.com"
+set :deploy_to,  "/home/eshwar/schoolapp"
 set :adapter, 'mongrel' # or 'thin' 
 set :start_port, 7001
 set :processes, 1
