@@ -1,7 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
-<head>
-  <title>Catholic school</title>
+<head> <% @school = School.find(:first) %>
+<% unless @school.nil? %>
+<title><%= @school.school_name %></title>
+<% end %>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
   <link rel="stylesheet" href="/stylesheets/ui.datepicker.css" type="text/css" media="screen" charset="utf-8" />
@@ -21,13 +23,15 @@
 </head>
 <body class="fixed-width">
   <div id="page-wrap"><!-- Wraps everything -->
-    <div id="header"><!--The Header -->
-      <h1><%= link_to "Catholic School Department", url(:schools) %></h1>
+  <div id="header"><!--The Header --><% @school = School.find(:first) %>
+   <% unless @school.nil? %>
+      <h1><%= link_to "#{@school.school_name}", url(:schools) %></h1>
+   <% end %>
       <div id="user-cp"><!--User Control Panel -->
        <p class="welcome">Welcome <em><%= session.user.first_name %></em></p>
         <ul>
         <li class="first"><%= link_to "My Account", url(:staff_account) %></li>
-          <li><%= link_to "logout", url(:logout) %></li>
+          <li><%= link_to "Logout", url(:logout) %></li>
         </ul>
       </div>
       <div id="navbar"><!--The Main Navigation -->
@@ -66,7 +70,7 @@
                  <li><%= link_to "<span>Your Announcements</span>", url(:parents), :class=> "admin" %></li>
                  <% end %>
            <% end %>
-           <li><a href="#" class="help-contact"><span>help/contact</span></a></li>
+           <li><a href="#" class="help-contact"><span>Help/Contact</span></a></li>
         </ul>
         <div class="hrule clear"><hr /></div><!-- gives bottom border to the Navigation.-->
       </div><!--Navbar End-->
@@ -85,9 +89,7 @@
            <% @classrooms.each do |f| %>
                   <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
            <% end %>
-         <div class="save-cancel">
-             Or <%= link_to "Cancel" %>
-         </div>
+        
     </div> 
       
     <!--Right Sidebar to be inserted here-->  
