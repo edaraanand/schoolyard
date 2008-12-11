@@ -8,7 +8,6 @@ class Approvals < Application
   
   def index
      @announcements = Announcement.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ])
-     #@announcements = Announcement.find(:all, :conditions => ['label=?', 'parent'])
      render
   end
   
