@@ -1,7 +1,7 @@
 <h2 class="current-page">Parent Registrations </h2>
 
 
-<% unless @parents.empty? %>
+
 <%= form_for(@parent, :action => url(:parent_approvals), :method => 'get') do %>
 <span class="select-announce"><%= select :name => "approve_status", :collection => %W{PendingApproval Approved Rejected } %><%= submit ">>" %><span class="add-link"><%= link_to "All Registrations", url(:parent_approvals) %></span></span>
      
@@ -70,5 +70,5 @@
   </table>
 
 
-  <% end %> 
+
        

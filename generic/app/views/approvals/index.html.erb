@@ -3,6 +3,7 @@
   
 
     <% for announcement in @announcements %>
+    Announcement for : <%= announcement.access_name %>
            <div class="data-block long-block">
               <% if announcement.expiration.nil? %>
                   <div class="ddmmm-x">
