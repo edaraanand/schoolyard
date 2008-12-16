@@ -31,6 +31,9 @@
               <%= text_field  :first_name,  :label => "Student", :class => "short defaultText", :title => "First" %>
               <%= text_field  :last_name, :class => "short apart defaultText", :title => "Last" %>
 	       </li>
+         <li>
+             <%= text_field  :birth_date, :id => "birth_date", :label => "Birth Date", :class => "short" %>
+         </li>
          
 	   <%= fields_for @parent do %>  
 	       <li>
@@ -159,19 +162,19 @@
              
          <% end %>
          <br/>
-             
-	       <li> <%= text_field  :phone,  :label => "Phone" %>	</li>
-	       <li> <%= text_field  :address,  :label => "Address" %> </li>
-        
-            
-	   <% end =%>        
+      
+	   <% end =%>      
+     
+          <li> <%= text_field  :phone,  :label => "Phone" %>	</li>
+	        <li> <%= text_field  :address,  :label => "Address" %> </li>
+          
 	       <li>
 	          <input type = 'button' value = 'Preview' onclick="preview();return false;" />
 	          <%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %>
 	       </li>
-	  
-      </ul>
-    
+	 
+        
+         </ul> 
    <% end =%>
 </fieldset>
  
@@ -258,6 +261,7 @@ function ClearAll()
     
 }
 
+  $j("#birth_date").datepicker();
   
 </script>
    

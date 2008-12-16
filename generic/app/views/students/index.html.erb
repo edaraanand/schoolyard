@@ -4,20 +4,14 @@
     <thead>
       <th>Last Name</th>
       <th>First Name</th>
-      <th>Email</th>
-      <th>Address</th>
-      <th>Phone</th>
+      <th>Contact Number</th>
     </thead>
     <tbody>
       <% for student in @students %>
         <tr>
           <td><%= link_to "#{student.last_name}", resource(student, :edit) %> </td>
           <td><%= student.first_name %></td>
-          <% student.parents.each do |f| %>
-               <td><%= f.email %></td>
-               <td><%= f.address %></td>
-               <td><%= f.phone %></td>
-          <% end %>
+          <td><%= student.phone %></td>
         </tr>
       <% end %>
     </tbody>

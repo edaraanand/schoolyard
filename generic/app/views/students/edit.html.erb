@@ -30,6 +30,10 @@
                   <%= text_field  :first_name,:class=>"short",  :label => "Student" %>
                   <%= text_field  :last_name, :class=>"short apart"  %>
 	            </li>
+              <li>
+                  <%= text_field  :birth_date, :id => "birth_date", :label => "Birth Date", :class => "short" %>
+              </li>
+              
 	         <% for parent in @student.parents %>
 	              <li>     
                     <%= text_field  :name => 'parent[first_name][]', :class=>"short", :label => "Parents/Guardian", :value => "#{parent.first_name}" %>
@@ -171,8 +175,8 @@
                <% end %>
            
            
-        <li><%= text_field :name => 'parent[phone][]', :label => "Phone", :value => "#{@parent.phone}" %></li>
-        <li><%= text_field :name => 'parent[address][]', :label => "Address", :value => "#{@parent.address}" %></li>
+               <li><%= text_field :phone, :label => "Phone" %></li>
+               <li><%= text_field :address, :label => "Address" %></li>
 	    
         <div class="save-cancel">		 
 	          <input type = 'button' value = 'Preview' onclick="preview();return false;" />
@@ -217,4 +221,7 @@
    window.open('/students/preview/-/?' + s);
  }
 
+ $j("#birth_date").datepicker();
+ 
+ 
 </script>
