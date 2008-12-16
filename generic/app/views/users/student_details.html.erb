@@ -1,0 +1,22 @@
+<fieldset>
+  
+  <h2 class="current-page">Student Details 
+ 
+     <%= link_to "Edit", url(:student_edit), :class=> "edit-btn" %>  </h2>
+  
+    <% @students.each do |f| %>
+    
+      <ul>
+          <li>Name: <%= f.name %></li>
+          <% f.classrooms.each do |r| %>
+             <li>Current Class: <%= r.class_name %></li>
+          <% end %>
+          <li>Birth month & Year: <%= f.birth_date.strftime("%b, %Y") %></li>
+          <li>Contact Number: <%= f.phone %></li>
+          <li>Address: <%= f.address %></li>
+      </ul>
+     
+    <% end %>
+    
+    
+</fieldset>
