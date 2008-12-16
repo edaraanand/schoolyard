@@ -29,8 +29,12 @@
    <% end %>
       <div id="user-cp"><!--User Control Panel -->
        <p class="welcome">Welcome <em><%= session.user.first_name %></em></p>
-        <ul>
-          <li class="first"><a href="#">My Account</a></li>
+        <ul> <% @access_rights = session.user.access_peoples  %>
+         <% if @access_rights.length == 0 %>
+             <li class="first"><%= link_to "My Account", url(:parent_account) %></li>
+         <% else %>
+             <li class="first"><%= link_to "My Account", url(:staff_account) %></li>
+         <% end %>
           <li><%= link_to "Logout", url(:logout) %></li>
         </ul>
       </div>
@@ -76,10 +80,17 @@
     </div><!--Header End -->
        <div id="sidebar">
       <ul id="menu"><!-- Nested Lists -->
-       
-        <li><%= link_to "My Profile", url(:staff_account) %></li>
-        <li><%= link_to "Alert Settings", url(:alerts) %></li>
-
+            <% @access_rights = session.user.access_peoples  %>
+         <% if @access_rights.length == 0 %>
+             <li><%= link_to "My Profile", url(:parent_account) %></li>
+             <li><%= link_to "Alert Settings", url(:alerts) %></li>
+             <li><%= link_to "Student Details", url(:student_details) %></li>
+             <li><%= link_to "Other Family Members", url(:parent_account, :label => "other") %></li>
+         <% else %>
+              <li><%= link_to "My Profile", url(:staff_account) %></li>
+              <li><%= link_to "Alert Settings", url(:alerts) %></li>
+         <% end %>
+  
       </ul>
        
         
