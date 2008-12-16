@@ -88,28 +88,35 @@ class Approvals < Application
              flash[:error] = "Please select the student and classroom"
              redirect url(:approval_review, :id => @parent)
           else
-             params[:student_not_found].each do |f|
-                 params[:class_not_found].each do |c|
-                     @st = f.split
-                     @student = Student.find(:first, :conditions => [" first_name in (?) AND last_name in (?)", @st, @st ] )
-                     puts @student.inspect
-                     @class = Classroom.find_by_class_name("#{c}")
-                     @studs = Student.find(:all, :joins => :studies, :conditions => [" first_name in (?) AND last_name in (?) AND studies.classroom_id = ?" , @st, @st, @class.id ] )
-                     @guardian = Guardian.find_by_student_id(@student.id)
-                     if @guardian.nil?
-                        Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
-                     else
-                        Guardian.update(@guardian.id, {:student_id => @student.id, :parent_id => @parent.id })
-                     end
-                 end
+             unless params[:student_not_found].nil?
+               params[:student_not_found].each do |f|
+                  params[:class_not_found].each do |c|
+                    @st = f.split
+                    @student = Student.find(:first, :conditions => [" first_name in (?) AND last_name in (?)", @st, @st ] )
+                    @class = Classroom.find_by_class_name("#{c}")
+                    @studs = Student.find(:all, :joins => :studies, :conditions => [" first_name in (?) AND last_name in (?) AND studies.classroom_id = ?" , @st, @st, @class.id ] )
+                    @guardian = Guardian.find_by_student_id(@student.id)
+                    if @guardian.nil?
+                       Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
+                    else
+                       Guardian.update(@guardian.id, {:student_id => @student.id, :parent_id => @parent.id })
+                    end
+                  end
+               end
              end
-             @parent.approved = 1
+             unless params[:student_found].nil?
+                @registrations.each do |f|
+                    @stud = Student.find(:first, :conditions => ["first_name = ? and last_name = ?", "#{f.first_name}", "#{f.last_name}" ])
+                    Guardian.create({:student_id => @stud.id, :parent_id => @parent.id })
+                end
+             end  
+             @parent.approved = 1    
              @parent.save
              @parent.send_password_approve
              redirect url(:parent_approvals)
           end
+          
      else
-       raise @parent.inspect
         @parent.approved = 3
         @parent.save
         Guardian.delete_all(["parent_id = ?", @parent.id])
