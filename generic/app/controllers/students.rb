@@ -51,11 +51,11 @@ class Students < Application
 	                              @parent.save
                                 Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
 	                              Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })	
-		                            @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2], :phone => @parent.phone, :address => @parent.address })
+		                            @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
 		                            Guardian.create({:student_id => @student.id, :parent_id => @p.id })
-                                @p3 = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3], :phone => @parent.phone, :address => @parent.address })
+                                @p3 = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                                 Guardian.create({:student_id => @student.id, :parent_id => @p3.id })
-                                @p4 = Parent.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4], :phone => @parent.phone, :address => @parent.address })
+                                @p4 = Parent.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
                                 Guardian.create({:student_id => @student.id, :parent_id => @p4.id })
                                 redirect resource(:students)
                               else
@@ -63,11 +63,11 @@ class Students < Application
                                 @student.save
 	                              Guardian.create({:student_id => @student.id, :parent_id => @sp.id })
 	                              Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })	
-		                            @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2], :phone => @parent.phone, :address => @parent.address })
+		                            @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
 		                            Guardian.create({:student_id => @student.id, :parent_id => @p.id })
-                                @p3 = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3], :phone => @parent.phone, :address => @parent.address })
+                                @p3 = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                                 Guardian.create({:student_id => @student.id, :parent_id => @p3.id })
-                                @p4 = Parent.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4], :phone => @parent.phone, :address => @parent.address })
+                                @p4 = Parent.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
                                 Guardian.create({:student_id => @student.id, :parent_id => @p4.id })
                                 redirect resource(:students)
                               end  
@@ -93,9 +93,9 @@ class Students < Application
 	                             @parent.save
                                Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
 	                             Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })	
-		                           @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2], :phone => @parent.phone, :address => @parent.address })
+		                           @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
 		                           Guardian.create({:student_id => @student.id, :parent_id => @p.id })
-                               @p3 = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3], :phone => @parent.phone, :address => @parent.address })
+                               @p3 = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                                Guardian.create({:student_id => @student.id, :parent_id => @p3.id })
                                redirect resource(:students)
                              else
@@ -103,9 +103,9 @@ class Students < Application
                                @student.save
 	                             Guardian.create({:student_id => @student.id, :parent_id => @sp.id })
 	                             Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })	
-		                           @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2], :phone => @parent.phone, :address => @parent.address })
+		                           @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
 		                           Guardian.create({:student_id => @student.id, :parent_id => @p.id })
-                               @p3 = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3], :phone => @parent.phone, :address => @parent.address })
+                               @p3 = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                                Guardian.create({:student_id => @student.id, :parent_id => @p3.id })
                                redirect resource(:students)
                              end
@@ -126,7 +126,7 @@ class Students < Application
 	                      @parent.save
                         Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
 	                      Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })	
-		                    @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2], :phone => @parent.phone, :address => @parent.address })
+		                    @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
 		                    Guardian.create({:student_id => @student.id, :parent_id => @p.id })
                         redirect resource(:students)
                       else
@@ -134,7 +134,7 @@ class Students < Application
                         @student.save
 	                      Guardian.create({:student_id => @student.id, :parent_id => @sp.id })
 	                      Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })	
-		                    @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2], :phone => @parent.phone, :address => @parent.address })
+		                    @p = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
 		                    Guardian.create({:student_id => @student.id, :parent_id => @p.id })
                         redirect resource(:students)
                       end
@@ -161,7 +161,6 @@ class Students < Application
   def edit
      @student = Student.find(params[:id])
      @class_rooms = Classroom.find(:all)
-     @parent = @student.parents.find(:first)
      @sp = @student.parents
      render
   end
@@ -169,9 +168,6 @@ class Students < Application
   def update
      @student = Student.find(params[:id])
      @class_rooms = Classroom.find(:all)
-     phone = params[:parent][:phone]
-     address = params[:parent][:address]
-     @parent = @student.parents.find(:first)
      @sp = @student.parents
      @study_id = Study.find_by_student_id(@student.id)
      parent_id = @sp.collect{|x| x.id }
@@ -185,11 +181,11 @@ class Students < Application
                     if( ( (params[:f_name_parent3] != "") && (params[:l_name_parent3] != "") ) && (params[:email_parent3] != "") )
                          if ( ( (params[:f_name_parent4] != "") || (params[:l_name_parent4] != "") ) || (params[:email_parent4] != "") )
                               if ( ( (params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") ) && (params[:email_parent4] != "") )
-                                   @a = Parent.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4], :phone => "#{phone}", :address => "#{address}" })
+                                   @a = Parent.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
                                    Guardian.create({:student_id => @student.id, :parent_id => @a.id })
-                                   @b = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3], :phone => "#{phone}", :address => "#{address}" })
+                                   @b = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                                    Guardian.create({:student_id => @student.id, :parent_id => @b.id })
-                                   @c = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2], :phone => "#{phone}", :address => "#{address}" })
+                                   @c = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
                                    Guardian.create({:student_id => @student.id, :parent_id => @c.id })
                                    redirect resource(:students)
                               else
@@ -206,9 +202,9 @@ class Students < Application
                                  render :edit
                               end
                          else
-                            @b = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3], :phone => "#{phone}", :address => "#{address}" })
+                            @b = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                             Guardian.create({:student_id => @student.id, :parent_id => @b.id })
-                            @c = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2], :phone => "#{phone}", :address => "#{address}" })
+                            @c = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
                             Guardian.create({:student_id => @student.id, :parent_id => @c.id })
                             redirect resource(:students)
                          end
@@ -223,7 +219,7 @@ class Students < Application
                        render :edit
                     end
                else
-                   @c = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2], :phone => "#{phone}", :address => "#{address}" })
+                   @c = Parent.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
                    Guardian.create({:student_id => @student.id, :parent_id => @c.id })
                    redirect resource(:students)
                end
@@ -236,7 +232,7 @@ class Students < Application
            end
        else
            sp.each do |f|
-              Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2], :phone => "#{phone}", :address => "#{address}" } )
+              Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
            end
            redirect resource(:students)
        end
@@ -245,9 +241,9 @@ class Students < Application
                if( ( (params[:f_name_parent3] != "") && (params[:l_name_parent3] != "") ) && (params[:email_parent3] != "") )
                       if ( ( (params[:f_name_parent4] != "") || (params[:l_name_parent4] != "") ) || (params[:email_parent4] != "") )
                             if ( ( (params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") ) && (params[:email_parent4] != "") )
-                                   @a = Parent.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4], :phone => "#{phone}", :address => "#{address}" })
+                                   @a = Parent.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
                                    Guardian.create({:student_id => @student.id, :parent_id => @a.id })
-                                   @b = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3], :phone => "#{phone}", :address => "#{address}" })
+                                   @b = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                                    Guardian.create({:student_id => @student.id, :parent_id => @b.id })
                                    redirect resource(:students)
                             else
@@ -261,7 +257,7 @@ class Students < Application
                                  render :edit
                             end
                       else
-                         @b = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3], :phone => "#{phone}", :address => "#{address}" })
+                         @b = Parent.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                          Guardian.create({:student_id => @student.id, :parent_id => @b.id })
                          redirect resource(:students)
                       end
@@ -274,14 +270,14 @@ class Students < Application
                end
          else
              sp.each do |f|
-                Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2], :phone => "#{phone}", :address => "#{address}" } )
+                Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
              end
              redirect resource(:students)
          end
     elsif @sp.length == 3
           if ( ( (params[:f_name_parent4] != "") || (params[:l_name_parent4] != "") ) || (params[:email_parent4] != "") )
                 if ( ( (params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") ) && (params[:email_parent4] != "") )
-                     @c = Parent.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4], :phone => "#{phone}", :address => "#{address}" })
+                     @c = Parent.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
                      Guardian.create({:student_id => @student.id, :parent_id => @c.id })
                      redirect resource(:students)
                 else
@@ -293,13 +289,13 @@ class Students < Application
                 end
           else
              sp.each do |f|
-                Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2], :phone => "#{phone}", :address => "#{address}" } )
+                Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
              end
              redirect resource(:students)
           end
      elsif @sp.length == 4
           sp.each do |f|
-                Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2], :phone => "#{phone}", :address => "#{address}" } )
+                Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
           end
           redirect resource(:students)
      else
