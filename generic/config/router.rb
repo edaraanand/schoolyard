@@ -75,10 +75,16 @@ authenticate do
   match("/approval_review").to(:controller => 'approvals', :action => 'approval_review').name(:approval_review)
   match("/parent_grant").to(:controller => 'approvals', :action => 'parent_grant').name(:parent_grant)
   match("/principal_articles").to(:controller => 'homes', :action => 'principal_articles').name(:principal_articles)
-  #match("/class_calendar").to(:controller => 'classrooms', :action => 'class_calendar').name(:class_calendar)
   match("/class_details").to(:controller => 'classrooms', :action => 'class_details').name(:class_details)
   match("/form_files").to(:controller => 'forms', :action => 'form_files').name(:form_files)
-  
+  match("/parent_account").to(:controller => 'users', :action => 'parent_account').name(:parent_account)
+  match("/parent_password").to(:controller => 'users', :action => 'parent_password').name(:parent_password)
+  match("/parent_password_change").to(:controller => 'users', :action => 'parent_password_change').name(:parent_password_change)
+  match("/parent_account_edit").to(:controller => 'users', :action => 'parent_account_edit').name(:parent_account_edit)
+  match("/parent_update").to(:controller => 'users', :action => 'parent_update').name(:parent_update)
+  match("/student_details").to(:controller => 'users', :action => 'student_details').name(:student_details)
+  match("/student_edit").to(:controller => 'users', :action => 'student_edit').name(:student_edit)
+  match("/student_update").to(:controller => 'users', :action => 'student_update').name(:student_update)
 end
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
