@@ -1,5 +1,5 @@
 class Alerts < Application
-  layout 'admin_account'
+  layout 'account'
   before :ensure_authenticated
   before :find_user
   
