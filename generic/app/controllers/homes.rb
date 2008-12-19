@@ -20,6 +20,9 @@ class Homes < Application
     render
   end
  
+  def help
+    render :layout => 'help'
+  end
   
 end
 

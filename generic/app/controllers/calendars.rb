@@ -1,5 +1,9 @@
 class Calendars < Application
- layout 'default'
+  
+  layout 'default'
+  before :ensure_authenticated
+  before :access_rights, :exclude => [:events]
+  before :classrooms, :only => [:events]
   
   def index
      @calendars = Calendar.find(:all)
@@ -52,6 +56,37 @@ class Calendars < Application
       redirect resource(:calendars)
   end
   
+  def events
+     @cls = Calendar.find(:all, :conditions => ["class_name = ?", params[:class_name] ])
+     if params[:class_name] == "All Events"
+        @calendars = Calendar.find(:all)
+     end
+     if params[:class_name].nil?
+        @cals = Calendar.find(:all)
+     end
+     render :layout => 'home'
+  end
   
+  private
+  
+  def classrooms
+      @class = Classroom.find(:all)
+      room = @class.collect{|x| x.class_name }
+      @classrooms = room.insert(0, "All Events")
+  end
+   
+  def access_rights
+     have_access = false
+     @view = Access.find_by_name('view_all')
+     @ann = Access.find_by_name('calendar')
+     @access_people = session.user.access_peoples.delete_if{|x| x.access_id == @view.id }
+     @access_people.each do |f|
+       have_access = (f.all == true) || (f.access_id == @ann.id)
+       break if have_access
+     end
+     unless have_access
+       redirect resource(:homes)
+     end
+  end  
   
 end
