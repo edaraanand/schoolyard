@@ -1,0 +1,36 @@
+<% if params[:label] == "students" %>
+
+      <div id="fullpage">
+           <h2 class="current-page">Current Students > <%= @student.name %></h2>
+           <%= link_to "< Back to Current Students List", url(:directory) %>
+     
+           <h2><%= @student.name %></h2>
+           <% @parents.each do |f| %>
+                <ul>
+                     <li>Parents/Guardians : <%= f.name %> ( <%= f.email %> )</li>
+                </ul>
+           <% end %>
+            <ul>
+                <li>Address : <%= @student.address %></li>
+                <li>Contact Number : <%= @student.phone %></li>
+            </ul>
+           <div class="hrule clear"><hr /></div>
+       </div>
+    
+<% else %>
+  
+       <div id="fullpage">
+       <h2 class="current-page">School Staff > <%= @staff.name %></h2>
+            <%= link_to "< Back to School Staff List", url(:staff) %>
+     
+            <h2><%= @staff.name %></h2>    </br>
+            <ul>
+                <li>Email : <%= @staff.name %> </li>
+                <li>Contact Number : <%= @staff.phone %> </li>
+                <li> <%= @staff.person_bio %></li>
+            </ul>
+            <div class="hrule clear"><hr /></div>
+       </div>
+            
+<% end %>
+

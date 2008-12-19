@@ -1,0 +1,71 @@
+
+
+    <%= form_for(@student, :action => url(:directory), :method => 'get', :id => 'student') do %>
+        <span class="select-announce"><%= select :name => "class_name", :collection => @classrooms %><%= submit ">>" %></span>
+    <% end =%> 
+    
+    <% if params[:class_name].nil? %>
+          <h2 class="current-page">Students </h2>
+          <% unless @stds.empty? %>
+          <table id="mytable">
+               <thead>
+                   <th>Last Name</th>
+                   <th>First Name</th>
+                   <th>Contact Number</th>
+               </thead>
+               <tbody>
+                    <% for student in @stds %>
+                         <tr>
+                             <td><%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %> </td>
+                             <td><%= student.first_name %></td>
+                             <td><%= student.phone %></td>
+                         </tr>
+                     <% end %>
+                </tbody>
+           </table>
+        <% end %>
+    <% elsif params[:class_name] == "All Students" %>
+         <h2 class="current-page">Students </h2>
+          <% unless @students.empty? %>
+          <table id="mytable">
+               <thead>
+                   <th>Last Name</th>
+                   <th>First Name</th>
+                   <th>Contact Number</th>
+               </thead>
+               <tbody>
+                    <% for student in @students %>
+                         <tr>
+                             <td><%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %> </td>
+                             <td><%= student.first_name %></td>
+                             <td><%= student.phone %></td>
+                         </tr>
+                     <% end %>
+                </tbody>
+           </table>
+        <% end %>
+    <% else %>
+          <h2 class="current-page">Students </h2>
+          <% unless @studs.empty? %>
+          <table id="mytable">
+               <thead>
+                   <th>Last Name</th>
+                   <th>First Name</th>
+                   <th>Contact Number</th>
+               </thead>
+               <tbody>
+                    <% for student in @studs %>
+                         <tr>
+                             <td><%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %> </td>
+                             <td><%= student.first_name %></td>
+                             <td><%= student.phone %></td>
+                         </tr>
+                     <% end %>
+                </tbody>
+           </table>
+        <% end %>
+     <% end %>
+
+
+
+

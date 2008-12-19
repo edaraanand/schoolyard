@@ -1,0 +1,90 @@
+ 
+  
+   
+ <%= form_for(@student, :action => url(:staff), :method => 'get', :id => 'student') do %>
+  
+      
+    <span class="select-announce"><%= select :name => "class_name", :collection => @teachers %><%= submit ">>" %></span>
+    
+ <% end =%> 
+ 
+   
+<% if params[:class_name].nil? %>
+    
+         <% unless @stf.empty? %>
+            <h2 class="current-page">School Staff</h2>
+            <table id="mytable">
+              <thead> 
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Role</th>
+                    <th>Contact Number</th>
+             </thead>
+              <% for person in @stf %>
+                   <tr>
+                   <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
+                       <td><%= person.first_name %></td>
+                       <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
+                       <% s.each do |f| %>
+                          <td><%= f.role.titleize %>-<%= f.classroom.class_name %></td> 
+                       <% end %>
+      	               <td><%= person.phone %></td>
+                   </tr>  
+              <% end %>
+            </table>
+         <% end %>
+       
+<% elsif params[:class_name] == "All Staff" %>
+
+         <% unless @staff.empty? %>
+            <h2 class="current-page">School Staff</h2>
+            <table id="mytable">
+              <thead> 
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Role</th>
+                    <th>Contact Number</th>
+                    
+              </thead>
+              <% for person in @staff %>
+                   <tr>
+                   <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
+                       <td><%= person.first_name %></td>
+                       <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
+                       <% s.each do |f| %>
+                          <td><%= f.role.titleize %>-<%= f.classroom.class_name %></td> 
+                       <% end %>
+      	               <td><%= person.phone %></td>
+                       
+                   </tr>  
+              <% end %>
+            </table>
+         <% end %>
+       
+<% else %>
+          
+        <% unless @class_peoples.empty? %>
+            <h2 class="current-page">School Staff</h2>
+            <table id="mytable">
+              <thead> 
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Role</th>
+                    <th>Contact Number</th>
+              </thead>
+                <% @class_peoples.each do |f| %>
+                   <tr>
+                       <td class="click-block"><%= link_to "#{f.person.last_name}", url(:student, f.person.id, :label => "staff") %></td>
+                       <td><%= f.person.first_name %></td>
+      	               <td><%= f.role.titleize %>-<%= f.classroom.class_name %></td>
+                       <td><%= f.person.phone %></td>
+                   </tr>  
+              <% end %>
+            </table>
+        <% end %>
+
+<% end %>
+
+
+
+
