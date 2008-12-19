@@ -44,8 +44,8 @@
           <li><a rel="facebox" href="#info"><span>Classrooms</span></a></li>
 		      <li class="current"><li><%= link_to "<span>Sports</span>" %></li>
           <li><%= link_to "<span>Forms</span>", url(:form_files) %></li>
-          <li><%= link_to "<span>Directory</span>" %></li>
-          <li><%= link_to "<span>Events</span>" %></li>
+          <li><%= link_to "<span>Directory</span>", url(:directory) %></li>
+          <li><%= link_to "<span>Events</span>", url(:events) %></li>
           <% @view = Access.find_by_name('view_all') %>
           <% @accesses = Access.find(:all).delete_if{|x| x.name == "view_all" } %>
              <% @a_p = session.user.access_peoples.delete_if{|x| x.access_id == @view.id } %>
@@ -74,11 +74,15 @@
                  <li><%= link_to "<span>Your Announcements</span>", url(:parents), :class=> "admin" %></li>
                  <% end %>
            <% end %>
-           <li><a href="#" class="help-contact"><span>Help/Contact</span></a></li>
+           <li><%= link_to "<span>Help/Contact</span>", url(:help) %></li>
+          
         </ul>
         <div class="hrule clear"><hr /></div><!-- gives bottom border to the Navigation.-->
       </div><!--Navbar End-->
     </div><!--Header End -->
+      
+   
+    
       <div id="content-wrap"><!--Wraps The content Area-->
       <div class="hrule clear hidden "><hr /></div>
       <div id="content"><!--Content Area Starts here-->

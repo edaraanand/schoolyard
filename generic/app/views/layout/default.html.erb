@@ -44,8 +44,8 @@
           <li><a rel="facebox" href="#info"><span>Classrooms</span></a></li>
           <li class="current"><li><%= link_to "<span>Sports</span>" %></li>
           <li><%= link_to "<span>Forms</span>", url(:form_files) %></li>
-          <li><%= link_to "<span>Directory</span>" %></li>
-          <li><%= link_to "<span>Events</span>" %></li>
+          <li><%= link_to "<span>Directory</span>", url(:directory) %></li>
+          <li><%= link_to "<span>Events</span>", url(:events) %></li>
           <% @view = Access.find_by_name('view_all') %>
           <% @accesses = Access.find(:all).delete_if{|x| x.name == "view_all" } %>
              <% @a_p = session.user.access_peoples.delete_if{|x| x.access_id == @view.id } %>
@@ -73,7 +73,7 @@
                  <li><%= link_to "<span>Your Announcements</span>", url(:parents), :class=> "admin" %></li>
                  <% end %>
            <% end %>
-           <li><a href="#" class="help-contact"><span>Help/Contact</span></a></li>
+           <li><%= link_to "<span>Help/Contact</span>", url(:help) %></li>
         </ul>
         <div class="hrule clear"><hr /></div><!-- gives bottom border to the Navigation.-->
       </div><!--Navbar End-->
@@ -95,7 +95,7 @@
           <% @announcements = Announcement.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ]) %>
         <li>Content<ul>
           <li class="count"><%= link_to_if((right = "approve_announcement"), "Pending Approvals", url(:approvals) ) %><span><b><%= @announcements.length %></b></span></li>
-        <li><%= link_to_if((right = "from_principal"), "From the principal", url(:from_principals)) %></li>
+        <li><%= link_to_if((right = "from_principal"), "From the Principal", url(:from_principals)) %></li>
       		<li><%= link_to_if((right = "announcements"), "Announcements", url(:announcements)) %></li>
       		<li><%= link_to_if( (right = "welcome_messages"), "Welcome Messages", url(:welcome_messages) ) %></li>
       	  <li><%= link_to_if((right = "calendar"), "Calendars", url(:calendars) )  %></li>
