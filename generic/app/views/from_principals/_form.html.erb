@@ -6,12 +6,14 @@
   </ul>
 </fieldset>
 <div class="save-cancel">
-  <input type = 'button' value = 'Preview' onclick="preview();return false;" /> <%= submit "Publish" %> Or <%= link_to "Cancel", url(:from_principals) %>
+  	<input type = 'button' value = 'Preview' onclick="preview();return false;" /><%= submit "Publish" %> Or <%= link_to "Cancel", url(:from_principals) %>
 </div>
+
 
 <script type= "text/javascript">
 
  function preview()
+ 
  {
    var s = $('announcement').serialize();
    window.open('/from_principals/preview/-/?' + s);
@@ -20,3 +22,5 @@
   $j("#expiration").datepicker({minDate:'today'});
 
 </script>
+
+  
