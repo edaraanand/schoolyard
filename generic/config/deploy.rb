@@ -11,16 +11,16 @@ default_run_options[:pty] = true
 set :ssh_options, { :forward_agent => true }
 #set :user, 'deployer'
 
-set :domain,   "eshwar@beta.insightmethods.com"
+set :domain,   "eshwar@schoolapp.insightmethods.com"
 set :deploy_to,  "/home/eshwar/schoolapp"
 set :adapter, 'mongrel' # or 'thin' 
 set :start_port, 7001
 set :processes, 1
 set :log_path, "#{shared_path}/log/production.log"
 
-role :app, "beta.insightmethods.com"
-role :web, "beta.insightmethods.com"
-role :db,  "beta.insightmethods.com", :primary => true
+role :app, "schoolapp.insightmethods.com"
+role :web, "schoolapp.insightmethods.com"
+role :db,  "schoolapp.insightmethods.com", :primary => true
 
 
 namespace :deploy do 
