@@ -85,6 +85,10 @@ authenticate do
   match("/student_details").to(:controller => 'users', :action => 'student_details').name(:student_details)
   match("/student_edit").to(:controller => 'users', :action => 'student_edit').name(:student_edit)
   match("/student_update").to(:controller => 'users', :action => 'student_update').name(:student_update)
+  match("/directory").to(:controller => 'students', :action => 'directory').name(:directory)
+  match("/staff").to(:controller => 'students', :action => 'staff').name(:staff)
+  match("/events").to(:controller => 'calendars', :action => 'events').name(:events)
+  match("/help").to(:controller => 'homes', :action => 'help').name(:help)
 end
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
