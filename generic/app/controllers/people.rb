@@ -97,6 +97,4 @@ class People < Application
   end
   
   
-    
-  
 end

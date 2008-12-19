@@ -1,6 +1,9 @@
 class Students < Application
   
   layout 'default'
+  before :access_rights, :exclude => [:directory, :show]
+  before :classrooms, :only => [:directory, :staff]
+  before :school_staff, :only => [:staff]
   
   def index 
      @students = Student.find(:all)
@@ -320,5 +323,73 @@ class Students < Application
    end
   
   
+   def directory
+      @class = Classroom.find_by_class_name(params[:class_name])
+      @studs = Student.find(:all, :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id] )
+      if params[:class_name] == "All Students"
+         @students = Student.find(:all)
+      end
+      if params[:class_name].nil?
+         @stds = Student.find(:all)
+      end
+      render :layout => 'directory'
+   end
+   
+   def show
+      if params[:label] == "students"
+        @student = Student.find(params[:id])
+        @parents = @student.parents
+      end
+      if params[:label] == "staff"
+        @staff = Staff.find(params[:id])
+      end
+      render :layout => 'directory'
+   end
+   
+   def staff
+       if params[:class_name] == "All Staff"
+          @staff = Staff.find(:all)
+       end
+       unless params[:class_name].nil?
+         unless params[:class_name] == "All Staff"
+           @class = Classroom.find_by_class_name(params[:class_name])
+           @class_peoples = @class.class_peoples.delete_if{ |x| x.team_id != nil }
+         end
+       end  
+      if params[:class_name].nil?
+         @stf = Staff.find(:all)
+      end    
+      
+      render :layout => 'directory'
+   end
+   
+   
+   private
+   
+   def classrooms
+      @class = Classroom.find(:all)
+      room = @class.collect{|x| x.class_name }
+      @classrooms = room.insert(0, "All Students")
+   end  
+   
+   def school_staff
+      @class = Classroom.find(:all)
+      room = @class.collect{|x| x.class_name }
+      @teachers = room.insert(0, "All Staff")
+   end
+   
+   def access_rights
+     have_access = false
+     @view = Access.find_by_name('view_all')
+     @ann = Access.find_by_name('manage_directory')
+     @access_people = session.user.access_peoples.delete_if{|x| x.access_id == @view.id }
+     @access_people.each do |f|
+       have_access = (f.all == true) || (f.access_id == @ann.id)
+       break if have_access
+     end
+     unless have_access
+       redirect resource(:homes)
+     end
+  end  
   
 end
