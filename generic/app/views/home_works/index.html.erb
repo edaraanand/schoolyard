@@ -4,7 +4,7 @@
    <%= form_for(@home_work, :action => resource(:home_works), :method => 'get', :id => 'home_work') do %>
        <span class="select-announce">
              <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name } %>
-             <%= submit ">>" %>
+             <%= submit "Go" %>
        <span class="add-link">
              <%= link_to "All Home Works", resource(:home_works) %>
        </span>
