@@ -8,6 +8,9 @@ class WelcomeMessages < Application
      if params[:access_name].nil?
       	@welcome = WelcomeMessage.find(:all)
      end
+     if params[:access_name] == "All Messages"
+       @all_messages = WelcomeMessage.find(:all)
+     end
      render
   end
   
@@ -76,7 +79,8 @@ class WelcomeMessages < Application
   def classrooms
      @class = Classroom.find(:all)
      room = @class.collect{|x| x.class_name }
-     @classrooms = room.insert(0, "HomePage")
+     @classrooms = room.insert(0, "All Messages")
+     @classrooms = room.insert(1, "HomePage")
   end
   
 end
