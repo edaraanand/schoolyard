@@ -12,6 +12,9 @@ class Announcements < Application
      if params[:access_name].nil?
        @announce = Announcement.find(:all, :conditions => ['label = ?', 'staff'])
      end
+     if params[:access_name] == "All Announcements"
+        @all_announcements = Announcement.find(:all, :conditions => ['label = ?', 'staff'])
+     end
      render
   end
   
@@ -69,7 +72,8 @@ class Announcements < Application
   def classrooms
      @class = Classroom.find(:all)
      room = @class.collect{|x| x.class_name }
-     @classrooms = room.insert(0, "HomePage")
+     @classrooms = room.insert(0, "All Announcements")
+     @classrooms = room.insert(1, "HomePage")
   end
   
   def access_rights
