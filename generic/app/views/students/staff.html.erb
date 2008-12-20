@@ -1,11 +1,12 @@
  
-  
-   
+ 
  <%= form_for(@student, :action => url(:staff), :method => 'get', :id => 'student') do %>
   
-      
-    <span class="select-announce"><%= select :name => "class_name", :collection => @teachers %><%= submit ">>" %></span>
-    
+     <% if params[:class_name].nil? %> 
+         <span class="select-announce"><%= select :name => "class_name", :collection => @teachers, :label => "View :"  %><%= submit "Go" %></span>
+     <% else %>
+         <span class="select-announce"><%= select :name => "class_name", :selected => params[:class_name], :collection => @teachers, :label => "View :"  %><%= submit "Go" %></span>
+     <% end %>
  <% end =%> 
  
    
