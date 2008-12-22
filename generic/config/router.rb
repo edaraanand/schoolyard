@@ -38,6 +38,7 @@ Merb::Router.prepare do
     match("/password_save").to(:controller => 'registrations', :action => 'password_save').name(:password_save)
     match("/new_password").to(:controller => 'registrations', :action => 'new_password').name(:new_password)
     match("/password_new").to(:controller => 'registrations', :action => 'password_new').name(:password_new)
+    match("/password_sent").to(:controller => 'registrations', :action => 'password_sent').name(:password_sent)
     match("/forgot_password").to(:controller => 'registrations', :action => 'forgot_password').name(:forgot_password)
     match("/get_password").to(:controller => 'registrations', :action => 'get_password').name(:get_password)
     match("/reset_password").to(:controller => 'registrations', :action => 'reset_password').name(:reset_password)
