@@ -225,14 +225,24 @@ class Registrations < Application
   end
   
   def get_password
-    if params[:email].nil?
-       flash[:error] = "You must enter a email to get new Password"
-       redirect url(:forgot_password)
+    if params[:email] == ""
+       flash[:error] = "Please Enter your Email"
+       render :forgot_password
     else
        @person = Person.find_by_email(params[:email])
-       @person.reset_password
-       redirect url(:login)
+       if @person.nil?
+          flash[:error1] = "You should enter correct Email that you have provided for the school"
+          render :forgot_password
+       else
+         @person.reset_password
+         redirect url(:password_sent, :id => @person.id)
+       end
     end
+  end
+
+  def password_sent
+     @person = Person.find(params[:id])
+     render
   end
   
   def reset_password
