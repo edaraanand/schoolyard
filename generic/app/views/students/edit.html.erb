@@ -16,7 +16,7 @@
 
 <h2 class="current-page">Students &gt; <span class="add-link">Edit</span></h2>
 <fieldset>
-    <%= form_for(@student, :action => resource(@student), :id => 'student') do %>
+<%= form_for(@student, :action => resource(@student), :id => 'student', :name => "studs", :onsubmit => "ClearAll()") do %>
 
 	        <ul>
               <li><label>Student for:</label> <select name = "classroom_id" id="classroom_person",>
@@ -48,8 +48,8 @@
                  <% if ((@fname2 != nil || @lname2 != nil ) || (@email2 != nil) ) %>  
                        <div id="parent2" style="display:block">
                            <li>
-                               <%= text_field  :name => 'f_name_parent2', :class => "short", :label => "Parents/Guardian", :value => "#{@fname2}" %>
-                               <%= text_field  :name => 'l_name_parent2', :class => "short apart", :value => "#{@lname2}" %>
+                               <%= text_field  :name => 'f_name_parent2', :id => "f_parent2", :class => "short", :label => "Parents/Guardian", :value => "#{@fname2}" %>
+                               <%= text_field  :name => 'l_name_parent2', :id => "l_parent2", :class => "short apart", :value => "#{@lname2}" %>
                            </li> 
                            <li>
                                <%= text_field  :name => 'email_parent2',  :label => "E-Mail", :value => "#{@email2}" %> 
@@ -75,8 +75,8 @@
                   <% else %>
                        <div id="parent2" style="display:none">
                             <li>
-                                <%= text_field  :name => 'f_name_parent2', :class => "short", :label => "Parents/Guardian" %>
-                                <%= text_field  :name => 'l_name_parent2', :class => "short apart" %>
+                            <%= text_field  :name => 'f_name_parent2', :id => "f_parent2", :class => "short defaultText", :label => "Parents/Guardian", :title => "First Name" %>
+                            <%= text_field  :name => 'l_name_parent2', :id => "l_parent2", :class => "short apart defaultText", :title => "Last Name" %>
                             </li> 
                             <li>
                                 <%= text_field  :name => 'email_parent2',  :label => "E-Mail" %> 
@@ -100,8 +100,8 @@
                  <% if ((@fname3 != nil || @lname3 != nil ) || (@email3 != nil) ) %>
                       <div id="parent3" style="display:block">
                           <li>
-                              <%= text_field  :name => 'f_name_parent3', :class => "short", :label => "Parents/Guardian", :value => "#{@fname3}" %>
-                              <%= text_field  :name => 'l_name_parent3', :class => "short apart", :value => "#{@lname3}" %>
+                              <%= text_field  :name => 'f_name_parent3', :id => "f_parent3", :class => "short", :label => "Parents/Guardian", :value => "#{@fname3}" %>
+                              <%= text_field  :name => 'l_name_parent3', :id => "l_parent3", :class => "short apart", :value => "#{@lname3}" %>
                           </li> 
                           <li>
                               <%= text_field  :name => 'email_parent3',  :label => "E-Mail", :value => "#{@email3}" %> 
@@ -127,8 +127,8 @@
                  <% else %>
                        <div id="parent3" style="display:none">
                           <li>
-                              <%= text_field  :name => 'f_name_parent3', :class => "short", :label => "Parents/Guardian" %>
-                              <%= text_field  :name => 'l_name_parent3', :class => "short apart" %>
+                          <%= text_field  :name => 'f_name_parent3', :id => "f_parent3", :class => "short defaultText", :title => "First Name", :label => "Parents/Guardian" %>
+                          <%= text_field  :name => 'l_name_parent3',  :id => "l_parent3", :class => "short apart defaultText", :title => "Last Name" %>
                           </li> 
                           <li>
                               <%= text_field  :name => 'email_parent3',  :label => "E-Mail" %> 
@@ -155,8 +155,8 @@
                  <% if ( ( (@fname4 != nil) || (@lname4 != nil) ) || (@email4 != nil) ) %>
                         <div id="parent4" style="display:block">
                              <li>
-                                 <%= text_field  :name => "f_name_parent4", :class => "short", :label => "Parents/Guardian", :value => "#{@fname4}" %>
-                                 <%= text_field  :name => "l_name_parent4", :class => "short apart", :value => "#{@lname4}" %>
+                             <%= text_field  :name => "f_name_parent4", :id => "f_parent4", :class => "short", :label => "Parents/Guardian", :value => "#{@fname4}" %>
+                             <%= text_field  :name => "l_name_parent4", :id => "l_parent4", :class => "short apart", :value => "#{@lname4}" %>
                              </li>
                              <li>
                                  <%= text_field  :name => "email_parent4",  :label => "E-Mail", :value => "#{@email4}" %> 
@@ -165,8 +165,8 @@
                <% else %>
                         <div id="parent4" style="display:none">
                              <li>
-                                 <%= text_field  :name => "f_name_parent4", :class => "short", :label => "Parents/Guardian" %>
-                                 <%= text_field  :name => "l_name_parent4", :class => "short apart" %>
+                             <%= text_field  :name => "f_name_parent4", :id => "f_parent4", :class => "short defaultText", :title => "First Name", :label => "Parents/Guardian" %>
+                             <%= text_field  :name => "l_name_parent4", :id => "l_parent4", :class => "short apart defaultText", :title => "Last Name" %>
                              </li>
                              <li>
                                  <%= text_field  :name => "email_parent4",  :label => "E-Mail" %> 
@@ -220,7 +220,67 @@
    var s = $('student').serialize();
    window.open('/students/preview/-/?' + s);
  }
+ 
+  $j(document).ready(function()
+{
+    $j(".defaultText").focus(function(srcc)
+    {
+        if ($j(this).val() == $j(this)[0].title)
+        {
+            $j(this).removeClass("defaultTextActive");
+            $j(this).val("");
+        }
+    });
+    
+    $j(".defaultText").blur(function()
+    {
+        if ($j(this).val() == "")
+        {
+            $j(this).addClass("defaultTextActive");
+            $j(this).val($j(this)[0].title);
+        }
+    });
+    
+    $j(".defaultText").blur();        
+});
 
+ function ClearAll()
+ {
+   var f_parent2 = document.getElementById('f_parent2')
+   var l_parent2 = document.getElementById('l_parent2')
+   
+   var f_parent3 = document.getElementById('f_parent3')
+   var l_parent3 = document.getElementById('l_parent3')
+   
+   var f_parent4 = document.getElementById('f_parent4')
+   var l_parent4 = document.getElementById('l_parent4')
+   
+    if ( f_parent2.value == f_parent2.title )
+    {
+        f_parent2.value = ""
+     }
+      if (l_parent2.value == l_parent2.title )
+    {
+        l_parent2.value = ""
+     }
+   
+    if (f_parent3.value == f_parent3.title) 
+   {
+      f_parent3.value = ""
+    }
+     if (l_parent3.value == l_parent3.title) 
+   {
+      l_parent3.value = ""
+    }
+     if (f_parent4.value == f_parent4.title) 
+   {
+      f_parent4.value = ""
+    }
+     if (l_parent4.value == l_parent4.title) 
+   {
+      l_parent4.value = ""
+    }
+ }
  $j("#birth_date").datepicker();
  
  
