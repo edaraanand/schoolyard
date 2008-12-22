@@ -67,6 +67,10 @@ class Approvals < Application
      if params[:approve_status].nil?
         @parents = Parent.find(:all, :conditions => ['approved = ?', 2] )
      end
+     if params[:approve_status] == "AllRegistrations"
+       @all_parents = Parent.find(:all)
+     end
+     @parents = Parent.find(:all)
      render
   end
   
@@ -81,6 +85,7 @@ class Approvals < Application
   end
   
   def parent_grant
+    #raise params.inspect
      @parent = Parent.find(params[:id])
      @registrations = Registration.find(:all, :conditions => ['parent_id = ?', @parent.id])
      if params[:approvetype] == "Approve & Grant Access"
@@ -91,6 +96,7 @@ class Approvals < Application
              unless params[:student_not_found].nil?
                params[:student_not_found].each do |f|
                   params[:class_not_found].each do |c|
+                    #raise "Naidu".inspect
                     @st = f.split
                     @student = Student.find(:first, :conditions => [" first_name in (?) AND last_name in (?)", @st, @st ] )
                     @class = Classroom.find_by_class_name("#{c}")
@@ -107,11 +113,17 @@ class Approvals < Application
              unless params[:student_found].nil?
                 @registrations.each do |f|
                     @stud = Student.find(:first, :conditions => ["first_name = ? and last_name = ?", "#{f.first_name}", "#{f.last_name}" ])
-                    Guardian.create({:student_id => @stud.id, :parent_id => @parent.id })
-                end
+                    @guardian = Guardian.find_by_student_id(@stud.id)
+                    if @guardian.nil?
+                        Guardian.create({:student_id => @stud.id, :parent_id => @parent.id })
+                    else
+                       Guardian.update(@guardian.id, {:student_id => @stud.id, :parent_id => @parent.id })
+                    end
+                 end
              end  
              @parent.approved = 1    
              @parent.save
+             #raise @parent.inspect
              @parent.send_password_approve
              redirect url(:parent_approvals)
           end
