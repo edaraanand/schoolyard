@@ -106,18 +106,10 @@ class Classrooms < Application
       @classroom = Classroom.find(params[:id])
       @calendars = Calendar.find(:all, :conditions => ['class_name = ?', @classroom.class_name])
       @home_works = @classroom.home_works.find(:all)
-      @announcements = Announcement.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
+      @announcements = Announcement.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true])
       @welcome_messages = WelcomeMessage.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
       render :layout => 'class_change', :id => @classroom.id
    end
-   
-   #def class_calendar
-      #@classroom = Classroom.find(params[:id])
-     # @calendar = Calendar.find(params[:id])
-      #@classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
-      #raise @classroom.inspect
-     # render :layout => 'class_change', :id => @classroom.id
-   #end
    
    private
    
