@@ -1,6 +1,8 @@
+ <%= error_messages_for @classroom %>
+
 <fieldset>
-  <%= error_messages_for @classroom %>
-  
+ 
+<h2 class="current-page"> Classrooms &gt; Add New </h2>
   
   <%= form_for(@classroom, :action => resource(:classrooms)) do %>
   <ul id="class_room">
@@ -22,9 +24,10 @@
                 </option>
              <% end %>
           </li>
-          <li><a href="#" onclick="add();return false;">Add More</a></li>
+          </ul>
+          <a href="#" onclick="add();return false;">Add More</a>
           
-    </ul>
+    
     <div class="save-cancel">
       <%= submit "Save" %> Or <%= link_to "Cancel", resource(:classrooms) %>
     </div>

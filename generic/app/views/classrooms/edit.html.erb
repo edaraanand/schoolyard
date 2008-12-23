@@ -41,9 +41,12 @@
       <% end %>
     </li>
 	<% end %>
-	  <li><a href="#" onclick="add();return false;">Add More</a></li>
-  
-  <%= submit "Save" %> Or <%= link_to "Cancel", url(:classrooms) %>
+   </ul>
+	  <a href="#" onclick="add();return false;">Add More</a>
+     
+     <div class="save-cancel">
+       <%= submit "Save" %> Or <%= link_to "Cancel", url(:classrooms) %>
+     </div>
   <% end =%>
 </fieldset>
 
