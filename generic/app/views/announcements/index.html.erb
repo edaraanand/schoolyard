@@ -25,8 +25,8 @@
 	          <span class="month"><%= a.expiration.strftime("%b") %></span>
 	       </div>
 	    <% end %>
-              <h3><%= a.title %></h3>
-              <p class="post-content"><%= a.content %></p>
+               <h3><%= link_to "#{a.title}", url(:announcement, a.id) %></h3>
+               <p class="post-content"><%= a.content %></p>
                <% if ( (a.approved) && (a.approve_announcement)) %>
                        <%= @message1 %>
                        <%= link_to "Edit", resource(a, :edit), :class=>"edit-btn" %>
@@ -56,7 +56,7 @@
 	          <span class="month"><%= a.expiration.strftime("%b") %></span>
 	       </div>
 	    <% end %>
-              <h3><%= a.title %></h3>
+               <h3><%= link_to "#{a.title}", url(:announcement, a.id) %></h3>
               <p class="post-content"><%= a.content %></p>
                <% if ( (a.approved) && (a.approve_announcement)) %>
                        <%= @message1 %>
@@ -88,7 +88,7 @@
                       <span class="month"><%= announcement.expiration.strftime("%b") %></span>
 	                 </div>
               <% end %>
-              <h3><%= announcement.title %></h3>
+              <h3><%= link_to "#{announcement.title}", url(:announcement, announcement.id) %></h3>
               <p class="post-content"><%= announcement.content %></p>
               <% if ( (announcement.approved) && (announcement.approve_announcement)) %>
                        <%= @message1 %>

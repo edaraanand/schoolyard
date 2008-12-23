@@ -40,6 +40,11 @@ class Announcements < Application
     render
   end
   
+  def show
+    @announcement = Announcement.find(params[:id])
+    render
+  end
+  
   def update 
      @announcement = Announcement.find(params[:id])
      if @announcement.update_attributes(params[:announcement])

@@ -1,0 +1,30 @@
+<div id="fullpage">
+  <h2 class="current-page">Announcement &gt; <%= @announcement.title %></h2>
+  <div class="data-block long-block">
+     <% if @announcement.expiration.nil? %>
+             <div class="ddmmm-x">
+	           </div>
+     <% else %>
+          <div class="ddmmm">
+              <span class="date"><%= @announcement.expiration.strftime("%d") %></span>
+	            <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
+	        </div>
+     <% end %>
+    <h3><%= @announcement.title %></h3>
+    <p><%= @announcement.content %></p>
+       <%= link_to "Edit", resource(@announcement, :edit), :class=>"edit-btn" %>
+       <%= link_to "Back to List", resource(:announcements) %>
+    <div class="hrule clear"><hr /></div>
+      
+     <%  if (@announcement.approved == false ) && (@announcement.approve_announcement == false) %>
+            Rejected By <%= @announcement.person.name %> 
+            <p> <%= @announcement.comments %></p>
+     <% end %>
+     
+     <%  if (@announcement.approved == true ) && (@announcement.approve_announcement == true) %>
+          Approved & PublishedBy <%= @announcement.person.name %> 
+            <p> <%= @announcement.comments %></p>
+     <% end %>
+   </div>
+</div>
+
