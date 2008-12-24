@@ -9,7 +9,7 @@
 <div class="save-cancel">
     <input type = 'button' value = 'Preview' onclick="preview();return false;" />
     <%= submit "Publish" %> Or 
-    <%= link_to "Cancel", resource(:welcome_messages) %>
+    <%= link_to "Cancel", resource(:welcome_messages), :class => "cancel" %>
 </div>
 
 <script type= "text/javascript">

@@ -11,7 +11,7 @@
          <li><%= file_field :attachment,  :label => "Upload Form" %></li>
      </ul>
      <div class="save-cancel">
-        <%= submit "Save" %> Or <%= link_to "Cancel", resource(:forms) %>
+        <%= submit "Save" %> Or <%= link_to "Cancel", resource(:forms), :class => "cancel" %>
      </div>
 <% end =%>
 </fieldset>

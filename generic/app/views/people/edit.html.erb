@@ -42,13 +42,16 @@
        <% end %>
              <% @accesses.delete_if{|x| x.name == "view_all"} %>
    <% end %>
-<fieldset>
-  <div class="save-cancel"><%= submit "Save & Notify" %> Or <%= link_to "Cancel", url(:people) %></div>
+      <dt></dt>
+	  </dl>
+       <div class="save-cancel">
+          <%= submit "Save & Notify" %> Or <%= link_to "Cancel", url(:people), :class => "cancel" %>
+      </div>
+</fieldset>
+    
+        
     <% end =%>
-    
-    
-    
-    
+ 
 
 <script type= "text/javascript">
 

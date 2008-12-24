@@ -16,31 +16,26 @@
           </option>
 			  <% end %>
 			</li>
-	<% @team_peoples.each do |f| %>
+	   <% @team_peoples.each do |f| %>
            <li> <%= text_field :name => 'classroom[people][role][]', :id =>'classroom_class_people', :value => "#{f.role}" %>
               	 <select name = "classroom[people][ids][]" id="classroom_person",>
 	                       <% @teachers.each do |teacher| %>
 		                      <option value="<%= teacher.id %>">
 			                   <%= teacher.first_name %>
 		                      </option>
-			        <% end %></li>
-				
-	 <% end %>
-
-	<li><a href="#" onclick="add();return false;" class="add-more">Add More</a></li>
+			        <% end %>
+           </li>
+	   <% end %>
     </ul>
-  </fieldset>
-  
+      <a href="#" onclick="add();return false;" class="add-more">Add More</a>
+      
+     <div class="save-cancel">
+        <%= submit "Save" %> Or  <%= link_to "Cancel", resource(:teams), :class => "cancel" %>
+     </div>
+  <% end =%>
 
- 
-<div class="save-cancel">
-  <%= submit "Save" %>
-  <%= link_to "Cancel", resource(:teams) %>
-</div>
-	      
-<% end =%>
-     
-</div>
+</fieldset>
+  
 
 
 <script type= "text/javascript">

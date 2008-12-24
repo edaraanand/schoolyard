@@ -167,15 +167,16 @@
      
           <li> <%= text_field  :phone,  :label => "Phone" %>	</li>
 	        <li> <%= text_field  :address,  :label => "Address" %> </li>
-          
-	       <li>
-	          <input type = 'button' value = 'Preview' onclick="preview();return false;" />
-	          <%= submit "Publish" %></br>  <%= link_to "Cancel", resource(:students) %>
-	       </li>
-	 
+      </ul>     
+      
+	     <div class="save-cancel">
+            <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+	          <%= submit "Publish" %> Or  <%= link_to "Cancel", resource(:students), :class => "cancel" %>
+       </div>
         
-         </ul> 
+         
    <% end =%>
+   
 </fieldset>
  
 <script type= "text/javascript">
