@@ -1,8 +1,12 @@
 <h2 class="current-page">Forms &gt; <span class="add-link"><%= link_to "Add New", resource(:forms, :new) %></span></h2>
 
 <%= form_for(@form, :action => resource(:forms), :method => 'get') do %>
-    <span class="select-announce"><%= select :name => "class_name", :collection => forms %> <%= submit ">>" %>
-     
+      <% if params[:class_name].nil? %>
+            <span class="select-announce"><%= select :name => "class_name", :collection => forms %> <%= submit "Go" %>
+      <% else %>
+            <span class="select-announce"><%= select :name => "class_name", :selected => params[:class_name], :collection => forms %> <%= submit "Go" %>
+      <% end %>
+  
 <% end =%>
 
 
