@@ -126,7 +126,6 @@ class Approvals < Application
              end  
              @parent.approved = 1    
              @parent.save
-             #raise @parent.inspect
              @parent.send_password_approve
              redirect url(:parent_approvals)
           end

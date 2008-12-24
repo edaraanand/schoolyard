@@ -5,7 +5,7 @@ class Person < ActiveRecord::Base
   validates_presence_of :first_name, :last_name
 	validates_presence_of :email, :if => :email
   validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}
-
+  validates_uniqueness_of :email, :if => :email
   
 	has_many :access_peoples
 	has_many :accesses, :through => :access_peoples, :source => :access

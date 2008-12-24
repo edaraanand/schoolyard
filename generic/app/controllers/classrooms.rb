@@ -108,6 +108,7 @@ class Classrooms < Application
       @home_works = @classroom.home_works.find(:all)
       @announcements = Announcement.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true])
       @welcome_messages = WelcomeMessage.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
+      @external_links = ExternalLink.find(:all, :conditions => ['label = ?', "Classrooms"])
       render :layout => 'class_change', :id => @classroom.id
    end
    

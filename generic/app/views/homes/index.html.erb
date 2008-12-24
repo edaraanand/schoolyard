@@ -47,5 +47,11 @@
    <% end %>
        <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements')  %> <br/>
      
-
+       <h4 class="current-page">
+         External Links </h4>
+      <ul> 
+       <% for link in @external_links %>
+           <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
+       <% end %>
+    </ul>
 

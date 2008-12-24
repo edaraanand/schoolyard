@@ -2,8 +2,8 @@ class Calendars < Application
   
   layout 'default'
   before :ensure_authenticated
-  before :access_rights, :exclude => [:events]
-  before :classrooms, :only => [:events]
+  before :access_rights, :exclude => [:events, :show]
+  before :classrooms, :only => [:events, :show]
   
   def index
      @calendars = Calendar.find(:all)
@@ -34,6 +34,12 @@ class Calendars < Application
      render
   end
   
+  def show
+     @calendar = Calendar.find(params[:id])
+     @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
+     render :layout => 'class_change', :id => @classroom.id
+  end
+
   def update
      @class_rooms = Classroom.find(:all)
      @calendar = Calendar.find(params[:id])
