@@ -4,6 +4,7 @@
         <div class="short-block">
           
         <h3 class="current-page"> Calendar for <%= @classroom.class_name %></h3>
+         <div class="clear dashed separate"></div>
              <% for calendar in @calendars %>
               <div class="calendar-block">
                  <% unless calendar.start_date.nil? %> 
@@ -20,7 +21,7 @@
                     &nbsp;
                  </span>
                 <span class="cal-title">
-                    <%= cal.title %>
+                      <%= link_to "#{cal.title}", url(:calendar, cal.id) %>
                 </span>
                    
                  </li>
@@ -86,7 +87,11 @@
          <% for message in @welcome_messages %>
               <p class="post-content"><%= message.content %></p>
          <% end %>
-       
+        <h2 class="current-page">External Links </h2>
+          <% for link in @external_links %>
+                <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
+          <% end %>
+           
            <h2 class="current-page">Announcements: </h2>
    
             <% for announcement in @announcements %>

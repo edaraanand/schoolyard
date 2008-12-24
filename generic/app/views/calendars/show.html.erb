@@ -1,0 +1,16 @@
+<div id="fullpage">
+  
+   <h2 class="current-page"> Calendar for <%= @calendar.class_name %></h2>
+ 
+     <h2> <%= @calendar.title %> </h2>   <%= @calendar.start_date.strftime("%b %d %Y") %> (<%= @calendar.end_time.strftime("%H:%M") %> -- <%= @calendar.end_time.strftime("%H:%M") %> )
+  
+    <p><%= @calendar.description %></p>
+  
+    <%  @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name]) %>
+    
+    <%= link_to "All Events", url(:class_details, :id => @classroom.id, :label => "calendars") %>
+    
+    <div class="hrule clear"><hr /></div>
+ 
+</div>
+
