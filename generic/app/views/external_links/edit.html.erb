@@ -1,11 +1,11 @@
 <div class=" data-block short-block">
   <h2 class="current-page"> <%= params[:label] %> &gt; Edit </h2>
-  <%= form_for(@external_link, :action => url(:external_links_update), :id => 'links') do %>
+  <%= form_for(@external_link, :action => url(:external_links_update), :id => 'links', :onsubmit => "ClearAll()") do %>
     <ul id="link" class="edit-ext-links">
       <% @external_links.each do |f| %>
         <li>
-          <%= text_field :id => 'external_link_title', :name => 'external_link[title][]', :value => "#{f.title}", :class=>"long text" %>
-          <%= text_field :id => 'external_link_url', :name => 'external_link[url][]', :value => "#{f.url}", :class=>"short text" %>
+        <%= text_field :id => 'external_link_title', :name => 'external_link[title][]', :value => "#{f.title}", :class=>"short text defaultText", :title => "title" %>
+        <%= text_field :id => 'external_link_url', :name => 'external_link[url][]', :value => "#{f.url}", :class=>"long text defaultText", :title => "url" %>
           <%= link_to "Delete", url(:delete_external_link, f.id), :class=>"delete-btn" %>
         </li>
       <% end %>
@@ -26,7 +26,7 @@
    {
       var links = document.getElementById('link');
     	var li = document.createElement('li');
-	li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]'/>"  + "<input type='text' id='external_link_url' name='external_link[url][]'/>";
+      li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]' class='short text defaultText' title='title' />"  + "<input type='text' id='external_link_url' name='external_link[url][]' class='long text defaultText' title='url'/>";
 	 links.appendChild(li);
 	
     }
@@ -39,6 +39,45 @@
    
  }
 
+  $j(document).ready(function()
+{
+    $j(".defaultText").focus(function(srcc)
+    {
+        if ($j(this).val() == $j(this)[0].title)
+        {
+            $j(this).removeClass("defaultTextActive");
+            $j(this).val("");
+        }
+    });
+    
+    $j(".defaultText").blur(function()
+    {
+        if ($j(this).val() == "")
+        {
+            $j(this).addClass("defaultTextActive");
+            $j(this).val($j(this)[0].title);
+        }
+    });
+    
+    $j(".defaultText").blur();        
+});
+ 
+ function ClearAll()
+{
+    var link_title = document.getElementById('external_link_title');
+    var url = document.getElementById('external_link_url');
+   
+    if (link_title.value == link_title.title) 
+   {
+       link_title.value = ""
+    }
+    
+     if (url.value == url.title) 
+   {
+       url.value = ""
+    }
+    
+ }
 
 </script>
 

@@ -5,20 +5,21 @@
       </ul>
   </div>
   <h2 class="current-page"><%= params[:label] %> &gt; New</h2>
-  <%= form_for(@external_link, :action => resource(:external_links), :id => 'links') do %>
+  <%= form_for(@external_link, :action => resource(:external_links), :id => 'links', :onsubmit => "ClearAll()" ) do %>
     <ul class="edit-ext-links">
       <li id="link">
-        <%= text_field  :title, :name => 'external_link[title][]', :class=>"long text"%>
-        <%= text_field  :url, :name => 'external_link[url][]', :class=>"short text"%>
+        <%= text_field  :title, :name => 'external_link[title][]', :class=>"short text defaultText", :title => "title" %>
+        <%= text_field  :url, :name => 'external_link[url][]', :class=>"long text defaultText", :title => "url" %>
         <a href="" class="delete-btn">Delete</a>
       </li>
     </ul>
-    <%= link_to_function 'Add',"add();"%>
+          
+            <%= hidden_field :name => "label", :value => params[:label] %>
+            
     <div class="save-cancel">
-      
-      <input type = 'button' value = 'Preview' onclick="preview();return false;" />
-      <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel"  %>
-      <%= hidden_field :name => "label", :value => params[:label] %>
+        <span class="add-link">  <%= link_to_function 'Add',"add();"%></span>
+        <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+        <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel"  %>
     </div>
   
   <% end =%>
@@ -31,11 +32,11 @@
    {
       var links = document.getElementById('link');
     	var li = document.createElement('li');
-	li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]'/>"  + "<input type='text' id='external_link_url' name='external_link[url][]'/>";
-	links.appendChild(li);
-	
-    }
+      li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]' class='short text defaultText' title='title'/>"  + "<input type='text' id='external_link_url' name='external_link[url][]' class='long text defaultText' title='url'/>";
+	    links.appendChild(li);
+	 }
  
+   
   
  function preview()
  {
@@ -44,6 +45,46 @@
    
  }
  
+ 
+  $j(document).ready(function()
+{
+    $j(".defaultText").focus(function(srcc)
+    {
+        if ($j(this).val() == $j(this)[0].title)
+        {
+            $j(this).removeClass("defaultTextActive");
+            $j(this).val("");
+        }
+    });
+    
+    $j(".defaultText").blur(function()
+    {
+        if ($j(this).val() == "")
+        {
+            $j(this).addClass("defaultTextActive");
+            $j(this).val($j(this)[0].title);
+        }
+    });
+    
+    $j(".defaultText").blur();        
+});
+ 
+ function ClearAll()
+{
+    var link_title = document.getElementById('external_link_title');
+    var url = document.getElementById('external_link_url');
+   
+    if (link_title.value == link_title.title) 
+   {
+       link_title.value = ""
+    }
+    
+     if (url.value == url.title) 
+   {
+       url.value = ""
+    }
+    
+ }
 
 </script>
 
