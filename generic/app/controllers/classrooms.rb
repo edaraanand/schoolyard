@@ -16,6 +16,7 @@ class Classrooms < Application
    end
    
    def create 
+      #raise params.inspect
       @classroom = Classroom.new(params[:classroom])
       @teachers = Staff.find(:all)
       id = params[:class][:people][:ids]
@@ -26,7 +27,11 @@ class Classrooms < Application
       end
        if @classroom.save
            if role.nil?
-	             ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
+               if @classroom.class_type == "Sports"
+	                ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "Athletic Director"})
+               else
+                  ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
+               end
            else
 	             role_id = id.delete_at(0)
                if @classroom.class_type == "Sports"
@@ -56,6 +61,7 @@ class Classrooms < Application
    end
    
    def update
+      #raise params.inspect
       @teachers = Staff.find(:all)
       @classroom = Classroom.find(params[:id])
       @class_people = @classroom.class_peoples
