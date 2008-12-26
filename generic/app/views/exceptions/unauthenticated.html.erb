@@ -1,4 +1,7 @@
-<h3>Catholic School</h3>
+<% @school = School.find(:first) %>
+<% unless @school.nil? %>
+<h3><%= @school.school_name %></h3>
+<% end %>
 
 <div>
 
