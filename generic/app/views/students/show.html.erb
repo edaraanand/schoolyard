@@ -6,10 +6,18 @@
      
            <h2><%= @student.name %></h2>
            <% @parents.each do |f| %>
-                <ul>
-                     <li>Parents/Guardians : <%= f.name %> ( <%= f.email %> )</li>
-                </ul>
+                <% if f.approved == 1 %>
+                     <ul>
+                     <%= @mess %>
+                         <li>Parents/Guardians : <%= f.name %> ( <%= f.email %> )</li>
+                     </ul>
+                <% end %>
            <% end %>
+                    <% @protectors.each do |r| %>
+                         <ul>
+                             <li>Parents/Guardians : <%= r.name %> ( <%= r.email %> )</li>
+                         </ul>
+                     <% end %>
             <ul>
                 <li>Address : <%= @student.address %></li>
                 <li>Contact Number : <%= @student.phone %></li>

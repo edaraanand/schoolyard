@@ -1,5 +1,6 @@
 
 <%= error_messages_for @student %>
+
 <fieldset>
 
 <ul class='error_messages'>
@@ -16,7 +17,7 @@
 
 <h2 class="current-page">Students &gt; <span class="add-link">Edit</span></h2>
 <fieldset>
-<%= form_for(@student, :action => resource(@student), :id => 'student', :name => "studs", :onsubmit => "ClearAll()") do %>
+<%= form_for(@student, :action => resource(@student), :id => 'student', :name => "studs", :onsubmit => "MPClearAll()") do %>
 
 	        <ul>
               <li><label>Student for:</label> <select name = "classroom_id" id="classroom_person",>
@@ -34,7 +35,7 @@
                   <%= text_field  :birth_date, :id => "birth_date", :label => "Birth Date", :class => "short" %>
               </li>
               
-	         <% for parent in @student.parents %>
+          <% for parent in @student.protectors %>
 	              <li>     
                     <%= text_field  :name => 'parent[first_name][]', :class=>"short", :label => "Parents/Guardian", :value => "#{parent.first_name}" %>
 		                <%= text_field  :name => 'parent[last_name][]', :class=>"short apart", :value => "#{parent.last_name}" %>
@@ -43,7 +44,6 @@
                     <%= text_field :name => 'parent[email][]', :label => "Email", :value => "#{parent.email}" %>
                 </li>
 	         <% end %>
-           
            <% if @sp.length == 1 %>
                  <% if ((@fname2 != nil || @lname2 != nil ) || (@email2 != nil) ) %>  
                        <div id="parent2" style="display:block">
@@ -75,8 +75,8 @@
                   <% else %>
                        <div id="parent2" style="display:none">
                             <li>
-                            <%= text_field  :name => 'f_name_parent2', :id => "f_parent2", :class => "short defaultText", :label => "Parents/Guardian", :title => "First Name" %>
-                            <%= text_field  :name => 'l_name_parent2', :id => "l_parent2", :class => "short apart defaultText", :title => "Last Name" %>
+                            <%= text_field  :name => 'f_name_parent2', :id => "f_parent2", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian",  :value => "First Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'First Name')" %>
+                            <%= text_field  :name => 'l_name_parent2', :id => "l_parent2", :class => "short apart defaultText defaultTextActive",  :value => "Last Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'Last Name')" %>
                             </li> 
                             <li>
                                 <%= text_field  :name => 'email_parent2',  :label => "E-Mail" %> 
@@ -100,8 +100,8 @@
                  <% if ((@fname3 != nil || @lname3 != nil ) || (@email3 != nil) ) %>
                       <div id="parent3" style="display:block">
                           <li>
-                              <%= text_field  :name => 'f_name_parent3', :id => "f_parent3", :class => "short", :label => "Parents/Guardian", :value => "#{@fname3}" %>
-                              <%= text_field  :name => 'l_name_parent3', :id => "l_parent3", :class => "short apart", :value => "#{@lname3}" %>
+                          <%= text_field  :name => 'f_name_parent3', :id => "f_parent3", :class => "short", :label => "Parents/Guardian", :value => "#{@fname3}", :title => "First Name" %>
+                              <%= text_field  :name => 'l_name_parent3', :id => "l_parent3",  :class => "short apart", :value => "#{@lname3}", :title => "Last Name" %>
                           </li> 
                           <li>
                               <%= text_field  :name => 'email_parent3',  :label => "E-Mail", :value => "#{@email3}" %> 
@@ -126,9 +126,9 @@
                         <% end %>
                  <% else %>
                        <div id="parent3" style="display:none">
-                          <li>
-                          <%= text_field  :name => 'f_name_parent3', :id => "f_parent3", :class => "short defaultText", :title => "First Name", :label => "Parents/Guardian" %>
-                          <%= text_field  :name => 'l_name_parent3',  :id => "l_parent3", :class => "short apart defaultText", :title => "Last Name" %>
+                       <li> 
+                       <%= text_field  :name => 'f_name_parent3', :id => "f_parent3",  :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :value => "First Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'First Name')" %>
+                          <%= text_field  :name => 'l_name_parent3', :id => "l_parent3",  :class => "short apart defaultText defaultTextActive", :value => "Last Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'Last Name')"  %>
                           </li> 
                           <li>
                               <%= text_field  :name => 'email_parent3',  :label => "E-Mail" %> 
@@ -165,8 +165,8 @@
                <% else %>
                         <div id="parent4" style="display:none">
                              <li>
-                             <%= text_field  :name => "f_name_parent4", :id => "f_parent4", :class => "short defaultText", :title => "First Name", :label => "Parents/Guardian" %>
-                             <%= text_field  :name => "l_name_parent4", :id => "l_parent4", :class => "short apart defaultText", :title => "Last Name" %>
+                                 <%= text_field  :name => "f_name_parent4", :id => "f_parent4", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :value => "First Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'First Name')"  %>
+                                 <%= text_field  :name => "l_name_parent4", :id => "l_parent4", :class => "short apart defaultText defaultTextActive", :value => "Last Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'Last Name')" %>
                              </li>
                              <li>
                                  <%= text_field  :name => "email_parent4",  :label => "E-Mail" %> 
@@ -189,6 +189,8 @@
 
 <script type= "text/javascript">
 
+   $j("#birth_date").datepicker();
+   
    var parent2_obj = document.getElementById('parent2');
    var parent3_obj = document.getElementById('parent3');
    var parent4_obj = document.getElementById('parent4');
@@ -221,67 +223,61 @@
    window.open('/students/preview/-/?' + s);
  }
  
-  $j(document).ready(function()
-{
-    $j(".defaultText").focus(function(srcc)
+ var thisForm = "studs";
+ 
+ var defaultVals = new Array();
+ defaultVals[0] = new Array("f_name_parent4", "First Name");
+ defaultVals[1] = new Array("l_name_parent4", "Last Name");
+ 
+ defaultVals[2] = new Array("f_name_parent3", "First Name");
+ defaultVals[3] = new Array("l_name_parent3", "Last Name");
+ 
+ defaultVals[4] = new Array("f_name_parent2", "First Name");
+ defaultVals[5] = new Array("l_name_parent2", "Last Name");
+ 
+  function MPLoadDefaults()
+  {
+    with (document.forms[thisForm])
     {
-        if ($j(this).val() == $j(this)[0].title)
-        {
-            $j(this).removeClass("defaultTextActive");
-            $j(this).val("");
-        }
-    });
-    
-    $j(".defaultText").blur(function()
-    {
-        if ($j(this).val() == "")
-        {
-            $j(this).addClass("defaultTextActive");
-            $j(this).val($j(this)[0].title);
-        }
-    });
-    
-    $j(".defaultText").blur();        
-});
+        for (var n=0; n<defaultVals.length; n++) 
+          {
+             var thisField = defaultVals[n][0];
+             var thisDefault = defaultVals[n][1];
+             if (elements[thisField].value == '')
+                elements[thisField].value = thisDefault;
+    }}}
+ 
+ function MPClearField(field) 
+  {
+      var fieldName = field.name;
+     for (var n=0; n<defaultVals.length; n++) 
+       {
+         var thisField = defaultVals[n][0];
+         var thisDefault = defaultVals[n][1];
+       if (thisField == fieldName) {
+          if (field.value == thisDefault) field.value = '';
+        break;
+   }}}
+   
+ function MPClearAll() 
+  {
+     with (document.forms[thisForm]) 
+      {
+         for (var n=0; n<defaultVals.length; n++) 
+         {
+            var thisField = defaultVals[n][0];
+            var thisDefault = defaultVals[n][1];
+            if (elements[thisField].value == thisDefault)
+             elements[thisField].value = '';
+   }}}
+   
+   function clickrecall(thisfield, defaulttext) 
+   {
+     if (thisfield.value == "")
+       {
+         thisfield.value = defaulttext;
+       }
+    }
 
- function ClearAll()
- {
-   var f_parent2 = document.getElementById('f_parent2')
-   var l_parent2 = document.getElementById('l_parent2')
    
-   var f_parent3 = document.getElementById('f_parent3')
-   var l_parent3 = document.getElementById('l_parent3')
-   
-   var f_parent4 = document.getElementById('f_parent4')
-   var l_parent4 = document.getElementById('l_parent4')
-   
-    if ( f_parent2.value == f_parent2.title )
-    {
-        f_parent2.value = ""
-     }
-      if (l_parent2.value == l_parent2.title )
-    {
-        l_parent2.value = ""
-     }
-   
-    if (f_parent3.value == f_parent3.title) 
-   {
-      f_parent3.value = ""
-    }
-     if (l_parent3.value == l_parent3.title) 
-   {
-      l_parent3.value = ""
-    }
-     if (f_parent4.value == f_parent4.title) 
-   {
-      f_parent4.value = ""
-    }
-     if (l_parent4.value == l_parent4.title) 
-   {
-      l_parent4.value = ""
-    }
- }
- $j("#birth_date").datepicker();
- 
- 
 </script>
