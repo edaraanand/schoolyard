@@ -83,9 +83,9 @@
             <% @access_rights = session.user.access_peoples  %>
          <% if @access_rights.length == 0 %>
              <li><%= link_to "My Profile", url(:parent_account) %></li>
-             <li><%= link_to "Alert Settings", url(:alerts) %></li>
              <li><%= link_to "Student Details", url(:student_details) %></li>
              <li><%= link_to "Other Family Members", url(:parent_account, :label => "other") %></li>
+             <li><%= link_to "Alert Settings", url(:alerts) %></li>
          <% else %>
               <li><%= link_to "My Profile", url(:staff_account) %></li>
               <li><%= link_to "Alert Settings", url(:alerts) %></li>
