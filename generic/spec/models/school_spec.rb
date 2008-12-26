@@ -3,7 +3,7 @@ require File.join( File.dirname(__FILE__), "..", "spec_helper" )
 describe School do
 
    before(:each) do
-     @school = School.new({:school_name => 'Catholic School Department', :phone => '1234567899', :email => 'test@yahoo.com'})
+     @school = School.new({:school_name => 'School', :phone => '1234567899', :email => 'test@yahoo.com'})
    end
     
    it "should be invalid without a School Name" do
