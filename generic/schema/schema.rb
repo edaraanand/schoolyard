@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 45) do
+ActiveRecord::Schema.define(:version => 47) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -40,6 +40,13 @@ ActiveRecord::Schema.define(:version => 45) do
   create_table "alerts", :force => true do |t|
     t.string   "name"
     t.string   "full_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ancestors", :force => true do |t|
+    t.integer  "student_id"
+    t.integer  "protector_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -155,6 +162,14 @@ ActiveRecord::Schema.define(:version => 45) do
     t.date     "birth_date"
     t.integer  "approved"
     t.string   "password_reset_key"
+  end
+
+  create_table "protectors", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "registrations", :force => true do |t|
