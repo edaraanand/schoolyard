@@ -32,7 +32,7 @@
    {
       var links = document.getElementById('link');
     	var li = document.createElement('li');
-      li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]' class='short text defaultText' title='title'/>"  + "<input type='text' id='external_link_url' name='external_link[url][]' class='long text defaultText' title='url'/>";
+      li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]' class='short text defaultText' />"  + "<input type='text' id='external_link_url' name='external_link[url][]' class='long text defaultText'/>";
 	    links.appendChild(li);
 	 }
  
@@ -74,7 +74,7 @@
     var link_title = document.getElementById('external_link_title');
     var url = document.getElementById('external_link_url');
    
-    if (link_title.value == link_title.title) 
+   if (link_title.value == link_title.title) 
    {
        link_title.value = ""
     }
@@ -83,8 +83,10 @@
    {
        url.value = ""
     }
-    
+ 
  }
+ 
+ 
 
 </script>
 

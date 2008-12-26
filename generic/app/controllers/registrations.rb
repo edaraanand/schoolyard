@@ -15,32 +15,22 @@ class Registrations < Application
   def create
     @parent = Parent.new(params[:parent])
     @registration = Registration.new(params[:registration])
-    @p = Parent.find(:first, :conditions => ["first_name = ? and last_name = ?", params[:parent][:first_name], params[:parent][:last_name]])
-    if (params[:f_name_student2] == "") && (params[:l_name_student2] == "") 
+    if ( ( (params[:f_name_student2] == "") && (params[:l_name_student2] == "") ) &&  ( (params[:current_class2] == "") &&  (params[:birth_date2] == "") ) )
           if (@parent.valid?) && (@registration.valid?)
-              if @p.nil?
-                 @parent.save
-                 @registration.parent_id = @parent.id
-                 @registration.save
-                 redirect url(:registration_process, :id => @parent)
-              else                 
-                 @p.update_attributes(params[:parent])
-                 @p.save
-                 @registration.parent_id = @p.id
-                 @registration.save
-                 redirect url(:registration_process, :id => @p)
-              end
+               @parent.save
+               @registration.parent_id = @parent.id
+               @registration.save
+               redirect url(:registration_process, :id => @parent)
           else 
               render :new
           end
       else
         if (@parent.valid?) && (@registration.valid?)
-          if ( ( (params[:f_name_student2] != "") && (params[:l_name_student2] != "") ) &&  ( (params[:current_class2] != "") &&  (params[:birth_date2] != "") ) )
+           if ( ( (params[:f_name_student2] != "") && (params[:l_name_student2] != "") ) &&  ( (params[:current_class2] != "") &&  (params[:birth_date2] != "") ) )
                if ( ( (params[:f_name_student3] != "") || (params[:l_name_student3] != "") ) || (params[:current_class3] != "") )
                     if ( ( (params[:f_name_student4] !="") || (params[:l_name_student4] != "") ) || (params[:current_class4] != "") )
                         if ( ( (params[:f_name_student4] != "") && (params[:l_name_student4] != "") ) &&  ( (params[:current_class4] != "") &&  (params[:birth_date4] != "") ) )
-                          if (@parent.valid?) && (@registration.valid?)
-                                    if @p.nil?
+                              if (@parent.valid?) && (@registration.valid?)
                                        @parent.save
                                        @registration.parent_id = @parent.id
                                        @registration.save
@@ -48,17 +38,7 @@ class Registrations < Application
                                        Registration.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @parent.id  })                                 
                                        Registration.create({:first_name => params[:f_name_student4], :last_name => params[:l_name_student4], :birth_date => params[:birth_date4], :current_class => params[:current_class4], :parent_id => @parent.id  })
                                        redirect url(:registration_process, :id => @parent)
-                                    else
-                                       @p.update_attributes(params[:parent])
-                                       @p.save
-                                       @registration.parent_id = @p.id
-                                       @registration.save        
-                                       Registration.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @p.id  } )                               
-                                       Registration.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @p.id  })                                 
-                                       Registration.create({:first_name => params[:f_name_student4], :last_name => params[:l_name_student4], :birth_date => params[:birth_date4], :current_class => params[:current_class4], :parent_id => @p.id  })
-                                       redirect url(:registration_process, :id => @p)
-                                     end
-                                     
+                                    
                               else
                                    flash[:error4] = "Please enter the Student4 details"
                                    @fname4 = params[:f_name_student4]
@@ -92,26 +72,16 @@ class Registrations < Application
                             render :new 
                         end
                    else
-                     if ( ( (params[:f_name_student3] != "") && (params[:l_name_student3] != "") ) &&  ( (params[:current_class3] != "") &&  (params[:birth_date3] != "") ) )
-                       if (@parent.valid?) && (@registration.valid?)
-                                    if @p.nil?
-                                       @parent.save
-                                       @registration.parent_id = @parent.id
-                                       @registration.save
-                                       Registration.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @parent.id } )
-                                       Registration.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @parent.id  })                                 
-                                       redirect url(:registration_process, :id => @parent)
-                                    else
-                                       @p.update_attributes(params[:parent])
-                                       @p.save
-                                       @registration.parent_id = @p.id
-                                       @registration.save    
-                                       Registration.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @p.id } )
-                                       Registration.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @p.id  })                                 
-                                       redirect url(:registration_process, :id => @p)
-                                    end
-                                    
-                              else
+                        if ( ( (params[:f_name_student3] != "") && (params[:l_name_student3] != "") ) &&  ( (params[:current_class3] != "") &&  (params[:birth_date3] != "") ) )
+                             if (@parent.valid?) && (@registration.valid?)
+                                  @parent.save
+                                  @registration.parent_id = @parent.id
+                                  @registration.save
+                                  Registration.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @parent.id } )
+                                  Registration.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @parent.id  })                                 
+                                  redirect url(:registration_process, :id => @parent)
+                              
+                             else
                                   flash[:error3] = "Please enter the Student3 details"
                                    @fname3 = params[:f_name_student3]
 	                                 @lname3 = params[:l_name_student3]
@@ -122,38 +92,28 @@ class Registrations < Application
 	                                 @current_class2 = params[:current_class2]
                                    @birth_date2 = params[:birth_date2]
                                   render :new 
-                               end
+                             end
                          else
-                            flash[:error3] = "Please enter the Student3 details"
-	                          @fname3 = params[:f_name_student3]
-	                                 @lname3 = params[:l_name_student3]
-	                                 @current_class3 = params[:current_class3]
-                                   @birth_date3 = params[:birth_date3]
-                                   @fname2 = params[:f_name_student2]
-	                                 @lname2 = params[:l_name_student2]
-	                                 @current_class2 = params[:current_class2]
-                                   @birth_date2 = params[:birth_date2]
-                            render :new
+                              flash[:error3] = "Please enter the Student3 details"
+	                            @fname3 = params[:f_name_student3]
+	                            @lname3 = params[:l_name_student3]
+	                            @current_class3 = params[:current_class3]
+                              @birth_date3 = params[:birth_date3]
+                              @fname2 = params[:f_name_student2]
+	                            @lname2 = params[:l_name_student2]
+	                            @current_class2 = params[:current_class2]
+                              @birth_date2 = params[:birth_date2]
+                              render :new
                          end
-                  end
+                   end
              else
-               if (@parent.valid?) && (@registration.valid?)
-                      if @p.nil?
-                         @parent.save
-                         @registration.parent_id = @parent.id
-                         @registration.save
-                         Registration.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @parent.id  } )
-                         redirect url(:registration_process, :id => @parent)
-                      else
-                         @p.update_attributes(params[:parent])
-                         @p.save
-                         @registration.parent_id = @p.id
-                         @registration.save        
-                         Registration.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @p.id  } )
-                         redirect url(:registration_process, :id => @p)
-                      end
-                       
-                  else
+                 if (@parent.valid?) && (@registration.valid?)
+                      @parent.save
+                      @registration.parent_id = @parent.id
+                      @registration.save
+                      Registration.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @parent.id  } )
+                      redirect url(:registration_process, :id => @parent)
+                 else
                       flash[:error] = "Please enter the Student2 details"
                       @fname2 = params[:f_name_student2]
 	                    @lname2 = params[:l_name_student2]
