@@ -18,7 +18,7 @@
       <%= form_for :announcement, :action => url(:publish, :id => @announcement), :name => "approveform" do %>      
            
             <ul>
-            <li><%= text_area  :comments,  :label => "Comments", :rows => "10", :cols => "50" %></li>
+                <li>Comments <%= text_area  :name => "announcement[comments]", :rows => "10", :cols => "50" %></li>
             </ul>
             
               <div class="hrule clear"><hr /></div>
