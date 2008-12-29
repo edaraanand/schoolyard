@@ -40,14 +40,14 @@ class Approvals < Application
         @announcement.approve_comments = params[:announcement][:comments]
         @announcement.approved = @announcement.approve_announcement = true
         #@announcement.person_id = session.user.id
-        @announcement.approve_by = session.user.id
+        @announcement.approved_by = session.user.id
         @announcement.save 
         redirect resource(:approvals)
      else
         @announcement.reject_comments = params[:announcement][:comments]
         @announcement.approved = @announcement.approve_announcement = false
         #@announcement.person_id = session.user.id
-        @announcement.reject_by = session.user.id
+        @announcement.rejected_by = session.user.id
         @announcement.save 
         redirect resource(:approvals)
      end
