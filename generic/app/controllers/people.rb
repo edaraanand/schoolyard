@@ -34,6 +34,7 @@ class People < Application
                   end
                 end
              end
+             @person.send_pass
          redirect url(:people)
      else
 	      render :new
@@ -95,6 +96,8 @@ class People < Application
   def disable
      redirect url(:people)
   end
+  
+  
   
   
 end

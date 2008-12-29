@@ -174,10 +174,10 @@ class Registrations < Application
             flash[:error1] = "Your Password doesn't match"
             render :new_password
          end
-    else
-       flash[:error2] = "Password cant be blank"
-       render :new_password
-    end
+     else
+         flash[:error2] = "Password cant be blank"
+         render :new_password
+     end
   end
   
   def forgot_password
@@ -237,6 +237,34 @@ class Registrations < Application
     end
   end
   
+  def password_staff
+     id = params[:id]
+     @staff = Staff.find(:first, :conditions => ['password_reset_key = ?', id])
+     redirect url(:new_staff_password, :id => @staff.id)
+  end
+  
+  def new_staff_password
+     @staff = Staff.find(params[:id])
+     render
+  end
+  
+  def staff_password_save
+    @staff = Staff.find(params[:id])
+    if ( !params[:staff][:password].blank? ) && (!params[:staff][:password_confirmation].blank? )
+         if ( params[:staff][:password] == params[:staff][:password_confirmation] )
+            @staff.password = params[:staff][:password]
+            @staff.password_confirmation = params[:staff][:password_confirmation]
+            @staff.save
+            redirect url(:login)
+         else
+            flash[:error1] = "Your Password doesn't match"
+            render :new_staff_password
+         end
+    else
+       flash[:error2] = "Password cant be blank"
+       render :new_staff_password
+    end
+  end
                                
   private
   

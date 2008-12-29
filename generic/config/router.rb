@@ -44,6 +44,9 @@ Merb::Router.prepare do
     match("/reset_password").to(:controller => 'registrations', :action => 'reset_password').name(:reset_password)
     match("/reset_password_edit").to(:controller => 'registrations', :action => 'reset_password_edit').name(:reset_password_edit)
     match("/reset_password_update").to(:controller => 'registrations', :action => 'reset_password_update').name(:reset_password_update)
+    match("/new_staff_password").to(:controller => 'registrations', :action => 'new_staff_password').name(:new_staff_password)
+    match("/password_staff").to(:controller => 'registrations', :action => 'password_staff').name(:password_staff)
+    match("/staff_password_save").to(:controller => 'registrations', :action => 'staff_password_save').name(:staff_password_save)
 authenticate do
   resources :parents
   resources :approvals
