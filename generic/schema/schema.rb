@@ -65,8 +65,8 @@ ActiveRecord::Schema.define(:version => 48) do
     t.integer  "file_file_size"
     t.boolean  "approved"
     t.boolean  "approve_announcement"
-    t.boolean  "approve_by"
-    t.boolean  "reject_by"
+    t.integer  "approved_by"
+    t.integer  "rejected_by"
     t.text     "approve_comments"
     t.text     "reject_comments"
   end

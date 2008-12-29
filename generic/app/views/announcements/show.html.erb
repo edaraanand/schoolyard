@@ -16,17 +16,17 @@
        <%= link_to "Back to List", resource(:announcements) %>
     <div class="hrule clear"><hr /></div>
       
-      <%  if (@announcement.approved == false ) && (@announcement.approve_announcement == false) %>
-                  <% @person = Person.find(:first, :conditions => ['id = ?', @announcement.reject_by] ) %>
-                   Rejected By <%= @person.name %> 
-                    <p> <%= @announcement.reject_comments %></p>
-               <% end %>
+          <%  if (@announcement.approved == false ) && (@announcement.approve_announcement == false) %>
+            <% @person = Person.find(:first, :conditions => ['id = ?', @announcement.rejected_by] ) %>
+                  Rejected By <%= @person.name %> 
+                  <p> <%= @announcement.reject_comments %></p>
+          <% end %>
       
-               <%  if (@announcement.approved == true ) && (@announcement.approve_announcement == true) %>
-                    <% @person = Person.find(:first, :conditions => ['id = ?', @announcement.approve_by] ) %>
+          <%  if (@announcement.approved == true ) && (@announcement.approve_announcement == true) %>
+             <% @person = Person.find(:first, :conditions => ['id = ?', @announcement.approved_by] ) %>
                      Approved & PublishedBy <%= @person.name %> 
-                    <p> <%= @announcement.approve_comments %></p>
-               <% end %>
+                 <p> <%= @announcement.approve_comments %></p>
+          <% end %>
    </div>
 </div>
 

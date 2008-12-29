@@ -39,12 +39,14 @@ class Approvals < Application
      if params[:approvetype] == "Approve & Publish"
         @announcement.approve_comments = params[:announcement][:comments]
         @announcement.approved = @announcement.approve_announcement = true
+        #@announcement.person_id = session.user.id
         @announcement.approve_by = session.user.id
         @announcement.save 
         redirect resource(:approvals)
      else
         @announcement.reject_comments = params[:announcement][:comments]
         @announcement.approved = @announcement.approve_announcement = false
+        #@announcement.person_id = session.user.id
         @announcement.reject_by = session.user.id
         @announcement.save 
         redirect resource(:approvals)
