@@ -1,5 +1,5 @@
 <%= error_messages_for @welcome_message %>
-<%= form_for(@welcome_message, :action => resource(:welcome_messages), :id => 'welcome_message') do %>
+<%= form_for(@welcome_message, :action => resource(:welcome_messages), :id => 'welcome_message', :name => "message") do %>
    <h2 class="current-page">Welcome Messages &gt; Add New</h2>
   <%= partial 'form' %> 
  <% end =%>
