@@ -1,7 +1,7 @@
 <%= error_messages_for @team %>
 
 <h2 class="current-page">Sports Teams &gt; Add New</h2>
-<%= form_for(@team, :action => resource(:teams)) do %>
+<%= form_for(@team, :action => resource(:teams), :name => "team" ) do %>
   <fieldset>
     <ul id="team">
       <li><%= text_field  :team_name,  :label => "Name of the Team" %></li>
@@ -28,6 +28,8 @@
  </fieldset>
 
 <script type= "text/javascript">
+  
+  document.team.team_team_name.focus();
  
   function add()
    {

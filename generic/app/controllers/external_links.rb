@@ -38,15 +38,13 @@ class ExternalLinks < Application
      s = title.zip(url, @external_ids)
      links = [] 
         s.each do |l|
-	    if l[2].nil?
-		links << ExternalLink.create!({:title => l[0], :url => l[1], :label => params[:label]})
-	    else
-		links << ExternalLink.update(l[2], {:title => l[0], :url => l[1], :label => params[:label]})
-	    end
+	         if l[2].nil?
+		           links << ExternalLink.create!({:title => l[0], :url => l[1], :label => params[:label]})
+	         else
+		           links << ExternalLink.update(l[2], {:title => l[0], :url => l[1], :label => params[:label]})
+	         end
         end
-	
-        redirect url(:external_links)
-     
+	      redirect url(:external_links)
   end
   
   def delete
