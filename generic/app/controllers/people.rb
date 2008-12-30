@@ -37,7 +37,7 @@ class People < Application
              @person.send_pass
          redirect url(:people)
      else
-	      render :new
+        render :new
      end
   end
   
