@@ -16,8 +16,10 @@
               <% end %>
               <h3><%= link_to "#{announcement.title}", url(:approval, announcement.id) %></h3>
                   <p class="post-content"><%= announcement.content %></p>
+                  Created By <%= announcement.person.name %> at <%= announcement.created_at.strftime("%d %b %Y") %>
                   <div class="hrule clear"><hr /></div>
            </div>
+        
     <% end %>
  
 </div>
