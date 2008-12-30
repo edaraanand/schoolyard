@@ -1,7 +1,7 @@
 class People < Application
 	
   layout 'default'
- 
+  before :access_rights
        
   def index
      @people = Person.find(:all)
@@ -94,10 +94,34 @@ class People < Application
 
   
   def disable
-     redirect url(:people)
+    @person = Person.find(params[:id])
+    @person.crypted_password = ""
+    @person.password_reset_key = ""
+    @person.save
+    redirect url(:edit_person, @person.id)
+  end
+  
+  def enable
+    @person = Person.find(params[:id])
+    @person.send_pass
+    redirect url(:edit_person, @person.id)
   end
   
   
+  private
   
+  def access_rights
+     have_access = false
+     @view = Access.find_by_name('view_all')
+     @ann = Access.find_by_name('rights_others')
+     @access_people = session.user.access_peoples.delete_if{|x| x.access_id == @view.id }
+     @access_people.each do |f|
+       have_access = (f.all == true) || (f.access_id == @ann.id)
+       break if have_access
+     end
+     unless have_access
+       redirect resource(:homes)
+     end
+  end 
   
 end
