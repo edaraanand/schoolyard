@@ -9,8 +9,8 @@
 <fieldset>
   <h2 class="current-page">Access Rights &gt; Add New</h2>
   <ul>
-    <li><%= text_field  :first_name,  :label => "First Name" %></li>
-    <li><%= text_field  :last_name,  :label => "Last Name" %></li>
+    <li><%= text_field  :first_name, :label => "First Name" %></li>
+    <li><%= text_field  :last_name,   :label => "Last Name" %></li>
   <li><%= text_field  :email,  :label => "Contact Email" %></li>
     <li><%= text_field  :phone,  :label => "Phone Number (optional)" %></li>
     <li><label>Rights</label>This Person Can: <%= check_box :checked => true, :checked => true, :value => @access_view.id , :disabled => "disabled", :name => "view_all"  %>View all Content</li>
@@ -39,4 +39,9 @@
 	  </div>
 </fieldset>
   
+  
+<script type= "text/javascript">
 
+    document.people_form.person_first_name.focus();
+
+</script>

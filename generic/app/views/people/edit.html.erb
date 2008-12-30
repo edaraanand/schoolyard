@@ -18,14 +18,38 @@
     <li><%= text_field  :phone,  :label => "Phone Number (optional)" %></li>
    
   </ul>
+   <div id="disable" style="display:none;">
+      <h3>  Disable Access for this user. 
+           Are you sure you want to do this?
+           <div class="save-cancel">
+           <%= link_to "Yes, Disable Access for this User", url(:disable, :id => @person.id) %> Or <%= link_to "Cancel this action", url(:edit_person, @person.id), :class => "cancel" %>
+           </div>
+      </h3>
+   </div> 
+   
+     <div id="enable" style="display:none;">
+     <h3> Enable Access for this user. 
+           Are you sure you want to do this?
+           <div class="save-cancel">
+              <%= link_to "Yes, Enable Access for this User", url(:enable, :id => @person.id) %> Or <%= link_to "Cancel this action", url(:edit_person, @person.id), :class => "cancel" %>
+           </div>
+      </h3>
+   </div> 
+     
   <dl>
     <dt>Rights:</dt>
-	  <dd>This person can:</dd>
+	  <dd>This person can:</dd> 
+      <% if (@person.crypted_password != "" ) %>
+            <a rel="facebox" href="#disable" class="cancel"><span>Disable the User</a>
+      <% else %>
+            
+            <a rel="facebox" href="#enable" class="cancel"><span>Enable the User</a>
+      <% end %>
 	</dl>
 	   
 	<dl class="check-box-set">
-    <dt><%= check_box :name => "view_all", :checked => true, :id => "all", :onclick => "viewall()" %></dt>
-    <dd>View all Content</dd>
+     
+  
 	  <dt><input type="checkbox" onclick="checkAll(this)"></dt>
 	  <dd>Select All:</dd>
         <% @accesses.each do |f| %>
@@ -55,35 +79,17 @@
 
 <script type= "text/javascript">
 
- function viewall()
-   {
-     if (document.getElementById('all').checked == false)
-	{
-	    var s =  document.getElementById('all')
-	   var message = "You want to disable this user";
-           var return_value = confirm(message);
-	   if (return_value == true) 
-	   {
-	      s.checked = false;
-	    }
-	   else 
-	   {
-	     s.checked = true;
-	   }
-	  
-	}
-    }  
-   s
+ 
    
    function checkAll(select_all)
    {
      var checked = select_all.checked;
-     var s =  document.getElementById('all')
+     //var s =  document.getElementById('all')
      var col = document.getElementsByTagName("INPUT");
       for (var i=0;i<col.length;i++) 
       {
           col[i].checked= checked;
-	        s.checked = true;
+	       // s.checked = true;
        }
      }
 

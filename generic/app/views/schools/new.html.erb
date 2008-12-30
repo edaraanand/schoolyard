@@ -1,7 +1,7 @@
 <%= error_messages_for @school %>
 <h2 class="current-page">School Profile > New</h2>
 <fieldset>
-     <%= form_for(@school, :action => resource(:schools)) do  %>
+<%= form_for(@school, :action => resource(:schools), :name => "school") do  %>
     
          <%= partial 'form' %>
 
