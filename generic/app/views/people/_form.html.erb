@@ -24,19 +24,19 @@
      
       
       <% @accesses.each do |f| %>
-      <dt>                       
-        <input type="checkbox" class="check" name="access[access_ids][]" value="<%= f.id %>" />
-      </dt>
-      <dd>
-          <%= f.full_name %>
-  	      <% @accesses.delete_if{|x| x.name == "view_all"} %>
-  	  </dd>
+          <dt>                       
+              <input type="checkbox" class="check" name="access[access_ids][]" value="<%= f.id %>" />
+          </dt>
+          <dd>
+              <%= f.full_name %>
+  	          <% @accesses.delete_if{|x| x.name == "view_all"} %>
+  	       </dd>
   	  <% end %>
-  	  <dt></dt>
-	  </dl>
-	  <div class="save-cancel">
-	    <%= submit "Save & Notify" %> <span>Or <%= link_to "Cancel", url(:people), :class => "cancel" %></span>
-	  </div>
+  	       <dt></dt>
+	   </dl>
+	         <div class="save-cancel">
+	            <%= submit "Save & Notify" %> <span>Or <%= link_to "Cancel", url(:people), :class => "cancel" %></span>
+	         </div>
 </fieldset>
   
   

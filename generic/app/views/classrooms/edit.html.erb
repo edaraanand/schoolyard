@@ -4,7 +4,7 @@
 <h2 class="current-page"> Classrooms &gt; Edit </h2>
   <%= form_for(@classroom, :action => resource(@classroom)) do %>
   <ul id="class_room">
-    <li><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular}, :onchange => "class_type();return false;" %></li>
+       <li><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular}, :onchange => "class_type();return false;" %></li>
        <% if (@classroom.class_type == "Sports") %>
             <div id="class_name" style="display:none">
               <li><%= text_field :class_name,  :label => "Class Name" %></li>
@@ -15,34 +15,34 @@
              </div>
        <% end %>
       
-    <li>
-          <div id="teacher" style="display:block">
+       <li>
+           <div id="teacher" style="display:block">
                <label>Class Teacher:</label>
-           </div>
-           <div id="sport" style="display:none">
-              <label>Athletic Director:</label>
-           </div>
-        <select name = "class[people][ids][]" id="class_person",>
-      <% @teachers.each do |teacher| %>
-        <option value="<%= teacher.id %>">
-          <%= teacher.name %>
-        </option>
-      <% end %>
-    </li>
-      <% @class_people.each do |f| %>
-    <li>
-      <%= text_field :name => 'class[people][role][]', :id =>'class_class_people', :value => "#{f.role}" %>
-    </li>
-    <li><label>Class Teacher: </label><select name = "class[people][ids][]" id="class_person",>
-      <% @teachers.each do |teacher| %>
-        <option value="<%= teacher.id %>">
-          <%= teacher.name %>
-        </option>
-      <% end %>
-    </li>
-	<% end %>
+            </div>
+            <div id="sport" style="display:none">
+               <label>Athletic Director:</label>
+            </div>
+           <select name = "class[people][ids][]" id="class_person",>
+               <% @teachers.each do |teacher| %>
+                  <option value="<%= teacher.id %>">
+                       <%= teacher.name %>
+                  </option>
+               <% end %>
+       </li>
+         <% @class_people.each do |f| %>
+              <li>
+                  <%= text_field :name => 'class[people][role][]', :id =>'class_class_people', :value => "#{f.role}", :class => "short" %>
+                  <select name = "class[people][ids][]" id="class_person",>
+                       <% @teachers.each do |teacher| %>
+                             <option value="<%= teacher.id %>">
+                                  <%= teacher.name %>
+                             </option>
+                       <% end %>
+               </li>
+	       <% end %>
    </ul>
-	  <a href="#" onclick="add();return false;">Add More</a>
+    
+	    <a href="#" onclick="add();return false;">Add More</a>
      
      <div class="save-cancel">
        <%= submit "Save" %> Or <%= link_to "Cancel", url(:classrooms), :class => "cancel" %>
@@ -57,8 +57,8 @@
    {
       var class_room = document.getElementById('class_room');
     	var li = document.createElement('li');
-	li.innerHTML = "<input type='text' name='class[people][role][]' id='class_class_people' />"  + <select name="class[people][ids][]" id="classroom_person"> 
-	                                <% @teachers.each do |teacher| %>
+	li.innerHTML = "<input type='text' name='class[people][role][]' id='class_class_people' class='short'  />" + <select name="class[people][ids][]" id="classroom_person"> 
+	                               <% @teachers.each do |teacher| %>
 		                           <option value="<%= teacher.id %>">
 					   <%= teacher.name %>
 					   </option>
