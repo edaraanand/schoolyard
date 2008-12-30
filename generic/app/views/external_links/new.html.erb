@@ -5,7 +5,7 @@
       </ul>
   </div>
   <h2 class="current-page"><%= params[:label] %> &gt; New</h2>
-  <%= form_for(@external_link, :action => resource(:external_links), :id => 'links', :onsubmit => "ClearAll()" ) do %>
+  <%= form_for(@external_link, :action => resource(:external_links), :id => 'links', :name => "external_link", :onsubmit => "ClearAll()" ) do %>
     <ul class="edit-ext-links">
       <li id="link">
         <%= text_field  :title, :name => 'external_link[title][]', :class=>"short text defaultText", :title => "title" %>
@@ -27,6 +27,8 @@
 </div>
 
 <script type= "text/javascript">
+
+
  
  function add()
    {

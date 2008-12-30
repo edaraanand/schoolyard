@@ -4,7 +4,7 @@
  
 <h2 class="current-page"> Classrooms &gt; Add New </h2>
   
-  <%= form_for(@classroom, :action => resource(:classrooms)) do %>
+<%= form_for(@classroom, :action => resource(:classrooms), :name => "class" ) do %>
   <ul id="class_room">
     <li><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports Extracirrcular}, :onchange => "class_type();return false;" %></li>
     <div id="class_name" style="display:block">
@@ -35,7 +35,10 @@
 </fieldset>
 
 <script type= "text/javascript">
+  
  
+    document.class.classroom_class_name.focus();
+
   function add()
    {
      var class_room = document.getElementById('class_room');
@@ -70,5 +73,7 @@
          }
      }
  
+     
+     
 </script>
 
