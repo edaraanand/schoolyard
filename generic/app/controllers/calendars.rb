@@ -73,6 +73,14 @@ class Calendars < Application
      render :layout => 'home'
   end
   
+  def preview
+     @title = params[:calendar][:title]
+     @description = params[:calendar][:description]
+     @location = params[:calendar][:location]
+     render :layout => 'preview' 
+  end
+  
+  
   private
   
   def classrooms
