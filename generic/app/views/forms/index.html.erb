@@ -17,6 +17,7 @@
                   <th>Form</th>
                   <th>for</th>
                   <th>Last Updated</th>
+                  <th>Actions</th>
              </thead>
              <tbody>
                    <% for form in @forms %>
@@ -24,10 +25,12 @@
                             <td><%= link_to "#{form.title}", resource(form, :edit) %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
+                            <td><%= link_to "Delete", resource(form, :delete), :class =>"delete-btn" %></td>
                         </tr>
                    <% end %>
              </tbody>
          </table>
+       
      <% end %> 
  <% elsif  params[:class_name] == "All Forms" %>
      <% unless @forms_f.empty? %>
@@ -36,6 +39,7 @@
                   <th>Form</th>
                   <th>for</th>
                   <th>Last Updated</th>
+                  <th>Actions</th>
              </thead>
              <tbody>
                    <% for form in @forms_f %>
@@ -43,6 +47,7 @@
                             <td><%= link_to "#{form.title}", resource(form, :edit) %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
+                            <td><%= link_to "Delete", resource(form, :delete), :class =>"delete-btn" %></td>
                         </tr>
                    <% end %>
              </tbody>
@@ -56,6 +61,7 @@
                   <th>Form</th>
                   <th>for</th>
                   <th>Last Updated</th>
+                  <th>Actions</th>
              </thead>
              <tbody>
                    <% for form in @files %>
@@ -63,6 +69,7 @@
                             <td><%= link_to "#{form.title}", resource(form, :edit) %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
+                            <td><%= link_to "Delete", resource(form, :delete), :class => "delete-btn" %></td>
                         </tr>
                    <% end %>
              </tbody>

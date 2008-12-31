@@ -5,7 +5,7 @@
   
   <%= form_for(@form, :action => resource(:forms), :name => "form" ) do %>
      <ul>
-         <li><%= text_field :title,  :label => "Title" %></li>
+         <li><%= text_field :title,  :label => "Title", :maxlength => "75" %></li>
          <li><%= select :class_name, :collection => @classrooms, :label => "Classroom" %></li>
          <li><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year" %></li>
          <li><%= file_field :attachment,  :label => "Upload Form" %></li>
