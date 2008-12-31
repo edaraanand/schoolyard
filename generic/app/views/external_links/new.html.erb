@@ -8,8 +8,8 @@
   <%= form_for(@external_link, :action => resource(:external_links), :id => 'links', :name => "external_link", :onsubmit => "ClearAll()" ) do %>
     <ul class="edit-ext-links">
       <li id="link">
-        <%= text_field  :title, :name => 'external_link[title][]', :class=>"short text defaultText", :title => "title" %>
-        <%= text_field  :url, :name => 'external_link[url][]', :class=>"long text defaultText", :title => "url" %>
+        <%= text_field  :title, :name => 'external_link[title][]', :maxlength => "75", :class=>"short text defaultText", :title => "title" %>
+        <%= text_field  :url, :name => 'external_link[url][]', :maxlength => "75", :class=>"long text defaultText", :title => "url" %>
         <a href="" class="delete-btn">Delete</a>
       </li>
     </ul>
@@ -17,7 +17,7 @@
             <%= hidden_field :name => "label", :value => params[:label] %>
             
     <div class="save-cancel">
-        <span class="add-link">  <%= link_to_function 'Add',"add();"%></span>
+        <span class="add-link">  <%= link_to_function 'Add More',"add();"%></span>
         <input type = 'button' value = 'Preview' onclick="preview();return false;" />
         <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel"  %>
     </div>

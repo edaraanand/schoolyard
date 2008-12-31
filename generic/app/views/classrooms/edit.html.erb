@@ -7,11 +7,11 @@
        <li><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports ExtraCirrcular}, :onchange => "class_type();return false;" %></li>
        <% if (@classroom.class_type == "Sports") %>
             <div id="class_name" style="display:none">
-              <li><%= text_field :class_name,  :label => "Class Name" %></li>
+              <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></li>
             </div>
        <% else %>
              <div id="class_name" style="display:block">
-                 <li><%= text_field :class_name,  :label => "Class Name" %></li>
+                 <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></li>
              </div>
        <% end %>
       

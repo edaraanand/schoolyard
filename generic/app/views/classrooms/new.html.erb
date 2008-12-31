@@ -8,7 +8,7 @@
   <ul id="class_room">
     <li><%= select :class_type, :label => "Class Type", :collection => %W{Classes Sports Extracirrcular}, :onchange => "class_type();return false;" %></li>
     <div id="class_name" style="display:block">
-        <li><%= text_field :class_name,  :label => "Class Name" %></li>
+        <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></li>
     </div>
            <li>
            <div id="teacher" style="display:block">
