@@ -1,6 +1,7 @@
 class WelcomeMessages < Application
  
   layout 'default'
+  before :rooms, :only => [:new, :create, :edit, :update]
   
   def index
      classrooms
@@ -16,35 +17,31 @@ class WelcomeMessages < Application
   
   def new
      @welcome_message = WelcomeMessage.new
-     classrooms
      render                            
   end
 
   def create
      @welcome_message = WelcomeMessage.new(params[:welcome_message])
      @welcome_message.person_id = @current_user.id
-     classrooms
      if @welcome_message.save
-	redirect resource(:welcome_messages)
+	      redirect resource(:welcome_messages)
      else
-	render :new
+	      render :new
      end
   end
   
   def edit
      @welcome_message = WelcomeMessage.find(params[:id])
-     classrooms
      render
   end
   
   def update
      @welcome_message = WelcomeMessage.find(params[:id])
-     classrooms
      if @welcome_message.update_attributes(params[:welcome_message])
-	@welcome_message.person_id = @current_user.id
-	redirect resource(:welcome_messages)
+	      @welcome_message.person_id = @current_user.id
+	      redirect resource(:welcome_messages)
      else
-	render :edit
+	      render :edit
      end
   end
   
@@ -82,5 +79,12 @@ class WelcomeMessages < Application
      @classrooms = room.insert(0, "All Messages")
      @classrooms = room.insert(1, "HomePage")
   end
+  
+  def rooms
+      @class = Classroom.find(:all)
+      room = @class.collect{|x| x.class_name }
+      @classrooms = room.insert(0, "HomePage")
+  end
+  
   
 end
