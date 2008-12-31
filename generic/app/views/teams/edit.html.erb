@@ -4,7 +4,7 @@
   <%= form_for(@team, :action => resource(@team)) do %>
   <fieldset>
     <ul id="team">
-      <li><%= text_field  :team_name,  :label => "Name of the Team" %></li>
+      <li><%= text_field  :team_name,  :label => "Name of the Team", :maxlength => "75" %></li>
         <li><%= select  :classroom_id,  :collection => @classrooms.collect{|x| x.class_name }, :label => "Classroom", :prompt => "Please Select", :selected => "#{@class.class_name}" %></li>
       <li><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year" %></li>
       <li>
