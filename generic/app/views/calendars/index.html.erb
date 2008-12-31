@@ -3,7 +3,7 @@
   <% for calendar in @calendars %>
     <div class="calendar-block" style="width:480px;">
       <% unless calendar.start_date.nil? %> 
-        <h3><%= calendar.start_date.strftime("%B-%d") %></h3>
+        <h3><%= calendar.start_date.strftime("%B %d %Y") %></h3>
       <% end %>
       <% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
       <ul class="calendar-items">
@@ -11,12 +11,18 @@
           <li>
             <span class="cal-time">
                 <% unless cal.start_time.nil? %>
-                  <%= cal.start_time.strftime("%H-%M") %>
+                  Starts at <%= cal.start_time.strftime("%H-%M") %>
                 <% end %>
                &nbsp;
             </span>
             <span class="cal-title">
               <%= cal.title %>
+            </span>
+             <span class="cal-time">
+               <% unless cal.end_time.nil? %>
+                  Ends at <%= cal.end_time.strftime("%H-%M") %>
+               <% end %>
+               &nbsp;
             </span>
             <%= link_to "Edit", resource(cal, :edit), :class=>"edit-btn" %>
             <%= link_to "Delete", resource(cal, :delete), :class=>"delete-btn" %>

@@ -1,27 +1,28 @@
 <fieldset>
   <ul>
     <li><label>Add for:</label><%= select :class_name, :collection => @class_rooms.collect{|x| x.class_name} %></li>
-    <li><%= text_field :title,  :label => "Event Title" %></li>
+    <li><%= text_field :title,  :label => "Event Title", :maxlength => "75" %></li>
     <li><%= text_area  :description,  :label => "Event Description",  :rows => "10", :cols => "25" %></li>
-	  <li><%= text_field  :location,  :label => "Location" %></li>
+	  <li><%= text_field  :location,  :label => "Location", :maxlength => "75" %></li>
     <li><label>&nbsp;</label><%= check_box :day_event, :onclick => "dayevent()" %>All Day Event</li>
-	  <li><%= text_field :start_date, :id => "start", :label => "Starts:", :class=>"short"%>
+      <li><%= text_field :start_date, :id => "start", :label => "Starts:", :class=>"short defaultText", :title => "dd/mm/yy" %>
         <% if @start_time == "" %>
-             <%= text_field :start_time, :id => "start_time", :class=>"short apart" %>
+            <%= text_field :start_time, :id => "start_time", :class=>"short apart defaultText", :title => "hh:mm" %>
         <% else %>
-             <%= text_field :start_time, :id => "start_time", :class=>"short apart", :value => "#{@start_time}" %>
+            <%= text_field :start_time, :id => "start_time", :class=>"short apart defaultText", :value => "#{@start_time}", :title => "hh:mm"  %>
         <% end %>     
     </li>
-    <li><%= text_field :end_date, :id => "end", :label => "Ends:" , :class=>"short"  %>
+          <li><%= text_field :end_date, :id => "end", :label => "Ends:", :class => "short defaultText", :title => "dd/mm/yy"  %>
         <% if @end_time == "" %>
-            <%= text_field :end_time, :id => "end_time", :class=>"short apart"  %>
+            <%= text_field :end_time, :id => "end_time", :class => "short apart defaultText", :title => "hh:mm"  %>
         <% else %>
-            <%= text_field :end_time, :id => "end_time", :class=>"short apart", :value => "#{@end_time}" %>
+            <%= text_field :end_time, :id => "end_time", :class=>"short apart defaultText", :title => "hh:mm", :value => "#{@end_time}"  %>
         <% end %>
     </li>
   </ul>
   <div class="save-cancel">
-    <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:calendars), :class=>"cancel" %>
+      <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+      <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:calendars), :class=>"cancel" %>
   </div>
 
     
@@ -35,6 +36,14 @@
   
   $j("#start_time").clockpick({starthour : 0, endhour : 23 }); 
   $j("#end_time").clockpick({starthour : 0, endhour : 23 });
+  
+  
+   function preview()
+ {
+   var s = $('event').serialize();
+   window.open('/calendars/preview/-/?' + s);
+   
+ }
  
   function dayevent()
   {
@@ -50,6 +59,60 @@
        }
   }
   
+  
+   $j(document).ready(function()
+{
+    $j(".defaultText").focus(function(srcc)
+    {
+        if ($j(this).val() == $j(this)[0].title)
+        {
+            $j(this).removeClass("defaultTextActive");
+            $j(this).val("");
+        }
+    });
+    
+    $j(".defaultText").blur(function()
+    {
+        if ($j(this).val() == "")
+        {
+            $j(this).addClass("defaultTextActive");
+            $j(this).val($j(this)[0].title);
+        }
+    });
+    
+    $j(".defaultText").blur();        
+});
+  
+ 
+   function ClearAll()
+{
+    var start = document.getElementById('start');
+    var end = document.getElementById('end');
+    
+    var start_time = document.getElementById('start_time');
+    var end_time = document.getElementById('end_time');
+   
+   if (start.value == start.title) 
+   {
+       start.value = ""
+    }
+    
+    if (end.value == end.title) 
+   {
+      end.value = ""
+    }
+ 
+    if (start_time.value == start_time.title) 
+   {
+      start_time.value = ""
+    }
+    
+    if (end_time.value == end_time.title) 
+   {
+      end_time.value = ""
+    }
+ }
+ 
 </script>
 
 

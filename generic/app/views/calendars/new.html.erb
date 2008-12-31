@@ -1,7 +1,7 @@
 <h2 class="current-page">Calendars &gt; Add New</h2>
 <fieldset>
   <%= error_messages_for @calendar %>
-  <%= form_for(@calendar, :action => resource(:calendars), :name => "calendar" ) do %>
+  <%= form_for(@calendar, :action => resource(:calendars), :id => "event", :name => "calendar", :onsubmit => "ClearAll()" ) do %>
       <%= partial 'form' %>
   <% end =%>
 </fieldset>

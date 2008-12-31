@@ -1,6 +1,6 @@
 <%= error_messages_for @calendar %>
 <h2 class="current-page"> Calendars > Edit </h2>
-<%= form_for(@calendar, :action => resource(@calendar)) do %>
+<%= form_for(@calendar, :action => resource(@calendar), :id => "event") do %>
 <fieldset>
   <ul>
     <li><label>Add for:</label><%= select :class_name, :collection => @class_rooms.collect{|x| x.class_name} %></li>
@@ -33,6 +33,7 @@
          <% end %>
 	   </li>
        <div class="save-cancel">
+             <input type = 'button' value = 'Preview' onclick="preview();return false;" />
              <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:calendars), :class=>"cancel" %>
        </div>
  <% end =%>
@@ -48,6 +49,13 @@
   
   $j("#start_time").clockpick({starthour : 0, endhour : 23 }); 
   $j("#end_time").clockpick({starthour : 0, endhour : 23 }); 
+ 
+   function preview()
+ {
+   var s = $('event').serialize();
+   window.open('/calendars/preview/-/?' + s);
+   
+ }
  
   function dayevent()
   {
