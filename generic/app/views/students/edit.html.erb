@@ -28,8 +28,8 @@
 			                   <% end %>
               </li>
 	            <li>
-                  <%= text_field  :first_name,:class=>"short",  :label => "Student" %>
-                  <%= text_field  :last_name, :class=>"short apart"  %>
+                  <%= text_field  :first_name, :maxlength => "75", :class=>"short",  :label => "Student" %>
+                  <%= text_field  :last_name, :maxlength => "75", :class=>"short apart"  %>
 	            </li>
               <li>
                   <%= text_field  :birth_date, :id => "birth_date", :label => "Birth Date", :class => "short" %>
@@ -37,22 +37,22 @@
               
           <% for parent in @student.protectors %>
 	              <li>     
-                    <%= text_field  :name => 'parent[first_name][]', :class=>"short", :label => "Parents/Guardian", :value => "#{parent.first_name}" %>
-		                <%= text_field  :name => 'parent[last_name][]', :class=>"short apart", :value => "#{parent.last_name}" %>
+                    <%= text_field  :name => 'parent[first_name][]', :maxlength => "75", :class=>"short", :label => "Parents/Guardian", :value => "#{parent.first_name}" %>
+		                <%= text_field  :name => 'parent[last_name][]', :maxlength => "75", :class=>"short apart", :value => "#{parent.last_name}" %>
                 </li>
 		            <li>
-                    <%= text_field :name => 'parent[email][]', :label => "Email", :value => "#{parent.email}" %>
+                    <%= text_field :name => 'parent[email][]', :maxlength => "75", :label => "Email", :value => "#{parent.email}" %>
                 </li>
 	         <% end %>
            <% if @sp.length == 1 %>
                  <% if ((@fname2 != nil || @lname2 != nil ) || (@email2 != nil) ) %>  
                        <div id="parent2" style="display:block">
                            <li>
-                               <%= text_field  :name => 'f_name_parent2', :id => "f_parent2", :class => "short", :label => "Parents/Guardian", :value => "#{@fname2}" %>
-                               <%= text_field  :name => 'l_name_parent2', :id => "l_parent2", :class => "short apart", :value => "#{@lname2}" %>
+                               <%= text_field  :name => 'f_name_parent2', :id => "f_parent2", :maxlength => "75", :class => "short", :label => "Parents/Guardian", :value => "#{@fname2}" %>
+                               <%= text_field  :name => 'l_name_parent2', :id => "l_parent2", :maxlength => "75", :class => "short apart", :value => "#{@lname2}" %>
                            </li> 
                            <li>
-                               <%= text_field  :name => 'email_parent2',  :label => "E-Mail", :value => "#{@email2}" %> 
+                               <%= text_field  :name => 'email_parent2',  :maxlength => "75", :label => "E-Mail", :value => "#{@email2}" %> 
                            </li>
                        </div>  
                        <% if( ( (@fname2 != "") && (@lname2 != "") ) && (@email2 != "") )   %>
@@ -75,11 +75,11 @@
                   <% else %>
                        <div id="parent2" style="display:none">
                             <li>
-                            <%= text_field  :name => 'f_name_parent2', :id => "f_parent2", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian",  :value => "First Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'First Name')" %>
-                            <%= text_field  :name => 'l_name_parent2', :id => "l_parent2", :class => "short apart defaultText defaultTextActive",  :value => "Last Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'Last Name')" %>
+                            <%= text_field  :name => 'f_name_parent2', :id => "f_parent2", :maxlength => "75", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian",  :value => "First Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'First Name')" %>
+                            <%= text_field  :name => 'l_name_parent2', :id => "l_parent2", :maxlength => "75", :class => "short apart defaultText defaultTextActive",  :value => "Last Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'Last Name')" %>
                             </li> 
                             <li>
-                                <%= text_field  :name => 'email_parent2',  :label => "E-Mail" %> 
+                                <%= text_field  :name => 'email_parent2',  :maxlength => "75", :label => "E-Mail" %> 
                             </li>
                         </div> 
                         <div id="am2" style="display:block">
@@ -100,11 +100,11 @@
                  <% if ((@fname3 != nil || @lname3 != nil ) || (@email3 != nil) ) %>
                       <div id="parent3" style="display:block">
                           <li>
-                          <%= text_field  :name => 'f_name_parent3', :id => "f_parent3", :class => "short", :label => "Parents/Guardian", :value => "#{@fname3}", :title => "First Name" %>
-                              <%= text_field  :name => 'l_name_parent3', :id => "l_parent3",  :class => "short apart", :value => "#{@lname3}", :title => "Last Name" %>
+                          <%= text_field  :name => 'f_name_parent3', :id => "f_parent3", :maxlength => "75", :class => "short", :label => "Parents/Guardian", :value => "#{@fname3}", :title => "First Name" %>
+                              <%= text_field  :name => 'l_name_parent3', :id => "l_parent3",  :maxlength => "75", :class => "short apart", :value => "#{@lname3}", :title => "Last Name" %>
                           </li> 
                           <li>
-                              <%= text_field  :name => 'email_parent3',  :label => "E-Mail", :value => "#{@email3}" %> 
+                              <%= text_field  :name => 'email_parent3',  :maxlength => "75", :label => "E-Mail", :value => "#{@email3}" %> 
                           </li>
                       </div>
                          <% if( ( (@fname3 != "") && (@lname3 != "") ) && (@email3 != "") )   %>
@@ -127,11 +127,11 @@
                  <% else %>
                        <div id="parent3" style="display:none">
                        <li> 
-                       <%= text_field  :name => 'f_name_parent3', :id => "f_parent3",  :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :value => "First Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'First Name')" %>
-                          <%= text_field  :name => 'l_name_parent3', :id => "l_parent3",  :class => "short apart defaultText defaultTextActive", :value => "Last Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'Last Name')"  %>
+                       <%= text_field  :name => 'f_name_parent3', :id => "f_parent3",  :maxlength => "75", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :value => "First Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'First Name')" %>
+                          <%= text_field  :name => 'l_name_parent3', :id => "l_parent3",  :maxlength => "75", :class => "short apart defaultText defaultTextActive", :value => "Last Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'Last Name')"  %>
                           </li> 
                           <li>
-                              <%= text_field  :name => 'email_parent3',  :label => "E-Mail" %> 
+                              <%= text_field  :name => 'email_parent3',  :maxlength => "75", :label => "E-Mail" %> 
                           </li>
                        </div>
                        <div id="am2" style="display:none">
@@ -155,28 +155,28 @@
                  <% if ( ( (@fname4 != nil) || (@lname4 != nil) ) || (@email4 != nil) ) %>
                         <div id="parent4" style="display:block">
                              <li>
-                             <%= text_field  :name => "f_name_parent4", :id => "f_parent4", :class => "short", :label => "Parents/Guardian", :value => "#{@fname4}" %>
-                             <%= text_field  :name => "l_name_parent4", :id => "l_parent4", :class => "short apart", :value => "#{@lname4}" %>
+                             <%= text_field  :name => "f_name_parent4", :id => "f_parent4", :maxlength => "75", :class => "short", :label => "Parents/Guardian", :value => "#{@fname4}" %>
+                             <%= text_field  :name => "l_name_parent4", :id => "l_parent4", :maxlength => "75", :class => "short apart", :value => "#{@lname4}" %>
                              </li>
                              <li>
-                                 <%= text_field  :name => "email_parent4",  :label => "E-Mail", :value => "#{@email4}" %> 
+                                 <%= text_field  :name => "email_parent4",  :maxlength => "75", :label => "E-Mail", :value => "#{@email4}" %> 
                              </li>
                         </div>
                <% else %>
                         <div id="parent4" style="display:none">
                              <li>
-                                 <%= text_field  :name => "f_name_parent4", :id => "f_parent4", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :value => "First Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'First Name')"  %>
-                                 <%= text_field  :name => "l_name_parent4", :id => "l_parent4", :class => "short apart defaultText defaultTextActive", :value => "Last Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'Last Name')" %>
+                                 <%= text_field  :name => "f_name_parent4", :id => "f_parent4", :maxlength => "75", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :value => "First Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'First Name')"  %>
+                                 <%= text_field  :name => "l_name_parent4", :id => "l_parent4", :maxlength => "75", :class => "short apart defaultText defaultTextActive", :value => "Last Name", :onfocus => "MPClearField(this)", :onblur => "clickrecall(this,'Last Name')" %>
                              </li>
                              <li>
-                                 <%= text_field  :name => "email_parent4",  :label => "E-Mail" %> 
+                                 <%= text_field  :name => "email_parent4",  :maxlength => "75", :label => "E-Mail" %> 
                              </li>
                         </div>
                <% end %>
            
            
                <li><%= text_field :phone, :label => "Phone" %></li>
-               <li><%= text_field :address, :label => "Address" %></li>
+               <li><%= text_field :address, :label => "Address", :maxlength => "75" %></li>
 	    
         <div class="save-cancel">		 
 	          <input type = 'button' value = 'Preview' onclick="preview();return false;" />
