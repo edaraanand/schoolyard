@@ -1,6 +1,7 @@
 class Announcements < Application
    layout 'default'
    before :classrooms
+   before :rooms, :only => [:new, :edit]
    before :access_rights, :exclude => [:parent_approval, :approve_process]
    before :approval_right, :only => [:parent_approval, :approve_process ]
    
@@ -79,6 +80,12 @@ class Announcements < Application
      room = @class.collect{|x| x.class_name }
      @classrooms = room.insert(0, "All Announcements")
      @classrooms = room.insert(1, "HomePage")
+  end
+  
+  def rooms
+      @class = Classroom.find(:all)
+      room = @class.collect{|x| x.class_name }
+      @classrooms = room.insert(0, "HomePage")
   end
   
   def access_rights
