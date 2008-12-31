@@ -1,16 +1,11 @@
 
 
 <% for principal in @from_principals %>
-<div id="sidebar">
-             <% if principal.expiration.nil? %>
-                   <div class="ddmmm-x">
-	                 </div>
-              <% else %>
-                   <div class="ddmmm">
-                      <span class="date"><%= principal.expiration.strftime("%d") %></span>
-                      <span class="month"><%= principal.expiration.strftime("%b") %></span>
-	                 </div>
-              <% end %>
+     <div id="sidebar">
+             <div class="ddmmm">
+                 <span class="date"><%= principal.created_at.strftime("%d") %></span>
+                 <span class="month"><%= principal.created_at.strftime("%b") %></span>
+	           </div>
               <h3><%= principal.title %></h3>
               <p class="post-content-sidebar"><%= principal.content %></p>
       </div>

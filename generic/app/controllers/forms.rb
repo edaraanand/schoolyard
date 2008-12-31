@@ -4,7 +4,7 @@ class Forms < Application
   
   before :classrooms
   before :access_rights, :exclude => [:form_files]
-  before :forms
+  before :forms, :only => [:index]
   
   def index
     if params[:class_name].nil?
@@ -46,8 +46,14 @@ class Forms < Application
   
   def update
     @form = Form.find(params[:id])
-     Attachment.delete_all(['attachable_id = ?', @form.id])
     if @form.update_attributes(params[:form])
+        Attachment.delete_all(['attachable_id = ?', @form.id])
+        @attachment = Attachment.create( :attachable_type => "Form",
+                                        :attachable_id => @form.id,
+                                        :filename => params[:form][:attachment][:filename],
+                                        :content_type => params[:form][:attachment][:content_type],
+                                        :size => params[:form][:attachment][:size]
+       )
        redirect resource(:forms)
     else
        render :edit
@@ -55,6 +61,12 @@ class Forms < Application
     
   end
   
+  def delete
+     @form = Form.find(params[:id])
+     Attachment.delete_all(['attachable_id = ?', @form.id])
+     @form.destroy
+     redirect resource(:forms)
+  end
   
   def form_files
      if params[:class_name].nil?
@@ -83,6 +95,7 @@ class Forms < Application
     @years = (1999..2025).to_a
   end
   
+ 
   def access_rights
      have_access = false
      @view = Access.find_by_name('view_all')

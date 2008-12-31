@@ -6,16 +6,11 @@
   </h2>
   <% for announcement in @announcements %>
     <div class="data-block long-block">
-       <% if announcement.expiration.nil? %>
-	         <div class="ddmmm-x">
-	         </div>
-       <% else %>
-           <div class="ddmmm">
-	             <span class="date"><%= announcement.expiration.strftime("%d") %></span>
-	             <span class="month"><%= announcement.expiration.strftime("%b") %></span>
-	         </div>
-	     <% end %>
-      <h3><%= link_to "#{announcement.title}", url(:from_principal, announcement.id) %></h3>
+       <div class="ddmmm">
+           <span class="date"><%= announcement.created_at.strftime("%d") %></span>
+             <span class="month"><%= announcement.created_at.strftime("%b") %></span>
+	     </div>
+	     <h3><%= link_to "#{announcement.title}", url(:from_principal, announcement.id) %></h3>
       <p class="post-content"><%= announcement.content %></p>
       <%= link_to "Edit", url(:edit_from_principal, announcement.id), :class=> "edit-btn"  %>
       <%= link_to "Delete", url(:delete_from_principal, announcement.id), :class=> "delete-btn"  %>
