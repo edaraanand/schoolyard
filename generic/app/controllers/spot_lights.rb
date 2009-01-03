@@ -58,7 +58,7 @@ class SpotLights < Application
   def class_students
      @class = Classroom.find(:all)
      room = @class.collect{|x| x.class_name }
-     @classrooms = room.insert(0, "HomePage")
+     @classrooms = room.insert(0, "Home Page")
      @students = Student.find(:all)
   end
   

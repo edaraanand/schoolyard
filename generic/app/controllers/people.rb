@@ -2,9 +2,10 @@ class People < Application
 	
   layout 'default'
   before :access_rights
+  before :titles
        
   def index
-     @people = Person.find(:all)
+     @people = Staff.find(:all)
      render
   end
   
@@ -123,5 +124,14 @@ class People < Application
        redirect resource(:homes)
      end
   end 
+  
+  def titles
+     a = []
+     t1 = a.insert(0, "Mr.")
+     t2 = a.insert(1, "Mrs.")
+     t3 = a.insert(2, "Ms.")
+     @titles = a.insert(3, "Dr.")
+  end
+  
   
 end

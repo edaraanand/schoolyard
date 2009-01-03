@@ -19,9 +19,9 @@ class ExternalLinks < Application
 	      @external_link = ExternalLink.create({:title => l, :url => params[:external_link][:url][i], :label => params[:label]})
       end
       if @external_link.valid?
-        redirect url(:external_links)
+         redirect url(:external_links)
       else
-        render :new
+         render :new
       end
   end     
 	  
@@ -44,7 +44,7 @@ class ExternalLinks < Application
 		           links << ExternalLink.update(l[2], {:title => l[0], :url => l[1], :label => params[:label]})
 	         end
         end
-	      redirect url(:external_links)
+	   redirect url(:external_links)
   end
   
   def delete

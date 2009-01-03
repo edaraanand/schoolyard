@@ -5,6 +5,8 @@ class Approvals < Application
   before :ensure_authenticated
   before :access_rights
   before :parent_registration, :only => [:parent_approvals, :approval_review, :parent_grant, :parent_reject]
+  before :approve_types, :only => [:parent_approvals, :approval_review, :parent_grant, :parent_reject]
+  
   
   def index
      @announcements = Announcement.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ])
@@ -61,7 +63,7 @@ class Approvals < Application
      if params[:approve_status] == "Approved"
         @approved_parents = Parent.find(:all, :conditions => ['approved = ?', 1] )
      end
-     if params[:approve_status] == "PendingApproval"
+     if params[:approve_status] == "Pending Approvals"
         @pending_parents = Parent.find(:all, :conditions => ['approved = ?', 2] )
      end
      if params[:approve_status] == "Rejected"
@@ -70,7 +72,7 @@ class Approvals < Application
      if params[:approve_status].nil?
         @parents = Parent.find(:all, :conditions => ['approved = ?', 2] )
      end
-     if params[:approve_status] == "AllRegistrations"
+     if params[:approve_status] == "All Registrations"
        @all_parents = Parent.find(:all)
      end
      @parents = Parent.find(:all)
@@ -165,6 +167,14 @@ class Approvals < Application
      @class = Classroom.find(:all)
      room = @class.collect{|x| x.class_name }
      @classrooms = room.insert(0, "HomePage")
+  end
+  
+  def approve_types
+    a = []
+    app1 = a.insert(0, "All Registrations")
+    app = a.insert(1, "Approved")
+    app1 = a.insert(2, "Pending Approvals")
+    @app = a.insert(3, "Rejected")
   end
   
 end

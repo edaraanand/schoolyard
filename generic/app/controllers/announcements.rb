@@ -79,13 +79,13 @@ class Announcements < Application
      @class = Classroom.find(:all)
      room = @class.collect{|x| x.class_name }
      @classrooms = room.insert(0, "All Announcements")
-     @classrooms = room.insert(1, "HomePage")
+     @classrooms = room.insert(1, "Home Page")
   end
   
   def rooms
       @class = Classroom.find(:all)
       room = @class.collect{|x| x.class_name }
-      @classrooms = room.insert(0, "HomePage")
+      @classrooms = room.insert(0, "Home Page")
   end
   
   def access_rights
