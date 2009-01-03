@@ -3,3 +3,10 @@
 <%= form_for(@announcement, :action => url(:from_principals), :id => 'announcement', :name => 'myform') do %>
     <%= partial 'form' %>
   <% end =%>
+  
+  
+<script type= "text/javascript">
+
+  document.myform.announcement_title.focus();
+
+</script>

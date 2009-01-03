@@ -4,18 +4,18 @@
     <ul id="link" class="edit-ext-links">
       <% @external_links.each do |f| %>
         <li>
-        <%= text_field :id => 'external_link_title', :name => 'external_link[title][]', :maxlength => "75", :value => "#{f.title}", :class=>"short text defaultText", :title => "title" %>
-        <%= text_field :id => 'external_link_url', :name => 'external_link[url][]', :maxlength => "75", :value => "#{f.url}", :class=>"long text defaultText", :title => "url" %>
-          <%= link_to "Delete", url(:delete_external_link, f.id), :class=>"delete-btn" %>
+            <%= text_field :id => 'external_link_title', :name => 'external_link[title][]', :maxlength => "75", :value => "#{f.title}", :class=>"short text defaultText", :title => "title" %>
+            <%= text_field :id => 'external_link_url', :name => 'external_link[url][]', :maxlength => "75", :value => "#{f.url}", :class=>"long text defaultText", :title => "url" %>
+            <%= link_to "Delete", url(:delete_external_link, f.id), :class=>"delete-btn" %>
         </li>
       <% end %>
     </ul>
     <%= hidden_field :name => "label", :value => params[:label] %>
     
     <div class="save-cancel">
-      <span class="add-link"><%= link_to_function 'Add More',"add();"%></span>
-      <input type = 'button' value = 'Preview' onclick="preview();return false;" />
-      <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
+         <span class="add-link"><%= link_to_function 'Add More',"add();"%></span>
+         <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+         <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
     </div>
   <% end =%>
 </div>
@@ -27,7 +27,7 @@
       var links = document.getElementById('link');
     	var li = document.createElement('li');
       li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]' class='short text defaultText' title='title' />"  + "<input type='text' id='external_link_url' name='external_link[url][]' class='long text defaultText' title='url'/>";
-	 links.appendChild(li);
+	    links.appendChild(li);
 	
     }
  
