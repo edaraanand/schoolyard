@@ -1,6 +1,12 @@
 <div class="short-block">
-  <h2 class="current-page"> All Events </h2>
-
+    <% if params[:class_name].nil? %>
+         <h2 class="current-page"> All Events </h2>
+    <% elsif params[:class_name] == "All Events" %>
+          <h2 class="current-page"> All Events </h2>
+     <% else %> 
+          <h2 class="current-page"> Events for <%= params[:class_name] %> </h2>
+     <% end %>
+     
   <%= form_for(@calendar, :action => url(:events), :method => 'get') do %>
   
   <% if params[:class_name].nil? %>
