@@ -22,7 +22,7 @@
       <h3>  Disable Access for this user. 
            Are you sure you want to do this?
            <div class="save-cancel">
-           <%= link_to "Yes, Disable Access for this User", url(:disable, :id => @person.id) %> Or <%= link_to "Cancel this action", url(:edit_person, @person.id), :class => "cancel" %>
+               <%= link_to "Yes, Disable Access for this User", url(:disable, :id => @person.id) %> Or <%= link_to "Cancel this action", url(:edit_person, @person.id), :class => "cancel" %>
            </div>
       </h3>
    </div> 
@@ -31,7 +31,7 @@
      <h3> Enable Access for this user. 
            Are you sure you want to do this?
            <div class="save-cancel">
-              <%= link_to "Yes, Enable Access for this User", url(:enable, :id => @person.id) %> Or <%= link_to "Cancel this action", url(:edit_person, @person.id), :class => "cancel" %>
+                <%= link_to "Yes, Enable Access for this User", url(:enable, :id => @person.id) %> Or <%= link_to "Cancel this action", url(:edit_person, @person.id), :class => "cancel" %>
            </div>
       </h3>
    </div> 
@@ -39,14 +39,17 @@
   <dl>
     <dt>Rights:</dt>
 	  <dd>This person can:</dd> 
-      <% if (@person.crypted_password != "" ) %>
+      <% if (@person.crypted_password != "" ) || (@person.password_reset_key != "" ) %>
             <a rel="facebox" href="#disable" class="cancel"><span>Disable the User</a>
       <% else %>
-            
-            <a rel="facebox" href="#enable" class="cancel"><span>Enable the User</a>
+      <a rel="facebox" href="#enable" class="enable">
+        <span>Enable the User</span>
+      </a>
       <% end %>
 	</dl>
 	   
+  
+    
 	<dl class="check-box-set">
      
   
@@ -60,9 +63,9 @@
                end %>
 	
         <% if have_access %>
-    <dt><input type="checkbox" class="check" checked="true" name="access[access_ids][]" value="<%= f.id %>" /></dt><dd><%= f.full_name %></dd>
+             <dt><input type="checkbox" class="check" checked="true" name="access[access_ids][]" value="<%= f.id %>" /></dt><dd><%= f.full_name %></dd>
        <% else %>
-    <dt><input type="checkbox" class="check" name="access[access_ids][]" value="<%= f.id %>" /></dt><dd><%= f.full_name %></dd>
+             <dt><input type="checkbox" class="check" name="access[access_ids][]" value="<%= f.id %>" /></dt><dd><%= f.full_name %></dd>
        <% end %>
              <% @accesses.delete_if{|x| x.name == "view_all"} %>
    <% end %>
@@ -79,8 +82,7 @@
 
 <script type= "text/javascript">
 
- 
-   
+
    function checkAll(select_all)
    {
      var checked = select_all.checked;

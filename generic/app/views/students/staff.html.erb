@@ -27,7 +27,7 @@
                        <td><%= person.first_name %></td>
                        <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
                        <% s.each do |f| %>
-                          <td><%= f.role.titleize %>-<%= f.classroom.class_name %></td> 
+                          <td><%= f.role.titleize %>--<%= f.classroom.class_name %></td>
                        <% end %>
       	               <td><%= person.phone %></td>
                    </tr>  
@@ -49,14 +49,13 @@
               </thead>
               <% for person in @staff %>
                    <tr>
-                   <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
+                       <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
                        <td><%= person.first_name %></td>
                        <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
                        <% s.each do |f| %>
                           <td><%= f.role.titleize %>-<%= f.classroom.class_name %></td> 
                        <% end %>
       	               <td><%= person.phone %></td>
-                       
                    </tr>  
               <% end %>
             </table>
