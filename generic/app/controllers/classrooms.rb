@@ -2,7 +2,7 @@ class Classrooms < Application
    
    layout 'default'
    before :access_rights, :exclude => [:class_details]
-  
+   before :class_types
   
    def index
       @classrooms = Classroom.find(:all)
@@ -16,11 +16,11 @@ class Classrooms < Application
    end
    
    def create 
-      #raise params.inspect
       @classroom = Classroom.new(params[:classroom])
       @teachers = Staff.find(:all)
       id = params[:class][:people][:ids]
       role = params[:class][:people][:role]
+      teachers = params[:class][:people][:teacher]
       @class_peoples = []
       if @classroom.class_type == "Sports"
          @classroom.class_name = "Sports"
@@ -39,7 +39,8 @@ class Classrooms < Application
                else 
                   @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => role_id, :role => "class_teacher"})
                end
-	             s = id.zip(role)
+               
+               s = teachers.zip(role)
 	             s.each do |f|
 	                @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
                end
@@ -61,7 +62,6 @@ class Classrooms < Application
    end
    
    def update
-      #raise params.inspect
       @teachers = Staff.find(:all)
       @classroom = Classroom.find(params[:id])
       @class_people = @classroom.class_peoples
@@ -70,36 +70,35 @@ class Classrooms < Application
       @class_sport = @class.delete_if{|x| x.role == "Athletic Director"}
       id = params[:class][:people][:ids]
       role = params[:class][:people][:role] 
-      
-    if @classroom.update_attributes(params[:classroom])
-       if @classroom.class_type == "Sports"
-          @classroom.class_name = "Sports"
-          @classroom.save
-       end
-       @class_peoples = @classroom.class_peoples
-      @cla = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
-      @class = @class_peoples.delete_if{|x| x.team_id != nil}
-      @class_p = @class.delete_if{|x| x.role == "class_teacher"}
-      @class_teacher = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
-      @class_id = @class_p.collect{|x| x.id }
-      if role.nil?
-	        ClassPeople.update(@cla.id, {:person_id => "#{id}", :classroom_id => @classroom.id, :role => "class_teacher" } )
+      if @classroom.update_attributes(params[:classroom])
+          if @classroom.class_type == "Sports"
+             @classroom.class_name = "Sports"
+             @classroom.save
+          end
+          @class_peoples = @classroom.class_peoples
+          @cla = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
+          @class = @class_peoples.delete_if{|x| x.team_id != nil}
+          @class_p = @class.delete_if{|x| x.role == "class_teacher"}
+          @class_teacher = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
+          @class_id = @class_p.collect{|x| x.id }
+          if role.nil?
+             ClassPeople.update(@cla.id, {:person_id => "#{id}", :classroom_id => @classroom.id, :role => "class_teacher" } )
+          else
+	           ClassPeople.update(@cla.id, { :person_id => id[0], :classroom_id => @classroom.id, :role => "class_teacher" })    
+	           role_id = id.delete_at(0)
+	           s = id.zip(role,@class_id)
+             s.each do |f|
+	               if f[2].nil?
+	                  @classroom.class_peoples << ClassPeople.create({:person_id => f[0], :classroom_id => @classroom.id, :role => f[1] })	 
+                 else
+	                  @classroom.class_peoples << ClassPeople.update(f[2], { :person_id => f[0], :classroom_id => @classroom.id, :role => f[1] })
+                 end
+             end
+          end
+          redirect resource(:classrooms)
       else
-	        ClassPeople.update(@cla.id, { :person_id => id[0], :classroom_id => @classroom.id, :role => "class_teacher" })    
-	        role_id = id.delete_at(0)
-	        s = id.zip(role,@class_id)
-	        s.each do |f|
-	           if f[2].nil?
-	              @classroom.class_peoples << ClassPeople.create({:person_id => f[0], :classroom_id => @classroom.id, :role => f[1] })	 
-            else
-	              @classroom.class_peoples << ClassPeople.update(f[2], { :person_id => f[0], :classroom_id => @classroom.id, :role => f[1] })
-            end
-         end
+	       render :edit
       end
-      redirect resource(:classrooms)
-   else
-	    render :edit
-   end
    
    end                                      
    
@@ -134,5 +133,11 @@ class Classrooms < Application
      end
   end  
   
+  def class_types
+    a = []
+    type1 = a.insert(0, "Classes")
+    type2 = a.insert(1, "Sports")
+    @class_types = a.insert(2, "Extra Cirrcular")
+  end
   
 end
