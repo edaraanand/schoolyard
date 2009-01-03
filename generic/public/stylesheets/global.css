@@ -268,7 +268,7 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 .cancel{padding:0 8px; color:#eb3f2c!important;}
 span.cancel a{color:#eb3f2c;}
 span.cancel a:hover{text-decoration:underline;}
-
+.enable{color:#287028!important}
 /*End Now*/
 
 /*Data Block*/
