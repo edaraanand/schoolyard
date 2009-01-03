@@ -18,6 +18,7 @@ class Teams < Application
      @team = Team.new(params[:team])
      id = params[:classroom][:people][:ids]
      role = params[:classroom][:people][:role]
+     teachers = params[:classroom][:people][:teacher]
      @class_people = []
      if @team.save
         @team.classroom_id = classroom.id
@@ -27,8 +28,8 @@ class Teams < Application
         else
 	         role_id = id.delete_at(0)
 	         @class_people << ClassPeople.create({:person_id => role_id, :team_id => @team.id, :classroom_id => classroom.id, :role => "coach"})
-           s = id.zip(role)
-     	     s.each do |r|
+           s = teachers.zip(role)
+           s.each do |r|
 	            @class_people << ClassPeople.create({:person_id => r[0], :classroom_id => classroom.id, :team_id => @team.id, :role => r[1] })
            end
         end
@@ -81,7 +82,7 @@ class Teams < Application
   def team_values
      @teachers = Staff.find(:all)
      @classrooms = Classroom.find(:all)
-     @years = (2008..2020).to_a 
+     @years = (2009..2025).to_a 
   end
   
   

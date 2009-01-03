@@ -17,17 +17,19 @@
 			  <% end %>
 			</li>
 	   <% @team_peoples.each do |f| %>
-           <li> <%= text_field :name => 'classroom[people][role][]', :id =>'classroom_class_people', :value => "#{f.role}" %>
+           <li> <%= text_field :name => 'classroom[people][role][]', :id =>'classroom_class_people', :class => "short", :value => "#{f.role}" %>
               	 <select name = "classroom[people][ids][]" id="classroom_person",>
 	                       <% @teachers.each do |teacher| %>
 		                      <option value="<%= teacher.id %>">
-			                   <%= teacher.first_name %>
+			                   <%= teacher.name %>
 		                      </option>
 			        <% end %>
            </li>
 	   <% end %>
     </ul>
-      <a href="#" onclick="add();return false;" class="add-more">Add More</a>
+        <input type="hidden" id="id" value="1">
+         <div id="divTxt"></div>
+	       <p><a href="#" onClick="addFormField(); return false;">Add More</a></p>
       
      <div class="save-cancel">
         <%= submit "Save" %> Or  <%= link_to "Cancel", resource(:teams), :class => "cancel" %>
@@ -40,20 +42,20 @@
 
 <script type= "text/javascript">
  
-  function add()
+ function addFormField()
+  {
+    var id = document.getElementById('id').value;
+    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short' name='classroom[people][role][]' id='txt" + id + "'><select name='classroom[people][ids][]'><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' onClick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a><p>");
+    
+    id = (id - 1) + 2;
+    document.getElementById('id').value = id;
+}
+
+   function removeFormField(id) 
    {
-      var class_room = document.getElementById('team');
-      var li = document.createElement('li');
-	li.innerHTML = "<input type='text' name='classroom[people][role][]' id='classroom_class_people' />"  + <select name="classroom[people][ids][]" id="classroom_person"> 
-	                                <% @teachers.each do |teacher| %>
-		                           <option value="<%= teacher.id %>">
-					   <%= teacher.name %>
-					   </option>
-			                <% end %>
-			      </select> ;
-	 class_room.appendChild(li);
-	
+         $j(id).remove();
     }
+    
 </script>
 
 
