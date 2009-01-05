@@ -1,39 +1,36 @@
 <div class="short-block">
   <h2 class="current-page"> Calendars &gt; <%= link_to "Add New", resource(:calendars, :new) %></h2>
+
   <% for calendar in @calendars %>
     <div class="calendar-block" style="width:480px;">
       <% unless calendar.start_date.nil? %> 
-        <h3><%= calendar.start_date.strftime("%B %d %Y") %></h3>
+          <h3><%= calendar.start_date.strftime("%B %d %Y") %></h3>
       <% end %>
-      <% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
-      <ul class="calendar-items">
-        <% cals.each do |cal| %>
-          <li>
-            <span class="cal-time">
-                <% unless cal.start_time.nil? %>
-                  Starts at <%= cal.start_time.strftime("%H-%M") %>
+          <% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
+       
+          <ul class="calendar-items">
+               <% cals.each do |cal| %>
+                     <li>
+                          <span class="cal-time">
+                               <% unless cal.start_time.nil? %>
+                                     Starts at <%= cal.start_time.strftime("%H-%M") %>
+                               <% end %>&nbsp;
+                          </span>
+                          <span class="cal-title">
+                                <%= cal.title %>
+                          </span>
+                          <span class="cal-time">
+                                <% unless cal.end_time.nil? %>
+                                      Ends at <%= cal.end_time.strftime("%H-%M") %>
+                                <% end %>  &nbsp;
+                          </span>
+                            <%= link_to "Edit", resource(cal, :edit), :class=>"edit-btn" %>
+                            <%= link_to "Delete", resource(cal, :delete), :class=>"delete-btn" %>
+                      </li>
                 <% end %>
-               &nbsp;
-            </span>
-            <span class="cal-title">
-              <%= cal.title %>
-            </span>
-             <span class="cal-time">
-               <% unless cal.end_time.nil? %>
-                  Ends at <%= cal.end_time.strftime("%H-%M") %>
-               <% end %>
-               &nbsp;
-            </span>
-            <%= link_to "Edit", resource(cal, :edit), :class=>"edit-btn" %>
-            <%= link_to "Delete", resource(cal, :delete), :class=>"delete-btn" %>
-          </li>
-           <%# @calendars.delete_if{|c| c.start_date.to_date == cal.start_date.to_date } %>
-             <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
-        <% end %>
-      </ul>
+         </ul>
     </div>
-   <% @calendars.delete_if{|c| cals.include?(c)} %>
-   <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
-   
+             <% @calendars.delete_if{|c| c.start_date == calendar.start_date } %>
+         
   <% end %>
 </div>
