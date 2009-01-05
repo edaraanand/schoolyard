@@ -77,6 +77,12 @@ class Teams < Application
   
   end
   
+  
+  def delete
+     Team.find(params[:id]).destroy
+     redirect resource(:teams)
+  end
+   
   private
   
   def team_values

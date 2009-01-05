@@ -10,14 +10,14 @@
     </thead>
     <tbody>
       <% for team in @teams %>
-      <tr>
-        <td><%= link_to "#{team.team_name}", resource(team, :edit) %></td>
-      
-             <% s = team.class_peoples %>
-		        <% s.each do |f| %>
-		    <td>  <%= f.role %> : <%= f.person.name %>   </td>
-        <% end %>
-      </tr>
+            <tr>
+                <td><%= link_to "#{team.team_name}", resource(team, :edit) %></td>
+                   <% s = team.class_peoples %>
+		               <% s.each do |f| %>
+		                    <td>  <%= f.role %> : <%= f.person.name %>   </td>
+                   <% end %>
+            </tr>
+            <td><%= link_to "Delete", resource(team, :delete), :class =>"delete-btn" %></td>
       <% end %> 
     </tbody>
   </table>

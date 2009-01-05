@@ -5,7 +5,7 @@
   <fieldset>
     <ul id="team">
       <li><%= text_field  :team_name,  :label => "Name of the Team", :maxlength => "75" %></li>
-        <li><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name }, :label => "Classroom", :prompt => "Please Select" %></li>
+      <li><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name }, :label => "Classroom", :prompt => "Please Select" %></li>
       <li><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year" %></li>
       <li>
         <label>Coach:</label>
