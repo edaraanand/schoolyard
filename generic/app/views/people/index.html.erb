@@ -4,18 +4,22 @@
   <h2 class="current-page">Access Rights &gt; <%= link_to "Add New", url(:new_person) %></h2>
     <table id="mytable">
     <thead> 
+       <th>Title</th>
        <th>Last Name</th>
        <th>First Name</th>
        <th>Email</th>
        <th>Phone</th>
     </thead>
     <% for person in @people %>
-      <tr>
-        <td class="click-block"><%= link_to "#{person.last_name}", url(:edit_person, person.id) %> </td>
-        <td><%= person.first_name %></td>
-      	<td><%= person.email %></td>
-      	<td><%= person.phone %></td>
-      </tr>  
+          <tr onclick="location.href='<%= url(:edit_person, person.id) %>'">
+               <% unless person.title.nil? %>
+                  <td><%= person.title %> </td>
+               <% end %>
+                <td><%= person.last_name %> </td>
+                <td><%= person.first_name %> </td>
+                <td><%= person.email %> </td>
+                <td><%= person.phone %> </td>
+          </tr>  
     <% end %>
   </table>
 <% end %>

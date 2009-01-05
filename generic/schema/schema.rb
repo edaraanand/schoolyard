@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 48) do
+ActiveRecord::Schema.define(:version => 50) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -148,6 +148,7 @@ ActiveRecord::Schema.define(:version => 48) do
     t.date     "due_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "person_id"
   end
 
   create_table "people", :force => true do |t|
@@ -165,6 +166,7 @@ ActiveRecord::Schema.define(:version => 48) do
     t.date     "birth_date"
     t.integer  "approved"
     t.string   "password_reset_key"
+    t.string   "title"
   end
 
   create_table "protectors", :force => true do |t|

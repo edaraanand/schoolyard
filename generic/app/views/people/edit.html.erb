@@ -12,6 +12,7 @@
   <h2 class="current-page">Access Rights &gt; Edit</h2>
   <%= form_for :person, :action => url(:person, @person) , :id => 'people' do %>
   <ul>
+     <li><%= select :title, :collection => @titles, :label => "Title" %></li>
     <li><%= text_field  :first_name,  :label => "First Name", :maxlength => "75" %></li>
     <li><%= text_field  :last_name,  :label => "Last Name", :maxlength => "75" %></li>
     <li><%= text_field  :email,  :label => "Contact Email", :maxlength => "75" %></li>

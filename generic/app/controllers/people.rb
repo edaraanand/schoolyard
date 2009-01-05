@@ -13,7 +13,6 @@ class People < Application
      @person = Person.new
      @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
      @access_view = Access.find(:first, :conditions => ['name=?', "view_all"])
-     puts @access_view.inspect
      render
   end
   
