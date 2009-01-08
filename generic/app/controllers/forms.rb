@@ -25,15 +25,17 @@ class Forms < Application
   def create
      @form = Form.new(params[:form])
      if @form.save
-        @attachment = Attachment.create( :attachable_type => "Form",
+       unless params[:form][:attachment].nil?
+           @attachment = Attachment.create( :attachable_type => "Form",
                                         :attachable_id => @form.id,
                                         :filename => params[:form][:attachment][:filename],
                                         :content_type => params[:form][:attachment][:content_type],
                                         :size => params[:form][:attachment][:size]
-       )
-      File.makedirs("public/uploads/#{@attachment.id}")
-      FileUtils.mv(params[:form][:attachment][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
-      redirect resource(:forms)
+           )
+          File.makedirs("public/uploads/#{@attachment.id}")
+          FileUtils.mv(params[:form][:attachment][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+       end
+       redirect resource(:forms)
     else
       render :new
     end
@@ -66,6 +68,12 @@ class Forms < Application
      Attachment.delete_all(['attachable_id = ?', @form.id])
      @form.destroy
      redirect resource(:forms)
+  end
+  
+  def form_download
+     @form = Form.find(params[:id])
+     @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', @form.id] )
+     send_file("#{Merb.root}/public/uploads/#{@attachment.id}/#{@attachment.filename}") 
   end
   
   def form_files
