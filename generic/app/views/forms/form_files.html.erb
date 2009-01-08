@@ -16,11 +16,12 @@
                   <th>Form</th>
                   <th>for</th>
                   <th>Last Updated</th>
+                
              </thead>
              <tbody>
                    <% for form in @forms %>
                         <tr>
-                            <td><%= form.title %> </td>
+                            <td><%= link_to "#{form.title}", url(:form_download, :id => form.id) %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
                         </tr>
@@ -35,13 +36,15 @@
                   <th>Form</th>
                   <th>for</th>
                   <th>Last Updated</th>
+                
              </thead>
              <tbody>
                    <% for form in @forms_f %>
                         <tr>
-                             <td><%= form.title %> </td>
+                            <td><%= link_to "#{form.title}", url(:form_download, :id => form.id) %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
+                            
                         </tr>
                    <% end %>
              </tbody>
@@ -59,7 +62,7 @@
              <tbody>
                    <% for form in @files %>
                         <tr>
-                            <td><%= form.title %> </td>
+                            <td><%= link_to "#{form.title}", url(:form_download, :id => form.id) %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
                         </tr>
