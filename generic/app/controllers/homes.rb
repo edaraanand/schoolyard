@@ -4,7 +4,7 @@ class Homes < Application
     layout 'home'
     
   def index
-    @announcements = Announcement.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'HomePage', true, true], :limit => 2 )
+    @announcements = Announcement.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :limit => 2 )
     @from_principals = Announcement.find(:all, :conditions => ['label = ?', 'from_principal'], :limit => 2 )
     @external_links = ExternalLink.find(:all, :conditions => ['label = ?', "Home Page"])
     render
@@ -12,7 +12,7 @@ class Homes < Application
   
   def principal_articles
      @from_principals = Announcement.find(:all, :conditions => ['label = ?', 'from_principal'] )
-     @announcements = Announcement.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'HomePage', true, true])
+     @announcements = Announcement.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true])
      render
   end
   
