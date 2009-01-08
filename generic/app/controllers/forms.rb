@@ -25,7 +25,7 @@ class Forms < Application
   def create
      @form = Form.new(params[:form])
      if @form.save
-       unless params[:form][:attachment].nil?
+       unless params[:form][:attachment].empty?
            @attachment = Attachment.create( :attachable_type => "Form",
                                         :attachable_id => @form.id,
                                         :filename => params[:form][:attachment][:filename],
@@ -50,12 +50,14 @@ class Forms < Application
     @form = Form.find(params[:id])
     if @form.update_attributes(params[:form])
         Attachment.delete_all(['attachable_id = ?', @form.id])
-        @attachment = Attachment.create( :attachable_type => "Form",
+        unless params[:form][:attachment].empty?
+            @attachment = Attachment.create( :attachable_type => "Form",
                                         :attachable_id => @form.id,
                                         :filename => params[:form][:attachment][:filename],
                                         :content_type => params[:form][:attachment][:content_type],
                                         :size => params[:form][:attachment][:size]
-       )
+             )
+        end
        redirect resource(:forms)
     else
        render :edit

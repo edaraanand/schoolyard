@@ -4,9 +4,10 @@
   <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
   <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
   <li><%= text_field  :due_date, :id => "due_date", :label => "Due Date", :class=>"short" %></li>
+  <li><%= file_field :attachment,  :label => "Attach a File" %></li>
   </ul>
 </fieldset>
-<div class="save-cancel">
+  <div class="save-cancel">
      <input type = 'button' value = 'Preview' onclick="preview();return false;" />
      <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:home_works), :class => "cancel" %>
 </div>

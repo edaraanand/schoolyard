@@ -27,6 +27,16 @@ class HomeWorks < Application
     @home_work = @person.home_works.build(params[:home_work])
     @home_work.classroom_id = params[:home_work][:classroom_id]
     if @home_work.save
+       unless params[:home_work][:attachment].empty?
+           @attachment = Attachment.create( :attachable_type => "Homework",
+                                        :attachable_id => @home_work.id,
+                                        :filename => params[:home_work][:attachment][:filename],
+                                        :content_type => params[:home_work][:attachment][:content_type],
+                                        :size => params[:home_work][:attachment][:size]
+            )
+           File.makedirs("public/uploads/#{@attachment.id}")
+           FileUtils.mv(params[:home_work][:attachment][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+        end
        redirect resource(:home_works)
     else
        render :new
@@ -42,6 +52,15 @@ class HomeWorks < Application
     @classroom = Classroom.find_by_class_name(params[:home_work][:classroom_id])
     @home_work = HomeWork.find(params[:id])
     if @home_work.update_attributes(params[:home_work])
+       Attachment.delete_all(['attachable_id = ?', @home_work.id])
+        unless params[:home_work][:attachment].empty?
+            @attachment = Attachment.create( :attachable_type => "Homework",
+                                        :attachable_id => @home_work.id,
+                                        :filename => params[:home_work][:attachment][:filename],
+                                        :content_type => params[:home_work][:attachment][:content_type],
+                                        :size => params[:home_work][:attachment][:size]
+              )
+         end
        @home_work.classroom_id = @classroom.id
        @home_work.person_id = session.user.id
        @home_work.save
@@ -52,14 +71,21 @@ class HomeWorks < Application
   end
   
   def delete
-    HomeWork.find(params[:id]).destroy
-    redirect resource(:home_works)
+     @home_work = HomeWork.find(params[:id])
+     Attachment.delete_all(['attachable_id = ?', @home_work.id])
+     @home_work.destroy
+     redirect resource(:home_works)
   end
   
   def preview
     render :layout => 'preview'
   end
  
+  def home_work_download
+      @attachment = Attachment.find(params[:id])
+      send_file("#{Merb.root}/public/uploads/#{@attachment.id}/#{@attachment.filename}") 
+  end
+  
   private
   
   def classrooms
