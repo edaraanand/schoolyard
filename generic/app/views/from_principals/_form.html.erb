@@ -3,6 +3,8 @@
     <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
     <li><%= text_area  :content,  :label => "Message", :rows => "10", :cols => "50" %></li>
     <li><%= text_field  :expiration, :id => "expiration",  :label => "Expiration", :class=>"short" %></li>
+    <li><%= file_field :attachment,  :label => "Attach a File" %></li>
+    
   </ul>
 </fieldset>
 <div class="save-cancel">
