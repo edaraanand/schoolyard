@@ -4,8 +4,9 @@ class Homes < Application
     layout 'home'
     
   def index
+    @date = Date.today
     @announcements = Announcement.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :limit => 2 )
-    @from_principals = Announcement.find(:all, :conditions => ['label = ?', 'from_principal'], :limit => 2 )
+    @from_principals = Announcement.find(:all, :conditions => ["label = ? and expiration >= ?", 'from_principal', @date], :limit => 2)
     @external_links = ExternalLink.find(:all, :conditions => ['label = ?', "Home Page"])
     render
   end

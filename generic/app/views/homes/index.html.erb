@@ -1,16 +1,16 @@
 
 
 <% for principal in @from_principals %>
-       <% unless principal.expiration <= Date.today %>
+    
              <div id="sidebar">
                  <div class="ddmmm">
                       <span class="date"><%= principal.created_at.strftime("%d") %></span>
                       <span class="month"><%= principal.created_at.strftime("%b") %></span>
 	               </div>
                  <h3><%= principal.title %></h3>
-                 <p class="post-content-sidebar"><%= principal.content %></p>
+                    <p class="post-content-sidebar"><%= principal.content %></p>
               </div>
-         <% end %>        
+          
             <div class="hrule clear"><hr /></div>
    <% end %>
        <%= link_to "All Articles", url(:principal_articles, :label => 'principal')  %> <br/>
