@@ -4,6 +4,7 @@
     <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
     <li><%= text_area  :content,  :label => "Description", :rows => "10", :cols => "50" %></li>
     <li><%= text_field  :expiration, :id => "expiration", :label => "Expiration" %></li>
+   
   </ul>
 </fieldset>
 <div class="save-cancel">
@@ -15,6 +16,7 @@
 <script type= "text/javascript">
 
      
+     
  function preview()
  {
    var s = $('announcement').serialize();
@@ -22,9 +24,10 @@
    
  }
   
-  $j("#expiration").datepicker({minDate:'today + 2'});
+  $j("#expiration").datepicker({minDate:'today + 1'});
   
-
+  
+  
 </script>
  
  
