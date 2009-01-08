@@ -95,6 +95,7 @@ authenticate do
   match("/help").to(:controller => 'homes', :action => 'help').name(:help)
   match("/disable").to(:controller => 'people', :action => 'disable').name(:disable)
   match("/enable").to(:controller => 'people', :action => 'enable').name(:enable)
+  match("/form_download").to(:controller => 'forms', :action => 'form_download').name(:form_download)
 end
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
