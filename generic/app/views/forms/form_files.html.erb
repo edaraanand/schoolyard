@@ -20,8 +20,9 @@
              </thead>
              <tbody>
                    <% for form in @forms %>
+                        <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', form.id] ) %>
                         <tr>
-                            <td><%= link_to "#{form.title}", url(:form_download, :id => form.id) %> </td>
+                            <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
                         </tr>
@@ -40,8 +41,9 @@
              </thead>
              <tbody>
                    <% for form in @forms_f %>
+                         <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', form.id] ) %>
                         <tr>
-                            <td><%= link_to "#{form.title}", url(:form_download, :id => form.id) %> </td>
+                            <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
                             
@@ -61,8 +63,9 @@
              </thead>
              <tbody>
                    <% for form in @files %>
+                         <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', form.id] ) %>
                         <tr>
-                            <td><%= link_to "#{form.title}", url(:form_download, :id => form.id) %> </td>
+                            <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
                         </tr>

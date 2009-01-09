@@ -1,7 +1,9 @@
 class SpotLight < ActiveRecord::Base
   
    attr_accessor :tempfile
-   #has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }
+  # has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }
+    
+    attr_accessor :attachment
     
     def url
       puts "Naidu".inspect

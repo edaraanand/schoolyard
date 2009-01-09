@@ -72,11 +72,6 @@ class Forms < Application
      redirect resource(:forms)
   end
   
-  def form_download
-     @form = Form.find(params[:id])
-     @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', @form.id] )
-     send_file("#{Merb.root}/public/uploads/#{@attachment.id}/#{@attachment.filename}") 
-  end
   
   def form_files
      if params[:class_name].nil?

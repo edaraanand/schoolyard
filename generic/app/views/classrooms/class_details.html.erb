@@ -1,40 +1,43 @@
 
 <%  if params[:label] == "calendars" %>
+<div class="short-block">
+  <h2 class="current-page"> Calendars</h2>
 
-        <div class="short-block">
-          
-        <h3 class="current-page"> Calendar for <%= @classroom.class_name %></h3>
-         <div class="clear dashed separate"></div>
-             <% for calendar in @calendars %>
-              <div class="calendar-block">
-                 <% unless calendar.start_date.nil? %> 
-                     <h3><%= calendar.start_date.strftime("%B-%d") %></h3>
-                 <% end %>
-                  <% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
-                  <ul class="calendar-items">
-                  <% cals.each do |cal| %>
-                  <li>
-                 <span class="cal-time">
-                   <% unless cal.start_time.nil? %>
-                        <%= cal.start_time.strftime("%H-%M") %>
-                     <% end %>
-                    &nbsp;
-                 </span>
-                <span class="cal-title">
-                      <%= link_to "#{cal.title}", url(:calendar, cal.id) %>
-                </span>
-                   
-                 </li>
-                  <%# @calendars.delete_if{|c| c.start_date.to_date == cal.start_date.to_date } %>
-                  <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
-           <% end %>
-          </ul>
-        </div>
-           <% @calendars.delete_if{|c| cals.include?(c)} %>
-          <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
-        <% end %>
-      </div>
-      
+  <% for calendar in @calendars %>
+    <div class="calendar-block" style="width:480px;">
+      <% unless calendar.start_date.nil? %> 
+          <h3><%= calendar.start_date.strftime("%B %d %Y") %></h3>
+      <% end %>
+          <% cals = @calendars.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
+       
+          <ul class="calendar-items">
+               <% cals.each do |cal| %>
+                     <li>
+                          <span class="cal-time">
+                               <% unless cal.start_time.nil? %>
+                                     Starts at <%= cal.start_time.strftime("%H-%M") %>
+                               <% end %>&nbsp;
+                          </span>
+                           <span class="cal-title">
+                               <%= link_to "#{cal.title}", url(:calendar, cal.id) %>
+                           </span>
+                          <span class="cal-time">
+                                <% unless cal.end_time.nil? %>
+                                      Ends at <%= cal.end_time.strftime("%H-%M") %>
+                                <% end %>  &nbsp;
+                          </span>
+                          <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', cal.id] ) %>
+                                  <% unless @attachment.nil? %>
+                                        <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+                                  <% end %>
+                      </li>
+                <% end %>
+         </ul>
+    </div>
+             <% @calendars.delete_if{|c| c.start_date == calendar.start_date } %>
+         
+  <% end %>
+</div>
 <% elsif params[:label] == "homeworks" %>
        <h2 class="current-page"> Homework </h2>
        <% for homework in @home_works %>
@@ -54,14 +57,14 @@
                     </div>
                <% end %>
               <h3><%= homework.title %></h3>
-               <% s = homework.classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
-                <% s.each do |f| %>
-                   <% if f.role == 'class_teacher' %>
-                       Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= f.person.name %>
-                   <% end %>
-                <% end %>
-              <p class="post-content"><%= homework.content %></p>
+               Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %>
+                <p class="post-content"><%= homework.content %></p>
+                  <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', homework.id] ) %>
+                  <% unless @attachment.nil? %>
+                      <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+                  <% end %>
                <div class="hrule clear"><hr /></div>
+                 
        <% end %>
 <% elsif params[:label] == "announcements" %>
           <h2 class="current-page"> Announcements </h2>
@@ -78,6 +81,10 @@
                       <% end %>
                             <h3><%= announcement.title %></h3>
                             <p class="post-content"><%= announcement.content %></p>
+                            <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', announcement.id] ) %>
+                             <% unless @attachment.nil? %>
+                                  <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+                             <% end %>
                            <div class="hrule clear"><hr /></div>
                    </div>
              <% end %>
