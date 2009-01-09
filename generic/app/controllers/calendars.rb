@@ -20,6 +20,16 @@ class Calendars < Application
      @class_rooms = Classroom.find(:all)
      @calendar = Calendar.new(params[:calendar])
      if @calendar.save
+        unless params[:calendar][:attachment].empty?
+          @attachment = Attachment.create( :attachable_type => "Calendar",
+                                        :attachable_id => @calendar.id,
+                                        :filename => params[:calendar][:attachment][:filename],
+                                        :content_type => params[:calendar][:attachment][:content_type],
+                                        :size => params[:calendar][:attachment][:size]
+            )
+           File.makedirs("public/uploads/#{@attachment.id}")
+           FileUtils.mv(params[:calendar][:attachment][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+        end
 	      redirect resource(:calendars)
      else
         @start_time = params[:calendar][:start_time]
@@ -44,6 +54,15 @@ class Calendars < Application
      @class_rooms = Classroom.find(:all)
      @calendar = Calendar.find(params[:id])
      if @calendar.update_attributes(params[:calendar])
+         Attachment.delete_all(['attachable_id = ?', @calendar.id])
+         unless params[:calendar][:attachment].empty?
+             @attachment = Attachment.create( :attachable_type => "Calendar",
+                                        :attachable_id => @calendar.id,
+                                        :filename => params[:calendar][:attachment][:filename],
+                                        :content_type => params[:calendar][:attachment][:content_type],
+                                        :size => params[:calendar][:attachment][:size]
+              )
+         end
 	     if @calendar.day_event == true
 	        @calendar.start_time = nil
 	        @calendar.end_time = nil
@@ -58,8 +77,10 @@ class Calendars < Application
   end
   
   def delete
-      Calendar.find(params[:id]).destroy
-      redirect resource(:calendars)
+     @calendar = Calendar.find(params[:id])
+     Attachment.delete_all(['attachable_id = ?', @calendar.id])
+     @calendar.destroy
+     redirect resource(:calendars)
   end
   
   def events

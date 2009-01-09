@@ -6,6 +6,8 @@ class Calendar < ActiveRecord::Base
       validates_presence_of :start_time, :if =>  Proc.new{|c| c.day_event != true }
       validates_presence_of :end_time, :if => Proc.new{|c| c.day_event != true }	
       
+      attr_accessor :attachment
+      
         def validate
 	         if ((self.start_date != nil) && (self.end_date != nil))
                 self.errors.add(:end_date, "must be after the start date") if self.end_date < self.start_date
