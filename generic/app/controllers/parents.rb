@@ -30,6 +30,16 @@ class Parents < Application
     @announcement.approve_announcement = true
     @announcement.label = 'parent'
      if @announcement.save
+        unless params[:announcement][:attachment].empty?
+          @attachment = Attachment.create( :attachable_type => "Announcement",
+                                        :attachable_id => @announcement.id,
+                                        :filename => params[:announcement][:attachment][:filename],
+                                        :content_type => params[:announcement][:attachment][:content_type],
+                                        :size => params[:announcement][:attachment][:size]
+            )
+           File.makedirs("public/uploads/#{@attachment.id}")
+           FileUtils.mv(params[:announcement][:attachment][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+        end
         redirect resource(:parents)
      else
 	      render :new
@@ -44,6 +54,15 @@ class Parents < Application
   def update
     @announcement = Announcement.find(params[:id])
      if @announcement.update_attributes(params[:announcement])
+        Attachment.delete_all(['attachable_id = ?', @announcement.id])
+        unless params[:announcement][:attachment].empty?
+            @attachment = Attachment.create( :attachable_type => "Announcement",
+                                        :attachable_id => @announcement.id,
+                                        :filename => params[:announcement][:attachment][:filename],
+                                        :content_type => params[:announcement][:attachment][:content_type],
+                                        :size => params[:announcement][:attachment][:size]
+            )
+         end
         @announcement.person_id = session.user.id
         @announcement.approved = false
         @announcement.approve_announcement = true

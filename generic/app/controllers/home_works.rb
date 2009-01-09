@@ -81,10 +81,6 @@ class HomeWorks < Application
     render :layout => 'preview'
   end
  
-  def home_work_download
-      @attachment = Attachment.find(params[:id])
-      send_file("#{Merb.root}/public/uploads/#{@attachment.id}/#{@attachment.filename}") 
-  end
   
   private
   

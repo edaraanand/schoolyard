@@ -10,7 +10,7 @@ class SpotLights < Application
   end
   
   def new
-     case request.method
+    case request.method
      when :get
         @spot_light = SpotLight.new
         render
@@ -22,6 +22,7 @@ class SpotLights < Application
           @spot.save
           redirect resource(:spot_lights)
        end
+       
   end
   
   def create

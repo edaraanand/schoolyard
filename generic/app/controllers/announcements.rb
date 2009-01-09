@@ -30,6 +30,16 @@ class Announcements < Application
     @announcement.approve_announcement = true
     @announcement.label = 'staff'
      if @announcement.save
+         unless params[:announcement][:attachment].empty?
+          @attachment = Attachment.create( :attachable_type => "Announcement",
+                                        :attachable_id => @announcement.id,
+                                        :filename => params[:announcement][:attachment][:filename],
+                                        :content_type => params[:announcement][:attachment][:content_type],
+                                        :size => params[:announcement][:attachment][:size]
+            )
+           File.makedirs("public/uploads/#{@attachment.id}")
+           FileUtils.mv(params[:announcement][:attachment][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+        end
 	      redirect resource(:announcements)
      else
 	      render :new
@@ -49,6 +59,15 @@ class Announcements < Application
   def update 
      @announcement = Announcement.find(params[:id])
      if @announcement.update_attributes(params[:announcement])
+        Attachment.delete_all(['attachable_id = ?', @announcement.id])
+        unless params[:announcement][:attachment].empty?
+            @attachment = Attachment.create( :attachable_type => "Announcement",
+                                        :attachable_id => @announcement.id,
+                                        :filename => params[:announcement][:attachment][:filename],
+                                        :content_type => params[:announcement][:attachment][:content_type],
+                                        :size => params[:announcement][:attachment][:size]
+            )
+         end
         @announcement.person_id = session.user.id
         @announcement.approved = false
         @announcement.approve_announcement = true
@@ -61,7 +80,9 @@ class Announcements < Application
   end
   
   def delete
-      Announcement.find(params[:id]).destroy
+      @announcement = Announcement.find(params[:id])
+      Attachment.delete_all(['attachable_id = ?', @announcement.id])
+      @announcement.destroy
       redirect resource(:announcements)
    end
    
