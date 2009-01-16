@@ -18,6 +18,8 @@ require  Merb.root / 'lib' / 'attachable'
   
 Merb::BootLoader.after_app_loads do
 	
+ 
+
   # Paperclip::Configure::enable_ar!
     #Merb::Slices::config[:merb_auth][:layout] = :application
    #MA[:forgotten_password] = true 
@@ -34,7 +36,7 @@ Merb::BootLoader.after_app_loads do
   
   #Merb::Mailer.config = { :sendmail_path => /usr/sbin/sendmail}
   #Merb::Mailer.delivery_method = :sendmail
-
+ 
 end
 
 # ==== Set up your basic configuration
