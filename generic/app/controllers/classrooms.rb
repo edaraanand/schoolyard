@@ -1,23 +1,24 @@
 class Classrooms < Application
    
    layout 'default'
+   before :find_school
    before :access_rights, :exclude => [:class_details]
    before :class_types
   
    def index
-      @classrooms = Classroom.find(:all)
+      @classrooms = @current_school.classrooms.find(:all)
       render
    end
   
    def new
       @classroom = Classroom.new 
-      @teachers = Staff.find(:all)
+      @teachers = @current_school.staff.find(:all)
       render
    end
    
    def create 
-      @classroom = Classroom.new(params[:classroom])
-      @teachers = Staff.find(:all)
+     @classroom = @current_school.classrooms.new(params[:classroom])
+      @teachers = @current_school.staff.find(:all)
       id = params[:class][:people][:ids]
       role = params[:class][:people][:role]
       teachers = params[:class][:people][:teacher]
@@ -57,12 +58,12 @@ class Classrooms < Application
       @class = @class_people.delete_if{|x| x.team_id != nil}
       @class_p = @class.delete_if{|x| x.role == "class_teacher"}
       @class_sport = @class.delete_if{|x| x.role == "Athletic Director"}
-      @teachers = Staff.find(:all)
+      @teachers = @current_school.staff.find(:all)
       render                          
    end
    
    def update
-      @teachers = Staff.find(:all)
+       @teachers = @current_school.staff.find(:all)
       @classroom = Classroom.find(params[:id])
       @class_people = @classroom.class_peoples
       @class = @class_people.delete_if{|x| x.team_id != nil}

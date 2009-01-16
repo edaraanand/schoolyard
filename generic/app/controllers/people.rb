@@ -3,9 +3,10 @@ class People < Application
   layout 'default'
   before :access_rights
   before :titles
-       
+  before :find_school
+  
   def index
-     @people = Staff.find(:all)
+     @people = @current_school.people.find(:all, :conditions => ['type = ?', "Staff"])
      render
   end
   
@@ -18,7 +19,7 @@ class People < Application
   
   def create
      @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
-     @person = Staff.new(params[:person])
+     @person = @current_school.staff.new(params[:person])
      if @person.save
         unless params[:access].nil?
 	         @access = params[:access][:access_ids]
@@ -45,7 +46,6 @@ class People < Application
       @person = Person.find(params[:id]) 
       @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
       @access_people = @person.access_peoples
-      puts @access_people.inspect
       render
   end
   
