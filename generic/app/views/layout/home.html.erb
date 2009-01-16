@@ -1,9 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
-<head> <% @school = School.find(:first) %>
-<% unless @school.nil? %>
-<title><%= @school.school_name %></title>
-<% end %>
+<head> 
+<title><%= @current_school.school_name %></title>
+
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
   <link rel="stylesheet" href="/stylesheets/ui.datepicker.css" type="text/css" media="screen" charset="utf-8" />
@@ -23,10 +22,8 @@
 </head>
 <body class="fixed-width">
   <div id="page-wrap"><!-- Wraps everything -->
-  <div id="header"><!--The Header --><% @school = School.find(:first) %>
-   <% unless @school.nil? %>
-      <h1><%= link_to "#{@school.school_name}", url(:schools) %></h1>
-   <% end %>
+  <div id="header"><!--The Header -->
+      <h1><%= link_to "#{@current_school.school_name}", url(:schools) %></h1>
       <div id="user-cp"><!--User Control Panel -->
        <p class="welcome">Welcome <em><%= session.user.first_name %></em></p>
         <ul>  <% @access_rights = session.user.access_peoples  %>
@@ -74,8 +71,9 @@
                  <li><%= link_to "<span>Your Announcements</span>", url(:parents), :class=> "admin" %></li>
                  <% end %>
            <% end %>
+            
            <li><%= link_to "<span>Help/Contact</span>", url(:help) %></li>
-          
+                     
         </ul>
         <div class="hrule clear"><hr /></div><!-- gives bottom border to the Navigation.-->
       </div><!--Navbar End-->
@@ -87,6 +85,7 @@
       <div class="hrule clear hidden "><hr /></div>
       <div id="content"><!--Content Area Starts here-->
         <%= catch_content :for_layout %>
+     
       </div><!--Content End-->
     </div><!--Content Wrap End -->
     
