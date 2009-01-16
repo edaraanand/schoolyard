@@ -21,6 +21,16 @@
 
 Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do 
+  
+  module Merb
+    class Request
+      def first_subdomain
+         subdomains.first
+         #puts subdomains.first.inspect
+      end
+    end
+  end
+
   # RESTful routes
   
  #r.add_slice(:MerbAuth, 'auth')
@@ -31,6 +41,8 @@ Merb::Router.prepare do
   #match("/logout").
    # to(:controller => 'sessions', :action => 'destroy').
     #name(:logout)
+  
+  
     slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "") 
     resources :registrations
     match("/registration_process").to(:controller => 'registrations', :action => 'registration_process').name(:registration_process)
@@ -47,7 +59,9 @@ Merb::Router.prepare do
     match("/new_staff_password").to(:controller => 'registrations', :action => 'new_staff_password').name(:new_staff_password)
     match("/password_staff").to(:controller => 'registrations', :action => 'password_staff').name(:password_staff)
     match("/staff_password_save").to(:controller => 'registrations', :action => 'staff_password_save').name(:staff_password_save)
-authenticate do
+
+ #match(:first_subdomain => ":first_subdomain") do
+   authenticate do
   resources :parents
   resources :approvals
   resources :schools
@@ -97,6 +111,7 @@ authenticate do
   match("/enable").to(:controller => 'people', :action => 'enable').name(:enable)
   match("/download").to(:controller => 'homes', :action => 'download').name(:download)
 end
+#end
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
   # routes, you may want to comment/remove this line to prevent
