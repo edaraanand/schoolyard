@@ -2,10 +2,11 @@ class Schools < Application
   
   layout 'default'
   before :ensure_authenticated
+  before :find_school
    
   def index
-    @school = School.find(:first)
-    render
+     @school = @current_school
+     render
   end
   
   def new
@@ -18,7 +19,7 @@ class Schools < Application
     if @school.save
        redirect resource(:schools)
     else
-	render :new
+      	render :new
     end
   end
   
@@ -28,12 +29,13 @@ class Schools < Application
   end
   
   def update
-    @school = School.find(params[:id])
+      @school = School.find(params[:id])
       if @school.update_attributes(params[:school])     
          redirect resource(:schools)                                     
       else
-	 render :edit
+	       render :edit
       end
   end
   
+ 
 end
