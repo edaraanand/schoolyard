@@ -1,7 +1,20 @@
 Merb.start_environment(:environment => ENV['MERB_ENV'] || 'rake')
 namespace :bootstrap do
+  
+  desc "creating a school information"
+   task :school do
+     @school = School.create({
+         :school_name => "St Benecia School",
+         :phone => "9998805789",
+         :email => "eshwar.gouthama@insightmethods.com",
+         :domain => "http://sdb.schoolyardapp.com",
+         :folder => "schoolyardappcom",
+         :subdomain => 'sdb'
+        })
+   end
+   
   desc "creating Access for the people"
-  task :access do
+  task :access => :school do
     accesses = {
       :announcements => "Add/Edit Announcements",
       :approve_announcement => "Approve Announcements",
@@ -26,23 +39,27 @@ namespace :bootstrap do
       end
      
   end
- 
+  
   desc "Creating a default person"
-  task :person => :access do
-    @staff = Staff.create({
-      :first_name => "Admin",
-      :last_name => "administration",
-      :email => "school@insight",
-      :type => 'Staff',
-      :password => 'admin',
-      :password_confirmation => 'admin'
-      
+    task :person => :access do
+       @staff = Staff.create({
+           :title => "Mr.",
+           :first_name => "Admin",
+           :last_name => "administration",
+           :email => "school@insight",
+           :type => 'Staff',
+           :password => 'admin',
+           :password_confirmation => 'admin',
+           :school_id => @school.id
       })
        
-      @view = Access.find_by_name('view_all')
-      AccessPeople.create({:person_id => @staff.id, :access_id => @view.id })
-      AccessPeople.create({:person_id => @staff.id, :all => true })
+       @view = Access.find_by_name('view_all')
+       AccessPeople.create({:person_id => @staff.id, :access_id => @view.id })
+       AccessPeople.create({:person_id => @staff.id, :all => true })
   end
+  
+ 
+ 
   
   desc "creating alerts for both parents and staff"
   task :alerts => :person do
@@ -67,5 +84,6 @@ namespace :bootstrap do
      
    end
  
+   
    
 end
