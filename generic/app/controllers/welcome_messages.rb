@@ -1,16 +1,18 @@
 class WelcomeMessages < Application
  
   layout 'default'
+  before :find_school
   before :rooms, :only => [:new, :create, :edit, :update]
+  
   
   def index
      classrooms
-     @welcome_messages = WelcomeMessage.find(:all, :conditions => ['access_name =?', params[:access_name]])
+     @welcome_messages =@current_school.welcome_messages.find(:all, :conditions => ['access_name =?', params[:access_name]])
      if params[:access_name].nil?
-      	@welcome = WelcomeMessage.find(:all)
+       @welcome = @current_school.welcome_messages.find(:all)
      end
      if params[:access_name] == "All Messages"
-       @all_messages = WelcomeMessage.find(:all)
+       @all_messages = @current_school.welcome_messages.find(:all)
      end
      render
   end
@@ -21,7 +23,7 @@ class WelcomeMessages < Application
   end
 
   def create
-     @welcome_message = WelcomeMessage.new(params[:welcome_message])
+     @welcome_message = @current_school.welcome_messages.new(params[:welcome_message])
      @welcome_message.person_id = @current_user.id
      if @welcome_message.save
 	      redirect resource(:welcome_messages)
@@ -74,14 +76,14 @@ class WelcomeMessages < Application
   end
   
   def classrooms
-     @class = Classroom.find(:all)
+     @class = @current_school.classrooms.find(:all)
      room = @class.collect{|x| x.class_name }
      @classrooms = room.insert(0, "All Messages")
      @classrooms = room.insert(1, "Home Page")
   end
   
   def rooms
-      @class = Classroom.find(:all)
+      @class = @current_school.classrooms.find(:all)
       room = @class.collect{|x| x.class_name }
       @classrooms = room.insert(0, "Home Page")
   end

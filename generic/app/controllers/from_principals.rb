@@ -1,9 +1,9 @@
 class FromPrincipals < Application
   layout 'default'
- 
+  before :find_school
 
   def index
-     @announcements = Announcement.find(:all, :conditions => ['label=?', "from_principal"])
+     @announcements = @current_school.announcements.find(:all, :conditions => ['label=?', "from_principal"])
      render
   end
   
@@ -13,7 +13,7 @@ class FromPrincipals < Application
   end
   
   def create
-     @announcement = Announcement.new(params[:announcement])
+     @announcement = @current_school.announcements.new(params[:announcement])
      @announcement.label = "from_principal"
      if @announcement.save
         unless params[:announcement][:attachment].empty?
