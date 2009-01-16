@@ -1,9 +1,13 @@
 class Form < ActiveRecord::Base
   
-    validates_presence_of :title
-    validates_presence_of :attachment, :message => 'Please Upload a Form'
+   belongs_to :school
   
-    attr_accessor :attachment
+   attr_accessor :attachment
+   
+   validates_presence_of :title
+   validates_presence_of :attachment, :message => 'Please Upload a Form'
+  
+    
              
   
     

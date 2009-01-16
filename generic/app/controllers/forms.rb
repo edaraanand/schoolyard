@@ -1,19 +1,19 @@
 class Forms < Application
   
   layout 'default'
-  
+  before :find_school
   before :classrooms
   before :access_rights, :exclude => [:form_files]
   before :forms, :only => [:index]
   
   def index
     if params[:class_name].nil?
-       @forms = Form.find(:all)
+      @forms = @current_school.forms.find(:all)
     end
     if params[:class_name] == "All Forms"
-      @forms_f = Form.find(:all)
+      @forms_f = @current_school.forms.find(:all)
     end
-    @files = Form.find(:all, :conditions => ['class_name = ?', params[:class_name] ] )
+    @files = @current_school.forms.find(:all, :conditions => ['class_name = ?', params[:class_name] ] )
     render
   end
   
@@ -23,7 +23,7 @@ class Forms < Application
   end
   
   def create
-     @form = Form.new(params[:form])
+     @form = @current_school.forms.new(params[:form])
      if @form.save
        unless params[:form][:attachment].empty?
            @attachment = Attachment.create( :attachable_type => "Form",

@@ -1,11 +1,12 @@
 class ExternalLinks < Application
   layout 'default'
+  before :find_school
   
   def index
-     @class_links = ExternalLink.find(:all, :conditions => ['label=?', "Classrooms"])
-     @home_links = ExternalLink.find(:all, :conditions => ['label=?', "Home Page"])
-     @sport_links = ExternalLink.find(:all, :conditions => ['label=?', "Sports"])
-     @event_links = ExternalLink.find(:all, :conditions => ['label=?', "Events"])
+     @class_links = @current_school.external_links.find(:all, :conditions => ['label=?', "Classrooms"])
+     @home_links = @current_school.external_links.find(:all, :conditions => ['label=?', "Home Page"])
+     @sport_links = @current_school.external_links.find(:all, :conditions => ['label=?', "Sports"])
+     @event_links = @current_school.external_links.find(:all, :conditions => ['label=?', "Events"])
      render
   end
   
@@ -16,7 +17,7 @@ class ExternalLinks < Application
   
   def create
       params[:external_link][:title].each_with_index do |l, i|
-	      @external_link = ExternalLink.create({:title => l, :url => params[:external_link][:url][i], :label => params[:label]})
+	      @external_link = @current_school.external_links.create({:title => l, :url => params[:external_link][:url][i], :label => params[:label]})
       end
       if @external_link.valid?
          redirect url(:external_links)
@@ -26,12 +27,12 @@ class ExternalLinks < Application
   end     
 	  
   def edit
-     @external_links = ExternalLink.find(:all, :conditions => ['label=?', params[:label] ])
+     @external_links = @current_school.external_links.find(:all, :conditions => ['label=?', params[:label] ])
      render
   end
   
   def update
-     @external_links = ExternalLink.find(:all, :conditions => ['label=?', params[:label] ])
+     @external_links = @current_school.external_links.find(:all, :conditions => ['label=?', params[:label] ])
      @external_ids = @external_links.collect{|x| x.id}
      title = params[:external_link][:title]
      url = params[:external_link][:url]
@@ -39,9 +40,9 @@ class ExternalLinks < Application
      links = [] 
         s.each do |l|
 	         if l[2].nil?
-		           links << ExternalLink.create!({:title => l[0], :url => l[1], :label => params[:label]})
+		           links << @current_school.external_links.create!({:title => l[0], :url => l[1], :label => params[:label]})
 	         else
-		           links << ExternalLink.update(l[2], {:title => l[0], :url => l[1], :label => params[:label]})
+		           links << @current_school.external_links.update(l[2], {:title => l[0], :url => l[1], :label => params[:label]})
 	         end
         end
 	   redirect url(:external_links)

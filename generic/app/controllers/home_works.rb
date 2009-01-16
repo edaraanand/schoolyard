@@ -1,6 +1,7 @@
 class HomeWorks < Application
   
   layout 'default'
+  before :find_school
   before :classrooms, :exclude => [:delete, :preview]
   before :rooms, :only => [:index]
   
@@ -23,9 +24,10 @@ class HomeWorks < Application
   end
   
   def create
+    @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
     @person = session.user
     @home_work = @person.home_works.build(params[:home_work])
-    @home_work.classroom_id = params[:home_work][:classroom_id]
+    @home_work.classroom_id = @classroom.id
     if @home_work.save
        unless params[:home_work][:attachment].empty?
            @attachment = Attachment.create( :attachable_type => "Homework",

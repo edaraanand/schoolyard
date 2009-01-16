@@ -1,5 +1,6 @@
 class Team < ActiveRecord::Base
 	
+  belongs_to :school
 	has_many :class_peoples
 	has_many :classrooms, :through => :class_peoples, :source => :classroom
 	

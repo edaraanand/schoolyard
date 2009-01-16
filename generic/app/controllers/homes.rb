@@ -2,6 +2,7 @@ class Homes < Application
   
     before :ensure_authenticated
     layout 'home'
+  
     
   def index
     @date = Date.today
@@ -30,6 +31,7 @@ class Homes < Application
      @attachment = Attachment.find(params[:id])
      send_file("#{Merb.root}/public/uploads/#{@attachment.id}/#{@attachment.filename}") 
   end
+  
   
   
 end

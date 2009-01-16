@@ -25,8 +25,7 @@ module Merb
            link_to(name, url)
         end
      end
-     
-     
+  
    
   end
 end

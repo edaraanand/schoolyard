@@ -1,10 +1,11 @@
 class Teams < Application
 	
   layout 'default'
+  before :find_school
   before :team_values, :exclude => [:index]
 
   def index
-     @teams = Team.find(:all)
+    @teams = @current_school.teams.find(:all)
      render
   end
   
@@ -15,7 +16,7 @@ class Teams < Application
   
   def create
      classroom = Classroom.find(:first, :conditions => ['class_name=?', params[:team][:classroom_id] ])
-     @team = Team.new(params[:team])
+     @team = @current_school.teams.new(params[:team])
      id = params[:classroom][:people][:ids]
      role = params[:classroom][:people][:role]
      teachers = params[:classroom][:people][:teacher]
