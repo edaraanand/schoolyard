@@ -71,18 +71,16 @@
                  <li><%= link_to "<span>Your Announcements</span>", url(:parents), :class=> "admin" %></li>
                  <% end %>
            <% end %>
-                <li><%= link_to "<span>Help/Contact</span>", url(:help) %></li>
+                <li><%= link_to "<span>Contact Us</span>", url(:help) %></li>
         </ul>
         <div class="hrule clear"><hr /></div><!-- gives bottom border to the Navigation.-->
       </div><!--Navbar End-->
     </div><!--Header End -->
        <div id="sidebar">
       <ul id="menu"><!-- Nested Lists -->
-       <li>How To :<ul>
-            <li><%= link_to "Help Item 1", url(:help, :label => "help1") %></li>
-            <li><%= link_to "Help Item 2", url(:help, :label => "help2") %></li>
-            <li><%= link_to "Help Item 3", url(:help, :label => "help3") %></li>
-            <li><%= link_to "Help Item 4", url(:help, :label => "help4") %></li>
+       <li><ul>
+             <li><%= link_to "Contact Us", url(:help) %></li>
+           
           </ul>
       </ul>
  
@@ -94,7 +92,7 @@
       </div><!--Content End-->
     </div><!--Content Wrap End -->
     
-                <% @classrooms = Classroom.find(:all) %>
+                 <% @classrooms = @current_school.classrooms.find(:all) %>
     <div id="info" style="display:none;">
          <h3>Please Select the classroom you would like to visit</h3>
           Classes:  

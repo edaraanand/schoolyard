@@ -72,7 +72,7 @@
                  <% end %>
            <% end %>
             
-           <li><%= link_to "<span>Help/Contact</span>", url(:help) %></li>
+          <li><%= link_to "<span>Contact Us</span>", url(:help) %></li>
                      
         </ul>
         <div class="hrule clear"><hr /></div><!-- gives bottom border to the Navigation.-->
@@ -89,7 +89,7 @@
       </div><!--Content End-->
     </div><!--Content Wrap End -->
     
-            <% @classrooms = Classroom.find(:all) %>
+       <% @classrooms = @current_school.classrooms.find(:all) %>
     <div id="info" style="display:none;">
          <h3>Please Select the classroom you would like to visit</h3>
           Classes:  

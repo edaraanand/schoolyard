@@ -64,7 +64,7 @@
                  <li><%= link_to "<span>Your Announcements</span>", url(:parents), :class=> "admin" %></li>
                  <% end %>
            <% end %>
-                 <li><%= link_to "<span>Help/Contact</span>", url(:help) %></li>
+                 <li><%= link_to "<span>Contact Us</span>", url(:help) %></li>
         </ul>
         <div class="hrule clear"><hr /></div><!-- gives bottom border to the Navigation.-->
       </div><!--Navbar End-->
@@ -83,7 +83,7 @@
              <li><a rel="facebox" href="#info"> Change Classroom</a></li>
           </ul>
       </li>
-        <% @classrooms = Classroom.find(:all) %>
+         <% @classrooms = @current_school.classrooms.find(:all) %>
          
       </ul>
     </div><!-- Sidebar Ends -->
