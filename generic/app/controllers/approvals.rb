@@ -1,6 +1,7 @@
 class Approvals < Application
   
   layout 'default'
+  before :find_school
   before :classrooms, :only => [:edit, :update]
   before :ensure_authenticated
   before :access_rights
@@ -9,7 +10,7 @@ class Approvals < Application
   
   
   def index
-     @announcements = Announcement.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ])
+     @announcements = @current_school.announcements.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ])
      render
   end
   
@@ -29,7 +30,9 @@ class Approvals < Application
         @announcement.person_id = session.user.id
         @announcement.approved = false
         @announcement.approve_announcement = true
+        @announcement.school_id = @current_school.id
         @announcement.label = 'parent'
+        @announcement.save
         redirect resource(:approvals)
       else
         render :edit
@@ -42,12 +45,14 @@ class Approvals < Application
         @announcement.approve_comments = params[:announcement][:comments]
         @announcement.approved = @announcement.approve_announcement = true
         @announcement.approved_by = session.user.id
+        @announcement.school_id = @current_school.id
         @announcement.save 
         redirect resource(:approvals)
      else
         @announcement.reject_comments = params[:announcement][:comments]
         @announcement.approved = @announcement.approve_announcement = false
         @announcement.rejected_by = session.user.id
+        @announcement.school_id = @current_school.id
         @announcement.save 
         redirect resource(:approvals)
      end
@@ -164,7 +169,7 @@ class Approvals < Application
   end
    
   def classrooms
-     @class = Classroom.find(:all)
+     @class = @current_school.classrooms.find(:all)
      room = @class.collect{|x| x.class_name }
      @classrooms = room.insert(0, "HomePage")
   end
