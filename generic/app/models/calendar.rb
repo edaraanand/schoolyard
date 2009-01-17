@@ -1,5 +1,7 @@
 class Calendar < ActiveRecord::Base
 	
+    belongs_to :school
+  
       validates_presence_of :title
       validates_presence_of :start_date 
       validates_presence_of :end_date  

@@ -75,12 +75,12 @@ class Forms < Application
   
   def form_files
      if params[:class_name].nil?
-        @forms = Form.find(:all)
+        @forms = @current_school.forms.find(:all)
      end
      if params[:class_name] == "All Forms"
-        @forms_f = Form.find(:all)
+        @forms_f = @current_school.forms.find(:all)
      end
-     @files = Form.find(:all, :conditions => ['class_name = ?', params[:class_name] ] )
+     @files = @current_school.forms.find(:all, :conditions => ['class_name = ?', params[:class_name] ] )
      render :layout => 'home'
   end
   
@@ -88,13 +88,13 @@ class Forms < Application
   private
   
   def forms
-     @class = Classroom.find(:all)
+     @class = @current_school.classrooms.find(:all)
      room = @class.collect{|x| x.class_name }
      @classrooms = room.insert(0, "All Forms")
   end
   
   def classrooms
-    classes = Classroom.find(:all)
+    classes = @current_school.classrooms.find(:all)
     room = classes.collect{|x| x.class_name }
     @classrooms = room.insert(0, "All Classes")
     @years = (1999..2025).to_a

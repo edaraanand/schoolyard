@@ -1,24 +1,25 @@
 class Calendars < Application
   
   layout 'default'
+  before :find_school
   before :ensure_authenticated
   before :access_rights, :exclude => [:events, :show]
   before :classrooms, :only => [:events, :show]
   
   def index
-     @calendars = Calendar.find(:all)
+    @calendars = @current_school.calendars.find(:all)
      render
   end
   
   def new
      @calendar = Calendar.new
-     @class_rooms = Classroom.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all)
      render
   end
   
   def create
-     @class_rooms = Classroom.find(:all)
-     @calendar = Calendar.new(params[:calendar])
+     @class_rooms = @current_school.classrooms.find(:all)
+     @calendar = @current_school.calendars.new(params[:calendar])
      if @calendar.save
         unless params[:calendar][:attachment].empty?
           @attachment = Attachment.create( :attachable_type => "Calendar",
@@ -40,7 +41,7 @@ class Calendars < Application
 
   def edit
      @calendar = Calendar.find(params[:id])
-     @class_rooms = Classroom.find(:all) 
+     @class_rooms = @current_school.classrooms.find(:all) 
      render
   end
   
@@ -51,7 +52,7 @@ class Calendars < Application
   end
 
   def update
-     @class_rooms = Classroom.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all)
      @calendar = Calendar.find(params[:id])
      if @calendar.update_attributes(params[:calendar])
          Attachment.delete_all(['attachable_id = ?', @calendar.id])
@@ -84,12 +85,12 @@ class Calendars < Application
   end
   
   def events
-     @cls = Calendar.find(:all, :conditions => ["class_name = ?", params[:class_name] ])
+     @cls = @current_school.calendars.find(:all, :conditions => ["class_name = ?", params[:class_name] ])
      if params[:class_name] == "All Events"
-        @calendars = Calendar.find(:all)
+        @calendars = @current_school.calendars.find(:all)
      end
      if params[:class_name].nil?
-        @cals = Calendar.find(:all)
+        @cals = @current_school.calendars.find(:all)
      end
      render :layout => 'home'
   end
@@ -105,7 +106,7 @@ class Calendars < Application
   private
   
   def classrooms
-      @class = Classroom.find(:all)
+      @class = @current_school.classrooms.find(:all)
       room = @class.collect{|x| x.class_name }
       @classrooms = room.insert(0, "All Events")
   end

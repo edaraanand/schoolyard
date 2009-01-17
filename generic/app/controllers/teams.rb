@@ -87,8 +87,8 @@ class Teams < Application
   private
   
   def team_values
-     @teachers = Staff.find(:all)
-     @classrooms = Classroom.find(:all)
+     @teachers = @current_school.staff.find(:all)
+     @classrooms = @current_school.classrooms.find(:all)
      @years = (2009..2025).to_a 
   end
   

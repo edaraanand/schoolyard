@@ -7,12 +7,12 @@ class HomeWorks < Application
   
   def index
      if params[:classroom_id].nil?
-        @h_works = HomeWork.find(:all)
+        @h_works = @current_school.home_works.find(:all)
      elsif params[:classroom_id] == "All Home Works"
-        @works = HomeWork.find(:all)
+        @works = @current_school.home_works.find(:all)
      else
         @classroom = Classroom.find_by_class_name(params[:classroom_id])
-        @home_works = @classroom.home_works.find(:all)
+        @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id])
      end
        @error = "No Homeworks Yet"
      render
@@ -28,6 +28,7 @@ class HomeWorks < Application
     @person = session.user
     @home_work = @person.home_works.build(params[:home_work])
     @home_work.classroom_id = @classroom.id
+    @home_work.school_id = @current_school.id
     if @home_work.save
        unless params[:home_work][:attachment].empty?
            @attachment = Attachment.create( :attachable_type => "Homework",
@@ -65,6 +66,7 @@ class HomeWorks < Application
          end
        @home_work.classroom_id = @classroom.id
        @home_work.person_id = session.user.id
+       @home_work.school_id = @current_school.id
        @home_work.save
        redirect resource(:home_works)
     else
@@ -87,12 +89,12 @@ class HomeWorks < Application
   private
   
   def classrooms
-    @classrooms = Classroom.find(:all)
+    @classrooms = @current_school.classrooms.find(:all)
   end
   
   
   def rooms
-    classes = Classroom.find(:all)
+    classes = @current_school.classrooms.find(:all)
     room = classes.collect{|x| x.class_name }
     @classes = room.insert(0, "All Home Works")
   end

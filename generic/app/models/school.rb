@@ -9,6 +9,7 @@ class School < ActiveRecord::Base
    has_many :teams
    has_many :external_links
    has_many :announcements
+   has_many :home_works
    
    validates_presence_of :school_name, :phone, :email
 	 #validates_format_of :email, :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i

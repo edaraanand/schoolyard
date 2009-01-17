@@ -109,12 +109,12 @@ class Classrooms < Application
    end
     
    def class_details
-      @classroom = Classroom.find(params[:id])
-      @calendars = Calendar.find(:all, :conditions => ['class_name = ?', @classroom.class_name])
-      @home_works = @classroom.home_works.find(:all)
-      @announcements = Announcement.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true])
-      @welcome_messages = WelcomeMessage.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
-      @external_links = ExternalLink.find(:all, :conditions => ['label = ?', "Classrooms"])
+      @classroom = @current_school.classrooms.find(params[:id])
+      @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', @classroom.class_name])
+      @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id])
+      @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true])
+      @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
+      @external_links = @current_school.external_links.find(:all, :conditions => ['label = ?', "Classrooms"])
       render :layout => 'class_change', :id => @classroom.id
    end
    

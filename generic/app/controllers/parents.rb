@@ -1,13 +1,13 @@
 class Parents < Application
   
   layout 'home'
-  
+  before :find_school
   before :ensure_authenticated
   before :classroom
   
  
   def index
-    @announcements = session.user.announcements
+    @announcements = session.user.announcements.find(:all, :conditions => ['school_id = ?', @current_school.id] )
     @message1 = "Approved"
     @message2 = "Pending Approval"
     @message3 = "Rejected"
@@ -29,6 +29,7 @@ class Parents < Application
     @announcement.approved = false
     @announcement.approve_announcement = true
     @announcement.label = 'parent'
+    @announcement.school_id = @current_school.id
      if @announcement.save
         unless params[:announcement][:attachment].empty?
           @attachment = Attachment.create( :attachable_type => "Announcement",
@@ -67,6 +68,7 @@ class Parents < Application
         @announcement.approved = false
         @announcement.approve_announcement = true
         @announcement.label = 'parent'
+        @announcement.school_id = @current_school.id
       	@announcement.save          
 	      redirect resource(:parents)
      else
@@ -88,7 +90,7 @@ class Parents < Application
   private
   
   def classroom
-     @class = Classroom.find(:all)
+     @class = @current_school.classrooms.find(:all)
      room = @class.collect{|x| x.class_name }
      @classrooms = room.insert(0, "HomePage")
   end
