@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 50) do
+ActiveRecord::Schema.define(:version => 53) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -60,15 +60,13 @@ ActiveRecord::Schema.define(:version => 50) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "label"
-    t.string   "file_file_name"
-    t.string   "file_content_type"
-    t.integer  "file_file_size"
     t.boolean  "approved"
     t.boolean  "approve_announcement"
     t.integer  "approved_by"
     t.integer  "rejected_by"
     t.text     "approve_comments"
     t.text     "reject_comments"
+    t.integer  "school_id"
   end
 
   create_table "attachments", :force => true do |t|
@@ -93,6 +91,7 @@ ActiveRecord::Schema.define(:version => 50) do
     t.time     "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "school_id"
   end
 
   create_table "class_peoples", :force => true do |t|
@@ -110,6 +109,7 @@ ActiveRecord::Schema.define(:version => 50) do
     t.datetime "updated_at"
     t.string   "class_type"
     t.integer  "person_id"
+    t.integer  "school_id"
   end
 
   create_table "classtypes", :force => true do |t|
@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(:version => 50) do
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "school_id"
   end
 
   create_table "forms", :force => true do |t|
@@ -132,6 +133,7 @@ ActiveRecord::Schema.define(:version => 50) do
     t.string   "year"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "school_id"
   end
 
   create_table "guardians", :force => true do |t|
@@ -149,6 +151,7 @@ ActiveRecord::Schema.define(:version => 50) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "person_id"
+    t.integer  "school_id"
   end
 
   create_table "people", :force => true do |t|
@@ -167,6 +170,7 @@ ActiveRecord::Schema.define(:version => 50) do
     t.integer  "approved"
     t.string   "password_reset_key"
     t.string   "title"
+    t.integer  "school_id"
   end
 
   create_table "protectors", :force => true do |t|
@@ -175,6 +179,7 @@ ActiveRecord::Schema.define(:version => 50) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "school_id"
   end
 
   create_table "registrations", :force => true do |t|
@@ -185,6 +190,7 @@ ActiveRecord::Schema.define(:version => 50) do
     t.string   "current_class"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "school_id"
   end
 
   create_table "schools", :force => true do |t|
@@ -193,6 +199,9 @@ ActiveRecord::Schema.define(:version => 50) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "domain"
+    t.string   "folder"
+    t.string   "subdomain"
   end
 
   create_table "spot_lights", :force => true do |t|
@@ -204,6 +213,7 @@ ActiveRecord::Schema.define(:version => 50) do
     t.integer  "avatar_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "school_id"
   end
 
   create_table "studies", :force => true do |t|
@@ -219,6 +229,7 @@ ActiveRecord::Schema.define(:version => 50) do
     t.string   "year"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "school_id"
   end
 
   create_table "users", :force => true do |t|
@@ -240,6 +251,7 @@ ActiveRecord::Schema.define(:version => 50) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "school_id"
   end
 
 end
