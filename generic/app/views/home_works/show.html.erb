@@ -1,0 +1,29 @@
+<div id="fullpage">
+  
+  <h2 class="current-page"> Homework for <%= @home_work.classroom.class_name %></h2>
+ 
+            <h2> <%= @home_work.title %> </h2> 
+                        <div class="data-block long-block">
+                              <span class="hidden">
+                                  <% unless @home_work.due_date.nil? %>
+                                         <%= @home_work.due_date.strftime("%B-%d") %>
+                                  <% end %>
+                              </span>
+                                   <% if @home_work.due_date.nil? %>
+	                                       <div class="ddmmm-x"></div>
+	                                 <% else %>
+                                         <div class="ddmmm">
+                                               <span class="date"><%= @home_work.due_date.strftime("%d") %></span>
+                                               <span class="month"><%= @home_work.due_date.strftime("%b") %></span>
+                                         </div>
+                                   <% end %>
+                                   
+                                      Assigned : <%= @home_work.created_at.strftime("%b %d, %Y") %>  by <%= @home_work.person.name %>
+                                      <p class="post-content"><%= @home_work.content %></p>
+                                     
+                                 <div class="hrule clear"><hr /></div>
+                         </div>
+                       <%= link_to "Back to All Homeworks", url(:class_details, :id => @home_work.classroom.id, :label => "homeworks") %>                
+         <%= link_to "Download as PDF", url(:home_works_pdf, :id => @home_work.id, :label => "single") %>
+</div>
+

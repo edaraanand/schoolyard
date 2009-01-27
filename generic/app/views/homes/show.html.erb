@@ -15,7 +15,7 @@
     <p><%= @announcement.content %></p>
     
     <% if @announcement.label == "from_principal" %>
-       <%= link_to "All Articles", url(:principal_articles, :label => 'principal')  %> <br/>
+       <%= link_to "< Back to All Articles", url(:principal_articles, :label => 'principal')  %> <br/>
     <% end %>       
     
- 
+    <%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) %>
