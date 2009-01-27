@@ -1,7 +1,7 @@
 class Staff < Person
   
   belongs_to :school
-  
+   
 	def self.make_key
       Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
   end
@@ -12,7 +12,7 @@ class Staff < Person
         self.password_reset_key = self.class.make_key
         puts self.password_reset_key.inspect
         puts "Naidu".inspect
-        self.save
+        self.save!
         pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false
      end
      send_password

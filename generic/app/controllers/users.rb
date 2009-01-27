@@ -14,12 +14,12 @@ class Users < Application
   end
   
   def staff_account_update
-    @person = session.user
-    if @person.update_attributes(params[:person])
-      redirect url(:staff_account)
-    else
-      render :staff_account_edit
-    end
+     @person = session.user
+     if @person.update_attributes(params[:person])
+        redirect url(:staff_account)
+     else
+        render :staff_account_edit
+     end
   end
   
   def staff_password
@@ -29,13 +29,13 @@ class Users < Application
   
   def staff_password_update
      @person = session.user
-    if  Person.authenticate(@person.email, params[:person][:old_password])
+     if  Person.authenticate(@person.email, @current_school.id, params[:person][:old_password])
       if (( params[:person][:password] == params[:person][:password_confirmation]) && !params[:person][:password_confirmation].blank?)
         if @person.update_attributes(params[:person])
-          redirect url(:staff_account)
+           redirect url(:staff_account)
         else
-          flash[:error1] = "Your Password is not updated"
-          render :staff_password
+           flash[:error1] = "You should enter Minimum Length"
+           render :staff_password
         end
       else
         flash[:error2] = "Your Password doesn't match"
@@ -63,12 +63,12 @@ class Users < Application
   
   def parent_password_change
     @parent = session.user
-    if  Person.authenticate(@parent.email, params[:parent][:old_password])
+    if Person.authenticate(@parent.email, @current_school.id, params[:parent][:old_password])
         if (( params[:parent][:password] == params[:parent][:password_confirmation]) && !params[:parent][:password_confirmation].blank?)
            if @parent.update_attributes(params[:parent])
               redirect url(:parent_account)
            else
-              flash[:error1] = "Your Password is not updated"
+              flash[:error1] = "You should enter Minimum Length"
               render :parent_password
            end
         else
@@ -92,7 +92,7 @@ class Users < Application
      @parent = session.user
      @students = @parent.students
      @students.each do |f|
-       @guardians = f.parents.delete_if{|x| x.name == @parent.name}
+        @guardians = f.parents.delete_if{|x| x.name == @parent.name}
      end  
     if params[:label] == "other"
        guardian_id = @guardians.collect{|x| x.id }
@@ -106,9 +106,9 @@ class Users < Application
                           if( ( (params[:f_name_parent3] != "") && (params[:l_name_parent3] != "") ) && (params[:email_parent3] != "") )
                               if ( ( (params[:f_name_parent4] != "") || (params[:l_name_parent4] != "") ) || (params[:email_parent4] != "") )
                                    if ( ( (params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") ) && (params[:email_parent4] != "") )
-                                       @p2 = Parent.create({ :first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2]} )
-                                       @p3 = Parent.create({ :first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3]} )
-                                       @p4 = Parent.create({ :first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4]} )
+                                       @p2 = @current_school.parents.create({ :first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2]} )
+                                       @p3 = @current_school.parents.create({ :first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3]} )
+                                       @p4 = @current_school.parents.create({ :first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4]} )
                                        @students.each do |f|
                                           Guardian.create({:student_id => "#{f.id}" , :parent_id => @p2.id })
                                        end
@@ -136,8 +136,8 @@ class Users < Application
                                        render :parent_account_edit, :label => "other"
                                      end
                               else
-                                  @p2 = Parent.create({ :first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2]} )
-                                  @p3 = Parent.create({ :first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3]} )
+                                  @p2 = @current_school.parents.create({ :first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2]} )
+                                  @p3 = @current_school.parents.create({ :first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3]} )
                                   @students.each do |f|
                                      Guardian.create({:student_id => "#{f.id}" , :parent_id => @p2.id })
                                   end
@@ -159,9 +159,9 @@ class Users < Application
                                render :parent_account_edit, :label => "other"
                            end
                      else
-                         @p2 = Parent.create({ :first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2]} )
+                         @p2 = @current_school.parents.create({ :first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2]} )
                          @students.each do |f|
-                           Guardian.create({:student_id => "#{f.id}" , :parent_id => @p2.id })
+                             Guardian.create({:student_id => "#{f.id}" , :parent_id => @p2.id })
                          end
                           @p2.send_password_approve
                           redirect url(:parent_account, :label => "other")
@@ -181,8 +181,8 @@ class Users < Application
                      if( ( (params[:f_name_parent3] != "") && (params[:l_name_parent3] != "") ) && (params[:email_parent3] != "") )
                            if ( ( (params[:f_name_parent4] != "") || (params[:l_name_parent4] != "") ) || (params[:email_parent4] != "") )
                                  if ( ( (params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") ) && (params[:email_parent4] != "") )
-                                       @p3 = Parent.create({ :first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3]} )
-                                       @p4 = Parent.create({ :first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4]} )
+                                       @p3 = @current_school.parents.create({ :first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3]} )
+                                       @p4 = @current_school.parents.create({ :first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4]} )
                                        @students.each do |f|
                                           Guardian.create({:student_id => "#{f.id}" , :parent_id => @p3.id })
                                        end
@@ -203,7 +203,7 @@ class Users < Application
                                        render :parent_account_edit, :label => "other"
                                   end
                             else
-                                @p3 = Parent.create({ :first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3]} )
+                                @p3 = @current_school.parents.create({ :first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3]} )
                                 @students.each do |f|
                                      Guardian.create({:student_id => "#{f.id}" , :parent_id => @p3.id })
                                 end
@@ -219,14 +219,14 @@ class Users < Application
                      end
                else
                     sp.each do |f|
-                       Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
+                       @current_school.parents.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
                     end
                     redirect url(:parent_account, :label => "other")
                end
         elsif @guardians.length == 2
              if ( ( (params[:f_name_parent4] != "") || (params[:l_name_parent4] != "") ) || (params[:email_parent4] != "") )
                      if ( ( (params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") ) && (params[:email_parent4] != "") )
-                            @p4 = Parent.create({ :first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4]} )
+                            @p4 = @current_school.parents.create({ :first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4]} )
                             @students.each do |f|
                                 Guardian.create({:student_id => "#{f.id}" , :parent_id => @p4.id })
                             end 
@@ -244,13 +244,13 @@ class Users < Application
                      end
              else
                  sp.each do |f|
-                     Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
+                     @current_school.parents.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
                  end
                  redirect url(:parent_account, :label => "other")
              end
         elsif @guardians.length == 3
               sp.each do |f|
-                 Parent.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
+                 @current_school.parents.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
               end
               redirect url(:parent_account, :label => "other")
         else
@@ -276,7 +276,7 @@ class Users < Application
   def student_edit
     @parent = session.user
     @students = @parent.students
-    @classrooms = Classroom.find(:all)
+    @classrooms = @current_school.classrooms.find(:all)
     render
   end
   
@@ -284,7 +284,7 @@ class Users < Application
   def student_update
     @parent = session.user
     @students = @parent.students
-    @classrooms = Classroom.find(:all)
+    @classrooms = @current_school.classrooms.find(:all)
     student_id = @students.collect{|x| x.id }
     sp = params[:classroom_id].zip(student_id)
     if @students.length == 1
@@ -294,9 +294,9 @@ class Users < Application
                         if ( ( (params[:f_name_student3] != "") && (params[:l_name_student3] != "") ) &&  ( (params[:current_class3] != "") &&  (params[:birth_date3] != "") ) )
                              if ( ( (params[:f_name_student4] !="") || (params[:l_name_student4] != "") ) || (params[:current_class4] != "") )
                                   if ( ( (params[:f_name_student4] != "") && (params[:l_name_student4] != "") ) &&  ( (params[:current_class4] != "") &&  (params[:birth_date4] != "") ) )
-                                       Registration.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @parent.id } )                               
-                                       Registration.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @parent.id  })                                 
-                                       Registration.create({:first_name => params[:f_name_student4], :last_name => params[:l_name_student4], :birth_date => params[:birth_date4], :current_class => params[:current_class4], :parent_id => @parent.id  })
+                                       @current_school.registrations.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @parent.id } )                               
+                                       @current_school.registrations.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @parent.id  })                                 
+                                       @current_school.registrations.create({:first_name => params[:f_name_student4], :last_name => params[:l_name_student4], :birth_date => params[:birth_date4], :current_class => params[:current_class4], :parent_id => @parent.id  })
                                        @parent.approved = 2
                                        @parent.save
                                        redirect url(:student_details)
@@ -317,8 +317,8 @@ class Users < Application
                                       render :student_edit
                                   end
                              else
-                                 Registration.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @parent.id } )                               
-                                 Registration.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @parent.id  })                                 
+                                 @current_school.registrations.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @parent.id } )                               
+                                 @current_school.registrations.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @parent.id  })                                 
                                  @parent.approved = 2
                                  @parent.save
                                  redirect url(:student_details)
@@ -336,7 +336,7 @@ class Users < Application
                              render :student_edit
                          end
                   else
-                      Registration.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @parent.id } )
+                      @current_school.registrations.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @parent.id } )
                       @parent.approved = 2
                       @parent.save
                       redirect url(:student_details)
@@ -361,8 +361,8 @@ class Users < Application
                     if ( ( (params[:f_name_student3] != "") && (params[:l_name_student3] != "") ) &&  ( (params[:current_class3] != "") &&  (params[:birth_date3] != "") ) )
                           if ( ( (params[:f_name_student4] !="") || (params[:l_name_student4] != "") ) || (params[:current_class4] != "") )
                                if ( ( (params[:f_name_student4] != "") && (params[:l_name_student4] != "") ) &&  ( (params[:current_class4] != "") &&  (params[:birth_date4] != "") ) )
-                                    Registration.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @parent.id  })                                 
-                                    Registration.create({:first_name => params[:f_name_student4], :last_name => params[:l_name_student4], :birth_date => params[:birth_date4], :current_class => params[:current_class4], :parent_id => @parent.id  })
+                                    @current_school.registrations.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @parent.id  })                                 
+                                    @current_school.registrations.create({:first_name => params[:f_name_student4], :last_name => params[:l_name_student4], :birth_date => params[:birth_date4], :current_class => params[:current_class4], :parent_id => @parent.id  })
                                     @parent.approved = 2
                                     @parent.save
                                     redirect url(:student_details)
@@ -378,7 +378,7 @@ class Users < Application
                                    @birth_date3 = params[:birth_date3]
                                end
                            else
-                               Registration.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @parent.id  })                                 
+                               @current_school.registrations.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @parent.id  })                                 
                                @parent.approved = 2
                                @parent.save
                                redirect url(:student_details)
@@ -399,7 +399,7 @@ class Users < Application
       elsif @students.length == 3   
               if ( ( (params[:f_name_student4] !="") || (params[:l_name_student4] != "") ) || (params[:current_class4] != "") )
                     if ( ( (params[:f_name_student4] != "") && (params[:l_name_student4] != "") ) &&  ( (params[:current_class4] != "") &&  (params[:birth_date4] != "") ) )
-                        Registration.create({:first_name => params[:f_name_student4], :last_name => params[:l_name_student4], :birth_date => params[:birth_date4], :current_class => params[:current_class4], :parent_id => @parent.id  })
+                        @current_school.registrations.create({:first_name => params[:f_name_student4], :last_name => params[:l_name_student4], :birth_date => params[:birth_date4], :current_class => params[:current_class4], :parent_id => @parent.id  })
                         @parent.approved = 2
                         @parent.save
                         redirect url(:student_details)

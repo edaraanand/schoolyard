@@ -1,5 +1,6 @@
 class Student < Person
-	
+	    
+     belongs_to :school
      has_many :guardians
      has_many :parents, :through => :guardians, :source => :parent
      
