@@ -28,7 +28,7 @@
 <body class="fixed-width">
   <div id="page-wrap"><!-- Wraps everything -->
     <div id="header"><!--The Header -->
-   <h1><%= link_to "#{@current_school.school_name}", url(:schools) %></h1>
+   <h1><%= link_to "#{@current_school.school_name}", resource(:homes) %></h1>
 
       <div id="user-cp"><!--User Control Panel -->
        <p class="welcome">Welcome <em><%= session.user.first_name %></em></p>
@@ -91,11 +91,11 @@
         </li>
         <li>Access Rights<ul>
             <li><%= link_to_if((right = "rights_others"), "Add/Edit Access Rights", url(:people) ) %></li>
-              <% @parents = Parent.find(:all, :conditions => ["approved = ?", 2 ]) %>
+              <% @parents = @current_school.parents.find(:all, :conditions => ["approved = ?", 2 ]) %>
               <li class="count"><%= link_to_if((right = "parent_registration"), "Parent Registration", url(:parent_approvals) ) %><span><b><%= @parents.length %></b></span></li>
           </ul>
         </li>
-          <% @announcements = Announcement.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ]) %>
+        <% @announcements = @current_school.announcements.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ]) %>
         <li>Content<ul>
           <li class="count"><%= link_to_if((right = "approve_announcement"), "Pending Approvals", url(:approvals) ) %><span><b><%= @announcements.length %></b></span></li>
         <li><%= link_to_if((right = "from_principal"), "From the Principal", url(:from_principals)) %></li>
