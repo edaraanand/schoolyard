@@ -38,6 +38,9 @@ class Merb::Authentication
         def site_id_param
           @site_id_param ||= Base.site_id_param
         end
+        
+        
+     
       end # Base      
  
       class Form < Base
@@ -45,33 +48,38 @@ class Merb::Authentication
         def run!
  
           if (login = request.params[login_param]) && (password = request.params[password_param]) && (site_id = request.params[site_id_param])
-            # see if user exists for the site_id
-           #  user = user_class.first(login_param => login, site_id_param => site_id)
+               # see if user exists for the site_id
+               # user = user_class.first(login_param => login, site_id_param => site_id)
                user = user_class.find(:first, :conditions => ["email= ? and school_id = ?", login, site_id] )
-            if user
-              # user_class.get(:login)
-               user = user_class.authenticate(login, password)
-              if !user
-                errors = request.session.authentication.errors
-                errors.clear!
-                errors.add(login_param, strategy_error_message)
+              if user
+                 user = user_class.authenticate(login, site_id, password)
+                 if !user
+                     errors = request.session.authentication.errors
+                     errors.clear!
+                     errors.add(login_param, strategy_error_message)
+                 end
+                 user
+              else
+                 errors = request.session.authentication.errors
+                 errors.clear!
+                 errors.add(login_param, strategy_error_message)
+                 nil
               end
-              user
-            else
-              errors = request.session.authentication.errors
-              errors.clear!
-              errors.add(login_param, strategy_error_message)
-              nil
-            end
-           # user
-          end
-        end # run!
- 
+           end
+           
+         end # run!
+        
+  
         def strategy_error_message
           "#{login_param.to_s.capitalize} or #{password_param.to_s.capitalize} were incorrect"
         end
- 
+        
+         
+       
       end # Form
+      
     end # Multisite Password
   end # Strategies
+  
+  
 end # Authentication

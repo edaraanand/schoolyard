@@ -44,8 +44,8 @@ namespace :bootstrap do
     task :person => :access do
        @staff = Staff.create({
            :title => "Mr.",
-           :first_name => "Admin",
-           :last_name => "administration",
+           :first_name => "John",
+           :last_name => "Meyer",
            :email => "school@insight",
            :type => 'Staff',
            :password => 'admin',
@@ -63,23 +63,12 @@ namespace :bootstrap do
   
   desc "creating alerts for both parents and staff"
   task :alerts => :person do
-     alerts = {
-       :announcements => "Announcement is Posted",
-       :home_work => "Home Work Assignment",
-       :from_principal => "From the Principal",
-       :first_grade => "1st Grade",
-       :second_grade => "2nd Grade",
-       :third_grade => "3rd Grade",
-       :fourth_grade => "4th Grade",
-       :fifth_grade => "5th Grade",
-       :sixth_grade => "6th Grade",
-       :seventh_grade => "7th Grade",
-       :eighth_grade => "8th Grade",
-       :sports => "Sports"
-     }
-     
-     alerts.each_pair do |key, value|
-        Alert.create({:name => "#{key}", :full_name => "#{value}"})
+     alerts = ["1st Grade", "2nd Grade","3rd Grade", "4th Grade","5th Grade", "6th Grade", "7th Grade",
+                "8th Grade", "Announcement is Posted", "Home Work Assignment", "From the Principal",
+                 "Sports"]
+   
+     alerts.each do |x|
+        Alert.create({:name => "#{x}", :full_name => "#{x}"})
      end
      
    end

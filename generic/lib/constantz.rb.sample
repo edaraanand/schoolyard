@@ -1,8 +1,8 @@
 class Schoolapp
   
   @@common_config = {
-    :auth_mailman      => 'eshwar1314@gmail.com',
-    :mailman_password  => 'ashwini1314',
+    :auth_mailman      => 'raja.naidu13@gmail.com',
+    :mailman_password  => 'raja1213',
     :bc_user => "basecamp user", 
     :bc_password => "basecamp password"
   }
