@@ -18,32 +18,39 @@
 
 <% if params[:class_name].nil? %>
 
-       <% for calendar in @cals %>
-            <div class="calendar-block" style="width:480px;">
-               <% unless calendar.start_date.nil? %> 
-                   <h3><%= calendar.start_date.strftime("%B-%d") %></h3>
-               <% end %>
-               <% cals = @cals.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
-               <ul class="calendar-items">
-                   <% cals.each do |cal| %>
-                        <li>
-                            <span class="cal-time">
-                                 <% unless cal.start_time.nil? %>
-                                       <%= cal.start_time.strftime("%H-%M") %>
-                                 <% end %>
-                                 &nbsp;
-                            </span>
-                            <span class="cal-title">
-                                  <%= cal.title %>
-                            </span>
-                        </li>
-                        <%# @calendars.delete_if{|c| c.start_date.to_date == cal.start_date.to_date } %>
-                        <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
-                   <% end %>
-                </ul>
-             </div>
-                  <% @cals.delete_if{|c| cals.include?(c)} %>
-                  <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
+        <% for calendar in @cals %>
+               <div class="calendar-block" style="width:480px;">
+                       <% unless calendar.start_date.nil? %> 
+                            <h3><%= calendar.start_date.strftime("%B-%d") %></h3>
+                       <% end %>
+                       <% cals = @cals.select{|c| c.start_date.to_date == calendar.start_date.to_date } %>
+                     <ul class="calendar-items">
+                           <% cals.each do |cal| %>
+                                  <li>
+                                      <span class="cal-time">
+                                            <% unless cal.start_time.nil? %>
+                                                 <%= cal.start_time.strftime("%H-%M") %>
+                                            <% end %>&nbsp;
+                                      </span>
+                                      <span class="cal-title">
+                                            <%= cal.title %>
+                                      </span>
+                                      <span class="cal-time">
+                                            <% unless cal.end_time.nil? %>
+                                                 Ends at <%= cal.end_time.strftime("%H-%M") %>
+                                            <% end %>  &nbsp;
+                                      </span>
+                                      <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', cal.id] ) %>
+                                       <% unless @attachment.nil? %>
+                                            <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+                                       <% end %>
+                                   </li>
+                           <% end %>
+                     </ul>
+                </div>
+                
+                   <% @cals.delete_if{|c| c.start_date == calendar.start_date } %>
+                  
       <% end %>
   
 <% elsif params[:class_name] == "All Events" %>
@@ -66,14 +73,21 @@
                                          <span class="cal-title">
                                                <%= cal.title %>
                                          </span>
+                                         <span class="cal-time">
+                                            <% unless cal.end_time.nil? %>
+                                                 Ends at <%= cal.end_time.strftime("%H-%M") %>
+                                            <% end %>  &nbsp;
+                                         </span>
+                                        <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', cal.id] ) %>
+                                        <% unless @attachment.nil? %>
+                                             <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+                                        <% end %>
                                      </li>
-                                     <%# @calendars.delete_if{|c| c.start_date.to_date == cal.start_date.to_date } %>
-                                     <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
-                               <% end %>
+                              <% end %>
                          </ul>
                  </div>
-                    <% @calendars.delete_if{|c| cals.include?(c)} %>
-                    <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
+                   <% @calendars.delete_if{|c| c.start_date == calendar.start_date } %>
+                   
            <% end %>
 <% else %>
 
@@ -95,14 +109,21 @@
                                          <span class="cal-title">
                                                 <%= cal.title %>
                                          </span>
+                                         <span class="cal-time">
+                                            <% unless cal.end_time.nil? %>
+                                                 Ends at <%= cal.end_time.strftime("%H-%M") %>
+                                            <% end %>  &nbsp;
+                                         </span>
+                                        <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', cal.id] ) %>
+                                        <% unless @attachment.nil? %>
+                                             <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+                                        <% end %>
                                      </li>
-                                     <%# @calendars.delete_if{|c| c.start_date.to_date == cal.start_date.to_date } %>
-                                     <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
+                                    
                              <% end %>
                         </ul>
                   </div>
-                        <% @cls.delete_if{|c| cals.include?(c)} %>
-                        <%# @calendars.delete_if{|key, value| value == cal.start_date } %>
+                        <% @cls.delete_if{|c| c.start_date == calendar.start_date } %>
           <% end %>
   
 <% end %> 
