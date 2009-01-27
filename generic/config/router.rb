@@ -60,8 +60,8 @@ Merb::Router.prepare do
     match("/password_staff").to(:controller => 'registrations', :action => 'password_staff').name(:password_staff)
     match("/staff_password_save").to(:controller => 'registrations', :action => 'staff_password_save').name(:staff_password_save)
 
- #match(:first_subdomain => ":first_subdomain") do
-   authenticate do
+ 
+ authenticate do
   resources :parents
   resources :approvals
   resources :schools
@@ -110,8 +110,13 @@ Merb::Router.prepare do
   match("/disable").to(:controller => 'people', :action => 'disable').name(:disable)
   match("/enable").to(:controller => 'people', :action => 'enable').name(:enable)
   match("/download").to(:controller => 'homes', :action => 'download').name(:download)
+  match("/pdf_download").to(:controller => 'homes', :action => 'pdf_download').name(:pdf_download)
+  match("/pdf_events").to(:controller => 'calendars', :action => 'pdf_events').name(:pdf_events)
+  match("/generate_csv").to(:controller => 'students', :action => 'generate_csv').name(:generate_csv)
+  match("/home_works_pdf").to(:controller => 'home_works', :action => 'home_works_pdf').name(:home_works_pdf)
 end
-#end
+
+
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
   # routes, you may want to comment/remove this line to prevent

@@ -1,7 +1,7 @@
 
 Gem.clear_paths
 Gem.path.unshift(Merb.root / "gems")
-
+gem "pdf-writer"
 
 # ==== Dependencies
 
@@ -10,6 +10,8 @@ require 'config/dependencies.rb'
 require  Merb.root / 'lib' / 'smtp_tls'
 require  Merb.root / 'lib' / 'constantz'
 require  Merb.root / 'lib' / 'attachable'
+require "pdf/writer"
+require "pdf/simpletable"
 
 
   use_orm :activerecord
@@ -18,19 +20,19 @@ require  Merb.root / 'lib' / 'attachable'
   
 Merb::BootLoader.after_app_loads do
 	
- 
+   
 
-  # Paperclip::Configure::enable_ar!
+   # Paperclip::Configure::enable_ar!
     #Merb::Slices::config[:merb_auth][:layout] = :application
    #MA[:forgotten_password] = true 
-  # Add dependencies here that must load after the application loads:
-    
-  # dependency "magic_admin" # this gem uses the app's model classes
+   # Add dependencies here that must load after the application loads:
+   # dependency "magic_admin" # this gem uses the app's model classes
+   
   Merb::Mailer.config = {
     :host   => 'smtp.gmail.com',
     :port   => '587',
-    :user   => 'eshwar1314@gmail.com',
-    :pass   => 'testing11',
+    :user   => 'raja.naidu13@gmail.com',
+    :pass   => 'raja1213',
     :auth   => :plain 
   }
   
