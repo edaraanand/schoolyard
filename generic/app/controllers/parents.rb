@@ -7,11 +7,11 @@ class Parents < Application
   
  
   def index
-    @announcements = session.user.announcements.find(:all, :conditions => ['school_id = ?', @current_school.id] )
-    @message1 = "Approved"
-    @message2 = "Pending Approval"
-    @message3 = "Rejected"
-    render
+     @announcements = session.user.announcements.find(:all, :conditions => ['school_id = ?', @current_school.id] )
+     @message1 = "Approved"
+     @message2 = "Pending Approval"
+     @message3 = "Rejected"
+     render
   end
   
   def new
@@ -77,8 +77,10 @@ class Parents < Application
   end
   
   def delete
-      Announcement.find(params[:id]).destroy
-      redirect resource(:parents)
+     @announcement = Announcement.find(params[:id])
+     Attachment.delete_all(['attachable_id = ?', @announcement.id])
+     @announcement.destroy
+     redirect resource(:parents)
   end
    
    def preview

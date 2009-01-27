@@ -37,6 +37,7 @@
              <% @calendars.delete_if{|c| c.start_date == calendar.start_date } %>
          
   <% end %>
+         <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id) %>
 </div>
 <% elsif params[:label] == "homeworks" %>
        <h2 class="current-page"> Homework </h2>
@@ -56,7 +57,7 @@
                        <span class="month"><%= homework.due_date.strftime("%b") %></span>
                     </div>
                <% end %>
-              <h3><%= homework.title %></h3>
+               <h3><%= link_to "#{homework.title}", url(:home_work, homework.id) %></h3>
                Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %>
                 <p class="post-content"><%= homework.content %></p>
                   <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', homework.id] ) %>
@@ -66,6 +67,8 @@
                <div class="hrule clear"><hr /></div>
                  
        <% end %>
+                <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id) %>
+                
 <% elsif params[:label] == "announcements" %>
           <h2 class="current-page"> Announcements </h2>
             <% for announcement in @announcements %>
