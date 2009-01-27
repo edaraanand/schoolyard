@@ -1,7 +1,10 @@
 class Parent < Person
 	
+     belongs_to :school
+     
      has_many :guardians
      has_many :students, :through => :guardians, :source => :student
+    
      
   def self.make_key
       Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )

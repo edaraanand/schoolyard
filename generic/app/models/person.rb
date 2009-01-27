@@ -22,17 +22,27 @@ class Person < ActiveRecord::Base
   has_many :alerts, :through => :alert_peoples
   
   has_many :home_works
-  
+                                          
   # Validations
   
   validates_presence_of :first_name, :last_name
-	validates_presence_of :email, :if => :email, :scope => :school_id
-  validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}
-  validates_uniqueness_of :email, :if => :email, :scope => :school_id
-   # validates_format_of :email, :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i, :if => :email
+	validates_presence_of :email, :if => :email
+  validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}, :scope => :school_id
+  validates_uniqueness_of :email, :scope => :school_id, :if => :email 
+  validates_format_of :email, :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i, :if => :email
   validates_length_of :phone, :is => 10, :message => 'must be 10 digits, excluding special characters such as spaces and dashes.', :if => Proc.new{|o| !o.phone.blank?}
-
+  validates_length_of :password, :within => 4..40, :if => :password
  
+  
+  def self.authenticate(email, school_id, password)
+      u = find_by_email_and_school_id(email, school_id) # need to get the salt
+      return nil unless u
+      u && u.authenticated?(password) ? u : nil
+  end
+  
+   def password_validation_required
+      new_record? || !@password.blank?
+   end
 
 	def accesses_without_all
 	    accesses.delete_if{|x| x.name == "view_all"}
@@ -43,7 +53,7 @@ class Person < ActiveRecord::Base
   end
 	
   def password_required?
-    false
+     false
   end
   
   def self.make_key
@@ -55,7 +65,7 @@ class Person < ActiveRecord::Base
      until pwreset_key_success
         self.password_reset_key = self.class.make_key
         puts self.password_reset_key.inspect
-        self.save
+        self.save!
         pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false
      end
      send_forgot_password
@@ -72,7 +82,6 @@ class Person < ActiveRecord::Base
   
 end            
   
-
 
 
 class Principle < Person

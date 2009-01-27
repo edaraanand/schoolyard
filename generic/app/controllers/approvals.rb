@@ -66,29 +66,29 @@ class Approvals < Application
   
   def parent_approvals
      if params[:approve_status] == "Approved"
-        @approved_parents = Parent.find(:all, :conditions => ['approved = ?', 1] )
+       @approved_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 1] )
      end
      if params[:approve_status] == "Pending Approvals"
-        @pending_parents = Parent.find(:all, :conditions => ['approved = ?', 2] )
+        @pending_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 2] )
      end
      if params[:approve_status] == "Rejected"
-       @reject_parents = Parent.find(:all, :conditions => ['approved = ?', 3 ] )
+       @reject_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 3 ] )
      end
      if params[:approve_status].nil?
-        @parents = Parent.find(:all, :conditions => ['approved = ?', 2] )
+        @parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 2] )
      end
      if params[:approve_status] == "All Registrations"
-       @all_parents = Parent.find(:all)
+       @all_parents = @current_school.parents.find(:all)
      end
-     @parents = Parent.find(:all)
+     @parents = @current_school.parents.find(:all)
      render
   end
   
   def approval_review
-     @parent = Parent.find(params[:id])
-     @students = Student.find(:all)
-     @classrooms = Classroom.find(:all)
-     @registrations = Registration.find(:all, :conditions => ['parent_id = ?', @parent.id])
+     @parent = @current_school.parents.find(params[:id])
+     @students = @current_school.students.find(:all)
+     @classrooms = @current_school.classrooms.find(:all)
+     @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
      @exist = "Following Student was found"
      @not_exist = "Following Student was not found"
      render
@@ -96,8 +96,8 @@ class Approvals < Application
   
   def parent_grant
     #raise params.inspect
-     @parent = Parent.find(params[:id])
-     @registrations = Registration.find(:all, :conditions => ['parent_id = ?', @parent.id])
+     @parent = @current_school.parents.find(params[:id])
+     @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
      if params[:approvetype] == "Approve & Grant Access"
           if (params[:class_not_found] == [""]) || (params[:student_not_found] == [""])
              flash[:error] = "Please select the student and classroom"
@@ -107,10 +107,10 @@ class Approvals < Application
                   params[:student_not_found].each do |f|
                       params[:class_not_found].each do |c|
                           @st = f.split
-                          @student = Student.find(:first, :conditions => [" first_name in (?) AND last_name in (?)", @st, @st ] )
-                          @class = Classroom.find_by_class_name("#{c}") 
+                          @student = @current_school.students.find(:first, :conditions => [" first_name in (?) AND last_name in (?)", @st, @st ] )
+                          @class = @current_school.classrooms.find_by_class_name("#{c}") 
                           @study_id = Study.find(:first, :conditions => ["classroom_id = ?", @class.id] )
-                          @studs = Student.find(:all, :joins => :studies, :conditions => [" first_name in (?) AND last_name in (?) AND studies.classroom_id = ?" , @st, @st, @class.id ] )
+                          @studs = @current_school.students.find(:all, :joins => :studies, :conditions => [" first_name in (?) AND last_name in (?) AND studies.classroom_id = ?" , @st, @st, @class.id ] )
                           Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
                           Study.update(@study_id.id, {:student_id => @student.id, :classroom_id => @class.id})
                        end
@@ -118,7 +118,7 @@ class Approvals < Application
                 end
                 unless params[:student_found].nil?
                    @registrations.each do |f|
-                       @stud = Student.find(:first, :conditions => ["first_name = ? and last_name = ?", "#{f.first_name}", "#{f.last_name}" ])
+                       @stud = @current_school.students.find(:first, :conditions => ["first_name = ? and last_name = ?", "#{f.first_name}", "#{f.last_name}" ])
                        Guardian.create({:student_id => @stud.id, :parent_id => @parent.id })
                     end
                 end  

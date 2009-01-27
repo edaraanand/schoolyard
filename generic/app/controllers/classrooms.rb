@@ -63,7 +63,7 @@ class Classrooms < Application
    end
    
    def update
-       @teachers = @current_school.staff.find(:all)
+      @teachers = @current_school.staff.find(:all)
       @classroom = Classroom.find(params[:id])
       @class_people = @classroom.class_peoples
       @class = @class_people.delete_if{|x| x.team_id != nil}
@@ -120,7 +120,7 @@ class Classrooms < Application
    
    private
    
-    def access_rights
+  def access_rights
      have_access = false
      @view = Access.find_by_name('view_all')
      @ann = Access.find_by_name('classes')
@@ -140,5 +140,6 @@ class Classrooms < Application
     type2 = a.insert(1, "Sports")
     @class_types = a.insert(2, "Extra Cirrcular")
   end
-  
+
+
 end

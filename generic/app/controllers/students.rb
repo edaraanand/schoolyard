@@ -1,26 +1,27 @@
 class Students < Application
   
   layout 'default'
-  before :access_rights, :exclude => [:directory, :show, :staff]
+  before :find_school
+  before :access_rights, :exclude => [:directory, :show, :staff, :generate_csv]
   before :classrooms, :only => [:directory, :staff]
   before :school_staff, :only => [:staff]
   
   def index 
-     @students = Student.find(:all)
+     @students = @current_school.students.find(:all)
      render
   end
   
   def new
      @student = Student.new
-     @class_rooms = Classroom.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all)
      @protector = Protector.new
      render
   end
   
   def create
-     @class_rooms = Classroom.find(:all)
-     @student = Student.new(params[:student])
-     @protector = Protector.new(params[:protector])
+     @class_rooms = @current_school.classrooms.find(:all)
+     @student = @current_school.students.new(params[:student])
+     @protector = @current_school.protectors.new(params[:protector])
      if ( ( (params[:f_name_parent2] == "") && (params[:l_name_parent2] == "") ) && (params[:email_parent2] == "") )
           if (@student.valid?) && (@protector.valid?)
              @student.save
@@ -41,11 +42,11 @@ class Students < Application
 	                              @protector.save
                                 Ancestor.create({:student_id => @student.id, :parent_id => @protector.id })
 	                              Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })	
-		                            @p2 = Protector.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
+		                            @p2 = @current_school.protectors.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
 		                            Ancestor.create({:student_id => @student.id, :protector_id => @p2.id })
-                                @p3 = Protector.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
+                                @p3 = @current_school.protectors.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                                 Ancestor.create({:student_id => @student.id, :protector_id => @p3.id })
-                                @p4 = Protector.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
+                                @p4 = @current_school.protectors.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
                                 Ancestor.create({:student_id => @student.id, :protector_id => @p4.id })
                                 redirect resource(:students)
                            else
@@ -67,9 +68,9 @@ class Students < Application
 	                             @protector.save
                                Ancestor.create({:student_id => @student.id, :protector_id => @protector.id })
 	                             Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })	
-		                           @p2 = Protector.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
+		                           @p2 = @current_school.protectors.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
                                Ancestor.create({:student_id => @student.id, :protector_id => @p2.id })
-                               @p3 = Protector.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
+                               @p3 = @current_school.protectors.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                                Ancestor.create({:student_id => @student.id, :protector_id => @p3.id })
                                redirect resource(:students)
                             else
@@ -88,7 +89,7 @@ class Students < Application
                      @protector.save
                      Ancestor.create({:student_id => @student.id, :protector_id => @protector.id })
 	                   Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })	
-		                 @p2 = Protector.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
+		                 @p2 = @current_school.protectors.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
                      Ancestor.create({:student_id => @student.id, :protector_id => @p2.id })
                      redirect resource(:students)
                 end
@@ -111,14 +112,14 @@ class Students < Application
   
   def edit
      @student = Student.find(params[:id])
-     @class_rooms = Classroom.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all)
      @sp = @student.protectors
      render
   end
   
   def update
      @student = Student.find(params[:id])
-     @class_rooms = Classroom.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all)
      @sp = @student.protectors
      @study_id = Study.find_by_student_id(@student.id)
      protector_id = @sp.collect{|x| x.id }
@@ -132,11 +133,11 @@ class Students < Application
                     if( ( (params[:f_name_parent3] != "") && (params[:l_name_parent3] != "") ) && (params[:email_parent3] != "") )
                          if ( ( (params[:f_name_parent4] != "") || (params[:l_name_parent4] != "") ) || (params[:email_parent4] != "") )
                               if ( ( (params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") ) && (params[:email_parent4] != "") )
-                                   @p2 = Protector.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
+                                   @p2 = @current_school.protectors.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
                                    Ancestor.create({:student_id => @student.id, :protector_id => @p2.id })
-                                   @p3 = Protector.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
+                                   @p3 = @current_school.protectors.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                                    Ancestor.create({:student_id => @student.id, :protector_id => @p3.id })
-                                   @p4 = Protector.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
+                                   @p4 = @current_school.protectors.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
                                    Ancestor.create({:student_id => @student.id, :protector_id => @p4.id })
                                    redirect resource(:students)
                               else
@@ -153,9 +154,9 @@ class Students < Application
                                  render :edit
                               end
                         else
-                            @p2 = Protector.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
+                            @p2 = @current_school.protectors.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
                             Ancestor.create({:student_id => @student.id, :protector_id => @p2.id })
-                            @p3 = Protector.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
+                            @p3 = @current_school.protectors.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                             Ancestor.create({:student_id => @student.id, :protector_id => @p3.id })
                             redirect resource(:students)
                         end
@@ -170,7 +171,7 @@ class Students < Application
                        render :edit
                    end
                else
-                    @p2 = Protector.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
+                    @p2 = @current_school.protectors.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
                     Ancestor.create({:student_id => @student.id, :protector_id => @p2.id })
                     redirect resource(:students)
                end
@@ -183,7 +184,7 @@ class Students < Application
            end
        else
            sp.each do |f|
-              Protector.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
+             @current_school.protectors.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
            end
            redirect resource(:students)
        end
@@ -192,9 +193,9 @@ class Students < Application
                if( ( (params[:f_name_parent3] != "") && (params[:l_name_parent3] != "") ) && (params[:email_parent3] != "") )
                       if ( ( (params[:f_name_parent4] != "") || (params[:l_name_parent4] != "") ) || (params[:email_parent4] != "") )
                             if ( ( (params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") ) && (params[:email_parent4] != "") )
-                                   @p3 = Protector.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
+                                   @p3 = @current_school.protectors.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                                    Ancestor.create({:student_id => @student.id, :protector_id => @p3.id })
-                                   @p4 = Protector.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
+                                   @p4 = @current_school.protectors.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
                                    Ancestor.create({:student_id => @student.id, :protector_id => @p4.id })
                                    redirect resource(:students)
                             else
@@ -208,7 +209,7 @@ class Students < Application
                                  render :edit
                             end
                       else
-                          @p3 = Protector.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
+                          @p3 = @current_school.protectors.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                           Ancestor.create({:student_id => @student.id, :protector_id => @p3.id })
                           redirect resource(:students)
                       end
@@ -221,14 +222,14 @@ class Students < Application
                end
          else
              sp.each do |f|
-                Protector.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
+                 @current_school.protectors.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
              end
              redirect resource(:students)
          end
     elsif @sp.length == 3
           if ( ( (params[:f_name_parent4] != "") || (params[:l_name_parent4] != "") ) || (params[:email_parent4] != "") )
                 if ( ( (params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") ) && (params[:email_parent4] != "") )
-                     @p4 = Protector.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
+                     @p4 = @current_school.protectors.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
                      Ancestor.create({:student_id => @student.id, :protector_id => @p4.id })
                      redirect resource(:students)
                 else
@@ -240,13 +241,13 @@ class Students < Application
                 end
           else
              sp.each do |f|
-                Protector.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
+                 @current_school.protectors.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
              end
              redirect resource(:students)
           end
      elsif @sp.length == 4
           sp.each do |f|
-             Protector.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
+              @current_school.protectors.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
           end
           redirect resource(:students)
      else
@@ -272,13 +273,13 @@ class Students < Application
   
   
    def directory
-      @class = Classroom.find_by_class_name(params[:class_name])
-      @studs = Student.find(:all, :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id] )
+     @class = @current_school.classrooms.find_by_class_name(params[:class_name])
+      @studs = @current_school.students.find(:all, :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id] )
       if params[:class_name] == "All Students"
-         @students = Student.find(:all)
+         @students = @current_school.students.find(:all)
       end
       if params[:class_name].nil?
-         @stds = Student.find(:all)
+         @stds = @current_school.students.find(:all)
       end
       render :layout => 'directory'
    end
@@ -298,32 +299,59 @@ class Students < Application
    
    def staff
        if params[:class_name] == "All Staff"
-          @staff = Staff.find(:all)
+         @staff = @current_school.staff.find(:all)
        end
        unless params[:class_name].nil?
          unless params[:class_name] == "All Staff"
-           @class = Classroom.find_by_class_name(params[:class_name])
+           @class = @current_school.classrooms.find_by_class_name(params[:class_name])
            @class_peoples = @class.class_peoples.delete_if{ |x| x.team_id != nil }
          end
        end  
       if params[:class_name].nil?
-         @stf = Staff.find(:all)
+         @stf = @current_school.staff.find(:all)
       end    
       
       render :layout => 'directory'
    end
    
+   def generate_csv
+     if params[:label] == "staff"
+        @staff = @current_school.staff.find(:all)
+        csv_string = FasterCSV.generate do |csv|
+          csv << ["First Name", "Last Name", "Role", "Contact-Number"]
+              @staff.each do |person|
+                 s = person.class_peoples.delete_if{ |x| x.team_id != nil }
+                 s.each do |f| 
+                   csv << [person.first_name, person.last_name, f.role.titleize+"--"+f.classroom.class_name, person.phone]
+                 end 
+              end
+        end
+         filename = params[:action] + ".csv"
+         send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename) 
+     else
+         @students = @current_school.students.find(:all)
+          csv_string = FasterCSV.generate do |csv|
+            csv << ["First Name", "Last Name", "Address", "Contact-Number"]
+              @students.each do |person|
+                 csv << [person.first_name, person.last_name, person.address, person.phone]
+              end
+          end
+         filename = params[:action] + ".csv"
+         send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename) 
+     end
+     
+   end
    
    private
    
    def classrooms
-      @class = Classroom.find(:all)
+      @class = @current_school.classrooms.find(:all)
       room = @class.collect{|x| x.class_name }
       @classrooms = room.insert(0, "All Students")
    end  
    
    def school_staff
-      @class = Classroom.find(:all)
+      @class = @current_school.classrooms.find(:all)
       room = @class.collect{|x| x.class_name }
       @teachers = room.insert(0, "All Staff")
    end

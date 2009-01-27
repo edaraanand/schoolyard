@@ -18,8 +18,8 @@ class PersonMailer < Merb::MailController
   end
   
   def forgot_password
-    @person = params
-    render_mail :html => :forgot_password, :layout => nil
+     @person = params
+     render_mail :html => :forgot_password, :layout => nil
   end
   
   def password_staff

@@ -33,6 +33,22 @@ class Homes < Application
      send_file("#{Merb.root}/public/uploads/#{@attachment.id}/#{@attachment.filename}") 
   end
   
+  def pdf_download
+     @announcement = Announcement.find(params[:id])
+     pdf = prepare_pdf(@announcement)
+     send_data(pdf.render, :filename => "#{@announcement.title}.pdf", :type => "application/pdf")
+  end
+  
+  private
+  
+  def prepare_pdf(announcement)
+      pdf = PDF::Writer.new
+      pdf.select_font "Helvetica"
+      pdf.text "#{@current_school.school_name}", :font_size => 40, :justification => :center
+      pdf.text "Title : #{@announcement.title}", :font_size => 10
+      pdf.text "Content : #{@announcement.content}" 
+      pdf
+  end
   
   
 end
