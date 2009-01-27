@@ -2,6 +2,7 @@ class HomeWorks < Application
   
   layout 'default'
   before :find_school
+  before :access_rights, :exclude => [:show]
   before :classrooms, :exclude => [:delete, :preview]
   before :rooms, :only => [:index]
   
@@ -11,7 +12,7 @@ class HomeWorks < Application
      elsif params[:classroom_id] == "All Home Works"
         @works = @current_school.home_works.find(:all)
      else
-        @classroom = Classroom.find_by_class_name(params[:classroom_id])
+        @classroom = @current_school.classrooms.find_by_class_name(params[:classroom_id])
         @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id])
      end
        @error = "No Homeworks Yet"
@@ -84,7 +85,26 @@ class HomeWorks < Application
   def preview
     render :layout => 'preview'
   end
+  
+  def show
+     @home_work = HomeWork.find(params[:id])
+     @classroom = @home_work.classroom
+     render :layout => 'class_change', :id => @classroom.id
+  end
  
+  def home_works_pdf
+    if params[:label] == "single"
+       @home_work = HomeWork.find(params[:id])
+       pdf = pdf_prepare("single", @home_work)
+       send_data(pdf.render, :filename => "#{@home_work.title}.pdf", :type => "application/pdf")
+    else
+       @classroom = Classroom.find(params[:id])
+       @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id])
+       pdf = pdf_prepare("multiple", @home_works)
+       send_data(pdf.render, :filename => "Homework for #{@classroom.class_name}.pdf", :type => "application/pdf")
+     end
+  end
+  
   
   private
   
@@ -99,5 +119,37 @@ class HomeWorks < Application
     @classes = room.insert(0, "All Home Works")
   end
   
+  def access_rights
+     have_access = false
+     @view = Access.find_by_name('view_all')
+     @ann = Access.find_by_name('homework')
+     @access_people = session.user.access_peoples.delete_if{|x| x.access_id == @view.id }
+     @access_people.each do |f|
+       have_access = (f.all == true) || (f.access_id == @ann.id)
+       break if have_access
+     end
+     unless have_access
+       redirect resource(:homes)
+     end
+  end  
+  
+  def pdf_prepare(value, homework)
+      pdf = PDF::Writer.new
+      pdf.select_font "Helvetica"
+      pdf.text "#{@current_school.school_name}", :font_size => 40, :justification => :center
+      if value == "multiple"
+         @home_works.each do |homework|
+              pdf.text "Title : #{homework.title}", :font_size => 10, :justification => :left
+              pdf.text "Description : #{homework.content}", :font_size => 10, :justification => :left
+              pdf.text "Due Date : #{homework.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
+          end
+          pdf
+      else
+          pdf.text "Title : #{@home_work.title}", :font_size => 10, :justification => :left
+          pdf.text "Description : #{@home_work.content}", :font_size => 10, :justification => :left
+          pdf.text "Due Date : #{@home_work.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
+          pdf
+      end
+  end
   
 end

@@ -48,6 +48,7 @@ class Calendars < Application
   def show
      @calendar = Calendar.find(params[:id])
      @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
+     @event = "All Day Event"
      render :layout => 'class_change', :id => @classroom.id
   end
 
@@ -102,6 +103,18 @@ class Calendars < Application
      render :layout => 'preview' 
   end
   
+  def pdf_events
+    if params[:label] == "single"
+       @calendar = Calendar.find(params[:id])
+       pdf = pdf_prepare("single", @calendar)
+       send_data(pdf.render, :filename => "#{@calendar.class_name}.pdf", :type => "application/pdf")
+    else
+       @classroom = Classroom.find(params[:id])
+       @calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @classroom.class_name ])
+       pdf = pdf_prepare("multiple", @calendars)
+       send_data(pdf.render, :filename => "#{@classroom.class_name}.pdf", :type => "application/pdf")
+    end
+  end
   
   private
   
@@ -124,5 +137,27 @@ class Calendars < Application
        redirect resource(:homes)
      end
   end  
+  
+  def pdf_prepare(value, calendar)
+      pdf = PDF::Writer.new
+      pdf.select_font "Helvetica"
+      pdf.text "#{@current_school.school_name}", :font_size => 40, :justification => :center
+      if value == "multiple"
+          @calendars.each do |calendar|
+              pdf.text "Title : #{calendar.title}", :font_size => 10, :justification => :left
+              pdf.text "Description : #{calendar.description}", :font_size => 10, :justification => :left
+              pdf.text "Location : #{calendar.location}", :font_size => 10, :justification => :left
+              pdf.text "Start Date : #{calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
+          end
+          pdf
+      else
+           pdf.text "Title : #{@calendar.title}", :font_size => 10, :justification => :left
+           pdf.text "Description : #{@calendar.description}", :font_size => 10, :justification => :left
+           pdf.text "Location : #{@calendar.location}", :font_size => 10, :justification => :left
+           pdf.text "Start Date : #{@calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
+           pdf
+      end
+  end
+  
   
 end
