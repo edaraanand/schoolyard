@@ -9,7 +9,7 @@
   <% end =%> 
     
     <% if params[:class_name].nil? %>
-          <h2 class="current-page">Students </h2>
+          <h2 class="current-page">Students  <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> </h2>
           <% unless @stds.empty? %>
           <table id="mytable">
                <thead>
@@ -27,9 +27,9 @@
                      <% end %>
                 </tbody>
            </table>
-        <% end %>
+         <% end %>
     <% elsif params[:class_name] == "All Students" %>
-         <h2 class="current-page">Students </h2>
+         <h2 class="current-page">Students  <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> </h2>
           <% unless @students.empty? %>
           <table id="mytable">
                <thead>
@@ -47,9 +47,9 @@
                      <% end %>
                 </tbody>
            </table>
-        <% end %>
+        <% end %> 
     <% else %>
-          <h2 class="current-page">Students </h2>
+    <h2 class="current-page">Students <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> </h2>
           <% unless @studs.empty? %>
           <table id="mytable">
                <thead>
@@ -67,7 +67,7 @@
                      <% end %>
                 </tbody>
            </table>
-        <% end %>
+        <% end %> 
      <% end %>
 
 

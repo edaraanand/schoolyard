@@ -13,7 +13,7 @@
 <% if params[:class_name].nil? %>
     
          <% unless @stf.empty? %>
-            <h2 class="current-page">School Staff</h2>
+         <h2 class="current-page">School Staff  <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %> </h2> 
             <table id="mytable">
               <thead> 
                     <th>Last Name</th>
@@ -33,12 +33,12 @@
                    </tr>  
               <% end %>
             </table>
-         <% end %>
+         <% end %> 
        
 <% elsif params[:class_name] == "All Staff" %>
 
          <% unless @staff.empty? %>
-            <h2 class="current-page">School Staff</h2>
+         <h2 class="current-page">School Staff  <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %> </h2> 
             <table id="mytable">
               <thead> 
                     <th>Last Name</th>
@@ -62,9 +62,9 @@
          <% end %>
        
 <% else %>
-          
+                                     
         <% unless @class_peoples.empty? %>
-            <h2 class="current-page">School Staff</h2>
+        <h2 class="current-page">School Staff  <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %> </h2> 
             <table id="mytable">
               <thead> 
                     <th>Last Name</th>
