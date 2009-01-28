@@ -7,7 +7,7 @@ namespace:school2 do
          :school_name => "St James School",
          :phone => "11111111",
          :email => "sjs@schoolyardapp.com",
-         :domain => "http://sjs.schoolyardapp.com",
+         :domain => "http://sjs.schoolyardapp.net",
          :folder => "schoolyardappcom",
          :subdomain => 'sjs'
         })
@@ -18,9 +18,9 @@ namespace:school2 do
            :title => "Mrs.",
            :first_name => "Lori",
            :last_name => "James",
-           :email => "sjs@schoolyardapp.com",
+           :email => "sjs@schoolyardapp.net",
            :type => 'Staff',
-           :password => 'sjs',
+           :password => 'lori',
            :password_confirmation => 'sjs',
            :school_id => @school.id
       })

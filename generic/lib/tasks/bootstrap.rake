@@ -6,8 +6,8 @@ namespace :bootstrap do
      @school = School.create({
          :school_name => "St Benecia School",
          :phone => "9998805789",
-         :email => "eshwar.gouthama@insightmethods.com",
-         :domain => "http://sdb.schoolyardapp.com",
+         :email => "sdb@schoolyardapp.net",
+         :domain => "http://sdb.schoolyardapp.net",
          :folder => "schoolyardappcom",
          :subdomain => 'sdb'
         })

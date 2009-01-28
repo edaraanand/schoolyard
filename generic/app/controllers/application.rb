@@ -4,7 +4,7 @@ class Application < Merb::Controller
    before :find_school
   
     def find_school
-      if request.first_subdomain != nil
+       if request.first_subdomain != nil
          @current_school = School.find(:first, :conditions => ['subdomain = ?', request.first_subdomain ] )
          # @current_school = School.first(:subdomain => request.first_subdomain)
        else

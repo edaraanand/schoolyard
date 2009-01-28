@@ -11,16 +11,16 @@ default_run_options[:pty] = true
 set :ssh_options, { :forward_agent => true }
 #set :user, 'deployer'
 
-set :domain,   "eshwar@schoolapp.insightmethods.com"
+set :domain,   "eshwar@sdb.schoolyardapp.net"
 set :deploy_to,  "/home/eshwar/schoolapp"
 set :adapter, 'mongrel' # or 'thin' 
 set :start_port, 7001
 set :processes, 1
 set :log_path, "#{shared_path}/log/production.log"
 
-role :app, "schoolapp.insightmethods.com"
-role :web, "schoolapp.insightmethods.com"
-role :db,  "schoolapp.insightmethods.com", :primary => true
+role :app, "sdb.schoolyardapp.net"
+role :web, "sdb.schoolyardapp.net"
+role :db,  "sdb.schoolyardapp.net", :primary => true
 
 
 namespace :deploy do 
@@ -38,7 +38,8 @@ namespace :deploy do
      run "mkdir -p #{current_path}/generic/db"
      run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
 	   run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
-     run "cd #{current_path}/generic && rake bootstrap:alerts"   
+     run "cd #{current_path}/generic && rake bootstrap:alerts" 
+     run "cd #{current_path}/generic && rake school2:person"
   end
   
   desc "Start Merb Instances"  
