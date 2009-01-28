@@ -1,5 +1,7 @@
 class PersonMailer < Merb::MailController
 
+  before :find_school
+  
   def notify_on_event
    
     # use params[] passed to this controller to get data
