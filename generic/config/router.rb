@@ -25,8 +25,7 @@ Merb::Router.prepare do
   module Merb
     class Request
       def first_subdomain
-         subdomains.first
-         #puts subdomains.first.inspect
+          subdomains.first
       end
     end
   end
@@ -61,60 +60,60 @@ Merb::Router.prepare do
     match("/staff_password_save").to(:controller => 'registrations', :action => 'staff_password_save').name(:staff_password_save)
 
  
- authenticate do
-  resources :parents
-  resources :approvals
-  resources :schools
-  resources :people
-  resources :alerts
-  resources :classrooms
-  resources :homes
-  resources :announcements
-  resources :welcome_messages
-  resources :calendars
-  resources :students
-  resources :teams
-  resources :from_principals
-  resources :home_works
-  resources :external_links
-  resources :forms
-  resources :spot_lights
-  match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
-  match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
-  match("/alerts_edit").to(:controller => 'alerts', :action => 'edit').name(:alert_edit)
-  match("/alerts_update").to(:controller => 'alerts', :action => 'update').name(:alert_update)
-  match("/staff_account").to(:controller => 'users', :action => 'staff_account').name(:staff_account)
-  match("/staff_account_edit").to(:controller => 'users', :action => 'staff_account_edit').name(:staff_account_edit)
-  match("/staff_account_update").to(:controller => 'users', :action => 'staff_account_update').name(:staff_account_update)
-  match("/staff_password").to(:controller => 'users', :action => 'staff_password').name(:staff_password)
-  match("/staff_password_update").to(:controller => 'users', :action => 'staff_password_update').name(:staff_password_update)
-  match("/publish").to(:controller => 'approvals', :action => 'publish').name(:publish)
-  match("/parent_approvals").to(:controller => 'approvals', :action => 'parent_approvals').name(:parent_approvals)
-  match("/approval_review").to(:controller => 'approvals', :action => 'approval_review').name(:approval_review)
-  match("/parent_grant").to(:controller => 'approvals', :action => 'parent_grant').name(:parent_grant)
-  match("/principal_articles").to(:controller => 'homes', :action => 'principal_articles').name(:principal_articles)
-  match("/class_details").to(:controller => 'classrooms', :action => 'class_details').name(:class_details)
-  match("/form_files").to(:controller => 'forms', :action => 'form_files').name(:form_files)
-  match("/parent_account").to(:controller => 'users', :action => 'parent_account').name(:parent_account)
-  match("/parent_password").to(:controller => 'users', :action => 'parent_password').name(:parent_password)
-  match("/parent_password_change").to(:controller => 'users', :action => 'parent_password_change').name(:parent_password_change)
-  match("/parent_account_edit").to(:controller => 'users', :action => 'parent_account_edit').name(:parent_account_edit)
-  match("/parent_update").to(:controller => 'users', :action => 'parent_update').name(:parent_update)
-  match("/student_details").to(:controller => 'users', :action => 'student_details').name(:student_details)
-  match("/student_edit").to(:controller => 'users', :action => 'student_edit').name(:student_edit)
-  match("/student_update").to(:controller => 'users', :action => 'student_update').name(:student_update)
-  match("/directory").to(:controller => 'students', :action => 'directory').name(:directory)
-  match("/staff").to(:controller => 'students', :action => 'staff').name(:staff)
-  match("/events").to(:controller => 'calendars', :action => 'events').name(:events)
-  match("/help").to(:controller => 'homes', :action => 'help').name(:help)
-  match("/disable").to(:controller => 'people', :action => 'disable').name(:disable)
-  match("/enable").to(:controller => 'people', :action => 'enable').name(:enable)
-  match("/download").to(:controller => 'homes', :action => 'download').name(:download)
-  match("/pdf_download").to(:controller => 'homes', :action => 'pdf_download').name(:pdf_download)
-  match("/pdf_events").to(:controller => 'calendars', :action => 'pdf_events').name(:pdf_events)
-  match("/generate_csv").to(:controller => 'students', :action => 'generate_csv').name(:generate_csv)
-  match("/home_works_pdf").to(:controller => 'home_works', :action => 'home_works_pdf').name(:home_works_pdf)
-end
+   authenticate do
+       resources :parents
+       resources :approvals
+       resources :schools
+       resources :people
+       resources :alerts
+       resources :classrooms
+       resources :homes
+       resources :announcements
+       resources :welcome_messages
+       resources :calendars
+       resources :students
+       resources :teams
+       resources :from_principals
+       resources :home_works
+       resources :external_links
+       resources :forms
+       resources :spot_lights
+       match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
+       match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
+       match("/alerts_edit").to(:controller => 'alerts', :action => 'edit').name(:alert_edit)
+       match("/alerts_update").to(:controller => 'alerts', :action => 'update').name(:alert_update)
+       match("/staff_account").to(:controller => 'users', :action => 'staff_account').name(:staff_account)
+       match("/staff_account_edit").to(:controller => 'users', :action => 'staff_account_edit').name(:staff_account_edit)
+       match("/staff_account_update").to(:controller => 'users', :action => 'staff_account_update').name(:staff_account_update)
+       match("/staff_password").to(:controller => 'users', :action => 'staff_password').name(:staff_password)
+       match("/staff_password_update").to(:controller => 'users', :action => 'staff_password_update').name(:staff_password_update)
+       match("/publish").to(:controller => 'approvals', :action => 'publish').name(:publish)
+       match("/parent_approvals").to(:controller => 'approvals', :action => 'parent_approvals').name(:parent_approvals)
+       match("/approval_review").to(:controller => 'approvals', :action => 'approval_review').name(:approval_review)
+       match("/parent_grant").to(:controller => 'approvals', :action => 'parent_grant').name(:parent_grant)
+       match("/principal_articles").to(:controller => 'homes', :action => 'principal_articles').name(:principal_articles)
+       match("/class_details").to(:controller => 'classrooms', :action => 'class_details').name(:class_details)
+       match("/form_files").to(:controller => 'forms', :action => 'form_files').name(:form_files)
+       match("/parent_account").to(:controller => 'users', :action => 'parent_account').name(:parent_account)
+       match("/parent_password").to(:controller => 'users', :action => 'parent_password').name(:parent_password)
+       match("/parent_password_change").to(:controller => 'users', :action => 'parent_password_change').name(:parent_password_change)
+       match("/parent_account_edit").to(:controller => 'users', :action => 'parent_account_edit').name(:parent_account_edit)
+       match("/parent_update").to(:controller => 'users', :action => 'parent_update').name(:parent_update)
+       match("/student_details").to(:controller => 'users', :action => 'student_details').name(:student_details)
+       match("/student_edit").to(:controller => 'users', :action => 'student_edit').name(:student_edit)
+       match("/student_update").to(:controller => 'users', :action => 'student_update').name(:student_update)
+       match("/directory").to(:controller => 'students', :action => 'directory').name(:directory)
+       match("/staff").to(:controller => 'students', :action => 'staff').name(:staff)
+       match("/events").to(:controller => 'calendars', :action => 'events').name(:events)
+       match("/help").to(:controller => 'homes', :action => 'help').name(:help)
+       match("/disable").to(:controller => 'people', :action => 'disable').name(:disable)
+       match("/enable").to(:controller => 'people', :action => 'enable').name(:enable)
+       match("/download").to(:controller => 'homes', :action => 'download').name(:download)
+       match("/pdf_download").to(:controller => 'homes', :action => 'pdf_download').name(:pdf_download)
+       match("/pdf_events").to(:controller => 'calendars', :action => 'pdf_events').name(:pdf_events)
+       match("/generate_csv").to(:controller => 'students', :action => 'generate_csv').name(:generate_csv)
+       match("/home_works_pdf").to(:controller => 'home_works', :action => 'home_works_pdf').name(:home_works_pdf)
+   end
 
 
   # This is the default route for /:controller/:action/:id

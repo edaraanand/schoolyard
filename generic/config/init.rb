@@ -19,15 +19,8 @@ require "pdf/simpletable"
   #use_template_engine :erb
   
 Merb::BootLoader.after_app_loads do
-	
-   
 
-   # Paperclip::Configure::enable_ar!
-    #Merb::Slices::config[:merb_auth][:layout] = :application
-   #MA[:forgotten_password] = true 
-   # Add dependencies here that must load after the application loads:
-   # dependency "magic_admin" # this gem uses the app's model classes
-   
+ 
   Merb::Mailer.config = {
     :host   => 'smtp.gmail.com',
     :port   => '587',
