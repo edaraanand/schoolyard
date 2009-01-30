@@ -18,7 +18,7 @@ set :start_port, 7001
 set :processes, 1
 set :log_path, "#{shared_path}/log/production.log"
 
-role :app, "sdb.schoolyardapp.net"
+role :app, "sdb.schoolyardapp.net"  
 role :web, "sdb.schoolyardapp.net"
 role :db,  "sdb.schoolyardapp.net", :primary => true
 
