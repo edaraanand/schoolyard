@@ -12,8 +12,8 @@
   <<: *defaults
   :database: db/schoolapp_production
 
-#:rake:
-  #<<: *defaults
- # :database: db/schoolapp_production
+:rake:
+  <<: *defaults
+  :database: db/schoolapp_production
   
   
