@@ -4,7 +4,8 @@ Install Gems
   
   Do these things before starting the server.
   rake db:migrate
-  rake bootstrap:app
+  rake bootstrap:alerts
+  rake school2:person
 
   
   
