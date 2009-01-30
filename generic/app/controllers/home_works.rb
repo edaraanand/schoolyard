@@ -136,7 +136,7 @@ class HomeWorks < Application
   def pdf_prepare(value, homework)
       pdf = PDF::Writer.new
       pdf.select_font "Helvetica"
-      pdf.text "#{@current_school.school_name}", :font_size => 40, :justification => :center
+      pdf.text "#{@current_school.school_name}", :font_size => 20, :justification => :center
       if value == "multiple"
          @home_works.each do |homework|
               pdf.text "Title : #{homework.title}", :font_size => 10, :justification => :left
