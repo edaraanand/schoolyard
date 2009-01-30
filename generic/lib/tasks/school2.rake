@@ -6,7 +6,7 @@ namespace:school2 do
      @school = School.create({
          :school_name => "St James School",
          :phone => "11111111",
-         :email => "sjs@schoolyardapp.com",
+         :email => "sjs@schoolyardapp.net",
          :domain => "http://sjs.schoolyardapp.net",
          :folder => "schoolyardappcom",
          :subdomain => 'sjs'
