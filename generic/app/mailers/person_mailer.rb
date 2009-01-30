@@ -27,12 +27,9 @@ class PersonMailer < Merb::MailController
   end
   
   def password_staff
-     puts "Damn".inspect
      @staff = params
      @current_school = @staff.school
-     puts @current_school.inspect
      render_mail :html => :password_staff, :layout => nil
-     puts "hiphip".inspect
   end
   
  
