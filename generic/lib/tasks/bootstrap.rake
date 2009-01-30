@@ -46,7 +46,7 @@ namespace :bootstrap do
            :title => "Mr.",
            :first_name => "John",
            :last_name => "Meyer",
-           :email => "school@insight",
+           :email => "school@insightmethods.com",
            :type => 'Staff',
            :password => 'admin',
            :password_confirmation => 'admin',
