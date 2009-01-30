@@ -37,8 +37,9 @@
              <% @calendars.delete_if{|c| c.start_date == calendar.start_date } %>
          
   <% end %>
-         <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id) %>
-</div>
+  </div>
+              <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id) %>
+        
 <% elsif params[:label] == "homeworks" %>
        <h2 class="current-page"> Homework </h2>
        <% for homework in @home_works %>
@@ -67,22 +68,14 @@
                <div class="hrule clear"><hr /></div>
                  
        <% end %>
-                <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id) %>
-                
+                <% unless @home_works.empty? %>
+                      <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id) %>
+                <% end %>          
 <% elsif params[:label] == "announcements" %>
           <h2 class="current-page"> Announcements </h2>
             <% for announcement in @announcements %>
                    <div class="data-block long-block">
-                      <% if announcement.expiration.nil? %>
-                          <div class="ddmmm-x">
-	                        </div>
-                      <% else %>
-                           <div class="ddmmm">
-                               <span class="date"><%= announcement.expiration.strftime("%d") %></span>
-                               <span class="month"><%= announcement.expiration.strftime("%b") %></span>
-	                          </div>
-                      <% end %>
-                            <h3><%= announcement.title %></h3>
+                           <h3><%= announcement.title %></h3>
                             <p class="post-content"><%= announcement.content %></p>
                             <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', announcement.id] ) %>
                              <% unless @attachment.nil? %>
@@ -95,7 +88,7 @@
 <% else %>
 
          <% for message in @welcome_messages %>
-              <p class="post-content"><%= message.content %></p>
+               <p class="post-content"><%= message.content %></p>
          <% end %>
         <h2 class="current-page">External Links </h2>
           <% for link in @external_links %>
@@ -106,21 +99,12 @@
    
             <% for announcement in @announcements %>
                    <div class="data-block long-block">
-                      <% if announcement.expiration.nil? %>
-                          <div class="ddmmm-x">
-	                        </div>
-                      <% else %>
-                           <div class="ddmmm">
-                               <span class="date"><%= announcement.expiration.strftime("%d") %></span>
-                               <span class="month"><%= announcement.expiration.strftime("%b") %></span>
-	                          </div>
-                      <% end %>
-                            <h3><%= announcement.title %></h3>
+                          <h3><%= announcement.title %></h3>
                             <p class="post-content"><%= announcement.content %></p>
                            <div class="hrule clear"><hr /></div>
                    </div>
             <% end %>
-                   <span class="add-link"><%= link_to "All Announcements" %></span></span>
+                  
 
 
 <% end %>   

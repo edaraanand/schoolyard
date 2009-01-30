@@ -7,12 +7,10 @@
        <% for principal in @from_principals %>
      
             <div id="sidebar">
-                        <div class="ddmmm">
-                             <span class="date"><%= principal.created_at.strftime("%d") %></span>
-                             <span class="month"><%= principal.created_at.strftime("%b") %></span>
-	                      </div>
+                 <div class="data-block long-block">
                      <h3><%= link_to "#{principal.title}", url(:home, principal.id) %></h3>
                      <p class="post-content-sidebar"><%= principal.content %></p>
+                 </div>
             </div>
             <div class="hrule clear"><hr /></div>
         <% end %>
@@ -20,17 +18,8 @@
  
         <% for announcement in @announcements %>
               <div class="data-block long-block">
-                   <% if announcement.expiration.nil? %>
-                        <div class="ddmmm-x">
-	                      </div>
-                   <% else %>
-                         <div class="ddmmm">
-                              <span class="date"><%= announcement.expiration.strftime("%d") %></span>
-                              <span class="month"><%= announcement.expiration.strftime("%b") %></span>
-	                       </div>
-                    <% end %>
-                         <h3><%= link_to "#{announcement.title}", url(:home, announcement.id) %></h3>
-                         <p class="post-content"><%= announcement.content %></p>
+                     <h3><%= link_to "#{announcement.title}", url(:home, announcement.id) %></h3>
+                     <p class="post-content"><%= announcement.content %></p>
               </div>
               <div class="hrule clear"><hr /></div>
          <% end %>

@@ -18,23 +18,21 @@
   </ul>
 
     <dl class="check-box-set">
-      <dt>
-        <input type="checkbox" class="check" value="Select all" name="select_all" id="select_all" onclick="Form.getInputs('people', 'checkbox').each(function(box){box.checked= $('select_all').checked})" />
-      </dt>
-      <dd>Select all</dd>
-     
-      
-      <% @accesses.each do |f| %>
-  
-          <dt>                       
-              <input type="checkbox" class="check" name="access[access_ids][]" value="<%= f.id %>" />
-          </dt>
-          <dd>
-              <%= f.full_name %>
-  	          <% @accesses.delete_if{|x| x.name == "view_all"} %>
-  	       </dd>
-  	  <% end %>
-  	       <dt></dt>
+        <dt>
+            <input type="checkbox" class="check" value="Select all" name="select_all" id="select_all" onclick="Form.getInputs('people', 'checkbox').each(function(box){box.checked= $('select_all').checked})" />
+        </dt>
+        <dd>Select all</dd>
+        
+        <% @accesses.each do |f| %>
+            <dt>                       
+                <input type="checkbox" class="check" name="access[access_ids][]" value="<%= f.id %>" />
+            </dt>
+            <dd>
+                <%= f.full_name %>
+  	            <% @accesses.delete_if{|x| x.name == "view_all"} %>
+  	        </dd>
+  	     <% end %>
+  	        <dt></dt>
 	   </dl>
 	         <div class="save-cancel">
 	            <%= submit "Save & Notify" %> <span>Or <%= link_to "Cancel", url(:people), :class => "cancel" %></span>
