@@ -11,7 +11,6 @@ class Staff < Person
      until pwreset_key_success
         self.password_reset_key = self.class.make_key
         puts self.password_reset_key.inspect
-        puts "Naidu".inspect
         self.save!
         pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false
      end

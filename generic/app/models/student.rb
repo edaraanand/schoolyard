@@ -12,4 +12,5 @@ class Student < Person
       
      validates_presence_of :birth_date
      validates_presence_of :address
+  
 end
