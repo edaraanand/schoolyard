@@ -21,7 +21,7 @@ namespace:school2 do
            :email => "sjs@schoolyardapp.net",
            :type => 'Staff',
            :password => 'lori',
-           :password_confirmation => 'sjs',
+           :password_confirmation => 'lori',
            :school_id => @school.id
       })
        
