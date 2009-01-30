@@ -29,6 +29,7 @@ class PersonMailer < Merb::MailController
   def password_staff
      @staff = params
      @current_school = @staff.school
+     puts "Ash".inspect
      render_mail :html => :password_staff, :layout => nil
   end
   
