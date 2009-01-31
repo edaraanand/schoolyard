@@ -15,7 +15,6 @@ class Staff < Person
         puts self.inspect
         pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false
      end
-     puts "raja".inspect
      send_password
   end
   
