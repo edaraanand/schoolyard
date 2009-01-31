@@ -5,7 +5,7 @@ namespace:school2 do
    task :school do
      @school = School.create({
          :school_name => "St James School",
-         :phone => "11111111",
+         :phone => "1234567890",
          :email => "sjs@schoolyardapp.net",
          :domain => "http://sjs.schoolyardapp.net",
          :folder => "schoolyardappcom",
