@@ -15,7 +15,7 @@ class Classroom < ActiveRecord::Base
   
   
  	validates_presence_of :class_name, :if => Proc.new{|c| c.class_type != "Sports" }
-  validates_uniqueness_of :class_name
+  validates_uniqueness_of :class_name, :scope => :school_id
   
   
 end
