@@ -21,7 +21,6 @@ class People < Application
      @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
      @staff = @current_school.staff.new(params[:person])
      if @staff.save
-       puts "Esh".inspect
         unless params[:access].nil?
 	         @access = params[:access][:access_ids]
         end
@@ -30,14 +29,12 @@ class People < Application
              if params[:select_all] == "Select all"
                 AccessPeople.create({:person_id => @staff.id, :all => true})
              else
-               puts "Tej".inspect
                 unless params[:access].nil?
 	                @access.each do |f|
                      @access_people = AccessPeople.create({:person_id => @staff.id, :access_id => f })
                   end
                 end
              end
-             puts "Raja".inspect
              @staff.send_pass
              redirect url(:people)
      else
