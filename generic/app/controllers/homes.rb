@@ -13,6 +13,7 @@ class Homes < Application
     @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ["access_name = ?", "Home Page"])
     @from_principals = @current_school.announcements.find(:all, :conditions => ["label = ?", "from_principal"], :limit => 2)
     @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :limit => 2 )
+    @classrooms = @current_school.classrooms.find(:all)
     render
   end
   

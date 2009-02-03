@@ -1,40 +1,36 @@
  <%= error_messages_for @classroom %>
 
 <fieldset>
- 
-<h2 class="current-page"> Classrooms &gt; Add New </h2>
-  
-<%= form_for(@classroom, :action => resource(:classrooms), :name => "class" ) do %>
-  <ul id="class_room">
-    <li><%= select :class_type, :label => "Class Type", :collection => @class_types, :onchange => "class_type();return false;" %></li>
-    <div id="class_name" style="display:block">
-        <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></li>
-    </div>
+      <h2 class="current-page"> Classrooms &gt; Add New </h2>
+     <%= form_for(@classroom, :action => resource(:classrooms), :name => "class" ) do %>
+         <ul id="class_room">
+            <li><%= select :class_type, :label => "Class Type", :collection => @class_types, :onchange => "class_type();return false;" %></li>
+            <div id="class_name" style="display:block">
+                <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></li>
+            </div>
            <li>
-           <div id="teacher" style="display:block">
-               <label>Class Teacher</label>
-           </div>
-           <div id="sport" style="display:none">
-              <label>Athletic Director</label>
-           </div>
+               <div id="teacher" style="display:block">
+                  <label>Class Teacher</label>
+               </div>
+               <div id="sport" style="display:none">
+                  <label>Athletic Director</label>
+               </div>
              <select name = "class[people][ids][]" id="class_person",>
               <% @teachers.each do |teacher| %>
                 <option value="<%= teacher.id %>">
                   <%= teacher.name %>
                 </option>
              <% end %>
-          </li>
-          </ul>
+           </li>
+         </ul>
           
-           <input type="hidden" id="id" value="1">
-            <div id="divTxt"></div>
-             
-          <p><a href="#" onClick="addFormField(); return false;">Add More</a></p>
-            
-        <div class="save-cancel">
-            <%= submit "Save" %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
-        </div>
-  <% end =%>
+             <input type="hidden" id="id" value="1">
+                  <div id="divTxt"></div>
+                     <p><a href="#" onClick="addFormField(); return false;">Add More</a></p>
+             <div class="save-cancel">
+                 <%= submit "Save" %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
+             </div>
+     <% end =%>
 </fieldset>
 
 <script type= "text/javascript">
@@ -45,9 +41,10 @@
   {
     var id = document.getElementById('id').value;
     $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short' name='class[people][role][]' id='txt" + id + "'><select name='class[people][teacher][]'><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' onClick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a><p>");
-    
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
+   // document.getElementById('txt" + id + "').focus();
+    
 }
 
    function removeFormField(id) 

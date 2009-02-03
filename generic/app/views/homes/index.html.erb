@@ -51,8 +51,15 @@
    <% end %>
  
        <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements')  %> <br/>
+       
+       <% unless @classrooms.empty? %>
+             <h4 class="current-page">Quick Links </h4>
+             <% @classrooms.each do |f| %>
+                 <%= link_to "#{f.class_name}", url(:class_details, :id => f.id) %>
+             <% end %>
+       <% end %>
      
-       <h4 class="current-page">
+      <h4 class="current-page">
          External Links </h4>
       <ul> 
        <% for link in @external_links %>
