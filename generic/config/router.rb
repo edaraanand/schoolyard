@@ -60,7 +60,7 @@ Merb::Router.prepare do
     match("/staff_password_save").to(:controller => 'registrations', :action => 'staff_password_save').name(:staff_password_save)
 
  
-   authenticate do
+  authenticate do
        resources :parents
        resources :approvals
        resources :schools
@@ -78,6 +78,7 @@ Merb::Router.prepare do
        resources :external_links
        resources :forms
        resources :spot_lights
+       resources :admin
        match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
        match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
        match("/alerts_edit").to(:controller => 'alerts', :action => 'edit').name(:alert_edit)
@@ -113,9 +114,10 @@ Merb::Router.prepare do
        match("/pdf_events").to(:controller => 'calendars', :action => 'pdf_events').name(:pdf_events)
        match("/generate_csv").to(:controller => 'students', :action => 'generate_csv').name(:generate_csv)
        match("/home_works_pdf").to(:controller => 'home_works', :action => 'home_works_pdf').name(:home_works_pdf)
+       match(:first_subdomain => 'admin').to(:controller => 'admin', :action => 'index') 
    end
-
    
+     
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
   # routes, you may want to comment/remove this line to prevent
@@ -123,7 +125,7 @@ Merb::Router.prepare do
   default_routes
   
   # Change this for your home page to be available at /
-  #authenticate do
-  match('/').to(:controller => 'homes')
-  #end
+ 
+    match('/').to(:controller => 'homes')
+
 end
