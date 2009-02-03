@@ -19,23 +19,26 @@ class People < Application
   
   def create
      @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
-     @staff = @current_school.staff.new(params[:person])
-     if @staff.save
+     @person = Person.new(params[:person])
+     if @person.valid?
+        @person.type = "Staff"
+        @person.school_id = @current_school.id
+        @person.save
         unless params[:access].nil?
 	         @access = params[:access][:access_ids]
         end
         @access_view = Access.find(:first, :conditions => ['name=?', "view_all"])
-        @access_view_all = AccessPeople.create({:person_id => @staff.id, :access_id => @access_view.id})
+        @access_view_all = AccessPeople.create({:person_id => @person.id, :access_id => @access_view.id})
              if params[:select_all] == "Select all"
-                AccessPeople.create({:person_id => @staff.id, :all => true})
+               AccessPeople.create({:person_id => @person.id, :all => true})
              else
                 unless params[:access].nil?
 	                @access.each do |f|
-                     @access_people = AccessPeople.create({:person_id => @staff.id, :access_id => f })
+                    @access_people = AccessPeople.create({:person_id => @person.id, :access_id => f })
                   end
                 end
              end
-             @staff.send_pass
+             @person.send_pass
              redirect url(:people)
      else
          render :new
