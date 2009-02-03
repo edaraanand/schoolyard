@@ -8,8 +8,9 @@
   <% @site_id_param = Merb::Authentication::Strategies::Multisite::Base.site_id_param %>
 	
 	<% # make @current_site value. application.rb does not get call because the authentication is protected at the rack level - which is better, but it means I have to add the following code. %>
-	<% if request.first_subdomain != "" %>
-        <% puts request.first_subdomain.inspect  %>
+	<% if (request.first_subdomain != "") && (request.first_subdomain == "admin") %>
+        <% @current_school = School.find(:first, :conditions => ['subdomain = ?', request.first_subdomain ] ) %>
+  <% elsif (request.first_subdomain != "") && (request.first_subdomain != "admin") %>
         <% @current_school = School.find(:first, :conditions => ['subdomain = ?', request.first_subdomain ] ) %>
   <% else %>
         <% @current_school = School.first(:domain => request.domain) %>
@@ -26,7 +27,10 @@
 	  </div> <!-- close: formRow -->
 	  <div class="formRow">
 	    <input type="submit" name="Submit" value="Log In" id="Submit">
-	  </div> <!-- close: formRow --> <%= link_to "Register Here", resource(:registrations, :new) %>
+	  </div> <!-- close: formRow -->
+     <% unless (request.first_subdomain == "admin") %>
+          <%= link_to "Register Here", resource(:registrations, :new) %>
+     <% end %>
 	</form>
  
     </div> <%= link_to "Forgot Password", url(:forgot_password) %>

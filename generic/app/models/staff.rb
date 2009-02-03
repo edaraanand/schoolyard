@@ -1,8 +1,10 @@
 class Staff < Person
   
     belongs_to :school
+    
+    validates_length_of :password, :within => 4..40, :if => :password
    
-	def self.make_key
+  def self.make_key
       Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
   end
     
@@ -26,6 +28,5 @@ class Staff < Person
       from = "no-reply@insightmethods.com"
       PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
-  
                             
 end

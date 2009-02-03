@@ -1,11 +1,23 @@
-<fieldset>
-<h3>Basic Settings <%= link_to "new", url(:new_admin) %> <%= link_to "Edit", url(:edit_admin, @school) %> </h3>
-<dl>
-  <dt>School Name</dt><dd><%= @school.school_name %></dd>
-</dl>
-<p> Contact Information For Parents </p>
-<dl>
-  <dt>Phone</dt><dd><%= @school.phone %></dd>
-  <dt>E-Mail</dt><dd><%= @school.email %></dd>
-</dl>
-</fieldset>
+
+<h2 class="current-page"><%= link_to "Add a New School", url(:new_admin) %></h2>
+  
+    <table id="mytable">
+    <thead> 
+         <th>School Name</th>
+         <th>URL</th>
+         <th>Admin Name</th>
+         <th>Admin Email</th>
+    </thead>
+  
+          <% for school in @schools %>
+              <tr onclick="location.href='<%= url(:edit_admin, school.id) %>'">
+                  <td><%= school.school_name %></td>
+                  <td><%= school.domain %> </td>
+                <% s = school.people.find(:first) %>
+                   <%# s.each do |f| %>
+                      <td><%= s.name %></td>
+                      <td><%= s.email %></td>
+                   <%# end %>
+              </tr>  
+          <% end %>
+  </table>
