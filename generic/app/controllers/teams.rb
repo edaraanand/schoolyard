@@ -15,7 +15,7 @@ class Teams < Application
   end
   
   def create
-     classroom = Classroom.find(:first, :conditions => ['class_name=?', params[:team][:classroom_id] ])
+    classroom = Classroom.find(:first, :conditions => ['class_name=?', params[:team][:classroom_id] ])
      @team = @current_school.teams.new(params[:team])
      id = params[:classroom][:people][:ids]
      role = params[:classroom][:people][:role]
@@ -36,6 +36,7 @@ class Teams < Application
         end
         redirect resource(:teams)
      else
+        @classroom_id = params[:team][:classroom_id]
 	      render :new
      end
   end

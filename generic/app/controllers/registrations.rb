@@ -170,8 +170,12 @@ class Registrations < Application
             @parent.password = params[:parent][:password]
             @parent.password_confirmation = params[:parent][:password_confirmation]
             @parent.school_id = @current_school.id
-            @parent.save
-            redirect url(:login)
+            if @parent.save
+               redirect url(:login)
+            else
+               flash[:error] = "You should enter Minimum Lengthof 4 Characters"
+               redirect url(:new_password, :id => @parent.id)
+            end
          else
             flash[:error1] = "Your Password doesn't match"
             render :new_password
