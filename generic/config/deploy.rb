@@ -35,6 +35,7 @@ namespace :deploy do
 	   run "mv #{current_path}/generic/config/database.yml.production #{current_path}/generic/config/database.yml"
 	   run "rm -fr #{current_path}/generic/db"
     # run "mv /home/eshwar/db  #{current_path}/generic"   
+     run "rm -fr #{current_path}/generic/schema/schema.rb"
      run "mkdir -p #{current_path}/generic/db"
      run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
