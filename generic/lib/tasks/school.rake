@@ -1,5 +1,5 @@
 Merb.start_environment(:environment => ENV['MERB_ENV'] || 'rake')
-namespace:school2 do
+namespace:school do
   
   desc "creating a school information"
    task :school do
