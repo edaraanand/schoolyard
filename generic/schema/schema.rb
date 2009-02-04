@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 53) do
+ActiveRecord::Schema.define(:version => 54) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(:version => 53) do
     t.string   "password_reset_key"
     t.string   "title"
     t.integer  "school_id"
+    t.boolean  "admin"
   end
 
   create_table "protectors", :force => true do |t|
