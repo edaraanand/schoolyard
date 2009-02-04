@@ -13,11 +13,11 @@
               <tr onclick="location.href='<%= url(:edit_admin, school.id) %>'">
                   <td><%= school.school_name %></td>
                   <td><%= school.domain %> </td>
-                <% s = school.people.find(:first) %>
-                   <%# s.each do |f| %>
-                      <td><%= s.name %></td>
-                      <td><%= s.email %></td>
-                   <%# end %>
+                <% s = school.people.find(:all, :conditions => ['admin =?', true]) %>
+                   <% s.each do |f| %>
+                       <td><%= f.name %></td>
+                       <td><%= f.email %></td>
+                   <% end %>
               </tr>  
           <% end %>
   </table>

@@ -23,6 +23,7 @@ class Admin < Application
        @school.save
        @person.school_id = @school.id
        @person.type = "Staff"
+       @person.admin = true
        @person.save
        @view = Access.find_by_name('view_all')
         AccessPeople.create({:person_id => @person.id, :access_id => @view.id })
@@ -30,19 +31,31 @@ class Admin < Application
        @person.send_pass
        redirect resource(:admin)
     else
-       @subdomain = params[:school][:domain]
+       @subdomain = params[:school][:subdomain]
        render :new
     end
   end
   
   def edit
      @school = School.find(params[:id])
+     @person = @school.people.find(:first, :conditions => ['admin =?', true])
      render
   end
   
   def update
-     raise params.inspect
-     render
+     @school = School.find(params[:id])
+     @person = @school.people.find(:first, :conditions => ['admin =?', true])
+     @email = params[:person][:email]
+     if @school.update_attributes(params[:school])
+        if @person.update_attributes(params[:person])
+           redirect resource(:admin)
+        else
+           render :edit
+        end
+     else
+        render :edit
+     end
+    
   end
   
   
