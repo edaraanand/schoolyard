@@ -198,7 +198,7 @@ input.long{width:200px}
 #mytable th.firsthead{border-left:1px solid #C1DAD7;}/*First TH*/
 #mytable td{border-right:1px solid #C1DAD7; border-bottom:1px solid #C1DAD7; background:#fff; padding:6px 6px 6px 12px; color: #4f6b72;}
 #mytable td.alt{background: #f5fafa; color: #797268;}/*Zebra style*/
-#mytable tbody tr:hover td{background-color:#E1F0EF;}
+/*#mytable tbody tr:hover td{background-color:#E1F0EF;}*/
 
 #mytable .click-block{padding:0!important}
 .click-block a{display:block; padding:6px 6px 6px 12px;}
@@ -267,7 +267,7 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 .cancel{padding:0 8px; color:#eb3f2c!important;}
 span.cancel a{color:#eb3f2c;}
 span.cancel a:hover{text-decoration:underline;}
-.enable{color:#287028!important}
+.enable{color:#169609!important; background:#fff url(../images/check.png) no-repeat left 50% !important;}
 .remove{color:red!important; padding:0 12px;}
 /*End Now*/
 
@@ -341,4 +341,11 @@ ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding
 
 #mytable td .edit-btn, #mytable td .delete-btn{float:none;}
 
+table.sports-teams {line-height:16px;}
+table.sports-teams .team-name{font-weight:bold; font-size:14px; display:block; border-bottom:1px solid #eee; padding-bottom:4px;margin-bottom:3px;}
+span.sports-faculty-list{display:block;}
+span.sports-faculty-list .role{}
+span.sports-faculty-list .name{font-weight:bold;}
+.divider{border-bottom:1px solid #eee; height:4px; margin-bottom:4px;}
 
+.deactivate{background:#fff url(../images/delete-btn-bg.gif) no-repeat 0 50%; padding:0 4px 0 18px; margin:0 0 0 200px; position:relative; top:-26px ;}

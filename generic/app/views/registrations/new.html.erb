@@ -20,7 +20,6 @@
    
 
 <%= form_for(@parent, :action => resource(:registrations) ) do %>
-      
        <ul>
            <li>
                <%= text_field  :first_name,  :label => "Your Name", :class => "short" %>
@@ -30,7 +29,6 @@
                <%= text_field  :email,  :label => "Your Email ID", :class => "short " %>
            </li>
        </ul>
-       
             <p> Student Details </p>
         <%= fields_for @registration do %>
               <ul>

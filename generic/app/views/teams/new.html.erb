@@ -25,8 +25,7 @@
      <input type="hidden" id="id" value="1">
             <div id="divTxt"></div>
              
-          <p><a href="#" onClick="addFormField(); return false;">Add More</a></p>
-  
+            <a href="#" onClick="addFormField(); return false;">Add More</a>
     <div class="save-cancel">
         <%= submit "Save" %>  Or <%= link_to "Cancel", resource(:teams), :class => "cancel" %>
     </div>
@@ -41,7 +40,7 @@
   function addFormField()
   {
     var id = document.getElementById('id').value;
-    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short' value='add more' name='classroom[people][role][]' id='txt" + id + "' onClick='test(id); return false;'><select name='classroom[people][teacher][]'><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' onClick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a><p>");
+    $j('#divTxt').append("<li id='row" + id + "'><input type='text' class='short text' value='add more' name='classroom[people][role][]' id='txt" + id + "' onClick='test(id); return false;'><select name='classroom[people][teacher][]'><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a class='remove' href='#' onClick='removeFormField(\"#row" + id + "\"); return false;'>remove</a></li>");
     
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
@@ -54,10 +53,10 @@
     
     function test(id)
     {
-      var s = document.getElementById(id)
+      var s = document.getElementById(id);
       if (s.value == "add more")
         {
-          s.value = ""
+          s.value = "";
         }
     }
     

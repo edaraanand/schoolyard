@@ -1,9 +1,9 @@
 <h2 class="current-page">Sports Teams &gt; <%= link_to "Add New", resource(:teams, :new) %></h2>
 <% unless @teams.empty? %>
-  <table id="mytable">
+  <table id="mytable" class="sports-teams">
     <thead>
       <tr >
-        <th colspan="3" scope="col">
+        <th colspan="4" scope="col">
           Teams
         </th>
       </tr>
@@ -11,13 +11,18 @@
     <tbody>
       <% for team in @teams %>
             <tr>
-                <td><%= link_to "#{team.team_name}", resource(team, :edit) %></td>
-                   <% s = team.class_peoples %>
-		               <% s.each do |f| %>
-		                    <td>  <%= f.role %> : <%= f.person.name %>   </td>
-                   <% end %>
-            </tr>
-            <td><%= link_to "Delete", resource(team, :delete), :class =>"delete-btn" %></td>
+                <td>
+                  <%= link_to "#{team.team_name}", resource(team, :edit), :class =>"team-name"  %>
+                    <% s = team.class_peoples %>
+		                <% s.each do |f| %>
+		                  <span class="sports-faculty-list">
+		                    <span class="role"><%= f.role %></span> : <span class="name"><%= f.person.name %></span>
+		                  </span>
+                    <% end %>
+                <td>
+                  <%= link_to "Delete", resource(team, :delete), :class =>"delete-btn" %>
+                </td>
+          </tr>
       <% end %> 
     </tbody>
   </table>
