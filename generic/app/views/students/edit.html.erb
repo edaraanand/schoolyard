@@ -58,18 +58,18 @@
                        <% if( ( (@fname2 != "") && (@lname2 != "") ) && (@email2 != "") )   %>
                              <% if ( ( (@fname3 != "") || (@lname3 != "" ) ) || (@email3 != "") ) %>
                                   <div id="am2" style="display:none">
-	                                    <a onclick="add_parent2();return false;" href="#">Add More</a>
+	                                    <a class="add-more add-more-block" onclick="add_parent2();return false;" href="#">Add More</a>
 	                                </div>
                                   <div id="am3" style="display:none">
-	                                    <a onclick="add_parent3();return false;" href="#">Add More</a>
+	                                    <a class="add-more add-more-block"  onclick="add_parent3();return false;" href="#">Add More</a>
 	                                </div>
                               <% end %>
                        <% else %>
                              <div id="am2" style="display:none">
-	                               <a onclick="add_parent2();return false;" href="#">Add More</a>
+	                               <a class="add-more add-more-block"  onclick="add_parent2();return false;" href="#">Add More</a>
 	                           </div>
                              <div id="am3" style="display:block">
-	                               <a onclick="add_parent3();return false;" href="#">Add More</a>
+	                               <a class="add-more add-more-block" onclick="add_parent3();return false;" href="#">Add More</a>
 	                           </div>
                        <% end %>
                   <% else %>

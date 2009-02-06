@@ -1,16 +1,22 @@
- <%= error_messages_for @classroom %>
-
+<%= error_messages_for @classroom %>
 <fieldset>
- 
 <h2 class="current-page"> Classrooms &gt; Add New </h2>
-  
 <%= form_for(@classroom, :action => resource(:classrooms), :name => "class" ) do %>
   <ul id="class_room">
-    <li><%= select :class_type, :label => "Class Type", :collection => @class_types, :onchange => "class_type();return false;" %></li>
-    <div id="class_name" style="display:block">
-        <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></li>
-    </div>
-           <li>
+    <li>
+      <%= select :class_type,
+                 :label => "Class Type",
+                 :collection => @class_types,
+                 :onchange => "class_type();return false;"
+      %>
+    </li>
+    <li id="class_name">
+      <%= text_field :class_name,  
+                     :label => "Class Name",
+                     :maxlength => "75" 
+      %>
+    </li>
+    <li>
            <div id="teacher" style="display:block">
                <label>Class Teacher</label>
            </div>
@@ -29,7 +35,7 @@
            <input type="hidden" id="id" value="1">
             <div id="divTxt"></div>
              
-          <p><a href="#" onClick="addFormField(); return false;">Add More</a></p>
+          <a href="#"  class="add-more"  onClick="addFormField(); return false;">Add More</a>
             
         <div class="save-cancel">
             <%= submit "Save" %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
@@ -44,7 +50,7 @@
   function addFormField()
   {
     var id = document.getElementById('id').value;
-    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short' name='class[people][role][]' id='txt" + id + "'><select name='class[people][teacher][]'><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' onClick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a><p>");
+    $j('#divTxt').append("<li id='row" + id + "'><input type='text' class='text short' name='class[people][role][]' id='txt" + id + "'><select name='class[people][teacher][]'><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' class='remove' onClick='removeFormField(\"#row" + id + "\"); return false;'>remove</a><li>");
     
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
