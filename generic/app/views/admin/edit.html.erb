@@ -1,3 +1,24 @@
-<div class = "header">
-    <%= render :partial => 'form' %>
-</div>
+<%= error_messages_for @school %>
+<%= error_messages_for @person %>
+
+<fieldset>
+  <h2 class="current-page">School Apps Setup &gt; Edit</h2>
+  <%= form_for(@school, :action => url(:admin, @school) ) do %>
+        <ul>
+            <li><%= text_field :school_name,  :label => "School Name", :maxlength => "75" %></li>
+            <li> <label>Url</label> http:// <input type="text" maxlength="75" id="school_subdomain" name="school[subdomain]" class="short" value="<%= @school.subdomain %>" />.schoolyardapp.net </li>  
+           
+            <h4> <p> Administrator </p></h4>
+              <li>     
+                  <%= text_field  :name => 'person[first_name]', :maxlength => "75", :class=>"short", :label => "Name", :value => "#{@person.first_name}" %>
+                  <%= text_field  :name => 'person[last_name]', :maxlength => "75", :class=>"short apart", :value => "#{@person.last_name}" %>
+             </li>
+		         <li>
+                  <%= text_field :name => 'person[email]', :maxlength => "75", :label => "Email", :value => "#{@person.email}" %>
+             </li>
+	      </ul>
+            <div class="save-cancel">
+                 <%= submit "Save" %> Or <%= link_to "Cancel", resource(:admin), :class => "cancel" %>
+            </div>
+    <% end =%>
+</fieldset>

@@ -1,2 +1,15 @@
-<%= render :partial => 'form' %>
+<%= error_messages_for @school %>
+<%= error_messages_for @person %>
+
+
+<h2 class="current-page">School Apps Setup > Add New School</h2>
+<fieldset>
+
+      <%= form_for(@school, :action => resource(:admin), :name => "school") do  %>
+    
+             <%= partial 'form' %>
+  
+      <% end =%>
+      
+</fieldset>
 

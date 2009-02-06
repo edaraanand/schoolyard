@@ -50,7 +50,8 @@ namespace :bootstrap do
            :type => 'Staff',
            :password => 'admin',
            :password_confirmation => 'admin',
-           :school_id => @school.id
+           :school_id => @school.id,
+           :admin => 'true'
       })
        
        @view = Access.find_by_name('view_all')

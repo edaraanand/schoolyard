@@ -16,8 +16,8 @@ class Classrooms < Application
       render
    end
    
-   def create 
-     @classroom = @current_school.classrooms.new(params[:classroom])
+  def create 
+      @classroom = @current_school.classrooms.new(params[:classroom])
       @teachers = @current_school.staff.find(:all)
       id = params[:class][:people][:ids]
       role = params[:class][:people][:role]
@@ -50,7 +50,7 @@ class Classrooms < Application
        else
 	         render :new
        end
-   end  
+   end   
   
    def edit
       @classroom = Classroom.find(params[:id])

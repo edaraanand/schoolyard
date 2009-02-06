@@ -5,6 +5,7 @@ class Person < ActiveRecord::Base
   # Relationships between the Models
   
   belongs_to :school
+ 
 	has_many :access_peoples
 	has_many :accesses, :through => :access_peoples, :source => :access
 	
@@ -34,6 +35,7 @@ class Person < ActiveRecord::Base
   validates_length_of :password, :within => 4..40, :if => :password
  
   
+    
   def self.authenticate(email, school_id, password)
       u = find_by_email_and_school_id(email, school_id) # need to get the salt
       return nil unless u
@@ -49,7 +51,8 @@ class Person < ActiveRecord::Base
 	end
 	
  	def name
-     "#{first_name}"  "     "    "#{last_name}" 
+    # "#{first_name}"  "     "    "#{last_name}" 
+    first_name + ' ' + last_name
   end
 	
   def password_required?
@@ -79,13 +82,35 @@ class Person < ActiveRecord::Base
       from = "no-reply@insightmethods.com"
       PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
+     
+  def send_pass
+     pwreset_key_success = false
+     until pwreset_key_success
+        self.password_reset_key = self.class.make_key
+        puts self.password_reset_key.inspect
+        self.save
+        puts self.inspect
+        pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false
+     end
+     send_password
+  end
+  
+  def send_password
+      d_email(:password_staff, :subject => "Choose your Password to login in to schoolapps" )
+  end
+ 
+  def d_email(action, params)
+      from = "no-reply@insightmethods.com"
+      PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
+  end
   
 end            
-  
 
 
 class Principle < Person
 	
 end
 
-  
+
+
+

@@ -1,0 +1,5 @@
+class Creator < Person
+  
+  
+end
+

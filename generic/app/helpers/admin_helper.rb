@@ -1,5 +1,5 @@
 module Merb
-    module AdminHelper
+  module AdminHelper
 
-    end
-end
+  end
+end # Merb

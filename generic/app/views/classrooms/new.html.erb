@@ -29,8 +29,8 @@
                   <%= teacher.name %>
                 </option>
              <% end %>
-          </li>
-          </ul>
+           </li>
+         </ul>
           
            <input type="hidden" id="id" value="1">
             <div id="divTxt"></div>
@@ -54,6 +54,8 @@
     
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
+   // document.getElementById('txt" + id + "').focus();
+    
 }
 
    function removeFormField(id) 
