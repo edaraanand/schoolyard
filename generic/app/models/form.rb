@@ -1,14 +1,10 @@
 class Form < ActiveRecord::Base
   
    belongs_to :school
-  
-   attr_accessor :attachment
-   
+  # has_many  :attachments, :as => :attachable, :dependent => :destroy
+ 
    validates_presence_of :title
-   validates_presence_of :attachment, :message => 'Please Upload a Form'
+   attr_accessor :attachment
   
-    
-             
-  
-    
- end
+     
+end

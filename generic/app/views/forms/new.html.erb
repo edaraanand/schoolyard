@@ -1,23 +1,37 @@
 <fieldset>
   <%= error_messages_for @form %>
+ <ul class='error_messages'>
+       <% if flash[:error] %>
+          <li><%= flash[:error] %> </li>
+       <% end %>
+   </ul>
 
 <h2 class="current-page">Forms &gt; <span class="add-link">Add New</span></h2>
   
-  <%= form_for(@form, :action => resource(:forms), :name => "form" ) do %>
+  <%= form_for(@form, :action => resource(:forms), :name => "form", :html => { :multipart => true } ) do %>
      <ul>
          <li><%= text_field :title,  :label => "Title", :maxlength => "75" %></li>
          <li><%= select :class_name, :collection => @classrooms, :label => "Classroom" %></li>
          <li><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year" %></li>
          <li><%= file_field :attachment,  :label => "Upload Form" %></li>
      </ul>
+             <ul id="pending_files"></ul>
+             <script type="text/javascript">
+                 var multi_selector = new MultiSelector($('pending_files'), 1);
+                 multi_selector.addElement($('form_attachment'));
+             </script>
+     
      <div class="save-cancel">
         <%= submit "Save" %> Or <%= link_to "Cancel", resource(:forms), :class => "cancel" %>
      </div>
-<% end =%>
+       
+  <% end =%>
+
 </fieldset>
 
 <script type= "text/javascript">
-
+  
   document.form.form_title.focus();
+
 
 </script>

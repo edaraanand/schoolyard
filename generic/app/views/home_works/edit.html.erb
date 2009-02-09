@@ -1,5 +1,55 @@
 <%= error_messages_for @home_work %>
 <h2 class="current-page">Home Work &gt; Edit</h2>
 <%= form_for(@home_work, :action => resource(@home_work), :id => 'home_work') do %>
-    <%= partial 'form' %>          
+    <fieldset>
+       <ul>
+           <li><label>Home Work for:</label><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name } %></li>
+           <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
+           <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
+           <li><%= text_field  :due_date, :id => "due_date", :label => "Due Date", :class=>"short" %></li>
+           <li>
+               <% if @attachments.count >= 1 %>
+                   <%= file_field :attachment,  :label => "Attach a File", :disabled => "true" %>
+               <% else %>
+                   <%= file_field :attachment,  :label => "Attach a File" %>
+               <% end %>
+           </li>  
+       </ul>
+            <ul id="pending_files">
+                <% if @attachments.size > 0 %>
+                     <% @attachments.each do |attachment| %>
+                           <li id="attachment_<%= attachment.id %>"><%= attachment.filename %>
+                           <%= link_to "Remove", url(:delete_home_work, attachment.id, :label => "attachment"), :class => "cancel" %>
+                           </li>
+                      <% end %>
+                <% end %>
+	          </ul>
+                <script type="text/javascript">
+	                 	  var multi_selector = new MultiSelector($('pending_files'), <%= @allowed %>);
+		                  multi_selector.addElement($('home_work_attachment'));
+	              </script>
+  
+    </fieldset>
+      <div class="save-cancel">
+          <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+          <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:home_works), :class => "cancel" %>
+      </div>    
+        
 <% end =%>
+
+
+<script type= "text/javascript">
+
+ document.home_work.home_work_title.focus();
+
+ function preview()
+ {
+   var s = $('home_work').serialize();
+   window.open('/home_works/preview/-/?' + s);
+ }
+  
+ $j("#due_date").datepicker({minDate:'today'});
+ 
+ 
+
+</script>

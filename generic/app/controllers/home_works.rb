@@ -3,7 +3,7 @@ class HomeWorks < Application
   layout 'default'
   before :find_school
   before :access_rights, :exclude => [:show]
-  before :classrooms, :exclude => [:delete, :preview]
+  before :classrooms, :exclude => [:preview]
   before :rooms, :only => [:index]
   
   def index
@@ -30,16 +30,18 @@ class HomeWorks < Application
     @home_work = @person.home_works.build(params[:home_work])
     @home_work.classroom_id = @classroom.id
     @home_work.school_id = @current_school.id
-    if @home_work.save
-       unless params[:home_work][:attachment].empty?
+    i=0
+    if @home_work.valid?
+       @home_work.save
+        unless params[:attachment]['file_'+i.to_s].empty?
            @attachment = Attachment.create( :attachable_type => "Homework",
                                         :attachable_id => @home_work.id,
-                                        :filename => params[:home_work][:attachment][:filename],
-                                        :content_type => params[:home_work][:attachment][:content_type],
-                                        :size => params[:home_work][:attachment][:size]
+                                        :filename => params[:attachment]['file_'+i.to_s][:filename],
+                                        :content_type => params[:attachment]['file_'+i.to_s][:content_type],
+                                        :size => params[:attachment]['file_'+i.to_s][:size]
             )
            File.makedirs("public/uploads/#{@attachment.id}")
-           FileUtils.mv(params[:home_work][:attachment][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
         end
        redirect resource(:home_works)
     else
@@ -49,37 +51,64 @@ class HomeWorks < Application
   
   def edit
     @home_work = HomeWork.find(params[:id])
+    @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
+    @allowed = 1 - @attachments.count
     render
   end
   
   def update
     @classroom = Classroom.find_by_class_name(params[:home_work][:classroom_id])
+    @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
+    @allowed = 1 - @attachments.count
     @home_work = HomeWork.find(params[:id])
-    if @home_work.update_attributes(params[:home_work])
-       Attachment.delete_all(['attachable_id = ?', @home_work.id])
-        unless params[:home_work][:attachment].empty?
-            @attachment = Attachment.create( :attachable_type => "Homework",
+    i=0
+    if params[:attachment]
+        if@home_work.update_attributes(params[:home_work])
+            unless params[:attachment]['file_'+i.to_s].empty?
+              @attachment = Attachment.create( :attachable_type => "Homework",
                                         :attachable_id => @home_work.id,
-                                        :filename => params[:home_work][:attachment][:filename],
-                                        :content_type => params[:home_work][:attachment][:content_type],
-                                        :size => params[:home_work][:attachment][:size]
-              )
-         end
-       @home_work.classroom_id = @classroom.id
-       @home_work.person_id = session.user.id
-       @home_work.school_id = @current_school.id
-       @home_work.save
-       redirect resource(:home_works)
+                                        :filename => params[:attachment]['file_'+i.to_s][:filename],
+                                        :content_type => params[:attachment]['file_'+i.to_s][:content_type],
+                                        :size => params[:attachment]['file_'+i.to_s][:size]
+                )
+                  File.makedirs("public/uploads/#{@attachment.id}")
+                  FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+             end
+             @home_work.classroom_id = @classroom.id
+             @home_work.person_id = session.user.id
+             @home_work.school_id = @current_school.id
+             @home_work.save
+             redirect resource(:home_works)
+        else
+             render :edit
+        end
     else
-	     render :edit
+         if @home_work.update_attributes(params[:home_work])
+            @home_work.classroom_id = @classroom.id
+            @home_work.person_id = session.user.id
+            @home_work.school_id = @current_school.id
+            @home_work.save
+            redirect resource(:home_works)
+         else
+            render :edit
+         end
     end
   end
   
   def delete
-     @home_work = HomeWork.find(params[:id])
-     Attachment.delete_all(['attachable_id = ?', @home_work.id])
-     @home_work.destroy
-     redirect resource(:home_works)
+     if params[:label] == "attachment"
+        @attachment = Attachment.find(params[:id])
+        @home_work = HomeWork.find_by_id(@attachment.attachable_id)
+        @attachment.destroy
+        @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
+        @allowed = 1 - @attachments.count
+        render :edit, :id => @home_work.id
+     else
+        @home_work = HomeWork.find(params[:id])
+        Attachment.delete_all(['attachable_id = ?', @home_work.id])
+        @home_work.destroy
+        redirect resource(:home_works)
+     end
   end
   
   def preview
@@ -139,15 +168,15 @@ class HomeWorks < Application
       pdf.text "#{@current_school.school_name}", :font_size => 20, :justification => :center
       if value == "multiple"
          @home_works.each do |homework|
-              pdf.text "Title : #{homework.title}", :font_size => 10, :justification => :left
-              pdf.text "Description : #{homework.content}", :font_size => 10, :justification => :left
-              pdf.text "Due Date : #{homework.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
+              pdf.text "<b>Title</b>" + ":" + "" + "#{homework.title}", :font_size => 10, :justification => :left
+              pdf.text "<b>Description</b>" + ":" + "" + "#{homework.content}", :font_size => 10, :justification => :left
+              pdf.text "<b>Due Date</b>" + ":" + "" + "#{homework.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
           end
           pdf
       else
-          pdf.text "Title : #{@home_work.title}", :font_size => 10, :justification => :left
-          pdf.text "Description : #{@home_work.content}", :font_size => 10, :justification => :left
-          pdf.text "Due Date : #{@home_work.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
+          pdf.text "<b>Title</b>" + ":" + "" + "#{@home_work.title}", :font_size => 10, :justification => :left
+          pdf.text "<b>Description</b>" + ":" + "" + "#{@home_work.content}", :font_size => 10, :justification => :left
+          pdf.text "<b>Due Date</b>" + ":" + "" + "#{@home_work.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
           pdf
       end
   end
