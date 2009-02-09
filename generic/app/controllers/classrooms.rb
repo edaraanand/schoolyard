@@ -23,89 +23,166 @@ class Classrooms < Application
       role = params[:class][:people][:role]
       teachers = params[:class][:people][:teacher]
       @class_peoples = []
-      if @classroom.class_type == "Sports"
-         @classroom.class_name = "Sports"
+      if @classroom.valid? 
+          unless id.include?("please")
+              if role.nil?
+                  if @classroom.class_type == "Sports"
+                     @classroom.class_name = "Sports"
+                     if @classroom.valid?
+                        @classroom.save
+                        ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "Athletic Director"})
+                        redirect resource(:classrooms)
+                     else
+                        flash[:error2] = "There is already a Sports class, You can modify that"
+                        @id = params[:class][:people][:ids]
+                        @class_type = params[:classroom][:class_type]
+                        render :new
+                     end
+                  else
+                     @classroom.save
+                     ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
+                     redirect resource(:classrooms)
+                  end
+              else
+                 unless teachers.include?("please")
+                   unless role.include?("")
+                     if @classroom.class_type == "Sports"
+                        @classroom.class_name = "Sports"
+                        if @classroom.valid?
+                           @classroom.save
+                           @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "Athletic Director"})
+                            s = teachers.zip(role)
+                            s.each do |f|
+                              @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
+                            end
+                            redirect resource(:classrooms)
+                        else
+                           flash[:error2] = "There is already a Sports class, You can modify that"
+                           @id = params[:class][:people][:ids]
+                           @class_type = params[:classroom][:class_type]
+                           render :new
+                         end
+                     else
+                         @classroom.save
+                         @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
+                          s = teachers.zip(role)
+                          s.each do |f|
+                             @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
+                          end
+                         redirect resource(:classrooms)
+                     end
+                  else
+                      flash[:error] = "Please enter the Role"
+                      @id = params[:class][:people][:ids]
+                      @class_type = params[:classroom][:class_type]
+                     render :new
+                   end
+                else
+                     flash[:error] = "Please select Faculty from the list"
+                     @id = params[:class][:people][:ids]
+                     @class_type = params[:classroom][:class_type]
+                     render :new
+                end
+              end
+          else
+             flash[:error] = "Please select Faculty from the list"
+             @id = params[:class][:people][:ids]
+             @class_type = params[:classroom][:class_type]
+             render :new
+          end
+      else
+          @id = params[:class][:people][:ids]
+          @class_type = params[:classroom][:class_type]
+          render :new
       end
-       if @classroom.save
-           if role.nil?
-               if @classroom.class_type == "Sports"
-	                ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "Athletic Director"})
-               else
-                  ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
-               end
-           else
-	             role_id = id.delete_at(0)
-               if @classroom.class_type == "Sports"
-                  @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => role_id, :role => "Athletic Director"})
-               else 
-                  @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => role_id, :role => "class_teacher"})
-               end
-               
-               s = teachers.zip(role)
-	             s.each do |f|
-	                @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
-               end
-           end
-	         redirect resource(:classrooms)
-       else
-	         render :new
-       end
-   end   
+  end   
   
    def edit
-      @classroom = Classroom.find(params[:id])
-      @class_people = @classroom.class_peoples
-      @class = @class_people.delete_if{|x| x.team_id != nil}
-      @class_p = @class.delete_if{|x| x.role == "class_teacher"}
-      @class_sport = @class.delete_if{|x| x.role == "Athletic Director"}
+      @classroom = @current_school.classrooms.find(params[:id])
       @teachers = @current_school.staff.find(:all)
+      @class_peoples = @classroom.class_peoples
       render                          
    end
    
    def update
+      @classroom = @current_school.classrooms.find(params[:id])
       @teachers = @current_school.staff.find(:all)
-      @classroom = Classroom.find(params[:id])
-      @class_people = @classroom.class_peoples
-      @class = @class_people.delete_if{|x| x.team_id != nil}
-      @class_p = @class.delete_if{|x| x.role == "class_teacher"}
-      @class_sport = @class.delete_if{|x| x.role == "Athletic Director"}
-      id = params[:class][:people][:ids]
-      role = params[:class][:people][:role] 
+      @class_peoples = @classroom.class_peoples
+      ids = params[:class][:people][:ids]
+      roles = params[:class][:people][:roles]
+      @cla = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
+      @a_d = @classroom.class_peoples.find(:first, :conditions => ['role=?', "Athletic Director"] )
+      cls_id = params[:class][:people][:teacher]
       if @classroom.update_attributes(params[:classroom])
-          if @classroom.class_type == "Sports"
-             @classroom.class_name = "Sports"
-             @classroom.save
-          end
-          @class_peoples = @classroom.class_peoples
-          @cla = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
-          @class = @class_peoples.delete_if{|x| x.team_id != nil}
-          @class_p = @class.delete_if{|x| x.role == "class_teacher"}
-          @class_teacher = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
-          @class_id = @class_p.collect{|x| x.id }
-          if role.nil?
-             ClassPeople.update(@cla.id, {:person_id => "#{id}", :classroom_id => @classroom.id, :role => "class_teacher" } )
-          else
-	           ClassPeople.update(@cla.id, { :person_id => id[0], :classroom_id => @classroom.id, :role => "class_teacher" })    
-	           role_id = id.delete_at(0)
-	           s = id.zip(role,@class_id)
-             s.each do |f|
-	               if f[2].nil?
-	                  @classroom.class_peoples << ClassPeople.create({:person_id => f[0], :classroom_id => @classroom.id, :role => f[1] })	 
-                 else
-	                  @classroom.class_peoples << ClassPeople.update(f[2], { :person_id => f[0], :classroom_id => @classroom.id, :role => f[1] })
-                 end
+         if (params[:class][:people][:teacher].nil?) 
+            flash[:error] = "Please select Faculty from the list"
+            render :edit
+         elsif roles.nil?
+             if @classroom.class_type == "Sports"
+               ClassPeople.update(@a_d.id, {:person_id => "#{cls_id}", :classroom_id => @classroom.id, :role => "Athletic Director" } )
+               redirect resource(:classrooms)
+             else
+               ClassPeople.update(@cla.id, {:person_id => "#{cls_id}", :classroom_id => @classroom.id, :role => "class_teacher" } )
+               redirect resource(:classrooms)
              end
-          end
-          redirect resource(:classrooms)
+         else
+             unless ( ids.include?("please") )|| ( ids.include?("") )
+                   unless roles.include?("")
+                     if @classroom.class_type == "Sports"
+                        ClassPeople.update(@a_d.id, { :person_id => "#{cls_id}", :classroom_id => @classroom.id, :role => "Athletic Director" })
+                         @class = @class_peoples.delete_if{|x| x.team_id != nil}
+                         @class_sp = @class.delete_if{|x| x.role == "Athletic Director"}
+                         @class_people_ids = @class_sp.collect{|x| x.id}
+                         s = ids.zip(roles,@class_people_ids) 
+                         s.each do |f|
+                            if f[2].nil?
+                                 @classroom.class_peoples << ClassPeople.create({:person_id => f[0], :classroom_id => @classroom.id, :role => f[1] })
+                            else
+                                 @classroom.class_peoples << ClassPeople.update(f[2], { :person_id => f[0], :classroom_id => @classroom.id, :role => f[1] })
+                            end
+                         end
+                         redirect resource(:classrooms)
+                     else
+                        ClassPeople.update(@cla.id, { :person_id => "#{cls_id}", :classroom_id => @classroom.id, :role => "class_teacher" })
+                         @class = @class_peoples.delete_if{|x| x.team_id != nil}
+                         @class_p = @class.delete_if{|x| x.role == "class_teacher"}
+                         @class_people_ids = @class_p.collect{|x| x.id}
+                         s = ids.zip(roles,@class_people_ids) 
+                         s.each do |f|
+                            if f[2].nil?
+                                 @classroom.class_peoples << ClassPeople.create({:person_id => f[0], :classroom_id => @classroom.id, :role => f[1] })
+                            else
+                                 @classroom.class_peoples << ClassPeople.update(f[2], { :person_id => f[0], :classroom_id => @classroom.id, :role => f[1] })
+                            end
+                         end
+                         redirect resource(:classrooms)
+                     end
+                   else
+                      flash[:error] = "Please enter the Role"
+                      render :edit
+                   end
+             else
+                flash[:error] = "Please select Faculty from the list"
+                render :edit
+             end
+         end
       else
-	       render :edit
+         render :edit
       end
-   
    end                                      
    
    def delete
-      Classroom.find(params[:id]).destroy
-      redirect resource(:classrooms) 
+     if params[:label] == "remove"
+        @class = ClassPeople.find(params[:id])
+        @classroom = @current_school.classrooms.find_by_id(@class.classroom_id)
+        @teachers = @current_school.staff.find(:all)
+        @class_peoples = @classroom.class_peoples
+        @class.destroy
+        render :edit, :id => @classroom.id
+     else
+        Classroom.find(params[:id]).destroy
+        redirect resource(:classrooms) 
+     end
    end
     
    def class_details
