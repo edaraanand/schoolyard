@@ -61,7 +61,7 @@
                <h3><%= link_to "#{homework.title}", url(:home_work, homework.id) %></h3>
                Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %>
                 <p class="post-content"><%= homework.content %></p>
-                  <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', homework.id] ) %>
+                <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
                   <% unless @attachment.nil? %>
                       <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
                   <% end %>
@@ -69,7 +69,7 @@
                  
        <% end %>
                 <% unless @home_works.empty? %>
-                      <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id) %>
+                    <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id) %>
                 <% end %>          
 <% elsif params[:label] == "announcements" %>
           <h2 class="current-page"> Announcements </h2>

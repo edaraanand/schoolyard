@@ -122,11 +122,11 @@ class HomeWorks < Application
   end
  
   def home_works_pdf
-    if params[:label] == "single"
+     if params[:label] == "single"
        @home_work = HomeWork.find(params[:id])
        pdf = pdf_prepare("single", @home_work)
        send_data(pdf.render, :filename => "#{@home_work.title}.pdf", :type => "application/pdf")
-    else
+     else
        @classroom = Classroom.find(params[:id])
        @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id])
        pdf = pdf_prepare("multiple", @home_works)
@@ -181,4 +181,5 @@ class HomeWorks < Application
       end
   end
   
+
 end

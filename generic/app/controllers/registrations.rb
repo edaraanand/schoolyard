@@ -2,6 +2,7 @@ class Registrations < Application
 
   before :month_year
   before :find_school
+ 
   
   def index
     render
