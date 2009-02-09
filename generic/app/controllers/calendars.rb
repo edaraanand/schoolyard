@@ -144,17 +144,17 @@ class Calendars < Application
       pdf.text "#{@current_school.school_name}", :font_size => 20, :justification => :center
       if value == "multiple"
           @calendars.each do |calendar|
-              pdf.text "Title : #{calendar.title}", :font_size => 10, :justification => :left
-              pdf.text "Description : #{calendar.description}", :font_size => 10, :justification => :left
-              pdf.text "Location : #{calendar.location}", :font_size => 10, :justification => :left
-              pdf.text "Start Date : #{calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
+              pdf.text "<b>Title</b>"  + ":" + "" + "#{calendar.title}", :font_size => 10, :justification => :left
+              pdf.text "<b>Description</b>" + ":" + "" +  "#{calendar.description}", :font_size => 10, :justification => :left
+              pdf.text "<b>Location</b>" + ":" + "" + "#{calendar.location}", :font_size => 10, :justification => :left
+              pdf.text "<b>Start Date</b>" + ":" + "" + "#{calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
           end
           pdf
       else
-           pdf.text "Title : #{@calendar.title}", :font_size => 10, :justification => :left
-           pdf.text "Description : #{@calendar.description}", :font_size => 10, :justification => :left
-           pdf.text "Location : #{@calendar.location}", :font_size => 10, :justification => :left
-           pdf.text "Start Date : #{@calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
+           pdf.text "<b>Title</b>"  + ":" + "" + "#{@calendar.title}", :font_size => 10, :justification => :left
+           pdf.text "<b>Description</b>" + ":" + "" +  "#{@calendar.description}", :font_size => 10, :justification => :left
+           pdf.text "<b>Location</b>" + ":" + "" + "#{@calendar.location}", :font_size => 10, :justification => :left
+           pdf.text "<b>Start Date</b>" + ":" + "" + "#{@calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
            pdf
       end
   end
