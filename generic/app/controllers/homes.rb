@@ -49,8 +49,8 @@ class Homes < Application
       pdf = PDF::Writer.new
       pdf.select_font "Helvetica"
       pdf.text "#{@current_school.school_name}", :font_size => 40, :justification => :center
-      pdf.text "Title : #{@announcement.title}", :font_size => 10
-      pdf.text "Content : #{@announcement.content}" 
+      pdf.text "<b>Title</b>" + ":" + "" + "#{@announcement.title}", :font_size => 10
+      pdf.text "<b>Content</b>" + ":" + "" + "#{@announcement.content}" 
       pdf
   end
   

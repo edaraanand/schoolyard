@@ -231,7 +231,7 @@ class Registrations < Application
             if @person.save
                redirect url(:login)
             else
-               flash[:error] = "You should enter Minimum Length"
+               flash[:error] = "You should enter Minimum Length of 4 Characters"
                redirect url(:reset_password_edit, :id => @person.id )
             end
          else
@@ -264,7 +264,7 @@ class Registrations < Application
             if  @staff.save
                 redirect url(:login)
             else
-               flash[:error] = "You should enter Minimum Length"
+               flash[:error] = "You should enter Minimum Length of 4 Characters"
                redirect url(:new_staff_password, :id => @staff)
             end
          else

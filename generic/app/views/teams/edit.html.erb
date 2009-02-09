@@ -1,31 +1,36 @@
 <%= error_messages_for @team %>
+<ul class='error_messages'>
+       <% if flash[:error] %>
+          <li><%= flash[:error] %> </li>
+       <% end %>
+       <% if flash[:error2] %>
+          <li><%= flash[:error2] %> </li>
+       <% end %>
+</ul>
 
 <h2 class="current-page">Sports Teams &gt; Edit</h2>
   <%= form_for(@team, :action => resource(@team)) do %>
   <fieldset>
     <ul id="team">
-      <li><%= text_field  :team_name,  :label => "Name of the Team", :maxlength => "75" %></li>
-        <li><%= select  :classroom_id,  :collection => @classrooms.collect{|x| x.class_name }, :label => "Classroom", :prompt => "Please Select", :selected => "#{@class.class_name}" %></li>
-      <li><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year" %></li>
-      <li>
-        <label>Coach:</label>
-        <select name = "classroom[people][ids][]" id="classroom_person",>
-        <% @teachers.each do |teacher| %>
-          <option value="<%= teacher.id %>">
-            <%= teacher.name %>
-          </option>
-			  <% end %>
-			</li>
-	   <% @team_peoples.each do |f| %>
-           <li> <%= text_field :name => 'classroom[people][role][]', :id =>'classroom_class_people', :class => "short", :value => "#{f.role}" %>
-              	 <select name = "classroom[people][ids][]" id="classroom_person",>
-	                       <% @teachers.each do |teacher| %>
-		                      <option value="<%= teacher.id %>">
-			                   <%= teacher.name %>
-		                      </option>
-			        <% end %>
-           </li>
-	   <% end %>
+       <li><%= text_field  :team_name,  :label => "Name of the Team", :maxlength => "75" %></li>
+       <li><%= select  :classroom_id,  :collection => @classrooms.collect{|x| x.class_name }, :label => "Classroom", :prompt => "Please Select", :selected => "#{@class.class_name}" %></li>
+       <li><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year" %></li>
+             <% @class = @team_peoples.delete_if{|x| x.team_id == nil} %>
+           <% @class.each do |f| %>
+                <% if f.role == "coach" %>
+                      <li>
+                          <label><%= f.role.titleize %></label>
+                          <%= select :name => "classroom[people][coach]", :collection => @current_school.staff.find(:all), :value_method => :id, :text_method => :name, :prompt => "Select Faculty", :selected => f.person_id.to_s %>
+                      </li>
+                <% else %>
+                       <li>
+                          <%= text_field :name => 'classroom[people][roles][]', :id =>'class_class_people', :value => "#{f.role}", :class => "short" %>
+                          <%= select :name => "classroom[people][ids][]", :collection => @current_school.staff.find(:all), :value_method => :id, :text_method => :name, :prompt => "Select Faculty", :selected => f.person_id.to_s %>
+                          <%= link_to "Remove", url(:delete_team, f, :label => "remove"), :class => "cancel" %>
+                       </li>
+                <% end %>
+           <% end %>
+            
     </ul>
         <input type="hidden" id="id" value="1">
          <div id="divTxt"></div>
@@ -45,7 +50,7 @@
  function addFormField()
   {
     var id = document.getElementById('id').value;
-    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short' name='classroom[people][role][]' id='txt" + id + "'><select name='classroom[people][ids][]'><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' onClick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a><p>");
+    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short' name='classroom[people][roles][]' id='txt" + id + "'><select name='classroom[people][ids][]'><option value='please'>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' onClick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a><p>");
     
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
