@@ -114,7 +114,7 @@ class Classrooms < Application
       @a_d = @classroom.class_peoples.find(:first, :conditions => ['role=?', "Athletic Director"] )
       cls_id = params[:class][:people][:teacher]
       if @classroom.update_attributes(params[:classroom])
-         if (params[:class][:people][:teacher].nil?) 
+         if (params[:class][:people][:teacher] == "") 
             flash[:error] = "Please select Faculty from the list"
             render :edit
          elsif roles.nil?
