@@ -37,17 +37,20 @@
       </h3>
    </div> 
      
-  <dl>
-    <dt>Rights:</dt>
-	  <dd>This person can:</dd> 
+  <ul>
+    <li><h2 class="current-page">Rights:</h2></li>
+	  <li>
+      This person can:
       <% if (@person.crypted_password != "" ) || (@person.password_reset_key != "" ) %>
-            <a rel="facebox" href="#disable" class="cancel"><span>Disable the User</a>
+        <a rel="facebox" href="#disable" class="deactivate cancel"><span>Disable Access for this User</span></a>
       <% else %>
-      <a rel="facebox" href="#enable" class="enable">
-        <span>Enable the User</span>
-      </a>
+        <a rel="facebox" href="#enable" class="deactivate enable">
+          <span>Enable Access for the User</span>
+        </a>
       <% end %>
-	</dl>
+    </li> 
+
+	</ul>
 	   
   
     

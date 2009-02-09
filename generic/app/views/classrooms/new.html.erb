@@ -1,3 +1,4 @@
+<<<<<<< HEAD:generic/app/views/classrooms/new.html.erb
  <%= error_messages_for @classroom %>
  <ul class='error_messages'>
        <% if flash[:error] %>
@@ -61,15 +62,17 @@
                                     </option>
                                <% end %>
               </li>
-         </ul>
+        </ul>
           
-             <input type="hidden" id="id" value="1">
-                  <div id="divTxt"></div>
-                     <p><a href="#" onClick="addFormField(); return false;">Add More</a></p>
-             <div class="save-cancel">
-                 <%= submit "Save" %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
-             </div>
-     <% end =%>
+           <input type="hidden" id="id" value="1">
+            <div id="divTxt"></div>
+             
+          <a href="#"  class="add-more"  onClick="addFormField(); return false;">Add More</a>
+            
+        <div class="save-cancel">
+            <%= submit "Save" %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
+        </div>
+  <% end =%>
 </fieldset>
 
 <script type= "text/javascript">

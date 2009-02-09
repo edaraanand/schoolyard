@@ -31,12 +31,11 @@
                   
   		</li>
   	 </ul>
-     
+    
      <input type="hidden" id="id" value="1">
             <div id="divTxt"></div>
              
-          <p><a href="#" onClick="addFormField(); return false;">Add More</a></p>
-  
+            <a href="#" onClick="addFormField(); return false;">Add More</a>
     <div class="save-cancel">
         <%= submit "Save" %>  Or <%= link_to "Cancel", resource(:teams), :class => "cancel" %>
     </div>
@@ -52,7 +51,6 @@
   {
     var id = document.getElementById('id').value;
     $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short' name='classroom[people][role][]' id='txt" + id + "'><select name='classroom[people][teacher][]'><option value='please'>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' onClick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a><p>");
-    
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
 }
@@ -62,5 +60,5 @@
          $j(id).remove();
     }
     
-  
+
 </script>
