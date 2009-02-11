@@ -30,7 +30,7 @@
                   <div class="data-block long-block">
                           <h3><%= announcement.title %></h3>
                           <p class="post-content"><%= announcement.content %></p>
-                          <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', announcement.id] ) %>
+                          <% @attachment = Attachment.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
                           <% unless @attachment.nil? %>
                              <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
                           <% end %>
@@ -39,7 +39,7 @@
                    <div class="data-block long-block">
                           <h3><%= announcement.title %></h3>
                           <p class="post-content"><%= announcement.content %></p>
-                          <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', announcement.id] ) %>
+                         <% @attachment = Attachment.find(:first, :conditions => ["attachable_id=? and attachable_type=?", announcement.id, "Announcement"] ) %>
                           <% unless @attachment.nil? %>
                              <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
                           <% end %>

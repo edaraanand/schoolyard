@@ -1,12 +1,40 @@
 <%= error_messages_for @announcement %>
 <h2 class="current-page">From the Principal &gt; Add New</h2>
 <%= form_for(@announcement, :action => url(:from_principals), :id => 'announcement', :name => 'myform') do %>
-    <%= partial 'form' %>
+    <fieldset>
+         <ul>
+             <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
+             <li><%= text_area  :content,  :label => "Message", :rows => "10", :cols => "50" %></li>
+             <li><%= text_field  :expiration, :id => "expiration",  :label => "Expiration", :class=>"short" %></li>
+             <li><%= file_field :attachment,  :label => "Attach a File" %></li>
+  
+        </ul>
+             <ul id="pending_files"></ul>
+             <script type="text/javascript">
+                 var multi_selector = new MultiSelector($('pending_files'), 1);
+                 multi_selector.addElement($('announcement_attachment'));
+             </script>
+             
+    </fieldset>
+      
+            <div class="save-cancel">
+  	              <input type = 'button' value = 'Preview' onclick="preview();return false;" /> 
+                  <%= submit "Publish" %>  Or <%= link_to "Cancel", url(:from_principals), :class => "cancel" %>
+            </div>
   <% end =%>
   
   
 <script type= "text/javascript">
 
   document.myform.announcement_title.focus();
+  
+  function preview()
+ 
+ {
+   var s = $('announcement').serialize();
+   window.open('/from_principals/preview/-/?' + s);
+ }
+  
+  $j("#expiration").datepicker({minDate:'today + 1'});
 
 </script>
