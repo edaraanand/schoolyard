@@ -21,7 +21,7 @@
    
      <ul>
          <li>
-	          Student for: <select name = "classroom_id" id="classroom_person",>
+	          <label>Student for:</label> <select name = "classroom_id" id="classroom_person",>
 	                       <% @class_rooms.each do |s| %>
 		                      <option value="<%= s.id %>">
 			                   <%= s.class_name %>

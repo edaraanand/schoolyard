@@ -8,7 +8,7 @@ class Announcements < Application
    
   def index
     @message1 = "Approved"
-    @message2 = "Pending Approval"
+    @message2 = "Pending"
     @message3 = "Rejected"
     @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and label = ?", params[:access_name], 'staff' ])
      if params[:access_name].nil?

@@ -11,7 +11,7 @@ class Registrations < Application
   def new
     @parent = Parent.new
     @registration = Registration.new
-    render
+    render :layout => 'application'
   end
   
   def create
@@ -188,7 +188,7 @@ class Registrations < Application
   end
   
   def forgot_password
-     render
+     render :layout => 'login'
   end
   
   def get_password
