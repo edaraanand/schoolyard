@@ -104,6 +104,16 @@ class Person < ActiveRecord::Base
       PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
   
+  def changed_details
+      mail_deliver(:notify_staff_details, :subject => "Your Details has Changed")
+  end
+  
+  def mail_deliver(action, params)
+      from = "no-reply@insightmethods.com"
+      PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
+  end
+  
+  
 end            
 
 

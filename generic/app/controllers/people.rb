@@ -95,6 +95,7 @@ class People < Application
 	             end
             end
          end
+         @person.changed_details
 	       redirect url(:people)
     else
 	      render :edit  

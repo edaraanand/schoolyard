@@ -31,5 +31,11 @@ class PersonMailer < Merb::MailController
      render_mail :html => :password_staff, :layout => nil
   end
   
+  def notify_staff_details
+      @staff = params
+      @current_school = @staff.school
+      render_mail :html => :notify_staff_details, :layout => nil
+  end
+
 
 end
