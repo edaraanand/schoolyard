@@ -53,7 +53,7 @@ class Announcements < Application
   def edit
      @announcement = Announcement.find(params[:id])
      @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
-     @allowed = 1 - @attachments.count
+     @allowed = 1 - @attachments.size
      render
   end
   
@@ -65,7 +65,7 @@ class Announcements < Application
   def update 
      @announcement = @current_school.announcements.find(params[:id])
      @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
-     @allowed = 1 - @attachments.count
+     @allowed = 1 - @attachments.size
      i=0
      if params[:attachment]
         if @announcement.update_attributes(params[:announcement])
@@ -110,7 +110,7 @@ class Announcements < Application
         @announcement = Announcement.find_by_id(@attachment.attachable_id)
         @attachment.destroy
         @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
-        @allowed = 1 - @attachments.count
+        @allowed = 1 - @attachments.size
         render :edit, :id => @announcement.id
      else
         @announcement = Announcement.find(params[:id])

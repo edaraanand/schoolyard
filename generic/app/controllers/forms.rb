@@ -50,14 +50,14 @@ class Forms < Application
   def edit
      @form = Form.find(params[:id])
      @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type = ?", @form.id, "Form"])
-     @allowed = 1 - @attachments.count
+     @allowed = 1 - @attachments.size
      render
   end
   
   def update
      @form = Form.find(params[:id])
      @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type = ?", @form.id, "Form"])
-     @allowed = 1 - @attachments.count
+     @allowed = 1 - @attachments.size
      i=0
      if params[:attachment]
         if @form.update_attributes(params[:form])
@@ -93,7 +93,7 @@ class Forms < Application
         @form = Form.find_by_id(@attachment.attachable_id)
         @attachment.destroy
         @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type = ?", @form.id, "Form"])
-        @allowed = 1 - @attachments.count
+        @allowed = 1 - @attachments.size
         render :edit, :id => @form.id
      else
         @form = Form.find(params[:id])

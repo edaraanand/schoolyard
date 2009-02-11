@@ -52,14 +52,14 @@ class HomeWorks < Application
   def edit
     @home_work = HomeWork.find(params[:id])
     @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
-    @allowed = 1 - @attachments.count
+    @allowed = 1 - @attachments.size
     render
   end
   
   def update
     @classroom = Classroom.find_by_class_name(params[:home_work][:classroom_id])
     @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
-    @allowed = 1 - @attachments.count
+    @allowed = 1 - @attachments.size
     @home_work = HomeWork.find(params[:id])
     i=0
     if params[:attachment]
@@ -101,7 +101,7 @@ class HomeWorks < Application
         @home_work = HomeWork.find_by_id(@attachment.attachable_id)
         @attachment.destroy
         @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
-        @allowed = 1 - @attachments.count
+        @allowed = 1 - @attachments.size
         render :edit, :id => @home_work.id
      else
         @home_work = HomeWork.find(params[:id])

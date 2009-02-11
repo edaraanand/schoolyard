@@ -45,7 +45,7 @@ class Calendars < Application
      @calendar = Calendar.find(params[:id])
      @class_rooms = @current_school.classrooms.find(:all) 
      @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
-     @allowed = 1 - @attachments.count
+     @allowed = 1 - @attachments.size
      render
   end
   
@@ -60,7 +60,7 @@ class Calendars < Application
      @class_rooms = @current_school.classrooms.find(:all)
      @calendar = Calendar.find(params[:id])
      @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
-     @allowed = 1 - @attachments.count
+     @allowed = 1 - @attachments.size
      i=0
      if params[:attachment]
         if @calendar.update_attributes(params[:calendar])
@@ -108,7 +108,7 @@ class Calendars < Application
         @class_rooms = @current_school.classrooms.find(:all)
         @attachment.destroy
         @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
-        @allowed = 1 - @attachments.count
+        @allowed = 1 - @attachments.size
         render :edit, :id => @calendar.id
     else
         @calendar = Calendar.find(params[:id])

@@ -14,7 +14,7 @@
          <li><%= select :class_name, :collection => @classrooms, :label => "Classroom" %></li>
          <li><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year" %></li>
          <li>
-              <% if @attachments.count >= 1 %>
+              <% if @attachments.size >= 1 %>
                   <%= file_field :attachment,  :label => "Upload Form", :disabled => "true" %>
               <% else %>
                    <%= file_field :attachment,  :label => "Upload Form" %>

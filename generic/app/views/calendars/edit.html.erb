@@ -7,7 +7,7 @@
     <li><%= text_field :title,  :label => "Event Title" %></li>
     <li><%= text_area  :description,  :label => "Event Description",  :rows => "10", :cols => "25" %></li>
     <li>
-         <% if @attachments.count >= 1 %>
+      <% if @attachments.size >= 1 %>
                  <%= file_field :attachment,  :label => "Attach a File", :disabled => "true" %>
          <% else %>
                  <%= file_field :attachment,  :label => "Attach a File" %>
