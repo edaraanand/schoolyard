@@ -18,14 +18,15 @@
       
           <%  if (@announcement.approved == false ) && (@announcement.approve_announcement == false) %>
             <% @person = Person.find(:first, :conditions => ['id = ?', @announcement.rejected_by] ) %>
-                  Rejected By <%= @person.name %> 
-                  <p> <%= @announcement.reject_comments %></p>
+                  <p class="reject-comments"> <%= @announcement.reject_comments %></p>
+                  <span class="approved-or-not">Rejected By <%= @person.name %> </span>
           <% end %>
       
           <%  if (@announcement.approved == true ) && (@announcement.approve_announcement == true) %>
              <% @person = Person.find(:first, :conditions => ['id = ?', @announcement.approved_by] ) %>
-                     Approved & PublishedBy <%= @person.name %> 
-                 <p> <%= @announcement.approve_comments %></p>
+                     
+                 <p class="approve-comments"> <%= @announcement.approve_comments %></p>
+                 <span class="approved-or-not">Approved & PublishedBy <%= @person.name %> </span>
           <% end %>
    </div>
 </div>

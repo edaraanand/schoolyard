@@ -36,7 +36,7 @@
          <div id="sport" style="display:none">
            <label>Athletic Director:</label>
          </div>
-         <select name = "class[people][ids][]" id="class_person",>
+         <select name = "class[people][ids][]" id="class_person">
          <% @teachers.each do |teacher| %>
            <option value="<%= teacher.id %>">
               <%= teacher.name %>
@@ -46,7 +46,7 @@
          <% @class_people.each do |f| %>
               <li>
                   <%= text_field :name => 'class[people][role][]', :id =>'class_class_people', :value => "#{f.role}", :class => "short" %>
-                  <select name = "class[people][ids][]" id="class_person",>
+                  <select name = "class[people][ids][]" id="class_person", class="apart4">
                        <% @teachers.each do |teacher| %>
                              <option value="<%= teacher.id %>">
                                   <%= teacher.name %>

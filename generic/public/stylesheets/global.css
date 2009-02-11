@@ -185,6 +185,7 @@ ul#menu li.count span b{background:url(../images/menu-count.gif) no-repeat right
 .semi-short{width:120px!important;}
 .short{width:100px!important;}
 .apart{margin-left:6px;}
+.apart4{margin-left:4px;}
 input.long{width:200px}
 
 #am1, #am2, #am3, #am4{padding:10px 10px; border-top:1px solid #eee; margin-top:10px;}
@@ -359,9 +360,14 @@ fieldset.logbox  li{width:400px; margin: 0 20px;}
 .reg-forgot span a{margin:4px; padding:4px; float:right;}
 .reg-forgot {border-top:1px solid #eee;}
 
+.reg-step2{padding:20px; margin:20px;}
 
+.spotlight-list li{padding:5px 0; border-bottom:1px solid #eee; list-style:disc inside;}
 
-
+.announce-for{padding:3px 0; border-bottom:1px solid #eee; margin:0 0 3px 0; width:640px;}
+.approval-status{float:right; padding:10px 0 10px 20px; background:url(../images/approve.gif) no-repeat 0 50%;}
+.approved-or-not{padding:6px 0 6px 20px; display: block; background:url(../images/approve.gif) no-repeat 0 20%;}
+.approve-comments, .reject-comments{ padding:20px 20px 20px 20px; border:1px solid #eee; margin-left:30px;}
 
 
 
