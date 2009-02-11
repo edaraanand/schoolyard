@@ -320,7 +320,8 @@ class Students < Application
         csv_string = FasterCSV.generate do |csv|
           csv << ["First Name", "Last Name", "Role", "Contact-Number"]
               @staff.each do |person|
-                 s = person.class_peoples.delete_if{ |x| x.team_id != nil }
+                 #s = person.class_peoples.delete_if{ |x| x.team_id != nil }
+                 s = person.class_peoples
                  s.each do |f| 
                    csv << [person.first_name, person.last_name, f.role.titleize+"--"+f.classroom.class_name, person.phone]
                  end 

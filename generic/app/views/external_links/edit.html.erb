@@ -2,6 +2,7 @@
   <h2 class="current-page"> <%= params[:label] %> &gt; Edit </h2>
   <%= form_for(@external_link, :action => url(:external_links_update), :id => 'links', :onsubmit => "ClearAll()") do %>
     <ul id="link" class="edit-ext-links">
+     
       <% @external_links.each do |f| %>
         <li>
             <%= text_field :id => 'external_link_title', :name => 'external_link[title][]', :maxlength => "75", :value => "#{f.title}", :class=>"short text defaultText", :title => "title" %>

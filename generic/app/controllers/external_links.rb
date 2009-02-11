@@ -1,6 +1,7 @@
 class ExternalLinks < Application
   layout 'default'
   before :find_school
+ # before :classrooms
   
   def index
      @class_links = @current_school.external_links.find(:all, :conditions => ['label=?', "Classrooms"])
@@ -57,6 +58,13 @@ class ExternalLinks < Application
      @title = params[:external_link][:title]
      @url = params[:external_link][:url]
      render :layout => 'preview'
+  end
+  
+  
+  private
+  
+  def classrooms
+    @classrooms = @current_school.classrooms.find(:all)
   end
 	  
 end
