@@ -14,11 +14,13 @@ class People < Application
      @person = Person.new
      @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
      @access_view = Access.find(:first, :conditions => ['name=?', "view_all"])
+     @p = @accesses.collect{|x| x.id.to_s}
      render
   end
   
   def create
      @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
+     @p = @accesses.collect{|x| x.id.to_s}
      @person = Person.new(params[:person])
      if @person.valid?
         @person.type = "Staff"
@@ -41,7 +43,12 @@ class People < Application
              @person.send_pass
              redirect url(:people)
      else
-        render :new
+         unless params[:access].nil?
+             @access = params[:access][:access_ids]
+             @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
+             @p = @accesses.collect{|x| x.id.to_s}
+         end
+         render :new
      end
   end
   

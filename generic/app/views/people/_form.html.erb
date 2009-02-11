@@ -23,17 +23,41 @@
         </dt>
         <dd>Select all</dd>
        
-        <% @accesses.each do |f| %>
-            <dt>                       
-                <input type="checkbox" class="check" name="access[access_ids][]" value="<%= f.id %>" />
-            </dt>
-            <dd>
-                <%= f.full_name %>
-  	            <% @accesses.delete_if{|x| x.name == "view_all"} %>
-  	        </dd>
-  	     <% end %>
-  	        <dt></dt>
-	   </dl>
+      <% if @access != nil %>
+           
+              <% @p.each do |f| %>
+                      <% have_access = false %>
+                     <% @access.each do |l| 
+                         have_access = (f == l)
+                         break if have_access
+                      end %>    
+                 
+                      <% if have_access %>
+                            <% @r = Access.find_by_id(f) %> 
+                            <dt><input type="checkbox" class="check" name="access[access_ids][]" checked="true" value="<%= @r.id %>" /></dt>
+                            <dd><%= @r.full_name %></dd>
+                      <% else %>
+                              <% @r = Access.find_by_id(f) %> 
+                              <dt><input type="checkbox" class="check" name="access[access_ids][]" value="<%= @r.id %>" /></dt>
+                              <dd><%= @r.full_name %></dd>
+                      <% end %>
+              <% end %>
+              <dt></dt>
+	            </dl>
+      <% else %>    
+              <% @accesses.each do |f| %>
+                    <dt>                       
+                        <input type="checkbox" class="check" name="access[access_ids][]" value="<%= f.id %>" />
+                    </dt>
+                  <dd>
+                       <%= f.full_name %>
+  	                   <% @accesses.delete_if{|x| x.name == "view_all"} %>
+  	              </dd>
+  	          <% end %>
+  	           <dt></dt>
+	            </dl>
+      <% end %>
+    
 	         <div class="save-cancel">
 	            <%= submit "Save & Notify" %> <span>Or <%= link_to "Cancel", url(:people), :class => "cancel" %></span>
 	         </div>
