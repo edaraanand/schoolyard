@@ -32,7 +32,6 @@ class Application < Merb::Controller
         if (request.first_subdomain != nil) && (request.first_subdomain == "admin")
             @current_school = School.find(:first, :conditions => ['subdomain = ?', request.first_subdomain ] )
         elsif  (request.first_subdomain != nil) && (request.first_subdomain != "admin")
-            puts "Raja".inspect
             @current_school = School.find(:first, :conditions => ['subdomain = ?', request.first_subdomain ] )
         else
             @current_school = School.find(:first, :conditions => ['domain = ?', request.domain ] )

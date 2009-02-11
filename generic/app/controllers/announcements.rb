@@ -2,7 +2,7 @@ class Announcements < Application
    layout 'default'
    before :find_school
    before :classrooms
-   before :rooms, :only => [:new, :edit]
+   before :rooms, :only => [:new, :edit, :delete]
    before :access_rights, :exclude => [:parent_approval, :approve_process]
    before :approval_right, :only => [:parent_approval, :approve_process ]
    
@@ -27,20 +27,22 @@ class Announcements < Application
   
   def create
     @announcement = session.user.announcements.build(params[:announcement])
-    @announcement.approved = false
-    @announcement.approve_announcement = true
-    @announcement.label = 'staff'
-    @announcement.school_id = @current_school.id
-     if @announcement.save
-         unless params[:announcement][:attachment].empty?
-          @attachment = Attachment.create( :attachable_type => "Announcement",
+    if @announcement.valid?
+       @announcement.approved = false
+       @announcement.approve_announcement = true
+       @announcement.label = 'staff'
+       @announcement.school_id = @current_school.id
+       @announcement.save
+       i=0
+       unless params[:attachment]['file_'+i.to_s].empty?
+           @attachment = Attachment.create( :attachable_type => "Announcement",
                                         :attachable_id => @announcement.id,
-                                        :filename => params[:announcement][:attachment][:filename],
-                                        :content_type => params[:announcement][:attachment][:content_type],
-                                        :size => params[:announcement][:attachment][:size]
+                                        :filename => params[:attachment]['file_'+i.to_s][:filename],
+                                        :content_type => params[:attachment]['file_'+i.to_s][:content_type],
+                                        :size => params[:attachment]['file_'+i.to_s][:size]
             )
            File.makedirs("public/uploads/#{@attachment.id}")
-           FileUtils.mv(params[:announcement][:attachment][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
         end
 	      redirect resource(:announcements)
      else
@@ -50,6 +52,8 @@ class Announcements < Application
   
   def edit
      @announcement = Announcement.find(params[:id])
+     @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
+     @allowed = 1 - @attachments.count
      render
   end
   
@@ -60,34 +64,61 @@ class Announcements < Application
   
   def update 
      @announcement = @current_school.announcements.find(params[:id])
-     if @announcement.update_attributes(params[:announcement])
-        Attachment.delete_all(['attachable_id = ?', @announcement.id])
-        unless params[:announcement][:attachment].empty?
-            @attachment = Attachment.create( :attachable_type => "Announcement",
+     @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
+     @allowed = 1 - @attachments.count
+     i=0
+     if params[:attachment]
+        if @announcement.update_attributes(params[:announcement])
+           unless params[:attachment]['file_'+i.to_s].empty?
+                @attachment = Attachment.create( :attachable_type => "Announcement",
                                         :attachable_id => @announcement.id,
-                                        :filename => params[:announcement][:attachment][:filename],
-                                        :content_type => params[:announcement][:attachment][:content_type],
-                                        :size => params[:announcement][:attachment][:size]
-            )
+                                        :filename => params[:attachment]['file_'+i.to_s][:filename],
+                                        :content_type => params[:attachment]['file_'+i.to_s][:content_type],
+                                        :size => params[:attachment]['file_'+i.to_s][:size]
+                 )
+                  File.makedirs("public/uploads/#{@attachment.id}")
+                  FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+           end
+           @announcement.person_id = session.user.id
+           @announcement.approved = false
+           @announcement.approve_announcement = true
+           @announcement.label = 'staff'
+           @announcement.school_id = @current_school.id
+      	   @announcement.save          
+	         redirect resource(:announcements)
+        else
+	         render :edit
+        end
+    else
+         if @announcement.update_attributes(params[:announcement])
+            @announcement.person_id = session.user.id
+            @announcement.approved = false
+            @announcement.approve_announcement = true
+            @announcement.label = 'staff'
+            @announcement.school_id = @current_school.id
+      	    @announcement.save          
+	          redirect resource(:announcements)
+         else
+	          render :edit
          end
-        @announcement.person_id = session.user.id
-        @announcement.approved = false
-        @announcement.approve_announcement = true
-        @announcement.label = 'staff'
-        @announcement.school_id = @current_school.id
-      	@announcement.save          
-	      redirect resource(:announcements)
-     else
-	      render :edit
-     end
+    end   
   end
   
   def delete
-      @announcement = Announcement.find(params[:id])
-      Attachment.delete_all(['attachable_id = ?', @announcement.id])
-      @announcement.destroy
-      redirect resource(:announcements)
-   end
+     if params[:label] == "attachment"
+        @attachment = Attachment.find(params[:id])
+        @announcement = Announcement.find_by_id(@attachment.attachable_id)
+        @attachment.destroy
+        @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
+        @allowed = 1 - @attachments.count
+        render :edit, :id => @announcement.id
+     else
+        @announcement = Announcement.find(params[:id])
+        Attachment.delete_all(['attachable_id = ?', @announcement.id])
+        @announcement.destroy
+        redirect resource(:announcements)
+     end
+  end
    
    def preview
       @title = params[:announcement][:title]

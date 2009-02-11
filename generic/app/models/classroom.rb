@@ -2,6 +2,7 @@ class Classroom < ActiveRecord::Base
   
   belongs_to :school
   
+  has_many :external_links
 	has_many :class_peoples, :dependent => :destroy
   has_many :people, :through => :class_peoples, :source => :person
 	
