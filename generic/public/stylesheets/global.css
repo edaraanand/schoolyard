@@ -39,6 +39,7 @@ body.fixed-width{width:1000px;}
 #pagewrap{width:980px}
   /*Wraps Everything*/
 #content{ min-width:480px; float:left; margin-left:1em; min-height:500px;}
+.widen{width:600px!important;}
   /*The center Content Area*/
 #sidebar{float:left; clear:both;}
   /*Left Side Menu. term 'Sidebar' defaults for LEFT SIDEBAR/MENU*/
@@ -186,6 +187,7 @@ ul#menu li.count span b{background:url(../images/menu-count.gif) no-repeat right
 .apart{margin-left:6px;}
 input.long{width:200px}
 
+#am1, #am2, #am3, #am4{padding:10px 10px; border-top:1px solid #eee; margin-top:10px;}
 
 
 
@@ -241,9 +243,9 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 #checkboxes #check-fields span{display:block;}
 
 /*Rules for Right Sidebar*/
-.right-sidebar{width:270px; float:left; margin:30px 0 0 20px;  background:url(../images/right-sidebar-mid.gif) repeat-y bottom center}
+.right-sidebar{ line-height:15px; width:270px; float:left; margin:30px 0 0 20px;  background:url(../images/right-sidebar-mid.gif) repeat-y bottom center}
 .right-sidebar h3{ height:14px; font-weight:bold ; background:url(../images/right-sidebar-top.gif) no-repeat top center; padding:12px;}
-.right-sidebar p.last{background:url(../images/right-sidebar-bottom.gif) no-repeat bottom center; }
+.right-sidebar .last{background:url(../images/right-sidebar-bottom.gif) no-repeat bottom center; }
   /*Styles applied to these three elements provide chrome for the right sidebar*/
 
 .right-sidebar h3 span.main{float:left;}
@@ -251,8 +253,8 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 
 .right-sidebar p{padding:10px 8px 10px 12px}
 
-.right-sidebar ul{padding:10px 8px 6px 20px; text-indent:20px;}
-.right-sidebar ul li{padding:0 0 6px 0; background:url(../images/bullet-dash.gif) no-repeat left center;}
+.right-sidebar ul{padding:10px 8px 6px 20px;}
+.right-sidebar ul li{padding:0 0 6px 20px; background:url(../images/bullet-dash.gif) no-repeat left top;}
 .right-sidebar ol{padding:10px 8px 6px 20px; list-style:decimal inside;}
 .right-sidebar ol li{padding:0 0 6px 0;}
 
@@ -349,3 +351,22 @@ span.sports-faculty-list .name{font-weight:bold;}
 .divider{border-bottom:1px solid #eee; height:4px; margin-bottom:4px;}
 
 .deactivate{background:#fff url(../images/delete-btn-bg.gif) no-repeat 0 50%; padding:0 4px 0 18px; margin:0 0 0 200px; position:relative; top:-26px ;}
+
+.logbox{border:1px solid #eee; margin:100px 10px 10px 200px; width:400px; padding:4px;}
+.logbox h3{background:#e2ebf0; padding:8px; margin:0 0 20px 0;}
+
+fieldset.logbox  li{width:400px; margin: 0 20px;}
+.reg-forgot span a{margin:4px; padding:4px; float:right;}
+.reg-forgot {border-top:1px solid #eee;}
+
+
+
+
+
+
+
+
+
+
+
+
