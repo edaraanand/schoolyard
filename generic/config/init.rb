@@ -2,6 +2,9 @@
 Gem.clear_paths
 Gem.path.unshift(Merb.root / "gems")
 gem "pdf-writer"
+#gem "paginator"
+
+
 
 # ==== Dependencies
 
@@ -12,6 +15,7 @@ require  Merb.root / 'lib' / 'constantz'
 require  Merb.root / 'lib' / 'attachable'
 require "pdf/writer"
 require "pdf/simpletable"
+#require "paginator"
 
 
   use_orm :activerecord
@@ -20,7 +24,6 @@ require "pdf/simpletable"
   
 Merb::BootLoader.after_app_loads do
 
- 
   Merb::Mailer.config = {
     :host   => 'smtp.gmail.com',
     :port   => '587',
