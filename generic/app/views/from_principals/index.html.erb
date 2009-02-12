@@ -4,7 +4,8 @@
       <%= link_to "Add New", resource(:from_principals, :new) %> &#124; <%= link_to "Settings" %>
       </span>
   </h2>
-  <% for announcement in @announcements %>
+    
+     <% for announcement in @announcements %>
           <div class="data-block long-block">
               <% if announcement.expiration.nil? %>
 	                <div class="ddmmm-x"></div>
@@ -21,4 +22,12 @@
                <div class="hrule clear"><hr /></div>
            </div>
   <% end %>
+         
+         
+
 </div>
+  
+  
+  
+  
+

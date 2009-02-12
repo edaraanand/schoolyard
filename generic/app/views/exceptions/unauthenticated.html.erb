@@ -1,4 +1,4 @@
-<form action="<%= slice_url(:merb_auth_slice_password, :perform_login) %>" method="POST" accept-charset="utf-8">
+<form action="<%= slice_url(:merb_auth_slice_password, :perform_login) %>" method="POST" name="login" accept-charset="utf-8">
   <fieldset class="logbox"><input type="hidden" name="_method" value="PUT" />
   <h3>Login</h3>
   <%= error_messages_for session.authentication %>
@@ -38,3 +38,11 @@
   </ul>
   </fieldset>
 </form>
+  
+<script type= "text/javascript">
+  
+    document.login.email.focus();
+
+
+</script>
+  
