@@ -8,11 +8,11 @@
   
   <h2 class="current-page"><%= params[:label] %> &gt; New</h2>
   <%= form_for(@external_link, :action => resource(:external_links), :id => 'links', :name => "external_link", :onsubmit => "ClearAll()" ) do %>
-    <ul class="edit-ext-links">
+    <ul class="edit-ext-links"  id="link">
     
-      <li id="link">
+      <li>
         <%= text_field :title, :name => 'external_link[title][]', :maxlength => "75", :class=>"short text defaultText defaultTextActive", :title => "title" %>
-        <%= text_field :url, :name => 'external_link[url][]', :maxlength => "75", :class=>"long text defaultText defaultTextActive", :title => "url" %>
+        <%= text_field :url, :name => 'external_link[url][]', :maxlength => "75", :class=>"long text apart defaultText defaultTextActive", :title => "url" %>
       </li>
     </ul>
     
@@ -37,7 +37,7 @@
    {
       var links = document.getElementById('link');
       var li = document.createElement('li');
-      li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]' class='short text' />" + "<input type='text' id='external_link_url' name='external_link[url][]' class='long text' />";
+      li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]' class='short text' />" + "<input type='text' id='external_link_url' name='external_link[url][]' class='long apart text' />";
       links.appendChild(li);
    }
  
@@ -81,12 +81,12 @@
    
    if (link_title.value == link_title.title)
    {
-       link_title.value = ""
+       link_title.value = "";
     }
     
      if (url.value == url.title)
    {
-       url.value = ""
+       url.value = "";
     }
  
  }
