@@ -128,11 +128,11 @@
          <% @classrooms = @current_school.classrooms.find(:all) %>
     <div id="info" style="display:none;">
          <h3>Please Select the classroom you would like to visit</h3>
-          Classes:  
+          <p>Classes: </p><ul> 
            <% @classrooms.each do |f| %>
                   <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
            <% end %>
-        
+        </ul>
     </div> 
     
     <!--Right Sidebar to be inserted here-->    

@@ -1,67 +1,78 @@
-<% for principal in @from_principals %>
-       <div id="sidebar">
-            <% if principal.expiration.nil? %>
-                  <div class="data-block long-block">
-                         <h3><%= principal.title %></h3>
-                         <p class="post-content-sidebar"><%= principal.content %></p>
-                  </div>
-            <% elsif principal.expiration >= @date %>
-                  <div class="data-block long-block">
-                       <h3><%= principal.title %></h3>
-                       <p class="post-content-sidebar"><%= principal.content %></p>
-                  </div>
-	           <% end %>
-               <div class="hrule clear"><hr /></div>
+<div id="sidebar" class="left-block">
+  <img src="images/principal.png" alt="From The Principal"/>
+  <% for principal in @from_principals %>
+      <% if principal.expiration.nil? %>
+        <div class="data-block long-block">
+          <h3><%= principal.title %></h3>
+          <p><%= principal.content %></p>
         </div>
-<% end %>
-       <%= link_to "All Articles", url(:principal_articles, :label => 'principal')  %> <br/>
-
-<h3 class="current-page">
-  
-      <% unless @welcome_messages.empty? %>
-          <% for message in @welcome_messages %>
-               <p class="post-content"><%= message.content %></p>
-           <% end %>
+      <% elsif principal.expiration >= @date %>
+        <div class="data-block long-block">
+          <h3><%= principal.title %></h3>
+          <p><%= principal.content %></p>
+        </div>
       <% end %>
+      <br />
+      <div class="hrule clear dashed"><hr /></div>
+  <% end %>
+  <h3 class="current-page">
+    <%= link_to "All Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
+  </h3>
+  </div>
+  <div id="content" class="homes-content">
+      <% unless @welcome_messages.empty? %>
+        <% for message in @welcome_messages %>
+           <p class="post-content"><%= message.content %></p>
+           <br />
+        <% end %>
+      <% end %>
+      <div>&nbsp;</div>
+      <div class="hrule clear dashed"><hr /></div>
   </h3>
  
    <% for announcement in @announcements %>
-           <% if announcement.expiration.nil? %>
-                  <div class="data-block long-block">
-                          <h3><%= announcement.title %></h3>
-                          <p class="post-content"><%= announcement.content %></p>
-                          <% @attachment = Attachment.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
-                          <% unless @attachment.nil? %>
-                             <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
-                          <% end %>
-                   </div>
-           <% elsif announcement.expiration >= @date %>
-                   <div class="data-block long-block">
-                          <h3><%= announcement.title %></h3>
-                          <p class="post-content"><%= announcement.content %></p>
-                         <% @attachment = Attachment.find(:first, :conditions => ["attachable_id=? and attachable_type=?", announcement.id, "Announcement"] ) %>
-                          <% unless @attachment.nil? %>
-                             <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
-                          <% end %>
-                   </div>
-            <% end %>      
-            <div class="hrule clear"><hr /></div>
+       <% if announcement.expiration.nil? %>
+          <div class="data-block long-block">
+              <h3><%= announcement.title %></h3>
+              <p class="post-content"><%= announcement.content %></p>
+              <% @attachment = Attachment.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
+              <% unless @attachment.nil? %>
+               <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+              <% end %>
+           </div>
+       <% elsif announcement.expiration >= @date %>
+           <div class="data-block long-block">
+              <h3><%= announcement.title %></h3>
+              <p class="post-content"><%= announcement.content %></p>
+             <% @attachment = Attachment.find(:first, :conditions => ["attachable_id=? and attachable_type=?", announcement.id, "Announcement"] ) %>
+              <% unless @attachment.nil? %>
+               <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+              <% end %>
+           </div>
+      <% end %>    
+      <div class="hrule clear"><hr /></div>
    <% end %>
  
-       <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements')  %> <br/>
-       
-       <% unless @classrooms.empty? %>
-             <h4 class="current-page">Quick Links </h4>
-             <% @classrooms.each do |f| %>
-                 <%= link_to "#{f.class_name}", url(:class_details, :id => f.id) %>
-             <% end %>
+     <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements'), :class =>'all-articles'   %>
+
+
+</div>
+<div class="right-sidebar">
+  <h3>Quick Links </h3>
+  <% unless @classrooms.empty? %>
+     <ul class="last">
+       <% @classrooms.each do |f| %>
+        <li><%= link_to "#{f.class_name}", url(:class_details, :id => f.id) %></li>
        <% end %>
-     
-      <h4 class="current-page">
-         External Links </h4>
-      <ul> 
-       <% for link in @external_links %>
-           <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
-       <% end %>
-    </ul>
+      </ul>
+   <% end %>
+</div>
+<div class="right-sidebar">
+   <h3>External Links </h3>
+  <ul class="last"> 
+    <% for link in @external_links %>
+     <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
+   <% end %>
+  </ul> 
+</div>
 
