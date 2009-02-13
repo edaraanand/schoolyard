@@ -21,17 +21,17 @@
                 <% if f.role == "class_teacher" %>
                       <li>
                           <label><%= f.role.titleize %></label>
-                          <%= select :name => "class[people][teacher]", :collection => @current_school.staff.find(:all), :value_method => :id, :text_method => :name, :prompt => "Select Faculty", :selected => f.person_id.to_s %>
+                          <%= select :name => "class[people][teacher]", :collection => @current_school.staff.find(:all), :selected => f.person_id.to_s, :value_method => :id, :text_method => :name, :prompt => "Select Faculty" %>
                       </li>
                 <% elsif f.role == "Athletic Director" %>
                        <li>
                            <label><%= f.role.titleize %></label>
-                           <%= select :name => "class[people][teacher]", :collection => @current_school.staff.find(:all), :value_method => :id, :text_method => :name, :prompt => "Select Faculty", :selected => f.person_id.to_s %>
+                           <%= select :name => "class[people][teacher]", :collection => @current_school.staff.find(:all), :selected => f.person_id.to_s, :value_method => :id, :text_method => :name, :prompt => "Select Faculty" %>
                        </li>
                 <% else %>
                        <li>
                           <%= text_field :name => 'class[people][roles][]', :id =>'class_class_people', :value => "#{f.role}", :class => "short" %>
-                          <%= select :name => "class[people][ids][]", :collection => @current_school.staff.find(:all), :value_method => :id, :text_method => :name, :prompt => "Select Faculty", :selected => f.person_id.to_s %>
+                          <%= select :name => "class[people][ids][]", :collection => @current_school.staff.find(:all), :selected => f.person_id.to_s, :value_method => :id, :text_method => :name, :prompt => "Select Faculty" %>
                           <%= link_to "Remove", url(:delete_classroom, f, :label => "remove") %>
                        </li>
                 <% end %>
