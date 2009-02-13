@@ -42,14 +42,20 @@ class Approvals < Application
   def publish
      @announcement = Announcement.find(params[:id])
      if params[:approvetype] == "Approve & Publish"
-        @announcement.approve_comments = params[:announcement][:comments]
+        if params[:announcement]
+           @announcement.update_attributes(params[:announcement])
+        end
+        @announcement.approve_comments = params[:comments]
         @announcement.approved = @announcement.approve_announcement = true
         @announcement.approved_by = session.user.id
         @announcement.school_id = @current_school.id
         @announcement.save 
         redirect resource(:approvals)
      else
-        @announcement.reject_comments = params[:announcement][:comments]
+        if params[:announcement]
+           @announcement.update_attributes(params[:announcement])
+        end
+        @announcement.reject_comments = params[:comments]
         @announcement.approved = @announcement.approve_announcement = false
         @announcement.rejected_by = session.user.id
         @announcement.school_id = @current_school.id
