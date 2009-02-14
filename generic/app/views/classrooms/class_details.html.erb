@@ -91,10 +91,13 @@
                <p class="post-content"><%= message.content %></p>
          <% end %>
         <h2 class="current-page">External Links </h2>
-          <% for link in @external_links %>
-                <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
-          <% end %>
-           
+        <div class="external-links">
+          <ul>
+            <% for link in @external_links %>
+                  <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
+            <% end %>
+          </ul>
+        </div>
            <h2 class="current-page">Announcements: </h2>
    
             <% for announcement in @announcements %>

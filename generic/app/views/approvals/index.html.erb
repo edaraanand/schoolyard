@@ -3,7 +3,7 @@
   
 
     <% for announcement in @announcements %>
-    Announcement for : <%= announcement.access_name %>
+    <span class="announce-for-page">Announcement for : <%= announcement.access_name %></span>
            <div class="data-block long-block">
               <% if announcement.expiration.nil? %>
                   <div class="ddmmm-x">
@@ -16,7 +16,7 @@
               <% end %>
               <h3><%= link_to "#{announcement.title}", url(:approval, announcement.id) %></h3>
                   <p class="post-content"><%= announcement.content %></p>
-                  Created By <%= announcement.person.name %> at <%= announcement.created_at.strftime("%d %b %Y") %>
+                  <span class="post-by">Created By<br /><b><%= announcement.person.name %></b> on <br /> <span><%= announcement.created_at.strftime("%d %b %Y") %></span></span>
                   <div class="hrule clear"><hr /></div>
            </div>
         
