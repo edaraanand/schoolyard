@@ -20,11 +20,11 @@ class People < Application
   
   def create
      @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
+     @person = @current_school.people.new(params[:person])
      @p = @accesses.collect{|x| x.id.to_s}
-     @person = Person.new(params[:person])
      if @person.valid?
         @person.type = "Staff"
-        @person.school_id = @current_school.id
+       # @person.school_id = @current_school.id
         @person.save
         unless params[:access].nil?
 	         @access = params[:access][:access_ids]
