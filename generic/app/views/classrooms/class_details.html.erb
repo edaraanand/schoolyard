@@ -34,7 +34,7 @@
                       </li>
                             
          </ul>
-    </div>
+          </div>
              <% #@calendars.delete_if{|c| c.start_date == cdate } %>
          
   <% end %>
@@ -44,7 +44,7 @@
 <% elsif params[:label] == "homeworks" %>
        <h2 class="current-page"> Homework </h2>
        <% for homework in @home_works %>
-             <div class="data-block long-block">
+             <div class="data-block short-block">
               <span class="hidden">
                   <% unless homework.due_date.nil? %>
                       <%= homework.due_date.strftime("%B-%d") %>
@@ -75,7 +75,7 @@
 <% elsif params[:label] == "announcements" %>
           <h2 class="current-page"> Announcements </h2>
             <% for announcement in @announcements %>
-                   <div class="data-block long-block">
+                   <div class="data-block short-block">
                            <h3><%= announcement.title %></h3>
                             <p class="post-content"><%= announcement.content %></p>
                           <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
@@ -102,7 +102,7 @@
            <h2 class="current-page">Announcements: </h2>
    
             <% for announcement in @announcements %>
-                   <div class="data-block long-block">
+                   <div class="data-block short-block">
                           <h3><%= announcement.title %></h3>
                             <p class="post-content"><%= announcement.content %></p>
                            <div class="hrule clear"><hr /></div>
@@ -113,6 +113,21 @@
 
 <% end %>   
 
+</div>
+<div class="right-sidebar">
+  <h3>Spotlight</h3>
+  
+     <ul class="last">
+
+        <li>ASDF</li>
+        <li>ASDF</li>
+        <li>ASDF</li>
+        <li>ASDF</li>
+        <li>ASDF</li>
+
+      </ul>
+
+</div>
 
 
 <script type= "text/javascript">
