@@ -3,6 +3,7 @@
    <h2 class="current-page"> Calendar for <%= @calendar.class_name %></h2>
  
      <h2> <%= @calendar.title %> </h2> 
+    
         <%= @calendar.start_date.strftime("%b %d %Y") %>
      <% unless @calendar.start_time.nil? &&  @calendar.end_time.nil? %>
         (<%= @calendar.start_time.strftime("%H:%M") %> -- <%= @calendar.end_time.strftime("%H:%M") %> )
@@ -11,7 +12,8 @@
      <% end %>
      
     <p><%= @calendar.description %></p>
-  
+    <p>Location : <%= @calendar.location %></p>
+    
     <%  @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name]) %>
     
     <%= link_to "All Events", url(:class_details, :id => @classroom.id, :label => "calendars") %>

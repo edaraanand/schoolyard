@@ -26,6 +26,7 @@
                           Ends at <%= calendar.end_time.strftime("%H-%M") %>
                                 <% end %>  &nbsp;
                           </span>
+                          Location : <%= calendar.location %>
                           <% @attachments = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
                                  <% unless @attachment.nil? %>
                                         <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
