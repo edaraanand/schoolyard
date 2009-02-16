@@ -1,12 +1,5 @@
-<div class='formcontainer'>
-
-       <table>
-             <tr> <h4>From the Principal</h4></tr>
-             <tr>
-                <td><%= params[:announcement][:title] %>:</td>
-		<td><%= params[:announcement][:content] %></td>
-             </tr>
-	    
-       </table>
-       
+<div class='preview-container'>
+  <h4><span>From the Principal</span></h4>
+  <h5><%= params[:announcement][:title] %>:</h5>
+	<p><%= params[:announcement][:content] %></p>
 </div>

@@ -1,15 +1,12 @@
-<div class='formcontainer'>
-
-
-   <table>
-           <tr><b>Title</b></tr>
-             <% @title.each do |f| %>
-               <tr>
-                   <td><%= f %></td>
-               </tr>
-            <% end %>
-           
-   </table>
-
-
+<div class='preview-container'>
+  <h4><span>External Links</span></h4>
+  <div class="indent">
+    <ul class="edit-ext-links">
+      <% @title.each do |f| %>
+        <li><%= f %></li>
+      <% end %>
+    </ul>
+    <div class="hrule clear hidden"><hr /></div>
+  </div>
 </div>
+

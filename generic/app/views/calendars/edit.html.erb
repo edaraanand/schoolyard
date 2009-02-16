@@ -28,7 +28,7 @@
 	       <% end %>
     </li>
 	   <li>
-	       <%= text_field :end_date, :id => "end", :label => "Ends:", :class=>"short apart" %>
+	       <%= text_field :end_date, :id => "end", :label => "Ends:", :class=>"short" %>
 	       <% if @calendar.day_event == true %>
 	            <%= text_field :end_time, :id => "end_time", :disabled => true, :class=>"short apart" %>
 	       <% else %>

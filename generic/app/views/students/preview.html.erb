@@ -1,29 +1,20 @@
-<div class='formcontainer'>
-
-
-   <table>
-           <b>Student</b>
-	 
-	   <tr>
-	       <td>First Name :</td>
-	       <td><%= @first %></td>
-	   </tr>
-	    <tr>
-	       <td>Last Name :</td>
-	       <td><%= @last %></td>
-	   </tr>
-	  
-	    
-	    <b>Parent</b>
-	    
-            <% @parent.each do |f| %>
-	       <tr>
-	           <td>First Name:<%= f[0] %></td>
-		   <td>Last Name:<%= f[1] %></td>
-		   <td>Email:<%= f[2] %></td>
-	       </tr>
-	    <% end %>
-   </table>
-
-
-</div>                                                 
+<div class='preview-container'>
+  <h4><span>Student</span></h4>
+    <dl>
+      <dt>First Name :</dt><dd><%= @first %></dd>
+      <dt>Last Name :</dt><dd>&nbsp;<%= @last %></dd>
+    </dl>
+    <div class="hrule clear hidden"><hr /></div>
+  <h4><span>Parent</span></h4>
+  <% @parent.each do |f| %>
+  <dl>
+    <dt>First Name:</dt>
+    <dd><%= f[0] %></dd>
+    <dt>Last Name:</dt>
+    <dd><%= f[1] %></dd>
+    <dt>Email:</dt>
+    <dd><%= f[2] %></dd>
+  </dl>
+  <% end %>
+<div class="hrule clear hidden"><hr /></div>
+</div>

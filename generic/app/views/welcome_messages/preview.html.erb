@@ -1,12 +1,5 @@
-<div class='formcontainer'>
-
-       <table>
-             <tr> <h4>Welcome Message</h4></tr>
-             <tr>
-                <td><%= params[:welcome_message][:message] %></td>
-		<td><%= params[:welcome_message][:content] %></td>
-             </tr>
-	    
-       </table>
-       
+<div class='preview-container'>
+  <h4><span>Welcome Message</span></h4>
+  <h5><%= params[:welcome_message][:message] %></h5>
+	<p><%= params[:welcome_message][:content] %></p>
 </div>

@@ -272,11 +272,11 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 .lightbox form{width:480px;}
 
 /*Error msg, cancel*/
-.cancel{padding:0 8px; color:#eb3f2c!important;}
+.cancel{padding:0 8px; color:#eb3f2c!important; text-transform:lowercase;}
 span.cancel a{color:#eb3f2c;}
 span.cancel a:hover{text-decoration:underline;}
-.enable{color:#169609!important; background:#fff url(../images/check.png) no-repeat left 50% !important;}
-.remove{color:red!important; padding:0 12px;}
+.enable{color:#169609!important; background:#fff url(../images/check.png) no-repeat left 50% !important; text-transform:lowercase;}
+.remove{color:red!important; padding:0 12px; text-transform:lowercase;}
 /*End Now*/
 
 /*Data Block*/
@@ -303,7 +303,7 @@ span.cancel a:hover{text-decoration:underline;}
 #content h3 a{margin:0 0 0 10px;}
 .data-block li{padding:0 0 4px 0;}
 
-.external-links ul{clear:both;}
+.external-links ul{clear:both; margin-bottom:20px;}
 .external-links ul li{text-indent:16px; }
 .external-links ul li a{display:block; border-bottom:1px solid #fcfcfc; padding:4px 0 2px 0;  background:url(../images/link-bullet.gif) no-repeat left center;}
 .external-links ul li a:hover{background: url(../images/link-bullet-hover.gif) no-repeat left center;}
@@ -391,4 +391,16 @@ fieldset.logbox  li{width:400px; margin: 0 20px;}
 
 form#welcome_message{padding:10px 0;}
 
+/*Attachments*/
+ul#pending_files li{background: transparent url('../images/attach.gif') no-repeat left 4px; padding:3px 3px 3px 22px;}
+ul#pending_files li a{padding:0 10px; color:#f00; text-transform:lowercase;}
+/*Preview*/
+.preview-container{}
+.preview-container{width:500px;margin:50px auto; padding:10px 20px 20px 20px; background:#f2f2ff;  border-bottom:6px solid #eef;  border-top:6px solid #eef;  }
+.preview-container h5{float:none;} 
+.preview-container h4{border-bottom:1px solid #bbc; padding-bottom:4px; margin-bottom:12px;}
+.preview-container h4 span{position:relative; top:10px; background:#f2f2ff; padding:0 4px 0 0;}
+.preview-container dd{font-weight:bold; border-bottom:1px solid #e3eaf6;}
+.preview-container dt{text-align:right; margin-right:12px; border-bottom:1px solid #e3eaf6;}
 
+.indent{margin-left:10px;}
