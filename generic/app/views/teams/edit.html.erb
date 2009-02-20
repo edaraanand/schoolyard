@@ -25,8 +25,8 @@
                 <% else %>
                        <li>
                           <%= text_field :name => 'classroom[people][roles][]', :id =>'class_class_people', :value => "#{f.role}", :class => "short" %>
-                          <%= select :name => "classroom[people][ids][]", :collection => @current_school.staff.find(:all), :value_method => :id, :text_method => :name, :prompt => "Select Faculty", :selected => f.person_id.to_s %>
-                          <%= link_to "Remove", url(:delete_team, f, :label => "remove"), :class => "cancel" %>
+                          <%= select :name => "classroom[people][ids][]", :collection => @current_school.staff.find(:all), :value_method => :id, :class =>"apart", :text_method => :name, :prompt => "Select Faculty", :selected => f.person_id.to_s %>
+                          <%= link_to "Remove", url(:delete_team, f, :label => "remove"), :class => "remove" %>
                        </li>
                 <% end %>
            <% end %>
@@ -50,7 +50,7 @@
  function addFormField()
   {
     var id = document.getElementById('id').value;
-    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short' name='classroom[people][roles][]' id='txt" + id + "'><select name='classroom[people][ids][]'><option value='please'>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' onClick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a><p>");
+    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short' name='classroom[people][roles][]' id='txt" + id + "'><select name='classroom[people][ids][]' class='apart'><option value='please'>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' class='remove' onClick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a><p>");
     $('txt'+id).focus();
     id = (id - 1) + 2;
     document.getElementById('id').value = id;

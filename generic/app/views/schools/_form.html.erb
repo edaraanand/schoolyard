@@ -1,12 +1,14 @@
 <ul>
   <li><%= text_field :school_name,  :label => "School Name", :maxlength => "75" %></li>
-  <li><h4>Contact Information for Parents</h4></li>
+  <li>&nbsp;</li>
+  <li><h3>Contact Information for Parents</h3></li>
   <li>
       <%= text_field :phone,  :label => "Phone", :class=>"short text", :maxlength => "75" %>
       <span class="phone-hint">(e.g. 1239076897)</span>
   </li>
   <li><%= text_field :email,  :label => "E-mail", :maxlength => "75" %></li>
 </ul>
+<br />
 <div class="save-cancel">
   <%= submit "Save" %> Or <%= link_to "Cancel", resource(:schools), :class => "cancel" %>
 </div>

@@ -77,6 +77,8 @@ dl.check-box-set{ margin:0 0 0 180px;}
 dl.check-box-set dt{width:38px; padding:0; margin:0; text-align:right; clear:both;}
 dl.check-box-set dd{width:420px; padding:4px 0; margin:0 0 0 12px;}
 
+dl.check-box-set.origin{margin-left:0;}
+
 .save-cancel{clear:both;  padding:12px; border-top:4px solid #e8e8e8; margin-top:8px;}
 .add-link {margin:0 12px;}
 
@@ -263,6 +265,8 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 .right-sidebar ul li{padding:0 0 6px 20px; background:url(../images/bullet-dash.gif) no-repeat left top;}
 .right-sidebar ol{padding:10px 8px 6px 20px; list-style:decimal inside;}
 .right-sidebar ol li{padding:0 0 6px 0;}
+
+.email-alerts li{margin:10px 0 0 30px; padding:3px 0 3px 20px; background:url(../images/bullet-dash.gif) no-repeat left center; border-bottom:1px dotted #eee;}
 
 
 #footer{clear:both;}
