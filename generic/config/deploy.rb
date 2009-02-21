@@ -9,9 +9,9 @@ set :deploy_via, :remote_cache
 
 default_run_options[:pty] = true
 set :ssh_options, { :forward_agent => true }
-#set :user, 'deployer'
+set :user, 'eshwar'
 
-set :domain,   "eshwar@sdb.schoolyardapp.net"
+set :domain,   "sdb.schoolyardapp.net"
 set :deploy_to,  "/home/eshwar/schoolapp"
 set :adapter, 'mongrel' # or 'thin' 
 set :start_port, 7001
