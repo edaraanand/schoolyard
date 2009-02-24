@@ -11,23 +11,27 @@
     
          <ul class="calendar-items">
                 <li>
-                      <span class="cal-time">
-                          <% unless calendar.start_time.nil? %>
-                        Starts at <%= calendar.start_time.strftime("%H-%M") %>
-                               <% end %>&nbsp;
-                          </span>
                           <span class="cal-title">
-                            <%= calendar.title %>
+                            <b><%= calendar.title %></b>
+                          </span>
+                          <span class="cal-time">
+                              <% unless calendar.start_time.nil? %>
+                            Starts at <b><%= calendar.start_time.strftime("%H-%M") %></b>
+                                   <% end %>&nbsp;
                           </span>
                           <span class="cal-time">
                             <% unless calendar.end_time.nil? %>
-                          Ends at <%= calendar.end_time.strftime("%H-%M") %>
+                          Ends at <b><%= calendar.end_time.strftime("%H-%M") %></b>
                                 <% end %>  &nbsp;
                           </span>
-                          Location : <%= calendar.location %>
+                      </li>
+                      <li class="cal_location">
+                          <span>Location :<b><%= calendar.location %></b></span>
+                      </li>
+                      
                           <%= link_to "Edit", resource(calendar, :edit), :class=>"edit-btn" %>
                           <%= link_to "Delete", resource(calendar, :delete), :class=>"delete-btn" %>
-                      </li>
+                      
                             
          </ul>
     </div>

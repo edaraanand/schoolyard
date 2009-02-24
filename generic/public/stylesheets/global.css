@@ -335,14 +335,15 @@ ul.edit-ext-links li{background:url(../images/link-bullet.gif) no-repeat left ce
 
 
 
-.calendar-block{border-bottom:1px solid #e8e8e8; float:left; clear:left;}
-.calendar-block h3{Background:#aaaaff; padding:4px 0 8px 2px; background:#f4f4f4;}
+.calendar-block{border:1px solid #e8e8e8; float:left; clear:left; margin-bottom:4px; padding:10px;}
+.calendar-block h3{background:#b6cddd; padding:4px!important;}
 .calendar-block h3.today{color:#ff7b00;}
 .calendar-block a{padding:2px 0 2px 18px!important; float:right}
-.calendar-block .cal-time{display:block; width:100px; float:left;}
-.cal-title{float:left; display:block; width:240px;}
+.calendar-block .cal-time{display:block; width:100px; float:left; text-align:right;}
+.cal-title{float:left; display:block; width:280px;}
+.cal_location{float:left; display:block; border-top:1px solid #eee; margin-top:3px; padding-top:2px; width:100%;}
 ul.calendar-items{clear:both;}
-ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding:4px 0 2px 2px;}
+ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding:4px 0 4px 4px;}
 
 .defaultText { width: 300px; }
 .defaultTextActive {color:#a1a1a1; font-style: italic!important; }
