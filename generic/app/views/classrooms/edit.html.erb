@@ -30,9 +30,9 @@
                        </li>
                 <% else %>
                        <li>
-                          <%= text_field :name => 'class[people][roles][]', :id =>'class_class_people', :value => "#{f.role}", :class => "short" %>
-                          <%= select :name => "class[people][ids][]", :collection => @current_school.staff, :selected => "#{f.person_id.to_s}", :value_method => :id, :text_method => :name, :prompt => "Select Faculty" %>
-                          <%= link_to "Remove", url(:delete_classroom, f, :label => "remove") %>
+                          <%= text_field :name => 'class[people][roles][]', :id =>'class_class_people', :value => "#{f.role}", :class => "short text" %>
+                          <%= select :class => "apart", :name => "class[people][ids][]", :collection => @current_school.staff, :selected => "#{f.person_id.to_s}", :value_method => :id, :text_method => :name, :prompt => "Select Faculty" %>
+                          <%= link_to "Remove", url(:delete_classroom, f, :label => "remove"), :class => "remove" %>
                        </li>
                 <% end %>
            <% end %>
@@ -55,7 +55,7 @@
  function addFormField()
   {
     var id = document.getElementById('id').value;
-   $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short' name='class[people][roles][]' id='txt" + id + "'><select name='class[people][ids][]'><option value='please'>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' onClick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a><p>");
+    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short text' name='class[people][roles][]' id='txt" + id + "'><select class='apart' name='class[people][ids][]'><option value='please'>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' class='remove' onClick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a><p>");
    $('txt'+id).focus();
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
