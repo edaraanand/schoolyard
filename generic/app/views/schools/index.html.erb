@@ -11,7 +11,7 @@
   <h5>Contact Information For Parents</h5>
   <dl>
     <dt>Phone</dt>
-    <dd><%= @school.phone %></dd>
+  <dd><%= number_to_phone(@school.phone, :area_code => true) %></dd>
     <dt>E-Mail</dt>
     <dd><%= @school.email %></dd>
   </dl>
