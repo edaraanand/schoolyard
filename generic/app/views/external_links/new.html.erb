@@ -17,11 +17,15 @@
     </ul>
     
          <%= hidden_field :name => "label", :value => params[:label] %>
+          <input type="hidden" id="id" value="1">
+            <div id="divTxt"></div>
+             
+          
             
     <div class="save-cancel">
-        <span class="add-link"> <%= link_to_function 'Add More',"add();"%></span>
-        <input type = 'button' value = 'Preview' onclick="preview();return false;" />
-        <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
+          <span class="add-link"> <%= link_to_function 'Add More',"add();"%></span>
+          <input type = 'button' value = 'Preview' onclick="preview();return false;" />
+          <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
     </div>
   
   <% end =%>
@@ -41,7 +45,28 @@
       links.appendChild(li);
    }
  
-   
+   function addFormField()
+  {
+    var id = document.getElementById('id').value;
+    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short text' name='external_link[title][]' id='txt" + id + "' value='title' onfocus='cl(this);'><input type='text' id='txt" + id + "' name='external_link[url][]' class='long apart text' value='url' onfocus='cl(this);' /><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a><p>");
+    //$('txt'+id).focus();
+    id = (id - 1) + 2;
+    document.getElementById('id').value = id;
+  }
+
+   function removeFormField(id) 
+   {
+         $j(id).remove();
+    }
+    
+    
+    function cl(t)
+    {
+      if (t.defaultValue == t.value)
+        {
+          t.value = '';
+         }
+     }
   
  function preview()
  {
@@ -74,22 +99,33 @@
     $j(".defaultText").blur();
 });
  
- function ClearAll()
-{
+  function ClearAll()
+ {
     var link_title = document.getElementById('external_link_title');
     var url = document.getElementById('external_link_url');
-   
-   if (link_title.value == link_title.title)
-   {
-       link_title.value = "";
-    }
-    
+     
+     if (link_title.value == link_title.title)
+       {
+          link_title.value = "";
+        }
      if (url.value == url.title)
-   {
-       url.value = "";
-    }
- 
- }
+       {
+          url.value = "";
+       }
+       
+     var l = document.getElementById('link_title');
+     var u = document.getElementById('link_url');
+     
+      if (l.value == 'title')
+       {
+          l.value = "";
+        }
+     if (u.value == 'url')
+       {
+          u.value = "";
+       }
+     
+  }
  
  
  
