@@ -8,7 +8,6 @@
      <% end %>
 <% end =%>
 
-
  <% if params[:class_name].nil? %>
      <% unless @forms.empty? %>
         <table id="mytable">
@@ -20,7 +19,7 @@
              </thead>
              <tbody>
                    <% for form in @forms %>
-                        <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', form.id] ) %>
+                        <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
                         <tr>
                             <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
                             <td><%= form.class_name %></td>
@@ -41,7 +40,7 @@
              </thead>
              <tbody>
                    <% for form in @forms_f %>
-                         <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', form.id] ) %>
+                         <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
                         <tr>
                             <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
                             <td><%= form.class_name %></td>
@@ -63,7 +62,7 @@
              </thead>
              <tbody>
                    <% for form in @files %>
-                         <% @attachment = Attachment.find(:first, :conditions => ['attachable_id=?', form.id] ) %>
+                         <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
                         <tr>
                             <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
                             <td><%= form.class_name %></td>
