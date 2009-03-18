@@ -24,4 +24,6 @@ class School < ActiveRecord::Base
    validates_uniqueness_of :school_name
    validates_uniqueness_of :subdomain, :if => :subdomain 
    
+   
 end
+

@@ -17,14 +17,14 @@ class ExternalLinks < Application
   end
   
   def create
-      params[:external_link][:title].each_with_index do |l, i|
-	      @external_link = @current_school.external_links.create({:title => l, :url => params[:external_link][:url][i], :label => params[:label]})
-      end
-      if @external_link.valid?
-         redirect url(:external_links)
-      else
-         render :new
-      end
+     params[:external_link][:title].each_with_index do |l, i|
+	          @external_link = @current_school.external_links.create({:title => l, :url => params[:external_link][:url][i], :label => params[:label]})
+     end
+     if @external_link.valid?
+        redirect url(:external_links)
+     else
+        render :new
+     end
   end     
 	  
   def edit
@@ -37,16 +37,29 @@ class ExternalLinks < Application
      @external_ids = @external_links.collect{|x| x.id}
      title = params[:external_link][:title]
      url = params[:external_link][:url]
-     s = title.zip(url, @external_ids)
-     links = [] 
+     if params[:link]
+        s = title.zip(url, @external_ids)
+        links = [] 
         s.each do |l|
-	         if l[2].nil?
-		           links << @current_school.external_links.create!({:title => l[0], :url => l[1], :label => params[:label]})
-	         else
-		           links << @current_school.external_links.update(l[2], {:title => l[0], :url => l[1], :label => params[:label]})
-	         end
+	           links << @current_school.external_links.update(l[2], {:title => l[0], :url => l[1], :label => params[:label]})
+	      end
+        params[:link][:title].each_with_index do |e, m|
+           @external_link = @current_school.external_links.create({:title => e, :url => params[:link][:url][m], :label => params[:label]})
         end
-	   redirect url(:external_links)
+        if @external_link.valid?
+           redirect url(:external_links)
+        else
+          flash[:error] = "please enter Title or Url"
+          render :edit
+        end
+    else
+        s = title.zip(url, @external_ids)
+        links = [] 
+        s.each do |l|
+	           links << @current_school.external_links.update(l[2], {:title => l[0], :url => l[1], :label => params[:label]})
+	      end
+	      redirect url(:external_links)
+     end
   end
   
   def delete

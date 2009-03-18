@@ -1,4 +1,10 @@
+<ul class='error_messages'>
+       <% if flash[:error] %>
+          <li><%= flash[:error] %> </li>
+       <% end %>
+</ul>
 <div class=" data-block short-block">
+  
   <h2 class="current-page"> <%= params[:label] %> &gt; Edit </h2>
   <%= form_for(@external_link, :action => url(:external_links_update), :id => 'links', :onsubmit => "ClearAll()") do %>
     <ul id="link" class="edit-ext-links">
@@ -12,8 +18,9 @@
       <% end %>
     </ul>
     <%= hidden_field :name => "label", :value => params[:label] %>
-    <%= link_to_function 'Add More',"add();"%>
+    <%= flash[:error] %>
     <div class="save-cancel">
+         <%= link_to_function 'Add More',"add();"%>
          <input type = 'button' value = 'Preview' onclick="preview();return false;" />
          <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
     </div>
@@ -26,7 +33,7 @@
    {
       var links = document.getElementById('link');
     	var li = document.createElement('li');
-      li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]' class='short text defaultText' title='title' />"  + "<input type='text' id='external_link_url' name='external_link[url][]' class='long text defaultText' title='url'/>";
+      li.innerHTML = "<input type='text' id='external_link_title' name='link[title][]' class='short text defaultText' title='title' />"  + "<input type='text' id='external_link_url' name='link[url][]' class='apart long text defaultText' title='url'/>";
 	    links.appendChild(li);
 	
     }
