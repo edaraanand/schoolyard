@@ -367,7 +367,7 @@ span.sports-faculty-list .name{font-weight:bold;}
 
 .deactivate{background:#fff url(../images/delete-btn-bg.gif) no-repeat 0 50%; padding:4px 4px 4px 20px; margin:0 0 0 160px; position:relative; top:-26px ;}
 
-.logbox{border:1px solid #eee; margin:100px 10px 10px 200px; width:400px; padding:4px;}
+.logbox{border:1px solid #eee; margin:100px 10px 10px 200px; width:480px; padding:4px;}
 .logbox h3{background:#e2ebf0; padding:8px!important; margin:0 0 20px 0;}
 
 fieldset.logbox  li{width:400px; margin: 0 20px;}
