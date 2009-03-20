@@ -1,17 +1,18 @@
 <div id="sidebar" class="left-block">
   <img src="images/principal.png" alt="From The Principal"/>
   <% for principal in @from_principals %>
+      <div class="data-block long-block">
       <% if principal.expiration.nil? %>
-        <div class="data-block long-block">
           <h3><%= principal.title %></h3>
           <p><%= principal.content %></p>
         </div>
       <% elsif principal.expiration >= @date %>
-        <div class="data-block long-block">
+       
           <h3><%= principal.title %></h3>
           <p><%= principal.content %></p>
-        </div>
+        
       <% end %>
+      </div>
       <br />
       <div class="hrule clear dashed"><hr /></div>
   <% end %>

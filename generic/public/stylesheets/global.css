@@ -182,8 +182,8 @@ ul#menu li.count span b{background:url(../images/menu-count.gif) no-repeat right
 
 
 
-/*Horizontal Rule*/
-.hrule{height:0; border-bottom:1px solid #e8e8e8;}
+/*Horizontal Rule
+.hrule{height:0; border-bottom:1px solid #e8e8e8;}*/
 .hrule hr{display:none;}
 .clear{clear:both;}
 .hidden{visibility:hidden;}
@@ -411,3 +411,6 @@ ul#pending_files li a{padding:0 10px; color:#f00; text-transform:lowercase;}
 .preview-container dt{text-align:right; margin-right:12px; border-bottom:1px solid #e3eaf6;}
 
 .indent{margin-left:10px;}
+
+.previewWrapper{padding:40px;}
+.previewWrapper .hrule{padding:10px; text-align:center; border-top:1px solid #ccc;}

@@ -1,19 +1,22 @@
-<h2 class="current-page">Welcome Messages  &gt;  <%= link_to "Add New", url(:new_welcome_message) %></h2>
+<h2 class="current-page">Welcome Messages  &nbsp;&nbsp;&nbsp; <%= link_to "Add New", url(:new_welcome_message) %></h2>
 
 
 <div class="fullpage announcemt">
-<%= form_for(@welcome_message, :action => url(:controller => 'welcome_messages', :action => 'index'), :id => 'welcome_message') do %>
-     <% if params[:access_name].nil? %>
-           <%= select :name => "access_name", :collection => @classrooms, :label => "View :" %>
-     <% else %>
-           <%= select :name => "access_name", :selected => params[:access_name], :collection => @classrooms, :label => "View :" %>
-     <% end %>
-           <%= submit "Go" %>
-<% end =%>
 
-<% if params[:access_name].nil? %>
+<%if  @welcome.blank?%>
+  <p>There are not welcome messages created yet. <%= link_to "Add New", url(:new_welcome_message) %>
+<%else%>
+  <%= form_for(@welcome_message, :action => url(:controller => 'welcome_messages', :action => 'index'), :id => 'welcome_message') do %>
+       <% if params[:access_name].nil? %>
+             <%= select :name => "access_name", :collection => @classrooms, :label => "View  " %>
+       <% else %>
+             <%= select :name => "access_name", :selected => params[:access_name], :collection => @classrooms, :label => "View  " %>
+       <% end %>
+             <%= submit "Go" %>
+  <% end =%>
+  <% if params[:access_name].nil? %>
         <% for mess in @welcome %>
-        <p>Welcome Message for :<b> <%= mess.access_name %></b></p>
+       
              <div class="data-block long-block">
                  <% if mess.created_at.nil? %>
 	                   <div class="ddmmm-x">
@@ -24,6 +27,7 @@
 	                        <span class="month"><%= mess.created_at.strftime("%b") %></span>
 	                   </div>
 	                <% end %>
+	                 <p>Welcome Message for: <b><%= mess.access_name %></b></p>
                   <p class="post-content"><%= mess.content %></p>
                   <%= link_to "Edit", resource(mess, :edit), :class=>"edit-btn" %>
                   <%= link_to "Delete", resource(mess, :delete), :class=>"delete-btn" %>
@@ -31,10 +35,10 @@
               </div>
         <% end %>
 
- <% elsif params[:access_name] == "All Messages" %>
+  <% elsif params[:access_name] == "All Messages" %>
       
        <% for mess in @all_messages %>
-               <p>Welcome Message for : <b><%= mess.access_name %></b></p>
+               
              <div class="data-block long-block">
                  <% if mess.created_at.nil? %>
 	                   <div class="ddmmm-x">
@@ -45,6 +49,7 @@
 	                        <span class="month"><%= mess.created_at.strftime("%b") %></span>
 	                   </div>
 	                <% end %>
+	                <p>Welcome Message for: <b><%= mess.access_name %></b></p>
                   <p class="post-content"><%= mess.content %></p>
                   <%= link_to "Edit", resource(mess, :edit), :class=>"edit-btn" %>
                   <%= link_to "Delete", resource(mess, :delete), :class=>"delete-btn" %>
@@ -52,10 +57,10 @@
               </div>
        <% end %>
 
-<% else %>
+  <% else %>
 
         <% for mess in @welcome_messages %>
-            <p> Welcome Message for : <%= mess.access_name %></p>
+            >
              <div class="data-block long-block">
                  <% if mess.created_at.nil? %>
 	                   <div class="ddmmm-x">
@@ -66,13 +71,14 @@
 	                        <span class="month"><%= mess.created_at.strftime("%b") %></span>
 	                   </div>
 	                <% end %>
+	                <p> Welcome Message for: <b><%= mess.access_name %></b></p
                   <p class="post-content"><%= mess.content %></p>
                   <%= link_to "Edit", resource(mess, :edit), :class=>"edit-btn" %>
                   <%= link_to "Delete", resource(mess, :delete), :class=>"delete-btn" %>
                   <div class="hrule clear"><hr /></div>
               </div>
         <% end %>
-        
+  <% end %>
 <% end %>
 </div> 
 
