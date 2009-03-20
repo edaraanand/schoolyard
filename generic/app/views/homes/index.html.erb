@@ -16,7 +16,7 @@
       <div class="hrule clear dashed"><hr /></div>
   <% end %>
   <h3 class="current-page">
-    <%= link_to "All Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
+    <%= link_to "All Principal’s Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
   </h3>
   </div>
   <div id="content" class="homes-content">
@@ -29,7 +29,7 @@
       <div>&nbsp;</div>
       <div class="hrule clear dashed"><hr /></div>
   </h3>
- 
+<h1>Announcements</h1>
    <% for announcement in @announcements %>
        <% if announcement.expiration.nil? %>
           <div class="data-block long-block">
