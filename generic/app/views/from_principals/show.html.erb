@@ -11,7 +11,7 @@
 	     <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
 	  </div>
     <h3><%= @announcement.title %></h3>
-    <p><%= @announcement.content %></p>
+    <p><%= san_content(@announcement.content) %></p>
     <%= link_to "Edit", url(:edit_from_principal, @announcement.id), :class=>"edit-btn" %>
     <%= link_to "Delete", url(:delete_from_principal, @announcement.id), :class=>"delete-btn"  %>
     <div class="hrule clear"><hr /></div>

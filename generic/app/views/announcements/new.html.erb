@@ -5,8 +5,8 @@
           <ul>
               <li><label>Announcement for:</label><%= select :access_name, :collection => rooms %></li>
               <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
-              <li><%= text_area  :content,  :label => "Description", :rows => "10", :cols => "50" %></li>
-              <li><%= text_field  :expiration, :id => "expiration", :label => "Expiration" %></li>
+              <li><%= text_area  :content,  :label => "Description", :rows => "20", :cols => "50" %></li>
+              <li><%= text_field  :expiration, :id => "expiration", :label => "Expiration", :size => "12" %></li>
               <li><%= file_field :attachment,  :label => "Attach a File" %></li>
           </ul>
           

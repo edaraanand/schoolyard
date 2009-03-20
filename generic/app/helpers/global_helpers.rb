@@ -30,6 +30,9 @@ module Merb
      thought.split[0..(wordcount-1)].join(" ") +(thought.split.size > wordcount ? " …" : "") 
      end
      
+     def san_content(content)
+      content.gsub("\r\n","<br/>")
+    end
      
   end
 end

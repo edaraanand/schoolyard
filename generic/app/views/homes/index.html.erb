@@ -27,7 +27,7 @@
 
 <h2>Announcements</h2>
    <% for announcement in @announcements %>
-       <% if announcement.expiration.nil? %>
+       <% if announcement.expiration.nil? or announcement.expiration >= @date %>
           <div class="data-block long-block">
             <div class="ddmmm">
               <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
@@ -39,22 +39,11 @@
                   <% unless @attachment.nil? %>
                    <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
                   <% end %>
-           </div>
-       <% elsif announcement.expiration >= @date %>
-           <div class="data-block long-block">
-             <div class="ddmmm">
-               <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
-               <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
-             </div>
-              <p><%= link_to "#{announcement.title}", url(:home, announcement.id) %></p>
-               <p class="separator"><%= snippet(announcement.content, 50) %></p>
-             <% @attachment = Attachment.find(:first, :conditions => ["attachable_id=? and attachable_type=?", announcement.id, "Announcement"] ) %>
-              <% unless @attachment.nil? %>
-               <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
-              <% end %>
-           </div>
+           </div>           
+      <%else%>
+        <p class="separator">There are no announcements at this time.</p>
+        
       <% end %>    
-      <div class="hrule clear"><hr /></div>
    <% end %>
  
      <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements'), :class =>'all-articles'   %>

@@ -12,7 +12,7 @@
     <% end %>
     
     <h3><%= @announcement.title %></h3>
-    <p><%= @announcement.content %></p>
+    <p><%= san_content(@announcement.content) %></p>
     
     <% if @announcement.label == "from_principal" %>
        <%= link_to "< Back to All Articles", url(:principal_articles, :label => 'principal')  %> <br/>
