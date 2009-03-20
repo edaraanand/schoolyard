@@ -157,14 +157,14 @@ ul#menu li.count span b{background:url(../images/menu-count.gif) no-repeat right
 #navigation li.current a{color:#999; background-image:url(../images/nav-bg-current.gif); color:#000; border-bottom:1px solid #fff;}
 #navigation li.current a span{background-image:url(../images/nav-bg-current.gif); cursor:pointer;}
   /*Admin's*/
-#navigation li a.admin{background-image:url(../images/nav-bg-admin.gif);border-bottom:1px solid #94c6a6;}
+#navigation li a.admin{color:#999; background-image:url(../images/nav-bg-admin.gif); color:#000; border-bottom:1px solid #fff;}
 #navigation li a.admin span{background-image:url(../images/nav-bg-admin.gif); color:#000;}
   /*Admin + Hover*/
 #navigation li a.admin:hover{background-image:url(../images/nav-bg-admin-current.gif);border-bottom:1px solid #eafff1;}
 #navigation li a.admin:hover span{background-image:url(../images/nav-bg-admin-current.gif); color:#000;}
   /*Admin + Current*/
-#navigation li.current a.admin{background-image:url(../images/nav-bg-admin-current.gif);}
-#navigation li.current a.admin span{background-image:url(../images/nav-bg-admin-current.gif); color:#060;}
+#navigation li.current a.admin{background-image:url(../images/nav-bg-current.gif);}
+#navigation li.current a.admin span{background-image:url(../images/nav-bg-current.gif); cursor:pointer;}
   /*Admin + Current + Hover*/
 #navigation li.current a.admin:hover{}
 #navigation li.current a.admin:hover span{}/*------------------Whoa! that was fun!!*/
@@ -346,7 +346,10 @@ ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding
 
 .defaultText { width: 300px; }
 .defaultTextActive {color:#a1a1a1; font-style: italic!important; }
+#.esh {color:black!important;}
 .phone-hint{color:#a1a1a1; padding:0 6px;}
+.css_class{border-bottom: solid 2px #000;}
+.on a{border-bottom: solid 2px #000; color:black!important;}
 
 
 /*Revisited extras @Rmax*/
