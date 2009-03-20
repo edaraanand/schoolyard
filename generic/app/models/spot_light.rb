@@ -1,9 +1,17 @@
 class SpotLight < ActiveRecord::Base
   
-   attr_accessor :tempfile
+    #attr_accessor :tempfile
   # has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }
-    
+    #include DataMapper::Resource
+   # include Paperclip::Resource
+    #has_attached_file :avatar,
+     #                 :styles => { :medium => "300x300>",
+      #                             :thumb => "100x100>" }
     attr_accessor :attachment
+    
+    #validations
+    validates_presence_of :student_name, :message => "please select the student"
+    
     
     def url
       puts "Naidu".inspect
