@@ -1,91 +1,42 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
-<head>
-<title><%= @current_school.school_name %></title>
-
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
-  <link rel="stylesheet" href="/stylesheets/global.css" type="text/css" media="screen" />
-  <link rel="stylesheet" href="/stylesheets/facebox.css" type="text/css" media="screen" charset="utf-8" />
-  
-  <script src='/javascripts/jquery.js'></script>
-  <script src='/javascripts/facebox.js'></script>
-  
-        <%= include_required_js %>
-</head>
-<body class="fixed-width">
-  <div id="page-wrap"><!-- Wraps everything -->
-    <div id="header"><!--The Header -->
-   <h1><%= link_to "#{@current_school.school_name}", resource(:homes) %></h1>
-
-      <div id="user-cp"><!--User Control Panel -->
-       <p class="welcome">Welcome <em><%= session.user.name %></em></p>
-        <ul> <% @access_rights = session.user.access_peoples  %>
-         <% if @access_rights.length == 0 %>
-         <li class="first"><%= link_to "My Account", url(:parent_account) %></li>
-         <% else %>
-             <li class="first"><%= link_to "My Account", url(:staff_account) %></li>
-         <% end %>
-          <li><%= link_to "Logout", url(:logout) %></li>
-        </ul>
-      </div>
-      <div id="navbar"><!--The Main Navigation -->
-        <ul id="navigation">
-          <li><%= link_to "<span>Home</span>", url(:homes) %></li>
-          <li><a rel="facebox" href="#info"><span>Classrooms</span></a></li>
-		      <li class="current"><li><%#= link_to "<span>Sports</span>" %></li>
-          <li><%= link_to "<span>Forms</span>", url(:form_files) %></li>
-          <li><%= link_to "<span>Directory</span>", url(:directory) %></li>
-          <li><%= link_to "<span>Events</span>", url(:events) %></li>
-           <% @view = Access.find_by_name('view_all') %>
-          <% @accesses = Access.find(:all).delete_if{|x| x.name == "view_all" } %>
-             <% @a_p = session.user.access_peoples.delete_if{|x| x.access_id == @view.id } %>
-             <% @accesses.each do |f| %>
-               <% have_access = false %>
-               <% @a_p.each do |l| 
-                   have_access = l.all || (f.id == l.access_id) 
-                   break if have_access	  
-                   end %>
-                    <% @accesses.delete_if{ have_access } %>
-                    
-                 <% if have_access %>
-                     <li><%= link_to "<span>Administration</span>", url(:schools), :class=> "admin" %></li>
-                 <% end %>
-             <% end %>
-           <% @accesses.each do |f| %>
-           <% have_access = true %>
-               <% @a_p.each do |l| 
-                 have_access = l.access_id == @view.id 
-                   break if have_access	  
-                   end %>
-                    <% @accesses.delete_if{ have_access } %>
-                    
-                 <% if have_access %>
-                 <li><%= link_to "<span>Your Announcements</span>", url(:parents), :class=> "admin" %></li>
-                 <% end %>
-           <% end %>
-                 <li><%= link_to "<span>Contact Us</span>", url(:help) %></li>
-        </ul>
-        <div class="hrule clear"><hr /></div><!-- gives bottom border to the Navigation.-->
-      </div><!--Navbar End-->
-    </div><!--Header End -->
+<%= partial 'layout/main' %>
     
       
     <div id="sidebar">
       <ul id="menu"><!-- Nested Lists -->
-        <li><%= @classroom.class_name %> Classroom<ul>
-      <li><%= link_to "<span>Home</span>", url(:class_details, :id =>  @classroom.id) %></li>
-             <li><%= link_to "Class Calendar", url(:class_details, :id =>  @classroom.id, :label => "calendars") %></li>
-             <li><%= link_to "Homework Corner", url(:class_details, :id =>  @classroom.id, :label => "homeworks") %></li>
+             <li><%= @classroom.class_name %> Classroom<ul>
+             <li <% if @selected == nil %> class="on" <% end %>><%= link_to "<span>Home</span>", url(:class_details, :id =>  @classroom.id) %></li>
+             <li <% if @selected == "calendars" %> class="on" <% end %> ><%= link_to "Class Calendar", url(:class_details, :id =>  @classroom.id, :label => "calendars") %></li>
+             <li <% if @selected == "homeworks" %> class="on" <% end %>><%= link_to "Homework Corner", url(:class_details, :id =>  @classroom.id, :label => "homeworks") %></li>
              <li><%#= link_to "Grades & Reports" %></li>
-             <li><%= link_to "Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %></li>
+             <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to "Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %></li>
              <li><%#= link_to "Spotlight" %>
              <li><a rel="facebox" href="#info"> Change Classroom</a></li>
-          </ul>
+               
+            </ul>
       </li>
          <% @classrooms = @current_school.classrooms.find(:all) %>
          
-      </ul>
+       </ul>
+       
+       <ul id="menu">
+            <% s = @classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
+         <% if @classroom.class_name != "Sports" %> 
+                 <% t = s.delete_if{ |x| x.role != "class_teacher" } %>
+                 <% t.each do |f| %>
+                     <li><%= f.role.titleize %></li>
+                     <li><%= f.person.name %></li>
+                     <li><%= f.person.email %> | <%= link_to "Bio" %> </li>
+                  <% end %>
+         <% else %>
+                <% t = s.delete_if{ |x| x.role != "Athletic Director" } %>
+                 <% t.each do |f| %>
+                     <li><%= f.role %></li>
+                     <li><%= f.person.name %></li>
+                     <li><%= f.person.email %> | <%= link_to "Bio" %> </li>
+                  <% end %>
+          <% end %>
+       </ul>
+       
     </div><!-- Sidebar Ends -->
     
     <div id="content-wrap"><!--Wraps The content Area-->
