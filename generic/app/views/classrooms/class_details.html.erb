@@ -96,7 +96,16 @@
             <% for announcement in @announcements %>
                    <div class="data-block short-block">
                           <h3><%= announcement.title %></h3>
-                            <p class="post-content"><%= announcement.content %></p>
+                          <% if announcement.created_at.nil? %>
+                              <div class="ddmmm-x">
+                              </div>
+                          <% else %>
+                               <div class="ddmmm">
+                                   <span class="date"><%= announcement.created_at.strftime("%d") %></span>
+                                   <span class="month"><%= announcement.created_at.strftime("%b") %></span>
+                               </div>
+                          <% end %>
+                            <p class="post-content"><%= snippet(announcement.content,50) %></p>
                            <div class="hrule clear"><hr /></div>
                    </div>
             <% end %>

@@ -9,16 +9,16 @@
               <li><%= text_area  :content,  :label => "Description", :rows => "10", :cols => "50" %></li>
               <li><%= text_field  :expiration, :id => "expiration", :label => "Expiration" %></li>
           </ul>
-          <ul>
-              <li>Comments <%= text_area  :name => "comments", :rows => "10", :cols => "50" %></li>
-          </ul>
+
+          <hr class="clear">
+           <h2 style="border:none;">Your Approval</h2>
+Optional Comments<br/> <%= text_area  :name => "comments", :rows => "10", :cols => "50" %><br/><br/>
     </fieldset>
       
-            <div class="hrule clear"><hr /></div>
-                  <input type="hidden" name="approvetype" />
-                  <a href="javascript:getsupport('Approve & Publish')">Approve & Publish </a> or
-                  <a href="javascript:getsupport('Reject')">Reject</a> or
-                  <%= link_to "Cancel", url(:approvals), :class => "cancel" %>
+    <input type="hidden" name="approvetype" />
+    <a href="javascript:getsupport('Approve & Publish')">Approve &amp; Publish </a> &nbsp;&nbsp;&nbsp;or
+    <a href="javascript:getsupport('Reject')">Reject</a> &nbsp;&nbsp;&nbsp;or
+    <%= link_to "Cancel", url(:approvals), :class => "cancel" %><br/><br/><br/>
              </div>
 
 <% end =%>

@@ -1,7 +1,8 @@
 <h2 class="current-page">Pending Approvals </h2>
 <div class="fullpage announcemt">
-  
-
+  <%if @announcements.empty?%>
+    <p>There are nothing pending your approval right now</p>
+  <%end%>
     <% for announcement in @announcements %>
     
            <div class="data-block long-block">
@@ -15,8 +16,8 @@
 	                 </div>
               <% end %>
               <h3><%= link_to "#{announcement.title}", url(:approval, announcement.id) %></h3>
-              <span>Announcement for: <%= announcement.access_name %></span><br/>
-              <span class="post-by">Created by <%= announcement.person.name %>, expires on <%= announcement.expiration.strftime("%d %b %Y") %></span>
+              <span class="subText">Announcement for: <%= announcement.access_name %></span><br/>
+              <span class="subText">Created by <%= announcement.person.name %>, expires on <%= announcement.expiration.strftime("%d %b %Y") %></span>
                    <p ><%= snippet(announcement.content.gsub("\r\n", "<br/>"), 50) %></p>
                   
                   <p class="separator">&nbsp;</p>
