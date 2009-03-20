@@ -19,11 +19,12 @@
         <%= include_required_js %>
    
   </head>
-<body class="fixed-width">
+<body>
+<div style="height:150px; background:#333;"></div>
   <div id="page-wrap"><!-- Wraps everything -->
     <div id="header"><!--The Header -->
       <% unless @current_school.nil? %>
-      <h1><a href="#"><span></span><%= @current_school.school_name %></a></h1>
+      <h1 class="login"><%= @current_school.school_name %></h1>
       <% end %>
     </div><!--Header End -->
     <div id="content-wrap"><!--Wraps The content Area-->

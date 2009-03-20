@@ -371,12 +371,14 @@ span.sports-faculty-list .name{font-weight:bold;}
 
 .deactivate{background:#fff url(../images/delete-btn-bg.gif) no-repeat 0 50%; padding:4px 4px 4px 20px; margin:0 0 0 160px; position:relative; top:-26px ;}
 
-.logbox{border:1px solid #eee; margin:100px 10px 10px 200px; width:400px; padding:4px;}
+h1.login {font-size:160%;color:#1a3e8f;}
+.logbox{ padding:4px; font-size:110%;}
+.logbox input {font-size:110%;}
 .logbox h3{background:#e2ebf0; padding:8px!important; margin:0 0 20px 0;}
 
 fieldset.logbox  li{width:400px; margin: 0 20px;}
-.reg-forgot span a{margin:4px; padding:4px; float:right;}
-.reg-forgot {border-top:1px solid #eee;}
+.reg-forgot span a{margin:0px; padding:4px;}
+.reg-forgot {border-top:1px solid #eee;padding:10px 0px;}
 
 .reg-step2{padding:20px; margin:20px;}
 
