@@ -63,8 +63,8 @@ a:hover{color:#08225c; text-decoration:underline;}
 a:active{color:#000;}
 
 
-h2 {font-size:120%; padding:10px 0; border-bottom:1px solid #ebebeb; }
-#content h3{font-size:13px; font-weight:bold; padding:4px 0; margin:0 0 8px 0; }
+h2 {font-size:120%; font-weight:bold; padding:10px 0; border-bottom:1px solid #ebebeb; }
+h3{font-size:120%; font-weight:bold; padding:4px 0; margin:0 0 8px 0; }
 h2.current-page{font-size:12px; font-weight:bold; padding:4px 0; margin:0 0 8px 0; border-bottom:1px solid #e8e8e8;}
 h2.current-page .edit-btn{float:none; margin:0 0 10px 16px;}
 
@@ -419,3 +419,4 @@ ul#pending_files li a{padding:0 10px; color:#f00; text-transform:lowercase;}
 
 
 .separator {border-bottom:1px dashed #e8e8e8; padding:10px 0;}
+.subLink {padding:0 10px;}

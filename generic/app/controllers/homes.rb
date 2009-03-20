@@ -49,9 +49,13 @@ class Homes < Application
   def prepare_pdf(announcement)
       pdf = PDF::Writer.new
       pdf.select_font "Helvetica"
-      pdf.text "#{@current_school.school_name}", :font_size => 40, :justification => :center
-      pdf.text "<b>Title</b>" + ":" + "" + "#{@announcement.title}", :font_size => 10
-      pdf.text "<b>Content</b>" + ":" + "" + "#{@announcement.content}" 
+      pdf.text "#{@current_school.school_name}", :font_size => 15
+      pdf.text " "
+      pdf.text "<b>#{@announcement.title} </b>", :font_size => 20
+      pdf.text "Published #{@announcement.created_at.strftime('%B %d %Y')}", :font_size => 10
+      pdf.text " "
+            pdf.text " "      
+      pdf.text "#{@announcement.content}" , :font_size => 15
       pdf
   end
   

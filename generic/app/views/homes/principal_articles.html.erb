@@ -1,29 +1,33 @@
-
-<%= link_to " < Back to Home Page", url(:homes) %> <br/>
-
-
- <%  if params[:label] == "principal" %>
-
+<%  if params[:label] == "principal" %>
+  <h2>From the Principal</h2>
+  <%= link_to " < Back to Home Page", url(:homes) %> <br/>
        <% for principal in @from_principals %>
      
             <div id="sidebar">
                  <div class="data-block long-block">
+                   <div class="ddmmm">
+                     <span class="date"><%=  principal.created_at.strftime("%d")%></span>
+                     <span class="month"><%=  principal.created_at.strftime("%b")%></span>
+                   </div>
                      <h3><%= link_to "#{principal.title}", url(:home, principal.id) %></h3>
-                     <p class="post-content-sidebar"><%= principal.content %></p>
+                     <p class="separator"><%= snippet(principal.content, 50) %></p>
                  </div>
             </div>
             <div class="hrule clear"><hr /></div>
         <% end %>
- <% else %>
- 
+<% else %>
+  <h2>All Announcements</h2>
+  <%= link_to " < Back to Home Page", url(:homes) %> <br/>
         <% for announcement in @announcements %>
               <div class="data-block long-block">
+                <div class="ddmmm">
+                  <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
+                  <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
+                </div>
                      <h3><%= link_to "#{announcement.title}", url(:home, announcement.id) %></h3>
-                     <p class="post-content"><%= announcement.content %></p>
+                     <p class="separator"><%= snippet(announcement.content, 50) %></p>
               </div>
               <div class="hrule clear"><hr /></div>
          <% end %>
        
- <% end %>
-
-
+<% end %>
