@@ -105,6 +105,7 @@ class Forms < Application
   
   
   def form_files
+     @select = "forms"
      if params[:class_name].nil?
         @forms = @current_school.forms.find(:all)
      end

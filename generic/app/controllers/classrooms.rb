@@ -4,6 +4,7 @@ class Classrooms < Application
    before :find_school
    before :access_rights, :exclude => [:class_details]
    before :class_types
+   before :select, :only => [:class_details]
   
    def index
       @classrooms = @current_school.classrooms.find(:all)
@@ -186,12 +187,15 @@ class Classrooms < Application
    end
     
    def class_details
+      @selected = params[:label] #if params[:label] != nil
+      @select = "classrooms"
       @classroom = @current_school.classrooms.find(params[:id])
       @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', @classroom.class_name], :order => 'start_date')
       @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id])
       @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true])
       @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
       @external_links = @current_school.external_links.find(:all, :conditions => ['label = ?', "Classrooms"])
+      @ann = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true], :limit => 3)
       render :layout => 'class_change', :id => @classroom.id
    end
    
@@ -218,5 +222,9 @@ class Classrooms < Application
     @class_types = a.insert(2, "Extra Cirrcular")
   end
 
+  def select
+      @current_action = action_name
+      @current_controller = controller_name
+  end
 
 end

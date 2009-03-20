@@ -45,6 +45,31 @@
   $j("#end_time").clockpick({starthour : 0, endhour : 23 });
   
   
+   $j(document).ready(function()
+{
+    $j(".defaultText").focus(function(srcc)
+    {
+        if ($j(this).val() == $j(this)[0].title)
+        {
+            $j(this).removeClass("defaultTextActive");
+           // $j(this).addClass("esh");
+            $j(this).val("");
+        }
+    });
+    
+    $j(".defaultText").blur(function()
+    {
+        if ($j(this).val() == "")
+        {
+            $j(this).addClass("defaultTextActive");
+            // $j(this).removeClass("esh")
+            $j(this).val($j(this)[0].title);
+        }
+    });
+    
+    $j(".defaultText").blur();        
+});
+  
    function preview()
  {
    var s = $('event').serialize();
@@ -67,28 +92,7 @@
   }
   
   
-   $j(document).ready(function()
-{
-    $j(".defaultText").focus(function(srcc)
-    {
-        if ($j(this).val() == $j(this)[0].title)
-        {
-            $j(this).removeClass("defaultTextActive");
-            $j(this).val("");
-        }
-    });
-    
-    $j(".defaultText").blur(function()
-    {
-        if ($j(this).val() == "")
-        {
-            $j(this).addClass("defaultTextActive");
-            $j(this).val($j(this)[0].title);
-        }
-    });
-    
-    $j(".defaultText").blur();        
-});
+  
   
  
    function ClearAll()

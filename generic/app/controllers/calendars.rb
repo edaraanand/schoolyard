@@ -50,6 +50,7 @@ class Calendars < Application
   end
   
   def show
+     @selected = "calendars"
      @calendar = Calendar.find(params[:id])
      @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
      @event = "All Day Event"
@@ -119,7 +120,8 @@ class Calendars < Application
   end
   
   def events
-    @cls = @current_school.calendars.find(:all, :conditions => ["class_name = ?", params[:class_name] ], :order => 'start_date')
+     @select = "events"
+     @cls = @current_school.calendars.find(:all, :conditions => ["class_name = ?", params[:class_name] ], :order => 'start_date')
      if params[:class_name] == "All Events"
         @calendars = @current_school.calendars.find(:all, :order => 'start_date')
      end

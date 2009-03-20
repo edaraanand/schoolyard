@@ -116,6 +116,7 @@ class HomeWorks < Application
   end
   
   def show
+     @selected = "homeworks"
      @home_work = HomeWork.find(params[:id])
      @classroom = @home_work.classroom
      render :layout => 'class_change', :id => @classroom.id

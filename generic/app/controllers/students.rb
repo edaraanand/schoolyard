@@ -5,6 +5,7 @@ class Students < Application
   before :access_rights, :exclude => [:directory, :show, :staff, :generate_csv]
   before :classrooms, :only => [:directory, :staff]
   before :school_staff, :only => [:staff]
+  before :selected, :only => [:directory, :show, :staff]
   
   def index 
      @students = @current_school.students.find(:all)
@@ -273,7 +274,7 @@ class Students < Application
   
   
    def directory
-     @class = @current_school.classrooms.find_by_class_name(params[:class_name])
+      @class = @current_school.classrooms.find_by_class_name(params[:class_name])
       @studs = @current_school.students.find(:all, :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id] )
       if params[:class_name] == "All Students"
          @students = @current_school.students.find(:all)
@@ -370,5 +371,10 @@ class Students < Application
        redirect resource(:homes)
      end
   end  
+  
+  def selected
+     @select = "directory"
+  end
+  
   
 end
