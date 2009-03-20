@@ -28,7 +28,7 @@
 	                   </div>
 	                <% end %>
 	                 <p>Welcome Message for: <b><%= mess.access_name %></b></p>
-                  <p class="post-content"><%= mess.content %></p>
+                  <p class="post-content"><%= snippet(mess.content,50) %></p>
                   <%= link_to "Edit", resource(mess, :edit), :class=>"edit-btn" %>
                   <%= link_to "Delete", resource(mess, :delete), :class=>"delete-btn" %>
                   <div class="hrule clear"><hr /></div>

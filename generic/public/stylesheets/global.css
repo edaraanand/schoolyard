@@ -122,9 +122,9 @@ fieldset td label{display:block; width:120px;}
 
 
 /*Sidebar Menu*/
-ul#menu{ padding:16px 16px 0 16px; width:160px; font-size:12px; line-height:15px;}
-ul#menu a{text-decoration:none;}
-ul#menu li{padding:4px 0 4px 0; font-weight:bold;}
+ul#menu{ padding:16px 16px 0 16px; width:160px; font-size:12px; line-height:18px;}
+ul#menu a{text-decoration:none; border-bottom:1px dotted #ccc;display:block;}
+ul#menu li{padding:4px 0 4px 10px;margin:0 0 0 10px;}
 ul#menu li ul{margin:2px 0 4px;}
 ul#menu li ul li{font-weight:normal; padding:0;}
 ul#menu li ul li a{display:block; width:100%; padding:2px 0 4px 0; border-bottom:1px dotted #ccc; color:#486290;}
@@ -137,8 +137,8 @@ ul#menu li.count span{background:url(../images/menu-count.gif) no-repeat left to
 ul#menu li.count span b{background:url(../images/menu-count.gif) no-repeat right top; padding:2px 5px 4px 2px;}
   /*That yellow dot which contains numbers*/
 
-
-
+#menu .change{border-top:1px solid #ccc;border-bottom:1px solid #ccc; padding:13px 10px; }
+#menu .change a {border:none;}
 /* Top Navigation*/
 #navigation{font-size:12px; margin-left:60px; position:relative; top:1px;} 
   /* Positioned Top:1px To create the open end bottom for Current Li*/
@@ -351,7 +351,7 @@ ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding
 #.esh {color:black!important;}
 .phone-hint{color:#a1a1a1; padding:0 6px;}
 .css_class{border-bottom: solid 2px #000;}
-.on a{border-bottom: solid 2px #000; color:black!important;}
+.on a{ color:black!important;}
 
 
 /*Revisited extras @Rmax*/
@@ -422,3 +422,31 @@ ul#pending_files li a{padding:0 10px; color:#f00; text-transform:lowercase;}
 
 .separator {border-bottom:1px dashed #e8e8e8; padding:10px 0;}
 .subLink {padding:0 10px;}
+
+.className{padding:5px; text-align:center; background:#008948; color:#fff; font-weight:bold;}
+
+.classNameLeft {width:40px; background:#008948 url("/images/class_name_background.png") left top; height:40px; }
+ .classNameRight{}
+
+.feature {
+	border:solid #008948;
+ 	border-width:0 1px;
+	background:#008948;
+	width:80%;
+	color:#fff; font-weight:bold;
+	text-align:center;
+	margin:15px auto;
+}
+.feature div {
+  position:relative;
+  top: -1px;
+  left: 0;
+  border:solid #008948;
+  border-width:1px 0 0;
+}
+.feature div div {
+	top: 2px;
+	border-width:0 0 1px;
+	padding: .3em .3em .1em;
+}
+.subText{color:#666;}

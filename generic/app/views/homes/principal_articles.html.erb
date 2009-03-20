@@ -1,6 +1,10 @@
 <%  if params[:label] == "principal" %>
+<div id="sidebar" class="left-block">
+  <img src="/images/principal.png" alt="From The Principal"/>
+</div>
+<div id="content" class="homes-content">
   <h2>From the Principal</h2>
-  <%= link_to " < Back to Home Page", url(:homes) %> <br/>
+  <%= link_to " < Back to Home Page", url(:homes) %> <br/><br/>
        <% for principal in @from_principals %>
      
             <div id="sidebar">
@@ -15,6 +19,7 @@
             </div>
             <div class="hrule clear"><hr /></div>
         <% end %>
+  </div>
 <% else %>
   <h2>All Announcements</h2>
   <%= link_to " < Back to Home Page", url(:homes) %> <br/>

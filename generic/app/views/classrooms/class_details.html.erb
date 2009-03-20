@@ -1,4 +1,3 @@
-
 <%  if params[:label] == "calendars" %>
 <div class="short-block">
   <h2 class="current-page"> Calendars</h2>
@@ -91,14 +90,7 @@
          <% for message in @welcome_messages %>
                <p class="post-content"><%= message.content %></p>
          <% end %>
-        <h2 class="current-page">External Links </h2>
-        <div class="external-links">
-          <ul>
-            <% for link in @external_links %>
-                  <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
-            <% end %>
-          </ul>
-        </div>
+        
            <h2 class="current-page">Announcements: </h2>
    
             <% for announcement in @announcements %>
@@ -126,6 +118,13 @@
         <li>ASDF</li>
 
       </ul>
+      <h3>External Links </h3>
+
+        <ul class="last">
+          <% for link in @external_links %>
+                <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
+          <% end %>
+        </ul>
 
 </div>
 

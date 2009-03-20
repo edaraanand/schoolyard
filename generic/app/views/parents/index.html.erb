@@ -14,7 +14,7 @@
 	                 </div>
               <% end %>
               <h3><%= link_to "#{announcement.title}", url(:parent, announcement.id) %></h3>
-                  <p class="post-content"><%= announcement.content %></p>
+                  <p class="separator"><%= announcement.content %></p>
                   <% if ( (announcement.approved) && (announcement.approve_announcement)) %>
                        <%= @message1 %>
                   <% elsif ((announcement.approve_announcement == true) && (announcement.approved == false )) %>

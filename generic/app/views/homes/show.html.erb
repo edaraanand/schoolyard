@@ -1,15 +1,26 @@
-<h2>All Announcements > <%= @announcement.title %></h2>
-<div clas="subLink"><%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) %> </div>
+<%  if params[:label] == "principal" %>
+  <div id="sidebar" class="left-block">
+    <img src="/images/principal.png" alt="From The Principal"/>
+  </div>
+  <div id="content" class="homes-content">
+      <h2>From the Principal > <%= @announcement.title %></h2>  
 
-<% if @announcement.expiration.nil? %>
-  <div class="ddmmm-x"></div>
-<% else %>
-  <div class="ddmmm">
-    <span class="date"><%= @announcement.expiration.strftime("%d") %></span>
-    <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
- </div>
-<% end %>
-<p><%= san_content(@announcement.content) %></p>
-<% if @announcement.label == "from_principal" %>
-  <%= link_to "< Back to All Articles", url(:principal_articles, :label => 'principal')  %> <br/>
-<% end %>
+<%else%>
+<div>
+  <h2>All Announcements > <%= @announcement.title %></h2>
+<%end%>
+<%= link_to " < Back to Home Page", url(:homes) %> | 
+<%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) %><br/><br/>
+  <% if @announcement.expiration.nil? %>
+    <div class="ddmmm-x"></div>
+  <% else %>
+    <div class="ddmmm">
+      <span class="date"><%= @announcement.expiration.strftime("%d") %></span>
+      <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
+   </div>
+  <% end %>
+  <p><%= san_content(@announcement.content) %></p>
+  <% if @announcement.label == "from_principal" %>
+    <%= link_to "< Back to All Articles", url(:principal_articles, :label => 'principal')  %> <br/>
+    <%end%>
+</div>
