@@ -60,7 +60,7 @@
                <% end %>
                <h3><%= link_to "#{homework.title}", url(:home_work, homework.id) %></h3>
                Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %>
-                <p class="post-content"><%= homework.content %></p>
+               <p class="post-content"><%= snippet(homework.content, 50) %></p>
                 <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
                   <% unless @attachment.nil? %>
                       <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
@@ -76,7 +76,11 @@
           <h2 class="current-page"> Announcements </h2>
             <% for announcement in @announcements %>
                    <div class="data-block short-block">
-                           <h3><%= announcement.title %></h3>
+                         <div class="ddmmm">
+                              <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
+                              <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
+                         </div>
+                         <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :label => "class_ann") %></h3>
                             <p class="post-content"><%= announcement.content %></p>
                           <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
                              <% unless @attachment.nil? %>
@@ -123,25 +127,26 @@
            <div class="right-sidebar">
                   <h3>Current Homework</h3>
                       <ul class="last">
-                        <% @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id], :limit => 3 ) %>
+                      <% @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ? and due_date >= ?', @current_school.id, @date] ) %>
                         <% for homework in @h_w %>
                              <li><%= link_to "#{homework.title}", url(:home_work, homework.id) %></li>
                         <% end %>
                       </ul>
             </div>
+            <div class="right-sidebar">
+                <h3>External Links </h3>
+                 <ul class="last">
+                      <% for link in @external_links %>
+                           <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
+                      <% end %>
+                 </ul>
+            </div>
             
-           
 
 <% end %>   
 
       </ul>
-      <h3>External Links </h3>
-
-        <ul class="last">
-          <% for link in @external_links %>
-                <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
-          <% end %>
-        </ul>
+      
 
 
 

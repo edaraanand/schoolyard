@@ -10,8 +10,12 @@
       <div>
          <h2>All Announcements > <%= @announcement.title %></h2>
 <% end %>
-       <%= link_to " < Back to Home Page", url(:homes) %> | 
-       <%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) %><br/><br/>
+     <% if params[:label] == "class_ann" %>
+          <%= link_to " back to All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>
+     <% else %>
+          <%= link_to " < Back to Home Page", url(:homes) %> | 
+          <%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) %><br/><br/>
+     <% end %>
   <% if @announcement.expiration.nil? %>
       <div class="ddmmm-x"></div>
   <% else %>

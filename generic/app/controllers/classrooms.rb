@@ -187,6 +187,7 @@ class Classrooms < Application
    end
     
    def class_details
+      @date = Date.today
       @selected = params[:label] #if params[:label] != nil
       @select = "classrooms"
       @classroom = @current_school.classrooms.find(params[:id])

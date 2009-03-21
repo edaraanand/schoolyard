@@ -30,14 +30,16 @@
                  <% t.each do |f| %>
                      <li><%= f.role.titleize %></li>
                      <li><%= f.person.name %></li>
-                     <li><%= f.person.email %> | <%= link_to "Bio" %> </li>
+                     <li><%= f.person.email %></li>
+                     <li <% if @selected == "bio" %> class="on" <% end %>> <%= link_to "Bio", url(:bio, :id => @classroom.id) %> </li>
                   <% end %>
          <% else %>
                 <% t = s.delete_if{ |x| x.role != "Athletic Director" } %>
                  <% t.each do |f| %>
                      <li><%= f.role %></li>
                      <li><%= f.person.name %></li>
-                     <li><%= f.person.email %> | <%= link_to "Bio" %> </li>
+                     <li><%= f.person.email %> </li>
+                     <li <% if @selected == "bio" %> class="on" <% end %>> <%= link_to "Bio", url(:bio, :id => @classroom.id) %> </li>
                   <% end %>
           <% end %>
        </ul>
