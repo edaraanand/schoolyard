@@ -3,7 +3,7 @@ class FromPrincipals < Application
   before :find_school
 
   def index
-    @announcements = @current_school.announcements.find(:all, :conditions => ['label=?', "from_principal"])
+    @announcements = @current_school.announcements.find(:all, :conditions => ['label=?', "from_principal"], :order => "created_at DESC")
       #@announcements = Announcement.paginate :page => params[:page], :order => 'updated_at DESC', :per_page => 2
      #  @pager = ::Paginator.new(@current_school.announcements.size, 10) do |offset, per_page|
         #   Announcement.find(:all, :conditions => ["label = ? and school_id = ?", "from_principal", @current_school.id],  :limit => per_page, :offset => offset)
