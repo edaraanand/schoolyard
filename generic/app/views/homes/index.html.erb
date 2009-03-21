@@ -1,17 +1,12 @@
 <div id="sidebar" class="left-block">
   <img src="images/principal.png" alt="From The Principal"/>
   <% for principal in @from_principals %>
-      <% if principal.expiration.nil? %>
+      
         <div class="data-block long-block">
-          <h3><%= principal.title %></h3>
-          <p><%= principal.content %></p>
+            <h3><%= link_to "#{principal.title}", url(:home, principal.id) %></h3>
+            <p><%= truncate(principal.content, 100, ".........") %></p>
         </div>
-      <% elsif principal.expiration >= @date %>
-        <div class="data-block long-block">
-          <h3><%= principal.title %></h3>
-          <p><%= principal.content %></p>
-        </div>
-      <% end %>
+     
       <br />
       <div class="hrule clear dashed"><hr /></div>
   <% end %>
@@ -31,26 +26,15 @@
   </h3>
 <h1>Announcements</h1>
    <% for announcement in @announcements %>
-       <% if announcement.expiration.nil? %>
-          <div class="data-block long-block">
-              <h3><%= announcement.title %></h3>
-              <p class="post-content"><%= announcement.content %></p>
-              <% @attachment = Attachment.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
-              <% unless @attachment.nil? %>
-               <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
-              <% end %>
-           </div>
-       <% elsif announcement.expiration >= @date %>
-           <div class="data-block long-block">
-              <h3><%= announcement.title %></h3>
-              <p class="post-content"><%= announcement.content %></p>
+         <div class="data-block long-block">
+              <h3><%= link_to "#{announcement.title}", url(:home, announcement.id) %></h3>
+              <p class="post-content"><%= truncate(announcement.content, 100, ".........") %></p>
              <% @attachment = Attachment.find(:first, :conditions => ["attachable_id=? and attachable_type=?", announcement.id, "Announcement"] ) %>
               <% unless @attachment.nil? %>
                <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
               <% end %>
-           </div>
-      <% end %>    
-      <div class="hrule clear"><hr /></div>
+         </div>
+         <div class="hrule clear"><hr /></div>
    <% end %>
  
      <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements'), :class =>'all-articles'   %>
