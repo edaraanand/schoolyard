@@ -1,4 +1,3 @@
-
 <%  if params[:label] == "calendars" %>
 
   <h2 class="current-page"> Calendars</h2>
@@ -92,12 +91,23 @@
          <% for message in @welcome_messages %>
                <p class="post-content"><%= message.content %></p>
          <% end %>
+
          <h2 class="current-page">Announcements & Updates </h2>
+
    
             <% for announcement in @ann %>
                    <div class="data-block short-block">
                           <h3><%= announcement.title %></h3>
-                            <p class="post-content"><%= announcement.content %></p>
+                          <% if announcement.created_at.nil? %>
+                              <div class="ddmmm-x">
+                              </div>
+                          <% else %>
+                               <div class="ddmmm">
+                                   <span class="date"><%= announcement.created_at.strftime("%d") %></span>
+                                   <span class="month"><%= announcement.created_at.strftime("%b") %></span>
+                               </div>
+                          <% end %>
+                            <p class="post-content"><%= snippet(announcement.content,50) %></p>
                            <div class="hrule clear"><hr /></div>
                    </div>
             <% end %>
@@ -119,18 +129,19 @@
                         <% end %>
                       </ul>
             </div>
-            <div class="right-sidebar">
-                <h3>External Links </h3>
-                <ul class="last">
-                    <% for link in @external_links %>
-                        <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
-                    <% end %>
-                 </ul>
-            </div>
+            
            
 
 <% end %>   
 
+      </ul>
+      <h3>External Links </h3>
+
+        <ul class="last">
+          <% for link in @external_links %>
+                <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
+          <% end %>
+        </ul>
 
 
 

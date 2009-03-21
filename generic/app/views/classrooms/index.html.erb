@@ -1,5 +1,11 @@
-<h2 class="current-page">Classrooms &gt; <%= link_to "Add New", resource(:classrooms, :new) %></h2>
-<% unless @classrooms.empty? %>
+<h2 class="current-page">Classrooms &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:classrooms, :new) %></h2>
+
+
+
+<% if @classrooms.empty? %>
+  <p>There are no classrooms created yet.  <%= link_to "Add New", resource(:classrooms, :new) %></p>
+
+<%else%>
 <div class="data-block short-block">
   <% for classroom in @classrooms %>
       <div class="data">

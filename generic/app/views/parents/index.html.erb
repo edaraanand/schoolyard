@@ -1,20 +1,18 @@
-<h2 class="current-page">Announcements: <%= link_to "Add New", resource(:parents, :new) %></h2>
+<h2 class="current-page">Announcements <%= link_to "Add New", resource(:parents, :new) %></h2>
 <div class="fullpage announcemt">
-  
-
     <% for announcement in @announcements %>
            <div class="data-block long-block">
-              <% if announcement.expiration.nil? %>
+              <% if announcement.created_at.nil? %>
                   <div class="ddmmm-x">
 	                </div>
               <% else %>
                    <div class="ddmmm">
-                       <span class="date"><%= announcement.expiration.strftime("%d") %></span>
-                       <span class="month"><%= announcement.expiration.strftime("%b") %></span>
+                       <span class="date"><%= announcement.created_at.strftime("%d") %></span>
+                       <span class="month"><%= announcement.created_at.strftime("%b") %></span>
 	                 </div>
               <% end %>
               <h3><%= link_to "#{announcement.title}", url(:parent, announcement.id) %></h3>
-                  <p class="post-content"><%= announcement.content %></p>
+                  <p class="separator"><%= snippet(announcement.content,50) %></p>
                   <% if ( (announcement.approved) && (announcement.approve_announcement)) %>
                        <%= @message1 %>
                   <% elsif ((announcement.approve_announcement == true) && (announcement.approved == false )) %>

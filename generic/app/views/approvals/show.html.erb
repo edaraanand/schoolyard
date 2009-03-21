@@ -1,7 +1,8 @@
     
     <h2 class="current-page">Pending Approval </h2>
+     <%= link_to "Edit", url(:edit_approval, @announcement.id), :class=>"edit-btn" %>
   <div class="fullpage announcemt"> 
-         Announcement for : <%= @announcement.access_name %>
+
            <div class="data-block long-block">
              <% if @announcement.expiration.nil? %>
                    <div class="ddmmm-x">
@@ -12,20 +13,21 @@
                       <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
 	                 </div>
               <% end %>
-              <h3><%= @announcement.title %></h3> <%= link_to "Edit", url(:edit_approval, @announcement.id), :class=>"edit-btn" %>
-              <p class="post-content"><%= @announcement.content %></p>
+              <h3><%= @announcement.title %></h3><span class="subText">Announcement for: <%= @announcement.access_name %></span><br/>
+              <span class="subText">Created by <%= @announcement.person.name %>, expires on <%= @announcement.expiration.strftime("%d %b %Y") %></span>
+              
+              
+              <p class="post-content"><%= san_content(@announcement.content) %></p>
               
       <%= form_for :announcement, :action => url(:publish, :id => @announcement), :name => "approveform" do %>      
-           
-            <ul>
-                <li>Comments <%= text_area  :name => "comments", :rows => "10", :cols => "50" %></li>
-            </ul>
+           <hr class="clear">
+           <h2 style="border:none;">Your Approval</h2>
+Optional Comments<br/> <%= text_area  :name => "comments", :rows => "10", :cols => "50" %><br/><br/>
             
-              <div class="hrule clear"><hr /></div>
                   <input type="hidden" name="approvetype" />
-                  <a href="javascript:getsupport('Approve & Publish')">Approve & Publish </a> or
-                  <a href="javascript:getsupport('Reject')">Reject</a> or
-                  <%= link_to "Cancel", url(:approvals), :class => "cancel" %>
+                  <a href="javascript:getsupport('Approve & Publish')">Approve &amp; Publish </a> &nbsp;&nbsp;&nbsp;or
+                  <a href="javascript:getsupport('Reject')">Reject</a> &nbsp;&nbsp;&nbsp;or
+                  <%= link_to "Cancel", url(:approvals), :class => "cancel" %><br/><br/><br/>
              </div>
       <% end =%>        
               

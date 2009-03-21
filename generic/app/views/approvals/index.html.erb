@@ -1,23 +1,26 @@
 <h2 class="current-page">Pending Approvals </h2>
 <div class="fullpage announcemt">
-  
-
+  <%if @announcements.empty?%>
+    <p>There are nothing pending your approval right now</p>
+  <%end%>
     <% for announcement in @announcements %>
-    <span class="announce-for-page">Announcement for : <%= announcement.access_name %></span>
+    
            <div class="data-block long-block">
               <% if announcement.expiration.nil? %>
                   <div class="ddmmm-x">
 	                </div>
               <% else %>
                    <div class="ddmmm">
-                       <span class="date"><%= announcement.expiration.strftime("%d") %></span>
-                       <span class="month"><%= announcement.expiration.strftime("%b") %></span>
+                       <span class="date"><%= announcement.created_at.strftime("%d") %></span>
+                       <span class="month"><%= announcement.created_at.strftime("%b") %></span>
 	                 </div>
               <% end %>
               <h3><%= link_to "#{announcement.title}", url(:approval, announcement.id) %></h3>
-                  <p class="post-content"><%= announcement.content %></p>
-                  <span class="post-by">Created By<br /><b><%= announcement.person.name %></b> on <br /> <span><%= announcement.created_at.strftime("%d %b %Y") %></span></span>
-                  <div class="hrule clear"><hr /></div>
+              <span class="subText">Announcement for: <%= announcement.access_name %></span><br/>
+              <span class="subText">Created by <%= announcement.person.name %>, expires on <%= announcement.expiration.strftime("%d %b %Y") %></span>
+                   <p ><%= snippet(announcement.content.gsub("\r\n", "<br/>"), 50) %></p>
+                  
+                  <p class="separator">&nbsp;</p>
            </div>
         
     <% end %>

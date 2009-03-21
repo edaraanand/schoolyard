@@ -1,25 +1,30 @@
 <%= partial 'layout/main' %>
-    
-      
     <div id="sidebar">
+      <div class="feature">
+          <div>
+            <div>
+              <p><%= @classroom.class_name %></p>
+            </div>
+          </div>
+        </div>
+      
+      
+      
       <ul id="menu"><!-- Nested Lists -->
-             <li><%= @classroom.class_name %> Classroom<ul>
              <li <% if @selected == nil %> class="on" <% end %>><%= link_to "<span>Home</span>", url(:class_details, :id =>  @classroom.id) %></li>
              <li <% if @selected == "calendars" %> class="on" <% end %> ><%= link_to "Class Calendar", url(:class_details, :id =>  @classroom.id, :label => "calendars") %></li>
              <li <% if @selected == "homeworks" %> class="on" <% end %>><%= link_to "Homework Corner", url(:class_details, :id =>  @classroom.id, :label => "homeworks") %></li>
-             <li><%#= link_to "Grades & Reports" %></li>
+
              <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to "Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %></li>
-             <li><%#= link_to "Spotlight" %>
-             <li><a rel="facebox" href="#info"> Change Classroom</a></li>
-               
+             <li>&nbsp;</li>
+             <li class="change"><a rel="facebox" href="#info"> Change Classroom</a></li>
             </ul>
-      </li>
+
          <% @classrooms = @current_school.classrooms.find(:all) %>
-         
-       </ul>
+
        
-       <ul id="menu">
-            <% s = @classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
+       <ul id="menu1">
+        <% s = @classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
          <% if @classroom.class_name != "Sports" %> 
                  <% t = s.delete_if{ |x| x.role != "class_teacher" } %>
                  <% t.each do |f| %>
@@ -48,7 +53,7 @@
     </div><!--Content Wrap End -->
     
     <div id="info" style="display:none;">
-             <h3>Please Select the classroom you would like to visit</h3>
+             <b>Please Select the classroom you would like to visit</b>
           <p>Classes:  </p>
            <ul><% @classrooms.each do |f| %>
                  <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
