@@ -28,7 +28,11 @@
                                      
                                  <div class="hrule clear"><hr /></div>
                          </div>
-                       <%= link_to "Back to All Homeworks", url(:class_details, :id => @home_work.classroom.id, :label => "homeworks") %>                
+                       <% if params[:label] == "home_w" %>
+                             <%= link_to "Back to All Homeworks", resource(:home_works) %>
+                       <% else %>
+                            <%= link_to "Back to All Homeworks", url(:class_details, :id => @home_work.classroom.id, :label => "homeworks") %>
+                       <% end %>
          <%= link_to "Download as PDF", url(:home_works_pdf, :id => @home_work.id, :label => "single") %>
 </div>
 

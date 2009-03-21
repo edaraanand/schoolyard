@@ -27,9 +27,9 @@
                                                <span class="month"><%= homework.due_date.strftime("%b") %></span>
                                          </div>
                                    <% end %>
-                                      <h3><%= homework.title %></h3>
+                                      <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
                                       Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %>
-                                      <p class="post-content"><%= homework.content %></p>
+                                      <p class="post-content"><%= snippet(homework.content, 50) %></p>
                                      <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
                                      <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
                                  <div class="hrule clear"><hr /></div>
@@ -56,9 +56,9 @@
                                                <span class="month"><%= homework.due_date.strftime("%b") %></span>
                                          </div>
                                    <% end %>
-                                      <h3><%= homework.title %></h3>
+                                   <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
                                       Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %>
-                                      <p class="post-content"><%= homework.content %></p>
+                                      <p class="post-content"><%= snippet(homework.content, 50) %></p>
                                      <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
                                      <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
                                  <div class="hrule clear"><hr /></div>
@@ -85,9 +85,9 @@
                                                <span class="month"><%= homework.due_date.strftime("%b") %></span>
                                          </div>
                                    <% end %>
-                                      <h3><%= homework.title %></h3>
+                                      <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
                                       Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %>
-                                      <p class="post-content"><%= homework.content %></p>
+                                      <p class="post-content"><%= snippet(homework.content, 50) %></p>
                                      <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
                                      <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
                                  <div class="hrule clear"><hr /></div>
