@@ -13,7 +13,7 @@
                 <li>
                       <span class="cal-time">
                           <% unless calendar.start_time.nil? %>
-                        Starts at <%= calendar.start_time.strftime("%H-%M") %>
+                        Starts at <%= calendar.start_time.strftime("%I:%M%p") %>
                                <% end %>&nbsp;
                           </span>
                           <span class="cal-title">
@@ -21,7 +21,7 @@
                           </span>
                           <span class="cal-time">
                             <% unless calendar.end_time.nil? %>
-                          Ends at <%= calendar.end_time.strftime("%H-%M") %>
+                          Ends at <%= calendar.end_time.strftime("%I:%M%p") %>
                                 <% end %>  &nbsp;
                           </span>
                           Location : <%= calendar.location %>
