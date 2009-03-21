@@ -24,8 +24,15 @@ class Homes < Application
   end
   
   def show
-    @announcement = Announcement.find(params[:id])
-    render
+    if params[:label] == "class_ann"
+       @selected = "announcements"
+       @announcement = Announcement.find(params[:id])
+       @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @announcement.access_name] )
+       render :layout => 'class_change', :id => @classroom.id
+    else
+       @announcement = Announcement.find(params[:id])
+       render :layout => 'home'
+    end
   end
  
   def help
@@ -33,6 +40,13 @@ class Homes < Application
     render :layout => 'help'
   end
   
+  def bio
+     @selected = "bio"
+     @select = "classrooms"
+     @classroom = @current_school.classrooms.find(params[:id])
+     render :layout => 'class_change', :id => @classroom.id
+  end
+
   def download
      @attachment = Attachment.find(params[:id])
      send_file("#{Merb.root}/public/uploads/#{@attachment.id}/#{@attachment.filename}") 

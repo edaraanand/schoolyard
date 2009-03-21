@@ -107,6 +107,7 @@ Merb::Router.prepare do
        match("/staff").to(:controller => 'students', :action => 'staff').name(:staff)
        match("/events").to(:controller => 'calendars', :action => 'events').name(:events)
        match("/help").to(:controller => 'homes', :action => 'help').name(:help)
+       match("/bio").to(:controller => 'homes', :action => 'bio').name(:bio)
        match("/disable").to(:controller => 'people', :action => 'disable').name(:disable)
        match("/enable").to(:controller => 'people', :action => 'enable').name(:enable)
        match("/download").to(:controller => 'homes', :action => 'download').name(:download)
