@@ -56,7 +56,7 @@ body.fixed-width{width:1000px;}
 
 
 /*Generic Link Colors*/
-a{color:#445978; text-decoration:none;}
+a{color:#445978; text-decoration:none; }
 a:link{color:#1a3e8f;}
 a:visited{color:#445978;}
 a:hover{color:#08225c; text-decoration:underline;}
@@ -271,7 +271,7 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 .email-alerts li{margin:10px 0 0 30px; padding:3px 0 3px 20px; background:url"(/images/bullet-dash.gif") no-repeat left center; border-bottom:1px dotted #eee;}
 
 
-#footer{clear:both;}
+#footer{clear:both; padding:10px; text-align:center; border-top:1px solid #ccc; margin:40px 0 40px 0;}
 
 .lightbox{width:480px; border:10px solid #ccc; padding:20px; margin:10px 0;}
 .lightbox .close{float:right}

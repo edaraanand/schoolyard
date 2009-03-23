@@ -24,9 +24,11 @@
          <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
       </div>
   <% end %>
-      <p><%= san_content(@announcement.content) %></p>
+      <p class="separator"><%= san_content(@announcement.content) %></p>
        <% if @announcement.label == "from_principal" %>
-           <%= link_to "< Back to All Articles", url(:principal_articles, :label => 'principal')  %> <br/>
+          <p> <%= link_to "< Back to All Articles", url(:principal_articles, :label => 'principal')  %> </p>
+       <%else%>
+          <p> <%= link_to "< Back to All Announcements", url(:principal_articles, :label => 'announcements'), :class =>'all-articles'   %></p>
        <%end%>
     </div>
 
