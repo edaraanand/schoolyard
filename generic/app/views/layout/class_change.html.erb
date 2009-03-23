@@ -6,24 +6,17 @@
               <p><%= @classroom.class_name %></p>
             </div>
           </div>
-        </div>
-      
-      
-      
+      </div>
       <ul id="menu"><!-- Nested Lists -->
-             <li <% if @selected == nil %> class="on" <% end %>><%= link_to "<span>Home</span>", url(:class_details, :id =>  @classroom.id) %></li>
-             <li <% if @selected == "calendars" %> class="on" <% end %> ><%= link_to "Class Calendar", url(:class_details, :id =>  @classroom.id, :label => "calendars") %></li>
-             <li <% if @selected == "homeworks" %> class="on" <% end %>><%= link_to "Homework Corner", url(:class_details, :id =>  @classroom.id, :label => "homeworks") %></li>
-
-             <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to "Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %></li>
-             <li>&nbsp;</li>
-             <li class="change"><a rel="facebox" href="#info"> Change Classroom</a></li>
-            </ul>
-
-         <% @classrooms = @current_school.classrooms.find(:all) %>
-
-       
-       <ul id="menu1">
+        <li <% if @selected == nil %> class="on" <% end %>><%= link_to "<span>Home</span>", url(:class_details, :id =>  @classroom.id) %></li>
+        <li <% if @selected == "calendars" %> class="on" <% end %> ><%= link_to "Class Calendar", url(:class_details, :id =>  @classroom.id, :label => "calendars") %></li>
+        <li <% if @selected == "homeworks" %> class="on" <% end %>><%= link_to "Homework Corner", url(:class_details, :id =>  @classroom.id, :label => "homeworks") %></li>
+        <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to "Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %></li>
+        <li>&nbsp;</li>
+        <li class="change"><a rel="facebox" href="#info"> Change Classroom</a></li>
+      </ul>
+      <% @classrooms = @current_school.classrooms.find(:all) %>
+      <ul id="menu1">
         <% s = @classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
          <% if @classroom.class_name != "Sports" %> 
                  <% t = s.delete_if{ |x| x.role != "class_teacher" } %>
@@ -43,23 +36,21 @@
                   <% end %>
           <% end %>
        </ul>
-       
     </div><!-- Sidebar Ends -->
     
     <div id="content-wrap"><!--Wraps The content Area-->
       
-      <div class="hrule clear hidden "><hr /></div>
-      <div id="content"><!--Content Area Starts here-->
         <%= catch_content :for_layout %>
-      </div><!--Content End-->
-    </div><!--Content Wrap End -->
-    
+      
+    </div><!--Content Wrap End -->  
+
     <div id="info" style="display:none;">
-             <b>Please Select the classroom you would like to visit</b>
+          <b>Please Select the classroom you would like to visit</b>
           <p>Classes:  </p>
-           <ul><% @classrooms.each do |f| %>
+           <ul>
+              <% @classrooms.each do |f| %>
                  <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
-           <% end %>
+              <% end %>
           </ul>
     </div> 
     
