@@ -449,4 +449,5 @@ ul#pending_files li a{padding:0 10px; color:#f00; text-transform:lowercase;}
 	border-width:0 0 1px;
 	padding: .3em .3em .1em;
 }
-.subText{color:#666;}
+.subText, .noText{color:#666;}
+.noText {font-style:italic;}
