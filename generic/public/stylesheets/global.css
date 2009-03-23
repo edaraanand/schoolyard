@@ -351,7 +351,7 @@ ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding
 #.esh {color:black!important;}
 .phone-hint{color:#a1a1a1; padding:0 6px;}
 .css_class{border-bottom: solid 2px #000;}
-.on a{ color:black!important;}
+.on a{ color:black!important; background:url("/images/arrow-right.png") right no-repeat; font-weight:bold; padding:0 20px 0 0;}
 
 
 /*Revisited extras @Rmax*/
@@ -419,35 +419,22 @@ ul#pending_files li a{padding:0 10px; color:#f00; text-transform:lowercase;}
 .previewWrapper{padding:40px;}
 .previewWrapper .hrule{padding:10px; text-align:center; border-top:1px solid #ccc;}
 
-
 .separator {border-bottom:1px dashed #e8e8e8; padding:10px 0;}
 .subLink {padding:0 10px;}
 
+
+#menu1{text-align:center;}
 .className{padding:5px; text-align:center; background:#008948; color:#fff; font-weight:bold;}
 
 .classNameLeft {width:40px; background:#008948 url("/images/class_name_background.png") left top; height:40px; }
- .classNameRight{}
 
-.feature {
-	border:solid #008948;
- 	border-width:0 1px;
-	background:#008948;
-	width:80%;
-	color:#fff; font-weight:bold;
-	text-align:center;
-	margin:15px auto;
-}
-.feature div {
-  position:relative;
-  top: -1px;
-  left: 0;
-  border:solid #008948;
-  border-width:1px 0 0;
-}
-.feature div div {
-	top: 2px;
-	border-width:0 0 1px;
-	padding: .3em .3em .1em;
-}
+
+.classTitle , .classStaff{ border:solid #008948; border-width:0 1px; background:#008948; width:80%; color:#fff; font-weight:bold; text-align:center; margin:15px auto;}
+.classTitle div , .classStaff div { position:relative; top: -1px; left: 0;border:solid #008948; border-width:1px 0 0;}
+.classTitle div div, .classStaff div div {top: 2px; border-width:0 0 1px; padding: .3em .3em .1em;}
+
+.classStaff{background:#FF7B00; border: #FF7B00; margin:20px auto;}
+.classStaff div {border: #FF7B00;}
+
 .subText, .noText{color:#666;}
 .noText {font-style:italic;}

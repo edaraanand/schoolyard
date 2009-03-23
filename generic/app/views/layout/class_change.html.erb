@@ -1,6 +1,6 @@
 <%= partial 'layout/main' %>
     <div id="sidebar">
-      <div class="feature">
+      <div class="classTitle">
           <div>
             <div>
               <p><%= @classroom.class_name %></p>
@@ -21,9 +21,17 @@
          <% if @classroom.class_name != "Sports" %> 
                  <% t = s.delete_if{ |x| x.role != "class_teacher" } %>
                  <% t.each do |f| %>
-                     <li><%= f.role.titleize %></li>
-                     <li><%= f.person.name %></li>
-                     <li><%= f.person.email %></li>
+                     <li>
+                        <div class="classStaff">
+                            <div>
+                              <div>
+                                <p><%= f.role.titleize %></p>
+                              </div>
+                            </div>
+                        </div>
+                     </li>
+                     <li><b><%= f.person.name %></b></li>
+                     <li><a href="mailto:<%= f.person.email %>"><%= f.person.email %></a></li>
                      <li <% if @selected == "bio" %> class="on" <% end %>> <%= link_to "Bio", url(:bio, :id => @classroom.id) %> </li>
                   <% end %>
          <% else %>

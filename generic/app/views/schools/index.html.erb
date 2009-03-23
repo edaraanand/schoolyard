@@ -11,7 +11,7 @@
   <h5>Contact Information For Parents</h5>
   <dl>
      <dt>Address</dt>
-     <dd><%= @current_school.address ? @current_school.address : "<span class='noText'>not specified</span>"%></dd>
+     <dd><%= @current_school.address ? san_content(@current_school.address) : "<span class='noText'>not specified</span>"%></dd>
     <dt>Phone</dt>
     <dd><%= @current_school.phone ? number_to_phone(@current_school.phone, :area_code => true)  : "<span class='noText'>not specified</span>"%></dd>
     <dt>E-Mail</dt>
