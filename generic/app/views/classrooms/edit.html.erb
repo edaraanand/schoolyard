@@ -21,7 +21,7 @@
                 <% if f.role == "class_teacher" %>
                       <li>
                           <label><%= f.role.titleize %></label>
-                        <%= select :name => "class[people][teacher]", :collection => @current_school.staff, :selected => "#{f.person_id.to_s}", :value_method => :id, :text_method => :name, :prompt => "Select Faculty" %>
+                          <%= select :name => "class[people][teacher]", :collection => @current_school.staff, :selected => "#{f.person_id.to_s}", :value_method => :id, :text_method => :name, :prompt => "Select Faculty" %>
                       </li>
                 <% elsif f.role == "Athletic Director" %>
                        <li>

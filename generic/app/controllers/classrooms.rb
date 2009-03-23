@@ -3,8 +3,8 @@ class Classrooms < Application
    layout 'default'
    before :find_school
    before :access_rights, :exclude => [:class_details]
-   before :class_types
-   before :select, :only => [:class_details]
+   before :class_types, :exclude => [:class_details]
+  
   
    def index
       @classrooms = @current_school.classrooms.find(:all)
@@ -223,9 +223,6 @@ class Classrooms < Application
     @class_types = a.insert(2, "Extra Cirrcular")
   end
 
-  def select
-      @current_action = action_name
-      @current_controller = controller_name
-  end
+ 
 
 end
