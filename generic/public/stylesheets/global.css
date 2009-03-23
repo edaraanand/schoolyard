@@ -99,7 +99,7 @@ fieldset td label{display:block; width:120px;}
 #header h1 a{font-size:16px; color:#157172; text-decoration:none; font-weight:bold;}
 #header h1 a:hover{border-bottom:1px solid #2f8843;}
 
-
+#navbar {border-bottom:1px solid #ebebeb;}
 
 
 /*User Control Panel Section*/
