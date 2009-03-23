@@ -2,9 +2,9 @@
 
  <%= form_for(@student, :action => url(:directory), :method => 'get', :id => 'student') do %>
       <% if params[:class_name].nil? %>        
-           <span class="select-announce"><%= select :name => "class_name", :collection => @classrooms, :label => "View :"  %><%= submit "Go" %></span>
+           <span class="select-announce"><%= select :name => "class_name", :collection => @classrooms, :label => "View :"  %><%= submit "    Go    " %></span>
       <% else %>
-           <span class="select-announce"><%= select :name => "class_name", :selected => params[:class_name], :collection => @classrooms, :label => "View :"  %><%= submit "Go" %></span>
+           <span class="select-announce"><%= select :name => "class_name", :selected => params[:class_name], :collection => @classrooms, :label => "View :"  %><%= submit "    Go    " %></span>
       <% end %>
   <% end =%> 
     

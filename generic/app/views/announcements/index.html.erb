@@ -5,9 +5,9 @@
   <%= form_for(@announcement, :action => resource(:announcements), :method => 'get', :id => 'announcement') do %>
 
     <% if params[:access_name].nil? %>
-        <span class="select-announce"><%= select :name => "access_name", :collection => classrooms, :label => "View :" %><%= submit "Go" %></span>
+        <span class="select-announce"><%= select :name => "access_name", :collection => classrooms, :label => "View :" %><%= submit "    Go    " %></span>
     <% else %>
-        <span class="select-announce"><%= select :name => "access_name", :selected => params[:access_name], :collection => classrooms, :label => "View :" %><%= submit "Go" %></span>
+        <span class="select-announce"><%= select :name => "access_name", :selected => params[:access_name], :collection => classrooms, :label => "View :" %><%= submit "    Go    " %></span>
     <% end %>
     
   <% end =%> 

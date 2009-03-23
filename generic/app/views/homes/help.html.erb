@@ -9,7 +9,7 @@
       <dt>Phone:</dt><dd><%= @current_school.phone %>&nbsp;</dd>
     <%end%>
     <%unless @current_school.email.blank?%>
-      <dt>Email:</dt><dd><a href="mailto:<%= @current_school.email %>"><%= @current_school.email %></a>&nbsp;</dd>
+      <dt>Email:</dt><dd><%=email(@current_school.email) %>&nbsp;</dd>
     <%end%>
   </dl>
  
