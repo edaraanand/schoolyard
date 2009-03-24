@@ -12,7 +12,7 @@
 </ul>	 
 
 <% if params[:label] == "other" %>
-
+<% @selected = "other_family" %>
 <h2 class="current-page">Other Family Members &gt; <span class="add-link">Edit</span></h2>
 <fieldset>
 
@@ -176,7 +176,7 @@
 <% else %>
 
      <%= error_messages_for @parent %>
-
+     <% @selected = "parent_profile" %>
      <h2 class="current-page">My Profile &gt; <span class="add-link">Edit</span></h2>
      <fieldset>
 

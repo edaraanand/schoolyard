@@ -117,6 +117,7 @@ class HomeWorks < Application
   
   def show
      if params[:label] == "home_w"
+        @selected = "home_work"
         @home_work = HomeWork.find(params[:id])
         render :layout => 'default'
      else
@@ -156,6 +157,7 @@ class HomeWorks < Application
   end
   
   def access_rights
+     @selected = "home_work"
      have_access = false
      @view = Access.find_by_name('view_all')
      @ann = Access.find_by_name('homework')

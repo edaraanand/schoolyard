@@ -2,6 +2,8 @@ class Users < Application
    
    before :ensure_authenticated
    layout 'account'
+   before :staff_selected_link, :only => [:staff_account, :staff_account_edit, :staff_password]
+   
    
   def staff_account
     @person = session.user
@@ -58,6 +60,7 @@ class Users < Application
   end
   
   def parent_password
+     @selected = "parent_profile"
      @parent = session.user
      render
   end
@@ -269,12 +272,14 @@ class Users < Application
   end
   
   def student_details
+     @selected = "s_details"
      @parent = session.user
      @students = @parent.students
      render
   end
   
   def student_edit
+    @selected = "s_details"
     @parent = session.user
     @students = @parent.students
     @classrooms = @current_school.classrooms.find(:all)
@@ -429,9 +434,11 @@ class Users < Application
   end
   
  
+  private
   
-  
-  
+  def staff_selected_link
+     @selected = "staff_profile"
+  end
   
   
   

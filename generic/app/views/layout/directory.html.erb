@@ -2,8 +2,8 @@
        <div id="sidebar">
       <ul id="menu"><!-- Nested Lists -->
           
-           <li><%= link_to "Current Students", url(:directory) %></li>
-           <li><%= link_to "School Staff", url(:staff) %></li>
+           <li <% if @selected == "current_students" %> class="on" <% end %> ><%= link_to "Current Students", url(:directory) %></li>
+           <li <% if @selected == "school_staff" %> class="on" <% end %> ><%= link_to "School Staff", url(:staff) %></li>
             
       </ul>
        

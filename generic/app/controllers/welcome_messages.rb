@@ -3,6 +3,7 @@ class WelcomeMessages < Application
   layout 'default'
   before :find_school
   before :rooms, :only => [:new, :create, :edit, :update]
+  before :access_rights
   
   
   def index
@@ -58,23 +59,6 @@ class WelcomeMessages < Application
    
   private
   
-  def access_rights
-     @access_people = @current_user.access_peoples
-     @accesses = Access.find(:all)
-      @accesses.each do |f|
-	have_access = false
-        @access_people.each do |l|
-	  have_access = l.all || (f.id == l.access_id) 
-	  break if have_access	
-	end
-	if have_access
-	   @access_rights =  @accesses.delete_if{|x| x.name == "view_all"}
-	else
-	   @access_rights = @current_user.accesses_without_all
-	end
-      end
-  end
-  
   def classrooms
      @class = @current_school.classrooms.find(:all)
      room = @class.collect{|x| x.class_name }
@@ -87,6 +71,20 @@ class WelcomeMessages < Application
       room = @class.collect{|x| x.class_name }
       @classrooms = room.insert(0, "Home Page")
   end
-  
+   
+   def access_rights
+     @selected = "welcome_messages"
+     have_access = false
+     @view = Access.find_by_name('view_all')
+     @ann = Access.find_by_name('welcome_messages')
+     @access_people = session.user.access_peoples.delete_if{|x| x.access_id == @view.id }
+     @access_people.each do |f|
+       have_access = (f.all == true) || (f.access_id == @ann.id)
+       break if have_access
+     end
+     unless have_access
+       redirect resource(:homes)
+     end
+  end  
   
 end

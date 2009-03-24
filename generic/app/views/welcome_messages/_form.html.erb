@@ -2,7 +2,7 @@
 <fieldset>
   <ul>
     <li><label>Welcome Message for:</label><%= select :access_name, :collection => @classrooms %></li>
-    <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50", :class => 'rte-zone' %></li>
+    <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
   </ul>
 </fieldset>
 
@@ -22,7 +22,7 @@
    window.open('/welcome_messages/preview/-/?' + s);
  }
   
- $j('.rte-zone').rte("css url", "toolbox images url");
+ //$j('.rte-zone').rte("css url", "toolbox images url");
 
 
 </script>

@@ -5,7 +5,7 @@ class Students < Application
   before :access_rights, :exclude => [:directory, :show, :staff, :generate_csv]
   before :classrooms, :only => [:directory, :staff]
   before :school_staff, :only => [:staff]
-  before :selected, :only => [:directory, :show, :staff]
+  before :selected_tab, :only => [:directory, :show, :staff]
   
   def index 
      @students = @current_school.students.find(:all)
@@ -274,6 +274,7 @@ class Students < Application
   
   
    def directory
+      @selected = "current_students"
       @class = @current_school.classrooms.find_by_class_name(params[:class_name])
       @studs = @current_school.students.find(:all, :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id] )
       if params[:class_name] == "All Students"
@@ -287,18 +288,21 @@ class Students < Application
    
    def show
       if params[:label] == "students"
+         @selected = "current_students"
          @student = Student.find(params[:id])
          @parents = @student.parents
          @protectors = @student.protectors
          @mess = "Testing"
       end
       if params[:label] == "staff"
+        @selected = "school_staff"
         @staff = Staff.find(params[:id])
       end
       render :layout => 'directory'
    end
    
    def staff
+       @selected = "school_staff"
        if params[:class_name] == "All Staff"
          @staff = @current_school.staff.find(:all)
        end
@@ -359,6 +363,7 @@ class Students < Application
    end
    
    def access_rights
+     @selected = "students"
      have_access = false
      @view = Access.find_by_name('view_all')
      @ann = Access.find_by_name('manage_directory')
@@ -372,7 +377,7 @@ class Students < Application
      end
   end  
   
-  def selected
+  def selected_tab
      @select = "directory"
   end
   

@@ -32,11 +32,10 @@
                      </li>
                      <li><b><%= f.person.name %></b></li>
                      <li><%= email(f.person.email) %></li>
-                     <%unless f.person.person_bio.blank?%>
-                        <li>
-                            <% if @selected == "bio" %> class="on" <% end %>> <%= link_to "Bio", url(:bio, :id => @classroom.id) %> 
+                     <% unless f.person.person_bio.blank? %>
+                        <li <% if @selected == "bio" %> class="on" <% end %> > <%= link_to "Bio", url(:bio, :id => @classroom.id) %> 
                         </li>
-                      <%end%>
+                      <% end %>
                   <% end %>
          <% else %>
                 <% t = s.delete_if{ |x| x.role != "Athletic Director" } %>
@@ -44,7 +43,7 @@
                      <li><%= f.role %></li>
                      <li><%= f.person.name %></li>
                      <li><%= f.person.email %> </li>
-                     <li <% if @selected == "bio" %> class="on" <% end %>> <%= link_to "Bio", url(:bio, :id => @classroom.id) %> </li>
+                     <li <% if @selected == "bio" %> class="on" <% end %> > <%= link_to "Bio", url(:bio, :id => @classroom.id) %> </li>
                   <% end %>
           <% end %>
        </ul>

@@ -1,13 +1,13 @@
 class SpotLight < ActiveRecord::Base
   
-    #attr_accessor :tempfile
+    attr_accessor :tempfile
   # has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }
     #include DataMapper::Resource
    # include Paperclip::Resource
     #has_attached_file :avatar,
      #                 :styles => { :medium => "300x300>",
       #                             :thumb => "100x100>" }
-    attr_accessor :attachment
+    #attr_accessor :attachment
     
     #validations
     validates_presence_of :student_name, :message => "please select the student"
@@ -21,6 +21,7 @@ class SpotLight < ActiveRecord::Base
 
   
     def self.from(fileparams)
+      raise fileparams.inspect
         spot_light = SpotLight.new do |s|
           s.avatar_content_type = fileparams[:content_type]
           s.avatar_file_name = fileparams[:filename]
@@ -41,7 +42,7 @@ class SpotLight < ActiveRecord::Base
 
     def after_create
         move_file
-        #create_thumbnails
+        create_thumbnails
     end
 
     def move_file

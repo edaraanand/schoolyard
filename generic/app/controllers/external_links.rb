@@ -1,7 +1,7 @@
 class ExternalLinks < Application
   layout 'default'
   before :find_school
- # before :classrooms
+  before :access_rights
   
   def index
      @class_links = @current_school.external_links.find(:all, :conditions => ['label=?', "Classrooms"])
@@ -80,4 +80,20 @@ class ExternalLinks < Application
     @classrooms = @current_school.classrooms.find(:all)
   end
 	  
+  def access_rights
+    @selected = "e_links"
+     have_access = false
+     @view = Access.find_by_name('view_all')
+     @ann = Access.find_by_name('external_links')
+     @access_people = session.user.access_peoples.delete_if{|x| x.access_id == @view.id }
+     @access_people.each do |f|
+       have_access = (f.all == true) || (f.access_id == @ann.id)
+       break if have_access
+     end
+     unless have_access
+       redirect resource(:homes)
+     end
+  end 
+  
+  
 end

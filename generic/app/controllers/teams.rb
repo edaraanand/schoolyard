@@ -2,6 +2,7 @@ class Teams < Application
 	
   layout 'default'
   before :find_school
+  before :access_rights
   before :team_values, :exclude => [:index]
 
   def index
@@ -138,5 +139,19 @@ class Teams < Application
      @years = (2009..2025).to_a 
   end
   
+  def access_rights
+     @selected = "teams"
+     have_access = false
+     @view = Access.find_by_name('view_all')
+     @ann = Access.find_by_name('teams')
+     @access_people = session.user.access_peoples.delete_if{|x| x.access_id == @view.id }
+     @access_people.each do |f|
+       have_access = (f.all == true) || (f.access_id == @ann.id)
+       break if have_access
+     end
+     unless have_access
+       redirect resource(:homes)
+     end
+  end  
   
 end
