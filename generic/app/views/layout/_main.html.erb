@@ -61,7 +61,6 @@
              <% @accesses.each do |f| %>
                <% have_access = false %>
                <% @a_p.each do |l| 
-               puts l.all.inspect
                    have_access =  l.all || (f.id == l.access_id) 
                    break if have_access	  
                    end %>
