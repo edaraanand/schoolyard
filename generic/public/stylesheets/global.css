@@ -440,9 +440,9 @@ ul#pending_files li a{padding:0 10px; color:#f00; text-transform:lowercase;}
 .noText {font-style:italic;}
 
 .class-name {margin:10px auto;}
-.class-name-backgr {background:url("/images/class-name-backgr.png"); text-align:center; font-weight:bold; color:#fff;}
+.class-name-backgr {background:url("/images/class-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:154px; padding:0 5px;}
 td.class-name-top, td.class-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
 .teach-name {margin:10px auto;}
-.teach-name-backgr {background:url("/images/teach-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff;}
+.teach-name-backgr {background:url("/images/teach-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:145px; padding:0 5px;}
 td.teach-name-top, td.teach-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
 
