@@ -1,21 +1,21 @@
 <fieldset>
-  <% if @school.nil? %>
+  <% if @current_school.nil? %>
   <h3>School Profile</h3>
 	<p>"Basic Settings are not specified, <%= link_to "Add Now", resource(:schools, :new) %>"</p>
   <% else %>
-  <h2 class="current-page">School Profile<%= link_to "Edit", resource(@school, :edit), :class=> "edit-btn" %></h2>
+  <h2 class="current-page">School Profile<%= link_to "Edit", resource(@current_school, :edit), :class=> "edit-btn" %></h2>
   <dl>
     <dt>School Name</dt>
-    <dd><%= @school.school_name %></dd>
+    <dd><%= @current_school.school_name %></dd>
   </dl>
   <h5>Contact Information For Parents</h5>
   <dl>
      <dt>Address</dt>
-     <dd><%= @school.address %></dd>
+     <dd><%= @current_school.address ? san_content(@current_school.address) : "<span class='noText'>not specified</span>"%></dd>
     <dt>Phone</dt>
-  <dd><%= number_to_phone(@school.phone, :area_code => true) %></dd>
+    <dd><%= @current_school.phone ? number_to_phone(@current_school.phone, :area_code => true)  : "<span class='noText'>not specified</span>"%></dd>
     <dt>E-Mail</dt>
-    <dd><%= @school.email %></dd>
+    <dd><%= @current_school.email ? @current_school.email  : "<span class='noText'>not specified</span>"%></dd>
   </dl>
   <% end %>
 </fieldset>

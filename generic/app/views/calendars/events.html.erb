@@ -10,9 +10,9 @@
   <%= form_for(@calendar, :action => url(:events), :method => 'get') do %>
   
   <% if params[:class_name].nil? %>
-  <span class="select-announce"><%= select :name => "class_name", :collection => @classrooms, :label => "View :" %><%= submit "Go" %></span>
+  <span class="select-announce"><%= select :name => "class_name", :collection => @classrooms, :label => "View :" %><%= submit "    Go    " %></span>
   <% else %>
-      <span class="select-announce"><%= select :name => "class_name", :selected => params[:class_name], :collection => @classrooms, :label => "View :" %><%= submit "Go" %></span>
+      <span class="select-announce"><%= select :name => "class_name", :selected => params[:class_name], :collection => @classrooms, :label => "View :" %><%= submit "    Go    " %></span>
   <% end %>
 <% end =%> 
 

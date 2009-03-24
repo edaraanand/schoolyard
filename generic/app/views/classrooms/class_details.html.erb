@@ -1,47 +1,52 @@
 <%  if params[:label] == "calendars" %>
 
   <h2 class="current-page"> Calendars</h2>
+  <%if @calendars.empty?%>
+    <span class="subText">There are no events planned at this time</span>
+  <%else%>
+    <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id) %>
+     <br/><br/>
+       <% cdate=""
+         for calendar in @calendars %>
+            <div class="calendar-block" style="width:480px;">
+            <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
+                  cdate=calendar.start_date.strftime("%B %d %Y") %>
+                 <h3><%= cdate %></h3>  
+            <% end %> 
 
-    <% cdate=""
-      for calendar in @calendars %>
-         <div class="calendar-block" style="width:480px;">
-         <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
-               cdate=calendar.start_date.strftime("%B %d %Y") %>
-              <h3><%= cdate %></h3>  
-         <% end %> 
-    
-         <ul class="calendar-items">
-                <li>
-                      <span class="cal-time">
-                          <% unless calendar.start_time.nil? %>
-                        Starts at <%= calendar.start_time.strftime("%H-%M") %>
-                               <% end %>&nbsp;
-                          </span>
-                          <span class="cal-title">
+            <ul class="calendar-items">
+                   <li>
+
+                             <% unless calendar.start_time.nil? %>
+                               <%= calendar.start_time.strftime("%H:%M %p") %> 
+                             <% end %>
+                             <% unless calendar.end_time.nil? %>
+                               to <%= calendar.end_time.strftime("%H:%M %p") %>
+                             <% end %>
                              <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
-                          </span>
-                          <span class="cal-time">
-                            <% unless calendar.end_time.nil? %>
-                          Ends at <%= calendar.end_time.strftime("%H-%M") %>
-                                <% end %>  &nbsp;
-                          </span>
-                          Location : <%= calendar.location %>
-                          <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
-                                 <% unless @attachment.nil? %>
-                                        <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
-                                  <% end %>
-                      </li>
-                            
-         </ul>
-          </div>
-             <% #@calendars.delete_if{|c| c.start_date == cdate } %>
-         
-  <% end %>
- 
-              <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id) %>
+                             <% @attachments = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
+                             <% unless @attachment.nil? %>
+                               &nbsp;<%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %>
+                             <% end %>
+                             <%unless calendar.location.blank? %>
+                               (Location : <%= calendar.location %>)
+                             <%end%>
+
+                         </li>
+
+            </ul>
+             </div>
+                <% #@calendars.delete_if{|c| c.start_date == cdate } %>
+
+     <%end%>
+   <% end %>
         
 <% elsif params[:label] == "homeworks" %>
-       <h2 class="current-page"> Homework </h2>
+  <h2 class="current-page"> Homework </h2>
+  <%if @home_works.empty? %>
+    <span class="subText">There are no Homework assignments at this time</span>
+  <%else%>
+      <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id) %>
        <% for homework in @home_works %>
              <div class="data-block short-block">
               <span class="hidden">
@@ -60,96 +65,91 @@
                <% end %>
                <h3><%= link_to "#{homework.title}", url(:home_work, homework.id) %></h3>
                Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %>
-               <p class="post-content"><%= snippet(homework.content, 50) %></p>
+               <p class="separator"><%= snippet(homework.content, 50) %></p>
                 <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
                   <% unless @attachment.nil? %>
                       <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
                   <% end %>
-               <div class="hrule clear"><hr /></div>
-                 
-       <% end %>
-                <% unless @home_works.empty? %>
-                    <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id) %>
-                <% end %>          
+               
+      <% end %>          
+    <% end %>
+       
                 
 <% elsif params[:label] == "announcements" %>
           <h2 class="current-page"> Announcements </h2>
-            <% for announcement in @announcements %>
+            <%if @announcements.blank?%>
+              <span class="subText">There are no announcements at this time</span>
+            <%else%>
+              <% for announcement in @announcements %>
                    <div class="data-block short-block">
                          <div class="ddmmm">
                               <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
                               <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
                          </div>
                          <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :label => "class_ann") %></h3>
-                            <p class="post-content"><%= announcement.content %></p>
+                            <p class="separator"><%= snippet(announcement.content,50) %></p>
                           <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
                              <% unless @attachment.nil? %>
                                   <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
                              <% end %>
-                           <div class="hrule clear"><hr /></div>
+                        
                    </div>
-             <% end %>
+                <% end %>
+            <% end %>
 
 <% else %>
-
-         <% for message in @welcome_messages %>
-               <p class="post-content"><%= message.content %></p>
-         <% end %>
-
-         <h2 class="current-page">Announcements & Updates </h2>
-
-   
-            <% for announcement in @ann %>
-                   <div class="data-block short-block">
-                          <h3><%= announcement.title %></h3>
-                          <% if announcement.created_at.nil? %>
-                              <div class="ddmmm-x">
-                              </div>
-                          <% else %>
-                               <div class="ddmmm">
-                                   <span class="date"><%= announcement.created_at.strftime("%d") %></span>
-                                   <span class="month"><%= announcement.created_at.strftime("%b") %></span>
-                               </div>
-                          <% end %>
-                            <p class="post-content"><%= snippet(announcement.content,50) %></p>
-                           <div class="hrule clear"><hr /></div>
-                   </div>
-            <% end %>
-            <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>          
-           <div class="right-sidebar">
-               <h3>Spotlight</h3>
-                      <ul class="last">
-                             <li>ASDF</li>
-                             <li>ASDF</li>
-                             <li>ASDF</li>
-                      </ul>
-           </div>
-           <div class="right-sidebar">
-                  <h3>Current Homework</h3>
-                      <ul class="last">
-                      <% @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ? and due_date >= ?', @current_school.id, @date] ) %>
-                        <% for homework in @h_w %>
-                             <li><%= link_to "#{homework.title}", url(:home_work, homework.id) %></li>
-                        <% end %>
-                      </ul>
-            </div>
-            <div class="right-sidebar">
-                <h3>External Links </h3>
-                 <ul class="last">
-                      <% for link in @external_links %>
-                           <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
-                      <% end %>
-                 </ul>
-            </div>
-            
-
-<% end %>   
-
-      </ul>
+      <div id="content"><!--Content Area Starts here-->
+        <% for message in @welcome_messages %>
+          <p class="post-content"><%= message.content %></p>
+        <% end %>
+        <h2 class="current-page">Announcements &amp; Updates </h2>
+        <% for announcement in @ann %>
+          <div class="data-block short-block">
+              <% if announcement.created_at.nil? %>
+                <div class="ddmmm-x"></div>
+              <% else %>
+                <div class="ddmmm">
+                  <span class="date"><%= announcement.created_at.strftime("%d") %></span>
+                  <span class="month"><%= announcement.created_at.strftime("%b") %></span>
+                </div>
+              <% end %>
+              <h3><%= announcement.title %></h3>
+              <p class="separator"><%= snippet(announcement.content,50) %></p>
+          </div>
+        <% end %>
+        <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>         
+      </div><!--Content End--> 
       
+      <div class="right-sidebar">
+        <!--><h3>Spotlight</h3>
+          <ul class="last">
+            <li>ASDF</li>
+            <li>ASDF</li>
+            <li>ASDF</li>
+          </ul>-->
 
-
-
+        <h3>Current Homework</h3>
+          <ul class="last">
+            <% @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ? and due_date >= ?', @current_school.id, @date] ) %>
+            <%if @h_w.blank?%>
+              <span class="subText">There are no homework assignments due at this time</span>
+            <%else%>
+              <% for homework in @h_w %>
+                <li><%= link_to "#{homework.title}", url(:home_work, homework.id) %></li>
+              <% end %>
+            <%end%>
+          </ul>
+        <%unless @external_links.blank?%>
+          <h3>External Links </h3>
+          <ul class="last">
+            <% for link in @external_links %>
+              <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
+            <% end %>
+          </ul>
+        <%end%>
+          
+      </div>
+<% end %>   
 
 <script type= "text/javascript">
 

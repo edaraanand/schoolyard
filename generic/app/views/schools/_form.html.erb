@@ -2,7 +2,7 @@
   <li><%= text_field :school_name,  :label => "School Name", :maxlength => "75" %></li>
   <li>&nbsp;</li>
   <li><h3>Contact Information for Parents</h3></li>
-  <li><%= text_area  :address,  :label => "Address", :rows => "10", :cols => "50" %></li>
+  <li><%= text_area  :address,  :label => "Address", :rows => "4", :cols => "50" %></li>
   <li>
       <%= text_field :phone,  :label => "Phone", :class=>"short text", :maxlength => "75" %>
       <span class="phone-hint">(e.g. 1239076897)</span>
@@ -11,7 +11,7 @@
 </ul>
 <br />
 <div class="save-cancel">
-  <%= submit "Save" %> Or <%= link_to "Cancel", resource(:schools), :class => "cancel" %>
+  <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:schools), :class => "cancel" %>
 </div>
 
 

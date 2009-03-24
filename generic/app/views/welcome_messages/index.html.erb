@@ -12,7 +12,7 @@
        <% else %>
              <%= select :name => "access_name", :selected => params[:access_name], :collection => @classrooms, :label => "View  " %>
        <% end %>
-             <%= submit "Go" %>
+             <%= submit "    Go    " %>
   <% end =%>
   <% if params[:access_name].nil? %>
         <% for mess in @welcome %>

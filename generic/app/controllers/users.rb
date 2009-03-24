@@ -18,7 +18,8 @@ class Users < Application
      if @person.update_attributes(params[:person])
         redirect url(:staff_account)
      else
-        render :staff_account_edit
+       @person.save
+      render :staff_account
      end
   end
   

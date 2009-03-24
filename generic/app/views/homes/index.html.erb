@@ -60,13 +60,13 @@
        <% end %>
       </ul>
    <% end %>
-</div>
-<div class="right-sidebar">
+<%unless  @external_links.empty?%>
    <h3>External Links </h3>
   <ul class="last"> 
     <% for link in @external_links %>
      <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
    <% end %>
   </ul> 
+  <%end%>
 </div>
 

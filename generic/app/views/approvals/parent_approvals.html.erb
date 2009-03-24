@@ -4,9 +4,9 @@
 
 <%= form_for(@parent, :action => url(:parent_approvals), :method => 'get') do %>
        <% if params[:approve_status].nil? %>
-               <span class="select-announce"><%= select :name => "approve_status", :collection => @app, :label => "View :" %><%= submit "Go" %></span>
+               <span class="select-announce"><%= select :name => "approve_status", :collection => @app, :label => "View :" %><%= submit "    Go    " %></span>
        <% else %>
-               <span class="select-announce"><%= select :name => "approve_status", :selected => params[:approve_status], :collection => @app, :label => "View :" %><%= submit "Go" %></span>
+               <span class="select-announce"><%= select :name => "approve_status", :selected => params[:approve_status], :collection => @app, :label => "View :" %><%= submit "    Go    " %></span>
        <% end %>
 <% end =%>
 
