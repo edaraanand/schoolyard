@@ -438,3 +438,11 @@ ul#pending_files li a{padding:0 10px; color:#f00; text-transform:lowercase;}
 
 .subText, .noText{color:#666;}
 .noText {font-style:italic;}
+
+.class-name {margin:10px auto;}
+.class-name-backgr {background:url("/images/class-name-backgr.png"); text-align:center; font-weight:bold; color:#fff;}
+td.class-name-top, td.class-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
+.teach-name {margin:10px auto;}
+.teach-name-backgr {background:url("/images/teach-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff;}
+td.teach-name-top, td.teach-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
+
