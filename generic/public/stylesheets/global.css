@@ -122,7 +122,7 @@ fieldset td label{display:block; width:120px;}
 
 
 /*Sidebar Menu*/
-ul#menu{ padding:16px 16px 0 16px; width:160px; font-size:12px; line-height:18px;}
+ul#menu{ padding:16px 16px 0 16px; width:165px; font-size:12px; line-height:18px;}
 ul#menu a{text-decoration:none; border-bottom:1px dotted #ccc;display:block;}
 ul#menu li{padding:4px 0 4px 10px;margin:0 0 0 10px;}
 ul#menu li ul{margin:2px 0 4px;}
@@ -133,8 +133,8 @@ ul#menu li ul li a:visited{color:#7e91b3;}
 ul#menu li ul li a:hover{text-decoration:underline}
 ul#menu li ul li a:active{color:#1b67ed;}
 
-ul#menu li.count span{background:url(/images/menu-count.gif) no-repeat left top; padding:2px 0px 4px 4px; margin:0 0 0 2px; color:#fff; font-size:11px; line-height:13px;}
-ul#menu li.count span b{background:url(/images/menu-count.gif) no-repeat right top; padding:2px 5px 4px 2px;}
+ul#menu li.count span. .on span {background:url(/images/menu-count.gif) no-repeat left top; padding:2px 0px 4px 4px; margin:0 0 0 2px; color:#fff; font-size:11px; line-height:13px;}
+ul#menu li.count span b, .on span b{background:url(/images/menu-count.gif) no-repeat right top; padding:2px 5px 4px 2px;}
   /*That yellow dot which contains numbers*/
 
 #menu .change{border-top:1px solid #ccc;border-bottom:1px solid #ccc; padding:13px 10px; }
@@ -351,7 +351,7 @@ ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding
 #.esh {color:black!important;}
 .phone-hint{color:#a1a1a1; padding:0 6px;}
 .css_class{border-bottom: solid 2px #000;}
-.on a{ color:black!important; background:url("/images/arrow-right.png") right no-repeat; font-weight:bold; padding:0 20px 0 0;}
+.on a{ color:black!important; background:url("/images/arrow-right.png") right no-repeat; font-weight:bold;}
 
 
 /*Revisited extras @Rmax*/

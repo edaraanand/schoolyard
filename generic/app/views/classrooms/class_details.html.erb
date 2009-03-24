@@ -103,21 +103,28 @@
           <p class="post-content"><%= message.content %></p>
         <% end %>
         <h2 class="current-page">Announcements &amp; Updates </h2>
-        <% for announcement in @ann %>
-          <div class="data-block short-block">
-              <% if announcement.created_at.nil? %>
-                <div class="ddmmm-x"></div>
-              <% else %>
-                <div class="ddmmm">
-                  <span class="date"><%= announcement.created_at.strftime("%d") %></span>
-                  <span class="month"><%= announcement.created_at.strftime("%b") %></span>
-                </div>
-              <% end %>
-              <h3><%= announcement.title %></h3>
-              <p class="separator"><%= snippet(announcement.content,50) %></p>
-          </div>
-        <% end %>
-        <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>         
+        
+        <%if @ann.blank?%>
+          <p class="subText">There are no announcements at this time.</p>
+        <%else%>
+            <% for announcement in @ann %>
+              <div class="data-block short-block">
+                  <% if announcement.created_at.nil? %>
+                    <div class="ddmmm-x"></div>
+                  <% else %>
+                    <div class="ddmmm">
+                      <span class="date"><%= announcement.created_at.strftime("%d") %></span>
+                      <span class="month"><%= announcement.created_at.strftime("%b") %></span>
+                    </div>
+                  <% end %>
+                  <h3><%= announcement.title %></h3>
+                  <p class="separator"><%= snippet(announcement.content,50) %></p>
+              </div>
+            <% end %>
+            <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>
+        <%end%>
+        
+             
       </div><!--Content End--> 
       
       <div class="right-sidebar">

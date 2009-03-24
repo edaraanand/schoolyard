@@ -1,25 +1,33 @@
 <div id="fullpage">
   
    <h2 class="current-page"> Calendar for <%= @calendar.class_name %></h2>
+    <%= link_to "Download as PDF", url(:pdf_events, :id => @calendar.id, :label => "single") %><br/><br/>
  
-     <h2> <%= @calendar.title %> </h2> 
-    
-        <%= @calendar.start_date.strftime("%b %d %Y") %>
-     <% unless @calendar.start_time.nil? &&  @calendar.end_time.nil? %>
-        (<%= @calendar.start_time.strftime("%H:%M") %> -- <%= @calendar.end_time.strftime("%H:%M") %> )
-     <% else %>
-         (<%= @event %>)
-     <% end %>
      
-    <p><%= @calendar.description %></p>
-    <p>Location : <%= @calendar.location %></p>
+    
+      
+      <div class="ddmmm">
+        <span class="date"><%=  @calendar.start_date.strftime("%d")%></span>
+        <span class="month"><%=  @calendar.start_date.strftime("%b")%></span>
+      </div><br/>
+      <h3> <%= @calendar.title %> </h3> 
+      <p class="subText"><% unless @calendar.start_time.nil? &&  @calendar.end_time.nil? %>
+        (<%= @calendar.start_time.strftime("%H:%M") %> -- <%= @calendar.end_time.strftime("%H:%M") %> )
+      <% else %>
+         (<%= @event %>)
+      <% end %>
+Location : <%= @calendar.location %></p><br/>
+     
+    <p><%= san_content(@calendar.description) %></p>
+    
+    <hr size="1"/>
     
     <%  @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name]) %>
     
-    <%= link_to "All Events", url(:class_details, :id => @classroom.id, :label => "calendars") %>
+    <%= link_to "< Back to All Events", url(:class_details, :id => @classroom.id, :label => "calendars") %>
     
     <div class="hrule clear"><hr /></div>
  
-      <%= link_to "Download as PDF", url(:pdf_events, :id => @calendar.id, :label => "single") %>
+     
 </div>
 

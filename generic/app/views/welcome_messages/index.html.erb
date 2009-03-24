@@ -50,7 +50,7 @@
 	                   </div>
 	                <% end %>
 	                <p>Welcome Message for: <b><%= mess.access_name %></b></p>
-                  <p class="post-content"><%= mess.content %></p>
+                  <p class="post-content"><%= san_content(mess.content) %></p>
                   <%= link_to "Edit", resource(mess, :edit), :class=>"edit-btn" %>
                   <%= link_to "Delete", resource(mess, :delete), :class=>"delete-btn" %>
                   <div class="hrule clear"><hr /></div>
@@ -72,7 +72,7 @@
 	                   </div>
 	                <% end %>
 	                <p> Welcome Message for: <b><%= mess.access_name %></b></p
-                  <p class="post-content"><%= mess.content %></p>
+                  <p class="post-content"><%= san_content(mess.content) %></p>
                   <%= link_to "Edit", resource(mess, :edit), :class=>"edit-btn" %>
                   <%= link_to "Delete", resource(mess, :delete), :class=>"delete-btn" %>
                   <div class="hrule clear"><hr /></div>
