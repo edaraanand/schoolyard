@@ -2,7 +2,14 @@
 <% unless @spot_lights.empty? %>
   <ul class="spotlight-list">
     <% for spot in @spot_lights %>
-      <li><%= spot.student_name %></li>
+       <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", spot.id, "SpotLight"]) %>
+       <li>
+           <img src="uploads/<%= @attachment.id %>/<%= @attachment.filename %>" alt="image"/>
+           <%= spot.student_name %>
+       </li>
+           <%= link_to "Delete", resource(spot, :delete), :class=>"delete-btn"  %>
     <% end %>
   </ul>
 <% end %>
+
+

@@ -15,12 +15,14 @@ require  Merb.root / 'lib' / 'constantz'
 require  Merb.root / 'lib' / 'attachable'
 require "pdf/writer"
 require "pdf/simpletable"
+require "mini_magick"
 #require "paginator"
 
 
   use_orm :activerecord
   use_test :rspec
-  #use_template_engine :erb
+  use_template_engine :erb
+  use_template_engine :haml
   
 Merb::BootLoader.after_app_loads do
 
