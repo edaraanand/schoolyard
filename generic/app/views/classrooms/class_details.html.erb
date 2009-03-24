@@ -24,6 +24,7 @@
                                to <%= calendar.end_time.strftime("%H:%M %p") %>
                              <% end %>
                              <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
+<<<<<<< HEAD:generic/app/views/classrooms/class_details.html.erb
                              <% @attachments = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
                              <% unless @attachment.nil? %>
                                &nbsp;<%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %>
@@ -43,6 +44,26 @@
   <%end%>
   
   
+=======
+                          </span>
+                          <span class="cal-time">
+                            <% unless calendar.end_time.nil? %>
+                          Ends at <%= calendar.end_time.strftime("%H-%M") %>
+                                <% end %>  &nbsp;
+                          </span>
+                          Location : <%= calendar.location %>
+                          <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
+                                 <% unless @attachment.nil? %>
+                                        <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+                                  <% end %>
+                      </li>
+                            
+         </ul>
+          </div>
+             <% #@calendars.delete_if{|c| c.start_date == cdate } %>
+         
+  <% end %>
+>>>>>>> 4bbd53416a603689b8da79b8fd5e8ab1dd8785d2:generic/app/views/classrooms/class_details.html.erb
  
  
               
