@@ -1,4 +1,4 @@
-
+<div id="fullpage">  
 <%  if params[:label] == "principal" %>
       <div id="sidebar" class="left-block">
           <img src="/images/principal.png" alt="From The Principal"/>
@@ -8,14 +8,11 @@
 
 <% else %>
       <div>
-         <h2>All Announcements > <%= @announcement.title %></h2>
+         <h2>Announcements > <%= @announcement.title %></h2>
+         <%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) %><br/><br/>
 <% end %>
-     <% if params[:label] == "class_ann" %>
-          <%= link_to " back to All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>
-     <% else %>
-          <%= link_to " < Back to Home Page", url(:homes) %> | 
-          <%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) %><br/><br/>
-     <% end %>
+     
+
   <% if @announcement.expiration.nil? %>
       <div class="ddmmm-x"></div>
   <% else %>
@@ -27,8 +24,11 @@
       <p class="separator"><%= san_content(@announcement.content) %></p>
        <% if @announcement.label == "from_principal" %>
           <p> <%= link_to "< Back to All Articles", url(:principal_articles, :label => 'principal')  %> </p>
+          <% elsif params[:label] == "class_ann" %>
+                <%= link_to " back to All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>
+       
        <%else%>
           <p> <%= link_to "< Back to All Announcements", url(:principal_articles, :label => 'announcements'), :class =>'all-articles'   %></p>
        <%end%>
     </div>
-
+</div>

@@ -351,7 +351,7 @@ ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding
 #.esh {color:black!important;}
 .phone-hint{color:#a1a1a1; padding:0 6px;}
 .css_class{border-bottom: solid 2px #000;}
-.on a{ color:black!important; background:url("/images/arrow-right.png") right no-repeat; font-weight:bold;}
+.on a{ color:black!important; background:url("/images/arrow-right.png") right no-repeat; font-weight:bold; padding:0 10px 0 0;}
 
 
 /*Revisited extras @Rmax*/

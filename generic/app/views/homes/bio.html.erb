@@ -1,4 +1,4 @@
-  
+<div id="fullpage">  
    <% s = @classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
           <% if @classroom.class_name != "Sports" %> 
                  <% t = s.delete_if{ |x| x.role != "class_teacher" } %>
@@ -14,3 +14,4 @@
                 <p><%= san_content(f.person.person_bio) %></p>
               <%end%>
            <% end %>
+</div>

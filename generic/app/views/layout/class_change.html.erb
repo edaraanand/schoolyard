@@ -30,20 +30,28 @@
                         </table>
                         
                      </li>
-                     <li><b><%= f.person.name %></b></li>
+                     <li><b><%= f.person.name %></b>
+                            <% unless f.person.person_bio.blank? %>
+                                | <span <% if @selected == "bio" %> class="on" <% end %> > <%= link_to "Bio", url(:bio, :id => @classroom.id) %> 
+                                </span>
+                              <% end %>
+                       
+                       
+                       </li>
                      <li><%= email(f.person.email) %></li>
-                     <% unless f.person.person_bio.blank? %>
-                        <li <% if @selected == "bio" %> class="on" <% end %> > <%= link_to "Bio", url(:bio, :id => @classroom.id) %> 
-                        </li>
-                      <% end %>
+                 
                   <% end %>
          <% else %>
                 <% t = s.delete_if{ |x| x.role != "Athletic Director" } %>
                  <% t.each do |f| %>
-                     <li><%= f.role %></li>
+                     <li><%= f.role %>
+                        <% unless f.person.person_bio.blank? %>
+                             | <span <% if @selected == "bio" %> class="on" <% end %> > <%= link_to "Bio", url(:bio, :id => @classroom.id) %> 
+                             </span>
+                           <% end %></li>
                      <li><%= f.person.name %></li>
                      <li><%= f.person.email %> </li>
-                     <li <% if @selected == "bio" %> class="on" <% end %> > <%= link_to "Bio", url(:bio, :id => @classroom.id) %> </li>
+                     
                   <% end %>
           <% end %>
        </ul>
