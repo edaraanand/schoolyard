@@ -5,7 +5,7 @@ class Students < Application
   before :access_rights, :exclude => [:directory, :show, :staff, :generate_csv]
   before :classrooms, :only => [:directory, :staff]
   before :school_staff, :only => [:staff]
-  before :selected, :only => [:directory, :show, :staff]
+  before :selected_tab, :only => [:directory, :show, :staff]
   
   def index 
      @students = @current_school.students.find(:all)
@@ -363,6 +363,7 @@ class Students < Application
    end
    
    def access_rights
+     @selected = "students"
      have_access = false
      @view = Access.find_by_name('view_all')
      @ann = Access.find_by_name('manage_directory')
@@ -376,7 +377,7 @@ class Students < Application
      end
   end  
   
-  def selected
+  def selected_tab
      @select = "directory"
   end
   

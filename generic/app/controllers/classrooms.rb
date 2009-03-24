@@ -203,6 +203,7 @@ class Classrooms < Application
    private
    
   def access_rights
+     @selected = "class_rooms"
      have_access = false
      @view = Access.find_by_name('view_all')
      @ann = Access.find_by_name('classes')

@@ -3,6 +3,7 @@ class Schools < Application
   layout 'default'
   before :ensure_authenticated
   before :find_school
+  before :selected_link
    
   def index
      @school = @current_school
@@ -39,5 +40,10 @@ class Schools < Application
       end
   end
   
+  private
+  
+  def selected_link
+     @selected = "school_profile"
+  end
  
 end

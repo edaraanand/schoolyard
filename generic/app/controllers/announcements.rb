@@ -144,6 +144,7 @@ class Announcements < Application
   end
   
   def access_rights
+     @selected = "announcements"
      have_access = false
      @view = Access.find_by_name('view_all')
      @ann = Access.find_by_name('announcements')
