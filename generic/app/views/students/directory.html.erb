@@ -1,4 +1,4 @@
- <h2 class="current-page">Students &nbsp;&nbsp;&nbsp;<%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> </h2>
+ <h2 class="current-page">Students</h2>
 
  <%= form_for(@student, :action => url(:directory), :method => 'get', :id => 'student') do %>
       <% if params[:class_name].nil? %>        
@@ -13,6 +13,7 @@
         <%if @stds.empty?%>
           <p class="subText">There are no students listed yet.</p>
           <% else %>
+          <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> 
           <table id="mytable">
                <thead>
                    <th>Last Name</th>
@@ -35,6 +36,7 @@
     <%if @students.empty?%>
       <p class="subText">There are no students listed yet.</p>
       <% else %>
+      <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> 
           <table id="mytable">
                <thead>
                    <th>Last Name</th>
@@ -56,6 +58,7 @@
     <%if @studs.empty?%>
       <p class="subText">There are no students listed yet.</p>
       <% else %>
+      <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> 
           <table id="mytable">
                <thead>
                    <th>Last Name</th>

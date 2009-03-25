@@ -332,7 +332,7 @@ class Students < Application
                  end 
               end
         end
-         filename = params[:action] + ".csv"
+         filename = params[:label] + ".csv"
          send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename) 
      else
          @students = @current_school.students.find(:all)
@@ -342,7 +342,7 @@ class Students < Application
                  csv << [person.first_name, person.last_name, person.address, person.phone]
               end
           end
-         filename = params[:action] + ".csv"
+         filename = params[:label] + ".csv"
          send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename) 
      end
      

@@ -1,4 +1,4 @@
-  <h2 class="current-page">School Staff  &nbsp;&nbsp;&nbsp;<%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %> </h2> 
+  <h2 class="current-page">School Staff</h2> 
  
  <%= form_for(@student, :action => url(:staff), :method => 'get', :id => 'student') do %>
   
@@ -15,7 +15,7 @@
          <%if @stf.empty?%>
            <p class="subText">There are no staff members listed yet.</p>
            <% else %>
-        
+        <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
             <table id="mytable">
               <thead> 
                     <th>Last Name</th>
@@ -42,6 +42,7 @@
          <%if @staff.empty?%>
            <p class="subText">There are no staff members listed yet.</p>
            <% else %>
+           <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
             <table id="mytable">
               <thead> 
                     <th>Last Name</th>
@@ -69,6 +70,7 @@
         <%if @class_peoples.empty?%>
           <p class="subText">There are no staff members listed yet.</p>
           <% else %>
+          <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
             <table id="mytable">
               <thead> 
                     <th>Last Name</th>
