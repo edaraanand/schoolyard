@@ -1,4 +1,4 @@
- 
+  <h2 class="current-page">School Staff  &nbsp;&nbsp;&nbsp;<%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %> </h2> 
  
  <%= form_for(@student, :action => url(:staff), :method => 'get', :id => 'student') do %>
   
@@ -12,8 +12,10 @@
    
 <% if params[:class_name].nil? %>
     
-         <% unless @stf.empty? %>
-         <h2 class="current-page">School Staff  <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %> </h2> 
+         <%if @stf.empty?%>
+           <p class="subText">There are no staff members listed yet.</p>
+           <% else %>
+        
             <table id="mytable">
               <thead> 
                     <th>Last Name</th>
@@ -26,9 +28,9 @@
                    <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
                        <td><%= person.first_name %></td>
                        <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
-                       <% s.each do |f| %>
-                          <td><%= f.role.titleize %>--<%= f.classroom.class_name %></td>
-                       <% end %>
+                       <td><% s.each do |f| %>
+                          <%= f.role.titleize %>--<%= f.classroom.class_name %>
+                       <% end %></td>
       	               <td><%= person.phone %></td>
                    </tr>  
               <% end %>
@@ -37,8 +39,9 @@
        
 <% elsif params[:class_name] == "All Staff" %>
 
-         <% unless @staff.empty? %>
-         <h2 class="current-page">School Staff  <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %> </h2> 
+         <%if @staff.empty?%>
+           <p class="subText">There are no staff members listed yet.</p>
+           <% else %>
             <table id="mytable">
               <thead> 
                     <th>Last Name</th>
@@ -52,9 +55,9 @@
                        <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
                        <td><%= person.first_name %></td>
                        <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
-                       <% s.each do |f| %>
-                          <td><%= f.role.titleize %>-<%= f.classroom.class_name %></td> 
-                       <% end %>
+                       <td><% s.each do |f| %>
+                          <%= f.role.titleize %>-<%= f.classroom.class_name %>
+                       <% end %></td> 
       	               <td><%= person.phone %></td>
                    </tr>  
               <% end %>
@@ -63,8 +66,9 @@
        
 <% else %>
                                      
-        <% unless @class_peoples.empty? %>
-        <h2 class="current-page">School Staff  <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %> </h2> 
+        <%if @class_peoples.empty?%>
+          <p class="subText">There are no staff members listed yet.</p>
+          <% else %>
             <table id="mytable">
               <thead> 
                     <th>Last Name</th>
