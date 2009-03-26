@@ -287,7 +287,7 @@ class Registrations < Application
   end
                                          
   def email_verification
-     deliver_email(:sign_up, :subject => "Your Account is about to  Activate only if u click the link" )
+     deliver_email(:sign_up, :subject => "Your Registration at "+ @current_school.school_name )
   end
  
   def deliver_email(action, params)
