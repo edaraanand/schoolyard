@@ -24,7 +24,7 @@ class Parent < Person
   end
   
   def send_approve_password
-      deliver_email(:new_password, :subject => "Choose your Password to login in to schoolapps" )
+      deliver_email(:new_password, :subject => "You application is approved")
   end
  
   def deliver_email(action, params)
