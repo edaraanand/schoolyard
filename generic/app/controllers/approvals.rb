@@ -11,13 +11,15 @@ class Approvals < Application
   
   def index
      @selected = "approve"
-     @announcements = @current_school.announcements.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ])
+     @announcements = @current_school.announcements.paginate(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ], :per_page => 4, :page => params[:page])
      render
   end
   
   def show
      @selected = "approve"
      @announcement = Announcement.find(params[:id])
+    # @previous_announcement = Announcement.previous(@announcement)
+     #@next_announcement = Announcement.next(@announcement)
      render :id => @announcement.id
   end
   
@@ -75,21 +77,21 @@ class Approvals < Application
   
   def parent_approvals
      if params[:approve_status] == "Approved"
-       @approved_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 1] )
+       @approved_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 1], :per_page => 5, :page => params[:page] )
      end
      if params[:approve_status] == "Pending Approvals"
-        @pending_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 2] )
+       @pending_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 2], :per_page => 5, :page => params[:page] )
      end
      if params[:approve_status] == "Rejected"
-       @reject_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 3 ] )
+       @reject_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 3 ], :per_page => 5, :page => params[:page] )
      end
      if params[:approve_status].nil?
-        @parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 2] )
+       @parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 2], :per_page => 5, :page => params[:page] )
      end
      if params[:approve_status] == "All Registrations"
-       @all_parents = @current_school.parents.find(:all)
+       @all_parents = @current_school.parents.paginate(:all, :per_page => 5, :page => params[:page])
      end
-     @parents = @current_school.parents.find(:all)
+     @parents = @current_school.parents.paginate(:all, :per_page => 5, :page => params[:page])
      render
   end
   

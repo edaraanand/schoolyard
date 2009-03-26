@@ -8,12 +8,12 @@ class HomeWorks < Application
   
   def index
      if params[:classroom_id].nil?
-        @h_works = @current_school.home_works.find(:all)
+       @h_works = @current_school.home_works.paginate(:all, :per_page => 3, :page => params[:page])
      elsif params[:classroom_id] == "All Homework"
-        @works = @current_school.home_works.find(:all)
+        @works = @current_school.home_works.paginate(:all, :per_page => 3, :page => params[:page])
      else
         @classroom = @current_school.classrooms.find_by_class_name(params[:classroom_id])
-        @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id])
+        @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :per_page => 3, :page => params[:page])
      end
        @error = "There are no Homeworks at this time."
      render

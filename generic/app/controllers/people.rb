@@ -6,7 +6,7 @@ class People < Application
   before :find_school
   
   def index
-     @people = @current_school.people.find(:all, :conditions => ['type = ?', "Staff"])
+     @people = @current_school.people.paginate(:all, :conditions => ['type = ?', "Staff"], :per_page => 5, :page => params[:page])
      render
   end
   

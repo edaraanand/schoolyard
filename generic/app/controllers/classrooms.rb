@@ -214,7 +214,7 @@ class Classrooms < Application
       @classroom = @current_school.classrooms.find(params[:id])
       @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', @classroom.class_name], :order => 'start_date')
       @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id])
-      @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true])
+      @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true], :per_page => 4, :page => params[:page])
       @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
       @external_links = @current_school.external_links.find(:all, :conditions => ['label = ?', "Classrooms"])
       @ann = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true], :limit => 3)
