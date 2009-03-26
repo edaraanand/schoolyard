@@ -75,7 +75,7 @@ class Person < ActiveRecord::Base
   end
   
   def send_forgot_password
-      deliver_email(:forgot_password, :subject => "Choose a Password to login" )
+      deliver_email(:forgot_password, :subject => "Password reset instructions" )
   end
  
   def deliver_email(action, params)

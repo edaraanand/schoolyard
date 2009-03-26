@@ -31,7 +31,7 @@
                       <% @students = Registration.find(:all, :conditions => ['parent_id = ?', parent.id]) %>
                         <% @students.each do |f| %>
                             <td><%= f.name %></td>
-                            <td><%= f.birth_date.strftime("%B %d %Y") %></td>
+                            <td><%= f.birth_date.strftime("%b %d, %Y") %></td>
                             <td>
                                 <% if parent.approved==1%>
                                   Approved
@@ -65,7 +65,7 @@
                                             <% @students = Registration.find(:all, :conditions => ['parent_id = ?', ap.id]) %>
                                             <% @students.each do |f| %>
                                                  <td><%= f.name %></td>
-                                                 <td><%= f.birth_date.strftime("%B %d %Y") %></td>
+                                                 <td><%= f.birth_date.strftime("%b %d, %Y") %></td>
                                                   <td>
                                 <% if ap.approved==1%>
                                   Approved
@@ -99,7 +99,7 @@
                                     <% @students = Registration.find(:all, :conditions => ['parent_id = ?', ap.id]) %>
                                     <% @students.each do |f| %>
                                           <td><%= f.name %></td>
-                                          <td><%= f.birth_date.strftime("%B %d %Y") %></td>
+                                          <td><%= f.birth_date.strftime("%b %d, %Y") %></td>
                                            <td>
                                 <% if ap.approved==1%>
                                   Approved
@@ -134,7 +134,7 @@
                                        <% @students = Registration.find(:all, :conditions => ['parent_id = ?', rp.id]) %>
                                        <% @students.each do |f| %>
                                             <td><%= f.name %></td>
-                                            <td><%= f.birth_date.strftime("%B %d %Y") %></td>
+                                            <td><%= f.birth_date.strftime("%b %d, %Y") %></td>
                                              <td>
                                 <% if rp.approved==1%>
                                   Approved
