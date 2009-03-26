@@ -11,7 +11,11 @@
 <% end =%>
 
 
-<% if params[:approve_status] == "All Registrations" %>
+<%if @all_parents.blank?%>
+    <p class="subText">There are no parent registrations so far.</p>
+  <%else%>
+
+    <% if params[:approve_status] == "All Registrations" %>
             <table id="mytable">
                <thead>
                      <th>Name</th>
@@ -31,6 +35,7 @@
              <% end %>
                 </tbody>
           </table>
+
  <% elsif params[:approve_status] == "Approved" %>
                <% unless @approved_parents.nil? %>
                      <table id="mytable">
@@ -120,8 +125,5 @@
           </table>
        
    <% end %> 
- 
-
-
-
-       
+   
+<%end%>
