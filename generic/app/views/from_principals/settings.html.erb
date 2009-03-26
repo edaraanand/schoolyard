@@ -1,0 +1,14 @@
+<h2 class="current-page">From the Principal &gt; Settings</h2>
+<%= form_for(@announcement, :action => url(:settings_update)) do %>
+    <fieldset>
+         <ul>
+             <li><%= file_field :image,  :label => "Upload a Photograph" %></li>
+         </ul>
+       
+           
+    </fieldset>
+      
+            <div class="save-cancel">
+  	            <%= submit "    Publish    " %>  Or <%= link_to "Cancel", url(:from_principals), :class => "cancel" %>
+            </div>
+  <% end =%>

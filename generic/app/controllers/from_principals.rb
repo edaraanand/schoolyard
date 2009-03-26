@@ -106,6 +106,35 @@ class FromPrincipals < Application
       render :layout => 'preview'
    end
   
+   def settings
+     render
+   end
+   
+   def settings_update
+     raise params.inspect
+      errors.add_to_base("You must choose a file to upload") unless self.filename
+      unless self.filename == nil
+         # Images should only be GIF, JPEG, or PNG
+          [:content_type].each do |attr_name|
+             enum = attachment_options[attr_name]
+          unless enum.nil? || enum.include?(send(attr_name))
+             errors.add_to_base("You can only upload images (GIF, JPEG, or PNG)")
+          end
+      end
+         # Images should be less than 5 MB
+           [:size].each do |attr_name|
+           enum = attachment_options[attr_name]
+           unless enum.nil? || enum.include?(send(attr_name))
+               errors.add_to_base("Images should be smaller than 5 MB in size")
+           end
+      end
+
+    end
+  end
+     render
+   end
+   
+   
    private
    
    def access_rights
@@ -122,6 +151,10 @@ class FromPrincipals < Application
        redirect resource(:homes)
      end
   end  
+  
+  
+    
+
   
   
 end

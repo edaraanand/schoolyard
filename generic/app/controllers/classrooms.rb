@@ -107,6 +107,11 @@ class Classrooms < Application
    
    def update
       @classroom = @current_school.classrooms.find(params[:id])
+      @class = @current_school.classrooms.find(params[:id])
+      @announcements = @current_school.announcements.find(:all, :conditions => ['access_name = ?', @class.class_name] )
+      @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @class.class_name])
+      @forms = @current_school.forms.find(:all, :conditions => ['class_name = ?', @class.class_name])
+      @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', @class.class_name])
       @teachers = @current_school.staff.find(:all)
       @class_peoples = @classroom.class_peoples
       ids = params[:class][:people][:ids]
@@ -115,6 +120,22 @@ class Classrooms < Application
       @a_d = @classroom.class_peoples.find(:first, :conditions => ['role=?', "Athletic Director"] )
       cls_id = params[:class][:people][:teacher]
       if @classroom.update_attributes(params[:classroom])
+          @announcements.each do |f|
+             f.access_name = params[:classroom][:class_name]
+             f.save!
+          end
+          @welcome_messages.each do |f|
+             f.access_name = params[:classroom][:class_name]
+             f.save!
+          end
+          @calendars.each do |f|
+             f.class_name = params[:classroom][:class_name]
+             f.save!
+          end
+          @forms.each do |f|
+             f.class_name = params[:classroom][:class_name]
+             f.save!
+          end
          if (params[:class][:people][:teacher] == "") 
             flash[:error] = "Please select Faculty from the list"
             render :edit
