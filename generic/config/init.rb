@@ -21,7 +21,7 @@ require "pdf/simpletable"
   
 Merb::BootLoader.after_app_loads do
    
-   gem 'will_paginate', '~> 2.2.2'
+   gem 'will_paginate', '~> 3.0.0'
    require 'will_paginate'
 
   Merb::Mailer.config = {
