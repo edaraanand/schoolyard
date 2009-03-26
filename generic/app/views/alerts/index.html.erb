@@ -1,19 +1,11 @@
- 
-<fieldset>
-   <% if @alerts.empty? %>
- 
-        <h2 class="current-page">Alerts > <%= link_to "Add New", url(:new_alert) %> </h2>
-        
-   <% else %>
-   
-   <h2 class="current-page">Alerts <%= link_to "Edit", url(:alert_edit), :class=> "edit-btn" %> </h2>
-   
-   <p> My current email alerts include:</p>
-   
-      <% @alerts.each do |f| %>
-          <ul class="email-alerts">
-           <li><%= f.full_name %> </li>
-           </ul>
-      <% end %>
-    <% end %>
-</fieldset>
+<h2 class="current-page">Alerts &nbsp;&nbsp;&nbsp;<%= link_to "change settings", url(:alert_edit), :class=> "edit-btn" %> </h2>   
+<% if @alerts.empty? %>
+  <p class="subText">You are currently not receiving any email alerts. (<%= link_to "change settings", url(:alert_edit) %>)</p>
+<% else %>
+  <p> My current email alerts include:</p>
+  <% @alerts.each do |f| %>
+    <ul class="email-alerts">
+      <li><%= f.full_name %> </li>
+    </ul>
+  <% end %>
+<% end %>

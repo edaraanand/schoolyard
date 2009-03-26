@@ -2,6 +2,8 @@
   <h2 class="current-page">From the Principal <span class="actions">
           <%= link_to "Add New", resource(:from_principals, :new) %> 
         </span></h2>
+         <%= link_to "Edit", url(:edit_from_principal, @announcement.id), :class=>"edit-btn" %>
+          <%= link_to "Delete", url(:delete_from_principal, @announcement.id), :class=>"delete-btn"  %>
   <div class="data-block long-block">
     <% unless @announcement.expiration.nil? %>
       <span class="hidden"><%= @announcement.expiration.strftime("%B-%d") %></span>
@@ -12,8 +14,7 @@
 	  </div>
     <h3><%= @announcement.title %></h3>
     <p><%= san_content(@announcement.content) %></p>
-    <%= link_to "Edit", url(:edit_from_principal, @announcement.id), :class=>"edit-btn" %>
-    <%= link_to "Delete", url(:delete_from_principal, @announcement.id), :class=>"delete-btn"  %>
+   
     <div class="hrule clear"><hr /></div>
   </div>
 </div>
