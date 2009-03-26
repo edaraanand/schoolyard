@@ -12,7 +12,7 @@
       <% end %>
       </div>
   <% end %>
-  <div>
+  <div class="page-links">
     <%= link_to "All Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
   </div>
   </div>
@@ -46,9 +46,9 @@
       <% end %>    
 
    <% end %>
- 
-     <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements'), :class =>'all-articles'   %>
-
+ <div class="page-links">
+     <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements')   %> | <%= link_to "Submit an announcement", resource(:parents, :new) %>
+</div>
 
 </div>
 <div class="right-sidebar">
