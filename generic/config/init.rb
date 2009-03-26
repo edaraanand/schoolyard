@@ -44,6 +44,7 @@ Merb::BootLoader.after_app_loads do
   end
 
   Merb::AbstractController.send(:include, WillPaginate::ViewHelpers::Base)
+  
   #Merb::Mailer.config = { :sendmail_path => /usr/sbin/sendmail}
   #Merb::Mailer.delivery_method = :sendmail
  
