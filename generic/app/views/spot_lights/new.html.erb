@@ -1,8 +1,13 @@
  <%= error_messages_for @spot_light %>
+  <ul class='error_messages'>
+       <% if flash[:error] %>
+          <li><%= flash[:error] %> </li>
+       <% end %>
+   </ul>
  
  <h2 class="current-page">Spot Light &gt; Add New</h2>
  
-<%= form_for(@spot_light, :action => resource(:spot_lights, :new), :html => { :multipart => true }, :id => 'spot_light') do %>
+ <%= form_for(@spot_light, :action => resource(:spot_lights, :new), :html => { :multipart => true }, :id => 'spot_light') do %>
     <fieldset>
          <ul>
             <li><label>Spotlight for:</label><%= select :class_name, :collection => @classrooms %></li>
@@ -12,9 +17,15 @@
          </ul>
     </fieldset>
  
+          <ul id="pending_files"></ul>
+             <script type="text/javascript">
+                 var multi_selector = new MultiSelector($('pending_files'), 1);
+                 multi_selector.addElement($('file'));
+             </script>
+             
            <div class="save-cancel">
-               <input type = 'button' value = 'Preview' onclick="preview();return false;" />
-               <%= submit "Publish" %> Or 
+               <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
+               <%= submit "    Publish    " %> Or 
                <%= link_to "Cancel", resource(:spot_lights), :class => "cancel" %>
            </div>
  

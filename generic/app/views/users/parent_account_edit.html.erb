@@ -12,7 +12,7 @@
 </ul>	 
 
 <% if params[:label] == "other" %>
-
+<% @selected = "other_family" %>
 <h2 class="current-page">Other Family Members &gt; <span class="add-link">Edit</span></h2>
 <fieldset>
 
@@ -166,7 +166,7 @@
                
        
         <div class="save-cancel">
-        <%= submit "Save" %> Or <%= link_to "Cancel", url(:parent_account, :label => "other"), :class => "cancel" %>
+        <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:parent_account, :label => "other"), :class => "cancel" %>
         </div>
 
    <% end =%>
@@ -176,7 +176,7 @@
 <% else %>
 
      <%= error_messages_for @parent %>
-
+     <% @selected = "parent_profile" %>
      <h2 class="current-page">My Profile &gt; <span class="add-link">Edit</span></h2>
      <fieldset>
 
@@ -193,7 +193,7 @@
                    </li>
                </ul>
                <div class="save-cancel">
-                   <%= submit "Save" %> Or <%= link_to "Cancel", url(:parent_account), :class => "cancel" %>
+                   <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:parent_account), :class => "cancel" %>
                </div>
       <% end =%>
     

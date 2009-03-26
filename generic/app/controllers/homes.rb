@@ -3,35 +3,50 @@ class Homes < Application
     before :ensure_authenticated
     layout 'home'
     before :find_school
-  
+    before :selected, :exclude => [:help]
     
   def index
     @date = Date.today
-   # @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ? and expiration >= ?", 'Home Page', true, true, @date], :limit => 2 )
-   # @from_principals = @current_school.announcements.find(:all, :conditions => ["label = ? and expiration >= ?", 'from_principal', @date], :limit => 2)
+    @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ? and expiration >= ?", 'Home Page', true, true, @date], :order => "created_at DESC", :limit => 4 )
+    @from_principals = @current_school.announcements.find(:all, :conditions => ["label = ? and expiration >= ?", 'from_principal', @date], :limit => 2)
     @external_links = @current_school.external_links.find(:all, :conditions => ['label = ?', "Home Page"])
     @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ["access_name = ?", "Home Page"])
-    @from_principals = @current_school.announcements.find(:all, :conditions => ["label = ?", "from_principal"], :limit => 2)
-    @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :limit => 4)
+    #@from_principals = @current_school.announcements.find(:all, :conditions => ["label = ?", "from_principal"], :limit => 2)
+    # @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :order => "created_at DESC", :limit => 4 )
     @classrooms = @current_school.classrooms.find(:all)
     render
   end
   
   def principal_articles
      @from_principals = @current_school.announcements.find(:all, :conditions => ['label = ?', 'from_principal'] )
-     @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true])
+     @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :order => "created_at DESC" )
      render
   end
   
   def show
-    @announcement = Announcement.find(params[:id])
-    render
+    if params[:label] == "class_ann"
+       @selected = "announcements"
+       @announcement = Announcement.find(params[:id])
+       @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @announcement.access_name] )
+       render :layout => 'class_change', :id => @classroom.id
+    else
+       @announcement = Announcement.find(params[:id])
+       render :layout => 'home'
+    end
   end
  
   def help
+    @select = "contact"
     render :layout => 'help'
   end
   
+  def bio
+     @selected = "bio"
+     @select = "classrooms"
+     @classroom = @current_school.classrooms.find(params[:id])
+     render :layout => 'class_change', :id => @classroom.id
+  end
+
   def download
      @attachment = Attachment.find(params[:id])
      send_file("#{Merb.root}/public/uploads/#{@attachment.id}/#{@attachment.filename}") 
@@ -48,12 +63,19 @@ class Homes < Application
   def prepare_pdf(announcement)
       pdf = PDF::Writer.new
       pdf.select_font "Helvetica"
-      pdf.text "#{@current_school.school_name}", :font_size => 40, :justification => :center
-      pdf.text "<b>Title</b>" + ":" + "" + "#{@announcement.title}", :font_size => 10
-      pdf.text "<b>Content</b>" + ":" + "" + "#{@announcement.content}" 
+      pdf.text "#{@current_school.school_name}", :font_size => 15
+      pdf.text " "
+      pdf.text "<b>#{@announcement.title} </b>", :font_size => 20
+      pdf.text "Published #{@announcement.created_at.strftime('%B %d %Y')}", :font_size => 10
+      pdf.text " "
+            pdf.text " "      
+      pdf.text "#{@announcement.content}" , :font_size => 15
       pdf
   end
   
+  def selected
+     @select = "home"
+  end
   
 end
 

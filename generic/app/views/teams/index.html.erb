@@ -1,5 +1,7 @@
-<h2 class="current-page">Sports Teams &gt; <%= link_to "Add New", resource(:teams, :new) %></h2>
-<% unless @teams.empty? %>
+<h2 class="current-page">Sports Teams &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:teams, :new) %></h2>
+<% if @teams.empty? %>
+  <p class="subText">There are no sports teams specified</p>
+<%else%>
   <table id="mytable" class="sports-teams">
     <thead>
       <tr >

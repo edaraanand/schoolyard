@@ -24,8 +24,8 @@
             
     <div class="save-cancel">
           <span class="add-link"> <%= link_to_function 'Add More',"add();"%></span>
-          <input type = 'button' value = 'Preview' onclick="preview();return false;" />
-          <%= submit "Publish" %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
+          <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
+          <%= submit "    Publish    " %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
     </div>
   
   <% end =%>
@@ -41,7 +41,7 @@
    {
       var links = document.getElementById('link');
       var li = document.createElement('li');
-      li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]' class='short text' />" + "<input type='text' id='external_link_url' name='external_link[url][]' class='long apart text' />";
+      li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]' class='short text' value='title' onfocus='cl(this);' />" + "<input type='text' id='external_link_url' name='external_link[url][]' class='long apart text' value='url' onfocus='cl(this);' />";
       links.appendChild(li);
    }
  

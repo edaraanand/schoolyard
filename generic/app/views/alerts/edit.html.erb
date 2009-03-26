@@ -1,8 +1,7 @@
-<fieldset>
-  
-    <h2 class="current-page">Alerts &gt; Edit</h2>
-  
-  <%= form_for :alert, :action => url(:alert_update) , :id => 'alert' do %>
+ <h2 class="current-page">Alerts &gt; change settings</h2>
+
+<%= form_for :alert, :action => url(:alert_update) , :id => 'alert' do %>
+  <fieldset>
   <dl class="check-box-set origin">
      <% @alerts.each do |f| %>
             <% have_alert = false %>
@@ -24,8 +23,8 @@
           
      <% end %>
 </dl>
-         <div class="save-cancel"><%= submit "Save" %> Or <%= link_to "Cancel", url(:alerts), :class => "cancel" %></div>
-         
-  <% end =%>
+    <div class="save-cancel"><%= submit "    Save    " %> Or <%= link_to "Cancel", url(:alerts), :class => "cancel" %></div>
+  </fieldset>         
+<% end =%>
     
-</fieldset>
+

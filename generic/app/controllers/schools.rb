@@ -3,6 +3,7 @@ class Schools < Application
   layout 'default'
   before :ensure_authenticated
   before :find_school
+  before :selected_link
    
   def index
      @school = @current_school
@@ -29,13 +30,20 @@ class Schools < Application
   end
   
   def update
-      @school = School.find(params[:id])
-      if @school.update_attributes(params[:school])     
+     @school = School.find(params[:id])
+     if @school.update_attributes(params[:school]) 
+         @school.address = params[:school][:address]
+         @school.save
          redirect resource(:schools)                                     
       else
 	       render :edit
       end
   end
   
+  private
+  
+  def selected_link
+     @selected = "school_profile"
+  end
  
 end

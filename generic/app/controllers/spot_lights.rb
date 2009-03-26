@@ -10,11 +10,13 @@ class SpotLights < Application
   end
   
   def new
-    case request.method
+   case request.method
      when :get
         @spot_light = SpotLight.new
+        #@attachment = Attachment.new
         render
      when :post
+       #raise params.inspect
           @spot = SpotLight.from(params[:file])
           @spot.class_name = params[:spot_light][:class_name]
           @spot.student_name = params[:spot_light][:student_name]
@@ -22,13 +24,34 @@ class SpotLights < Application
           @spot.save
           redirect resource(:spot_lights)
        end
-       
+       render 
   end
   
-  def create
-    raise params.inspect
-    render
-  end
+  #def create
+    #raise params.inspect
+   # @spot_light = SpotLight.new(params[:spot_light])
+   # i=0
+  #  if @spot_light.valid?
+    #   unless params[:attachment]['file_'+i.to_s].empty?
+     #       @spot_light.save
+      #      @attachment = Attachment.create( :attachable_type => "SpotLight",
+       #                                 :attachable_id => @spot_light.id,
+        #                                :filename => params[:attachment]['file_'+i.to_s][:filename],
+         #                               :content_type => params[:attachment]['file_'+i.to_s][:content_type],
+          #                              :size => params[:attachment]['file_'+i.to_s][:size]
+           #  )
+            #  File.makedirs("public/uploads/#{@attachment.id}")
+             # FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+              #create_thumbnails
+              #redirect resource(:spot_lights)
+        #else
+         #   flash[:error] = "please upload a picture"
+          #  render :new
+        #end
+    #else
+      #render :new
+    #end
+  #end
   
   def edit
     @spot_light = SpotLight.find(params[:id])
@@ -41,8 +64,10 @@ class SpotLights < Application
   end
   
   def delete
-      SpotLight.find(params[:id]).destroy
-      redirect resource(:spot_lights)
+     @spot_light = SpotLight.find(params[:id])
+     Attachment.delete_all(['attachable_id = ?', @spot_light.id])
+     @spot_light.destroy
+     redirect resource(:spot_lights)
   end
    
   def preview

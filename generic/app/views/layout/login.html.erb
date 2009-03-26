@@ -9,21 +9,25 @@
     <link rel="stylesheet" href="/stylesheets/global.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/stylesheets/ui.datepicker.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/stylesheets/clockpick.1.2.4.css" type="text/css" media="screen" charset="utf-8" />
-  
+    <link rel="stylesheet" href="/stylesheets/rte.css" type="text/css" media="screen" charset="utf-8" />
+    
+    
     <script src='/javascripts/prototype.js'></script>
     <script src='/javascripts/jquery.js'></script>
     <script src='/javascripts/ui-datepicker-1.5.2.min.js'></script>
     <script src='/javascripts/jquery.clockpick.1.2.4.js'></script>
+    <script src='/javascripts/jquery.rte.js'></script>
     <script>  jQuery.noConflict(); </script>
     <script>  var $j = jQuery; </script>
-        <%= include_required_js %>
+        <%= include_required_js %>               
    
   </head>
-<body class="fixed-width">
+<body>
+<div style="height:150px; background:#333;"></div>
   <div id="page-wrap"><!-- Wraps everything -->
     <div id="header"><!--The Header -->
       <% unless @current_school.nil? %>
-      <h1><a href="#"><span></span><%= @current_school.school_name %></a></h1>
+      <h1 class="login"><%= @current_school.school_name %></h1>
       <% end %>
     </div><!--Header End -->
     <div id="content-wrap"><!--Wraps The content Area-->
@@ -36,5 +40,6 @@
     </div><!--Content Wrap End -->
     <div class="hrule clear hidden "><hr /></div>
   </div><!--Pagewrap End -->
+  <%= partial 'common/footer' %>
 </body>
 </html>                                  

@@ -1,9 +1,10 @@
 class FromPrincipals < Application
   layout 'default'
   before :find_school
+  before :access_rights
 
   def index
-    @announcements = @current_school.announcements.find(:all, :conditions => ['label=?', "from_principal"])
+    @announcements = @current_school.announcements.find(:all, :conditions => ['label=?', "from_principal"], :order => "created_at DESC")
       #@announcements = Announcement.paginate :page => params[:page], :order => 'updated_at DESC', :per_page => 2
      #  @pager = ::Paginator.new(@current_school.announcements.size, 10) do |offset, per_page|
         #   Announcement.find(:all, :conditions => ["label = ? and school_id = ?", "from_principal", @current_school.id],  :limit => per_page, :offset => offset)
@@ -104,5 +105,23 @@ class FromPrincipals < Application
    def preview
       render :layout => 'preview'
    end
+  
+   private
+   
+   def access_rights
+     @selected = "from_principal"
+     have_access = false
+     @view = Access.find_by_name('view_all')
+     @ann = Access.find_by_name('from_principal')
+     @access_people = session.user.access_peoples.delete_if{|x| x.access_id == @view.id }
+     @access_people.each do |f|
+       have_access = (f.all == true) || (f.access_id == @ann.id)
+       break if have_access
+     end
+     unless have_access
+       redirect resource(:homes)
+     end
+  end  
+  
   
 end

@@ -2,14 +2,16 @@
 
 <%= form_for(@form, :action => url(:form_files), :method => 'get') do %>
      <% if params[:class_name].nil? %>
-        <span class="select-announce"><%= select :name => "class_name", :collection => forms %> <%= submit "Go" %>
+        <span class="select-announce"><%= select :name => "class_name", :collection => forms %> <%= submit "    Go    " %>
      <% else %>
-        <span class="select-announce"><%= select :name => "class_name", :selected => params[:class_name], :collection => forms %> <%= submit "Go" %>
+        <span class="select-announce"><%= select :name => "class_name", :selected => params[:class_name], :collection => forms %> <%= submit "    Go    " %>
      <% end %>
 <% end =%>
 
  <% if params[:class_name].nil? %>
-     <% unless @forms.empty? %>
+     <% if @forms.empty? %>
+        <p class="subText">There are no forms available.</p>
+     <%else%>
         <table id="mytable">
              <thead>
                   <th>Form</th>
@@ -30,7 +32,9 @@
          </table>
      <% end %> 
  <% elsif  params[:class_name] == "All Forms" %>
-     <% unless @forms_f.empty? %>
+ <% if @forms_f.empty? %>
+    <p class="subText">There are no forms available.</p>
+ <%else%>
          <table id="mytable">
              <thead>
                   <th>Form</th>
@@ -53,7 +57,9 @@
      <% end %>  
  <% else %>
  
-      <% unless @files.empty? %>
+      <% if @files.empty? %>
+         <p class="subText">There are no forms available for <%=params[:class_name]%>.</p>
+      <%else%>
          <table id="mytable">
              <thead>
                   <th>Form</th>

@@ -9,13 +9,13 @@ class HomeWorks < Application
   def index
      if params[:classroom_id].nil?
         @h_works = @current_school.home_works.find(:all)
-     elsif params[:classroom_id] == "All Home Works"
+     elsif params[:classroom_id] == "All Homework"
         @works = @current_school.home_works.find(:all)
      else
         @classroom = @current_school.classrooms.find_by_class_name(params[:classroom_id])
         @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id])
      end
-       @error = "No Homeworks Yet"
+       @error = "There are no Homeworks at this time."
      render
   end
   
@@ -116,9 +116,17 @@ class HomeWorks < Application
   end
   
   def show
-     @home_work = HomeWork.find(params[:id])
-     @classroom = @home_work.classroom
-     render :layout => 'class_change', :id => @classroom.id
+     if params[:label] == "home_w"
+        @selected = "home_work"
+        @home_work = HomeWork.find(params[:id])
+        render :layout => 'default'
+     else
+         @selected = "homeworks"
+         @select = "classrooms"
+         @home_work = HomeWork.find(params[:id])
+         @classroom = @home_work.classroom
+         render :layout => 'class_change', :id => @classroom.id
+     end
   end
  
   def home_works_pdf
@@ -145,10 +153,11 @@ class HomeWorks < Application
   def rooms
     classes = @current_school.classrooms.find(:all)
     room = classes.collect{|x| x.class_name }
-    @classes = room.insert(0, "All Home Works")
+    @classes = room.insert(0, "All Homework")
   end
   
   def access_rights
+     @selected = "home_work"
      have_access = false
      @view = Access.find_by_name('view_all')
      @ann = Access.find_by_name('homework')

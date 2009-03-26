@@ -1,6 +1,7 @@
 <fieldset>
   
   <% if params[:label] == "other" %>
+       <% @selected = "other_family" %>
        <h2 class="current-page"> Other Family Members
        <%= link_to "Edit", url(:parent_account_edit, :label => "other"), :id => @parent, :class=> "edit-btn" %></h2>
      
@@ -18,7 +19,7 @@
       
        
   <% else %>
-  
+        <% @selected = "parent_profile" %>
        <h2 class="current-page"> My Profile 
            <%= link_to "Edit", url(:parent_account_edit), :id => @parent, :class=> "edit-btn" %>
            <%= link_to "Change Password", url(:parent_password), :class => "edit-btn" %> 

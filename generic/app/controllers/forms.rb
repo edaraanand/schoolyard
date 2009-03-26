@@ -5,7 +5,8 @@ class Forms < Application
   before :classrooms
   before :access_rights, :exclude => [:form_files]
   before :forms, :only => [:index]
-  
+ 
+    
   def index
     if params[:class_name].nil?
       @forms = @current_school.forms.find(:all)
@@ -105,6 +106,7 @@ class Forms < Application
   
   
   def form_files
+     @select = "forms"
      if params[:class_name].nil?
         @forms = @current_school.forms.find(:all)
      end
@@ -133,6 +135,7 @@ class Forms < Application
   
  
   def access_rights
+     @selected = "forms"
      have_access = false
      @view = Access.find_by_name('view_all')
      @ann = Access.find_by_name('forms')

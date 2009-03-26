@@ -1,10 +1,10 @@
-<h2 class="current-page">Home Work  &gt; <%= link_to "Add New", resource(:home_works, :new) %></h2>
+<h2 class="current-page">Home Work  &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:home_works, :new) %></h2>
 
 <div class="fullpage announcemt">
    <%= form_for(@home_work, :action => resource(:home_works), :method => 'get', :id => 'home_work') do %>
        <span class="select-announce">
              <%= select :classroom_id, :collection => @classes %>
-             <%= submit "Go" %>
+             <%= submit "    Go    " %>
        </span>
    <% end =%>
 
@@ -27,16 +27,16 @@
                                                <span class="month"><%= homework.due_date.strftime("%b") %></span>
                                          </div>
                                    <% end %>
-                                      <h3><%= homework.title %></h3>
-                                      Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %>
-                                      <p class="post-content"><%= homework.content %></p>
+                                      <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
+                                      <p class="subText">Assigned on <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></p>
+                                      <p class="post-content"><%= snippet(homework.content, 50) %></p>
                                      <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
                                      <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
                                  <div class="hrule clear"><hr /></div>
                          </div>
                  <% end %>
           <% end %>
-  <% elsif params[:classroom_id] == "All Home Works" %>   
+  <% elsif params[:classroom_id] == "All Homework" %>   
   
            <% if @works.empty? %>
                  <%= @error %><h2 class="current-page"><%= link_to "Add New", resource(:home_works, :new) %></h2>
@@ -56,9 +56,9 @@
                                                <span class="month"><%= homework.due_date.strftime("%b") %></span>
                                          </div>
                                    <% end %>
-                                      <h3><%= homework.title %></h3>
-                                      Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %>
-                                      <p class="post-content"><%= homework.content %></p>
+                                   <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
+                                      <p class="subText">Assigned on <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></p>
+                                      <p class="post-content"><%= snippet(homework.content, 50) %></p>
                                      <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
                                      <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
                                  <div class="hrule clear"><hr /></div>
@@ -68,7 +68,7 @@
   
   <% else %>
           <% if @home_works.empty? %>
-                 <%= @error %><h2 class="current-page"><%= link_to "Add New", resource(:home_works, :new) %></h2>
+                 <p><%= @error %><%= link_to "Add New", resource(:home_works, :new) %></p>
            <% else %>
                    <% for homework in @home_works %>
                         <div class="data-block long-block">
@@ -85,9 +85,9 @@
                                                <span class="month"><%= homework.due_date.strftime("%b") %></span>
                                          </div>
                                    <% end %>
-                                      <h3><%= homework.title %></h3>
-                                      Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %>
-                                      <p class="post-content"><%= homework.content %></p>
+                                      <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
+                                      <p class="subText">Assigned on <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></p>
+                                      <p class="post-content"><%= snippet(homework.content, 50) %></p>
                                      <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
                                      <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
                                  <div class="hrule clear"><hr /></div>

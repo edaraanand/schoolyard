@@ -1,41 +1,43 @@
 <div class="short-block">
-  <h2 class="current-page"> Calendars &gt; <%= link_to "Add New", resource(:calendars, :new) %></h2>
- 
-<% cdate=""
-      for calendar in @calendars %>
-         <div class="calendar-block" style="width:480px;">
-         <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
-               cdate=calendar.start_date.strftime("%B %d %Y") %>
-              <h3><%= cdate %></h3>  
-         <% end %> 
+  <h2 class="current-page"> Calendars &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:calendars, :new) %></h2>
+  <%if  @calendars.blank?%>
+    <p>There are no calendar events created yet.</p>
     
-         <ul class="calendar-items">
-                <li>
-                          <span class="cal-title">
-                            <b><%= calendar.title %></b>
-                          </span>
-                          <span class="cal-time">
-                              <% unless calendar.start_time.nil? %>
-                            Starts at <b><%= calendar.start_time.strftime("%H-%M") %></b>
-                                   <% end %>&nbsp;
-                          </span>
-                          <span class="cal-time">
-                            <% unless calendar.end_time.nil? %>
-                          Ends at <b><%= calendar.end_time.strftime("%H-%M") %></b>
-                                <% end %>  &nbsp;
-                          </span>
-                      </li>
-                      <li class="cal_location">
-                          <span>Location :<b><%= calendar.location %></b></span>
-                      </li>
-                      
-                          <%= link_to "Edit", resource(calendar, :edit), :class=>"edit-btn" %>
-                          <%= link_to "Delete", resource(calendar, :delete), :class=>"delete-btn" %>
-                      
-                            
-         </ul>
-    </div>
-             <% #@calendars.delete_if{|c| c.start_date == cdate } %>
-         
-  <% end %>
+  <%else%>
+      <% cdate=""
+            for calendar in @calendars %>
+               <div class="calendar-block" style="width:480px;">
+               <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
+                     cdate=calendar.start_date.strftime("%B %d %Y") %>
+                    <h3><%= cdate %></h3>  
+               <% end %> 
+
+               <ul class="calendar-items">
+                      <li>
+                            <span class="cal-time">
+                                <% unless calendar.start_time.nil? %>
+                              Starts at <%= calendar.start_time.strftime("%I:%M%p") %>
+                                     <% end %>&nbsp;
+                                </span>
+                                <span class="cal-title">
+                                  <%= calendar.title %>
+                                </span>
+                                <span class="cal-time">
+                                  <% unless calendar.end_time.nil? %>
+                                Ends at <%= calendar.end_time.strftime("%I:%M%p") %>
+                                      <% end %>  &nbsp;
+                                </span>
+                                Location : <%= calendar.location %>
+                                <%= link_to "Edit", resource(calendar, :edit), :class=>"edit-btn" %>
+                                <%= link_to "Delete", resource(calendar, :delete), :class=>"delete-btn" %>
+                            </li>
+
+               </ul>
+          </div>
+                   <% #@calendars.delete_if{|c| c.start_date == cdate } %>
+
+        <% end %>
+    
+  <%end%>
+
 </div>

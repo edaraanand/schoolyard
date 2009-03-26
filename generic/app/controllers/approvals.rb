@@ -10,16 +10,19 @@ class Approvals < Application
   
   
   def index
+     @selected = "approve"
      @announcements = @current_school.announcements.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ])
      render
   end
   
   def show
+     @selected = "approve"
      @announcement = Announcement.find(params[:id])
      render :id => @announcement.id
   end
   
   def edit
+     @selected = "approve"
      @announcement = Announcement.find(params[:id])
      render
   end
@@ -161,6 +164,7 @@ class Approvals < Application
   end
   
   def parent_registration
+     @selected = "parent_registration"
      have_access = false
      @view = Access.find_by_name('view_all')
      @ann = Access.find_by_name('parent_registration')

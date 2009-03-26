@@ -2,6 +2,7 @@ class Alerts < Application
   layout 'account'
   before :ensure_authenticated
   before :find_user
+  before :selected_link
   
   def index
     @alerts = @person.alerts
@@ -65,4 +66,9 @@ class Alerts < Application
     @person = session.user
   end
 
+  def selected_link
+     @selected = "alerts"
+  end
+  
+  
 end

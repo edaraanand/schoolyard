@@ -5,7 +5,11 @@
        <%= link_to "Edit", url(:staff_account_edit), :id => @person, :class=> "edit-btn" %>
        <%= link_to "Change Password", url(:staff_password), :class=> "edit-btn" %> 
   </h2>
-      <%= session.user.person_bio %>
+    <p><%= session.user.email.blank? ? "" :  email(session.user.email) %></p>
+    <p><%= session.user.phone.blank? ? "" :  session.user.phone %></p>
+    <br/><br/>
+    <h3>Your Bio</h3>
+      <p><%= session.user.person_bio.blank? ? "You have not created your bio yet." :  san_content(session.user.person_bio) %></p>
       
 </fieldset>
    

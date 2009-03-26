@@ -2,7 +2,7 @@ class Application < Merb::Controller
 
   
     before :find_school
-    
+   
    # before :school
  
    # def find_school
@@ -29,6 +29,7 @@ class Application < Merb::Controller
    
    
     def find_school
+        @select = "schools"
         if (request.first_subdomain != nil) && (request.first_subdomain == "admin")
             @current_school = School.find(:first, :conditions => ['subdomain = ?', request.first_subdomain ] )
         elsif  (request.first_subdomain != nil) && (request.first_subdomain != "admin")
@@ -38,4 +39,5 @@ class Application < Merb::Controller
         end
     end
   
+   
 end

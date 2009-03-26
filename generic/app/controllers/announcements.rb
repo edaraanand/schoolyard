@@ -10,12 +10,12 @@ class Announcements < Application
     @message1 = "Approved"
     @message2 = "Pending"
     @message3 = "Rejected"
-    @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and label = ?", params[:access_name], 'staff' ])
+    @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and label = ?", params[:access_name], 'staff' ], :order => "created_at DESC")
      if params[:access_name].nil?
-        @announce = @current_school.announcements.find(:all, :conditions => ['label = ?', 'staff'])
+        @announce = @current_school.announcements.find(:all, :conditions => ['label = ?', 'staff'], :order => "created_at DESC")
      end
      if params[:access_name] == "All Announcements"
-        @all_announcements = @current_school.announcements.find(:all, :conditions => ['label = ?', 'staff'])
+        @all_announcements = @current_school.announcements.find(:all, :conditions => ['label = ?', 'staff'], :order => "created_at DESC")
      end
      render
   end 
@@ -27,13 +27,13 @@ class Announcements < Application
   
   def create
     @announcement = session.user.announcements.build(params[:announcement])
+    i=0
     if @announcement.valid?
        @announcement.approved = false
        @announcement.approve_announcement = true
        @announcement.label = 'staff'
        @announcement.school_id = @current_school.id
        @announcement.save
-       i=0
        unless params[:attachment]['file_'+i.to_s].empty?
            @attachment = Attachment.create( :attachable_type => "Announcement",
                                         :attachable_id => @announcement.id,
@@ -144,6 +144,7 @@ class Announcements < Application
   end
   
   def access_rights
+     @selected = "announcements"
      have_access = false
      @view = Access.find_by_name('view_all')
      @ann = Access.find_by_name('announcements')
