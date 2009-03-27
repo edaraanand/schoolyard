@@ -5,7 +5,6 @@ class Classrooms < Application
    before :access_rights, :exclude => [:class_details]
    before :class_types, :exclude => [:class_details]
   
-  
    def index
       @classrooms = @current_school.classrooms.find(:all)
       render
@@ -241,8 +240,8 @@ class Classrooms < Application
   def class_types
     a = []
     type1 = a.insert(0, "Classes")
-    type2 = a.insert(1, "Sports")
-    @class_types = a.insert(2, "Extra Cirrcular")
+   # type2 = a.insert(1, "Sports")
+    @class_types = a.insert(1, "Extra Cirrcular")
   end
 
  
