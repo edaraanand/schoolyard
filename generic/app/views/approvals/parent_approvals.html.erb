@@ -47,6 +47,7 @@
                 </tbody>
           </table>
           <%= will_paginate (@all_parents, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+        <% end %>
  <% elsif params[:approve_status] == "Approved" %>
                <% if @approved_parents.nil? %>
                    <p class="subText">There are no approved registrations at this time.</p>
@@ -156,7 +157,7 @@
    <% else %>
      <%if  @parents.empty? %>
        <p class="subText">There are no registrations at this time.</p>
-   <%else%>
+      <%else%>
               <table id="mytable">
                <thead>
                      <th>Name</th>
@@ -179,14 +180,13 @@
                                   Pending Approval
                                 <%else%>
                                   <span class="reject">Rejected</span>
-                                  <%end%>
+                                <%end%>
                               </td>
                         <% end %>
-                  </tr>
-             <% end %>
-                </tbody>
+                      </tr>
+            <% end %>
+            </tbody>
           </table>
-        <%= will_paginate (@parents, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+          <%= will_paginate (@parents, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
    <% end %> 
-      <% end %> 
-   
+  <% end %> 
