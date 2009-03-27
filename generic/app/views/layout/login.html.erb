@@ -23,23 +23,14 @@
    
   </head>
 <body>
-<div style="height:150px; background:#333;"></div>
+<div style="height:10px; background:#333;"></div>
   <div id="page-wrap"><!-- Wraps everything -->
     <div id="header"><!--The Header -->
       <% unless @current_school.nil? %>
-      <h1 class="login"><%= @current_school.school_name %></h1>
+        <h1 class="login"><%= @current_school.school_name %></h1>
       <% end %>
     </div><!--Header End -->
-    <div id="content-wrap"><!--Wraps The content Area-->
-      <div class="hrule clear hidden">
-        <hr />
-      </div>
-      <div id="content" class="widen">
-        <%= catch_content :for_layout %>
-      </div><!--Content End-->
-    </div><!--Content Wrap End -->
-    <div class="hrule clear hidden "><hr /></div>
-  </div><!--Pagewrap End -->
+    <div style="margin:0 auto;"><%= catch_content :for_layout %></div>
   <%= partial 'common/footer' %>
 </body>
 </html>                                  

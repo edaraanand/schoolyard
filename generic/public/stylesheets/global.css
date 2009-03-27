@@ -55,13 +55,15 @@ body.fixed-width{width:1000px;}
 
 
 
-/*Generic Link Colors*/
+/*Generic*/
 a{color:#445978; text-decoration:none; }
 a:link{color:#1a3e8f;}
 a:visited{color:#445978;}
 a:hover{color:#08225c; text-decoration:underline;}
 a:active{color:#000;}
-
+.fltlft{float:left;}
+.clear{clear:both; height:0;font-size: 1px;line-height: 0px;}
+.fltrt{float:right;}
 
 h2 {font-size:120%; font-weight:bold; padding:10px 0; border-bottom:1px solid #ebebeb; }
 h3{font-size:120%; font-weight:bold; padding:4px 0; margin:0 0 8px 0; }
@@ -187,7 +189,7 @@ ul#menu li.count span b, .on span b{background:url(/images/menu-count.gif) no-re
 /*Horizontal Rule
 .hrule{height:0; border-bottom:1px solid #e8e8e8;}*/
 .hrule hr{display:none;}
-.clear{clear:both;}
+
 .hidden{visibility:hidden;}
 .dashed{border-bottom:1px dashed #e8e8e8;}
 .separate{margin:8px 0;}
