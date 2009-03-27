@@ -8,7 +8,7 @@ class Students < Application
   before :selected_tab, :only => [:directory, :show, :staff]
   
   def index 
-     @students = @current_school.students.find(:all)
+     @students = @current_school.students.paginate(:all, :per_page => 5, :page => params[:page])
      render
   end
   
@@ -276,12 +276,12 @@ class Students < Application
    def directory
       @selected = "current_students"
       @class = @current_school.classrooms.find_by_class_name(params[:class_name])
-      @studs = @current_school.students.find(:all, :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id] )
+      @studs = @current_school.students.paginate(:all, :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id], :per_page => 5, :page => params[:page] )
       if params[:class_name] == "All Students"
-         @students = @current_school.students.find(:all)
+        @students = @current_school.students.paginate(:all, :per_page => 5, :page => params[:page])
       end
       if params[:class_name].nil?
-         @stds = @current_school.students.find(:all)
+        @stds = @current_school.students.paginate(:all, :per_page => 5, :page => params[:page])
       end
       render :layout => 'directory'
    end
@@ -304,7 +304,7 @@ class Students < Application
    def staff
        @selected = "school_staff"
        if params[:class_name] == "All Staff"
-         @staff = @current_school.staff.find(:all)
+         @staff = @current_school.staff.paginate(:all, :per_page => 5, :page => params[:page])
        end
        unless params[:class_name].nil?
          unless params[:class_name] == "All Staff"
@@ -313,7 +313,7 @@ class Students < Application
          end
        end  
       if params[:class_name].nil?
-         @stf = @current_school.staff.find(:all)
+        @stf = @current_school.staff.paginate(:all, :per_page => 5, :page => params[:page])
       end    
       
       render :layout => 'directory'

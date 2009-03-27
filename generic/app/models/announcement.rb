@@ -1,5 +1,6 @@
 class Announcement < ActiveRecord::Base
-	
+	 
+     require 'base_ext'
  
      belongs_to :person
      belongs_to :school
@@ -8,7 +9,9 @@ class Announcement < ActiveRecord::Base
      validates_presence_of :access_name, :message => "Please select the access from the drop down", :if => :access_name, :scope => :school_id
  
      attr_accessor :attachment
+     attr_accessor :image
      
-     
-   
+     #named_scope :previous, lambda { |p| {:conditions => ["id < ?", p.id], :limit => 1, :order => "id"} }
+     #named_scope :next, lambda { |p| {:conditions => ["id > ?", p.id], :limit => 1, :order => "id"} }
+
 end

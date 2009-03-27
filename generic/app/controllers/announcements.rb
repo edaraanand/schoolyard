@@ -10,12 +10,12 @@ class Announcements < Application
     @message1 = "Approved"
     @message2 = "Pending"
     @message3 = "Rejected"
-    @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and label = ?", params[:access_name], 'staff' ], :order => "created_at DESC")
+    @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and label = ?", params[:access_name], 'staff' ], :order => "created_at DESC", :per_page => 4, :page => params[:page])
      if params[:access_name].nil?
-        @announce = @current_school.announcements.find(:all, :conditions => ['label = ?', 'staff'], :order => "created_at DESC")
+       @announce = @current_school.announcements.paginate(:all, :conditions => ['label = ?', 'staff'], :order => "created_at DESC", :per_page => 4, :page => params[:page])
      end
      if params[:access_name] == "All Announcements"
-        @all_announcements = @current_school.announcements.find(:all, :conditions => ['label = ?', 'staff'], :order => "created_at DESC")
+       @all_announcements = @current_school.announcements.paginate(:all, :conditions => ['label = ?', 'staff'], :order => "created_at DESC", :per_page => 4, :page => params[:page])
      end
      render
   end 

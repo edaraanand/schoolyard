@@ -9,12 +9,12 @@ class Forms < Application
     
   def index
     if params[:class_name].nil?
-      @forms = @current_school.forms.find(:all)
+      @forms = @current_school.forms.paginate(:all, :per_page => 5, :page => params[:page])
     end
     if params[:class_name] == "All Forms"
-      @forms_f = @current_school.forms.find(:all)
+      @forms_f = @current_school.forms.paginate(:all, :per_page => 5, :page => params[:page])
     end
-    @files = @current_school.forms.find(:all, :conditions => ['class_name = ?', params[:class_name] ] )
+    @files = @current_school.forms.paginate(:all, :conditions => ['class_name = ?', params[:class_name] ], :per_page => 5, :page => params[:page] )
     render
   end
   
@@ -108,12 +108,12 @@ class Forms < Application
   def form_files
      @select = "forms"
      if params[:class_name].nil?
-        @forms = @current_school.forms.find(:all)
+       @forms = @current_school.forms.paginate(:all, :per_page => 5, :page => params[:page])
      end
      if params[:class_name] == "All Forms"
-        @forms_f = @current_school.forms.find(:all)
+       @forms_f = @current_school.forms.paginate(:all, :per_page => 5, :page => params[:page])
      end
-     @files = @current_school.forms.find(:all, :conditions => ['class_name = ?', params[:class_name] ] )
+     @files = @current_school.forms.paginate(:all, :conditions => ['class_name = ?', params[:class_name] ], :per_page => 5, :page => params[:page] )
      render :layout => 'home'
   end
  

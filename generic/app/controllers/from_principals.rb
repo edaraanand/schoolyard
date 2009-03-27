@@ -4,12 +4,7 @@ class FromPrincipals < Application
   before :access_rights
 
   def index
-    @announcements = @current_school.announcements.find(:all, :conditions => ['label=?', "from_principal"], :order => "created_at DESC")
-      #@announcements = Announcement.paginate :page => params[:page], :order => 'updated_at DESC', :per_page => 2
-     #  @pager = ::Paginator.new(@current_school.announcements.size, 10) do |offset, per_page|
-        #   Announcement.find(:all, :conditions => ["label = ? and school_id = ?", "from_principal", @current_school.id],  :limit => per_page, :offset => offset)
-      # end  
-      # @page = @pager.page(params[:page])
+    @announcements = @current_school.announcements.paginate(:all, :conditions => ['label=?', "from_principal"], :order => "created_at DESC", :per_page => 4, :page => params[:page] )
     render
   end
   
@@ -106,6 +101,35 @@ class FromPrincipals < Application
       render :layout => 'preview'
    end
   
+   def settings
+     render
+   end
+   
+   #def settings_update
+     #raise params.inspect
+    #  errors.add_to_base("You must choose a file to upload") unless self.filename
+     # unless self.filename == nil
+         # Images should only be GIF, JPEG, or PNG
+      #    [:content_type].each do |attr_name|
+       #      enum = attachment_options[attr_name]
+        #  unless enum.nil? || enum.include?(send(attr_name))
+         #    errors.add_to_base("You can only upload images (GIF, JPEG, or PNG)")
+          #end
+      #end
+         # Images should be less than 5 MB
+       #    [:size].each do |attr_name|
+        #   enum = attachment_options[attr_name]
+         #  unless enum.nil? || enum.include?(send(attr_name))
+          #     errors.add_to_base("Images should be smaller than 5 MB in size")
+           #end
+      #end
+
+    #end
+  #end
+   #  render
+   #end
+   
+   
    private
    
    def access_rights
@@ -122,6 +146,10 @@ class FromPrincipals < Application
        redirect resource(:homes)
      end
   end  
+  
+  
+    
+
   
   
 end

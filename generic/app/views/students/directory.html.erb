@@ -30,6 +30,7 @@
                      <% end %>
                 </tbody>
            </table>
+         <%= will_paginate (@stds, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
          <% end %>
     <% elsif params[:class_name] == "All Students" %>
          
@@ -53,6 +54,7 @@
                      <% end %>
                 </tbody>
            </table>
+         <%= will_paginate (@students, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
         <% end %> 
     <% else %>
     <%if @studs.empty?%>
@@ -75,6 +77,7 @@
                      <% end %>
                 </tbody>
            </table>
+         <%= will_paginate (@studs, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
         <% end %> 
      <% end %>
 

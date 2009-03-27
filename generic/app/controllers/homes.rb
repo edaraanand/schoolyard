@@ -18,8 +18,8 @@ class Homes < Application
   end
   
   def principal_articles
-     @from_principals = @current_school.announcements.find(:all, :conditions => ['label = ?', 'from_principal'] )
-     @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :order => "created_at DESC" )
+    @from_principals = @current_school.announcements.paginate(:all, :conditions => ['label = ?', 'from_principal'], :per_page => 4, :page => params[:page] )
+    @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :order => "created_at DESC", :per_page => 4, :page => params[:page] )
      render
   end
   

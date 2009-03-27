@@ -11,13 +11,15 @@ class Approvals < Application
   
   def index
      @selected = "approve"
-     @announcements = @current_school.announcements.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ])
+     @announcements = @current_school.announcements.paginate(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ], :per_page => 4, :page => params[:page])
      render
   end
   
   def show
      @selected = "approve"
      @announcement = Announcement.find(params[:id])
+    # @previous_announcement = Announcement.previous(@announcement)
+     #@next_announcement = Announcement.next(@announcement)
      render :id => @announcement.id
   end
   
