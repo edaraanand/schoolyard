@@ -4,10 +4,11 @@ class Parents < Application
   before :find_school
   before :ensure_authenticated
   before :classroom
+  before :tab_select
   
  
   def index
-     @announcements = session.user.announcements.find(:all, :conditions => ['school_id = ?', @current_school.id] )
+    @announcements = session.user.announcements.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :per_page => 1, :page => params[:page] )
      @message1 = "Approved"
      @message2 = "Pending Approval"
      @message3 = "Rejected"
@@ -20,7 +21,7 @@ class Parents < Application
   end
   
   def show
-    @announcement = Announcement.find(params[:id])
+    @announcement = session.user.announcements.find(params[:id])
     render
   end
   
@@ -95,6 +96,10 @@ class Parents < Application
      @class = @current_school.classrooms.find(:all)
      room = @class.collect{|x| x.class_name }
      @classrooms = room.insert(0, "HomePage")
+  end
+  
+  def tab_select
+    @select = "parent_announcements"
   end
     
 end

@@ -18,8 +18,6 @@ class Approvals < Application
   def show
      @selected = "approve"
      @announcement = Announcement.find(params[:id])
-    # @previous_announcement = Announcement.previous(@announcement)
-     #@next_announcement = Announcement.next(@announcement)
      render :id => @announcement.id
   end
   
@@ -75,23 +73,23 @@ class Approvals < Application
      render :layout => 'preview'
   end
   
-  def parent_approvals
+ def parent_approvals
      if params[:approve_status] == "Approved"
-       @approved_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 1] , :order => "created_at DESC")
+       @approved_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 1], :order => "created_at DESC", :per_page => 5, :page => params[:page] )
      end
      if params[:approve_status] == "Pending Approvals"
-        @pending_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 2] , :order => "created_at DESC" )
+       @pending_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 2], :order => "created_at DESC", :per_page => 5, :page => params[:page] )
      end
      if params[:approve_status] == "Rejected"
-       @reject_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 3 ] , :order => "created_at DESC" )
+       @reject_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 3 ], :order => "created_at DESC", :per_page => 5, :page => params[:page] )
      end
      if params[:approve_status].nil?
-        @parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 2] , :order => "created_at DESC" )
+       @parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 2], :order => "created_at DESC", :per_page => 5, :page => params[:page] )
      end
      if params[:approve_status] == "All Registrations"
-       @all_parents = @current_school.parents.find(:all , :order => "created_at DESC")
+       @all_parents = @current_school.parents.paginate(:all, :order => "created_at DESC", :per_page => 5, :page => params[:page])
      end
-     @parents = @current_school.parents.find(:all , :order => "created_at DESC")
+     @parents = @current_school.parents.paginate(:all, :order => "created_at DESC", :per_page => 5, :page => params[:page])
      render
   end
   
@@ -142,7 +140,8 @@ class Approvals < Application
          @parent.approved = 3
          @parent.save
          #Guardian.delete_all(["parent_id = ?", @parent.id])
-         redirect url(:approval_review)
+         #redirect url(:approval_review)
+         redirect url(:parent_approvals)
      end
    
   end

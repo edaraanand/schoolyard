@@ -17,7 +17,7 @@
         
               
               <div class="hrule clear"><hr /></div>
-                  <%= link_to "Back", resource(:parents) %> 
+                <%= link_to "All Announcements", resource(:parents) %> 
               </div>   
             
               <%  if (@announcement.approved == false ) && (@announcement.approve_announcement == false) %>
@@ -31,6 +31,7 @@
                     <span class="approved-or-not"> Approved & PublishedBy <%= @person.name %> </span>
                     <p class="approve-comments"> <%= @announcement.approve_comments %></p>
                <% end %>
-             
+               <%= link_to 'Previous', url(:parent, @announcement.previous_parent_announcement),:class => "alignleft" if @announcement.previous_parent_announcement %>
+               <%= link_to 'Next',  url(:parent, @announcement.next_parent_announcement),:class => "alignright" if @announcement.next_parent_announcement %>
    </div>     
    

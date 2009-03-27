@@ -74,8 +74,8 @@ class Person < ActiveRecord::Base
      send_forgot_password
   end
   
-  def send_forgot_password
-      deliver_email(:forgot_password, :subject => "Password reset instructions" )
+  def send_forgot_password 
+    deliver_email(:forgot_password, :subject => "Password reset instructions for " + self.school.school_name)
   end
  
   def deliver_email(action, params)
@@ -105,7 +105,7 @@ class Person < ActiveRecord::Base
   end
   
   def changed_details
-      mail_deliver(:notify_staff_details, :subject => "Your Details has Changed")
+    mail_deliver(:notify_staff_details, :subject => "Your Details has Changed for " + self.school.school_name)
   end
   
   def mail_deliver(action, params)

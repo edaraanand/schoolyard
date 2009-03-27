@@ -439,7 +439,5 @@ class Users < Application
   def staff_selected_link
      @selected = "staff_profile"
   end
-  
-  
-  
+ 
 end

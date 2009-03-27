@@ -194,12 +194,12 @@ class Registrations < Application
   def get_password
      if params[:email] == ""
         flash[:error] = "Please Enter your Email"
-        render :forgot_password
+        render :forgot_password, :layout => 'login'
      else
         @person = @current_school.people.find_by_email_and_school_id(params[:email], @current_school.id)
         if @person.nil?
            flash[:error1] = "You should enter correct Email that you have provided for the school"
-           render :forgot_password
+           render :forgot_password, :layout => 'login'
         else
            @person.reset_password
            redirect url(:password_sent, :id => @person.id)
@@ -209,7 +209,7 @@ class Registrations < Application
 
   def password_sent
      @person = @current_school.people.find(params[:id])
-     render
+     render :layout => 'login'
   end
   
   def reset_password
@@ -220,7 +220,7 @@ class Registrations < Application
   
   def reset_password_edit
      @person = Person.find(params[:id])
-     render
+     render :layout => 'login'
   end
   
   def reset_password_update
@@ -253,7 +253,7 @@ class Registrations < Application
   
   def new_staff_password
      @staff = @current_school.staff.find(params[:id])
-     render
+     render :layout => 'login'
   end
   
   def staff_password_save
@@ -270,11 +270,11 @@ class Registrations < Application
             end
          else
             flash[:error1] = "Your Password doesn't match"
-            render :new_staff_password
+            render :new_staff_password, :layout => 'login'
          end
     else
        flash[:error2] = "Password cant be blank"
-       render :new_staff_password
+       render :new_staff_password, :layout => 'login'
     end
   end
                                
