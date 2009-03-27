@@ -75,21 +75,21 @@ class Approvals < Application
   
   def parent_approvals
      if params[:approve_status] == "Approved"
-       @approved_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 1] )
+       @approved_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 1] , :order => "created_at DESC")
      end
      if params[:approve_status] == "Pending Approvals"
-        @pending_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 2] )
+        @pending_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 2] , :order => "created_at DESC" )
      end
      if params[:approve_status] == "Rejected"
-       @reject_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 3 ] )
+       @reject_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 3 ] , :order => "created_at DESC" )
      end
      if params[:approve_status].nil?
-        @parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 2] )
+        @parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 2] , :order => "created_at DESC" )
      end
      if params[:approve_status] == "All Registrations"
-       @all_parents = @current_school.parents.find(:all)
+       @all_parents = @current_school.parents.find(:all , :order => "created_at DESC")
      end
-     @parents = @current_school.parents.find(:all)
+     @parents = @current_school.parents.find(:all , :order => "created_at DESC")
      render
   end
   
