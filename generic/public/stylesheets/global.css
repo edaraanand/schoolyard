@@ -456,3 +456,4 @@ td.teach-name-top, td.teach-name-bottom {height:9px; padding:0px; margin:0px; li
 .register-steps3 {float:left; margin:-75px 0 0 27em;}
 #register h1 {font-size:200%; padding:10px 0; border-bottom:1px solid #ccc; margin:0 0 30px 0;}
 .reject {color:red;}
+.approved {color:#169609!important; background:#fff}
