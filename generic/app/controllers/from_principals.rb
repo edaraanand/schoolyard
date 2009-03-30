@@ -102,7 +102,33 @@ class FromPrincipals < Application
    end
   
    def settings
-     render
+      @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"])
+      render
+   end
+   
+   def settings_update
+       @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"])
+       @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
+       unless params[:image][:filename] == nil
+           if @content_types.include?(params[:image][:content_type])
+              @att = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"])
+              @att.destroy
+              @attachment = Attachment.create( :attachable_type => "principal_image",
+                                               :filename => params[:image][:filename],
+                                               :content_type => params[:image][:content_type],
+                                               :size => params[:image][:size]
+                )
+              File.makedirs("public/uploads/principal_images")
+              FileUtils.mv(params[:image][:tempfile].path, "public/uploads/principal_images/#{@attachment.filename}")
+              redirect resource(:from_principals)   
+           else
+               flash[:error1] = "You can only upload images"
+               render :settings
+           end
+       else
+          flash[:error] = "Please upload a picture"
+          render :settings
+       end
    end
    
    #def settings_update

@@ -1,14 +1,31 @@
+<ul class='error_messages'>
+       <% if flash[:error] %>
+          <li><%= flash[:error] %> </li>
+       <% end %>
+       <% if flash[:error1] %>
+          <li><%= flash[:error1] %> </li>
+       <% end %>
+</ul>
+
 <h2 class="current-page">From the Principal &gt; Settings</h2>
+
 <%= form_for(@announcement, :action => url(:settings_update)) do %>
-    <fieldset>
-         <ul>
-             <li><%= file_field :image,  :label => "Upload a Photograph" %></li>
-         </ul>
-       
-           
-    </fieldset>
+       <fieldset>
+            <ul>
+                <li><%= file_field :image,  :label => "Upload a Photograph" %></li>
+            </ul>
+       </fieldset>
       
             <div class="save-cancel">
-  	            <%= submit "    Publish    " %>  Or <%= link_to "Cancel", url(:from_principals), :class => "cancel" %>
+                <%= submit "    Upload    " %>  Or <%= link_to "Cancel", url(:from_principals), :class => "cancel" %>
             </div>
   <% end =%>
+
+<% unless @attachment.nil? %>
+    <img src="uploads/principal_images/<%= @attachment.filename %>" alt="<%= @attachment.filename %>"/>
+<% else %>
+     <img src="images/principal.png" alt="From The Principal"/>
+<% end %>
+
+
+  

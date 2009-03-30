@@ -1,5 +1,11 @@
 <div id="sidebar" class="left-block">
-  <img src="images/principal.png" alt="From The Principal"/>
+  <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
+  <% unless @attachment.nil? %>
+     <img src="uploads/principal_images/<%= @attachment.filename %>" alt="<%= @attachment.filename %>"/>
+  <% else %>
+     <img src="images/principal.png" alt="From The Principal"/>
+  <% end %>
+  
   <% for principal in @from_principals %>
       <div class="data-block long-block">
       <% if principal.expiration.nil? or principal.expiration >= @date%>
@@ -47,7 +53,10 @@
 
    <% end %>
  <div class="page-links">
-     <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements')   %> | <%= link_to "Submit an announcement", resource(:parents, :new) %>
+     <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements')   %> 
+     <% if session.user.type == "Parent" %>
+         | <%= link_to "Submit an announcement", resource(:parents, :new) %>
+     <% end %>
 </div>
 
 </div>
