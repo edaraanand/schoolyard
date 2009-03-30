@@ -104,7 +104,6 @@ class Approvals < Application
   end
   
   def parent_grant
-    #raise params.inspect
      @parent = @current_school.parents.find(params[:id])
      @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
      if params[:approvetype] == "Approve & Grant Access"
