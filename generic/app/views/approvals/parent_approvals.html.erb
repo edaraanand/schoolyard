@@ -34,7 +34,7 @@
                             <td><%= f.birth_date.strftime("%b %d, %Y") %></td>
                             <td>
                                 <% if parent.approved==1%>
-                                  Approved
+                                   <span class="approved">Approved</span>
                                 <%elsif parent.approved==2%>
                                   Pending Approval
                                 <%else%>
@@ -69,7 +69,7 @@
                                                  <td><%= f.birth_date.strftime("%b %d, %Y") %></td>
                                                   <td>
                                 <% if ap.approved==1%>
-                                  Approved
+                                 <span class="approved">Approved</span>
                                 <%elsif ap.approved==2%>
                                   Pending Approval
                                 <%else%>
@@ -105,7 +105,7 @@
                                           <td><%= f.birth_date.strftime("%b %d, %Y") %></td>
                                            <td>
                                 <% if ap.approved==1%>
-                                  Approved
+                                  <span class="approved">Approved</span>
                                 <%elsif ap.approved==2%>
                                   Pending Approval
                                 <%else%>
@@ -140,7 +140,7 @@
                                             <td><%= f.birth_date.strftime("%b %d, %Y") %></td>
                                              <td>
                                 <% if rp.approved==1%>
-                                  Approved
+                                 <span class="approved">Approved</span>
                                 <%elsif rp.approved==2%>
                                   Pending Approval
                                 <%else%>
@@ -175,7 +175,7 @@
                             <td><%= f.birth_date.strftime("%b %d, %Y") %></td>
                              <td>
                                 <% if parent.approved==1%>
-                                  Approved
+                                  <span class="approved">Approved</span>
                                 <%elsif parent.approved==2%>
                                   Pending Approval
                                 <%else%>

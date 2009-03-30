@@ -27,19 +27,19 @@
              
          <% @class = Classroom.find(:first, :conditions => ['class_name = ?', f.current_class ] ) %> 
            
-            <% @studs = Student.find( :all, :joins => :studies, :conditions => ["first_name = ? AND last_name = ? AND studies.classroom_id = ?" , f.first_name, f.last_name, @class.id ] ) %>
+         <% @studs = Student.find( :all, :joins => :studies, :conditions => ["first_name = ? AND last_name = ? AND birth_date = ? AND studies.classroom_id = ?" , f.first_name, f.last_name, f.birth_date, @class.id ] ) %>
              
             <% if @studs.empty? %>
               <dt></dt>
               <ul class='error_messages'>
                 <dd><%= @not_exist %></dd>
               </ul>
-                <dd><%= select :name => "student_not_found[]", :prompt => "Please Select", :collection => @students.collect{|x| x.name } %></dd>
-                <dd><%= select :name => "class_not_found[]", :prompt => "Please Select", :collection => @classrooms.collect{|x| x.class_name } %></dd>
+            <dd><%= select :name => "student_not_found[]", :prompt => "Please Select", :collection => @students.collect{|x| x.name } %></dd>
+                  <dd><%= select :name => "class_not_found[]", :prompt => "Please Select", :collection => @classrooms.collect{|x| x.class_name } %></dd>
             <% else %>
                  <dd><%= @exist %></dd>
-                 <dd><%= select :name => "student_found[]", :prompt => "Please Select", :collection => @students.collect{|x| x.name } %></dd>
                  <dd><%= select :name => "class_found[]", :prompt => "Please Select", :collection => @classrooms.collect{|x| x.class_name } %></dd>
+                 <dd><%= select :name => "student_found[]", :prompt => "Please Select", :collection => @students.collect{|x| x.name } %></dd>
               <% end %> 
                
             <dl>                                                                                        
@@ -78,5 +78,16 @@
       document.approveform.approvetype.value = selectedtype ;
       document.approveform.submit() ;
     }
+
+   function students(x)
+    {
+      alert("Eshwar");
+      alert(x);
+      var y = document.getElementById('class_not_found[]').options.selectedIndex
+      alert(y);
+     
+    }
+    
+  
 
 </script> 
