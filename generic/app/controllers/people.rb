@@ -24,7 +24,6 @@ class People < Application
      @p = @accesses.collect{|x| x.id.to_s}
      if @person.valid?
         @person.type = "Staff"
-       # @person.school_id = @current_school.id
         @person.save
         unless params[:access].nil?
 	         @access = params[:access][:access_ids]

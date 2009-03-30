@@ -22,7 +22,9 @@ class Registrations < Application
                @parent.save
                @registration.parent_id = @parent.id
                @registration.save
-               redirect url(:registration_process, :id => @parent)
+               @parent.sign_up_verification
+               redirect url(:registration_process)
+               #redirect url(:registration_process, :id => @parent)
           else 
               render :new
           end
@@ -39,7 +41,9 @@ class Registrations < Application
                                        @current_school.registrations.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @parent.id } )                               
                                        @current_school.registrations.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @parent.id  })                                 
                                        @current_school.registrations.create({:first_name => params[:f_name_student4], :last_name => params[:l_name_student4], :birth_date => params[:birth_date4], :current_class => params[:current_class4], :parent_id => @parent.id  })
-                                       redirect url(:registration_process, :id => @parent)
+                                       @parent.sign_up_verification
+                                       redirect url(:registration_process)
+                                       #redirect url(:registration_process, :id => @parent)
                                     
                               else
                                    flash[:error4] = "Please enter the Student4 details"
@@ -81,7 +85,9 @@ class Registrations < Application
                                   @registration.save
                                   @current_school.registrations.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @parent.id } )
                                   @current_school.registrations.create({:first_name => params[:f_name_student3], :last_name => params[:l_name_student3], :birth_date => params[:birth_date3], :current_class => params[:current_class3], :parent_id => @parent.id  })                                 
-                                  redirect url(:registration_process, :id => @parent)
+                                  @parent.sign_up_verification
+                                  redirect url(:registration_process)
+                                  #redirect url(:registration_process, :id => @parent)
                               
                              else
                                   flash[:error3] = "Please enter the Student3 details"
@@ -114,7 +120,9 @@ class Registrations < Application
                       @registration.parent_id = @parent.id
                       @registration.save
                       @current_school.registrations.create({ :first_name => params[:f_name_student2], :last_name => params[:l_name_student2], :birth_date => params[:birth_date2], :current_class => params[:current_class2], :parent_id => @parent.id  } )
-                      redirect url(:registration_process, :id => @parent)
+                      @parent.sign_up_verification
+                      redirect url(:registration_process)
+                      #redirect url(:registration_process, :id => @parent)
                  else
                       flash[:error] = "Please enter the Student2 details"
                       @fname2 = params[:f_name_student2]
@@ -141,31 +149,38 @@ class Registrations < Application
   
   
   def registration_process
-    @parent = Parent.find(params[:id])
-    email_verification
+    # @parent = Parent.find(params[:id])
+    # @parent.sign_up
+     #email_verification
     render
   end
   
   def registration_last
-    @parent = Parent.find(params[:id])
+    id = params[:id]
+    @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
+    #@parent = Parent.find(params[:id])
     @parent.approved = 2
     @parent.save
     render
   end
   
-  def password_new
-     id = params[:id]
-     @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
-     redirect url(:new_password, :id => @parent.id)
-  end
+  #def password_new
+   #  id = params[:id]
+    # @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
+     #redirect url(:new_password, :id => @parent.id)
+  #end
   
   def new_password
-     @parent = @current_school.parents.find(params[:id])
+      id = params[:id]
+      @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
+    # @parent = @current_school.parents.find(params[:id])
      render
   end
   
   def password_save
-     @parent = @current_school.parents.find(params[:id])
+     # @parent = @current_school.parents.find(params[:id])
+      id = params[:id]
+      @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
      if ( !params[:parent][:password].blank? ) && (!params[:parent][:password_confirmation].blank? )
          if ( params[:parent][:password] == params[:parent][:password_confirmation] )
             @parent.password = params[:parent][:password]
@@ -175,15 +190,15 @@ class Registrations < Application
                redirect url(:login)
             else
                flash[:error] = "You should enter Minimum Lengthof 4 Characters"
-               redirect url(:new_password, :id => @parent.id)
+               redirect url(:new_password, :id => @parent.password_reset_key)
             end
          else
             flash[:error1] = "Your Password doesn't match"
-            render :new_password
+            redirect url(:new_password, :id => @parent.password_reset_key)
          end
      else
          flash[:error2] = "Password cant be blank"
-         render :new_password
+         redirect url(:new_password, :id => @parent.password_reset_key)
      end
   end
   
@@ -286,13 +301,13 @@ class Registrations < Application
      @months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   end
                                          
-  def email_verification
-     deliver_email(:sign_up, :subject => "Your Registration at "+ @current_school.school_name )
-  end
+ # def email_verification
+  #   deliver_email(:sign_up, :subject => "Your Registration at "+ @current_school.school_name )
+  #end
  
-  def deliver_email(action, params)
-     from = "no-reply@insightmethods.com"
-     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => @parent.email), @parent )
-  end
+  #def deliver_email(action, params)
+   #  from = "no-reply@insightmethods.com"
+     #PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => @parent.email), @parent )
+  #end
   
 end
