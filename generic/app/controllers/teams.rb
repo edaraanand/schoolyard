@@ -2,8 +2,8 @@ class Teams < Application
 	
   layout 'default'
   before :find_school
-  before :access_rights
-  before :team_values, :exclude => [:index]
+  before :access_rights, :exclude => [:sports]
+  before :team_values, :exclude => [:index, :sports]
 
   def index
     @teams = @current_school.teams.find(:all)
@@ -131,6 +131,18 @@ class Teams < Application
      end
   end
    
+  def sports
+     @select = "sports"
+     @selected = params[:label]
+     @teams = @current_school.teams.paginate(:all, :per_page => 4, :page => params[:page])
+     @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', "Sports"], :order => 'start_date')
+     @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", "Sports", true, true], :per_page => 2, :page => params[:page])
+     @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', "Sports"])
+     @ann = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", "Sports", true, true], :limit => 3)
+     render :layout => 'sports'
+  end
+  
+  
   private
   
   def team_values

@@ -117,6 +117,7 @@ Merb::Router.prepare do
        match("/home_works_pdf").to(:controller => 'home_works', :action => 'home_works_pdf').name(:home_works_pdf)
        match("/settings").to(:controller => 'from_principals', :action => 'settings').name(:settings)
        match("/settings_update").to(:controller => 'from_principals', :action => 'settings_update').name(:settings_update)
+       match("/sports").to(:controller => 'teams', :action => 'sports').name(:sports)
        match(:first_subdomain => 'admin').to(:controller => 'admin', :action => 'index') 
    end
    

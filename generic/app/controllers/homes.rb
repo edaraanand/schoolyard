@@ -29,6 +29,11 @@ class Homes < Application
        @announcement = Announcement.find(params[:id])
        @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @announcement.access_name] )
        render :layout => 'class_change', :id => @classroom.id
+    elsif params[:label] == "sports_announcement"
+       @selected = "announcements"
+       @select = "sports"
+       @announcement = Announcement.find(params[:id])
+       render :layout => 'sports'
     else
        @announcement = Announcement.find(params[:id])
        render :layout => 'home'
@@ -41,10 +46,17 @@ class Homes < Application
   end
   
   def bio
-     @selected = "bio"
-     @select = "classrooms"
-     @classroom = @current_school.classrooms.find(params[:id])
-     render :layout => 'class_change', :id => @classroom.id
+    if params[:label] == "classes"
+       @selected = "bio_classes"
+       @select = "classrooms"
+       @classroom = @current_school.classrooms.find(params[:id])
+       render :layout => 'class_change', :id => @classroom.id
+    else
+      @selected = "bio_sports"
+      @select = "sports"
+      @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', "Sports"])
+      render :layout => 'sports'
+    end
   end
 
   def download

@@ -1,6 +1,11 @@
 <%  if params[:label] == "principal" %>
 <div id="sidebar" class="left-block">
-  <img src="/images/principal.png" alt="From The Principal"/>
+ <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
+  <% unless @attachment.nil? %>
+     <img src="uploads/principal_images/<%= @attachment.filename %>" alt="<%= @attachment.filename %>"/>
+  <% else %>
+     <img src="images/principal.png" alt="From The Principal"/>
+  <% end %>
 </div>
 <div id="content" class="homes-content">
   <h2>From the Principal</h2>
