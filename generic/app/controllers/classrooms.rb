@@ -240,8 +240,8 @@ class Classrooms < Application
   def class_types
     a = []
     type1 = a.insert(0, "Classes")
-   # type2 = a.insert(1, "Sports")
-    @class_types = a.insert(1, "Extra Cirrcular")
+    type2 = a.insert(1, "Sports")
+    @class_types = a.insert(2, "Extra Cirrcular")
   end
 
  

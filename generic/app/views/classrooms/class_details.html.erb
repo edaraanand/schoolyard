@@ -126,8 +126,14 @@
                   <p class="separator"><%= snippet(announcement.content,50) %></p>
               </div>
             <% end %>
-            <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>
-        <%end%>
+            <div class="page-links">
+                 <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>
+                 <% if session.user.type == "Parent" %>
+                       | <%= link_to "Submit an announcement", resource(:parents, :new) %>
+                  <% end %>
+            </div>
+               
+        <% end %>
         
              
       </div><!--Content End--> 
