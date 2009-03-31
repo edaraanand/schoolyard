@@ -1,0 +1,66 @@
+<%= partial 'layout/main' %>
+    <div id="sidebar">
+          
+          <table cellpadding="0" cellspacing="0" order="0" class="class-name">
+            <tr><td class="class-name-top"><img src="/images/class-name-top.gif"/></td></tr>
+            <tr><td class="class-name-backgr"><p>Sports</p></td></tr>
+            <tr><td  class="class-name-bottom"><img src="/images/class-name-bottom.gif"/></td></tr>
+          </table>
+          
+          
+      <ul id="menu"><!-- Nested Lists -->
+        <li <% if @selected == nil %> class="on" <% end %>><%= link_to "<span>Home</span>", url(:sports) %></li>
+        <li <% if @selected == "teams" %> class="on" <% end %> ><%= link_to "Teams", url(:sports, :label => "teams") %></li>
+        <li <% if @selected == "calendars" %> class="on" <% end %> ><%= link_to "Class Calendar", url(:sports, :label => "calendars") %></li>
+        <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to "Announcements", url(:sports, :label => "announcements") %></li>
+        <li>&nbsp;</li>
+       
+      </ul>
+          <% @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', "Sports"]) %>
+      <ul id="menu1">
+      <% s = @classroom.class_peoples.delete_if{|x| x.role != "Athletic Director"} %>
+                  <% s.each do |f| %>
+                     <li>
+                         <table cellpadding="0" cellspacing="0" order="0" class="teach-name">
+                             <tr><td class="teach-name-top"><img src="/images/teach-name-top.gif"/></td></tr>
+                             <tr><td class="teach-name-backgr"><p>School Staff</p></td></tr>
+                             <tr><td  class="teach-name-bottom"><img src="/images/teach-name-bottom.gif"/></td></tr>
+                         </table>
+                     </li>
+                     <li><b><%= f.person.name %></b>
+                         <% unless f.person.person_bio.blank? %>
+                          | <span <% if @selected == "bio_sports" %> class="on" <% end %> > <%= link_to "Bio", url(:bio, :label => "sports") %> 
+                             </span>
+                           <% end %>
+                     </li>
+                      <li><%= f.role %></li>
+                     <li><%= email(f.person.email) %> </li>
+                     
+                  <% end %>
+         
+       </ul>
+    </div><!-- Sidebar Ends -->
+    
+    <div id="content-wrap"><!--Wraps The content Area-->
+      
+        <%= catch_content :for_layout %>
+      
+    </div><!--Content Wrap End -->  
+      
+       <% @classrooms = @current_school.classrooms.find(:all, :conditions => ['class_name != ?', "Sports"]) %>
+    <div id="info" style="display:none;">
+         <h3>Please Select the classroom you would like to visit</h3>
+          <p>Classes:</p>  
+           <ul><% @classrooms.each do |f| %>
+                  <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
+           <% end %>
+         </ul>
+    </div> 
+
+    
+    <!--Right Sidebar to be inserted here-->    
+  <div class="hrule clear hidden "><hr /></div>
+  </div><!--Pagewrap End -->
+  <%= partial 'common/footer' %>
+</body>
+</html>

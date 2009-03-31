@@ -1,0 +1,159 @@
+<%  if params[:label] == "calendars" %>
+
+  <h2 class="current-page"> Calendars</h2>
+  <%if @calendars.empty?%>
+    <span class="subText">There are no events planned at this time</span>
+  <%else%>
+    <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id) %>
+     <br/><br/>
+       <% cdate=""
+         for calendar in @calendars %>
+            <div class="calendar-block" style="width:480px;">
+            <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
+                  cdate=calendar.start_date.strftime("%B %d %Y") %>
+                 <h3><%= cdate %></h3>  
+            <% end %> 
+
+            <ul class="calendar-items">
+                   <li>
+
+                             <% unless calendar.start_time.nil? %>
+                               <%= calendar.start_time.strftime("%I:%M %p") %> 
+                            <%else%>
+                              All day event
+                             <% end %>
+                             <% unless calendar.end_time.nil? %>
+                               to <%= calendar.end_time.strftime("%I:%M %p") %>
+                             <% end %>
+                             <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
+                             <% @attachments = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
+                             <% unless @attachment.nil? %>
+                               &nbsp;<%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %>
+                             <% end %>
+                             <%unless calendar.location.blank? %>
+                               (Location: <%= calendar.location %>)
+                             <%end%>
+
+                         </li>
+
+            </ul>
+             </div>
+                <% #@calendars.delete_if{|c| c.start_date == cdate } %>
+
+     <%end%>
+   <% end %>
+        
+   <% elsif params[:label] == "teams" %>
+        <% if @teams.empty? %>
+            <p class="subText">There are no sports teams specified</p>
+        <%else%>
+             <table id="mytable" class="sports-teams">
+                 <thead>
+                       <tr >
+                            <th colspan="4" scope="col">
+                                Teams
+                            </th>
+                       </tr>
+                 </thead>
+                 <tbody>
+                       <% for team in @teams %>
+                           <tr>
+                               <td>
+                                    <%= link_to "#{team.team_name}"  %>
+                                    <% s = team.class_peoples %>
+		                                <% s.each do |f| %>
+		                                    <span class="sports-faculty-list">
+		                                        <span class="role"><%= f.role %></span> : <span class="name"><%= f.person.name %></span>
+		                                    </span>
+                                    <% end %>
+                               <td>
+                          </tr>
+                       <% end %> 
+                 </tbody>
+              </table>
+        <% end %>    
+                
+<% elsif params[:label] == "announcements" %>
+          <h2 class="current-page"> Announcements </h2>
+            <%if @announcements.blank?%>
+              <span class="subText">There are no announcements at this time</span>
+            <%else%>
+              <% for announcement in @announcements %>
+                   <div class="data-block short-block">
+                         <div class="ddmmm">
+                              <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
+                              <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
+                         </div>
+                            <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :label => "sports_announcement") %></h3>
+                            <p class="separator"><%= snippet(announcement.content,50) %></p>
+                            <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
+                             <% unless @attachment.nil? %>
+                                  <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+                             <% end %>
+                        
+                   </div>
+                <% end %>
+                 <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+                 
+            <% end %>
+
+<% else %>
+      <div id="content"><!--Content Area Starts here-->
+        <% for message in @welcome_messages %>
+          <p class="post-content"><%= message.content %></p>
+        <% end %>
+        <h2 class="current-page">Announcements &amp; Updates </h2>
+        
+        <%if @ann.blank?%>
+           <p class="subText">There are no announcements at this time.</p>
+        <% else %>
+            <% for announcement in @ann %>
+              <div class="data-block short-block">
+                  <% if announcement.created_at.nil? %>
+                    <div class="ddmmm-x"></div>
+                  <% else %>
+                    <div class="ddmmm">
+                      <span class="date"><%= announcement.created_at.strftime("%d") %></span>
+                      <span class="month"><%= announcement.created_at.strftime("%b") %></span>
+                    </div>
+                  <% end %>
+                   <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :label => "sports_announcement") %></h3>
+                  <p class="separator"><%= snippet(announcement.content,50) %></p>
+              </div>
+            <% end %>
+            <div class="page-links">
+                  <%= link_to "All Announcements", url(:sports, :label => "announcements") %>
+                  <% if session.user.type == "Parent" %>
+                       | <%= link_to "Submit an announcement", resource(:parents, :new) %>
+                  <% end %>
+            </div>
+        <%end%>
+        
+             
+      </div><!--Content End--> 
+      
+      <div class="right-sidebar">
+        <!--><h3>Spotlight</h3>
+          <ul class="last">
+            <li>ASDF</li>
+            <li>ASDF</li>
+            <li>ASDF</li>
+          </ul>-->
+
+         <h3>Teams</h3>
+          <ul class="last">
+          <% @team_names = Team.find(:all, :conditions => ['school_id = ?', @current_school.id] ) %>
+            <% if @team_names.blank? %>
+               <span class="subText">There are no Teams specified</span>
+            <% else %>
+                   <% for team in @team_names %>
+                         <li><%= link_to "#{team.team_name}" %></li>
+                   <% end %>
+            <% end %>
+          </ul>
+       
+          
+      </div>
+<% end %>   
+
+
