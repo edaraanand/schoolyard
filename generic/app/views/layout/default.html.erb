@@ -24,7 +24,7 @@
           <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_if((right = "homework"), "Homework", url(:home_works) )  %></li>
       		<li><%#= link_to_if((right = "grades"), "Grades/Reports" ) %></li>
       		<li <% if @selected == "e_links" %> class="on" <% end %>><%= link_to_if((right = "external_links"), "External Links", url(:external_links) ) %></li>
-      		<li <% if @selected == "teams" %> class="on" <% end %>><%#= link_to_if((right = "teams"), "Sports Teams", url(:teams)) %></li>
+      		<li <% if @selected == "teams" %> class="on" <% end %>><%= link_to_if((right = "teams"), "Sports Teams", url(:teams)) %></li>
       		<li <% if @selected == "forms" %> class="on" <% end %>><%= link_to_if((right = "forms"), "Forms", url(:forms)  ) %></li>
       		<li><%#= link_to "Advertising" %></li>
           </ul>                                                                                                      
@@ -42,7 +42,7 @@
       </div><!--Content End-->
     </div><!--Content Wrap End -->
     
-         <% @classrooms = @current_school.classrooms.find(:all) %>
+         <% @classrooms = @current_school.classrooms.find(:all, :conditions => ['class_name != ?', "Sports"]) %>
     <div id="info" style="display:none;">
          <h3>Please Select the classroom you would like to visit</h3>
           <p>Classes: </p><ul> 

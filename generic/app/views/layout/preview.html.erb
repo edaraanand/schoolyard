@@ -46,7 +46,7 @@
         <ul id="navigation">
           <li><%= link_to "<span>Home</span>", url(:homes) %></li>
           <li><a rel="facebox" href="#info"><span>Classrooms</span></a></li>
-          <li class="current"><li><%#= link_to "<span>Sports</span>" %></li>
+          <li class="current"><li><%= link_to "<span>Sports</span>", url(:sports) %></li>
           <li><%= link_to "<span>Forms</span>", url(:form_files) %></li>
           <li><%= link_to "<span>Directory</span>", url(:directory) %></li>
           <li><%= link_to "<span>Events</span>", url(:events) %></li>
@@ -89,7 +89,7 @@
 
 
     <!-- Classrooms Lightbox -->
-    <% @classrooms = @current_school.classrooms.find(:all) %>
+   <% @classrooms = @current_school.classrooms.find(:all, :conditions => ['class_name != ?', "Sports"]) %>
     <div id="info" style="display:none;">
       <h3>Please Select the classroom you would like to visit</h3>
       <p>Classes: </p>
