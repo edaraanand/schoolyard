@@ -11,7 +11,7 @@
               <%end%>
            <% end %>
  <% else %>
-        <% s = @classroom.class_peoples %>
+ <% s = @classroom.class_peoples.delete_if{|x| x.role != "Athletic Director" } %>
           <% s.each do |f| %>
               <h2><%= f.person.name %>'s Bio</h2>
               <p><%= email(f.person.email) %></p>

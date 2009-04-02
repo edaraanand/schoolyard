@@ -19,14 +19,25 @@
            </ul>
       </div>
        <%= link_to "Edit",  resource(classroom, :edit), :class=> "edit-btn" %>
-       <%#= link_to "Delete", resource(classroom, :delete), :class=> "delete-btn" %>
-       <a rel="facebox" href="#<%= classroom.id %>" class="delete-btn" > Delete </a>
+     
+       <% if classroom.activate == true %>
+            <a rel="facebox" href="#<%= classroom.id %>" class="cancel" >De Activate </a>
+       <% else %>
+           <a rel="facebox" href="#<%= classroom.id %>" class="cancel" > <span class=approved>Activate</span> </a>
+       <% end %>
        
          <div id="<%= classroom.id %>" style="display:none;">
-           <h4> Are you sure u want to delete the classroom </h4>
-           <div class="save-cancel">
-              <%= link_to "Delete", resource(classroom, :delete),  :class => "delete-btn" %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
-           </div>
+             <% if classroom.activate == true %>
+                   <h4> Are you sure u want to De Activate the classroom </h4>
+                   <div class="save-cancel">
+                       <%= link_to "De Activate", resource(classroom, :delete, :label => "deactivate"),  :class => "cancel" %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
+                   </div>
+             <% else %>
+                  <h4> Are you sure u want to Activate the classroom </h4>
+                  <div class="save-cancel">
+                      <%= link_to "<span class=approved>Activate</span>", resource(classroom, :delete, :label => "activate"),  :class => "cancel" %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
+                  </div>
+             <% end %>
        </div>
        <div class="clear dashed separate"></div>
  

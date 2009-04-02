@@ -65,7 +65,11 @@
   <% unless @classrooms.empty? %>
      <ul class="last">
        <% @classrooms.each do |f| %>
-        <li><%= link_to "#{f.class_name}", url(:class_details, :id => f.id) %></li>
+             <% if f.class_name == "Sports" %>
+                   <li><%= link_to "#{f.class_name}", url(:sports) %></li>
+             <% else %>
+                   <li><%= link_to "#{f.class_name}", url(:class_details, :id => f.id) %></li>
+             <% end %>
        <% end %>
       </ul>
    <% end %>
