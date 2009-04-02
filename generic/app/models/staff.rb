@@ -21,7 +21,7 @@ class Staff < Person
   end
   
   def send_password
-      deliver_email(:password_staff, :subject => "Choose your Password to login in to schoolapps" )
+      deliver_email(:password_staff, :subject => "Choose your Password to login to " + self.school.school_name )
   end
  
   def deliver_email(action, params)
