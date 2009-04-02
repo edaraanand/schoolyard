@@ -28,8 +28,8 @@
                    <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
                        <td><%= link_to "#{person.first_name}", url(:student, person.id, :label => "staff") %></td>
                        <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
-                       <td><% s.each do |f| %>
-                          <%= f.role.titleize %>-<%= f.classroom.class_name.titleize %>
+                       <td nowrap><% s.each do |f| %>
+                          <%= f.role.titleize %>-<%= f.classroom.class_name.titleize %><br/>
                        <% end %></td>
       	               <td nowrap><%= number_to_phone(person.phone, :area_code => true) %></td>
                    </tr>  
