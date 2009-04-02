@@ -48,7 +48,7 @@ body.fixed-width{width:1000px;}
 #sidebar{float:left; clear:both;}
 .left-block{width:240px; border-right:1px solid #eee;}
   /*Left Side Menu. term 'Sidebar' defaults for LEFT SIDEBAR/MENU*/
-#content p{font-size:13px; margin:.5em 0 .5em 0;}
+#content p{font-size:13px; padding:.5em 0 .5em 0;}
 #content-wrap{float:left; padding:0 0 0 10px; margin:20px 0 0 0; border-left:1px solid #e8e8e8;}
   /*Wraps the content section*/
 #fullpage{width:700px;}
@@ -90,7 +90,6 @@ dl.check-box-set.origin{margin-left:0;}
 h5{float:left; width:480px; font:bold 12px/14px "lucida grande","Lucida Sans Unicode",tahoma,verdana,arial,sans-serif; margin:6px 0;}
 
 fieldset td label{display:block; width:120px;}
-
 
 
 /*Header*/
@@ -294,13 +293,16 @@ span.cancel a:hover{text-decoration:underline;}
 .left-block .long-block{width:230px; padding:5px;}
 .post-content{width:480px; float:left;}
 
-.data{width:400px;}
+.data{width:300px;}
 .ddmmm{width:36px; height:48px; border:1px solid #C1DAD7; margin:10px 10px 10px 0; float:left;}
 .ddmmm .date{display:block; text-align:center; padding:5px 0 6px 0; font-size:14px; font-weight:bold; color:#333}
 .ddmmm .month{display:block; text-align:center; background:#f5fafa; padding:2px 0;font-size:12px; border-top:1px solid #C1DAD7;}
 .ddmmm-x{width:36px; height:42px;margin:0px 10px 10px 0; float:left; visibility:hidden;}
-.edit-btn, .delete-btn{float:right; width:50px; padding:10px 0 10px 20px;}
+.edit-btn, .delete-btn, .deactive, .reactive{width:50px; padding:10px 0 10px 20px;}
 .edit-btn{background:url(/images/edit-btn-bg.gif) no-repeat 0 50%;}
+.deactive{background:url("/images/ico_deactivate.gif") no-repeat 0 50%; color:red;}
+.reactive{background:url("/images/ico_activate.gif") no-repeat 0 50%; color:#169609;}
+
 .add-more{padding:8px 0 0 0;}
 
 .delete-btn{background:url(/images/delete-btn-bg.gif) no-repeat 0 50%;}
@@ -448,7 +450,8 @@ td.class-name-top, td.class-name-bottom {height:9px; padding:0px; margin:0px; li
 .teach-name-backgr {background:url("/images/teach-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:125px; padding:0 5px;}
 td.teach-name-top, td.teach-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
 
-.page-links{text-align:center;}
+.page-links{text-align:center;padding:10px;}
+.page-links a{padding:4px;}
 
 /* Registration*/
 .register-steps {float:left; margin:-75px 0 0 15em;}

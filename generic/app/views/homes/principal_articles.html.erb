@@ -18,7 +18,7 @@
                      <span class="date"><%=  principal.created_at.strftime("%d")%></span>
                      <span class="month"><%=  principal.created_at.strftime("%b")%></span>
                    </div>
-                     <h3><%= link_to "#{principal.title}", url(:home, principal.id) %></h3>
+                     <h3><%= link_to "#{principal.title}", url(:home, principal.id, :label => 'principal') %></h3>
                      <p class="separator"><%= snippet(principal.content, 50) %></p>
                  </div>
             </div>

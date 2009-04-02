@@ -23,9 +23,10 @@
   <% end %>
       <p class="separator"><%= san_content(@announcement.content) %></p>
         <% if @announcement.label == "from_principal" %>
-             <p> <%= link_to "< Back to All Articles", url(:principal_articles, :label => 'principal')  %> </p>
-                 <%= link_to 'Previous', url(:home, @announcement.previous_id),:class => "alignleft" if @announcement.previous_id %>
-                 <%= link_to 'Next',  url(:home, @announcement.next_id),:class => "alignright" if @announcement.next_id %>
+             <p> 
+                 <%= link_to '< Previous', url(:home, @announcement.previous_id, :label => 'principal'),:class => "alignleft" if @announcement.previous_id %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 
+                 <%= link_to "Back to All Articles", url(:principal_articles, :label => 'principal')  %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                 <%= link_to 'Next >',  url(:home, @announcement.next_id, :label => 'principal'),:class => "alignright" if @announcement.next_id %> </p>
         <% elsif params[:label] == "class_ann" %>
                 <%= link_to " back to All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>
                 <%= link_to 'Previous', url(:home, @announcement.previous_class_announcement, :label => "class_ann"), :class => "alignleft" if @announcement.previous_class_announcement %>
