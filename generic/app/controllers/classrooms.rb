@@ -29,6 +29,7 @@ class Classrooms < Application
                   if @classroom.class_type == "Sports"
                      @classroom.class_name = "Sports"
                      if @classroom.valid?
+                        @classroom.activate = true
                         @classroom.save
                         ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "Athletic Director"})
                         redirect resource(:classrooms)
@@ -39,6 +40,7 @@ class Classrooms < Application
                         render :new
                      end
                   else
+                     @classroom.activate = true
                      @classroom.save
                      ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
                      redirect resource(:classrooms)
@@ -49,6 +51,7 @@ class Classrooms < Application
                      if @classroom.class_type == "Sports"
                         @classroom.class_name = "Sports"
                         if @classroom.valid?
+                           @classroom.activate = true
                            @classroom.save
                            @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "Athletic Director"})
                             s = teachers.zip(role)
@@ -63,6 +66,7 @@ class Classrooms < Application
                            render :new
                          end
                      else
+                         @classroom.activate = true
                          @classroom.save
                          @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
                           s = teachers.zip(role)
@@ -201,8 +205,17 @@ class Classrooms < Application
         @class.destroy
         render :edit, :id => @classroom.id
      else
-        Classroom.find(params[:id]).destroy
-        redirect resource(:classrooms) 
+        if params[:label] == "deactivate"
+           @classroom = Classroom.find(params[:id])
+           @classroom.activate = false
+           @classroom.save
+           redirect resource(:classrooms)
+        else
+           @classroom = Classroom.find(params[:id])
+           @classroom.activate = true
+           @classroom.save
+           redirect resource(:classrooms)
+        end
      end
    end
     

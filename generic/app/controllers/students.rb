@@ -14,13 +14,13 @@ class Students < Application
   
   def new
      @student = Student.new
-     @class_rooms = @current_school.classrooms.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @protector = Protector.new
      render
   end
   
   def create
-     @class_rooms = @current_school.classrooms.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @student = @current_school.students.new(params[:student])
      @protector = @current_school.protectors.new(params[:protector])
      if ( ( (params[:f_name_parent2] == "") && (params[:l_name_parent2] == "") ) && (params[:email_parent2] == "") )
@@ -113,14 +113,14 @@ class Students < Application
   
   def edit
      @student = Student.find(params[:id])
-     @class_rooms = @current_school.classrooms.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @sp = @student.protectors
      render
   end
   
   def update
      @student = Student.find(params[:id])
-     @class_rooms = @current_school.classrooms.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @sp = @student.protectors
      @study_id = Study.find_by_student_id(@student.id)
      protector_id = @sp.collect{|x| x.id }
@@ -351,13 +351,13 @@ class Students < Application
    private
    
    def classrooms
-      @class = @current_school.classrooms.find(:all)
+      @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
       room = @class.collect{|x| x.class_name }
       @classrooms = room.insert(0, "All Students")
    end  
    
    def school_staff
-      @class = @current_school.classrooms.find(:all)
+      @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
       room = @class.collect{|x| x.class_name }
       @teachers = room.insert(0, "All Staff")
    end

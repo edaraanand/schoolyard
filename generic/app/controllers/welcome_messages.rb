@@ -60,14 +60,14 @@ class WelcomeMessages < Application
   private
   
   def classrooms
-     @class = @current_school.classrooms.find(:all)
+     @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      room = @class.collect{|x| x.class_name }
      @classrooms = room.insert(0, "All Messages")
      @classrooms = room.insert(1, "Home Page")
   end
   
   def rooms
-      @class = @current_school.classrooms.find(:all)
+      @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
       room = @class.collect{|x| x.class_name }
       @classrooms = room.insert(0, "Home Page")
   end

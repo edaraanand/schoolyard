@@ -13,12 +13,12 @@ class Calendars < Application
   
   def new
      @calendar = Calendar.new
-     @class_rooms = @current_school.classrooms.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      render
   end
   
   def create
-     @class_rooms = @current_school.classrooms.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @calendar = @current_school.calendars.new(params[:calendar])
      i=0
      if @calendar.valid?
@@ -43,7 +43,7 @@ class Calendars < Application
 
   def edit
      @calendar = Calendar.find(params[:id])
-     @class_rooms = @current_school.classrooms.find(:all) 
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true]) 
      @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
      @allowed = 1 - @attachments.size
      render
@@ -58,7 +58,7 @@ class Calendars < Application
   end
 
   def update
-     @class_rooms = @current_school.classrooms.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @calendar = Calendar.find(params[:id])
      @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
      @allowed = 1 - @attachments.size
@@ -106,7 +106,7 @@ class Calendars < Application
     if params[:label] == "attachment"
         @attachment = Attachment.find(params[:id])
         @calendar = Calendar.find_by_id(@attachment.attachable_id)
-        @class_rooms = @current_school.classrooms.find(:all)
+        @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
         @attachment.destroy
         @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
         @allowed = 1 - @attachments.size
@@ -154,7 +154,7 @@ class Calendars < Application
   private
   
   def classrooms
-      @class = @current_school.classrooms.find(:all)
+      @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
       room = @class.collect{|x| x.class_name }
       @classrooms = room.insert(0, "All Events")
   end

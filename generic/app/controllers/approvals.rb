@@ -96,7 +96,7 @@ class Approvals < Application
   def approval_review
      @parent = @current_school.parents.find(params[:id])
      @students = @current_school.students.find(:all)
-     @classrooms = @current_school.classrooms.find(:all)
+     @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
      @exist = "Following Student was found"
      @not_exist = "Following Student was not found"
@@ -179,7 +179,7 @@ class Approvals < Application
   end
    
   def classrooms
-     @class = @current_school.classrooms.find(:all)
+     @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      room = @class.collect{|x| x.class_name }
      @classrooms = room.insert(0, "HomePage")
   end
