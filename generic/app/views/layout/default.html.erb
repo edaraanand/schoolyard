@@ -14,6 +14,7 @@
           </ul>
         </li>
         <% @announcements = @current_school.announcements.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ]) %>
+        <% @sports_class = @current_school.classrooms.find(:first, :conditions => ['class_name = ? and activate =  ?', "Sports", true] ) %>
         <li>Content<ul>
           <li <% if @selected == "approve" %> class="on" <% end %> class="count"><%= link_to_if((right = "approve_announcement"), "Pending Approvals", url(:approvals) ) %><span><b><%= @announcements.length %></b></span></li>
           <li <% if @selected == "from_principal" %> class="on" <% end %>><%= link_to_if((right = "from_principal"), "From the Principal", url(:from_principals)) %></li>
@@ -24,7 +25,9 @@
           <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_if((right = "homework"), "Homeworks", url(:home_works) )  %></li>
       		<li><%#= link_to_if((right = "grades"), "Grades/Reports" ) %></li>
       		<li <% if @selected == "e_links" %> class="on" <% end %>><%= link_to_if((right = "external_links"), "External Links", url(:external_links) ) %></li>
-      		<li <% if @selected == "teams" %> class="on" <% end %>><%= link_to_if((right = "teams"), "Sports Teams", url(:teams)) %></li>
+          <% unless @sports_class.nil? %>
+      		    <li <% if @selected == "teams" %> class="on" <% end %>><%= link_to_if((right = "teams"), "Sports Teams", url(:teams)) %></li>
+          <% end %>
       		<li <% if @selected == "forms" %> class="on" <% end %>><%= link_to_if((right = "forms"), "Forms", url(:forms)  ) %></li>
       		<li><%#= link_to "Advertising" %></li>
           </ul>                                                                                                      

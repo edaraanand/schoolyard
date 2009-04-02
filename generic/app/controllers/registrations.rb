@@ -296,7 +296,7 @@ class Registrations < Application
   private
   
   def month_year
-     @classrooms = @current_school.classrooms .find(:all)
+     @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @years = (1999..2020).to_a 
      @months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   end

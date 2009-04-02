@@ -46,12 +46,14 @@
          <% end %>
             <li><%= link_to "Logout", url(:logout) %></li>
         </ul>
-      </div>
+      </div><% @sports_class = @current_school.classrooms.find(:first, :conditions => ['class_name = ? and activate =  ?', "Sports", true] ) %>
       <div id="navbar"><!--The Main Navigation -->
                <ul id="navigation">
           <li <% if @select == "home" %> class="current" <% end %> ><%= link_to "<span>Home</span>", url(:homes) %></li>
           <li <% if @select == "classrooms" %> class="current" <% end %> ><a rel="facebox" href="#info"><span>Classrooms</span></a></li>
-		      <li <% if @select == "sports" %> class="current" <% end %> ><%= link_to "<span>Sports</span>", url(:sports) %></li>
+          <% unless @sports_class.nil? %>
+		          <li <% if @select == "sports" %> class="current" <% end %> ><%= link_to "<span>Sports</span>", url(:sports) %></li>
+          <% end %>
           <li <% if @select == "forms" %> class="current" <% end %> ><%= link_to "<span>Forms</span>", url(:form_files) %></li>
           <li <% if @select == "directory" %> class="current" <% end %>><%= link_to "<span>Directory</span>", url(:directory) %></li>
           <li <% if @select == "events" %> class="current" <% end %>><%= link_to "<span>Events</span>", url(:events) %></li>
