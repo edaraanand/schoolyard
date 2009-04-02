@@ -4,7 +4,7 @@
   <%if @calendars.empty?%>
     <span class="subText">There are no events planned at this time</span>
   <%else%>
-    <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id) %>
+    <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id)  , :class=> "pdf"%>
      <br/><br/>
        <% cdate=""
          for calendar in @calendars %>
@@ -48,7 +48,7 @@
   <%if @home_works.empty? %>
     <span class="subText">There are no Homework assignments at this time</span>
   <%else%>
-      <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id) %>
+      <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id)  , :class=> "pdf"%>
        <% for homework in @home_works %>
              <div class="data-block short-block">
               <span class="hidden">

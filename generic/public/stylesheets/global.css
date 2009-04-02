@@ -19,7 +19,7 @@
 !!!-----------------------------------------*/
 
 /* Full Reset */
-html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, font, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td {margin:0; padding:0; border:0; outline:0; font-weight:inherit;	font-style: inherit; font-size: 100%; font-family:inherit; vertical-align:baseline;}
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, font, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,dl, dt, dd, ol, ul, li,fieldset, form, label, legend, caption {margin:0; padding:0; border:0; outline:0; font-weight:inherit;	font-style: inherit; font-size: 100%; font-family:inherit; vertical-align:baseline;}
 :focus{outline:0;}
 body{line-height:1; color:black; background:white;}
 ol, ul{list-style:none;}
@@ -27,6 +27,7 @@ table{border-collapse:separate; border-spacing:0;}
 caption, th, td{text-align:left; font-weight:normal;}
 blockquote:before, blockquote:after,q:before, q:after{content:"";}
 blockquote, q{quotes:"" "";}
+td{vertical-align="top"}
 
   /*End Reset*/
 
@@ -424,6 +425,7 @@ ul#pending_files li a{padding:0 10px; color:#f00; text-transform:lowercase;}
 .previewWrapper .hrule{padding:10px; text-align:center; border-top:1px solid #ccc;}
 
 .separator {border-bottom:1px dashed #e8e8e8; padding:10px 0;}
+td.separator{padding:8px;}
 .subLink {padding:0 10px;}
 
 
@@ -460,3 +462,5 @@ td.teach-name-top, td.teach-name-bottom {height:9px; padding:0px; margin:0px; li
 #register h1 {font-size:200%; padding:10px 0; border-bottom:1px solid #ccc; margin:0 0 30px 0;}
 .reject {color:red;}
 .approved {color:#169609!important; background:#fff}
+.pdf{padding:2px 0 2px 25px; background:url("/images/ico_pdf.gif") no-repeat 0 50%;}
+h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;}

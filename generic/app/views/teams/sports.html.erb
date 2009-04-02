@@ -4,7 +4,7 @@
   <%if @calendars.empty?%>
     <span class="subText">There are no events planned at this time</span>
   <%else%>
-    <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id) %>
+    <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id) , :class=> "pdf" %>
      <br/><br/>
        <% cdate=""
          for calendar in @calendars %>

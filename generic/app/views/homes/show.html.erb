@@ -9,7 +9,7 @@
 <% else %>
       <div>
          <h2>Announcements > <%= @announcement.title %></h2>
-         <%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) %><br/><br/>
+         <%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) , :class=> "pdf" %><br/><br/>
 <% end %>
      
 
