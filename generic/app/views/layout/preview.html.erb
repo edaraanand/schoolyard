@@ -50,6 +50,7 @@
           <li><%= link_to "<span>Forms</span>", url(:form_files) %></li>
           <li><%= link_to "<span>Directory</span>", url(:directory) %></li>
           <li><%= link_to "<span>Events</span>", url(:events) %></li>
+          <li><%= link_to "<span>Contact Us</span>", url(:help) %></li>
           <% @view = Access.find_by_name('view_all') %>
           <% @accesses = Access.find(:all).delete_if{|x| x.name == "view_all" } %>
              <% @a_p = session.user.access_peoples.delete_if{|x| x.access_id == @view.id } %>
@@ -62,7 +63,7 @@
                     <% @accesses.delete_if{ have_access } %>
                     
                  <% if have_access %>
-                     <li><%= link_to "<span>Administration</span>", url(:schools), :class=> "admin" %></li>
+                     <li><%= link_to "<span>Administration</span>", url(:schools) %></li>
                  <% end %>
              <% end %>
            <% @accesses.each do |f| %>
@@ -74,10 +75,10 @@
                     <% @accesses.delete_if{ have_access } %>
                     
                  <% if have_access %>
-                 <li><%= link_to "<span>Your Announcements</span>", url(:parents), :class=> "admin" %></li>
+                 <li><%= link_to "<span>Your Announcements</span>", url(:parents) %></li>
                  <% end %>
            <% end %>
-              <li><%= link_to "<span>Contact Us</span>", url(:help) %></li>
+              
         </ul>
         <div class="hrule clear"><hr /></div><!-- gives bottom border to the Navigation.-->
       </div><!--Navbar End-->

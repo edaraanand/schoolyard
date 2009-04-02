@@ -12,9 +12,9 @@
                 <%= text_field  :first_name,  :label => "Name", :class => "short " %>
                 <%= text_field  :last_name, :class => "short apart" %>
 	          </li>
-             <li><label>Contact Email</label>  <%= @person.email %> </li>
-             <li><%= text_field :phone,  :label => "Phone Number" %></li>
-            <li><%= text_area :person_bio,  :label => "Brief Bio" %></li>
+             <li><label>Email</label>  <%= email(@person.email) %> </li>
+             <li><%= text_field :phone,  :label => "Phone Number (optional)" %></li>
+            <li><%= text_area :person_bio,  :label => "Your Bio" %></li>
         </ul>
             <div class="save-cancel">
                 <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:staff_account), :class => "cancel" %>

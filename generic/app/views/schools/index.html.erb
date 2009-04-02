@@ -15,7 +15,9 @@
     <dt>Phone</dt>
     <dd><%= @current_school.phone ? number_to_phone(@current_school.phone, :area_code => true)  : "<span class='noText'>not specified</span>"%></dd>
     <dt>E-Mail</dt>
-    <dd><%= @current_school.email ? @current_school.email  : "<span class='noText'>not specified</span>"%></dd>
+    <dd><%= @current_school.email ? email(@current_school.email)  : "<span class='noText'>not specified</span>"%></dd>
   </dl>
+
   <% end %>
 </fieldset>
+  <hr size="1"/>
