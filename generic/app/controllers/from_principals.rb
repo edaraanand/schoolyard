@@ -111,8 +111,9 @@ class FromPrincipals < Application
        @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
        unless params[:image][:filename] == nil
            if @content_types.include?(params[:image][:content_type])
-              @att = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"])
-              @att.destroy
+                unless @attachment.nil?
+                       @attachment.destroy
+                end
               @attachment = Attachment.create( :attachable_type => "principal_image",
                                                :filename => params[:image][:filename],
                                                :content_type => params[:image][:content_type],
@@ -131,31 +132,7 @@ class FromPrincipals < Application
        end
    end
    
-   #def settings_update
-     #raise params.inspect
-    #  errors.add_to_base("You must choose a file to upload") unless self.filename
-     # unless self.filename == nil
-         # Images should only be GIF, JPEG, or PNG
-      #    [:content_type].each do |attr_name|
-       #      enum = attachment_options[attr_name]
-        #  unless enum.nil? || enum.include?(send(attr_name))
-         #    errors.add_to_base("You can only upload images (GIF, JPEG, or PNG)")
-          #end
-      #end
-         # Images should be less than 5 MB
-       #    [:size].each do |attr_name|
-        #   enum = attachment_options[attr_name]
-         #  unless enum.nil? || enum.include?(send(attr_name))
-          #     errors.add_to_base("Images should be smaller than 5 MB in size")
-           #end
-      #end
-
-    #end
-  #end
-   #  render
-   #end
-   
-   
+  
    private
    
    def access_rights
@@ -173,9 +150,6 @@ class FromPrincipals < Application
      end
   end  
   
-  
-    
 
-  
   
 end
