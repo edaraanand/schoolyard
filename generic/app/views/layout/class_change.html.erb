@@ -16,7 +16,7 @@
         <li>&nbsp;</li>
         <li class="change"><a rel="facebox" href="#info"> Change Classroom</a></li>
       </ul>
-        <% @classrooms = @current_school.classrooms.find(:all, :conditions => ['class_name != ?', "Sports"]) %>
+        <% @classrooms = @current_school.classrooms.find(:all, :conditions => ['class_name != ? and activate = ?', "Sports", true]) %>
       <ul id="menu1">
         <% s = @classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
               <% t = s.delete_if{ |x| x.role != "class_teacher" } %>

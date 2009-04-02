@@ -7,7 +7,7 @@
       </div><!--Content End-->
     </div><!--Content Wrap End -->
     
-                 <% @classrooms = @current_school.classrooms.find(:all, :conditions => ['class_name != ?', "Sports"]) %>
+                 <% @classrooms = @current_school.classrooms.find(:all, :conditions => ['class_name != ? and activate = ?', "Sports", true]) %>
     <div id="info" style="display:none;">
          <h3>Please Select the classroom you would like to visit</h3>
           <p>Classes:</p> <ul>
