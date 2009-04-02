@@ -46,15 +46,7 @@
       
     </div><!--Content Wrap End -->  
 
-    <div id="info" style="display:none;">
-          <b>Please Select the classroom you would like to visit</b>
-          <p>Classes:  </p>
-           <ul>
-              <% @classrooms.each do |f| %>
-                 <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
-              <% end %>
-          </ul>
-    </div> 
+<%= partial 'common/change' %>
     
     
     
