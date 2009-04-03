@@ -48,9 +48,9 @@
                 </td><td class="separator">
                    <%= @staff.phone ? number_to_phone(@staff.phone, :area_code => true)  : "<span class='noText'>not specified</span>"%>
                 </td></tr>
-                
-                  <tr><td colspan="2"><%= san_content(@staff.person_bio) %></td></tr>
-                
+                  <% unless @staff.person_bio.nil? %>
+                     <tr><td colspan="2"><%= san_content(@staff.person_bio) %></td></tr>
+                     <% end %>
                 </table>
   
         <br/>
