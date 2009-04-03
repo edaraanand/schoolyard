@@ -56,7 +56,7 @@
           <% end %>
           <li <% if @select == "forms" %> class="current" <% end %> ><%= link_to "<span>Forms</span>", url(:form_files) %></li>
           <li <% if @select == "directory" %> class="current" <% end %>><%= link_to "<span>Directory</span>", url(:directory) %></li>
-          <li <% if @select == "events" %> class="current" <% end %>><%= link_to "<span>Events</span>", url(:events) %></li>            
+          <li <% if @select == "events" %> class="current" <% end %>><%= link_to "<span>Calendars</span>", url(:events) %></li>            
            <li <% if @select == "contact" %> class="current" <% end %> ><%= link_to "<span>Contact Us</span>", url(:help) %></li>
            <% @view = Access.find_by_name('view_all') %>
            <% @accesses = Access.find(:all).delete_if{|x| x.name == "view_all" } %>
