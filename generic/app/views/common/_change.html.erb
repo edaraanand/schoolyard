@@ -3,7 +3,7 @@
           <p>Classes: </p>
             <ul><% @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ? and class_name != ?', true, "Sports"]) %>
               <% @classrooms.each do |f| %>
-                  <li><%= link_to "#{f.class_name}".upcase, url(:class_details, :id => "#{f.id}" ) %></li>
+                  <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => "#{f.id}" ) %></li>
               <% end %>
           </ul>
     </div> 

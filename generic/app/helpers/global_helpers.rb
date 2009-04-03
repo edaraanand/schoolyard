@@ -35,8 +35,8 @@ module Merb
         end
         if have_access
            link_to(name, url)
-        else
-           '<span class=cancel>'+name+' </span>'
+          # else
+          # '<span class=cancel>'+name+' </span>'
         end
      end
 

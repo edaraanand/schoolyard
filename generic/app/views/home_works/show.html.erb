@@ -1,6 +1,6 @@
 <div id="fullpage">
   
-  <h2 class="current-page"> Homework for <%= @home_work.classroom.class_name %></h2>
+  <h2 class="current-page"> Homework for <%= @home_work.classroom.class_name.titleize %></h2>
   <%= link_to "Download as PDF", url(:home_works_pdf, :id => @home_work.id, :label => "single") , :class=> "pdf" %>
  
             
