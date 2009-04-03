@@ -8,18 +8,14 @@
         <% @alert_people.each do |l| 
             have_alert = (f.id == l.alert_id) 
             break if have_alert	 end %>
-            
-          <% if have_alert %>
-               <dt>
-                 <input type="checkbox" class="check" checked="true" name="alert[alert_ids][]" value="<%= f.id %>" />
-               </dt>
-               <dd><%= f.full_name %></dd>
-          <% else %>
-               <dt>
-                 <input type="checkbox" class="check" name="alert[alert_ids][]" value="<%= f.id %>" />
-               </dt>
-                 <dd><%= f.full_name %></dd>
-          <% end %>
+            <dt>
+               <input type="checkbox" class="check"
+               <% if have_alert %>
+                  checked="true"
+              <% end %>
+                name="alert[alert_ids][]" value="<%= f.id %>" />
+            </dt>
+            <dd><%= f.full_name %></dd>
           
      <% end %>
 </dl>

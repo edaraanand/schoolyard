@@ -14,7 +14,7 @@
              <ul id="menu">
              <li <% if @selected == "all_forms" %> class="on" <% end %> ><%= link_to "All Forms", url(:form_files, :l => "all_forms", :label => "forms") %></li>
                    <% @classes.each do |f| %>
-                 <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".upcase, url(:form_files, :id => "#{f.id}", :label => "forms") %></li>
+                 <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:form_files, :id => "#{f.id}", :label => "forms") %></li>
                    <% end %>
              </ul>
      <% elsif params[:label] == "calendars" %>
@@ -26,7 +26,7 @@
            <ul id="menu">
                  <li <% if @selected == "all_events" %> class="on" <% end %> ><%= link_to "All Events", url(:events, :l => "all_events", :label => "calendars") %></li>
                  <% @classes.each do |f| %>
-                     <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".upcase, url(:events, :id => "#{f.id}", :label => "calendars") %></li>
+                     <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:events, :id => "#{f.id}", :label => "calendars") %></li>
                  <% end %>
            </ul>
      <% else %>
