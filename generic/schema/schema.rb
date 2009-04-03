@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 57) do
+ActiveRecord::Schema.define(:version => 58) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -213,7 +213,12 @@ ActiveRecord::Schema.define(:version => 57) do
     t.string   "domain"
     t.string   "folder"
     t.string   "subdomain"
-    t.text     "address"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip_code"
+    t.string   "fax"
   end
 
   create_table "spot_lights", :force => true do |t|
