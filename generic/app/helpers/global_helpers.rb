@@ -26,6 +26,19 @@ module Merb
         end
      end
      
+     def link_to_right(right, name, url = "")
+        @acc = Access.find_by_name(right)
+        have_access = false
+        session.user.access_peoples.each do |f|
+          have_access = f.all || (@acc.id == f.access_id)
+          break if have_access
+        end
+        if have_access
+           link_to(name, url)
+        else
+           '<span class=cancel>'+name+' </span>'
+        end
+     end
 
      def truncate(text, *args)
          options = args.extract_options!

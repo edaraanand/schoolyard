@@ -7,14 +7,18 @@ class WelcomeMessages < Application
   
   
   def index
-     classrooms
-     @welcome_messages =@current_school.welcome_messages.find(:all, :conditions => ['access_name =?', params[:access_name]])
-     if params[:access_name].nil?
-       @welcome = @current_school.welcome_messages.find(:all)
-     end
-     if params[:access_name] == "All Messages"
-       @all_messages = @current_school.welcome_messages.find(:all)
-     end
+       classrooms
+    if params[:label] == "home_messages"
+       @w_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name =?', "Home Page"])
+    else
+       @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name =?', params[:access_name]])
+       if params[:access_name].nil?
+          @welcome = @current_school.welcome_messages.find(:all)
+       end
+       if params[:access_name] == "All Messages"
+          @all_messages = @current_school.welcome_messages.find(:all)
+       end
+    end
      render
   end
   
@@ -24,13 +28,14 @@ class WelcomeMessages < Application
   end
 
   def create
-     @welcome_message = @current_school.welcome_messages.new(params[:welcome_message])
-     @welcome_message.person_id = @current_user.id
-     if @welcome_message.save
-	      redirect resource(:welcome_messages)
-     else
-	      render :new
-     end
+    #if params[:access_name] != ""
+       @welcome_message = @current_school.welcome_messages.new(params[:welcome_message])
+       @welcome_message.person_id = @current_user.id
+        if @welcome_message.save
+	         redirect resource(:welcome_messages)
+        else
+	         render :new
+        end
   end
   
   def edit

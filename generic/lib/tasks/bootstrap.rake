@@ -5,14 +5,19 @@ namespace :bootstrap do
    task :school do
      @school = School.create({
          :school_name => "St Benecia School",
-         :phone => "9998805789",
+         :phone => "7077451266",
+         :address1 => "935 East 5th Street",
+         :city => "Benecia",
+         :state => "CA",
+         :zip_code => "94510",
+         :fax => "7077451841",
          :email => "sdb@schoolyardapp.net",
          :domain => "http://sdb.schoolyardapp.net",
          :folder => "schoolyardappcom",
          :subdomain => 'sdb'
         })
    end
-   
+                                             
   desc "creating Access for the people"
   task :access => :school do
     accesses = {
