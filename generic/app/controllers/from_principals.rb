@@ -121,7 +121,7 @@ class FromPrincipals < Application
                 )
               File.makedirs("public/uploads/principal_images")
               FileUtils.mv(params[:image][:tempfile].path, "public/uploads/principal_images/#{@attachment.filename}")
-              redirect resource(:from_principals)   
+              redirect url(:settings)   
            else
                flash[:error1] = "You can only upload images"
                render :settings

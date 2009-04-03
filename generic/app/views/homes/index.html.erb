@@ -66,9 +66,9 @@
      <ul class="last">
        <% @classrooms.each do |f| %>
              <% if f.class_name == "Sports" %>
-                   <li><%= link_to "#{f.class_name}", url(:sports) %></li>
+                   <li><%= link_to "#{f.class_name}".upcase, url(:sports) %></li>
              <% else %>
-                   <li><%= link_to "#{f.class_name}", url(:class_details, :id => f.id) %></li>
+                   <li><%= link_to "#{f.class_name}".upcase, url(:class_details, :id => f.id) %></li>
              <% end %>
        <% end %>
       </ul>
