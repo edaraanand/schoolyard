@@ -11,7 +11,8 @@
             <div class="calendar-block" style="width:480px;">
             <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
                   cdate=calendar.start_date.strftime("%B %d %Y") %>
-                 <h3><%= cdate %></h3>  
+                  <h3>Calendars for <%= calendar.class_name.upcase %></h3> 
+                  <%= cdate %>
             <% end %> 
 
             <ul class="calendar-items">
@@ -145,7 +146,14 @@
             <li>ASDF</li>
             <li>ASDF</li>
           </ul>-->
-
+      <% unless session.user.type == "Parent" %>
+        <h3>Manage Classroom</h3>
+            <ul class="last">
+                <li <% if @selected == "calendars" %> class="on" <% end %>><%= link_to_right((right = "calendar"), "Manage Calendars", url(:calendars) )  %></li>
+                <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_right((right = "homework"), "Manage Homeworks", url(:home_works) )  %></li>
+                <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements)) %></li>
+            </ul>
+         <% end %>
         <h3>Current Homework</h3>
           <ul class="last">
             <% @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ? and due_date >= ?', @current_school.id, @date] ) %>
