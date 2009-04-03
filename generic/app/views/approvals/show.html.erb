@@ -13,7 +13,7 @@
                       <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
 	                 </div>
               <% end %>
-              <h3><%= @announcement.title %></h3><span class="subText">Announcement for: <%= @announcement.access_name %></span><br/>
+              <h3><%= @announcement.title %></h3><span class="subText">Announcement for: <%= @announcement.access_name.upcase %></span><br/>
               <span class="subText">Created by <%= @announcement.person.name %>, expires on <%= @announcement.expiration.strftime("%d %b %Y") %></span>
                <p class="post-content"><%= san_content(@announcement.content) %></p>
              
