@@ -98,8 +98,8 @@ class Approvals < Application
      @students = @current_school.students.find(:all)
      @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
-     @exist = "Following Student was found"
-     @not_exist = "Following Student was not found"
+     @exist = "Student details entered by the parent match the school records"
+     @not_exist = "Student details entered by the parent do not match the school records"
      render
   end
   
