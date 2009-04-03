@@ -32,12 +32,10 @@ class Schools < Application
   def update
      @school = School.find(params[:id])
      if @school.update_attributes(params[:school]) 
-         @school.address = params[:school][:address]
-         @school.save
-         redirect resource(:schools)                                     
-      else
+        redirect resource(:schools)                                     
+     else
 	       render :edit
-      end
+     end
   end
   
   private
