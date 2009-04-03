@@ -6,7 +6,7 @@
      <img src="images/principal.png" alt="From The Principal"/>
   <% end %>
   <%if @announcements.blank?%>
-    <p class="subText">There are no messages right now.</p>
+    <p class="subText">There are no messages at this time.</p>
   <%else%>
   
       <% for principal in @from_principals %>
@@ -37,7 +37,7 @@
 <h2 class="home">Announcements</h2>
 
 <%if @announcements.blank?%>
-  <p class="subText">There are no announcements currently.</p>
+  <p class="subText">There are no Announcements at this time.</p>
 <%else%>
    <% for announcement in @announcements %>
 
@@ -55,7 +55,7 @@
                   <% end %>
            </div>           
       <% else %>
-           <p class="separator">There are no announcements at this time.</p>
+           <p class="separator">There are no Announcements at this time.</p>
         
       <% end %>    
    <% end %>
