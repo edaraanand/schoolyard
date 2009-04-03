@@ -20,36 +20,41 @@
 <%if @cals.empty?%>
   <span class="subText">There are no events planned at this time</span>
 <%else%>
-       <% cdate=""
-      for calendar in @cals %>
-         <div class="calendar-block" style="width:480px;">
-         <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
-               cdate=calendar.start_date.strftime("%B %d %Y") %>
-              <h3><%= cdate %></h3>  
-         <% end %> 
-    
-         <ul class="calendar-items">
-                <li>
-                      <% unless calendar.start_time.nil? %>
-                         <%= calendar.start_time.strftime("%I:%M %p") %> 
-                      <%else%>
-                        All day event
-                       <% end %>
-                       <% unless calendar.end_time.nil? %>
-                         to <%= calendar.end_time.strftime("%I:%M %p") %>
-                       <% end %>
-                       <%= calendar.title %>
-                       <% @attachments = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
-                       <% unless @attachment.nil? %>
-                         &nbsp;<%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %>
-                       <% end %>
-                       <%unless calendar.location.blank? %>
-                         (Location: <%= calendar.location %>)
-                       <%end%>
-                      </li>
+       <% cdate="" 
+       for calendar in @cals %>
+       
+
+              <% if(cdate!=calendar.start_date) 
+                cdate=calendar.start_date %>
+                <div class="ddmmm" style="float:left">
+                  <span class="date"><%=  cdate.strftime("%d")%></span>
+                  <span class="month"><%= cdate.strftime("%b")%></span>
+                </div>
+              <% end %> 
+              <div style="float:left">
+             <ul class="calendar-items">
+                    <li>
+                          <% unless calendar.start_time.nil? %>
+                             <%= calendar.start_time.strftime("%I:%M %p") %> 
+                          <%else%>
+                            All day event
+                           <% end %>
+                           <% unless calendar.end_time.nil? %>
+                             to <%= calendar.end_time.strftime("%I:%M %p") %>
+                           <% end %>
+                           <%= calendar.title %>
+                           <% @attachments = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
+                           <% unless @attachment.nil? %>
+                             &nbsp;<%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %>
+                           <% end %>
+                           <%unless calendar.location.blank? %>
+                             (Location: <%= calendar.location %>)
+                           <%end%>
+                          </li>
                             
-         </ul>
-    </div>
+             </ul>
+        </div>
+        <p class="separator clear">&nbsp;</p>
              <% #@calendars.delete_if{|c| c.start_date == cdate } %>
          
   <% end %>

@@ -56,36 +56,35 @@
           <% end %>
           <li <% if @select == "forms" %> class="current" <% end %> ><%= link_to "<span>Forms</span>", url(:form_files) %></li>
           <li <% if @select == "directory" %> class="current" <% end %>><%= link_to "<span>Directory</span>", url(:directory) %></li>
-          <li <% if @select == "events" %> class="current" <% end %>><%= link_to "<span>Events</span>", url(:events) %></li>
-          <% @view = Access.find_by_name('view_all') %>
-          <% @accesses = Access.find(:all).delete_if{|x| x.name == "view_all" } %>
-             <% @a_p = session.user.access_peoples.delete_if{|x| x.access_id == @view.id } %>
-             <% @accesses.each do |f| %>
-               <% have_access = false %>
-               <% @a_p.each do |l| 
-                   have_access =  l.all || (f.id == l.access_id) 
-                   break if have_access	  
-                   end %>
-                    <% @accesses.delete_if{ have_access } %>
-                  
-                 <% if have_access %>
-                     <li <% if @select == "schools" %> class="current" <% end %>><%= link_to "<span>Administration</span>", url(:schools), :class=> "admin" %></li>
-                 <% end %>
-             <% end %>
-             <% @accesses.each do |f| %>
-           <% have_access = true %>
-               <% @a_p.each do |l| 
-                 have_access = (l.access_id == @view.id) 
-                   break if have_access	  
-                   end %>
-                    <% @accesses.delete_if{ have_access } %>
-                    
-                 <% if have_access %>
-                 <li <% if @select == "parent_announcements" %> class="current" <% end %>><%= link_to "<span>Your Announcements</span>", url(:parents), :class=> "admin" %></li>
-                 <% end %>
-           <% end %>
-            
+          <li <% if @select == "events" %> class="current" <% end %>><%= link_to "<span>Calendars</span>", url(:events) %></li>            
            <li <% if @select == "contact" %> class="current" <% end %> ><%= link_to "<span>Contact Us</span>", url(:help) %></li>
+           <% @view = Access.find_by_name('view_all') %>
+           <% @accesses = Access.find(:all).delete_if{|x| x.name == "view_all" } %>
+              <% @a_p = session.user.access_peoples.delete_if{|x| x.access_id == @view.id } %>
+              <% @accesses.each do |f| %>
+                <% have_access = false %>
+                <% @a_p.each do |l| 
+                    have_access =  l.all || (f.id == l.access_id) 
+                    break if have_access	  
+                    end %>
+                     <% @accesses.delete_if{ have_access } %>
+
+                  <% if have_access %>
+                      <li <% if @select == "schools" %> class="current" <% end %>><%= link_to "<span>Administration</span>", url(:schools) %></li>
+                  <% end %>
+              <% end %>
+              <% @accesses.each do |f| %>
+            <% have_access = true %>
+                <% @a_p.each do |l| 
+                  have_access = (l.access_id == @view.id) 
+                    break if have_access	  
+                    end %>
+                     <% @accesses.delete_if{ have_access } %>
+
+                  <% if have_access %>
+                  <li <% if @select == "parent_announcements" %> class="current" <% end %>><%= link_to "<span>Your Announcements</span>", url(:parents) %></li>
+                  <% end %>
+            <% end %>
                      
         </ul>
         <div class="hrule clear"><hr /></div><!-- gives bottom border to the Navigation.-->

@@ -9,21 +9,26 @@
 <div class="data-block short-block">
   <% for classroom in @classrooms %>
       <div class="data">
-   
            <ul>
-               <li><h3><%= classroom.class_name %></h3></li>
+               <li><h3><%= classroom.class_name %>
+                        <% if classroom.activate == false %>
+                          <span class="cancel">(Inactive)</span>
+                        <%end%>
+                        
+                 
+                 
+                 </h3></li>
                   <% s = classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
                   <% s.each do |f| %>
                      <li><%= f.role.titleize %> : <%= f.person.name %></li>
                   <% end %>
            </ul>
       </div>
-       <%= link_to "Edit",  resource(classroom, :edit), :class=> "edit-btn" %>
-     
+       <%= link_to "Edit",  resource(classroom, :edit), :class=> "edit-btn" %>&nbsp;&nbsp;
        <% if classroom.activate == true %>
-            <a rel="facebox" href="#<%= classroom.id %>" class="cancel" >De Activate </a>
+            <a rel="facebox" href="#<%= classroom.id %>" class="deactive" >De-Activate </a>
        <% else %>
-           <a rel="facebox" href="#<%= classroom.id %>" class="cancel" > <span class=approved>Activate</span> </a>
+           <a rel="facebox" href="#<%= classroom.id %>" class="reactive" >Re-Activate </a>
        <% end %>
        
          <div id="<%= classroom.id %>" style="display:none;">

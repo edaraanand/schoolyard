@@ -96,7 +96,7 @@ class Person < ActiveRecord::Base
   end
   
   def send_password
-      d_email(:password_staff, :subject => "Choose your Password to login in to schoolapps" )
+      d_email(:password_staff, :subject => "Choose your Password to login to " + self.school.school_name )
   end
  
   def d_email(action, params)

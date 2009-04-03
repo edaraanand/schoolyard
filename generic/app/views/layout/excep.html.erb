@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+  <head>
+    <title>There was an error</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <style>
+        body{ font:90%/16px "lucida grande","Lucida Sans Unicode",tahoma,verdana,arial,sans-serif; background:url("/images/header-bg.gif") repeat-x;}
+        p {padding:10px; font-size:120%;}
+        #container{margin:0 auto; text-align:center;}
+        h1 {font-size:160%;color:#1a3e8f; padding:20px; border-bottom:1px solid #ccc; width:50%; margin:30px auto;}
+        .error{color:red;}
+        #footer{clear:both; padding:10px; text-align:center; border-top:1px solid #ccc; margin:40px 0; font-size:80%; color:#666; width:50%; margin:30px auto;}
+        a{color:#445978; text-decoration:none; }
+        a:link{color:#1a3e8f;}
+        a:visited{color:#445978;}
+        a:hover{color:#08225c; text-decoration:underline;}
+        a:active{color:#000;}
+    </style>
+      
+  </head>
+<body>
+  
+  <div id="container">
+    <br/>
+    <%= catch_content :for_layout %>
+    <%= partial 'common/footer' %>
+  </div>
+</body>
+</html>                                  

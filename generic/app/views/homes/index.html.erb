@@ -1,23 +1,28 @@
 <div id="sidebar" class="left-block">
   <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
   <% unless @attachment.nil? %>
-     <img src="uploads/principal_images/<%= @attachment.filename %>" alt="<%= @attachment.filename %>"/>
+     <img src="uploads/principal_images/<%= @attachment.filename %>" alt=" "/>
   <% else %>
      <img src="images/principal.png" alt="From The Principal"/>
   <% end %>
+  <%if @announcements.blank?%>
+    <p class="subText">There are no messages right now.</p>
+  <%else%>
   
-  <% for principal in @from_principals %>
-      <div class="data-block long-block">
-      <% if principal.expiration.nil? or principal.expiration >= @date%>
-           <div class="ddmmm">
-                <span class="date"><%=  principal.created_at.strftime("%d")%></span>
-                <span class="month"><%=  principal.created_at.strftime("%b")%></span>
-           </div>
-           <span><%= link_to "#{principal.title}", url(:home, principal.id) %></span>
-           <p class="separator"><%= snippet(principal.content, 50) %></p>
+      <% for principal in @from_principals %>
+          <div class="data-block long-block">
+          <% if principal.expiration.nil? or principal.expiration >= @date%>
+               <div class="ddmmm">
+                    <span class="date"><%=  principal.created_at.strftime("%d")%></span>
+                    <span class="month"><%=  principal.created_at.strftime("%b")%></span>
+               </div>
+               <span><%= link_to "#{principal.title}", url(:home, principal.id) %></span>
+               <p class="separator"><%= snippet(principal.content, 50) %></p>
+          <% end %>
+          </div>
       <% end %>
-      </div>
   <% end %>
+  <p class="separator">&nbsp;</p>
   <div class="page-links">
     <%= link_to "All Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
   </div>
@@ -25,12 +30,15 @@
   <div id="content" class="homes-content">
       <% unless @welcome_messages.empty? %>
         <% for message in @welcome_messages %>
-           <p class="post-content"><%= message.content %></p>
+           <p class="post-content"><%= san_content(message.content) %></p>
            <br />
         <% end %>
       <% end %>
+<h2 class="home">Announcements</h2>
 
-<h2>Announcements</h2>
+<%if @announcements.blank?%>
+  <p class="subText">There are no announcements currently.</p>
+<%else%>
    <% for announcement in @announcements %>
 
        <% if announcement.expiration.nil? or announcement.expiration >= @date %>
@@ -50,8 +58,9 @@
            <p class="separator">There are no announcements at this time.</p>
         
       <% end %>    
-
    <% end %>
+<% end %>
+<p class="separator">&nbsp;</p>
  <div class="page-links">
      <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements')   %> 
      <% if session.user.type == "Parent" %>
