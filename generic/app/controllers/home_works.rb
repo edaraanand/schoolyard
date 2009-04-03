@@ -152,7 +152,7 @@ class HomeWorks < Application
   
   def rooms
     classes = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-    room = classes.collect{|x| x.class_name }
+    room = classes.collect{|x| x.class_name.upcase }
     @classes = room.insert(0, "All Homework")
   end
   

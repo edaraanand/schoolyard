@@ -158,7 +158,7 @@ class Calendars < Application
   
   def classrooms
       @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-      room = @class.collect{|x| x.class_name }
+      room = @class.collect{|x| x.class_name.upcase }
       @classrooms = room.insert(0, "All Events")
   end
    

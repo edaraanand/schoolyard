@@ -41,8 +41,8 @@
             <dt></dt>
             
                  <dd><%= @exist %></dd>
-                 <dd><%= select :name => "class_found[]", :prompt => "Please Select", :collection => @classrooms.collect{|x| x.class_name } %></dd>
-                 <dd><%= select :name => "student_found[]", :prompt => "Please Select", :collection => @students.collect{|x| x.name } %></dd>
+                   <dd><%= select :name => "class_found[]", :prompt => "Please Select", :collection => @classrooms.collect{|x| x.class_name.upcase } %></dd>
+                   <dd><%= select :name => "student_found[]", :prompt => "Please Select", :collection => @students.collect{|x| x.name } %></dd>
               <% end %> 
                <br/><br/><br/>
                <h4><b>Details entered by the parent</b></h4>
@@ -55,7 +55,7 @@
            
           <dl> 
              <dt>Current Class</dt>
-             <dd><%= f.current_class %> </dd>
+             <dd><%= f.current_class.upcase %> </dd>
               
                </dl> 
           </dl> 

@@ -16,7 +16,7 @@
 	                 </div>
               <% end %>
               <h3><%= link_to "#{announcement.title}", url(:approval, announcement.id) %></h3>
-              <span class="subText">Announcement for: <%= announcement.access_name %></span><br/>
+              <span class="subText">Announcement for: <%= announcement.access_name.upcase %></span><br/>
               <span class="subText">Created by <%= announcement.person.name %>, expires on <%= announcement.expiration.strftime("%d %b %Y") %></span>
                    <p ><%= snippet(announcement.content.gsub("\r\n", "<br/>"), 50) %></p>
                   
