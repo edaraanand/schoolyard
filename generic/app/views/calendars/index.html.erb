@@ -9,9 +9,10 @@
                <div class="calendar-block" style="width:480px;">
                <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
                      cdate=calendar.start_date.strftime("%B %d %Y") %>
-                    <h3><%= cdate %></h3>  
+                     <h3>Calendar for <%= calendar.class_name.upcase %></h3>
+                     <%= cdate %>
                <% end %> 
-
+               
                <ul class="calendar-items">
                       <li>
                             <span class="cal-time">
@@ -34,8 +35,7 @@
 
                </ul>
           </div>
-                   <% #@calendars.delete_if{|c| c.start_date == cdate } %>
-
+     
         <% end %>
     
   <%end%>

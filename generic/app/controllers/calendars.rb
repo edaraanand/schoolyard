@@ -50,6 +50,7 @@ class Calendars < Application
   end
   
   def show
+     @select = "classrooms"
      @selected = "calendars"
      @calendar = Calendar.find(params[:id])
      @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
@@ -121,14 +122,16 @@ class Calendars < Application
   
   def events
      @select = "events"
-     @cls = @current_school.calendars.find(:all, :conditions => ["class_name = ?", params[:class_name] ], :order => 'start_date')
-     if params[:class_name] == "All Events"
+     @selected = "all_events"
+     unless params[:id].nil?
+         @class = @current_school.classrooms.find(params[:id])
+         @cls = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @class.class_name ], :order => 'start_date')
+         @selected = @class.class_name 
+     end
+     if params[:l] == "all_events"
         @calendars = @current_school.calendars.find(:all, :order => 'start_date')
      end
-     if params[:class_name].nil?
-        @cals = @current_school.calendars.find(:all, :order => 'start_date')
-     end
-     render :layout => 'home'
+     render :layout => 'directory'
   end
   
   def preview

@@ -107,14 +107,16 @@ class Forms < Application
   
   def form_files
      @select = "forms"
-     if params[:class_name].nil?
-       @forms = @current_school.forms.paginate(:all, :per_page => 5, :page => params[:page])
+     @selected = "all_forms"
+     unless params[:id].nil?
+         @class = @current_school.classrooms.find(params[:id])
+         @forms = @current_school.forms.paginate(:all, :conditions => ["class_name = ?", @class.class_name ], :per_page => 5, :page => params[:page] )
+         @selected = @class.class_name 
      end
-     if params[:class_name] == "All Forms"
-       @forms_f = @current_school.forms.paginate(:all, :per_page => 5, :page => params[:page])
+     if params[:l] == "all_forms"
+       @all_forms = @current_school.forms.paginate(:all, :per_page => 5, :page => params[:page])
      end
-     @files = @current_school.forms.paginate(:all, :conditions => ['class_name = ?', params[:class_name] ], :per_page => 5, :page => params[:page] )
-     render :layout => 'home'
+     render :layout => 'directory'
   end
  
   

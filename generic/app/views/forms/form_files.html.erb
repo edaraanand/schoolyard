@@ -1,26 +1,23 @@
-<h2 class="current-page">Forms </h2>
+      <% if params[:l] == "all_forms" %>
+           <h2 class="current-page"> All Forms </h2>
+      <% elsif params[:id].nil? %>
+           <h2 class="current-page"> All Forms </h2>
+      <% else %> 
+           <h2 class="current-page"> Forms for <%= @class.class_name.upcase %> </h2>
+      <% end %>
 
-<%= form_for(@form, :action => url(:form_files), :method => 'get') do %>
-     <% if params[:class_name].nil? %>
-        <span class="select-announce"><%= select :name => "class_name", :collection => forms %> <%= submit "    Go    " %>
+<% if params[:l] == "all_forms" %>
+     <% if @all_forms.empty? %>
+         <p class="subText">There are no forms available.</p>
      <% else %>
-        <span class="select-announce"><%= select :name => "class_name", :selected => params[:class_name], :collection => forms %> <%= submit "    Go    " %>
-     <% end %>
-<% end =%>
-
- <% if params[:class_name].nil? %>
-     <% if @forms.empty? %>
-        <p class="subText">There are no forms available.</p>
-     <%else%>
-        <table id="mytable">
-             <thead>
-                  <th>Form</th>
-                  <th>for</th>
-                  <th>Last Updated</th>
-                
-             </thead>
-             <tbody>
-                   <% for form in @forms %>
+           <table id="mytable">
+                 <thead>
+                        <th>Form</th>
+                        <th>for</th>
+                        <th>Last Updated</th>
+                 </thead>
+                <tbody>
+                   <% for form in @all_forms %>
                         <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
                         <tr>
                             <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
@@ -32,54 +29,30 @@
          </table>
          <%= will_paginate (@forms, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
      <% end %> 
- <% elsif  params[:class_name] == "All Forms" %>
- <% if @forms_f.empty? %>
-    <p class="subText">There are no forms available.</p>
- <%else%>
-         <table id="mytable">
-             <thead>
-                  <th>Form</th>
-                  <th>for</th>
-                  <th>Last Updated</th>
-                
-             </thead>
-             <tbody>
-                   <% for form in @forms_f %>
-                         <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
-                        <tr>
-                            <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
-                            <td><%= form.class_name %></td>
-                            <td><%= form.updated_at.strftime("%b %d %Y") %></td>
-                            
-                        </tr>
-                   <% end %>
-             </tbody>
-         </table>
-          <%= will_paginate (@forms_f, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-     <% end %>  
- <% else %>
+     
+<% else %>
  
-      <% if @files.empty? %>
-         <p class="subText">There are no forms available for <%=params[:class_name]%>.</p>
-      <%else%>
-         <table id="mytable">
-             <thead>
-                  <th>Form</th>
-                  <th>for</th>
-                  <th>Last Updated</th>
-             </thead>
-             <tbody>
-                   <% for form in @files %>
-                         <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
-                        <tr>
-                            <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
-                            <td><%= form.class_name %></td>
-                            <td><%= form.updated_at.strftime("%b %d %Y") %></td>
-                        </tr>
-                   <% end %>
-             </tbody>
-         </table>
-       <%= will_paginate (@files, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-     <% end %>  
+      <% if @forms.empty? %>
+         <p class="subText">There are no forms available for <%= @class.class_name.upcase %>.</p>
+      <% else %>
+            <table id="mytable">
+                <thead>
+                       <th>Form</th>
+                       <th>for</th>
+                       <th>Last Updated</th>
+                </thead>
+                 <tbody>
+                       <% for form in @forms %>
+                             <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
+                             <tr>
+                                 <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
+                                 <td><%= form.class_name %></td>
+                                 <td><%= form.updated_at.strftime("%b %d %Y") %></td>
+                             </tr>
+                        <% end %>
+                 </tbody>
+             </table>
+                <%= will_paginate (@files, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+      <% end %>  
 
 <% end %>
