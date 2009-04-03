@@ -9,7 +9,7 @@
           
           
       <ul id="menu"><!-- Nested Lists -->
-        <li <% if @selected == nil %> class="on" <% end %>><%= link_to "<span>Home</span>", url(:class_details, :id =>  @classroom.id) %></li>
+        <li <% if @selected == nil %> class="on" <% end %>><%= link_to "Home", url(:class_details, :id =>  @classroom.id) %></li>
         <li <% if @selected == "calendars" %> class="on" <% end %> ><%= link_to "Class Calendar", url(:class_details, :id =>  @classroom.id, :label => "calendars") %></li>
         <li <% if @selected == "homeworks" %> class="on" <% end %>><%= link_to "Homework Corner", url(:class_details, :id =>  @classroom.id, :label => "homeworks") %></li>
         <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to "Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %></li>

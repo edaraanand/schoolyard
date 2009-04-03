@@ -9,7 +9,8 @@
 <% else %>
       <div>
          <h2>Announcements > <%= @announcement.title %></h2>
-         <%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) , :class=> "pdf" %><br/><br/>
+         
+          <br/><%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) , :class=> "pdf" %><br/><br/>
 <% end %>
      
 
@@ -22,21 +23,24 @@
       </div>
   <% end %>
       <p class="separator"><%= san_content(@announcement.content) %></p>
+       <p>
         <% if @announcement.label == "from_principal" %>
-             <p> 
+             
                  <%= link_to '< Previous', url(:home, @announcement.previous_id, :label => 'principal'),:class => "alignleft" if @announcement.previous_id %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 
                  <%= link_to "Back to All Articles", url(:principal_articles, :label => 'principal')  %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                 <%= link_to 'Next >',  url(:home, @announcement.next_id, :label => 'principal'),:class => "alignright" if @announcement.next_id %> </p>
+                 <%= link_to 'Next >',  url(:home, @announcement.next_id, :label => 'principal'),:class => "alignright" if @announcement.next_id %> 
         <% elsif params[:label] == "class_ann" %>
-                <%= link_to " back to All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>
-                <%= link_to 'Previous', url(:home, @announcement.previous_class_announcement, :label => "class_ann"), :class => "alignleft" if @announcement.previous_class_announcement %>
-                <%= link_to 'Next',  url(:home, @announcement.next_class_announcement, :label => "class_ann"), :class => "alignright" if @announcement.next_class_announcement %>
+                <%= link_to '< Previous', url(:home, @announcement.previous_class_announcement, :label => "class_ann") if @announcement.previous_class_announcement %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                <%= link_to "Back to All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>
+                <%= link_to 'Next >',  url(:home, @announcement.next_class_announcement, :label => "class_ann") if @announcement.next_class_announcement %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
         <% elsif params[:label] == "sports_announcement" %>
                 <%= link_to " back to All Announcements", url(:sports, :label => "announcements") %>
         <% else %>
-              <p> <%= link_to "< Back to All Announcements", url(:principal_articles, :label => 'announcements'), :class =>'all-articles'   %></p>
-                  <%= link_to 'Previous', url(:home, @announcement.previous_record),:class => "alignleft" if @announcement.previous_record %>
-                  <%= link_to 'Next',  url(:home, @announcement.next_record),:class => "alignright" if @announcement.next_record %>
+                <%= link_to '< Previous', url(:home, @announcement.previous_record),:class => "alignleft" if @announcement.previous_record %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+               <%= link_to "Back to All Announcements", url(:principal_articles, :label => 'announcements') %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                 
+              <%= link_to 'Next >',  url(:home, @announcement.next_record),:class => "alignright" if @announcement.next_record %>
         <% end %>
+        </p>
     </div>
 </div>

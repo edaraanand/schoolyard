@@ -4,24 +4,29 @@
 
 <div id="info" style="display:none;">
   
+
+    <h3 style="text-align:center; font-size:100%">Please select the classroom you would like to visit</h3>
+    <hr size='1'/><br/>
   <table cellpadding="5" cellspacing="0" border="0">
-    <h3>Please Select the classroom you would like to visit</h3>
     <tr>
       <td>
-        <p>Classes:</p>
-        <ul>
-         <% @classes.each do |f| %>
-          <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
-         <% end %>
-       <ul>
-      </td>
+        <p><b>Classes:</b></p>
+      </td>  
+      <td nowrap>&nbsp;&nbsp;&nbsp;&nbsp;</td>
       <td>
-        <p>Subject:</p>
-         <ul>
-          <% @extracurricular.each do |f| %>
-           <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
-          <% end %>
-        <ul>
+         <% @classes.each do |f| %>
+          <p class="separator"><%= link_to "#{f.class_name.titleize}", url(:class_details, :id => "#{f.id}" ) %></p>
+         <% end %>
+      </td>
+      <td nowrap>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>
+        <p><b>Subject:</b></p>
+      </td>  
+     <td nowrap>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>
+         <% @extracurricular.each do |f| %>
+          <p class="separator"><%= link_to "#{f.class_name.titleize}", url(:class_details, :id => "#{f.id}" ) %></p>
+         <% end %>
       </td>
     </tr>
   </table>
