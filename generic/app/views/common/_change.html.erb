@@ -1,9 +1,28 @@
- <div id="info" style="display:none;">
-          <b>Please Select the classroom you would like to visit</b>
-          <p>Classes: </p>
-            <ul><% @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ? and class_name != ?', true, "Sports"]) %>
-              <% @classrooms.each do |f| %>
-                  <li><%= link_to "#{f.class_name}".upcase, url(:class_details, :id => "#{f.id}" ) %></li>
-              <% end %>
-          </ul>
-    </div> 
+<% @classrooms = @current_school.classrooms.find(:all, :conditions => ['class_name != ? and activate = ?', "Sports", true]) %>
+<% @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = "Classes"'], :order => "class_name ASC") %>
+<% @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = "Extra Cirrcular"'], :order => "class_name ASC") %>
+
+<div id="info" style="display:none;">
+  
+  <table cellpadding="5" cellspacing="0" border="0">
+    <h3>Please Select the classroom you would like to visit</h3>
+    <tr>
+      <td>
+        <p>Classes:</p>
+        <ul>
+         <% @classes.each do |f| %>
+          <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
+         <% end %>
+       <ul>
+      </td>
+      <td>
+        <p>Subject:</p>
+         <ul>
+          <% @extracurricular.each do |f| %>
+           <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
+          <% end %>
+        <ul>
+      </td>
+    </tr>
+  </table>
+</div>
