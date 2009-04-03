@@ -24,7 +24,7 @@
 	          <label>Student for:</label> <select name = "classroom_id" id="classroom_person",>
 	                       <% @class_rooms.each do |s| %>
 		                      <option value="<%= s.id %>">
-                          <%= s.class_name.upcase %>
+                          <%= s.class_name.titleize %>
 		                      </option>
 			        <% end %>
 	       </li>

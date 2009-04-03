@@ -71,7 +71,7 @@
 </div>
 <div class="right-sidebar">
   <% unless session.user.type == "Parent" %>
-      <h3>Homepage Administration </h3>
+      <h3>Manage Homepage</h3>
       <ul class="last">
           <li <% if @selected == "from_principal" %> class="on" <% end %>><%= link_to_right((right = "from_principal"), "Manage From the Principal", url(:from_principals)) %></li>
             <li <% if @selected == "welcome_messages" %> class="on" <% end %>><%= link_to_right( (right = "welcome_messages"), "Manage Welcome Messages", url(:welcome_messages, :label => "home_messages") ) %></li>
@@ -84,9 +84,9 @@
      <ul class="last">
        <% @classrooms.each do |f| %>
              <% if f.class_name == "Sports" %>
-                   <li><%= link_to "#{f.class_name}".upcase, url(:sports) %></li>
+                   <li><%= link_to "#{f.class_name}".titleize, url(:sports) %></li>
              <% else %>
-                   <li><%= link_to "#{f.class_name}".upcase, url(:class_details, :id => f.id) %></li>
+                   <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => f.id) %></li>
              <% end %>
        <% end %>
       </ul>

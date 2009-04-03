@@ -5,7 +5,7 @@
       <% elsif params[:id].nil? %>
            <h2 class="current-page"> All Events </h2>
       <% else %> 
-           <h2 class="current-page"> Events for <%= @class.class_name.upcase %> </h2>
+           <h2 class="current-page"> Events for <%= @class.class_name.titleize %> </h2>
       <% end %>
      
 <% if params[:l] == "all_events" %>

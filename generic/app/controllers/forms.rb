@@ -124,13 +124,13 @@ class Forms < Application
   
   def forms
      @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-     room = @class.collect{|x| x.class_name.upcase }
+     room = @class.collect{|x| x.class_name.titleize }
      @classrooms = room.insert(0, "All Forms")
   end
   
   def classrooms
     classes = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-    room = classes.collect{|x| x.class_name.upcase }
+    room = classes.collect{|x| x.class_name.titleize }
     @classrooms = room.insert(0, "All Classes")
     @years = (2009..2025).to_a
   end

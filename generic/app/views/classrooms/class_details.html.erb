@@ -11,7 +11,7 @@
             <div class="calendar-block" style="width:480px;">
             <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
                   cdate=calendar.start_date.strftime("%B %d %Y") %>
-                  <h3>Calendars for <%= calendar.class_name.upcase %></h3> 
+                  <h3>Calendars for <%= calendar.class_name.titleize %></h3> 
                   <%= cdate %>
             <% end %> 
 

@@ -10,20 +10,15 @@
   </dl>
   <h5>Contact Information For Parents</h5>
   <dl>
-    <dt>Address 1 </dt>
-    <dd><%= @current_school.address1 %></dd>
-    <dt>City </dt>
-    <dd><%= @current_school.city %></dd>
-    <dt>State </dt>
-    <dd><%= @current_school.state %></dd>
-    <dt>Zip Code </dt>
-    <dd><%= @current_school.zip_code %></dd>
-    <dt>Fax </dt>
-    <dd><%= number_to_phone(@current_school.fax, :area_code => true) %></dd>
-    <dt>Phone</dt>
-    <dd><%= @current_school.phone ? number_to_phone(@current_school.phone, :area_code => true)  : "<span class='noText'>not specified</span>"%></dd>
-    <dt>E-Mail</dt>
-    <dd><%= @current_school.email ? email(@current_school.email)  : "<span class='noText'>not specified</span>"%></dd>
+    <dt>Address</dt>
+    <dd><%= @current_school.address1 ? @current_school.address1 : "<span class='noText'>not specified</span>" %>
+    <%= "<br/>#{@current_school.address2}" if @current_school.address2?  %>
+    <%= "<br/>#{@current_school.city }" if @current_school.city?  %>
+    <%= "<br/>#{@current_school.state }" if @current_school.state?   %><%= " - #{@current_school.zip_code }" if @current_school.zip_code?  %>
+    </dd>
+    <%= "<dt>Fax </dt><dd>#{number_to_phone(@current_school.fax, :area_code => true)}</dd>" if @current_school.fax?  %>
+    <%= "<dt>Phone </dt><dd>#{number_to_phone(@current_school.phone, :area_code => true)}</dd>" if @current_school.phone?  %>
+    <%= "<dt>E-Mail </dt><dd>#{email(@current_school.email)}</dd>" if @current_school.email?  %>
   </dl>
 
   <% end %>

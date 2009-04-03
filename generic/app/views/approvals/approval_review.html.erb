@@ -41,7 +41,7 @@
             <dt></dt>
             
                  <dd><%= @exist %></dd>
-                   <dd><%= select :name => "class_found[]", :prompt => "Please Select", :collection => @classrooms.collect{|x| x.class_name.upcase } %></dd>
+                   <dd><%= select :name => "class_found[]", :prompt => "Please Select", :collection => @classrooms.collect{|x| x.class_name.titleize } %></dd>
                    <dd><%= select :name => "student_found[]", :prompt => "Please Select", :collection => @students.collect{|x| x.name } %></dd>
               <% end %> 
                <br/><br/><br/>
@@ -55,7 +55,7 @@
            
           <dl> 
              <dt>Current Class</dt>
-             <dd><%= f.current_class.upcase %> </dd>
+             <dd><%= f.current_class.titleize %> </dd>
               
                </dl> 
           </dl> 
