@@ -1,8 +1,8 @@
 
 <fieldset>
   <ul>
-    <li><label>Welcome Message for:</label><%= select :access_name, :collection => @classrooms %></li>
-    <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
+      <li><label>Welcome Message for:</label><%= select :access_name, :collection => @classrooms, :prompt => "Please Select" %></li>
+      <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
   </ul>
 </fieldset>
 

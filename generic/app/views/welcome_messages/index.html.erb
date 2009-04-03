@@ -3,19 +3,48 @@
 
 <div class="fullpage announcemt">
 
-<%if  @welcome.blank?%>
-  <p>There are not welcome messages created yet. <%= link_to "Add New", url(:new_welcome_message) %>
-<%else%>
-  <%= form_for(@welcome_message, :action => url(:controller => 'welcome_messages', :action => 'index'), :id => 'welcome_message') do %>
+<%= form_for(@welcome_message, :action => url(:controller => 'welcome_messages', :action => 'index'), :id => 'welcome_message') do %>
        <% if params[:access_name].nil? %>
              <%= select :name => "access_name", :collection => @classrooms, :label => "View  " %>
+       <% elsif params[:label] == "home_messages" %>
+             <%= select :name => "access_name", :selected => 1, :collection => @classrooms, :label => "View  " %>
        <% else %>
              <%= select :name => "access_name", :selected => params[:access_name], :collection => @classrooms, :label => "View  " %>
        <% end %>
              <%= submit "    Go    " %>
-  <% end =%>
+<% end =%>
+
+<% if params[:label] == "home_messages" %>
+        <% if  @w_messages.blank?  %>
+             <p>There are not welcome messages created yet. <%= link_to "Add New", url(:new_welcome_message) %>
+       <%else%>
+               <% for mess in @w_messages %>
+                     <div class="data-block long-block">
+                           <% if mess.created_at.nil? %>
+	                              <div class="ddmmm-x">
+	                            </div>
+                          <% else %>
+                                <div class="ddmmm">
+	                                  <span class="date"><%= mess.created_at.strftime("%d") %></span>
+	                                  <span class="month"><%= mess.created_at.strftime("%b") %></span>
+	                              </div>
+	                         <% end %>
+	                <p> Welcome Message for: <b><%= mess.access_name %></b></p
+                  <p class="post-content"><%= san_content(mess.content) %></p>
+                  <%= link_to "Edit", resource(mess, :edit), :class=>"edit-btn" %>
+                  <%= link_to "Delete", resource(mess, :delete), :class=>"delete-btn" %>
+                  <div class="hrule clear"><hr /></div>
+                </div>
+           <% end %>
+       <% end %>
+
+
+<% else %>
   <% if params[:access_name].nil? %>
-        <% for mess in @welcome %>
+       <% if  @welcome.blank?  %>
+             <p>There are not welcome messages created yet. <%= link_to "Add New", url(:new_welcome_message) %>
+       <%else%>
+            <% for mess in @welcome %>
        
              <div class="data-block long-block">
                  <% if mess.created_at.nil? %>
@@ -33,11 +62,13 @@
                   <%= link_to "Delete", resource(mess, :delete), :class=>"delete-btn" %>
                   <div class="hrule clear"><hr /></div>
               </div>
-        <% end %>
-
-  <% elsif params[:access_name] == "All Messages" %>
-      
-       <% for mess in @all_messages %>
+           <% end %>
+       <% end %>
+ <% elsif params[:access_name] == "All Messages" %>
+        <% if  @all_messages.blank?  %>
+             <p>There are not welcome messages created yet. <%= link_to "Add New", url(:new_welcome_message) %>
+       <%else%>
+            <% for mess in @all_messages %>
                
              <div class="data-block long-block">
                  <% if mess.created_at.nil? %>
@@ -55,30 +86,32 @@
                   <%= link_to "Delete", resource(mess, :delete), :class=>"delete-btn" %>
                   <div class="hrule clear"><hr /></div>
               </div>
+          <% end %>
        <% end %>
-
   <% else %>
-
-        <% for mess in @welcome_messages %>
-            >
-             <div class="data-block long-block">
-                 <% if mess.created_at.nil? %>
-	                   <div class="ddmmm-x">
-	                   </div>
-                 <% else %>
-                     <div class="ddmmm">
-	                        <span class="date"><%= mess.created_at.strftime("%d") %></span>
-	                        <span class="month"><%= mess.created_at.strftime("%b") %></span>
-	                   </div>
-	                <% end %>
+       <% if  @welcome_messages.blank?  %>
+             <p>There are not welcome messages created yet. <%= link_to "Add New", url(:new_welcome_message) %>
+       <%else%>
+               <% for mess in @welcome_messages %>
+                     <div class="data-block long-block">
+                           <% if mess.created_at.nil? %>
+	                              <div class="ddmmm-x">
+	                            </div>
+                          <% else %>
+                                <div class="ddmmm">
+	                                  <span class="date"><%= mess.created_at.strftime("%d") %></span>
+	                                  <span class="month"><%= mess.created_at.strftime("%b") %></span>
+	                              </div>
+	                         <% end %>
 	                <p> Welcome Message for: <b><%= mess.access_name %></b></p
                   <p class="post-content"><%= san_content(mess.content) %></p>
                   <%= link_to "Edit", resource(mess, :edit), :class=>"edit-btn" %>
                   <%= link_to "Delete", resource(mess, :delete), :class=>"delete-btn" %>
                   <div class="hrule clear"><hr /></div>
-              </div>
-        <% end %>
-  <% end %>
+                </div>
+           <% end %>
+       <% end %>
+    <% end %>
 <% end %>
 </div> 
 
