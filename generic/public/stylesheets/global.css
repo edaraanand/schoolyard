@@ -466,3 +466,4 @@ td.teach-name-top, td.teach-name-bottom {height:9px; padding:0px; margin:0px; li
 .pdf{padding:2px 0 2px 25px; background:url("/images/ico_pdf.gif") no-repeat 0 50%;}
 h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;}
 #info b{color:#666;}
+#alerts ul li{list-style:square; margin:0 0 0 25px;}
