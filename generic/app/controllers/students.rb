@@ -352,13 +352,13 @@ class Students < Application
    
    def classrooms
       @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-      room = @class.collect{|x| x.class_name }
+      room = @class.collect{|x| x.class_name.upcase }
       @classrooms = room.insert(0, "All Students")
    end  
    
    def school_staff
       @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-      room = @class.collect{|x| x.class_name }
+      room = @class.collect{|x| x.class_name.upcase }
       @teachers = room.insert(0, "All Staff")
    end
    
