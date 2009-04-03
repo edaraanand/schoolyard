@@ -1,12 +1,40 @@
    <%= partial 'layout/main' %>
-       <div id="sidebar">
-      <ul id="menu"><!-- Nested Lists -->
-          
-           <li <% if @selected == "current_students" %> class="on" <% end %> ><%= link_to "Current Students", url(:directory) %></li>
-           <li <% if @selected == "school_staff" %> class="on" <% end %> ><%= link_to "School Staff", url(:staff) %></li>
-            
-      </ul>
-       
+   
+        <% @classes =  @current_school.classrooms.find(:all, :conditions => ['activate = ?', true]) %>
+        
+     <div id="sidebar">
+           
+     <% if params[:label] == "forms" %>  
+             <% unless session.user.type == "Parent" %>
+                <ul id="menu">
+                    <li <% if @selected == "forms" %> class="on" <% end %>><%= link_to_right((right = "forms"), "Manage Forms", url(:forms)  ) %></li>
+                </ul>
+             <% end %>
+             
+             <ul id="menu">
+             <li <% if @selected == "all_forms" %> class="on" <% end %> ><%= link_to "All Forms", url(:form_files, :l => "all_forms", :label => "forms") %></li>
+                   <% @classes.each do |f| %>
+                 <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".upcase, url(:form_files, :id => "#{f.id}", :label => "forms") %></li>
+                   <% end %>
+             </ul>
+     <% elsif params[:label] == "calendars" %>
+           <% unless session.user.type == "Parent" %>
+                <ul id="menu">
+                    <li <% if @selected == "calendars" %> class="on" <% end %>><%= link_to_right((right = "calendar"), "Manage Calendars", url(:calendars) )  %></li>
+                </ul>
+           <% end %>
+           <ul id="menu">
+                 <li <% if @selected == "all_events" %> class="on" <% end %> ><%= link_to "All Events", url(:events, :l => "all_events", :label => "calendars") %></li>
+                 <% @classes.each do |f| %>
+                     <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".upcase, url(:events, :id => "#{f.id}", :label => "calendars") %></li>
+                 <% end %>
+           </ul>
+     <% else %>
+            <ul id="menu"><!-- Nested Lists -->
+                 <li <% if @selected == "current_students" %> class="on" <% end %> ><%= link_to "Current Students", url(:directory) %></li>
+                 <li <% if @selected == "school_staff" %> class="on" <% end %> ><%= link_to "School Staff", url(:staff) %></li>
+            </ul>
+     <% end %>  
         
      
     </div><!-- Sidebar Ends -->
