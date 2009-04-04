@@ -1,32 +1,7 @@
 <fieldset>
   <h2 class="current-page">Contact Us</h2>
   <p>If you have any comments, suggestions or questions, please contact us at:</p>
-  <dl>
-    <%unless @current_school.address1.blank?%>
-      <dt>Address 1</dt><dd><%= @current_school.address1 %>&nbsp;</dd>
-    <%end%>
-     <%unless @current_school.address2.blank?%>
-      <dt>Address 2</dt><dd><%= @current_school.address2 %>&nbsp;</dd>
-    <%end%>
-    <%unless @current_school.city.blank?%>
-      <dt>City</dt><dd><%= @current_school.city %>&nbsp;</dd>
-    <%end%>
-    <%unless @current_school.state.blank?%>
-      <dt>State</dt><dd><%= @current_school.state %>&nbsp;</dd>
-    <%end%>
-    <%unless @current_school.zip_code.blank?%>
-    <dt>Zip Code</dt><dd><%= @current_school.zip_code %>&nbsp;</dd>
-    <%end%>
-    <%unless @current_school.fax.blank?%>
-    <dt>Fax</dt><dd><%= number_to_phone(@current_school.fax, :area_code => true) %>&nbsp;</dd>
-    <%end%>
-    <%unless @current_school.phone.blank?%>
-    <dt>Phone:</dt><dd><%= number_to_phone(@current_school.phone, :area_code => true) %>&nbsp;</dd>
-    <%end%>
-    <%unless @current_school.email.blank?%>
-      <dt>Email:</dt><dd><%=email(@current_school.email) %>&nbsp;</dd>
-    <%end%>
-  </dl>
+<%= partial 'common/contact' %>
  
 
 </fieldset>

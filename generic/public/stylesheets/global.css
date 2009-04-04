@@ -47,10 +47,10 @@ body.fixed-width{width:100%;}
 .widen{width:600px!important;}
   /*The center Content Area*/
 #sidebar{float:left; clear:both;}
-.left-block{width:240px; border-right:1px solid #eee;}
+.left-block{width:240px;}
   /*Left Side Menu. term 'Sidebar' defaults for LEFT SIDEBAR/MENU*/
 #content p{font-size:13px; padding:.5em 0 .5em 0;}
-#content-wrap{float:left; padding:0 0 0 20px; margin:20px 0 0 0; border-left:1px solid #e8e8e8; min-width:500px;}
+#content-wrap{float:left; padding:0 0 0 20px; margin:20px 0 0 0; min-width:500px;}
   /*Wraps the content section*/
 #fullpage{width:500px;}
 
@@ -271,7 +271,7 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 .email-alerts li{margin:10px 0 0 30px; padding:3px 0 3px 20px; background:url"(/images/bullet-dash.gif") no-repeat left center; border-bottom:1px dotted #eee;}
 
 
-#footer{clear:both; padding:10px; text-align:center; border-top:1px solid #ccc; margin:40px 0 40px 0;}
+#footer{clear:both; padding:10px; text-align:center; border-top:1px solid #ccc; margin:10px 0 40px 0;}
 
 .lightbox{width:480px; border:10px solid #ccc; padding:20px; margin:10px 0;}
 .lightbox .close{float:right}
@@ -447,10 +447,10 @@ td.separator{padding:8px;}
 .noText {font-style:italic;}
 
 .class-name {margin:10px auto;}
-.class-name-backgr {background:url("/images/class-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:154px; padding:0 5px;}
+.class-name-backgr {background:url("/images/class-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:154px; padding:0 5px; line-height:0px;}
 td.class-name-top, td.class-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
 .teach-name {margin:10px auto; font-size:80%;}
-.teach-name-backgr {background:url("/images/teach-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:125px; padding:0 5px;}
+.teach-name-backgr {background:url("/images/teach-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:125px; padding:0 5px;line-height:0px;}
 td.teach-name-top, td.teach-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
 
 .page-links{text-align:center;padding:10px;}
@@ -468,3 +468,4 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 #info b{color:#666;}
 #alerts ul li{list-style:square; margin:0 0 0 25px;}
 .right-sidebar li.noBullet{list-style:none; padding: 8px 0 0 10px; color:#666;}
+#classContainer {background:url(/images/vertical-separator.gif) repeat-y 230px 0px; overflow: auto; padding:10px 0;}
