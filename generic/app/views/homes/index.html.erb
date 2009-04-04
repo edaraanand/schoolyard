@@ -81,15 +81,37 @@
   <% end %>
   <% unless @classrooms.empty? %>
    <h3>Quick Links </h3>
-     <ul class="last">
-       <% @classrooms.each do |f| %>
-             <% if f.class_name == "Sports" %>
-                   <li><%= link_to "#{f.class_name}".titleize, url(:sports) %></li>
-             <% else %>
-                   <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => f.id) %></li>
-             <% end %>
-       <% end %>
-      </ul>
+   <div class="last">
+         <%unless @classes.empty?%>
+               <li class="noBullet">Classes:
+                 <ul>
+                <% @classes.each do |f| %>
+                      <% if f.class_name == "Sports" %>
+                            <li><%= link_to "#{f.class_name}".titleize, url(:sports) %></li>
+                      <% else %>
+                            <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => f.id) %></li>
+                      <% end %>
+                <% end %>
+                </li>
+                </ul>
+               </ul>
+         <%end%>
+         <%unless @extracurricular.empty?%>
+               <li class="noBullet">Subjects:
+                 <ul>
+                <% @extracurricular.each do |f| %>
+                      <% if f.class_name == "Sports" %>
+                            <li><%= link_to "#{f.class_name}".titleize, url(:sports) %></li>
+                      <% else %>
+                            <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => f.id) %></li>
+                      <% end %>
+                <% end %>
+                </li>
+                </ul>
+               </ul>
+         <%end%>
+    </div>
+     
    <% end %>
 <%unless  @external_links.empty?%>
    <h3>External Links </h3>
