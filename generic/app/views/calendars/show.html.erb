@@ -22,7 +22,7 @@ Location : <%= @calendar.location %></p><br/>
     
     <%  @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name]) %>
     
-    <%= link_to "< Back to All Events", url(:class_details, :id => @classroom.id, :label => "calendars") %>
+    <%= link_to "&larr; Back to All Events", url(:class_details, :id => @classroom.id, :label => "calendars") %>
     
     <div class="hrule clear"><hr /></div>
  

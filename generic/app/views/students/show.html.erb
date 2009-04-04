@@ -2,7 +2,7 @@
 
       <div id="fullpage">
            <h2 class="current-page">Current Students > <%= @student.name %></h2>
-           <%= link_to "< Back to Current Students List", url(:directory) %>
+           <%= link_to "&larr; Back to Current Students List", url(:directory) %>
      
            <h3 class="name"><%= @student.name %></h3>
            <table cellpadding="8" cellspacing="0" border="0">
@@ -35,7 +35,7 @@
   
        <div id="fullpage">
        <h2 class="current-page">School Staff > <%= @staff.name %></h2>
-            <%= link_to "< Back to School Staff List", url(:staff) %>
+            <%= link_to "&larr; Back to School Staff List", url(:staff) %>
      
             <h3 class="name"><%= @staff.name %></h3>
             <table cellpadding="8" cellspacing="0" border="0">
