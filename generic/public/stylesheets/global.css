@@ -253,9 +253,9 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 #checkboxes #check-fields span{display:block;}
 
 /*Rules for Right Sidebar*/
-.right-sidebar{ line-height:15px; width:200px; float:left; margin:30px 0 0 20px;  background:url("/images/right-sidebar-mid.gif") repeat-y bottom center}
-.right-sidebar h3{ height:14px; font-weight:bold ; background:url(/images/right-sidebar-top.gif) no-repeat top center; padding:12px; margin:10px 0 0 0;}
-.right-sidebar .last{background:url(/images/right-sidebar-bottom.gif) no-repeat bottom center; }
+.right-sidebar{ line-height:15px; width:200px; float:left; margin:30px 0 0 20px; }
+.right-sidebar h3{font-weight:bold ; background:url("/images/right-sidebar-top.gif") no-repeat top center; padding:12px; margin:10px 0 0 0;}
+.right-sidebar .last{background:url("/images/right-sidebar-bottom.gif") no-repeat bottom center; border-top:1px solid #becfdb; }
   /*Styles applied to these three elements provide chrome for the right sidebar*/
 
 .right-sidebar h3 span.main{float:left;}
