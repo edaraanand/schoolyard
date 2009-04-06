@@ -39,7 +39,7 @@
 
             </ul>
              </div>
-                <% #@calendars.delete_if{|c| c.start_date == cdate } %>
+               
 
      <%end%>
    <% end %>
@@ -155,8 +155,8 @@
         <h3>Manage Classroom</h3>
             <ul class="last">
                 <li <% if @selected == "calendars" %> class="on" <% end %>><%= link_to_right((right = "calendar"), "Manage Calendars", url(:calendars) )  %></li>
-                <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_right((right = "homework"), "Manage Homeworks", url(:home_works) )  %></li>
-                <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements)) %></li>
+              <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_right((right = "homework"), "Manage Homeworks", url(:home_works, :id => @classroom.id, :label => "class_home_works") )  %></li>
+              <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :id => @classroom.id, :label => "class_announcements")) %></li>
             </ul>
          <% end %>
         <h3>Current Homework</h3>

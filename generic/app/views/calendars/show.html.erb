@@ -19,10 +19,12 @@ Location : <%= @calendar.location %></p><br/>
     <p><%= san_content(@calendar.description) %></p>
     
     <hr size="1"/>
-    
-    <%  @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name]) %>
-    
-    <%= link_to "&larr; Back to All Events", url(:class_details, :id => @classroom.id, :label => "calendars") %>
+    <% if params[:l] == "calendar" %>
+          <%= link_to "&larr; Back to All Events", url(:events, :l => "all_events", :label =>  "calendars") %>
+    <% else %>
+          <%  @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name]) %>
+          <%= link_to "&larr; Back to All Events", url(:class_details, :id => @classroom.id, :label => "calendars") %>
+    <% end %>
     
     <div class="hrule clear"><hr /></div>
  
