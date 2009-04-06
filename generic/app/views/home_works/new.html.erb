@@ -1,9 +1,18 @@
 <%= error_messages_for @home_work %>
+<ul class='error_messages'>
+     <% if flash[:error] %>
+        <li><%= flash[:error] %> </li>
+     <% end %>
+ </ul>
 <h2 class="current-page">Home Work &gt; Add New </h2>
 <%= form_for (@home_work, :action => resource(:home_works), :id => 'home_work', :name => "home_work" ) do %>
    <fieldset>
       <ul>
-          <li><label>Home Work for:</label><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize } , :prompt => "Please Select" %></li>
+          <% if @class_id != "" %>
+              <li><label>Home Work for:</label><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :selected => @class_id, :prompt => "Please Select" %></li>
+          <% else %>
+              <li><label>Home Work for:</label><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :prompt => "Please Select" %></li>
+          <% end %>
           <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
           <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
           <li><%= text_field  :due_date, :id => "due_date", :label => "Due Date", :class=>"short" %></li>

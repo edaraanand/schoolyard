@@ -9,14 +9,14 @@ class WelcomeMessages < Application
   def index
        classrooms
     if params[:label] == "home_messages"
-       @w_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name =?', "Home Page"])
+       @w_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name =?', "Home Page"], :order => "created_at DESC")
     else
-       @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name =?', params[:access_name]])
+       @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name =?', params[:access_name]], :order => "created_at DESC")
        if params[:access_name].nil?
-          @welcome = @current_school.welcome_messages.find(:all)
+          @welcome = @current_school.welcome_messages.find(:all, :order => "created_at DESC")
        end
        if params[:access_name] == "All Messages"
-          @all_messages = @current_school.welcome_messages.find(:all)
+          @all_messages = @current_school.welcome_messages.find(:all, :order => "created_at DESC")
        end
     end
      render
@@ -28,15 +28,19 @@ class WelcomeMessages < Application
   end
 
   def create
-    #if params[:access_name] != ""
-       @welcome_message = @current_school.welcome_messages.new(params[:welcome_message])
-       @welcome_message.person_id = @current_user.id
-        if @welcome_message.save
-	         redirect resource(:welcome_messages)
-        else
-	         render :new
-        end
-  end
+      @welcome_message = @current_school.welcome_messages.new(params[:welcome_message])
+      if params[:welcome_message][:access_name] != ""
+         @welcome_message.person_id = @current_user.id
+         if @welcome_message.save
+	          redirect resource(:welcome_messages)
+         else
+	          render :new
+         end
+      else
+         flash[:error] = "Please select the option"
+         render :new
+      end
+  end 
   
   def edit
      @welcome_message = WelcomeMessage.find(params[:id])
@@ -45,11 +49,16 @@ class WelcomeMessages < Application
   
   def update
      @welcome_message = WelcomeMessage.find(params[:id])
-     if @welcome_message.update_attributes(params[:welcome_message])
-	      @welcome_message.person_id = @current_user.id
-	      redirect resource(:welcome_messages)
+     if params[:welcome_message][:access_name] != ""
+        if @welcome_message.update_attributes(params[:welcome_message])
+	         @welcome_message.person_id = @current_user.id
+	         redirect resource(:welcome_messages)
+        else
+	         render :edit
+        end
      else
-	      render :edit
+         flash[:error] = "Please select the option"
+         render :edit
      end
   end
   
