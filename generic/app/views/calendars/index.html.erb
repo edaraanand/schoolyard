@@ -1,17 +1,19 @@
 <div class="short-block">
   <h2 class="current-page"> Calendars &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:calendars, :new) %></h2>
   <%if  @calendars.blank?%>
-    <p>There are no calendar events created yet.</p>
+       <p>There are no calendar events created yet.</p>
     
-  <%else%>
+  <% else %>
       <% cdate=""
             for calendar in @calendars %>
                <div class="calendar-block" style="width:480px;">
-               <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
-                     cdate=calendar.start_date.strftime("%B %d %Y") %>
-                     <h3>Calendar for <%= calendar.class_name.titleize %></h3>
-                     <%= cdate %>
-               <% end %> 
+                   <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
+                         cdate=calendar.start_date.strftime("%B %d %Y") %>
+                         <div class="ddmmm">
+                              <span class="date"><%= calendar.start_date.strftime("%d") %></span>
+                              <span class="month"><%= calendar.start_date.strftime("%b") %></span>
+                         </div>
+                   <% end %> 
                
                <ul class="calendar-items">
                       <li>

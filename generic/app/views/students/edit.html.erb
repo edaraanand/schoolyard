@@ -20,14 +20,8 @@
 <%= form_for(@student, :action => resource(@student), :id => 'student', :name => "studs", :onsubmit => "MPClearAll()") do %>
 
 	        <ul>
-              <li><label>Student for:</label> <select name = "classroom_id" id="classroom_person",>
-	                       <% @class_rooms.each do |s| %>
-		                        <option value="<%= s.id %>">
-                               <%= s.class_name.titleize %>
-		                        </option>
-			                   <% end %>
-              </li>
-	            <li>
+          <li><label>Student for:</label><%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name.titleize},  :prompt => "Please Select" %></li>
+              <li>
                   <%= text_field  :first_name, :maxlength => "75", :class=>"short",  :label => "Student" %>
                   <%= text_field  :last_name, :maxlength => "75", :class=>"short apart"  %>
 	            </li>

@@ -24,15 +24,22 @@ class Students < Application
      @student = @current_school.students.new(params[:student])
      @protector = @current_school.protectors.new(params[:protector])
      if ( ( (params[:f_name_parent2] == "") && (params[:l_name_parent2] == "") ) && (params[:email_parent2] == "") )
-          if (@student.valid?) && (@protector.valid?)
-             @student.save
-             @protector.save
-             Ancestor.create({:student_id => @student.id, :protector_id => @protector.id })
-	           Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })
-	           redirect resource(:students)
-          else
-	           render :new
-	        end
+         if params[:classroom_id] !=  ""
+            if (@student.valid?) && (@protector.valid?)
+                @student.save
+                @protector.save
+                Ancestor.create({:student_id => @student.id, :protector_id => @protector.id })
+	              Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })
+	              redirect resource(:students)
+            else
+               @class_id = params[:classroom_id]
+	             render :new
+	          end
+         else
+            flash[:error] = "Please select option"
+            @class_id = params[:classroom_id]
+            render :new
+         end
      else
 	        if (@student.valid?) && (@protector.valid?)
              if ( ( (params[:f_name_parent2] != "") && (params[:l_name_parent2] != "") ) && (params[:email_parent2] != "") )
@@ -61,6 +68,7 @@ class Students < Application
                                 @fname2 = params[:f_name_parent2]
 	                              @lname2 = params[:l_name_parent2]
 	                              @mail2 = params[:email_parent2]
+                                @class_id = params[:classroom_id]
 		                            render :new      
                            end
                       else
@@ -82,6 +90,7 @@ class Students < Application
                                @fname2 = params[:f_name_parent2]
 	                             @lname2 = params[:l_name_parent2]
 	                             @mail2 = params[:email_parent2]
+                               @class_id = params[:classroom_id]
 		                           render :new
                             end
                        end
@@ -100,14 +109,13 @@ class Students < Application
 	                @fname2 = params[:f_name_parent2]
 	                @lname2 = params[:l_name_parent2]
 	                @mail2 = params[:email_parent2]
+                  @class_id = params[:classroom_id]
 		              render :new
 	          end
         else
 		       render :new
         end
-     #else
-	     # render :new
-	   end
+     end
        
   end
   

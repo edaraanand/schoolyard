@@ -20,15 +20,11 @@
 <%= form_for(@student, :action => resource(:students), :id => 'student', :name => "studs",  :onsubmit => "ClearAll()")  do %>
    
      <ul>
-         <li>
-	          <label>Student for:</label> <select name = "classroom_id" id="classroom_person",>
-	                       <% @class_rooms.each do |s| %>
-		                      <option value="<%= s.id %>">
-                          <%= s.class_name.titleize %>
-		                      </option>
-			        <% end %>
-	       </li>
-	    
+         <% if @class_id != "" %>
+             <li><label>Student for:</label><%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name.titleize}, :selected => "#{@class_id}", :prompt => "Please Select" %></li>
+         <% else %>
+             <li><label>Student for:</label><%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name.titleize}, :prompt => "Please Select" %></li>
+         <% end %>
          <li>
              <%= text_field  :first_name,  :label => "Student", :maxlength => "75", :class => "short defaultText defaultTextActive", :title => "First Name" %>
              <%= text_field  :last_name, :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
