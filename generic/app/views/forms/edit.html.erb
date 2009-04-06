@@ -11,8 +11,8 @@
   <%= form_for(@form, :action => resource(@form)) do %>
      <ul>
          <li><%= text_field :title,  :label => "Title", :maxlength => "75" %></li>
-         <li><%= select :class_name, :collection => @classrooms, :label => "Classroom" %></li>
-         <li><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year" %></li>
+         <li><%= select :class_name, :collection => @classrooms, :label => "Classroom", :prompt => "Please Select" %></li>
+         <li><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year", :prompt => "Please Select" %></li>
          <li>
               <% if @attachments.size >= 1 %>
                   <%= file_field :attachment,  :label => "Upload Form", :disabled => "true" %>

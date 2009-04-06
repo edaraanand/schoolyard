@@ -10,8 +10,6 @@ class Announcement < ActiveRecord::Base
  
      attr_accessor :attachment
      attr_accessor :image
-     
-     #named_scope :previous, lambda { |p| {:conditions => ["id < ?", p.id], :limit => 1, :order => "id"} }
-     #named_scope :next, lambda { |p| {:conditions => ["id > ?", p.id], :limit => 1, :order => "id"} }
+    
 
 end

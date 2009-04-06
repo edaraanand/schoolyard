@@ -1,9 +1,16 @@
 <%= error_messages_for @announcement %>
+<ul class='error_messages'>
+     <% if flash[:error] %>
+        <li><%= flash[:error] %> </li>
+     <% end %>
+</ul>
+ 
+
 <h2 class="current-page">Announcements &gt; Add New </h2>
 <%= form_for (@announcement, :action => resource(:announcements), :id => 'announcement', :name => "announce") do %>
     <fieldset>
           <ul>
-              <li><label>Announcement for:</label><%= select :access_name, :collection => rooms %></li>
+              <li><label>Announcement for:</label><%= select :access_name, :collection => rooms, :prompt => "Please Select" %></li>
               <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
               <li><%= text_area  :content,  :label => "Description", :rows => "20", :cols => "50" %></li>
               <li><%= text_field  :expiration, :id => "expiration", :label => "Expiration", :size => "12" %></li>

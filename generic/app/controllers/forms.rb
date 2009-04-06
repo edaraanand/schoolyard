@@ -28,24 +28,30 @@ class Forms < Application
      @form = @current_school.forms.new(params[:form])
      i=0
      if @form.valid?
-        unless params[:attachment]['file_'+i.to_s].empty?
-            @form.save
-            @attachment = Attachment.create( :attachable_type => "Form",
+        if ( (params[:form][:class_name] != "") && (params[:form][:year] != "") )
+            unless params[:attachment]['file_'+i.to_s].empty?
+                @form.save
+                @attachment = Attachment.create( :attachable_type => "Form",
                                         :attachable_id => @form.id,
                                         :filename => params[:attachment]['file_'+i.to_s][:filename],
                                         :content_type => params[:attachment]['file_'+i.to_s][:content_type],
                                         :size => params[:attachment]['file_'+i.to_s][:size]
-             )
-              File.makedirs("public/uploads/#{@attachment.id}")
-              FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
-              redirect resource(:forms)
+                  )
+                 File.makedirs("public/uploads/#{@attachment.id}")
+                 FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+                 redirect resource(:forms)
+             else
+                flash[:error] = "please upload a File"
+                render :new
+             end
         else
-            flash[:error] = "please upload a File"
+            flash[:error] = "Please select classroom and year"
             render :new
         end
      else
         render :new
      end
+     
   end
    
   def edit
@@ -61,30 +67,40 @@ class Forms < Application
      @allowed = 1 - @attachments.size
      i=0
      if params[:attachment]
-        if @form.update_attributes(params[:form])
-            unless params[:attachment]['file_'+i.to_s].empty?
-                @attachment = Attachment.create( :attachable_type => "Form",
+        if ( (params[:form][:class_name] != "") && (params[:form][:year] != "") )
+            if @form.update_attributes(params[:form])
+               unless params[:attachment]['file_'+i.to_s].empty?
+                    @attachment = Attachment.create( :attachable_type => "Form",
                                         :attachable_id => @form.id,
                                         :filename => params[:attachment]['file_'+i.to_s][:filename],
                                         :content_type => params[:attachment]['file_'+i.to_s][:content_type],
                                         :size => params[:attachment]['file_'+i.to_s][:size]
-                )
-                  File.makedirs("public/uploads/#{@attachment.id}")
-                  FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
-                  redirect resource(:forms)
-             else
-                 flash[:error] = "please upload a File"
-                 render :edit
-             end
-         else
-             render :edit
-         end
-    else
-         if @form.update_attributes(params[:form])
-            redirect resource(:forms)
-         else
+                     )
+                     File.makedirs("public/uploads/#{@attachment.id}")
+                     FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+                     redirect resource(:forms)
+               else
+                  flash[:error] = "please upload a File"
+                  render :edit
+               end
+            else
+               render :edit
+            end
+        else
+            flash[:error] = "Please select classroom and year"
             render :edit
-         end
+        end
+   else
+       if ( (params[:form][:class_name] != "") && (params[:form][:year] != "") )
+           if @form.update_attributes(params[:form])
+              redirect resource(:forms)
+           else
+              render :edit
+           end
+        else
+            flash[:error] = "Please select classroom and year"
+            render :edit
+        end    
      end
   end
   
