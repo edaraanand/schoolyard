@@ -4,13 +4,13 @@
 <div class="fullpage announcemt">
 
 <%= form_for(@welcome_message, :action => url(:controller => 'welcome_messages', :action => 'index'), :id => 'welcome_message') do %>
-       <% if params[:access_name].nil? %>
+         <% if params[:label] ==  "home_messages" %>
+             <%= select :name => "access_name", :collection => @classrooms, :selected => "Home Page", :label => "View  " %>
+         <% elsif params[:access_name].nil? %>
              <%= select :name => "access_name", :collection => @classrooms, :label => "View  " %>
-       <% elsif params[:label] == "home_messages" %>
-             <%= select :name => "access_name", :selected => 1, :collection => @classrooms, :label => "View  " %>
-       <% else %>
+         <% else %>
              <%= select :name => "access_name", :selected => params[:access_name], :collection => @classrooms, :label => "View  " %>
-       <% end %>
+         <% end %>
              <%= submit "    Go    " %>
 <% end =%>
 

@@ -1,21 +1,26 @@
-
+ <ul class='error_messages'>
+     <% if flash[:error] %>
+        <li><%= flash[:error] %> </li>
+     <% end %>
+ </ul>
+ 
 <fieldset>
   <ul>
       <li><label>Welcome Message for:</label><%= select :access_name, :collection => @classrooms, :prompt => "Please Select" %></li>
-      <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
+      <li><%= text_area :content, :label => "Content", :rows => "10", :cols => "50" %></li>
   </ul>
 </fieldset>
-
+ 
 <div class="save-cancel">
-    <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
-    <%= submit "    Publish    " %> Or 
+    <input type = 'button' value = ' Preview ' onclick="preview();return false;" />
+    <%= submit " Publish " %> Or
     <%= link_to "Cancel", resource(:welcome_messages), :class => "cancel" %>
 </div>
-
+ 
 <script type= "text/javascript">
-
+ 
    document.message.welcome_message_content.focus();
-
+ 
  function preview()
  {
    var s = $('welcome_message').serialize();
@@ -23,6 +28,6 @@
  }
   
  //$j('.rte-zone').rte("css url", "toolbox images url");
-
-
+ 
+ 
 </script>
