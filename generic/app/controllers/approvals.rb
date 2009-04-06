@@ -113,7 +113,7 @@ class Approvals < Application
           else
                unless params[:student_not_found].nil?
                   params[:student_not_found].each do |f|
-                      params[:class_not_found].each do |c|
+                      #params[:class_not_found].each do |c|
                           @st = f.split
                           @student = @current_school.students.find(:first, :conditions => [" first_name in (?) AND last_name in (?)", @st, @st ] )
                           @class = @current_school.classrooms.find_by_class_name("#{c}") 
@@ -121,7 +121,7 @@ class Approvals < Application
                           @studs = @current_school.students.find(:all, :joins => :studies, :conditions => [" first_name in (?) AND last_name in (?) AND studies.classroom_id = ?" , @st, @st, @class.id ] )
                           Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
                           Study.update(@study_id.id, {:student_id => @student.id, :classroom_id => @class.id})
-                       end
+                       #end
                    end
                 end
                 unless params[:student_found].nil?

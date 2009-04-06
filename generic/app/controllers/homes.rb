@@ -13,7 +13,10 @@ class Homes < Application
     @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ["access_name = ?", "Home Page"])
     #@from_principals = @current_school.announcements.find(:all, :conditions => ["label = ?", "from_principal"], :limit => 2)
     # @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :order => "created_at DESC", :limit => 4 )
-    @classrooms = @current_school.classrooms.find(:all)
+    @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = "1"'], :order => "class_name ASC")
+    @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = "Classes" and activate = "1"'], :order => "class_name ASC")
+    @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = "Extra Cirrcular" and activate = "1"'], :order => "class_name ASC")
+    
     render
   end
   

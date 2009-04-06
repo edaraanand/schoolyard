@@ -30,12 +30,12 @@
        
          <div id="<%= classroom.id %>" style="display:none;">
              <% if classroom.activate == true %>
-                   <h4> Are you sure u want to De Activate the classroom </h4>
+                   <h4> Are you sure you want to De Activate the classroom ?</h4>
                    <div class="save-cancel">
                        <%= link_to "De Activate", resource(classroom, :delete, :label => "deactivate"),  :class => "cancel" %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
                    </div>
              <% else %>
-                  <h4> Are you sure u want to Activate the classroom </h4>
+                  <h4> Are you sure you want to Activate the classroom ?</h4>
                   <div class="save-cancel">
                       <%= link_to "<span class=approved>Activate</span>", resource(classroom, :delete, :label => "activate"),  :class => "cancel" %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
                   </div>

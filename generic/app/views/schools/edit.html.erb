@@ -2,25 +2,6 @@
 <fieldset>
   <h2 class="current-page">School Profile &gt; Edit</h2>
   <%= form_for(@current_school, :action => resource(@current_school)) do %>
-       <ul>
-           <li><%= text_field :school_name,  :label => "School Name", :maxlength => "75" %></li>
-           <li>&nbsp;</li>
-           <li><h3>Contact Information for Parents</h3></li>
-           <li><%= text_field  :address1,  :label => "Address 1", :maxlength => "75" %></li>
-           <li><%= text_field  :address2,  :label => "Address 2", :maxlength => "75" %></li>
-           <li><%= text_field  :city,  :label => "City", :maxlength => "75" %></li>
-           <li><%= text_field  :state,  :label => "State", :maxlength => "75" %></li>
-           <li><%= text_field  :zip_code,  :label => "Zip Code", :maxlength => "75" %></li>
-           <li><%= text_field  :fax,  :label => "Fax", :class=>"short text", :maxlength => "75" %></li>
-           <li>
-                <%= text_field :phone,  :label => "Phone", :class=>"short text", :maxlength => "75" %>
-                <span class="phone-hint">(e.g. 1239076897)</span>
-           </li>
-            <li><%= text_field :email,  :label => "E-mail", :maxlength => "75" %></li>
-      </ul>
-<br />
-<div class="save-cancel">
-  <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:schools), :class => "cancel" %>
-</div>
+        <%= partial 'form' %>
   <% end =%>
 </fieldset>

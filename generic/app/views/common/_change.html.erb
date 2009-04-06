@@ -1,9 +1,43 @@
- <div id="info" style="display:none;">
-          <b>Please Select the classroom you would like to visit</b>
-          <p>Classes: </p>
-            <ul><% @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ? and class_name != ?', true, "Sports"]) %>
-              <% @classrooms.each do |f| %>
-                  <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => "#{f.id}" ) %></li>
-              <% end %>
-          </ul>
-    </div> 
+
+<% @classrooms = @current_school.classrooms.find(:all, :conditions => ['class_name != ? and activate = ?', "Sports", true]) %>
+<% @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = "Classes" and activate = "1"'], :order => "class_name ASC") %>
+<% @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = "Extra Cirrcular" and activate = "1"'], :order => "class_name ASC") %>
+
+<div id="info" style="display:none;">
+  
+
+    <h3 style="text-align:center; font-size:100%">Please select the classroom you would like to visit</h3>
+    <hr size='1'/><br/>
+  <% if @classrooms.empty? %>
+    <p class="subText">Sorry, there are not classrooms defined yet.</p>
+  <%else%>
+    <table cellpadding="5" cellspacing="0" border="0">
+      <tr>
+        <%unless @classes.empty?%>
+        <td>
+          <p><b>Classes:</b></p>
+        </td>  
+        <td nowrap>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>
+           <% @classes.each do |f| %>
+            <p class="separator"><%= link_to "#{f.class_name.titleize}", url(:class_details, :id => "#{f.id}" ) %></p>
+           <% end %>
+        </td>
+        <td nowrap>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <% end %>
+       <%unless @extracurricular.empty?%>
+        <td>
+          <p><b>Subjects:</b></p>
+        </td>  
+       <td nowrap>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>
+           <% @extracurricular.each do |f| %>
+            <p class="separator"><%= link_to "#{f.class_name.titleize}", url(:class_details, :id => "#{f.id}" ) %></p>
+           <% end %>
+        </td>
+        <%end%>
+      </tr>
+    </table>
+  <%end%>
+</div>
+

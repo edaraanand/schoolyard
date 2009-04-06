@@ -31,9 +31,9 @@
                          </div>
                          <hr size="1"/>
                        <% if params[:label] == "home_w" %>
-                             <%= link_to "< Back to All Homework", resource(:home_works) %>
+                             <%= link_to "&larr; Back to All Homework", resource(:home_works) %>
                        <% else %>
-                            <%= link_to "< Back to All Homework", url(:class_details, :id => @home_work.classroom.id, :label => "homeworks") %>
+                            <%= link_to "&larr; Back to All Homework", url(:class_details, :id => @home_work.classroom.id, :label => "homeworks") %>
                        <% end %>
          
 </div>

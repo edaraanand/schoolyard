@@ -1,4 +1,6 @@
 <%= partial 'layout/main' %>
+<div>&nbsp;</div>
+<div id="classContainer">
     <div id="sidebar">
           
           <table cellpadding="0" cellspacing="0" order="0" class="class-name">
@@ -11,7 +13,7 @@
       <ul id="menu"><!-- Nested Lists -->
         <li <% if @selected == nil %> class="on" <% end %>><%= link_to "<span>Home</span>", url(:sports) %></li>
         <li <% if @selected == "teams" %> class="on" <% end %> ><%= link_to "Teams", url(:sports, :label => "teams") %></li>
-        <li <% if @selected == "calendars" %> class="on" <% end %> ><%= link_to "Class Calendar", url(:sports, :label => "calendars") %></li>
+        <li <% if @selected == "calendars" %> class="on" <% end %> ><%= link_to "Sports Calendar", url(:sports, :label => "calendars") %></li>
         <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to "Announcements", url(:sports, :label => "announcements") %></li>
         <li>&nbsp;</li>
        
@@ -55,6 +57,7 @@
    
     <!--Right Sidebar to be inserted here-->    
   <div class="hrule clear hidden "><hr /></div>
+  </div>
   </div><!--Pagewrap End -->
   <%= partial 'common/footer' %>
 </body>

@@ -36,10 +36,10 @@ td{vertical-align="top"}
 
 /*Base Layout*/
 body{ font:12px/16px "lucida grande","Lucida Sans Unicode",tahoma,verdana,arial,sans-serif; background:url(/images/header-bg.gif) repeat-x;}
-body.fixed-width{width:1000px;}
+body.fixed-width{width:100%;}
 #pagewrap{width:980px}
   /*Wraps Everything*/
-#content{ min-width:480px; float:left; margin-left:1em; min-height:500px;}
+#content{ width:450px; float:left; margin-left:1em; min-height:500px;}
 .homes-content{width:420px!important;min-width:420px!important; padding:12px;}
 .homes-content .post-content{width:420px;}
 .homes-content .long-block{width:420px;}
@@ -47,12 +47,12 @@ body.fixed-width{width:1000px;}
 .widen{width:600px!important;}
   /*The center Content Area*/
 #sidebar{float:left; clear:both;}
-.left-block{width:240px; border-right:1px solid #eee;}
+.left-block{width:240px;}
   /*Left Side Menu. term 'Sidebar' defaults for LEFT SIDEBAR/MENU*/
 #content p{font-size:13px; padding:.5em 0 .5em 0;}
-#content-wrap{float:left; padding:0 0 0 10px; margin:20px 0 0 0; border-left:1px solid #e8e8e8;}
+#content-wrap{float:left; padding:0 0 0 20px; margin:20px 0 0 0; min-width:500px;}
   /*Wraps the content section*/
-#fullpage{width:700px;}
+#fullpage{width:500px;}
 
 
 
@@ -124,7 +124,7 @@ fieldset td label{display:block; width:120px;}
 
 
 /*Sidebar Menu*/
-ul#menu{ padding:16px 16px 0 16px; width:165px; font-size:12px; line-height:18px;}
+ul#menu{ padding:16px 16px 0 16px; width:200px; font-size:12px; line-height:18px;}
 ul#menu a{text-decoration:none; border-bottom:1px dotted #ccc;display:block;}
 ul#menu li{padding:4px 0 4px 10px;margin:0 0 0 10px;}
 ul#menu li ul{margin:2px 0 4px;}
@@ -135,8 +135,6 @@ ul#menu li ul li a:visited{color:#7e91b3;}
 ul#menu li ul li a:hover{text-decoration:underline}
 ul#menu li ul li a:active{color:#1b67ed;}
 
-ul#menu li.count span. .on span {background:url(/images/menu-count.gif) no-repeat left top; padding:2px 0px 4px 4px; margin:0 0 0 2px; color:#fff; font-size:11px; line-height:13px;}
-ul#menu li.count span b, .on span b{background:url(/images/menu-count.gif) no-repeat right top; padding:2px 5px 4px 2px;}
   /*That yellow dot which contains numbers*/
 
 #menu .change{border-top:1px solid #ccc;border-bottom:1px solid #ccc; padding:13px 10px; }
@@ -255,9 +253,9 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 #checkboxes #check-fields span{display:block;}
 
 /*Rules for Right Sidebar*/
-.right-sidebar{ line-height:15px; width:270px; float:left; margin:30px 0 0 20px;  background:url(/images/right-sidebar-mid.gif) repeat-y bottom center}
-.right-sidebar h3{ height:14px; font-weight:bold ; background:url(/images/right-sidebar-top.gif) no-repeat top center; padding:12px; margin:10px 0 0 0;}
-.right-sidebar .last{background:url(/images/right-sidebar-bottom.gif) no-repeat bottom center; }
+.right-sidebar{ line-height:15px; width:200px; float:left; margin:30px 0 0 20px; }
+.right-sidebar h3{font-weight:bold ; background:url("/images/right-sidebar-top.gif") no-repeat top center; padding:12px; margin:10px 0 0 0;}
+.right-sidebar .last{background:url("/images/right-sidebar-bottom.gif") no-repeat bottom center; border-top:1px solid #becfdb; }
   /*Styles applied to these three elements provide chrome for the right sidebar*/
 
 .right-sidebar h3 span.main{float:left;}
@@ -273,7 +271,7 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 .email-alerts li{margin:10px 0 0 30px; padding:3px 0 3px 20px; background:url"(/images/bullet-dash.gif") no-repeat left center; border-bottom:1px dotted #eee;}
 
 
-#footer{clear:both; padding:10px; text-align:center; border-top:1px solid #ccc; margin:40px 0 40px 0;}
+#footer{clear:both; padding:10px; text-align:center; border-top:1px solid #ccc; margin:10px 0 40px 0;}
 
 .lightbox{width:480px; border:10px solid #ccc; padding:20px; margin:10px 0;}
 .lightbox .close{float:right}
@@ -292,7 +290,7 @@ span.cancel a:hover{text-decoration:underline;}
 .short-block{width:480px;}
 .long-block{width:640px;}
 .left-block .long-block{width:230px; padding:5px;}
-.post-content{width:480px; float:left;}
+.post-content{width:445px; float:left;}
 
 .data{width:300px;}
 .ddmmm{width:36px; height:48px; border:1px solid #C1DAD7; margin:10px 10px 10px 0; float:left;}
@@ -357,6 +355,9 @@ ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding
 .phone-hint{color:#a1a1a1; padding:0 6px;}
 .css_class{border-bottom: solid 2px #000;}
 .on a{ color:black!important; background:url("/images/arrow-right.png") right no-repeat; font-weight:bold; padding:0 10px 0 0;}
+
+ul#menu li span, .on a span {background:url("/images/menu-count.gif") no-repeat left top; padding:2px 0px 4px 4px;color:#fff; font-size:11px; line-height:13px;}
+ul#menu li span b, .on a span b{background:url("/images/menu-count.gif") no-repeat right top; padding:2px 5px 4px 2px;}
 
 
 /*Revisited extras @Rmax*/
@@ -446,10 +447,10 @@ td.separator{padding:8px;}
 .noText {font-style:italic;}
 
 .class-name {margin:10px auto;}
-.class-name-backgr {background:url("/images/class-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:154px; padding:0 5px;}
+.class-name-backgr {background:url("/images/class-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:154px; padding:0 5px; line-height:0px;}
 td.class-name-top, td.class-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
 .teach-name {margin:10px auto; font-size:80%;}
-.teach-name-backgr {background:url("/images/teach-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:125px; padding:0 5px;}
+.teach-name-backgr {background:url("/images/teach-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:125px; padding:0 5px;line-height:0px;}
 td.teach-name-top, td.teach-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
 
 .page-links{text-align:center;padding:10px;}
@@ -464,3 +465,7 @@ td.teach-name-top, td.teach-name-bottom {height:9px; padding:0px; margin:0px; li
 .approved {color:#169609!important; background:#fff}
 .pdf{padding:2px 0 2px 25px; background:url("/images/ico_pdf.gif") no-repeat 0 50%;}
 h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;}
+#info b{color:#666;}
+#alerts ul li{list-style:square; margin:0 0 0 25px;}
+.right-sidebar li.noBullet{list-style:none; padding: 8px 0 0 10px; color:#666;}
+#classContainer {background:url(/images/vertical-separator.gif) repeat-y 230px 0px; overflow: auto; padding:10px 0;}

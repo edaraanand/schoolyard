@@ -45,44 +45,49 @@
    <% end %>
         
 <% elsif params[:label] == "homeworks" %>
+
+
+
   <h2 class="current-page"> Homework </h2>
   <%if @home_works.empty? %>
     <span class="subText">There are no Homework assignments at this time</span>
   <%else%>
-      <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id)  , :class=> "pdf"%>
-       <% for homework in @home_works %>
-             <div class="data-block short-block">
-              <span class="hidden">
-                  <% unless homework.due_date.nil? %>
-                      <%= homework.due_date.strftime("%B-%d") %>
-                  <% end %>
-              </span>
-              <% if homework.due_date.nil? %>
-	                <div class="ddmmm-x">
-	                </div>
-	            <% else %>
-                   <div class="ddmmm">
-                       <span class="date"><%= homework.due_date.strftime("%d") %></span>
-                       <span class="month"><%= homework.due_date.strftime("%b") %></span>
-                    </div>
-               <% end %>
-               <h3><%= link_to "#{homework.title}", url(:home_work, homework.id) %></h3>
-               Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %>
-               <p class="separator"><%= snippet(homework.content, 50) %></p>
-                <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
-                  <% unless @attachment.nil? %>
-                      <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
-                  <% end %>
-               
-      <% end %>    
+  <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id)  , :class=> "pdf"%>
+  <% for homework in @home_works %>
+    <div class="data-block short-block">
+      <span class="hidden">
+        <% unless homework.due_date.nil? %>
+          <%= homework.due_date.strftime("%B-%d") %>
+        <% end %>
+      </span>
+      <% if homework.due_date.nil? %>
+	      <div class="ddmmm-x"></div>
+	    <% else %>
+        <div class="ddmmm">
+          <span class="date"><%= homework.due_date.strftime("%d") %></span>
+          <span class="month"><%= homework.due_date.strftime("%b") %></span>
+        </div>
+      <% end %>
+      <h3><%= link_to "#{homework.title}", url(:home_work, homework.id) %></h3>
+      Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %>
+      <p class="separator"><%= snippet(homework.content, 50) %></p>
+      <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
+      <% unless @attachment.nil? %>
+        <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+      <% end %>
+    </div>           
+  <% end %>    
       <%= will_paginate (@home_works, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>      
-    <% end %>
+<% end %>
+       
+       
+       
        
                 
 <% elsif params[:label] == "announcements" %>
           <h2 class="current-page"> Announcements </h2>
             <%if @announcements.blank?%>
-              <span class="subText">There are no announcements at this time</span>
+              <span class="subText">There are no Announcements at this time</span>
             <%else%>
               <% for announcement in @announcements %>
                    <div class="data-block short-block">
@@ -111,7 +116,7 @@
         <h2 class="current-page">Announcements &amp; Updates </h2>
         
         <%if @ann.blank?%>
-          <p class="subText">There are no announcements at this time.</p>
+          <p class="subText">There are no Announcements at this time.</p>
         <%else%>
             <% for announcement in @ann %>
               <div class="data-block short-block">

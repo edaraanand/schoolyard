@@ -1,44 +1,46 @@
 <%  if params[:label] == "principal" %>
-<div id="sidebar" class="left-block">
- <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
-  <% unless @attachment.nil? %>
-     <img src="uploads/principal_images/<%= @attachment.filename %>" alt="<%= @attachment.filename %>"/>
-  <% else %>
-     <img src="images/principal.png" alt="From The Principal"/>
-  <% end %>
-</div>
-<div id="content" class="homes-content">
-  <h2>From the Principal</h2>
-  <%= link_to " < Back to Home Page", url(:homes) %> <br/><br/>
-       <% for principal in @from_principals %>
+<div id="classContainer">
+    <div id="sidebar" class="left-block">
+     <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
+      <% unless @attachment.nil? %>
+         <img src="uploads/principal_images/<%= @attachment.filename %>" alt="<%= @attachment.filename %>"/>
+      <% else %>
+         <img src="images/principal.png" alt="From The Principal"/>
+      <% end %>
+    </div>
+    <div id="content" class="homes-content">
+      <h2>From the Principal</h2>
+      <%= link_to " &larr; Back to Home Page", url(:homes) %> <br/><br/>
+           <% for principal in @from_principals %>
      
-            <div id="sidebar">
-                 <div class="data-block long-block">
-                   <div class="ddmmm">
-                     <span class="date"><%=  principal.created_at.strftime("%d")%></span>
-                     <span class="month"><%=  principal.created_at.strftime("%b")%></span>
-                   </div>
-                     <h3><%= link_to "#{principal.title}", url(:home, principal.id, :label => 'principal') %></h3>
-                     <p class="separator"><%= snippet(principal.content, 50) %></p>
-                 </div>
-            </div>
-            <div class="hrule clear"><hr /></div>
-        <% end %>
-      <%= will_paginate (@from_principals, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-  </div>
-<% else %>
-  <h2>All Announcements</h2>
-  <%= link_to " < Back to Home Page", url(:homes) %> <br/>
-        <% for announcement in @announcements %>
-              <div class="data-block long-block">
-                <div class="ddmmm">
-                  <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
-                  <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
+                <div id="sidebar">
+                     <div class="data-block long-block">
+                       <div class="ddmmm">
+                         <span class="date"><%=  principal.created_at.strftime("%d")%></span>
+                         <span class="month"><%=  principal.created_at.strftime("%b")%></span>
+                       </div>
+                         <h3><%= link_to "#{principal.title}", url(:home, principal.id, :label => 'principal') %></h3>
+                         <p class="separator"><%= snippet(principal.content, 50) %></p>
+                     </div>
                 </div>
-                     <h3><%= link_to "#{announcement.title}", url(:home, announcement.id) %></h3>
-                     <p class="separator"><%= snippet(announcement.content, 50) %></p>
-              </div>
-              <div class="hrule clear"><hr /></div>
-         <% end %>
-       <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-<% end %>
+                <div class="hrule clear"><hr /></div>
+            <% end %>
+          <%= will_paginate (@from_principals, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+      </div>
+    <% else %>
+      <h2>All Announcements</h2>
+      <%= link_to " &larr; Back to Home Page", url(:homes) %> <br/>
+            <% for announcement in @announcements %>
+                  <div class="data-block long-block">
+                    <div class="ddmmm">
+                      <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
+                      <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
+                    </div>
+                         <h3><%= link_to "#{announcement.title}", url(:home, announcement.id) %></h3>
+                         <p class="separator"><%= snippet(announcement.content, 50) %></p>
+                  </div>
+                  <div class="hrule clear"><hr /></div>
+             <% end %>
+           <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+    <% end %>
+</div>

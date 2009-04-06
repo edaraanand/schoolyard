@@ -1,14 +1,15 @@
    <%= partial 'layout/main' %>
    
         <% @classes =  @current_school.classrooms.find(:all, :conditions => ['activate = ?', true]) %>
-        
+<div>&nbsp;</div>
+  <div id="classContainer">      
      <div id="sidebar">
            
      <% if params[:label] == "forms" %>  
               <ul id="menu">
                    <li <% if @selected == "all_forms" %> class="on" <% end %> ><%= link_to "All Forms", url(:form_files, :l => "all_forms", :label => "forms") %></li>
                    <% @classes.each do |f| %>
-                        <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:form_files, :id => "#{f.id}", :label => "forms") %></li>
+                       <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:form_files, :id => "#{f.id}", :label => "forms") %></li>
                    <% end %>
               </ul>
      <% elsif params[:label] == "calendars" %>
@@ -38,7 +39,8 @@
     <!--Right Sidebar to be inserted here-->
     
   <div class="hrule clear hidden "><hr /></div>
+   </div>
   </div><!--Pagewrap End -->
-  <%= partial 'common/footer' %>
+  <%= partial 'common/footer' %>                                        
 </body>
 </html>
