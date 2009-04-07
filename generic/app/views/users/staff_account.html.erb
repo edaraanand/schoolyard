@@ -6,7 +6,10 @@
        <%= link_to "Change Password", url(:staff_password), :class=> "edit-btn" %> 
   </h2>
     <p><%= session.user.email.blank? ? "" :  email(session.user.email) %><br/>
-    <%= session.user.phone.blank? ? "" :  number_to_phone(session.user.phone, :area_code => true) %></p>
+    <% unless @attachment.nil? %>
+    <img src="uploads/user_pictures/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class = "teacherPic"/>
+     <% end %>
+     <%= session.user.phone.blank? ? "" :  number_to_phone(session.user.phone, :area_code => true) %></p>
     <br/>
     <h3>Your Bio</h3>
       <p><%= session.user.person_bio.blank? ? "You have not created your bio yet." :  san_content(session.user.person_bio) %></p>

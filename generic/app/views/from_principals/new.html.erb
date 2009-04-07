@@ -18,8 +18,8 @@
     </fieldset>
       
             <div class="save-cancel">
-  	              <input type = 'button' value = '    Preview    ' onclick="preview();return false;" /> 
-                  <%= submit "    Publish    " %>  Or <%= link_to "Cancel", url(:from_principals), :class => "cancel" %>
+                <input type = 'button' value = '    Preview    ' onclick="preview();return false;" /> 
+                <%= submit "    Publish    " %>  Or <%= link_to "Cancel", url(:from_principals), :class => "cancel" %>
             </div>
   <% end =%>
   
@@ -29,11 +29,12 @@
   document.myform.announcement_title.focus();
   
   function preview()
- 
  {
    var s = $('announcement').serialize();
    window.open('/from_principals/preview/-/?' + s);
  }
+
+ // $j('#announcement_content').modalpreview({allowHtml:true});
   
   $j("#expiration").datepicker({minDate:'today + 1'});
 

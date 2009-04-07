@@ -29,7 +29,10 @@
                           <tr><td class="teach-name-backgr"><p><%= f.role.titleize %></p></td></tr>
                           <tr><td  class="teach-name-bottom"><img src="/images/teach-name-bottom.gif"/></td></tr>
                         </table>
-                        
+                        <% @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", f.person.id]) %>
+                        <% unless @pic.nil? %>
+                            <li><img src="uploads/user_pictures/<%= @pic.filename %>" alt="<%= @pic.filename %>", class ="teacherPic"/></li>
+                        <% end %>
                      </li>
                      <li><b><%= f.person.name %></b>
                             <% unless f.person.person_bio.blank? %>
