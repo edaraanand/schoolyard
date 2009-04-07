@@ -1,0 +1,40 @@
+.preview_div
+{
+	position:fixed;
+	width:380px;
+	height:380px;
+	overflow:auto;
+	left:50%;
+	margin-left:-200px;
+	top:50%;
+	margin-top:-200px;
+	background:#fff;
+	padding:20px;
+}
+#overlay
+{
+	background:#000;
+	position:fixed;
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+}
+* html,
+* html body
+{
+	height:100%;
+}
+* html .preview_div
+{
+	position:absolute;
+	margin-top:60px;
+	top:expression(( (ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop)) + 'px'); 
+	right:expression(( (ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft)) + 'px');
+}
+* html #overlay
+{
+	position:absolute;
+	top:expression(( (ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop)) + 'px');
+	right:0;
+}
