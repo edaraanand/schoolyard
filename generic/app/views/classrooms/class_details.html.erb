@@ -128,7 +128,7 @@
                       <span class="month"><%= announcement.created_at.strftime("%b") %></span>
                     </div>
                   <% end %>
-                  <h3><%= announcement.title %></h3>
+                  <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :label => "class_ann") %></h3>
                   <p class="separator"><%= snippet(announcement.content,50) %></p>
               </div>
             <% end %>

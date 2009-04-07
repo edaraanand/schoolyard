@@ -4,42 +4,38 @@
        <p>There are no calendar events created yet.</p>
     
   <% else %>
-      <% cdate=""
+       
+        <% cdate=""
             for calendar in @calendars %>
-               <div class="calendar-block" style="width:480px;">
-                   <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
+                <div class="calendar-block" style="width:480px;">
+                    <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
                          cdate=calendar.start_date.strftime("%B %d %Y") %>
-                         <div class="ddmmm">
-                              <span class="date"><%= calendar.start_date.strftime("%d") %></span>
-                              <span class="month"><%= calendar.start_date.strftime("%b") %></span>
-                         </div>
-                   <% end %> 
-               
-               <ul class="calendar-items">
-                      <li>
-                            <span class="cal-time">
-                                <% unless calendar.start_time.nil? %>
-                              Starts at <%= calendar.start_time.strftime("%I:%M%p") %>
-                                     <% end %>&nbsp;
-                                </span>
-                                <span class="cal-title">
-                                  <%= calendar.title %>
-                                </span>
-                                <span class="cal-time">
-                                  <% unless calendar.end_time.nil? %>
-                                Ends at <%= calendar.end_time.strftime("%I:%M%p") %>
-                                      <% end %>  &nbsp;
-                                </span>
-                                Location : <%= calendar.location %>
-                                <%= link_to "Edit", resource(calendar, :edit), :class=>"edit-btn" %>
-                                <%= link_to "Delete", resource(calendar, :delete), :class=>"delete-btn" %>
-                            </li>
-
-               </ul>
-          </div>
-     
+                         <h3><%= cdate %></h3>
+                    <% end %> 
+                    <ul class="calendar-items">
+                         <li>
+                              <span class="cal-time">
+                                   <% unless calendar.start_time.nil? %>
+                                        Starts at <%= calendar.start_time.strftime("%I:%M%p") %>
+                                   <% end %>&nbsp;
+                              </span>
+                              <span class="cal-title">
+                                   <%= calendar.title %>
+                              </span>
+                              <span class="cal-time">
+                                   <% unless calendar.end_time.nil? %>
+                                       Ends at <%= calendar.end_time.strftime("%I:%M%p") %>
+                                   <% end %>  &nbsp;
+                              </span>
+                                   Location : <%= calendar.location %>
+                              <%= link_to "Edit", resource(calendar, :edit), :class=>"edit-btn" %>
+                              <%= link_to "Delete", resource(calendar, :delete), :class=>"delete-btn" %>
+                        </li>
+                    </ul>
+                </div>   
         <% end %>
+         
     
-  <%end%>
+  <% end %>
 
 </div>

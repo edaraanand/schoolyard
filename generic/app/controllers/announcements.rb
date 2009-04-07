@@ -145,7 +145,17 @@ class Announcements < Application
    def preview
       @title = params[:announcement][:title]
       @content = params[:announcement][:content]
-      render :layout => 'preview'
+      @expiration = params[:announcement][:expiration]
+      @access_name = params[:announcement][:access_name]
+      if params[:announcement][:access_name] == "Home Page"
+         @select = "home"
+         render :layout => 'home'
+      else
+         @selected = "announcements"
+         @select =  "classrooms"
+         @classroom = @current_school.classrooms.find_by_class_name(params[:announcement][:access_name])
+         render :layout => 'class_change', :id => @classroom.id
+      end
    end
    
        

@@ -68,7 +68,14 @@ class WelcomeMessages < Application
   end
   
   def preview
-     render :layout => 'preview'
+     if params[:welcome_message][:access_name] == "Home Page"
+        @select = "home"
+        render :layout => "home"
+     else
+        @select = "classrooms"
+        @classroom = @current_school.classrooms.find_by_class_name(params[:welcome_message][:access_name])
+        render :layout => 'class_change', :id => @classroom.id
+     end
   end
    
   private
