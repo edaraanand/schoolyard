@@ -123,6 +123,7 @@ class Students < Application
      @student = Student.find(params[:id])
      @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @sp = @student.protectors
+     @lt = @student.studies
      render
   end
   
