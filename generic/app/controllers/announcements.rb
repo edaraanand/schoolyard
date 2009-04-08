@@ -143,10 +143,7 @@ class Announcements < Application
   end
    
    def preview
-      @title = params[:announcement][:title]
-      @content = params[:announcement][:content]
-      @expiration = params[:announcement][:expiration]
-      @access_name = params[:announcement][:access_name]
+      @date = Date.today
       if params[:announcement][:access_name] == "Home Page"
          @select = "home"
          render :layout => 'home'

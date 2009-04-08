@@ -157,10 +157,14 @@ class Calendars < Application
   end
   
   def preview
-     @title = params[:calendar][:title]
-     @description = params[:calendar][:description]
-     @location = params[:calendar][:location]
-     render :layout => 'preview' 
+     @date = Date.today
+     @select = "classrooms"
+     if params[:calendar][:class_name] != nil
+         @classroom = @current_school.classrooms.find_by_class_name(params[:calendar][:class_name])
+         render :layout => 'class_change', :id => @classroom.id
+     else
+       raise NotFound
+     end
   end
   
   def pdf_events

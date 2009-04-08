@@ -134,7 +134,15 @@ class HomeWorks < Application
   end
   
   def preview
-    render :layout => 'preview'
+    if params[:home_work][:classroom_id] != nil
+        @date = Date.today
+        @select = "classrooms"
+        @selected = "homeworks"
+        @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
+        render :layout => 'class_change', :id => @classroom.id
+    else
+        raise NotFound
+    end
   end
   
   def show

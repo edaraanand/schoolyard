@@ -11,8 +11,6 @@ class Homes < Application
     @from_principals = @current_school.announcements.find(:all, :conditions => ["label = ? and expiration >= ?", 'from_principal', @date], :limit => 2)
     @external_links = @current_school.external_links.find(:all, :conditions => ['label = ?', "Home Page"])
     @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ["access_name = ?", "Home Page"])
-    #@from_principals = @current_school.announcements.find(:all, :conditions => ["label = ?", "from_principal"], :limit => 2)
-    # @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :order => "created_at DESC", :limit => 4 )
     @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = "1"'], :order => "class_name ASC")
     @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = "Classes" and activate = "1"'], :order => "class_name ASC")
     @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = "Extra Cirrcular" and activate = "1"'], :order => "class_name ASC")
@@ -28,9 +26,10 @@ class Homes < Application
   
   def show
     if params[:label] == "class_ann"
+       @select = "classrooms" 
        @selected = "announcements"
-       @announcement = Announcement.find(params[:id])
-       @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @announcement.access_name] )
+       @announcement = @current_school.announcements.find(params[:id])
+       @classroom = @current_school.classrooms.find_by_class_name(@announcement.access_name)
        render :layout => 'class_change', :id => @classroom.id
     elsif params[:label] == "sports_announcement"
        @selected = "announcements"

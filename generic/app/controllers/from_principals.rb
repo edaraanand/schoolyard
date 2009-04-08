@@ -98,7 +98,9 @@ class FromPrincipals < Application
   end
   
    def preview
-      render :layout => 'preview'
+      @date = Date.today
+      @select = "home"
+      render :layout => 'home'
    end
   
    def settings

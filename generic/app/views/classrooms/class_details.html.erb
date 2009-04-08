@@ -46,8 +46,6 @@
         
 <% elsif params[:label] == "homeworks" %>
 
-
-
   <h2 class="current-page"> Homework </h2>
   <%if @home_works.empty? %>
     <span class="subText">There are no Homework assignments at this time</span>
@@ -95,7 +93,7 @@
                               <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
                               <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
                          </div>
-                         <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :label => "class_ann") %></h3>
+                         <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann" ) %></h3>
                             <p class="separator"><%= snippet(announcement.content,50) %></p>
                           <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
                              <% unless @attachment.nil? %>
@@ -128,7 +126,7 @@
                       <span class="month"><%= announcement.created_at.strftime("%b") %></span>
                     </div>
                   <% end %>
-                  <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :label => "class_ann") %></h3>
+                  <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann") %></h3>
                   <p class="separator"><%= snippet(announcement.content,50) %></p>
               </div>
             <% end %>
