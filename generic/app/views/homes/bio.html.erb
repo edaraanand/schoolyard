@@ -1,17 +1,17 @@
 <div id="fullpage">  
  <% if params[:label] == "classes" %>
-   <% s = @classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
-           <% t = s.delete_if{ |x| x.role != "class_teacher" } %>
-           <% t.each do |f| %>
+        <% s = @classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
+               <% t = s.delete_if{ |x| x.role != "class_teacher" } %>
+         <% t.each do |f| %>
               <h2><%= f.person.name %>'s Bio</h2>
               <p><%= email(f.person.email) %></p>
               <br/><br/>
-              <%unless f.person.person_bio.blank?%>
-                <p><%= san_content(f.person.person_bio) %></p>
-              <%end%>
+              <% unless f.person.person_bio.blank? %>
+                 <p><%= san_content(f.person.person_bio) %></p>
+              <% end %>
            <% end %>
  <% else %>
- <% s = @classroom.class_peoples.delete_if{|x| x.role != "Athletic Director" } %>
+          <% s = @classroom.class_peoples.delete_if{|x| x.role != "Athletic Director" } %>
           <% s.each do |f| %>
               <h2><%= f.person.name %>'s Bio</h2>
               <p><%= email(f.person.email) %></p>

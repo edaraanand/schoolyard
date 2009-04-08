@@ -1,12 +1,23 @@
-<div class="previewWrapper"> 
-  <div class="data-block long-block">
-    <div class="ddmmm">
-      <span class="date"><%=  params[:announcement][:expiration]%></span>
-      <span class="month"><%=  params[:announcement][:expiration]%></span>
-    </div>
-    <h3><%= params[:announcement][:title] %></h3>
-    <p class="post-content"><%= params[:announcement][:content] %></p>
-    <div class="hrule clear">
-    <a href="javascript:window.close();">Close the preview</a></div>
-  </div>
+
+
+
+<div id="classContainer">
+        <div id="sidebar" class="left-block">
+              <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
+              <% unless @attachment.nil? %>
+                  <img src="uploads/principal_images/<%= @attachment.filename %>" alt=" ", class = "teacherPic"/>
+              <% else %>
+                  <img src="images/principal.png" alt="From The Principal"/>
+              <% end %>
+        </div>
+        <div id="content" class="homes-content">
+             <h2>From the Principal > <%= params[:announcement][:title] %></h2>
+             <div>
+                   <div class="ddmmm">
+                        <span class="date"><%= @date.strftime("%d") %></span>
+                        <span class="month"><%= @date.strftime("%b") %></span>
+                   </div>
+                   <p class="separator"><%= san_content(params[:announcement][:content]) %></p>
+             </div>
+        </div>
 </div>
