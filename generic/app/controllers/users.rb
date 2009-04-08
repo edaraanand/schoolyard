@@ -7,13 +7,13 @@ class Users < Application
    
   def staff_account
     @person = session.user
-    @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
+    @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
     render 
   end
   
   def staff_account_edit
     @person = session.user
-    @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
+    @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
     render
   end
   
