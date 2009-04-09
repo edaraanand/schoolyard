@@ -348,6 +348,7 @@ ul.edit-ext-links li{background:url(/images/link-bullet.gif) no-repeat left cent
 .cal-title{float:left; display:block; width:240px;}
 ul.calendar-items{clear:both;}
 ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding:4px 0 2px 2px;}
+ul.calendar-items small{color:#666;}
 
 .defaultText { width: 300px; }
 .defaultTextActive {color:#a1a1a1; font-style: italic!important; }

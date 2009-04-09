@@ -1,6 +1,6 @@
 <%  if params[:label] == "calendars" %>
 
-  <h2 class="current-page"> Calendars</h2>
+  <h2 class="current-page">Class Calendar</h2>
   <%if @calendars.empty?%>
     <span class="subText">There are no events planned at this time</span>
   <%else%>
@@ -11,30 +11,17 @@
             <div class="calendar-block" style="width:480px;">
             <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
                   cdate=calendar.start_date.strftime("%B %d %Y") %>
-                  <h3>Calendars for <%= calendar.class_name.titleize %></h3> 
-                  <%= cdate %>
+                  <h3><%= cdate %></h3> 
+                  
             <% end %> 
-
             <ul class="calendar-items">
                    <li>
-
                              <% unless calendar.start_time.nil? %>
                                <%= calendar.start_time.strftime("%I:%M %p") %> 
                             <%else%>
                               All day event
                              <% end %>
-                             <% unless calendar.end_time.nil? %>
-                               to <%= calendar.end_time.strftime("%I:%M %p") %>
-                             <% end %>
                              <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
-                             <% @attachments = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
-                             <% unless @attachment.nil? %>
-                               &nbsp;<%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %>
-                             <% end %>
-                             <%unless calendar.location.blank? %>
-                               (Location: <%= calendar.location %>)
-                             <%end%>
-
                          </li>
 
             </ul>
