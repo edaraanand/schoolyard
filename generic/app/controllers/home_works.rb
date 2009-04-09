@@ -134,7 +134,7 @@ class HomeWorks < Application
   end
   
   def preview
-    if params[:home_work][:classroom_id] != nil
+    if params[:home_work][:classroom_id] != ""
         @date = Date.today
         @select = "classrooms"
         @selected = "homeworks"
