@@ -1,7 +1,45 @@
 <%= error_messages_for @welcome_message %>
+<ul class='error_messages'>
+     <% if flash[:error] %>
+        <li><%= flash[:error] %> </li>
+     <% end %>
+ </ul>
+ 
 <%= form_for(@welcome_message, :action => resource(@welcome_message), :id => 'welcome_message') do %>
     <h2 class="current-page">Welcome Messages &gt; Edit</h2>
-  <%= partial 'form' %>
+    <fieldset>
+         <ul>
+             <li>
+                 <label>Welcome Message for:</label>
+                 <%= select :access_name, :collection => @test, :prompt => "Please Select"  %>
+             </li>
+             <li><%= text_area :content, :label => "Content", :rows => "10", :cols => "50" %></li>
+         </ul>
+    </fieldset>
+  
+      <div class="save-cancel">
+            <input type = 'button' value = ' Preview ' onclick="preview();return false;" />
+            <%= submit " Publish " %> Or
+            <%= link_to "Cancel", resource(:welcome_messages), :class => "cancel" %>
+      </div>
 <% end =%>
+
+
+
+<script type= "text/javascript">
+ 
+   document.message.welcome_message_content.focus();
+ 
+ function preview()
+ {
+   var s = $('welcome_message').serialize();
+   window.open('/welcome_messages/preview/-/?' + s);
+ }
+  
+ //$j('.rte-zone').rte("css url", "toolbox images url");
+
+ 
+ 
+</script>
 
 

@@ -43,7 +43,10 @@ class WelcomeMessages < Application
   end 
   
   def edit
-     @welcome_message = WelcomeMessage.find(params[:id])
+      @welcome_message = WelcomeMessage.find(params[:id])
+      ss = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+      om = ss.collect{|x| x.class_name.titleize }
+      @test = om.insert(0, "Home Page")
      render
   end
   
@@ -81,6 +84,10 @@ class WelcomeMessages < Application
    
   private
   
+  def check
+     raise "Eshwar".inspect
+  end
+  
   def classrooms
      @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      room = @class.collect{|x| x.class_name.titleize }
@@ -92,6 +99,14 @@ class WelcomeMessages < Application
       @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
       room = @class.collect{|x| x.class_name.titleize }
       @classrooms = room.insert(0, "Home Page")
+      @messages = @current_school.welcome_messages.find(:all)
+      @messages.each do |f|
+        if @classrooms.include?(f.access_name)
+           @eee = @classrooms.delete_if{|x| x == f.access_name}
+        else
+           @eee =  @classrooms
+        end
+      end
   end
    
    def access_rights

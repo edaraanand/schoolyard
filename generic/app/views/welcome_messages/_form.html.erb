@@ -6,7 +6,10 @@
  
 <fieldset>
   <ul>
-      <li><label>Welcome Message for:</label><%= select :access_name, :collection => @classrooms, :prompt => "Please Select" %></li>
+      <li>
+          <label>Welcome Message for:</label>
+          <%= select :access_name, :collection => @eee, :prompt => "Please Select"  %>
+      </li>
       <li><%= text_area :content, :label => "Content", :rows => "10", :cols => "50" %></li>
   </ul>
 </fieldset>
@@ -28,6 +31,7 @@
  }
   
  //$j('.rte-zone').rte("css url", "toolbox images url");
+
  
  
 </script>

@@ -19,6 +19,7 @@
                                <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
                                      cdate=calendar.start_date.strftime("%B %d %Y") %>
                                      <h3><%= cdate %></h3>  
+                                     <h7>Event for <%= calendar.class_name %></h7>
                                <% end %>    
                                <ul class="calendar-items">
                                     <li>

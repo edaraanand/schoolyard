@@ -3,9 +3,9 @@
       <div id="sidebar" class="left-block">
               <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
           <% unless @attachment.nil? %>
-              <img src="uploads/principal_images/<%= @attachment.filename %>" alt=" ", class = "teacherPic"/>
+              <img src="/uploads/principal_images/<%= @attachment.filename %>" alt=" ", class = "teacherPic"/>
           <% else %>
-              <img src="images/principal.png" alt="From The Principal"/>
+              <img src="/images/principal.png" alt="From The Principal"/>
           <% end %>
       </div>
       <div id="content" class="homes-content">
@@ -34,6 +34,7 @@
                  <%= link_to '< Previous', url(:home, @announcement.previous_id, :label => 'principal'),:class => "alignleft" if @announcement.previous_id %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                  <%= link_to "Back to All Articles", url(:principal_articles, :label => 'principal') %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                  <%= link_to 'Next >', url(:home, @announcement.next_id, :label => 'principal'),:class => "alignright" if @announcement.next_id %>
+                 <%= link_to " &larr; Back to Home Page", url(:homes) %> <br/>
         <% elsif params[:label] == "class_ann" %>
                 <%= link_to '< Previous', url(:home, @announcement.previous_class_announcement, :label => "class_ann") if @announcement.previous_class_announcement %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
                 <%= link_to "Back to All Announcements", url(:class_details, :id => @classroom.id, :label => "announcements") %>

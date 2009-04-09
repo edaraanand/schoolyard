@@ -5,7 +5,7 @@
       <% unless @attachment.nil? %>
          <img src="/uploads/principal_images/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class = "teacherPic"/>
       <% else %>
-         <img src="images/principal.png" alt="From The Principal"/>
+         <img src="/images/principal.png" alt="From The Principal"/>
       <% end %>
     </div>
     <div id="content" class="homes-content">
@@ -27,7 +27,7 @@
             <% end %>
           <%= will_paginate (@from_principals, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
       </div>
-    <% else %>
+ <% else %>
       <h2>All Announcements</h2>
       <%= link_to " &larr; Back to Home Page", url(:homes) %> <br/>
             <% for announcement in @announcements %>
