@@ -30,6 +30,7 @@ class Classrooms < Application
                      @classroom.class_name = "Sports"
                      if @classroom.valid?
                         @classroom.activate = true
+                        @classroom.class_name = params[:classroom][:class_name].titleize
                         @classroom.save
                         ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "Athletic Director"})
                         redirect resource(:classrooms)
@@ -41,6 +42,7 @@ class Classrooms < Application
                      end
                   else
                      @classroom.activate = true
+                     @classroom.class_name = params[:classroom][:class_name].titleize
                      @classroom.save
                      ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
                      redirect resource(:classrooms)
@@ -52,6 +54,7 @@ class Classrooms < Application
                         @classroom.class_name = "Sports"
                         if @classroom.valid?
                            @classroom.activate = true
+                           @classroom.class_name = params[:classroom][:class_name].titleize
                            @classroom.save
                            @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "Athletic Director"})
                             s = teachers.zip(role)
@@ -67,6 +70,7 @@ class Classrooms < Application
                          end
                      else
                          @classroom.activate = true
+                         @classroom.class_name = params[:classroom][:class_name].titleize
                          @classroom.save
                          @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
                           s = teachers.zip(role)
@@ -123,6 +127,8 @@ class Classrooms < Application
       @a_d = @classroom.class_peoples.find(:first, :conditions => ['role=?', "Athletic Director"] )
       cls_id = params[:class][:people][:teacher]
       if @classroom.update_attributes(params[:classroom])
+          @classroom.class_name = params[:classroom][:class_name].titleize
+          @classroom.save
           @announcements.each do |f|
              f.access_name = params[:classroom][:class_name]
              f.save!
@@ -207,11 +213,13 @@ class Classrooms < Application
      else
         if params[:label] == "deactivate"
            @classroom = Classroom.find(params[:id])
+           @classroom.class_name = @classroom.class_name.titleize
            @classroom.activate = false
            @classroom.save
            redirect resource(:classrooms)
         else
            @classroom = Classroom.find(params[:id])
+           @classroom.class_name = @classroom.class_name.titleize
            @classroom.activate = true
            @classroom.save
            redirect resource(:classrooms)
@@ -225,12 +233,12 @@ class Classrooms < Application
       @select = "classrooms"
       @classroom = @current_school.classrooms.find(params[:id])
       if @classroom.activate == true
-         @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', @classroom.class_name], :order => 'start_date')
+         @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', @classroom.class_name.titleize], :order => 'start_date')
          @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 3, :page => params[:page])
-         @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true], :per_page => 4, :page => params[:page])
-         @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
+         @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name.titleize, true, true], :per_page => 4, :page => params[:page])
+         @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name.titleize])
          @external_links = @current_school.external_links.find(:all, :conditions => ['label = ?', "Classrooms"])
-         @ann = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true], :limit => 3)
+         @ann = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name.titleize, true, true], :limit => 3)
          render :layout => 'class_change', :id => @classroom.id
       else
         raise NotFound

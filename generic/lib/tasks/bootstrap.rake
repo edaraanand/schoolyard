@@ -69,14 +69,13 @@ namespace :bootstrap do
   
   desc "creating alerts for both parents and staff"
   task :alerts => :person do
-     alerts = ["1st Grade", "2nd Grade","3rd Grade", "4th Grade","5th Grade", "6th Grade", "7th Grade",
-                "8th Grade", "Announcement is Posted", "Home Work Assignment", "From the Principal",
-                 "Sports"]
-   
-     alerts.each do |x|
-        Alert.create({:name => "#{x}", :full_name => "#{x}"})
-     end
-     
+        alerts = ["1st Grade", "2nd Grade","3rd Grade", "4th Grade","5th Grade", "6th Grade", "7th Grade",
+             "8th Grade", "Announcement is Posted", "Home Work Assignment", "From the Principal",
+             "Sports"]
+  
+        alerts.each do |x|
+            Alert.create({:name => "#{x}", :full_name => "#{x}"})
+        end
    end
  
    

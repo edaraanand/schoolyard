@@ -150,8 +150,12 @@ class Announcements < Application
       else
          @selected = "announcements"
          @select =  "classrooms"
-         @classroom = @current_school.classrooms.find_by_class_name(params[:announcement][:access_name])
-         render :layout => 'class_change', :id => @classroom.id
+         if params[:announcement][:access_name] != nil
+             @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', params[:announcement][:access_name] ])
+             render :layout => 'class_change', :id => @classroom.id
+         else
+             raise NotFound
+         end
       end
    end
    

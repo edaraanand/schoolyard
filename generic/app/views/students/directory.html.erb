@@ -83,6 +83,13 @@
      
 <% end %>
 
-
+<% unless session.user.type == "Parent" %>
+     <div class="right-sidebar">
+     <h3>Manage Students</h3>
+          <ul class="last">
+          <li <% if @selected == "students" %> class="on" <% end %>><%= link_to_right((right = "manage_directory"), "Manage Students", url(:students)  ) %></li>
+          </ul>
+      </div>
+<% end %>
 
 

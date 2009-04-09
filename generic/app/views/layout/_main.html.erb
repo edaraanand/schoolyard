@@ -73,7 +73,7 @@
                      <% @accesses.delete_if{ have_access } %>
 
                   <% if have_access %>
-                      <li <% if @select == "schools" %> class="current" <% end %>><%= link_to "<span>Administration</span>", url(:schools) %></li>
+                  <li <% if @select == "schools" %> class="current" <% end %>><%= link_to "<span>Administration</span>", url(:school_admin) %></li>
                   <% end %>
               <% end %>
               <% @accesses.each do |f| %>

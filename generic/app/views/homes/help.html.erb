@@ -6,3 +6,13 @@
 
 </fieldset>
 <hr size="1"/>
+
+
+<% unless session.user.type == "Parent" %>
+     <div class="right-sidebar"> 
+     <h3>Manage Contact Information</h3>
+           <ul class="last">
+           <li <% if @selected == "school_profile" %> class="on" <% end %>><%= link_to_right((right = "basic_settings"), "Manage Contact Information", url(:schools) )  %></li>
+           </ul>
+     </div>
+<% end %> 
