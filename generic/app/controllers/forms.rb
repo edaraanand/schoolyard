@@ -9,12 +9,12 @@ class Forms < Application
     
   def index
     if params[:class_name].nil?
-      @forms = @current_school.forms.paginate(:all, :per_page => 5, :page => params[:page])
+      @forms = @current_school.forms.paginate(:all, :per_page => 25,  :page => params[:page])
     end
     if params[:class_name] == "All Forms"
-      @forms_f = @current_school.forms.paginate(:all, :per_page => 5, :page => params[:page])
+      @forms_f = @current_school.forms.paginate(:all, :per_page => 25,  :page => params[:page])
     end
-    @files = @current_school.forms.paginate(:all, :conditions => ['class_name = ?', params[:class_name] ], :per_page => 5, :page => params[:page] )
+    @files = @current_school.forms.paginate(:all, :conditions => ['class_name = ?', params[:class_name] ], :per_page => 25,  :page => params[:page] )
     render
   end
   
@@ -126,11 +126,11 @@ class Forms < Application
      @selected = "all_forms"
      unless params[:id].nil?
          @class = @current_school.classrooms.find(params[:id])
-         @forms = @current_school.forms.paginate(:all, :conditions => ["class_name = ?", @class.class_name ], :per_page => 5, :page => params[:page] )
+         @forms = @current_school.forms.paginate(:all, :conditions => ["class_name = ?", @class.class_name ], :per_page => 25,  :page => params[:page] )
          @selected = @class.class_name 
      end
      if params[:l] == "all_forms"
-       @all_forms = @current_school.forms.paginate(:all, :per_page => 5, :page => params[:page])
+       @all_forms = @current_school.forms.paginate(:all, :per_page => 25,  :page => params[:page])
      end
      render :layout => 'directory'
   end

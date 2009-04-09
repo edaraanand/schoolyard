@@ -134,7 +134,8 @@ class Teams < Application
   def sports
      @select = "sports"
      @selected = params[:label]
-     @teams = @current_school.teams.paginate(:all, :per_page => 4, :page => params[:page])
+     @teams = @current_school.teams.paginate(:all, :per_page => 20,
+ :page => params[:page])
      @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', "Sports"], :order => 'start_date')
      @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", "Sports", true, true], :per_page => 2, :page => params[:page])
      @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', "Sports"])

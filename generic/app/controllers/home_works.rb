@@ -9,15 +9,15 @@ class HomeWorks < Application
   def index
      if params[:label] == "class_home_works"
         @classroom = @current_school.classrooms.find_by_id(params[:id], :conditions => ['activate = ?', true])
-        @class_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 3, :page => params[:page])
+        @class_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 10, :page => params[:page])
      else
         if params[:classroom_id].nil?
-           @h_works = @current_school.home_works.paginate(:all, :order => "due_date DESC", :per_page => 3, :page => params[:page])
+           @h_works = @current_school.home_works.paginate(:all, :order => "due_date DESC", :per_page => 10, :page => params[:page])
         elsif params[:classroom_id] == "All Homework"
-           @works = @current_school.home_works.paginate(:all, :order => "due_date DESC", :per_page => 3, :page => params[:page])
+           @works = @current_school.home_works.paginate(:all, :order => "due_date DESC", :per_page => 10, :page => params[:page])
         else
            @classroom = @current_school.classrooms.find_by_class_name(params[:classroom_id])
-           @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 3, :page => params[:page])
+           @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 10, :page => params[:page])
         end
      end
      @error = "There are no Homeworks at this time."
