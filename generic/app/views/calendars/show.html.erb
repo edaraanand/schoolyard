@@ -8,13 +8,15 @@
         <span class="month"><%=  @calendar.start_date.strftime("%b")%></span>
       </div><br/>
       <h3> <%= @calendar.title %> </h3> 
-      <p class="subText"><% unless @calendar.start_time.nil? &&  @calendar.end_time.nil? %>
-        (<%= @calendar.start_time.strftime("%H:%M") %> -- <%= @calendar.end_time.strftime("%H:%M") %> )
-      <% else %>
-         (<%= @event %>)
-      <% end %>
-Location : <%= @calendar.location %></p><br/>
-     
+            <span class="subText"><% unless @calendar.start_time.nil? &&  @calendar.end_time.nil? %>
+              <%= @calendar.start_time.strftime("%I:%M %p") %> to <%= @calendar.end_time.strftime("%I:%M %p") %>, 
+            <% else %>
+               (<%= @event %>)
+            <% end %>
+      Location: <%= @calendar.location %></span>
+      <br/>
+
+  <hr size="1"/>
     <p><%= san_content(@calendar.description) %></p>
     
     <hr size="1"/>

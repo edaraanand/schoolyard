@@ -9,9 +9,13 @@
        <% cdate=""
          for calendar in @calendars %>
             <div class="calendar-block" style="width:480px;">
-            <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
-                  cdate=calendar.start_date.strftime("%B %d %Y") %>
-                  <h3><%= cdate %></h3> 
+            <% if(cdate!=calendar.start_date.strftime("%b %d"))
+                  cdate=calendar.start_date.strftime("%b %d") %>
+                  <br/><h3<% unless (Time.now.strftime("%b %d")!=cdate) %>
+                    class="today"
+                  <%end%>
+                  >
+                  <%= cdate %> </h3> 
                   
             <% end %> 
             <ul class="calendar-items">
@@ -54,7 +58,7 @@
         </div>
       <% end %>
       <h3><%= link_to "#{homework.title}", url(:home_work, homework.id) %></h3>
-      Assigned : <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %>
+      <span class="subText">Assigned <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></span>
       <p class="separator"><%= snippet(homework.content, 50) %></p>
       <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
       <% unless @attachment.nil? %>

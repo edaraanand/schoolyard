@@ -50,7 +50,7 @@ body.fixed-width{width:100%;}
 .left-block{width:240px;}
   /*Left Side Menu. term 'Sidebar' defaults for LEFT SIDEBAR/MENU*/
 #content p{font-size:13px; padding:.5em 0 .5em 0;}
-#content-wrap{float:left; padding:0 0 0 20px; margin:20px 0 0 0; min-width:500px;}
+#content-wrap{float:left; padding:0 0 0 30px; margin:20px 0 0 0; min-width:500px;}
   /*Wraps the content section*/
 #fullpage{width:500px;}
 
@@ -340,9 +340,9 @@ ul.edit-ext-links li{background:url(/images/link-bullet.gif) no-repeat left cent
 
 
 
-.calendar-block{border-bottom:1px solid #e8e8e8; float:left; clear:left;}
+.calendar-block{float:left; clear:left; padding:2px 0;}
 .calendar-block h3{Background:#aaaaff; padding:6px; background:#f4f4f4; font-size:100%;}
-.calendar-block h3.today{color:#ff7b00;}
+.calendar-block h3.today{background:#ff7b00; color:#fff;}
 .calendar-block a{padding:2px 0 2px 18px!important;}
 .calendar-block .cal-time{display:block; width:100px; float:left;}
 .cal-title{float:left; display:block; width:240px;}
