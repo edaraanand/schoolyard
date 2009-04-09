@@ -11,7 +11,7 @@ class Homes < Application
     @from_principals = @current_school.announcements.find(:all, :conditions => ["label = ? and expiration >= ?", 'from_principal', @date], :order => "created_at DESC", :limit => 2)
     @external_links = @current_school.external_links.find(:all, :conditions => ['label = ?', "Home Page"])
     @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ["access_name = ?", "Home Page"])
-    @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = "1"'], :order => "class_name ASC")
+    @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true], :order => "class_name ASC")
     @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ?', "Classes", true], :order => "class_name ASC")
     @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ?', "Extra Cirrcular", true ], :order => "class_name ASC")
     render
