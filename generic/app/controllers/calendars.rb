@@ -151,7 +151,7 @@ class Calendars < Application
          @selected = @class.class_name 
      end
      if params[:l] == "all_events"
-        @calendars = @current_school.calendars.find(:all, :order => 'start_date')
+       @calendars = @current_school.calendars.paginate(:all, :per_page => 10,  :page => params[:page], :order => 'start_date')
      end
      render :layout => 'directory'
   end
@@ -159,12 +159,8 @@ class Calendars < Application
   def preview
      @date = Date.today
      @select = "classrooms"
-     #if params[:calendar][:class_name] != nil
-         @classroom = @current_school.classrooms.find_by_class_name(params[:calendar][:class_name])
-         render :layout => 'class_change', :id => @classroom.id
-    # else
-     #  raise NotFound
-     #end
+     @classroom = @current_school.classrooms.find_by_class_name(params[:calendar][:class_name])
+     render :layout => 'class_change', :id => @classroom.id
   end
   
   def pdf_events
