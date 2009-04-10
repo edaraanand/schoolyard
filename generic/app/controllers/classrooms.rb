@@ -233,7 +233,7 @@ class Classrooms < Application
       @select = "classrooms"
       @classroom = @current_school.classrooms.find(params[:id])
       if @classroom.activate == true
-         @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', @classroom.class_name.titleize], :order => 'start_date')
+         @calendars = @current_school.calendars.paginate(:all, :conditions => ['class_name = ?', @classroom.class_name.titleize], :per_page => 10, :page => params[:page], :order => 'start_date')
          @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 10, :page => params[:page])
          @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name.titleize, true, true], :per_page => 10,
  :page => params[:page])

@@ -7,7 +7,7 @@ class Calendars < Application
   before :classrooms, :only => [:events, :show]
   
   def index
-     @calendars = @current_school.calendars.find(:all, :order => 'start_date')
+     @calendars = @current_school.calendars.paginate(:all, :per_page => 10,  :page => params[:page], :order => 'start_date')
      render
   end
   
