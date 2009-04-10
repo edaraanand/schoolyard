@@ -6,7 +6,7 @@
        <%= link_to "Change Password", url(:staff_password), :class=> "edit-btn" %> 
   </h2>
   <% unless @pic.nil? %>
-       <img src="uploads/user_pictures/<%= @pic.filename %>" alt="<%= @pic.filename %>" class = "teacherPic"/>
+       <img src="/uploads/user_pictures/<%= @pic.filename %>" alt="<%= @pic.filename %>" class = "teacherPic"/>
    <% end %>
     <p><%= session.user.email.blank? ? "" :  email(session.user.email) %><br/>
 
