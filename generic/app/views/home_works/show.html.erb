@@ -30,11 +30,15 @@
                                  <div class="hrule clear"><hr /></div>
                          </div>
                          <hr size="1"/>
-                       <% if params[:label] == "home_w" %>
-                             <%= link_to "&larr; Back to All Homework", resource(:home_works) %>
-                       <% else %>
-                            <%= link_to "&larr; Back to All Homework", url(:class_details, :id => @home_work.classroom.id, :label => "homeworks") %>
-                       <% end %>
-         
+          <% if params[:label] == "home_w" %>
+                 <%= link_to '&larr; Previous', url(:home_work, @home_work.previous_home_work, :label => "home_w"),:class => "alignleft" if @home_work.previous_home_work %>
+                 <%= link_to "All Homeworks", resource(:home_works) %>
+                 <%= link_to 'Next',  url(:home_work, @home_work.next_home_work, :label => "home_w"),:class => "alignright" if @home_work.next_home_work %>
+          <% else %>
+                <%= link_to '&larr; Previous', url(:home_work, @home_work.previous_home_work),:class => "alignleft" if @home_work.previous_home_work %>
+                <%= link_to "All Homeworks", url(:class_details, :id => @home_work.classroom.id, :label => "homeworks") %>
+                <%= link_to 'Next',  url(:home_work, @home_work.next_home_work),:class => "alignright" if @home_work.next_home_work %>
+          <% end %>
+          
 </div>
 

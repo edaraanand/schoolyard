@@ -43,14 +43,22 @@ module ActiveRecord #:nodoc:
     end
     
     def next_parent_announcement
-      #raise "Esh".inspect
-      @next ||= self.class.find(:first, :select => ['id'],:conditions => ["id > ? and label=? and person_id=?", id, "parent", self.person.id ], :order => 'id')
+       @next ||= self.class.find(:first, :select => ['id'],:conditions => ["id > ? and label=? and person_id=?", id, "parent", self.person.id ], :order => 'id')
        @next ? @next.id : nil
     end
 
     def previous_parent_announcement
-       #raise "Esh".inspect
        @previous ||= self.class.find(:first, :select => ['id'], :conditions => ["id < ? and label=? and person_id=?", id, "parent", self.person.id], :order => "id desc")
+       @previous ? @previous.id : nil
+    end
+    
+    def next_home_work
+       @next ||= self.class.find(:first, :select => ['id'],:conditions => ["id > ?", id], :order => 'id')
+       @next ? @next.id : nil
+    end
+    
+    def previous_home_work
+       @previous ||= self.class.find(:first, :select => ['id'], :conditions => ["id < ?", id], :order => "id desc")
        @previous ? @previous.id : nil
     end
     
