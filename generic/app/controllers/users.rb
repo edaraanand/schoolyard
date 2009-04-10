@@ -64,7 +64,7 @@ class Users < Application
         if @person.update_attributes(params[:person])
            redirect url(:staff_account)
         else
-          flash[:error1] = "You should enter Minimum Length of 4 Characters"
+          flash[:error1] = "You should enter Minimum Length of 8 Characters"
            render :staff_password
         end
       else
@@ -99,7 +99,7 @@ class Users < Application
            if @parent.update_attributes(params[:parent])
               redirect url(:parent_account)
            else
-             flash[:error1] = "You should enter Minimum Length of 4 Characters"
+             flash[:error1] = "You should enter Minimum Length of 8 Characters"
               render :parent_password
            end
         else

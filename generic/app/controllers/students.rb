@@ -272,11 +272,9 @@ class Students < Application
   
   
    def preview
-      @first = params[:student][:first_name]
-      @last = params[:student][:last_name]
-      first = params[:parent][:first_name]
-      last = params[:parent][:last_name]
-      email = params[:parent][:email]
+      first = params[:protector][:first_name]
+      last = params[:protector][:last_name]
+      email = params[:protector][:email]
       @parent = first.zip(last, email)
       render :layout => 'preview'
    end
@@ -332,13 +330,13 @@ class Students < Application
      if params[:label] == "staff"
         @staff = @current_school.staff.find(:all)
         csv_string = FasterCSV.generate do |csv|
-          csv << ["First Name", "Last Name", "Role", "Contact-Number"]
+          csv << ["First Name", "Last Name", "Role", "E-mail", "Contact-Number"]
               @staff.each do |person|
-                 #s = person.class_peoples.delete_if{ |x| x.team_id != nil }
                  s = person.class_peoples
                  s.each do |f| 
-                   csv << [person.first_name, person.last_name, f.role.titleize+"--"+f.classroom.class_name, person.phone]
-                 end 
+                   csv << [person.first_name, person.last_name, f.role.titleize+"--"+f.classroom.class_name, person.email, person.phone]
+                 end
+                 csv << [person.first_name, person.last_name, nil, person.email, person.phone]
               end
         end
          filename = params[:label] + ".csv"

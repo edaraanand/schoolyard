@@ -71,9 +71,9 @@ class WelcomeMessages < Application
   end
   
   def preview
-     if params[:welcome_message][:access_name] == ""
-         raise NotFound
-     elsif params[:welcome_message][:access_name] == "Home Page"
+    # if params[:welcome_message][:access_name] == ""
+     #    raise NotFound
+     if params[:welcome_message][:access_name] == "Home Page"
          @select = "home"
          render :layout => "home"
      else
