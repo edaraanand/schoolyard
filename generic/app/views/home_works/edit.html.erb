@@ -44,8 +44,17 @@
 
  function preview()
  {
-   var s = $('home_work').serialize();
-   window.open('/home_works/preview/-/?' + s);
+     name = document.getElementById('home_work_classroom_id');
+    if (name.value == "")
+       {
+          alert("Please select the Classroom/Homepage from the dropdown menu");
+       }
+   else
+       {
+         var s = $('home_work').serialize();
+         window.open('/home_works/preview/-/?' + s);
+       }
+  
  }
   
  $j("#due_date").datepicker({minDate:'today'});

@@ -32,8 +32,16 @@
  
  function preview()
  {
-   var s = $('welcome_message').serialize();
-   window.open('/welcome_messages/preview/-/?' + s);
+     name = document.getElementById('welcome_message_access_name');
+    if (name.value == "")
+       {
+          alert("Please select the Classroom/Homepage from the dropdown menu");
+       }
+    else
+       {
+         var s = $('welcome_message').serialize();
+         window.open('/welcome_messages/preview/-/?' + s);
+       }
  }
   
  //$j('.rte-zone').rte("css url", "toolbox images url");

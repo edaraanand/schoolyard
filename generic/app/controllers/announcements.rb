@@ -150,14 +150,14 @@ class Announcements < Application
       else
          @selected = "announcements"
          @select =  "classrooms"
-         if params[:announcement][:access_name] != ""
+         #if params[:announcement][:access_name] != ""
              @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', params[:announcement][:access_name] ])
              render :layout => 'class_change', :id => @classroom.id
-         else
-            @announcement = Announcement.new
-            flash[:error] = "Please select the option"
-            render :new
-         end
+         #else
+          #  @announcement = Announcement.new
+            #flash[:error] = "Please select the option"
+            #render :new
+         #end
       end
    end
    
