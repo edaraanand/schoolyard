@@ -189,7 +189,7 @@ class Registrations < Application
             if @parent.save
                redirect url(:login)
             else
-               flash[:error] = "You should enter Minimum Lengthof 4 Characters"
+               flash[:error] = "You should enter Minimum Length of 8 Characters"
                redirect url(:new_password, :id => @parent.password_reset_key)
             end
          else
@@ -217,29 +217,34 @@ class Registrations < Application
            render :forgot_password, :layout => 'login'
         else
            @person.reset_password
-           redirect url(:password_sent, :id => @person.id)
+           redirect url(:password_sent, :id => @person.password_reset_key)
         end
      end
   end
 
   def password_sent
-     @person = @current_school.people.find(params[:id])
+     id = params[:id]
+     @person = @current_school.people.find(:first, :conditions => ['password_reset_key = ?', id])
      render :layout => 'login'
   end
   
-  def reset_password
-    id = params[:id]
-    @person = @current_school.people.find(:first, :conditions => ['password_reset_key = ?', id])
-    redirect url(:reset_password_edit, :id => @person.id )
-  end
+  #def reset_password
+   # id = params[:id]
+    #@person = @current_school.people.find(:first, :conditions => ['password_reset_key = ?', id])
+    #redirect url(:reset_password_edit, :id => @person.id )
+  #end
   
   def reset_password_edit
-     @person = Person.find(params[:id])
+     id = params[:id]
+     @person = @current_school.people.find(:first, :conditions => ['password_reset_key = ?', id])
+     #@person = Person.find(params[:id])
      render :layout => 'login'
   end
   
   def reset_password_update
-     @person = Person.find(params[:id])
+       id = params[:id]
+       #@person = Person.find(params[:id])
+       @person = @current_school.people.find(:first, :conditions => ['password_reset_key = ?', id])
     if ( !params[:person][:password].blank? ) && (!params[:person][:password_confirmation].blank? )
         if ( params[:person][:password] == params[:person][:password_confirmation] )
            @person.password = params[:person][:password]
@@ -247,32 +252,35 @@ class Registrations < Application
             if @person.save
                redirect url(:login)
             else
-               flash[:error] = "You should enter Minimum Length of 4 Characters"
-               redirect url(:reset_password_edit, :id => @person.id )
+               flash[:error] = "You should enter Minimum Length of 8 Characters"
+               redirect url(:reset_password_edit, :id => @person.password_reset_key)
             end
          else
             flash[:error1] = "Your Password doesn't match"
-            redirect url(:reset_password_edit, :id => @person.id )
+            redirect url(:reset_password_edit, :id => @person.password_reset_key )
          end
     else
        flash[:error2] = "Password cant be blank"
-       redirect url(:reset_password_edit, :id => @person.id )
+       redirect url(:reset_password_edit, :id => @person.password_reset_key )
     end
   end
   
-  def password_staff
-     id = params[:id]
-     @staff = @current_school.staff.find(:first, :conditions => ['password_reset_key = ?', id])
-     redirect url(:new_staff_password, :id => @staff.id)
-  end
+#  def password_staff
+ #    id = params[:id]
+  #   @staff = @current_school.staff.find(:first, :conditions => ['password_reset_key = ?', id])
+   #  redirect url(:new_staff_password, :id => @staff.id)
+  #end
   
   def new_staff_password
-     @staff = @current_school.staff.find(params[:id])
+     id = params[:id]
+     @staff = @current_school.staff.find(:first, :conditions => ['password_reset_key = ?', id])
+     #@staff = @current_school.staff.find(params[:id])
      render :layout => 'login'
   end
   
   def staff_password_save
-    @staff = @current_school.staff.find(params[:id])
+     id = params[:id]
+     @staff = @current_school.staff.find(:first, :conditions => ['password_reset_key = ?', id])
     if ( !params[:staff][:password].blank? ) && (!params[:staff][:password_confirmation].blank? )
          if ( params[:staff][:password] == params[:staff][:password_confirmation] )
             @staff.password = params[:staff][:password]
@@ -280,16 +288,16 @@ class Registrations < Application
             if  @staff.save
                 redirect url(:login)
             else
-               flash[:error] = "You should enter Minimum Length of 4 Characters"
-               redirect url(:new_staff_password, :id => @staff)
+               flash[:error] = "You should enter Minimum Length of 8 Characters"
+               redirect url(:new_staff_password, :id => @staff.password_reset_key)
             end
          else
             flash[:error1] = "Your Password doesn't match"
-            render :new_staff_password, :layout => 'login'
+            render :new_staff_password, :id => @staff.password_reset_key, :layout => 'login'
          end
     else
        flash[:error2] = "Password cant be blank"
-       render :new_staff_password, :layout => 'login'
+       render :new_staff_password, :id => @staff.password_reset_key, :layout => 'login'
     end
   end
                                

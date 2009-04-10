@@ -25,10 +25,10 @@ class PersonMailer < Merb::MailController
      render_mail :html => :forgot_password, :layout => nil
   end
   
-  def password_staff
+  def new_staff_password
      @staff = params
      @current_school = @staff.school
-     render_mail :html => :password_staff, :layout => nil
+     render_mail :html => :new_staff_password, :layout => nil
   end
   
   def notify_staff_details
