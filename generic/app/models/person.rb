@@ -33,7 +33,7 @@ class Person < ActiveRecord::Base
       validates_uniqueness_of :email, :if => :email, :scope => :school_id 
       validates_format_of :email, :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i, :if => :email
       validates_length_of :phone, :is => 10, :message => 'must be 10 digits, excluding special characters such as spaces and dashes.', :if => Proc.new{|o| !o.phone.blank?}
-      validates_length_of :password, :within => 4..40, :if => :password
+      validates_length_of :password, :within => 8..40, :if => :password
  
   
         
@@ -97,7 +97,7 @@ class Person < ActiveRecord::Base
       end
       
       def send_password
-          d_email(:password_staff, :subject => "Choose your Password to login to " + self.school.school_name )
+         d_email(:new_staff_password, :subject => "Choose your Password to login to " + self.school.school_name )
       end
      
       def d_email(action, params)

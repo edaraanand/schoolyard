@@ -5,7 +5,7 @@ class Parent < Person
      has_many :guardians
      has_many :students, :through => :guardians, :source => :student
     
-    validates_length_of :password, :within => 4..40, :if => :password
+    validates_length_of :password, :within => 8..40, :if => :password
      
   def self.make_key
       Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
