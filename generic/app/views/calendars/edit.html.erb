@@ -81,8 +81,16 @@
  
    function preview()
  {
-   var s = $('event').serialize();
-   window.open('/calendars/preview/-/?' + s);
+     name = document.getElementById('calendar_class_name');
+    if (name.value == "")
+       {
+          alert("Please select the Classroom/Homepage from the dropdown menu");
+       }
+   else
+       {
+         var s = $('event').serialize();
+         window.open('/calendars/preview/-/?' + s);
+       }
    
  }
  

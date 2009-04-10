@@ -39,12 +39,23 @@
   
    function preview()
  {
-   var s = $('announcement').serialize();
-   window.open('/announcements/preview/-/?' + s);
-   
+     name = document.getElementById('announcement_access_name');
+     title = document.getElementById('announcement_title');
+     content = document.getElementById('announcement_content');
+     
+     if (name.value == "")
+       {
+          alert("Please select the Classroom/Homepage from the dropdown menu");
+       }
+    else
+       {
+          var s = $('announcement').serialize();
+          window.open('/announcements/preview/-/?' + s);
+       }
+     
  }
   
-  $j("#expiration").datepicker({minDate:'today + 1'});
+    $j("#expiration").datepicker({minDate:'today + 1'});
   
 
 </script>

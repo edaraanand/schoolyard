@@ -211,8 +211,18 @@ $j("#birth_date").datepicker({ yearRange: '1970:2040'});
     }
  function preview()
  {
-   var s = $('student').serialize();
-   window.open('/students/preview/-/?' + s);
+    ClearAll();
+    name = document.getElementById('classroom_person');
+    if (name.value == "")
+       {
+          alert("Please select the Classroom/Homepage from the dropdown menu");
+       }
+   else
+       {
+          var s = $('student').serialize();
+          window.open('/students/preview/-/?' + s);
+       }
+  
  }
 
   $j(document).ready(function()
