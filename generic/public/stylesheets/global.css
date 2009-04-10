@@ -50,7 +50,7 @@ body.fixed-width{width:100%;}
 .left-block{width:240px;}
   /*Left Side Menu. term 'Sidebar' defaults for LEFT SIDEBAR/MENU*/
 #content p{font-size:13px; padding:.5em 0 .5em 0;}
-#content-wrap{float:left; padding:0 0 0 20px; margin:20px 0 0 0; min-width:500px;}
+#content-wrap{float:left; padding:0 0 0 30px; margin:20px 0 0 0; min-width:500px;}
   /*Wraps the content section*/
 #fullpage{width:500px;}
 
@@ -254,7 +254,7 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 
 /*Rules for Right Sidebar*/
 .right-sidebar{ line-height:15px; width:200px; float:left; margin:30px 0 0 20px; }
-.right-sidebar h3{font-weight:bold ; background:url("/images/right-sidebar-top.gif") no-repeat top center; padding:12px; margin:10px 0 0 0;}
+.right-sidebar h3{font-weight:bold ; background:url("/images/right-sidebar-top.gif") no-repeat top center; padding:12px; margin:10px 0 0 0; min-height:15px;}
 .right-sidebar .last{background:url("/images/right-sidebar-bottom.gif") no-repeat bottom center; border-top:1px solid #becfdb; }
   /*Styles applied to these three elements provide chrome for the right sidebar*/
 
@@ -340,14 +340,15 @@ ul.edit-ext-links li{background:url(/images/link-bullet.gif) no-repeat left cent
 
 
 
-.calendar-block{border-bottom:1px solid #e8e8e8; float:left; clear:left;}
+.calendar-block{float:left; clear:left; padding:2px 0;}
 .calendar-block h3{Background:#aaaaff; padding:6px; background:#f4f4f4; font-size:100%;}
-.calendar-block h3.today{color:#ff7b00;}
+.calendar-block h3.today{background:#ff7b00; color:#fff;}
 .calendar-block a{padding:2px 0 2px 18px!important;}
 .calendar-block .cal-time{display:block; width:100px; float:left;}
 .cal-title{float:left; display:block; width:240px;}
 ul.calendar-items{clear:both;}
 ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding:4px 0 2px 2px;}
+ul.calendar-items small{color:#666;}
 
 .defaultText { width: 300px; }
 .defaultTextActive {color:#a1a1a1; font-style: italic!important; }
@@ -456,6 +457,7 @@ td.teach-name-top, td.teach-name-bottom {height:9px; padding:0px; margin:0px; li
 .page-links{text-align:center;padding:10px;}
 .page-links a{padding:4px;}
 .teacherPic{width:124px;}
+.prinPic{width:220px;}
 /* Registration*/
 .register-steps {float:left; margin:-75px 0 0 15em;}
 .register-steps2 {float:left; margin:-75px 0 0 20em;}
@@ -469,3 +471,5 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 #alerts ul li{list-style:square; margin:0 0 0 25px;}
 .right-sidebar li.noBullet{list-style:none; padding: 8px 0 0 10px; color:#666;}
 #classContainer {background:url(/images/vertical-separator.gif) repeat-y 230px 0px; overflow: auto; padding:10px 0;}
+
+.picEdit{padding:0 0 0 200px;}

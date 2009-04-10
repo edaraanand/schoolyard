@@ -11,7 +11,8 @@ class Approvals < Application
   
   def index
      @selected = "approve"
-     @announcements = @current_school.announcements.paginate(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ], :per_page => 4, :page => params[:page])
+     @announcements = @current_school.announcements.paginate(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ], :per_page => 10,
+ :page => params[:page])
      render
   end
   
@@ -75,21 +76,21 @@ class Approvals < Application
   
  def parent_approvals
      if params[:approve_status] == "Approved"
-       @approved_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 1], :order => "created_at DESC", :per_page => 5, :page => params[:page] )
+       @approved_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 1], :order => "created_at DESC", :per_page => 25,  :page => params[:page] )
      end
      if params[:approve_status] == "Pending Approvals"
-       @pending_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 2], :order => "created_at DESC", :per_page => 5, :page => params[:page] )
+       @pending_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 2], :order => "created_at DESC", :per_page => 25,  :page => params[:page] )
      end
      if params[:approve_status] == "Rejected"
-       @reject_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 3 ], :order => "created_at DESC", :per_page => 5, :page => params[:page] )
+       @reject_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 3 ], :order => "created_at DESC", :per_page => 25,  :page => params[:page] )
      end
      if params[:approve_status].nil?
-       @parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 2], :order => "created_at DESC", :per_page => 5, :page => params[:page] )
+       @parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 2], :order => "created_at DESC", :per_page => 25,  :page => params[:page] )
      end
      if params[:approve_status] == "All Registrations"
-       @all_parents = @current_school.parents.paginate(:all, :order => "created_at DESC", :per_page => 5, :page => params[:page])
+       @all_parents = @current_school.parents.paginate(:all, :order => "created_at DESC", :per_page => 25,  :page => params[:page])
      end
-     @parents = @current_school.parents.paginate(:all, :order => "created_at DESC", :per_page => 5, :page => params[:page])
+     @parents = @current_school.parents.paginate(:all, :order => "created_at DESC", :per_page => 25,  :page => params[:page])
      render
   end
   
