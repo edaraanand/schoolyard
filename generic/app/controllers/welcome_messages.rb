@@ -71,11 +71,9 @@ class WelcomeMessages < Application
   end
   
   def preview
-    # if params[:welcome_message][:access_name] == ""
-     #    raise NotFound
      if params[:welcome_message][:access_name] == "Home Page"
-         @select = "home"
-         render :layout => "home"
+        @select = "home"
+        render :layout => "home"
      else
         @select = "classrooms"
         @selected = nil
@@ -86,10 +84,6 @@ class WelcomeMessages < Application
    
   private
   
-  def check
-     raise "Eshwar".inspect
-  end
-  
   def classrooms
      @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      room = @class.collect{|x| x.class_name.titleize }
@@ -99,15 +93,19 @@ class WelcomeMessages < Application
   
   def rooms
       @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-      room = @class.collect{|x| x.class_name.titleize }
+      room = @class.collect{|x| x.class_name }
       @classrooms = room.insert(0, "Home Page")
       @messages = @current_school.welcome_messages.find(:all)
-      @messages.each do |f|
-        if @classrooms.include?(f.access_name)
-           @eee = @classrooms.delete_if{|x| x == f.access_name}
-        else
-           @eee =  @classrooms
-        end
+      if @messages.empty?
+         @eee = @classrooms
+      else
+         @messages.each do |f|
+           if @classrooms.include?(f.access_name)
+              @eee = @classrooms.delete_if{|x| x == f.access_name}
+           else
+              @eee =  @classrooms
+           end
+         end
       end
   end
    
