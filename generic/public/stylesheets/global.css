@@ -302,6 +302,7 @@ span.cancel a:hover{text-decoration:underline;}
 .deactive{background:url("/images/ico_deactivate.gif") no-repeat 0 50%; color:red;}
 .reactive{background:url("/images/ico_activate.gif") no-repeat 0 50%; color:#169609;}
 
+
 .add-more{padding:8px 0 0 0;}
 
 .delete-btn{background:url(/images/delete-btn-bg.gif) no-repeat 0 50%;}
