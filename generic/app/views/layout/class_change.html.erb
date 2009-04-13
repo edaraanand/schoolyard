@@ -15,6 +15,7 @@
         <li <% if @selected == "calendars" %> class="on" <% end %> ><%= link_to "Class Calendar", url(:class_details, :id =>  @classroom.id, :label => "calendars") %></li>
         <li <% if @selected == "homeworks" %> class="on" <% end %>><%= link_to "Homework Corner", url(:class_details, :id =>  @classroom.id, :label => "homeworks") %></li>
         <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to "Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %></li>
+        <li <% if @selected == "spot_light" %> class="on" <% end %>><%= link_to "Spot Light", url(:class_details, :id =>  @classroom.id, :label => "spot_light") %></li>
         <li>&nbsp;</li>
         <li class="change"><a rel="facebox" href="#info"> Change Classroom</a></li>
       </ul>

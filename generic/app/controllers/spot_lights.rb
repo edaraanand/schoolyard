@@ -5,62 +5,88 @@ class SpotLights < Application
   before :access_rights
   
   def index
-     @spot_lights = SpotLight.find(:all) 
+     @spot_lights = SpotLight.find(:all)
      render
   end
   
   def new
-   case request.method
-     when :get
-        @spot_light = SpotLight.new
-        #@attachment = Attachment.new
-        render
-     when :post
-       #raise params.inspect
-          @spot = SpotLight.from(params[:file])
-          @spot.class_name = params[:spot_light][:class_name]
-          @spot.student_name = params[:spot_light][:student_name]
-          @spot.content = params[:spot_light][:content]
-          @spot.save
-          redirect resource(:spot_lights)
-       end
-       render 
+     @spot_light = SpotLight.new
+     render 
   end
   
-  #def create
-    #raise params.inspect
-   # @spot_light = SpotLight.new(params[:spot_light])
-   # i=0
-  #  if @spot_light.valid?
-    #   unless params[:attachment]['file_'+i.to_s].empty?
-     #       @spot_light.save
-      #      @attachment = Attachment.create( :attachable_type => "SpotLight",
-       #                                 :attachable_id => @spot_light.id,
-        #                                :filename => params[:attachment]['file_'+i.to_s][:filename],
-         #                               :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-          #                              :size => params[:attachment]['file_'+i.to_s][:size]
-           #  )
-            #  File.makedirs("public/uploads/#{@attachment.id}")
-             # FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
-              #create_thumbnails
-              #redirect resource(:spot_lights)
-        #else
-         #   flash[:error] = "please upload a picture"
-          #  render :new
-        #end
-    #else
-      #render :new
-    #end
-  #end
+  def create
+     @spot_light = @current_school.spot_lights.new(params[:spot_light])
+     @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
+     if ( (params[:spot_light][:class_name] != "") && (params[:spot_light][:student_name] != "") )
+         if params[:spot_light][:image] != ""
+             if @content_types.include?(params[:spot_light][:image][:content_type])
+                @spot_light.save
+                @attachment = Attachment.create( :attachable_id => @spot_light.id,
+                                                 :attachable_type => "spot_light", 
+                                                 :filename => params[:spot_light][:image][:filename],
+                                                 :size => params[:spot_light][:image][:size],
+                                                 :content_type => params[:spot_light][:image][:content_type]
+                  )
+                File.makedirs("public/uploads/spotlights")
+                FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/spotlights/#{@attachment.filename}")
+                redirect resource(:spot_lights)
+             else
+                flash[:error1] = "You can only upload images"
+                render :new
+             end
+         else
+            flash[:error1] = "Please upload a Image"
+            render :new
+         end
+     else
+        flash[:error] = "please select the classroom and student"
+        render :new
+     end
+
+  end
   
   def edit
-    @spot_light = SpotLight.find(params[:id])
-    render
+     @spot_light = SpotLight.find(params[:id])
+     @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
+     render
   end
   
   def update
      @spot_light = SpotLight.find(params[:id])
-     render
+     @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
+     @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
+     if params[:spot_light][:image] != ""
+        if ( (params[:spot_light][:class_name] != "") && (params[:spot_light][:student_name] != "") )
+            if @content_types.include?(params[:spot_light][:image][:content_type])
+               @spot_light.update_attributes(params[:spot_light])
+               @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
+               @pic.destroy
+               @attachment = Attachment.create( :attachable_id => @spot_light.id,
+                                                  :attachable_type => "spot_light", 
+                                                  :filename => params[:spot_light][:image][:filename],
+                                                  :size => params[:spot_light][:image][:size],
+                                                  :content_type => params[:spot_light][:image][:content_type]
+                   )
+               FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/spotlights/#{@attachment.filename}")
+               redirect resource(:spot_lights)
+            else
+               flash[:error] = "You should only upload images"
+               render :edit
+            end
+        else
+           flash[:error] = "please select classroom and student"
+           render :edit
+        end
+     else
+         if ( (params[:spot_light][:class_name] != "") && (params[:spot_light][:student_name] != "") )
+            @spot_light.update_attributes(params[:spot_light])
+            redirect resource(:spot_lights)
+         else
+            flash[:error] = "please select classroom and student"
+            render :edit
+         end
+     end
+    
   end
   
   def delete
@@ -71,10 +97,10 @@ class SpotLights < Application
   end
    
   def preview
-    @student_name = params[:spot_light][:student_name]
-    @content = params[:spot_light][:content]
-    @class_name = params[:spot_light][:class_name]
-    render :layout => 'preview'
+      @student_name = params[:spot_light][:student_name]
+      @content = params[:spot_light][:content]
+      @class_name = params[:spot_light][:class_name]
+      render :layout => 'preview'
   end
   
   
@@ -89,6 +115,7 @@ class SpotLights < Application
   end
   
   def access_rights
+     @selected = "spotlight"
      have_access = false
      @view = Access.find_by_name('view_all')
      @ann = Access.find_by_name('spotlight')
