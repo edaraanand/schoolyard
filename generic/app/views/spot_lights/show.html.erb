@@ -1,0 +1,29 @@
+<div id="fullpage">
+    
+     <h2 class="current-page">SpotLight for <%= @spot_light.class_name %></h2>
+  
+    <div class="data-block short-block">
+           <div class="ddmm">
+                 <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @spot_light.id]) %>
+                 <% unless @attachment.nil? %>
+                      <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
+                 <% end %>
+           </div>
+           <h3><%= @spot_light.student_name %></h3>
+           <span class="subText"><%= @spot_light.created_at.strftime("%b %d %Y") %></span>
+           <p class="post-content"><%= san_content(@spot_light.content) %></p>
+           <div class="hrule clear"><hr /></div>
+     </div>
+   
+     <% if params[:label] == "class_spot_light" %>
+           <%= link_to '< Previous', url(:spot_light, @spot_light.previous_class_spot_light, :label => 'class_spot_light'), :class => "alignleft" if @spot_light.previous_class_spot_light %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+           <%= link_to "Back to all Spot Lights", url(:class_details, :id =>  @classroom.id, :label => "spot_light") %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+           <%= link_to 'Next >', url(:spot_light, @spot_light.next_class_spot_light, :label => 'class_spot_light'),:class => "alignright" if @spot_light.next_class_spot_light %>
+     <% else %>
+           <%= link_to '< Previous', url(:spot_light, @spot_light.previous_common), :class => "alignleft" if @spot_light.previous_common %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+           <%= link_to "Back to all Spot Lights", resource(:spot_lights) %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+           <%= link_to 'Next >', url(:spot_light, @spot_light.next_common),:class => "alignright" if @spot_light.next_common %>
+     <% end %>    
+    
+  
+</div>

@@ -14,9 +14,9 @@
 	  </div>
     <h3><%= @announcement.title %></h3>
     <p><%= san_content(@announcement.content) %></p>
-    <%= link_to 'Previous', url(:from_principal, @announcement.previous_id),:class => "alignleft" if @announcement.previous_id %>
-    <%= link_to 'Next',  url(:from_principal, @announcement.next_id),:class => "alignright" if @announcement.next_id %>
-    <%= link_to "All Articles", url(:from_principals) %>
+    <%= link_to '< Previous', url(:from_principal, @announcement.previous_id),:class => "alignleft" if @announcement.previous_id %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <%= link_to "All Articles", url(:from_principals) %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <%= link_to 'Next >',  url(:from_principal, @announcement.next_id),:class => "alignright" if @announcement.next_id %>
     <div class="hrule clear"><hr /></div>
   </div>
 </div>
