@@ -78,7 +78,7 @@ dl{width:480px; float:left; padding:4px 0; margin:4px 0; }
 dt{width:120px; padding:4px 0; margin:0 3px 0 3px; float:left; }
 dd{width:300px; padding:4px 0; float:left; }
 
-dl.check-box-set{ margin:0 0 0 180px;}
+/*dl.check-box-set{ margin:0 0 0 180px;}*/
 dl.check-box-set dt{width:38px; padding:0; margin:0; text-align:right; clear:both;}
 dl.check-box-set dd{width:420px; padding:4px 0; margin:0 0 0 12px;}
 
@@ -377,7 +377,7 @@ span.sports-faculty-list .role{}
 span.sports-faculty-list .name{font-weight:bold;}
 .divider{border-bottom:1px solid #eee; height:4px; margin-bottom:4px;}
 
-.deactivate{background:#fff url(/images/delete-btn-bg.gif) no-repeat 0 50%; padding:4px 4px 4px 20px; margin:0 0 0 160px; position:relative; top:-26px ;}
+.deactivate{background:#fff url(/images/delete-btn-bg.gif) no-repeat 0 50%; padding:4px 4px 4px 20px; }
 
 h1.login {font-size:160%;color:#1a3e8f;}
 .logbox{ padding:4px; font-size:110%;}
