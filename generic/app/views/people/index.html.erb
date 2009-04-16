@@ -13,13 +13,14 @@
     </thead>
     <% for person in @people %>
           <tr onclick="location.href='<%= url(:edit_person, person.id) %>'" style="cursor:pointer">
+               <td>
                <% unless person.title.nil? %>
-                  <td><%= person.title %> </td>
-               <% end %>
-                <td><%= person.last_name %> </td>
-                <td><%= person.first_name %> </td>
-                <td><%= email(person.email) %> </td>
-                <td nowrap><%= number_to_phone(person.phone, :area_code => true) %></td>
+                  <%= person.title %> 
+               <% end %>&nbsp;</td>
+                <td><%= person.last_name %>&nbsp;</td>
+                <td><%= person.first_name %>&nbsp;</td>
+                <td><%= email(person.email) %>&nbsp;</td>
+                <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>
           </tr>  
     <% end %>
   </table>
