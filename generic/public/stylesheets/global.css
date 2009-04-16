@@ -448,11 +448,11 @@ td.separator{padding:8px;}
 .subText, .noText{color:#666;}
 .noText {font-style:italic;}
 
-.class-name {margin:10px auto;}
-.class-name-backgr {background:url("/images/class-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:154px; padding:0 5px; line-height:0px;}
+.class-name {margin:0px 5px 10px 40px;}
+.class-name-backgr {background:url("/images/class-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:154px; padding:0px;}
 td.class-name-top, td.class-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
-.teach-name {margin:10px auto; font-size:80%;}
-.teach-name-backgr {background:url("/images/teach-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:125px; padding:0 5px;line-height:0px;}
+.teach-name {margin:10px 5px 10px 20px; font-size:80%;}
+.teach-name-backgr {background:url("/images/teach-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:125px; padding:0 5px;}
 td.teach-name-top, td.teach-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
 
 .page-links{text-align:center;padding:10px;}
