@@ -24,6 +24,9 @@ class Person < ActiveRecord::Base
       has_many :alerts, :through => :alert_peoples
        
       has_many :home_works
+      
+      has_many :reports
+      
                                           
       # Validations
       
