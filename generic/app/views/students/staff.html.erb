@@ -26,12 +26,12 @@
               <% for person in @stf %>
                    <tr>
                    <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
-                       <td><%= link_to "#{person.first_name}", url(:student, person.id, :label => "staff") %></td>
+                       <td><%= link_to "#{person.first_name}", url(:student, person.id, :label => "staff") %>&nbsp;</td>
                        <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
                        <td nowrap><% s.each do |f| %>
                           <%= f.role.titleize %>-<%= f.classroom.class_name.titleize %><br/>
-                       <% end %></td>
-      	               <td nowrap><%= number_to_phone(person.phone, :area_code => true) %></td>
+                       <% end %>&nbsp;</td>
+      	               <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>
                    </tr>  
               <% end %>
             </table>
@@ -55,12 +55,12 @@
               <% for person in @staff %>
                    <tr>
                        <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
-                       <td><%= person.first_name %></td>
+                       <td><%= person.first_name %>&nbsp;</td>
                        <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
                        <td><% s.each do |f| %>
                           <%= f.role.titleize %>-<%= f.classroom.class_name %>
-                       <% end %></td> 
-      	               <td nowrap><%= number_to_phone(person.phone, :area_code => true) %></td>
+                       <% end %>&nbsp;</td> 
+      	               <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>
                    </tr>  
               <% end %>
             </table>
@@ -83,9 +83,9 @@
                 <% @class_peoples.each do |f| %>
                    <tr>
                        <td class="click-block"><%= link_to "#{f.person.last_name}", url(:student, f.person.id, :label => "staff") %></td>
-                       <td><%= f.person.first_name %></td>
-      	               <td><%= f.role.titleize %>-<%= f.classroom.class_name %></td>
-                       <td nowrap><%= number_to_phone(person.phone, :area_code => true) %></td>
+                       <td><%= f.person.first_name %>&nbsp;</td>
+      	               <td><%= f.role.titleize %>-<%= f.classroom.class_name %>&nbsp;</td>
+                       <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>
                    </tr>  
               <% end %>
             </table>

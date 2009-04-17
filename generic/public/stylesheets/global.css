@@ -78,7 +78,7 @@ dl{width:480px; float:left; padding:4px 0; margin:4px 0; }
 dt{width:120px; padding:4px 0; margin:0 3px 0 3px; float:left; }
 dd{width:300px; padding:4px 0; float:left; }
 
-dl.check-box-set{ margin:0 0 0 180px;}
+/*dl.check-box-set{ margin:0 0 0 180px;}*/
 dl.check-box-set dt{width:38px; padding:0; margin:0; text-align:right; clear:both;}
 dl.check-box-set dd{width:420px; padding:4px 0; margin:0 0 0 12px;}
 
@@ -377,7 +377,7 @@ span.sports-faculty-list .role{}
 span.sports-faculty-list .name{font-weight:bold;}
 .divider{border-bottom:1px solid #eee; height:4px; margin-bottom:4px;}
 
-.deactivate{background:#fff url(/images/delete-btn-bg.gif) no-repeat 0 50%; padding:4px 4px 4px 20px; margin:0 0 0 160px; position:relative; top:-26px ;}
+.deactivate{background:#fff url(/images/delete-btn-bg.gif) no-repeat 0 50%; padding:4px 4px 4px 20px; }
 
 h1.login {font-size:160%;color:#1a3e8f;}
 .logbox{ padding:4px; font-size:110%;}
@@ -448,11 +448,11 @@ td.separator{padding:8px;}
 .subText, .noText{color:#666;}
 .noText {font-style:italic;}
 
-.class-name {margin:10px auto;}
-.class-name-backgr {background:url("/images/class-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:154px; padding:0 5px; line-height:0px;}
+.class-name {margin:0px 5px 10px 40px;}
+.class-name-backgr {background:url("/images/class-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:154px; padding:0px;}
 td.class-name-top, td.class-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
-.teach-name {margin:10px auto; font-size:80%;}
-.teach-name-backgr {background:url("/images/teach-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:125px; padding:0 5px;line-height:0px;}
+.teach-name {margin:10px 5px 10px 20px; font-size:80%;}
+.teach-name-backgr {background:url("/images/teach-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:125px; padding:0 5px;}
 td.teach-name-top, td.teach-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
 
 .page-links{text-align:center;padding:10px;}

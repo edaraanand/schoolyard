@@ -149,6 +149,7 @@
         
        </div><!--Content End--> 
       
+
        <div class="right-sidebar">
               <% unless @sp_light.nil? %>
                    <h3>Spotlight</h3>
@@ -161,7 +162,8 @@
                         <%= snippet(@sp_light.content, 25) %>
                         <li><%= link_to "previous spot lights", url(:class_details, :id => @classroom.id, :label => "spot_light") %></li>
                    </ul>
-              <% end %>
+
+             <% end %>
               <% unless session.user.type == "Parent" %>
                     <h3>Manage Classroom</h3>
                     <ul class="last">

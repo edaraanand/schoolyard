@@ -73,6 +73,7 @@ Merb::Router.prepare do
        resources :calendars
        resources :students
        resources :teams
+       resources :reports
        resources :from_principals
        resources :home_works
        resources :external_links
