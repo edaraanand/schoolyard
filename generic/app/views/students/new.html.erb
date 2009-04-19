@@ -34,7 +34,7 @@
               <%= text_field  :birth_date, :id => "birth_date", :label => "Birth Date", :class => "short" %>
           </li>
          </ul>
-         <hr size="1"/>
+         <hr size="1" class="clear"/>
          
          
           <%= fields_for @protector do %>  
@@ -163,7 +163,7 @@
                      <br/>
       
 	        <% end =%>   
-	        <hr size="1"/>   
+	        <hr size="1" class="clear" style="border:none"/>   
       <ul>
                 <li> <%= text_field  :phone,  :label => "Phone" %>	</li>
 	              <li> <%= text_area  :address,  :label => "Address", :rows => "4", :cols => "10" %> </li>
