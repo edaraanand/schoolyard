@@ -17,17 +17,17 @@
                <li><%= select :class_type, :label => "Class Type", :collection => @class_types, :onchange => "class_type();return false;" %></li>
                    
                 <% if (@id == ["please"]) && (@class_type == "Classes") %>
-                     <div id="class_name" style="display:block">
-                          <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></li>
-                     </div>
+                     
+                          <li><div id="class_name" style="display:block"><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></div></li>
+                     
                 <% elsif (@id == ["please"]) || (@class_type == "Sports") %>
-                     <div id="class_name" style="display:none">
-                          <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></li>
-                     </div>
+                     
+                          <li><div id="class_name" style="display:none"><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></div></li>
+                     
                 <% else %>
-                     <div id="class_name" style="display:block">
-                          <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></li>
-                     </div>
+                     
+                          <li><div id="class_name" style="display:block"><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></div></li>
+                     
                 <% end %>
                      
               <li>
@@ -67,7 +67,7 @@
            <input type="hidden" id="id" value="1">
             <div id="divTxt"></div>
              
-          <a href="#"  class="add-more"  onClick="addFormField(); return false;">Add More</a>
+          <div><a href="#"  class="add-more"  onClick="addFormField(); return false;">Add More</a></div>
             
         <div class="save-cancel">
             <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>

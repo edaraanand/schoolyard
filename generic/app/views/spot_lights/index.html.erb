@@ -1,6 +1,6 @@
 <div id="fullpage">
      <h2 class="current-page">
-         Spot Light <span class="actions">
+         Spotlight <span class="actions">
          <%= link_to "Add New", resource(:spot_lights, :new) %></span>
      </h2>
    <% unless @spot_lights.empty? %>
@@ -13,13 +13,15 @@
                          <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
                       <% end %>
                   </div>
+                  
                   <h3><%= link_to "#{spot.student_name}", url(:spot_light, spot.id) %></h3>
-                  <h5><span class="subText">SpotLight for <%= spot.class_name %></span></h5>
-                  <span class="subText"><%= spot.created_at.strftime("%b %d %Y") %></span>
-                  <p class="post-content"><%= snippet(spot.content, 50) %></p>
-                  <%= link_to "Edit", resource(spot, :edit), :class=>"edit-btn" %>
-                  <%= link_to "Delete", resource(spot, :delete), :class=>"delete-btn"  %>
-                  <div class="hrule clear"><hr /></div>
+                  <span class="subText">Spotlight for: <%= spot.class_name %></span><br/>
+                  <span  class="subText">Created by <%= spot.created_at.strftime("%b %d %Y") %></span>
+                  <p><%= snippet(spot.content, 50) %></p>
+                  
+                   <%= link_to "Edit", resource(spot, :edit), :class=>"edit-btn" %>
+                   <%= link_to "Delete", resource(spot, :delete), :class=>"delete-btn"  %>
+                  <p class="separator">&nbsp;</p>
               </div>
          <% end %>
     

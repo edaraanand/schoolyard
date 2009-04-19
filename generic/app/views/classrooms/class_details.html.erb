@@ -94,9 +94,9 @@
         <% end %>
           
 <% elsif params[:label] == "spot_light" %>    
-        <h2 class="current-page"> SpotLights </h2>
+        <h2 class="current-page"> Spotlight </h2>
         <% if @spot_lights.blank? %>
-            <span class="subText">There are no SpotLights at this time</span>
+            <span class="subText">There are no Spotlights at this time</span>
         <% else %>
               <% for spot in @spot_lights %>
                    <div class="data-block short-block">
@@ -159,7 +159,7 @@
                         <% end %>
                         <h6><%= link_to "#{@sp_light.student_name}", url(:spot_light, @sp_light.id, :label => "class_spot_light") %></h6>
                         <%= snippet(@sp_light.content, 25) %>
-                        <li><%= link_to "previous spot lights", url(:class_details, :id => @classroom.id, :label => "spot_light") %></li>
+                        <li><%= link_to "previous Spotlights", url(:class_details, :id => @classroom.id, :label => "spot_light") %></li>
                    </ul>
               <% end %>
               <% unless session.user.type == "Parent" %>

@@ -26,18 +26,22 @@
       <%= link_to 'Next >',  url(:announcement, @announcement.next_announcement),:class => "alignright" if @announcement.next_announcement %>
 
     <div class="hrule clear"><hr /></div>
+    <br/><br/><br/>
     
           <%  if (@announcement.approved == false ) && (@announcement.approve_announcement == false) %>
             <% @person = Person.find(:first, :conditions => ['id = ?', @announcement.rejected_by] ) %>
+                  <h2>Reviewer Comments:</h2>
+                  <span class="approved-or-not">Rejected by <%= @person.name %> </span>
                   <p class="reject-comments"> <%= @announcement.reject_comments %></p>
-                  <span class="approved-or-not">Rejected By <%= @person.name %> </span>
+                  
           <% end %>
       
           <%  if (@announcement.approved == true ) && (@announcement.approve_announcement == true) %>
              <% @person = Person.find(:first, :conditions => ['id = ?', @announcement.approved_by] ) %>
-                     
+                  <h2>Reviewer Comments:</h2>
+                  <span class="approved-or-not">Approved &amp; Published by <%= @person.name %> </span>
                  <p class="approve-comments"> <%= @announcement.approve_comments %></p>
-                 <span class="approved-or-not">Approved & PublishedBy <%= @person.name %> </span>
+                 
           <% end %>
           
    

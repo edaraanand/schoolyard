@@ -356,10 +356,10 @@ ul.calendar-items small{color:#666;}
 #.esh {color:black!important;}
 .phone-hint{color:#a1a1a1; padding:0 6px;}
 .css_class{border-bottom: solid 2px #000;}
-.on a{ color:black!important; background:url("/images/arrow-right.png") right no-repeat; font-weight:bold; padding:0 10px 0 0;}
+.on a{ color:black!important; background:url("/images/arrow-right.gif") right no-repeat; font-weight:bold; padding:0 10px 0 0;}
 
-ul#menu li span, .on a span {background:url("/images/menu-count.gif") no-repeat left top; padding:2px 0px 4px 4px;color:#fff; font-size:11px; line-height:13px;}
-ul#menu li span b, .on a span b{background:url("/images/menu-count.gif") no-repeat right top; padding:2px 5px 4px 2px;}
+ul#menu li span, .on a span {background:url("/images/menu-count.gif") no-repeat left top; padding:0px 0px 2px 4px;color:#fff;}
+ul#menu li span b, .on a span b{background:url("/images/menu-count.gif") no-repeat right top; padding:0px 4px 2px 0px;}
 
 
 /*Revisited extras @Rmax*/
@@ -448,12 +448,15 @@ td.separator{padding:8px;}
 .subText, .noText{color:#666;}
 .noText {font-style:italic;}
 
-.class-name {margin:0px 5px 10px 40px;}
-.class-name-backgr {background:url("/images/class-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:154px; padding:0px;}
-td.class-name-top, td.class-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
-.teach-name {margin:10px 5px 10px 20px; font-size:80%;}
-.teach-name-backgr {background:url("/images/teach-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:125px; padding:0 5px;}
-td.teach-name-top, td.teach-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
+
+.class-name, .teach-name {margin:0px 5px 10px 40px;}
+.class-name-backgr, .teach-name-backgr {background:url("/images/class-name-backgr.gif"); text-align:center; font-weight:bold; color:#fff; width:154px; padding:0px;}
+td.class-name-top, td.class-name-bottom, td.teach-name-top, td.teach-name-bottom {height:9px; padding:0px; margin:0px; line-height:1px;} 
+
+.teach-name {font-size:80%;}
+.teach-name-backgr {background:url("/images/teach-name-backgr.gif"); }
+ {height:9px; padding:0px; margin:0px; line-height:1px;} 
+
 
 .page-links{text-align:center;padding:10px;}
 .page-links a{padding:4px;}
@@ -471,6 +474,6 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 #info b{color:#666;}
 #alerts ul li{list-style:square; margin:0 0 0 25px;}
 .right-sidebar li.noBullet{list-style:none; padding: 8px 0 0 10px; color:#666;}
-#classContainer {background:url(/images/vertical-separator.gif) repeat-y 230px 0px; overflow: auto; padding:10px 0;}
+#classContainer {background:url("/images/vertical-separator.gif") repeat-y 230px 0px; overflow: auto; padding:10px 0; height:100%;}
 
 .picEdit{padding:0 0 0 200px;}
