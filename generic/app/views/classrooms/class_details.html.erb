@@ -149,6 +149,14 @@
        </div><!--Content End--> 
       
        <div class="right-sidebar">
+          <% unless session.user.type == "Parent" %>
+                 <h3>Manage Classroom</h3>
+                 <ul class="last">
+                     <li <% if @selected == "calendars" %> class="on" <% end %>><%= link_to_right((right = "calendar"), "Manage Calendars", url(:calendars) )  %></li>
+                   <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_right((right = "homework"), "Manage Homeworks", url(:home_works, :id => @classroom.id, :label => "class_home_works") )  %></li>
+                   <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :id => @classroom.id, :label => "class_announcements")) %></li>
+                 </ul>
+           <% end %>
               <% unless @sp_light.nil? %>
                    <h3>Spotlight</h3>
                    <ul class="last">
@@ -162,14 +170,7 @@
                    </ul>
                    
               <% end %>
-              <% unless session.user.type == "Parent" %>
-                    <h3>Manage Classroom</h3>
-                    <ul class="last">
-                        <li <% if @selected == "calendars" %> class="on" <% end %>><%= link_to_right((right = "calendar"), "Manage Calendars", url(:calendars) )  %></li>
-                      <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_right((right = "homework"), "Manage Homeworks", url(:home_works, :id => @classroom.id, :label => "class_home_works") )  %></li>
-                      <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :id => @classroom.id, :label => "class_announcements")) %></li>
-                    </ul>
-              <% end %>
+             
               <h3>Current Homework</h3>
               <ul class="last">
                   <% @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ? and due_date >= ?', @current_school.id, @date] ) %>

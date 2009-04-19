@@ -52,7 +52,7 @@ body.fixed-width{width:100%;}
 #content p{font-size:13px; padding:.5em 0 .5em 0;}
 #content-wrap{float:left; padding:0 0 0 30px; margin:20px 0 0 0; min-width:500px;}
   /*Wraps the content section*/
-#fullpage{width:500px;}
+#fullpage{width:700px;}
 
 
 
@@ -463,9 +463,9 @@ td.class-name-top, td.class-name-bottom, td.teach-name-top, td.teach-name-bottom
 .teacherPic{width:124px;}
 .prinPic{width:220px;}
 /* Registration*/
-.register-steps {float:left; margin:-75px 0 0 15em;}
-.register-steps2 {float:left; margin:-75px 0 0 20em;}
-.register-steps3 {float:left; margin:-75px 0 0 27em;}
+.register-steps {float:left; margin:-72px 0 0 15em;}
+.register-steps2 {float:left; margin:-72px 0 0 20em;}
+.register-steps3 {float:left; margin:-72px 0 0 27em;}
 #register h1 {font-size:200%; padding:10px 0; border-bottom:1px solid #ccc; margin:0 0 30px 0;}
 .reject {color:red;}
 .approved {color:#169609!important; background:#fff}
