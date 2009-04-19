@@ -3,6 +3,7 @@
      <h2 class="current-page">SpotLight for <%= @spot_light.class_name %></h2>
   
     <div class="data-block short-block">
+           
            <div class="ddmm">
                  <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @spot_light.id]) %>
                  <% unless @attachment.nil? %>
@@ -11,9 +12,11 @@
            </div>
            <h3><%= @spot_light.student_name %></h3>
            <span class="subText"><%= @spot_light.created_at.strftime("%b %d %Y") %></span>
+           <br class="clear"/>
            <p class="post-content"><%= san_content(@spot_light.content) %></p>
-           <div class="hrule clear"><hr /></div>
      </div>
+      <br class="clear"/>
+     <p class="separator">&nbsp;</p>
    
      <% if params[:label] == "class_spot_light" %>
            <%= link_to '< Previous', url(:spot_light, @spot_light.previous_class_spot_light, :label => 'class_spot_light'), :class => "alignleft" if @spot_light.previous_class_spot_light %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;

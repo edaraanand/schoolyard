@@ -1,4 +1,6 @@
 
+
+<h2 class="current-page">Students &gt; Add New</h2>
 <%= error_messages_for @student %>
 <%= error_messages_for @protector %>
 
@@ -13,7 +15,6 @@
           <li><%= flash[:error4] %> </li>
        <% end %>
        </ul>
-<h2 class="current-page">Students &gt; <span class="add-link">Add New</span></h2>
 
 <fieldset> 
 
@@ -26,23 +27,27 @@
               <li><label>Student for:</label><%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name.titleize}, :prompt => "Please Select" %></li>
           <% end %>
           <li>
-              <%= text_field  :first_name,  :label => "Student", :maxlength => "75", :class => "short defaultText defaultTextActive", :title => "First Name" %>
+              <%= text_field  :first_name,  :label => "Student Name", :maxlength => "75", :class => "short defaultText defaultTextActive", :title => "First Name" %>
               <%= text_field  :last_name, :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
 	        </li>
           <li>
               <%= text_field  :birth_date, :id => "birth_date", :label => "Birth Date", :class => "short" %>
           </li>
+         </ul>
+         <hr size="1"/>
+         
          
           <%= fields_for @protector do %>  
+          <ul>
 	             <li>
                    <%= text_field  :first_name, :maxlength => "75", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :title => "First Name" %>
                    <%= text_field  :last_name, :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
 	             </li>
 	             <li> <%= text_field :email, :label => "Email" %> </li>
-         
+         </ul>
                <% if ( ( (@fname2 != nil) || (@lname2 != nil) ) || (@mail2 != nil) ) %>
-         
-                     <div id="parent2" style="display:block">
+                
+                     <ul id="parent2" style="display:block">
                           <li>
                               <%= text_field  :name => "f_name_parent2", :id => "f_parent2", :maxlength => "75", :class => "short", :label => "Parents/Guardian", :value => "#{@fname2}" %>
                               <%= text_field  :name => "l_name_parent2", :id => "l_parent2", :maxlength => "75", :class => "short apart", :value => "#{@lname2}" %>
@@ -50,7 +55,7 @@
                           <li>
                               <%= text_field  :name => "email_parent2",  :label => "E-Mail", :value => "#{@mail2}" %> 
                           </li>
-                     </div>
+                     </ul>
            
                       <% if( ( (@fname2 != "") && (@lname2 != "") ) && (@mail2 != "") )   %>
                             <% if ( ( (@fname3 != "") || (@lname3 != "" ) ) || (@mail3 != "") ) %>
@@ -71,7 +76,7 @@
                      <% end %>
                 
                <% else %>
-                      <div id="parent2" style="display:none">
+                      <ul id="parent2" style="display:none">
                           <li>
                                <%= text_field  :name => "f_name_parent2", :id => "f_parent2", :maxlength => "75", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :title => "First Name" %>
                                <%= text_field  :name => "l_name_parent2", :id => "l_parent2", :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
@@ -79,7 +84,7 @@
                           <li>
                                <%= text_field  :name => "email_parent2",  :label => "E-Mail" %> 
                           </li>
-                      </div>
+                      </ul>
                       <div id="am2" style="display:block">
 	                        <a onclick="add_parent2();return false;" href="#">Add More</a>
 	                    </div>
@@ -92,7 +97,7 @@
              
                <% if ( ( (@fname3 != nil) || ( @lname3 != nil ) ) || (@mail3 != nil) ) %>
          
-                       <div id="parent3" style="display:block">
+                       <il id="parent3" style="display:block">
                             <li>
                                 <%= text_field  :name => "f_name_parent3",  :id => "f_parent3", :maxlength => "75", :class => "short", :label => "Parents/Guardian", :value => "#{@fname3}" %>
                                 <%= text_field  :name => "l_name_parent3",  :id => "l_parent3", :maxlength => "75", :class => "short apart", :value => "#{@lname3}" %>
@@ -100,7 +105,7 @@
                             <li>
                                 <%= text_field  :name => "email_parent3",  :label => "E-Mail", :value => "#{@mail3}" %> 
                             </li>
-                       </div>
+                       </ul>
                        <% if( ( (@fname3 != "") && (@lname3 != "") ) && (@mail3 != "") )   %>
                               <% if ( ( (@fname4 != "") || (@lname4 != "" ) ) || (@mail4 != "") ) %>
                                     <div id="am3" style="display:none">
@@ -119,7 +124,7 @@
 	                           </div>
                        <% end %>
                <% else %>
-                        <div id="parent3" style="display:none">
+                        <ul id="parent3" style="display:none">
                              <li>
                                  <%= text_field  :name => "f_name_parent3",  :id => "f_parent3", :maxlength => "75", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :title => "First Name" %>
                                  <%= text_field  :name => "l_name_parent3",  :id => "l_parent3", :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
@@ -127,7 +132,7 @@
                              <li>
                                  <%= text_field  :name => "email_parent3",  :label => "E-Mail" %> 
                              </li>
-                        </div>
+                        </ul>
               
                <% end %>
                         <div id="am4" style="display:none">
@@ -135,7 +140,7 @@
 	                      </div>
                <% if ( ( (@fname4 != nil) || (@lname4 != nil) ) || (@mail4 != nil) ) %>
                
-                       <div id="parent4" style="display:block">
+                       <ul id="parent4" style="display:block">
                             <li>
                                 <%= text_field  :name => "f_name_parent4",  :id => "f_parent4", :maxlength => "75", :class => "short", :label => "Parents/Guardian", :value => "#{@fname4}" %>
                                 <%= text_field  :name => "l_name_parent4",  :id => "l_parent4", :maxlength => "75", :class => "short apart", :value => "#{@lname4}" %>
@@ -143,9 +148,9 @@
                             <li>
                                 <%= text_field  :name => "email_parent4",  :label => "E-Mail", :value => "#{@mail4}" %> 
                             </li>
-                       </div>
+                       </ul>
                <% else %>
-                       <div id="parent4" style="display:none">
+                       <ul id="parent4" style="display:none">
                             <li>
                             <%= text_field  :name => "f_name_parent4", :id => "f_parent4", :maxlength => "75", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :title => "First Name" %>
                             <%= text_field  :name => "l_name_parent4", :id => "l_parent4", :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
@@ -153,12 +158,13 @@
                             <li>
                                 <%= text_field  :name => "email_parent4",  :label => "E-Mail" %> 
                             </li>
-                       </div>
+                       </ul>
                <% end %>
                      <br/>
       
-	        <% end =%>      
-     
+	        <% end =%>   
+	        <hr size="1"/>   
+      <ul>
                 <li> <%= text_field  :phone,  :label => "Phone" %>	</li>
 	              <li> <%= text_area  :address,  :label => "Address", :rows => "4", :cols => "10" %> </li>
        </ul>     

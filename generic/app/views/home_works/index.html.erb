@@ -34,7 +34,7 @@
                                          </div>
                                    <% end %>
                                       <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
-                                      <span class="subText">HomeWork for: <%= homework.classroom.class_name %></span><br/>
+                                      <span class="subText">Homework for: <%= homework.classroom.class_name %></span><br/>
                                       <p class="subText">Assigned on <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></p>
                                       <p class="post-content"><%= snippet(homework.content, 50) %></p>
                                      <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
@@ -66,7 +66,7 @@
                                          </div>
                                    <% end %>
                                       <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
-                                      <span class="subText">HomeWork for: <%= homework.classroom.class_name %></span><br/>
+                                      <span class="subText">Homework for: <%= homework.classroom.class_name %></span><br/>
                                       <p class="subText">Assigned on <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></p>
                                       <p class="post-content"><%= snippet(homework.content, 50) %></p>
                                      <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
@@ -97,7 +97,7 @@
                                          </div>
                                    <% end %>
                                    <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
-                                      <span class="subText">HomeWork for: <%= homework.classroom.class_name %></span><br/>
+                                      <span class="subText">Homework for: <%= homework.classroom.class_name %></span><br/>
                                       <p class="subText">Assigned on <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></p>
                                       <p class="post-content"><%= snippet(homework.content, 50) %></p>
                                      <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
@@ -128,7 +128,7 @@
                                          </div>
                                    <% end %>
                                       <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
-                                      <span class="subText">HomeWork for: <%= homework.classroom.class_name %></span><br/>
+                                      <span class="subText">Homework for: <%= homework.classroom.class_name %></span><br/>
                                       <p class="subText">Assigned on <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></p>
                                       <p class="post-content"><%= snippet(homework.content, 50) %></p>
                                      <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
