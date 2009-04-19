@@ -239,7 +239,9 @@ class Classrooms < Application
  :page => params[:page])
          @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name.titleize])
          @external_links = @current_school.external_links.find(:all, :conditions => ['label = ?', "Classrooms"])
+         @spot_lights = @current_school.spot_lights.paginate(:all, :conditions => ['class_name = ?', @classroom.class_name], :per_page => 2, :page => params[:page], :order => 'created_at DESC') 
          @ann = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name.titleize, true, true], :limit => 3)
+         @sp_light = @current_school.spot_lights.find(:first, :conditions => ['class_name = ?', @classroom.class_name], :order => "created_at DESC" )
          render :layout => 'class_change', :id => @classroom.id
       else
         raise NotFound
