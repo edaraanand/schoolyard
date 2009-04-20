@@ -1,0 +1,136 @@
+
+<%= error_messages_for @report %>
+<%= error_messages_for @assignment %>
+<ul class='error_messages'>
+     
+       <% if flash[:error] %>
+          <li><%= flash[:error] %> </li>
+       <% end %>
+      
+</ul>
+
+<h2 class="current-page">Grades/Reports &gt; <span class="add-link">Add New</span></h2>
+<span class="subText">Please specify the subjects for which you wish to add the grades</span><br/>
+
+<fieldset>
+
+      <%= form_for(@report, :action => resource(:reports) ) do %>
+       
+              <ul>
+                  <li><label>Main Subject</label><%= text_field  :subject_name %></li>
+              </ul>
+                     
+            <div id="readroot_1" style="display:block" value="1">
+                     <%= fields_for @category do %>
+                           <ul>
+                                <li><label>Category(optional)</label><li>
+                                <li><input name="category_1[category]"  value="" /></li>
+                           </ul>
+                     <% end =%>
+                     <%= fields_for @assignment do %>
+                          <%= partial 'grade' %>
+                     <% end =%>
+                     <a href="#"  class="add-more"  onClick="test(this.parentNode.id); return false;">Add More Assignments</a>                        
+              </div>
+                   <span id="writeroot">
+                   </span>
+                     
+                   <div class="save-cancel">
+                      <a href="#"  class="add-more"  id="moreFields" onClick="moreFields(); return false;">Add Another Category</a>
+                      <%= submit "Save and Add Grades" %> Or  <%= link_to "Cancel", resource(:reports), :class => "cancel" %>
+                   </div>
+      <% end =%> 
+
+</fieldset>
+
+
+
+<script type= "text/javascript">
+  
+     // $j("#readroot_1 input.date").datepicker({minDate:'today + 1'});
+   
+      $j("#date1").datepicker({minDate:'today + 1'});
+      $j("#date2").datepicker({minDate:'today + 1'});
+      $j("#date3").datepicker({minDate:'today + 1'});
+      $j("#date4").datepicker({minDate:'today + 1'});
+      $j("#date5").datepicker({minDate:'today + 1'});
+       
+     var counter = 1;
+      t = 6;
+    function moreFields()
+    {
+       counter++;
+       var newFields = document.getElementById('readroot_1').cloneNode(true);
+	     newFields.id = 'readroot_' + counter;
+       newFields.style.display = 'block';
+       newFields.value = counter;
+       var newField = newFields.childNodes;
+       for (var i=1;i<newField.length;i++)
+       {
+		      var theName = newField[i].name
+          if (theName)
+			      newField[i].name = theName + counter;
+        }
+       var insertHere = document.getElementById('writeroot');
+       insertHere.parentNode.insertBefore(newFields,insertHere);
+       $j(newFields).append('<a href="#" class="cancel" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"> Remove Category </a>')
+       var sr = newFields.getElementsByTagName('input');
+       for (var r=0;r<sr.length;r++)
+         {
+            nam = sr[r].name
+            if (nam == "category_1[category]")
+              {
+                 sr[r].name = 'category_' + counter + '[category]'
+                 sr[r].value = ""
+              }
+            else if (nam == "category_1[assignment][name][]")
+              {
+                 sr[r].name = 'category_' + counter + '[assignment][name][]'
+                 sr[r].value = ""
+              }
+            else if (nam == "category_1[assignment][date][]")
+              {
+                 sr[r].name = 'category_' + counter + '[assignment][date][]'
+                 sr[r].id = 'date' + t
+                 sr[r].value = ""
+                 id = sr[r].id
+                 $j("#" + sr[r].id ).removeClass("hasDatepicker").datepicker({ minDate:'today + 1' });
+                 t++;
+              }
+            else if (nam == "category_1[assignment][max_point][]")
+              {
+                 sr[r].name = 'category_' + counter + '[assignment][max_point][]'
+                 sr[r].value = ""
+              }      
+             
+          }
+          
+      }
+    
+    //window.onload = moreFields;
+    
+    id = 1
+    function test(counter)
+    {  
+      //id = 1
+      var div = document.getElementById(counter) 
+      var r = document.getElementById(counter).id
+      var k = r.split('_')
+      var a = k[1]
+      $j(div).append("<p id='row" + id + "'><input type='text' class='short text' name='category_" +  a  + "[assignment][name][]' id='txt" + id + "'><input type='text' class='short text apart' name='category_" + a + "[assignment][date][]' id='newdate" + id + "'><input type='text' class='short text apart' name='category_" +  a  + "[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a><p>");
+      $j("#newdate" + id + "").datepicker({minDate:'today + 1'});
+      id = (id - 1) + 2;
+     
+      //document.getElementById('id').value = id;
+      
+  
+    }
+  
+     function removeFormField(id) 
+   {
+      $j(id).remove();
+    }
+  
+    
+ 
+</script>
