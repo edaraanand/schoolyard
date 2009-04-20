@@ -94,9 +94,9 @@
         <% end %>
           
 <% elsif params[:label] == "spot_light" %>    
-        <h2 class="current-page"> SpotLights </h2>
+        <h2 class="current-page"> Spotlight </h2>
         <% if @spot_lights.blank? %>
-            <span class="subText">There are no SpotLights at this time</span>
+            <span class="subText">There are no Spotlights at this time</span>
         <% else %>
               <% for spot in @spot_lights %>
                    <div class="data-block short-block">
@@ -107,11 +107,10 @@
                             <% end %>
                         </div>
                         <h3><%= link_to "#{spot.student_name}", url(:spot_light, spot.id, :label => "class_spot_light") %></h3>
-                        <h5><span class="subText">SpotLight for <%= spot.class_name %></span></h5>
                         <span class="subText"><%= spot.created_at.strftime("%b %d %Y") %></span>
                         <p class="post-content"><%= snippet(spot.content, 50) %></p>
-                        <div class="hrule clear"><hr /></div>
                    </div>
+                   <p class="separator">&nbsp;</p>
               <% end %>
               <%= will_paginate (@spot_lights, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
         <% end %>
@@ -150,6 +149,14 @@
        </div><!--Content End--> 
       
        <div class="right-sidebar">
+          <% unless session.user.type == "Parent" %>
+                 <h3>Manage Classroom</h3>
+                 <ul class="last">
+                     <li <% if @selected == "calendars" %> class="on" <% end %>><%= link_to_right((right = "calendar"), "Manage Calendars", url(:calendars) )  %></li>
+                   <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_right((right = "homework"), "Manage Homeworks", url(:home_works, :id => @classroom.id, :label => "class_home_works") )  %></li>
+                   <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :id => @classroom.id, :label => "class_announcements")) %></li>
+                 </ul>
+           <% end %>
               <% unless @sp_light.nil? %>
                    <h3>Spotlight</h3>
                    <ul class="last">
@@ -159,17 +166,11 @@
                         <% end %>
                         <h6><%= link_to "#{@sp_light.student_name}", url(:spot_light, @sp_light.id, :label => "class_spot_light") %></h6>
                         <%= snippet(@sp_light.content, 25) %>
-                        <li><%= link_to "previous spot lights", url(:class_details, :id => @classroom.id, :label => "spot_light") %></li>
+                        <li><%= link_to "All spotlights", url(:class_details, :id => @classroom.id, :label => "spot_light") %></li>
                    </ul>
+                   
               <% end %>
-              <% unless session.user.type == "Parent" %>
-                    <h3>Manage Classroom</h3>
-                    <ul class="last">
-                        <li <% if @selected == "calendars" %> class="on" <% end %>><%= link_to_right((right = "calendar"), "Manage Calendars", url(:calendars) )  %></li>
-                      <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_right((right = "homework"), "Manage Homeworks", url(:home_works, :id => @classroom.id, :label => "class_home_works") )  %></li>
-                      <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :id => @classroom.id, :label => "class_announcements")) %></li>
-                    </ul>
-              <% end %>
+             
               <h3>Current Homework</h3>
               <ul class="last">
                   <% @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ? and due_date >= ?', @current_school.id, @date] ) %>

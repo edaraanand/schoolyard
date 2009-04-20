@@ -13,12 +13,13 @@
             <ul>
                <li><label>Spotlight for:</label><%= select :class_name, :collection => @classrooms, :prompt => "Please Select" %></li>
                <li><label>Student </label><%= select :student_name, :collection => @students.collect{|x| x.name }, :prompt => "Please Select" %></li>
+                <li><%= file_field :image, :label => "Upload Picture (optional)" %>
+                    <% unless @pic.nil? %>                          
+                         <span class="picEdit"><img src="/uploads/spotlights/<%= @pic.filename %>" alt="<%= @pic.filename %>" class="teacherPic"/></span>
+                    <% end %>
+                </li>
                <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
-               <li><%= file_field :image, :label => "Upload Picture" %>
-                   <% unless @pic.nil? %>                          
-                        <span class="picEdit"><img src="/uploads/spotlights/<%= @pic.filename %>" alt="<%= @pic.filename %>" class="teacherPic"/></span>
-                   <% end %>
-               </li>
+              
             </ul>
        </fieldset>
 
