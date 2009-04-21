@@ -6,25 +6,23 @@
           <% else %>
                <img src="/images/principal.png" alt="From The Principal"/>
           <% end %>
-          <% if @announcements.blank? %>
+          <% if @from_principals.blank? %>
                <p class="subText">There are no messages at this time.</p>
           <% else %>
                  <% for principal in @from_principals %>
                       <div class="data-block long-block">
-                      <% if principal.expiration.nil? or principal.expiration >= @date%>
-                           <div class="ddmmm">
+                            <div class="ddmmm">
                                 <span class="date"><%=  principal.created_at.strftime("%d")%></span>
                                 <span class="month"><%=  principal.created_at.strftime("%b")%></span>
                            </div>
                             <span><%= link_to "#{principal.title}", url(:home, principal.id, :label => 'principal') %></span>
                            <p class="separator"><%= snippet(principal.content, 50) %></p>
-                      <% end %>
                       </div>
                   <% end %>
            <% end %>
               <p class="separator">&nbsp;</p>
               <div class="page-links">
-                <%= link_to "All Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
+                   <%= link_to "All Principal’s Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
               </div>
      </div>
      <div id="content" class="homes-content">
