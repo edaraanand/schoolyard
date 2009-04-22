@@ -7,14 +7,18 @@ class WelcomeMessages < Application
   
   
   def index
-     classrooms
-     @welcome_messages =@current_school.welcome_messages.find(:all, :conditions => ['access_name =?', params[:access_name]])
-     if params[:access_name].nil?
-       @welcome = @current_school.welcome_messages.find(:all)
-     end
-     if params[:access_name] == "All Messages"
-       @all_messages = @current_school.welcome_messages.find(:all)
-     end
+       classrooms
+    if params[:label] == "home_messages"
+       @w_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name =?', "Home Page"], :order => "created_at DESC")
+    else
+       @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name =?', params[:access_name]], :order => "created_at DESC")
+       if params[:access_name].nil?
+          @welcome = @current_school.welcome_messages.find(:all, :order => "created_at DESC")
+       end
+       if params[:access_name] == "All Messages"
+          @all_messages = @current_school.welcome_messages.find(:all, :order => "created_at DESC")
+       end
+    end
      render
   end
   
@@ -24,27 +28,40 @@ class WelcomeMessages < Application
   end
 
   def create
-     @welcome_message = @current_school.welcome_messages.new(params[:welcome_message])
-     @welcome_message.person_id = @current_user.id
-     if @welcome_message.save
-	      redirect resource(:welcome_messages)
-     else
-	      render :new
-     end
-  end
+      @welcome_message = @current_school.welcome_messages.new(params[:welcome_message])
+      if params[:welcome_message][:access_name] != ""
+         @welcome_message.person_id = @current_user.id
+         if @welcome_message.save
+	          redirect resource(:welcome_messages)
+         else
+	          render :new
+         end
+      else
+         flash[:error] = "Please select the option"
+         render :new
+      end
+  end 
   
   def edit
-     @welcome_message = WelcomeMessage.find(params[:id])
+      @welcome_message = WelcomeMessage.find(params[:id])
+      ss = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+      om = ss.collect{|x| x.class_name.titleize }
+      @test = om.insert(0, "Home Page")
      render
   end
   
   def update
      @welcome_message = WelcomeMessage.find(params[:id])
-     if @welcome_message.update_attributes(params[:welcome_message])
-	      @welcome_message.person_id = @current_user.id
-	      redirect resource(:welcome_messages)
+     if params[:welcome_message][:access_name] != ""
+        if @welcome_message.update_attributes(params[:welcome_message])
+	         @welcome_message.person_id = @current_user.id
+	         redirect resource(:welcome_messages)
+        else
+	         render :edit
+        end
      else
-	      render :edit
+         flash[:error] = "Please select the option"
+         render :edit
      end
   end
   
@@ -54,22 +71,42 @@ class WelcomeMessages < Application
   end
   
   def preview
-     render :layout => 'preview'
+     if params[:welcome_message][:access_name] == "Home Page"
+        @select = "home"
+        render :layout => "home"
+     else
+        @select = "classrooms"
+        @selected = nil
+        @classroom = @current_school.classrooms.find_by_class_name(params[:welcome_message][:access_name])
+        render :layout => 'class_change', :id => @classroom.id
+     end
   end
    
   private
   
   def classrooms
-     @class = @current_school.classrooms.find(:all)
-     room = @class.collect{|x| x.class_name }
+     @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+     room = @class.collect{|x| x.class_name.titleize }
      @classrooms = room.insert(0, "All Messages")
      @classrooms = room.insert(1, "Home Page")
   end
   
   def rooms
-      @class = @current_school.classrooms.find(:all)
+      @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
       room = @class.collect{|x| x.class_name }
       @classrooms = room.insert(0, "Home Page")
+      @messages = @current_school.welcome_messages.find(:all)
+      if @messages.empty?
+         @eee = @classrooms
+      else
+         @messages.each do |f|
+           if @classrooms.include?(f.access_name)
+              @eee = @classrooms.delete_if{|x| x == f.access_name}
+           else
+              @eee =  @classrooms
+           end
+         end
+      end
   end
    
    def access_rights

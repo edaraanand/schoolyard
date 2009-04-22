@@ -26,15 +26,16 @@
               <% for person in @stf %>
                    <tr>
                    <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
-                       <td><%= person.first_name %></td>
+                       <td><%= link_to "#{person.first_name}", url(:student, person.id, :label => "staff") %></td>
                        <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
-                       <td><% s.each do |f| %>
-                          <%= f.role.titleize %>--<%= f.classroom.class_name %>
+                       <td nowrap><% s.each do |f| %>
+                          <%= f.role.titleize %>-<%= f.classroom.class_name.titleize %><br/>
                        <% end %></td>
-      	               <td><%= person.phone %></td>
+      	               <td nowrap><%= number_to_phone(person.phone, :area_code => true) %></td>
                    </tr>  
               <% end %>
             </table>
+              <%= will_paginate (@stf, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
          <% end %> 
        
 <% elsif params[:class_name] == "All Staff" %>
@@ -59,10 +60,11 @@
                        <td><% s.each do |f| %>
                           <%= f.role.titleize %>-<%= f.classroom.class_name %>
                        <% end %></td> 
-      	               <td><%= person.phone %></td>
+      	               <td nowrap><%= number_to_phone(person.phone, :area_code => true) %></td>
                    </tr>  
               <% end %>
             </table>
+              <%= will_paginate (@staff, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
          <% end %>
        
 <% else %>
@@ -83,14 +85,23 @@
                        <td class="click-block"><%= link_to "#{f.person.last_name}", url(:student, f.person.id, :label => "staff") %></td>
                        <td><%= f.person.first_name %></td>
       	               <td><%= f.role.titleize %>-<%= f.classroom.class_name %></td>
-                       <td><%= f.person.phone %></td>
+                       <td nowrap><%= number_to_phone(person.phone, :area_code => true) %></td>
                    </tr>  
               <% end %>
             </table>
+              
         <% end %>
 
 <% end %>
 
 
+<% unless session.user.type == "Parent" %>
+     <div class="right-sidebar">
+     <h3>Manage Staff</h3>
+          <ul class="last">
+          <li <% if @selected == "rights" %> class="on" <% end %>><%= link_to_right((right = "rights_others"), "Manage Staff", url(:people)  ) %></li>
+          </ul>
+      </div>
+<% end %>
 
 

@@ -115,6 +115,10 @@ Merb::Router.prepare do
        match("/pdf_events").to(:controller => 'calendars', :action => 'pdf_events').name(:pdf_events)
        match("/generate_csv").to(:controller => 'students', :action => 'generate_csv').name(:generate_csv)
        match("/home_works_pdf").to(:controller => 'home_works', :action => 'home_works_pdf').name(:home_works_pdf)
+       match("/settings").to(:controller => 'from_principals', :action => 'settings').name(:settings)
+       match("/settings_update").to(:controller => 'from_principals', :action => 'settings_update').name(:settings_update)
+       match("/sports").to(:controller => 'teams', :action => 'sports').name(:sports)
+       match("/school_admin").to(:controller => 'schools', :action => 'school_admin').name(:school_admin)
        match(:first_subdomain => 'admin').to(:controller => 'admin', :action => 'index') 
    end
    

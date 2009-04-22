@@ -1,12 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
 <head> 
-<title><%= @current_school.school_name %></title>
+<title><%= @current_school.school_name %>, <%= @current_school.email %>, <%= number_to_phone(@current_school.phone, :area_code => true) %> </title>
 
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
   <link rel="stylesheet" href="/stylesheets/ui.datepicker.css" type="text/css" media="screen" charset="utf-8" />
   <link rel="stylesheet" href="/stylesheets/clockpick.1.2.4.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="/stylesheets/modalpreview.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="/stylesheets/listnav.css" type="text/css" media="screen" charset="utf-8" />
   <link rel="stylesheet" href="/stylesheets/rte.css" type="text/css" media="screen" charset="utf-8" />
   <link rel="stylesheet" href="/stylesheets/global.css" type="text/css" media="screen" />
   <link rel="stylesheet" href="/stylesheets/facebox.css" type="text/css" media="screen" charset="utf-8" />
@@ -20,6 +22,7 @@
   <script src='/javascripts/jquery.highlightFade.js'></script>
   <script src='/javascripts/jquery.MultiFile.js'></script>
   <script src='/javascripts/jquery.hint.js'></script>
+  <script src='/javascripts/jquery.modalpreview.js'></script>
   <script src='/javascripts/ui-datepicker-1.5.2.min.js'></script>
   <script src='/javascripts/jquery.clockpick.1.2.4.js'></script>
   <script src='/javascripts/util-functions.js'></script>
@@ -35,55 +38,56 @@
 <body class="fixed-width">
   <div id="page-wrap"><!-- Wraps everything -->
   <div id="header"><!--The Header -->
-      <h1><%= link_to "#{@current_school.school_name}", resource(:homes) %></h1>
+  <h1><%= link_to "#{@current_school.school_name}", resource(:homes) %></h1>
       <div id="user-cp"><!--User Control Panel -->
        <p class="welcome">Welcome <em><%= session.user.name %></em></p>
         <ul>  <% @access_rights = session.user.access_peoples  %>
          <% if @access_rights.length == 0 %>
          <li class="first"><%= link_to "My Account", url(:parent_account) %></li>
          <% else %>
-             <li class="first"><%= link_to "My Account", url(:staff_account) %></li>
+             <li class="first"><%= link_to "My Account", url(:staff_account) %>&nbsp;</li>
          <% end %>
-            <li><%= link_to "Logout", url(:logout) %></li>
+            <li>&nbsp;<%= link_to "Logout", url(:logout) %></li>
         </ul>
-      </div>
+      </div><% @sports_class = @current_school.classrooms.find(:first, :conditions => ['class_name = ? and activate =  ?', "Sports", true] ) %>
       <div id="navbar"><!--The Main Navigation -->
                <ul id="navigation">
           <li <% if @select == "home" %> class="current" <% end %> ><%= link_to "<span>Home</span>", url(:homes) %></li>
           <li <% if @select == "classrooms" %> class="current" <% end %> ><a rel="facebox" href="#info"><span>Classrooms</span></a></li>
-		      <li class="current"><li><%#= link_to "<span>Sports</span>" %></li>
-          <li <% if @select == "forms" %> class="current" <% end %> ><%= link_to "<span>Forms</span>", url(:form_files) %></li>
+          <% unless @sports_class.nil? %>
+		          <li <% if @select == "sports" %> class="current" <% end %> ><%= link_to "<span>Sports</span>", url(:sports) %></li>
+          <% end %>
+          <li <% if @select == "forms" %> class="current" <% end %> ><%= link_to "<span>Forms</span>", url(:form_files, :l => "all_forms", :label => "forms") %></li>
           <li <% if @select == "directory" %> class="current" <% end %>><%= link_to "<span>Directory</span>", url(:directory) %></li>
-          <li <% if @select == "events" %> class="current" <% end %>><%= link_to "<span>Events</span>", url(:events) %></li>
-          <% @view = Access.find_by_name('view_all') %>
-          <% @accesses = Access.find(:all).delete_if{|x| x.name == "view_all" } %>
-             <% @a_p = session.user.access_peoples.delete_if{|x| x.access_id == @view.id } %>
-             <% @accesses.each do |f| %>
-               <% have_access = false %>
-               <% @a_p.each do |l| 
-                   have_access =  l.all || (f.id == l.access_id) 
-                   break if have_access	  
-                   end %>
-                    <% @accesses.delete_if{ have_access } %>
-                  
-                 <% if have_access %>
-                     <li <% if @select == "schools" %> class="current" <% end %>><%= link_to "<span>Administration</span>", url(:schools), :class=> "admin" %></li>
-                 <% end %>
-             <% end %>
-             <% @accesses.each do |f| %>
-           <% have_access = true %>
-               <% @a_p.each do |l| 
-                 have_access = (l.access_id == @view.id) 
-                   break if have_access	  
-                   end %>
-                    <% @accesses.delete_if{ have_access } %>
-                    
-                 <% if have_access %>
-                 <li><%= link_to "<span>Your Announcements</span>", url(:parents), :class=> "admin" %></li>
-                 <% end %>
-           <% end %>
-            
+        <li <% if @select == "events" %> class="current" <% end %>><%= link_to "<span>Calendars</span>", url(:events, :l => "all_events", :label =>  "calendars") %></li>            
            <li <% if @select == "contact" %> class="current" <% end %> ><%= link_to "<span>Contact Us</span>", url(:help) %></li>
+           <% @view = Access.find_by_name('view_all') %>
+           <% @accesses = Access.find(:all).delete_if{|x| x.name == "view_all" } %>
+              <% @a_p = session.user.access_peoples.delete_if{|x| x.access_id == @view.id } %>
+              <% @accesses.each do |f| %>
+                <% have_access = false %>
+                <% @a_p.each do |l| 
+                    have_access =  l.all || (f.id == l.access_id) 
+                    break if have_access	  
+                    end %>
+                     <% @accesses.delete_if{ have_access } %>
+
+                  <% if have_access %>
+                  <li <% if @select == "schools" %> class="current" <% end %>><%= link_to "<span>Administration</span>", url(:school_admin) %></li>
+                  <% end %>
+              <% end %>
+              <% @accesses.each do |f| %>
+            <% have_access = true %>
+                <% @a_p.each do |l| 
+                  have_access = (l.access_id == @view.id) 
+                    break if have_access	  
+                    end %>
+                     <% @accesses.delete_if{ have_access } %>
+
+                  <% if have_access %>
+                  <li <% if @select == "parent_announcements" %> class="current" <% end %>><%= link_to "<span>Your Announcements</span>", url(:parents) %></li>
+                  <% end %>
+            <% end %>
                      
         </ul>
         <div class="hrule clear"><hr /></div><!-- gives bottom border to the Navigation.-->

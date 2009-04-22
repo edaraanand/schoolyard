@@ -10,13 +10,25 @@ class Announcements < Application
     @message1 = "Approved"
     @message2 = "Pending"
     @message3 = "Rejected"
-    @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and label = ?", params[:access_name], 'staff' ], :order => "created_at DESC")
-     if params[:access_name].nil?
-        @announce = @current_school.announcements.find(:all, :conditions => ['label = ?', 'staff'], :order => "created_at DESC")
-     end
-     if params[:access_name] == "All Announcements"
-        @all_announcements = @current_school.announcements.find(:all, :conditions => ['label = ?', 'staff'], :order => "created_at DESC")
-     end
+    if params[:label] == "home_a"
+       @home_announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and label = ?", "Home Page", 'staff' ], :order => "created_at DESC", :per_page => 10,
+ :page => params[:page])
+    elsif params[:label] == "class_announcements"
+       @classroom = @current_school.classrooms.find_by_id(params[:id])
+       @class_announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and label = ?", @classroom.class_name, 'staff' ], :order => "created_at DESC", :per_page => 10,
+ :page => params[:page])
+    else
+       @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and label = ?", params[:access_name], 'staff' ], :order => "created_at DESC", :per_page => 10,
+ :page => params[:page])
+       if params[:access_name].nil?
+          @announce = @current_school.announcements.paginate(:all, :conditions => ['label = ?', 'staff'], :order => "created_at DESC", :per_page => 10,
+ :page => params[:page])
+       end
+       if params[:access_name] == "All Announcements"
+          @all_announcements = @current_school.announcements.paginate(:all, :conditions => ['label = ?', 'staff'], :order => "created_at DESC", :per_page => 10,
+ :page => params[:page])
+       end
+    end
      render
   end 
   
@@ -27,26 +39,31 @@ class Announcements < Application
   
   def create
     @announcement = session.user.announcements.build(params[:announcement])
-    i=0
-    if @announcement.valid?
-       @announcement.approved = false
-       @announcement.approve_announcement = true
-       @announcement.label = 'staff'
-       @announcement.school_id = @current_school.id
-       @announcement.save
-       unless params[:attachment]['file_'+i.to_s].empty?
-           @attachment = Attachment.create( :attachable_type => "Announcement",
+    i=0    
+    if params[:announcement][:access_name] != ""
+       if @announcement.valid?
+          @announcement.approved = false
+          @announcement.approve_announcement = true
+          @announcement.label = 'staff'
+          @announcement.school_id = @current_school.id
+          @announcement.save
+          unless params[:attachment]['file_'+i.to_s].empty?
+              @attachment = Attachment.create( :attachable_type => "Announcement",
                                         :attachable_id => @announcement.id,
                                         :filename => params[:attachment]['file_'+i.to_s][:filename],
                                         :content_type => params[:attachment]['file_'+i.to_s][:content_type],
                                         :size => params[:attachment]['file_'+i.to_s][:size]
-            )
-           File.makedirs("public/uploads/#{@attachment.id}")
-           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
-        end
-	      redirect resource(:announcements)
+               )
+               File.makedirs("public/uploads/#{@attachment.id}")
+               FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+          end
+	        redirect resource(:announcements)
+       else
+	        render :new
+       end
      else
-	      render :new
+        flash[:error] = "Please select the option"
+        render :new
      end
   end       
   
@@ -68,39 +85,49 @@ class Announcements < Application
      @allowed = 1 - @attachments.size
      i=0
      if params[:attachment]
-        if @announcement.update_attributes(params[:announcement])
-           unless params[:attachment]['file_'+i.to_s].empty?
-                @attachment = Attachment.create( :attachable_type => "Announcement",
+        if params[:announcement][:access_name] != ""
+           if @announcement.update_attributes(params[:announcement])
+              unless params[:attachment]['file_'+i.to_s].empty?
+                   @attachment = Attachment.create( :attachable_type => "Announcement",
                                         :attachable_id => @announcement.id,
                                         :filename => params[:attachment]['file_'+i.to_s][:filename],
                                         :content_type => params[:attachment]['file_'+i.to_s][:content_type],
                                         :size => params[:attachment]['file_'+i.to_s][:size]
-                 )
-                  File.makedirs("public/uploads/#{@attachment.id}")
-                  FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+                    )
+                    File.makedirs("public/uploads/#{@attachment.id}")
+                    FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+              end
+              @announcement.person_id = session.user.id
+              @announcement.approved = false
+              @announcement.approve_announcement = true
+              @announcement.label = 'staff'
+              @announcement.school_id = @current_school.id
+      	      @announcement.save          
+	            redirect resource(:announcements)
+           else
+	            render :edit
            end
-           @announcement.person_id = session.user.id
-           @announcement.approved = false
-           @announcement.approve_announcement = true
-           @announcement.label = 'staff'
-           @announcement.school_id = @current_school.id
-      	   @announcement.save          
-	         redirect resource(:announcements)
-        else
-	         render :edit
-        end
-    else
-         if @announcement.update_attributes(params[:announcement])
-            @announcement.person_id = session.user.id
-            @announcement.approved = false
-            @announcement.approve_announcement = true
-            @announcement.label = 'staff'
-            @announcement.school_id = @current_school.id
-      	    @announcement.save          
-	          redirect resource(:announcements)
          else
-	          render :edit
-         end
+             flash[:error] = "Please select the option"
+             render :edit
+         end 
+    else
+         if params[:announcement][:access_name] != ""
+             if @announcement.update_attributes(params[:announcement])
+                @announcement.person_id = session.user.id
+                @announcement.approved = false
+                @announcement.approve_announcement = true
+                @announcement.label = 'staff'
+                @announcement.school_id = @current_school.id
+      	        @announcement.save          
+	              redirect resource(:announcements)
+             else
+	              render :edit
+             end
+         else
+             flash[:error] = "Please select the option"
+             render :edit
+         end 
     end   
   end
   
@@ -121,9 +148,16 @@ class Announcements < Application
   end
    
    def preview
-      @title = params[:announcement][:title]
-      @content = params[:announcement][:content]
-      render :layout => 'preview'
+      @date = Date.today
+      if params[:announcement][:access_name] == "Home Page"
+         @select = "home"
+         render :layout => 'home'
+      else
+         @selected = "announcements"
+         @select =  "classrooms"
+         @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', params[:announcement][:access_name] ])
+         render :layout => 'class_change', :id => @classroom.id
+      end
    end
    
        
@@ -131,15 +165,15 @@ class Announcements < Application
   
   
   def classrooms
-     @class = @current_school.classrooms.find(:all)
-     room = @class.collect{|x| x.class_name }
+     @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+     room = @class.collect{|x| x.class_name.titleize }
      @classrooms = room.insert(0, "All Announcements")
      @classrooms = room.insert(1, "Home Page")
   end
   
   def rooms
-      @class = @current_school.classrooms.find(:all)
-      room = @class.collect{|x| x.class_name }
+      @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+      room = @class.collect{|x| x.class_name.titleize }
       @classrooms = room.insert(0, "Home Page")
   end
   

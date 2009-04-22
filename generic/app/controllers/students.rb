@@ -8,31 +8,38 @@ class Students < Application
   before :selected_tab, :only => [:directory, :show, :staff]
   
   def index 
-     @students = @current_school.students.find(:all)
+     @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
      render
   end
   
   def new
      @student = Student.new
-     @class_rooms = @current_school.classrooms.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @protector = Protector.new
      render
   end
   
   def create
-     @class_rooms = @current_school.classrooms.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @student = @current_school.students.new(params[:student])
      @protector = @current_school.protectors.new(params[:protector])
      if ( ( (params[:f_name_parent2] == "") && (params[:l_name_parent2] == "") ) && (params[:email_parent2] == "") )
-          if (@student.valid?) && (@protector.valid?)
-             @student.save
-             @protector.save
-             Ancestor.create({:student_id => @student.id, :protector_id => @protector.id })
-	           Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })
-	           redirect resource(:students)
-          else
-	           render :new
-	        end
+         if params[:classroom_id] !=  ""
+            if (@student.valid?) && (@protector.valid?)
+                @student.save
+                @protector.save
+                Ancestor.create({:student_id => @student.id, :protector_id => @protector.id })
+	              Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })
+	              redirect resource(:students)
+            else
+               @class_id = params[:classroom_id]
+	             render :new
+	          end
+         else
+            flash[:error] = "Please select option"
+            @class_id = params[:classroom_id]
+            render :new
+         end
      else
 	        if (@student.valid?) && (@protector.valid?)
              if ( ( (params[:f_name_parent2] != "") && (params[:l_name_parent2] != "") ) && (params[:email_parent2] != "") )
@@ -61,6 +68,7 @@ class Students < Application
                                 @fname2 = params[:f_name_parent2]
 	                              @lname2 = params[:l_name_parent2]
 	                              @mail2 = params[:email_parent2]
+                                @class_id = params[:classroom_id]
 		                            render :new      
                            end
                       else
@@ -82,6 +90,7 @@ class Students < Application
                                @fname2 = params[:f_name_parent2]
 	                             @lname2 = params[:l_name_parent2]
 	                             @mail2 = params[:email_parent2]
+                               @class_id = params[:classroom_id]
 		                           render :new
                             end
                        end
@@ -100,27 +109,27 @@ class Students < Application
 	                @fname2 = params[:f_name_parent2]
 	                @lname2 = params[:l_name_parent2]
 	                @mail2 = params[:email_parent2]
+                  @class_id = params[:classroom_id]
 		              render :new
 	          end
         else
 		       render :new
         end
-     #else
-	     # render :new
-	   end
+     end
        
   end
   
   def edit
      @student = Student.find(params[:id])
-     @class_rooms = @current_school.classrooms.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @sp = @student.protectors
+     @lt = @student.studies
      render
   end
   
   def update
      @student = Student.find(params[:id])
-     @class_rooms = @current_school.classrooms.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @sp = @student.protectors
      @study_id = Study.find_by_student_id(@student.id)
      protector_id = @sp.collect{|x| x.id }
@@ -263,11 +272,9 @@ class Students < Application
   
   
    def preview
-      @first = params[:student][:first_name]
-      @last = params[:student][:last_name]
-      first = params[:parent][:first_name]
-      last = params[:parent][:last_name]
-      email = params[:parent][:email]
+      first = params[:protector][:first_name]
+      last = params[:protector][:last_name]
+      email = params[:protector][:email]
       @parent = first.zip(last, email)
       render :layout => 'preview'
    end
@@ -276,12 +283,12 @@ class Students < Application
    def directory
       @selected = "current_students"
       @class = @current_school.classrooms.find_by_class_name(params[:class_name])
-      @studs = @current_school.students.find(:all, :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id] )
+      @studs = @current_school.students.paginate(:all, :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id], :per_page => 25,  :page => params[:page] )
       if params[:class_name] == "All Students"
-         @students = @current_school.students.find(:all)
+        @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
       end
       if params[:class_name].nil?
-         @stds = @current_school.students.find(:all)
+        @stds = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
       end
       render :layout => 'directory'
    end
@@ -304,7 +311,7 @@ class Students < Application
    def staff
        @selected = "school_staff"
        if params[:class_name] == "All Staff"
-         @staff = @current_school.staff.find(:all)
+         @staff = @current_school.staff.paginate(:all, :per_page => 25,  :page => params[:page])
        end
        unless params[:class_name].nil?
          unless params[:class_name] == "All Staff"
@@ -313,7 +320,7 @@ class Students < Application
          end
        end  
       if params[:class_name].nil?
-         @stf = @current_school.staff.find(:all)
+        @stf = @current_school.staff.paginate(:all, :per_page => 25,  :page => params[:page])
       end    
       
       render :layout => 'directory'
@@ -323,13 +330,13 @@ class Students < Application
      if params[:label] == "staff"
         @staff = @current_school.staff.find(:all)
         csv_string = FasterCSV.generate do |csv|
-          csv << ["First Name", "Last Name", "Role", "Contact-Number"]
+          csv << ["First Name", "Last Name", "Role", "E-mail", "Contact-Number"]
               @staff.each do |person|
-                 #s = person.class_peoples.delete_if{ |x| x.team_id != nil }
                  s = person.class_peoples
                  s.each do |f| 
-                   csv << [person.first_name, person.last_name, f.role.titleize+"--"+f.classroom.class_name, person.phone]
-                 end 
+                   csv << [person.first_name, person.last_name, f.role.titleize+"--"+f.classroom.class_name, person.email, person.phone]
+                 end
+                 csv << [person.first_name, person.last_name, nil, person.email, person.phone]
               end
         end
          filename = params[:label] + ".csv"
@@ -351,14 +358,14 @@ class Students < Application
    private
    
    def classrooms
-      @class = @current_school.classrooms.find(:all)
-      room = @class.collect{|x| x.class_name }
+      @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+      room = @class.collect{|x| x.class_name.titleize }
       @classrooms = room.insert(0, "All Students")
    end  
    
    def school_staff
-      @class = @current_school.classrooms.find(:all)
-      room = @class.collect{|x| x.class_name }
+      @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+      room = @class.collect{|x| x.class_name.titleize }
       @teachers = room.insert(0, "All Staff")
    end
    

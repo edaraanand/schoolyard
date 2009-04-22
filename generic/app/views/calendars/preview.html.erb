@@ -1,6 +1,15 @@
-<div class='preview-container'>
-  <h4><span>Calendars</span></h4>
-  <h5>Title: <%= @title %></h5>
-  <p>Description: <%= @description %></p>
-  <h5>Location: <%= @location %></h5>
+<div id="fullpage">
+  
+     <h2 class="current-page"> Calendar for <%= params[:calendar][:class_name].titleize %></h2>
+   
+     <div class="ddmmm">
+          <span class="date"><%=  @date.strftime("%d")%></span>
+          <span class="month"><%=  @date.strftime("%b")%></span>
+     </div><br/>
+      <h3> <%= params[:calendar][:title] %> </h3> 
+          <p class="subText">
+              (<%= @date.strftime("%H:%M") %> -- <%= @date.strftime("%H:%M") %> )
+               Location : <%= params[:calendar][:location] %></p><br/>
+          <p><%= san_content(params[:calendar][:description]) %></p>
+     <div class="hrule clear"><hr /></div>
 </div>

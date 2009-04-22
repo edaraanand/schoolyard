@@ -1,10 +1,10 @@
+<p>Hello <%= @parent.name %>,</p>
+<p>Thank you for your registration at <%=@current_school.school_name%>.</p>
+<p>Your application shall be sent for approval once you click the following link:
+  <br/><a href="http://<%= @current_school.subdomain %>.schoolyardapp.net<%= url(:registration_last, :id => @parent.password_reset_key) %>">http://<%= @current_school.subdomain %>.schoolyardapp.net<%= url(:registration_last, :id => @parent.password_reset_key) %> </a></p>
 
-
-
-Please click the link to get an approval or rejection from the school
-
-<a href="http://<%= @current_school.subdomain %>.schoolyardapp.net<%= url(:registration_last, :id => @parent.id) %>">http://<%= @current_school.subdomain %>.schoolyardapp.net<%= url(:registration_last, :id => @parent.id) %> </a>
-
-
-
+<p>If you did not register, you do not need to take any action and your application will not be sent for approval.</p>
+<br/>
+<p>Thank you<br/>
+<p><%=@current_school.school_name%></p>
 

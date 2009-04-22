@@ -2,27 +2,54 @@ class Users < Application
    
    before :ensure_authenticated
    layout 'account'
-   before :staff_selected_link, :only => [:staff_account, :staff_account_edit, :staff_password]
+   before :staff_selected_link, :only => [:staff_account, :staff_account_edit, :staff_password, :staff_account_update]
    
    
   def staff_account
     @person = session.user
+    @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
     render 
   end
   
   def staff_account_edit
     @person = session.user
+    @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
     render
   end
   
   def staff_account_update
      @person = session.user
-     if @person.update_attributes(params[:person])
-        redirect url(:staff_account)
-     else
-       @person.save
-      render :staff_account
-     end
+     @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
+     if params[:person][:image] != ""
+        if @content_types.include?(params[:person][:image][:content_type])
+            if @person.update_attributes(params[:person])
+               @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
+               unless @pic.nil?
+                 @pic.destroy
+               end
+               @attachment = Attachment.create( :attachable_type => "user_picture",
+                                                :attachable_id => @person.id, 
+                                                :filename => params[:person][:image][:filename],
+                                                :content_type => params[:person][:image][:content_type],
+                                                :size => params[:person][:image][:size]
+                 )
+                File.makedirs("public/uploads/user_pictures")
+                FileUtils.mv(params[:person][:image][:tempfile].path, "public/uploads/user_pictures/#{@attachment.filename}")
+                redirect url(:staff_account)
+           else
+               render :staff_account_edit
+           end
+        else
+           flash[:error1] = "You can only upload images"
+           render :staff_account_edit
+        end
+    else
+         if @person.update_attributes(params[:person])
+            redirect url(:staff_account)
+         else
+            render :staff_account_edit
+         end
+    end
   end
   
   def staff_password
@@ -37,7 +64,7 @@ class Users < Application
         if @person.update_attributes(params[:person])
            redirect url(:staff_account)
         else
-          flash[:error1] = "You should enter Minimum Length of 4 Characters"
+          flash[:error1] = "You should enter Minimum Length of 8 Characters"
            render :staff_password
         end
       else
@@ -72,7 +99,7 @@ class Users < Application
            if @parent.update_attributes(params[:parent])
               redirect url(:parent_account)
            else
-             flash[:error1] = "You should enter Minimum Length of 4 Characters"
+             flash[:error1] = "You should enter Minimum Length of 8 Characters"
               render :parent_password
            end
         else
@@ -439,7 +466,5 @@ class Users < Application
   def staff_selected_link
      @selected = "staff_profile"
   end
-  
-  
-  
+ 
 end

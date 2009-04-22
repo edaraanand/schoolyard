@@ -1,5 +1,7 @@
 class HomeWork < ActiveRecord::Base
   
+   require 'base_ext'
+   
    belongs_to :classroom
    belongs_to :person
    belongs_to :school

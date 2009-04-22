@@ -25,21 +25,22 @@
     </ul>
     <% end %>
   </div>
-
-  <div class="section">
-    <% if  @sport_links.empty? %>
-      <p><em>Sports Links</em> are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Sports') %></p>
-    <% else %>
-    <h4>Sports<%= link_to "Edit", url(:external_links_edit, :label => 'Sports'), :class=>"edit-btn" %></h4>
-    <ul>
-      <% for external_link in @sport_links %>
-        <li><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></li>
-      <% end %> 
-    </ul>
-    <% end %>
-  </div>
-  
-   <div class="hrule dashed clear"><hr /></div>
+     <% @sports_class = @current_school.classrooms.find(:first, :conditions => ['class_name = ? and activate =  ?', "Sports", true] ) %>
+     <% unless @sports_class.nil? %>
+            <div class="section">
+              <% if  @sport_links.empty? %>
+                <p><em>Sports Links</em> are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Sports') %></p>
+              <% else %>
+              <h4>Sports<%= link_to "Edit", url(:external_links_edit, :label => 'Sports'), :class=>"edit-btn" %></h4>
+              <ul>
+                <% for external_link in @sport_links %>
+                  <li><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></li>
+                <% end %> 
+              </ul>
+              <% end %>
+            </div>
+     <% end %>
+   
    
   <div class="section">
     <% if @event_links.empty? %> 

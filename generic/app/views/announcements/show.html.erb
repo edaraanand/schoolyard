@@ -20,6 +20,9 @@
     <span class="subText">Created by <%= @announcement.person.name %>, expires on <%= @announcement.expiration.strftime("%d %b %Y") %></span>
     <br class="clear"/>
     <p><%= san_content(@announcement.content) %></p>
+      
+      <%= link_to 'Previous', url(:announcement, @announcement.previous_announcement),:class => "alignleft" if @announcement.previous_announcement %>
+      <%= link_to 'Next',  url(:announcement, @announcement.next_announcement),:class => "alignright" if @announcement.next_announcement %>
 
     <div class="hrule clear"><hr /></div>
     

@@ -7,97 +7,120 @@ class Calendars < Application
   before :classrooms, :only => [:events, :show]
   
   def index
-     @calendars = @current_school.calendars.find(:all, :order => 'start_date')
+     @calendars = @current_school.calendars.paginate(:all, :per_page => 10,  :page => params[:page], :order => 'start_date')
      render
   end
   
   def new
      @calendar = Calendar.new
-     @class_rooms = @current_school.classrooms.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      render
   end
   
   def create
-     @class_rooms = @current_school.classrooms.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @calendar = @current_school.calendars.new(params[:calendar])
      i=0
-     if @calendar.valid?
-        @calendar.save
-         unless params[:attachment]['file_'+i.to_s].empty?
-           @attachment = Attachment.create( :attachable_type => "Calendar",
+     if params[:calendar][:class_name] != ""
+        if @calendar.valid?
+           @calendar.save
+           unless params[:attachment]['file_'+i.to_s].empty?
+              @attachment = Attachment.create( :attachable_type => "Calendar",
                                         :attachable_id => @calendar.id,
                                         :filename => params[:attachment]['file_'+i.to_s][:filename],
                                         :content_type => params[:attachment]['file_'+i.to_s][:content_type],
                                         :size => params[:attachment]['file_'+i.to_s][:size]
-            )
-           File.makedirs("public/uploads/#{@attachment.id}")
-           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+               )
+               File.makedirs("public/uploads/#{@attachment.id}")
+               FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+           end
+	         redirect resource(:calendars)
+        else
+           @start_time = params[:calendar][:start_time]
+           @end_time = params[:calendar][:end_time]
+	         render :new 
         end
-	      redirect resource(:calendars)
      else
-        @start_time = params[:calendar][:start_time]
-        @end_time = params[:calendar][:end_time]
-	      render :new 
+        flash[:error] = "Please select the option"
+        render :new
      end
   end
 
   def edit
      @calendar = Calendar.find(params[:id])
-     @class_rooms = @current_school.classrooms.find(:all) 
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true]) 
      @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
      @allowed = 1 - @attachments.size
      render
   end
   
   def show
-     @selected = "calendars"
-     @calendar = Calendar.find(params[:id])
-     @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
-     @event = "All Day Event"
-     render :layout => 'class_change', :id => @classroom.id
+    if params[:l] == "calendar"
+       @select = "events"
+       @calendar = Calendar.find(params[:id])
+       @selected = @calendar.class_name 
+       render :layout => 'directory'
+    else
+       @select = "classrooms"
+       @selected = "calendars"
+       @calendar = Calendar.find(params[:id])
+       @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
+       @event = "All Day Event"
+       render :layout => 'class_change', :id => @classroom.id
+    end
   end
 
   def update
-     @class_rooms = @current_school.classrooms.find(:all)
+     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @calendar = Calendar.find(params[:id])
      @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
      @allowed = 1 - @attachments.size
      i=0
      if params[:attachment]
-        if @calendar.update_attributes(params[:calendar])
-           unless params[:attachment]['file_'+i.to_s].empty?
-                @attachment = Attachment.create( :attachable_type => "Calendar",
+        if params[:calendar][:class_name] != ""
+           if @calendar.update_attributes(params[:calendar])
+              unless params[:attachment]['file_'+i.to_s].empty?
+                  @attachment = Attachment.create( :attachable_type => "Calendar",
                                         :attachable_id => @calendar.id,
                                         :filename => params[:attachment]['file_'+i.to_s][:filename],
                                         :content_type => params[:attachment]['file_'+i.to_s][:content_type],
                                         :size => params[:attachment]['file_'+i.to_s][:size]
-                 )
-                 File.makedirs("public/uploads/#{@attachment.id}")
-                 FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
-            end
-             if @calendar.day_event == true
-	              @calendar.start_time = nil
-	              @calendar.end_time = nil
-             end
-	           @calendar.save
-	           redirect resource(:calendars)
+                   )
+                   File.makedirs("public/uploads/#{@attachment.id}")
+                   FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+              end
+              if @calendar.day_event == true
+	               @calendar.start_time = nil
+	               @calendar.end_time = nil
+              end
+	            @calendar.save
+	            redirect resource(:calendars)
+           else
+              @start_time = params[:calendar][:start_time]
+              @end_time = params[:calendar][:end_time]
+	            render :edit
+           end
         else
-            @start_time = params[:calendar][:start_time]
-            @end_time = params[:calendar][:end_time]
-	          render :edit
+           flash[:error] = "Please select the option"
+           render :edit
         end
      else
-         if @calendar.update_attributes(params[:calendar])
-             if @calendar.day_event == true
-	              @calendar.start_time = nil
-	              @calendar.end_time = nil
-             end
-	           @calendar.save
-	           redirect resource(:calendars)
+         if params[:calendar][:class_name] != ""
+            if @calendar.update_attributes(params[:calendar])
+               if @calendar.day_event == true
+	                @calendar.start_time = nil
+	                @calendar.end_time = nil
+               end
+	             @calendar.save
+	             redirect resource(:calendars)
+            else
+               @start_time = params[:calendar][:start_time]
+               @end_time = params[:calendar][:end_time]
+	             render :edit
+            end
          else
-             @start_time = params[:calendar][:start_time]
-             @end_time = params[:calendar][:end_time]
-	           render :edit
+            flash[:error] = "Please select the option"
+            render :edit
          end
       end
   end
@@ -106,7 +129,7 @@ class Calendars < Application
     if params[:label] == "attachment"
         @attachment = Attachment.find(params[:id])
         @calendar = Calendar.find_by_id(@attachment.attachable_id)
-        @class_rooms = @current_school.classrooms.find(:all)
+        @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
         @attachment.destroy
         @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
         @allowed = 1 - @attachments.size
@@ -121,21 +144,23 @@ class Calendars < Application
   
   def events
      @select = "events"
-     @cls = @current_school.calendars.find(:all, :conditions => ["class_name = ?", params[:class_name] ], :order => 'start_date')
-     if params[:class_name] == "All Events"
-        @calendars = @current_school.calendars.find(:all, :order => 'start_date')
+     @selected = "all_events"
+     unless params[:id].nil?
+         @class = @current_school.classrooms.find(params[:id])
+         @cls = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @class.class_name ], :order => 'start_date')
+         @selected = @class.class_name 
      end
-     if params[:class_name].nil?
-        @cals = @current_school.calendars.find(:all, :order => 'start_date')
+     if params[:l] == "all_events"
+       @calendars = @current_school.calendars.paginate(:all, :per_page => 10,  :page => params[:page], :order => 'start_date')
      end
-     render :layout => 'home'
+     render :layout => 'directory'
   end
   
   def preview
-     @title = params[:calendar][:title]
-     @description = params[:calendar][:description]
-     @location = params[:calendar][:location]
-     render :layout => 'preview' 
+     @date = Date.today
+     @select = "classrooms"
+     @classroom = @current_school.classrooms.find_by_class_name(params[:calendar][:class_name])
+     render :layout => 'class_change', :id => @classroom.id
   end
   
   def pdf_events
@@ -154,8 +179,8 @@ class Calendars < Application
   private
   
   def classrooms
-      @class = @current_school.classrooms.find(:all)
-      room = @class.collect{|x| x.class_name }
+      @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+      room = @class.collect{|x| x.class_name.titleize }
       @classrooms = room.insert(0, "All Events")
   end
    

@@ -7,15 +7,20 @@ class HomeWorks < Application
   before :rooms, :only => [:index]
   
   def index
-     if params[:classroom_id].nil?
-        @h_works = @current_school.home_works.find(:all)
-     elsif params[:classroom_id] == "All Homework"
-        @works = @current_school.home_works.find(:all)
+     if params[:label] == "class_home_works"
+        @classroom = @current_school.classrooms.find_by_id(params[:id], :conditions => ['activate = ?', true])
+        @class_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 10, :page => params[:page])
      else
-        @classroom = @current_school.classrooms.find_by_class_name(params[:classroom_id])
-        @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id])
+        if params[:classroom_id].nil?
+           @h_works = @current_school.home_works.paginate(:all, :order => "due_date DESC", :per_page => 10, :page => params[:page])
+        elsif params[:classroom_id] == "All Homework"
+           @works = @current_school.home_works.paginate(:all, :order => "due_date DESC", :per_page => 10, :page => params[:page])
+        else
+           @classroom = @current_school.classrooms.find_by_class_name(params[:classroom_id])
+           @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 10, :page => params[:page])
+        end
      end
-       @error = "There are no Homeworks at this time."
+     @error = "There are no Homeworks at this time."
      render
   end
   
@@ -25,26 +30,33 @@ class HomeWorks < Application
   end
   
   def create
-    @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
-    @person = session.user
-    @home_work = @person.home_works.build(params[:home_work])
-    @home_work.classroom_id = @classroom.id
-    @home_work.school_id = @current_school.id
-    i=0
-    if @home_work.valid?
-       @home_work.save
-        unless params[:attachment]['file_'+i.to_s].empty?
-           @attachment = Attachment.create( :attachable_type => "Homework",
+     @person = session.user
+     @home_work = @person.home_works.new(params[:home_work])
+     i=0
+     if params[:home_work][:classroom_id] != ""
+        if @home_work.valid?
+           @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
+           @home_work.classroom_id = @classroom.id
+           @home_work.school_id = @current_school.id
+           @home_work.save
+           unless params[:attachment]['file_'+i.to_s].empty?
+              @attachment = Attachment.create( :attachable_type => "Homework",
                                         :attachable_id => @home_work.id,
                                         :filename => params[:attachment]['file_'+i.to_s][:filename],
                                         :content_type => params[:attachment]['file_'+i.to_s][:content_type],
                                         :size => params[:attachment]['file_'+i.to_s][:size]
-            )
-           File.makedirs("public/uploads/#{@attachment.id}")
-           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
-        end
-       redirect resource(:home_works)
+               )
+               File.makedirs("public/uploads/#{@attachment.id}")
+               FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+           end
+           redirect resource(:home_works)
+         else
+            @class_id =  params[:home_work][:classroom_id]
+            render :new
+         end
     else
+       flash[:error] = "Please select the option"
+       @class_id = params[:home_work][:classroom_id]
        render :new
     end
   end
@@ -63,35 +75,45 @@ class HomeWorks < Application
     @home_work = HomeWork.find(params[:id])
     i=0
     if params[:attachment]
-        if@home_work.update_attributes(params[:home_work])
-            unless params[:attachment]['file_'+i.to_s].empty?
-              @attachment = Attachment.create( :attachable_type => "Homework",
+        if params[:home_work][:classroom_id] != ""
+            if @home_work.update_attributes(params[:home_work])
+               unless params[:attachment]['file_'+i.to_s].empty?
+                   @attachment = Attachment.create( :attachable_type => "Homework",
                                         :attachable_id => @home_work.id,
                                         :filename => params[:attachment]['file_'+i.to_s][:filename],
                                         :content_type => params[:attachment]['file_'+i.to_s][:content_type],
                                         :size => params[:attachment]['file_'+i.to_s][:size]
-                )
-                  File.makedirs("public/uploads/#{@attachment.id}")
-                  FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
-             end
-             @home_work.classroom_id = @classroom.id
-             @home_work.person_id = session.user.id
-             @home_work.school_id = @current_school.id
-             @home_work.save
-             redirect resource(:home_works)
+                    )
+                    File.makedirs("public/uploads/#{@attachment.id}")
+                    FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+               end
+               @home_work.classroom_id = @classroom.id
+               @home_work.person_id = session.user.id
+               @home_work.school_id = @current_school.id
+               @home_work.save
+               redirect resource(:home_works)
+            else
+               render :edit
+            end
         else
-             render :edit
+           flash[:error] = "Please select the option"
+           render :edit
         end
     else
-         if @home_work.update_attributes(params[:home_work])
-            @home_work.classroom_id = @classroom.id
-            @home_work.person_id = session.user.id
-            @home_work.school_id = @current_school.id
-            @home_work.save
-            redirect resource(:home_works)
+         if params[:home_work][:classroom_id] != ""
+            if @home_work.update_attributes(params[:home_work])
+               @home_work.classroom_id = @classroom.id
+               @home_work.person_id = session.user.id
+               @home_work.school_id = @current_school.id
+               @home_work.save
+               redirect resource(:home_works)
+            else
+               render :edit
+            end
          else
-            render :edit
-         end
+           flash[:error] = "Please select the option"
+           render :edit
+        end
     end
   end
   
@@ -112,7 +134,11 @@ class HomeWorks < Application
   end
   
   def preview
-    render :layout => 'preview'
+     @date = Date.today
+     @select = "classrooms"
+     @selected = "homeworks"
+     @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
+     render :layout => 'class_change', :id => @classroom.id
   end
   
   def show
@@ -146,13 +172,13 @@ class HomeWorks < Application
   private
   
   def classrooms
-    @classrooms = @current_school.classrooms.find(:all)
+    @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
   end
   
   
   def rooms
-    classes = @current_school.classrooms.find(:all)
-    room = classes.collect{|x| x.class_name }
+    classes = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    room = classes.collect{|x| x.class_name.titleize }
     @classes = room.insert(0, "All Homework")
   end
   

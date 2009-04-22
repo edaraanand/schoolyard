@@ -5,14 +5,19 @@ namespace :bootstrap do
    task :school do
      @school = School.create({
          :school_name => "St Benecia School",
-         :phone => "9998805789",
+         :phone => "7077451266",
+         :address1 => "935 East 5th Street",
+         :city => "Benecia",
+         :state => "CA",
+         :zip_code => "94510",
+         :fax => "7077451841",
          :email => "sdb@schoolyardapp.net",
          :domain => "http://sdb.schoolyardapp.net",
          :folder => "schoolyardappcom",
          :subdomain => 'sdb'
         })
    end
-   
+                                             
   desc "creating Access for the people"
   task :access => :school do
     accesses = {
@@ -64,14 +69,13 @@ namespace :bootstrap do
   
   desc "creating alerts for both parents and staff"
   task :alerts => :person do
-     alerts = ["1st Grade", "2nd Grade","3rd Grade", "4th Grade","5th Grade", "6th Grade", "7th Grade",
-                "8th Grade", "Announcement is Posted", "Home Work Assignment", "From the Principal",
-                 "Sports"]
-   
-     alerts.each do |x|
-        Alert.create({:name => "#{x}", :full_name => "#{x}"})
-     end
-     
+        alerts = ["1st Grade", "2nd Grade","3rd Grade", "4th Grade","5th Grade", "6th Grade", "7th Grade",
+             "8th Grade", "Announcement is Posted", "Home Work Assignment", "From the Principal",
+             "Sports"]
+  
+        alerts.each do |x|
+            Alert.create({:name => "#{x}", :full_name => "#{x}"})
+        end
    end
  
    

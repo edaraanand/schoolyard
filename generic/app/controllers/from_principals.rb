@@ -4,12 +4,8 @@ class FromPrincipals < Application
   before :access_rights
 
   def index
-    @announcements = @current_school.announcements.find(:all, :conditions => ['label=?', "from_principal"], :order => "created_at DESC")
-      #@announcements = Announcement.paginate :page => params[:page], :order => 'updated_at DESC', :per_page => 2
-     #  @pager = ::Paginator.new(@current_school.announcements.size, 10) do |offset, per_page|
-        #   Announcement.find(:all, :conditions => ["label = ? and school_id = ?", "from_principal", @current_school.id],  :limit => per_page, :offset => offset)
-      # end  
-      # @page = @pager.page(params[:page])
+    @announcements = @current_school.announcements.paginate(:all, :conditions => ['label=?', "from_principal"], :order => "created_at DESC", :per_page => 10,
+ :page => params[:page] )
     render
   end
   
@@ -103,8 +99,42 @@ class FromPrincipals < Application
   end
   
    def preview
-      render :layout => 'preview'
+      @date = Date.today
+      @select = "home"
+      render :layout => 'home'
    end
+  
+   def settings
+      @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"])
+      render
+   end
+   
+   def settings_update
+       @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"])
+       @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
+       unless params[:image][:filename] == nil
+           if @content_types.include?(params[:image][:content_type])
+                unless @attachment.nil?
+                       @attachment.destroy
+                end
+              @attachment = Attachment.create( :attachable_type => "principal_image",
+                                               :filename => params[:image][:filename],
+                                               :content_type => params[:image][:content_type],
+                                               :size => params[:image][:size]
+                )
+              File.makedirs("public/uploads/principal_images")
+              FileUtils.mv(params[:image][:tempfile].path, "public/uploads/principal_images/#{@attachment.filename}")
+              redirect url(:settings)   
+           else
+               flash[:error1] = "You can only upload images"
+               render :settings
+           end
+       else
+          flash[:error] = "Please upload a picture"
+          render :settings
+       end
+   end
+   
   
    private
    
@@ -123,5 +153,6 @@ class FromPrincipals < Application
      end
   end  
   
+
   
 end

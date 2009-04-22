@@ -8,27 +8,35 @@ class Homes < Application
   def index
     @date = Date.today
     @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ? and expiration >= ?", 'Home Page', true, true, @date], :order => "created_at DESC", :limit => 4 )
-    @from_principals = @current_school.announcements.find(:all, :conditions => ["label = ? and expiration >= ?", 'from_principal', @date], :limit => 2)
+    @from_principals = @current_school.announcements.find(:all, :conditions => ["label = ? and expiration >= ?", 'from_principal', @date], :order => "created_at DESC", :limit => 2)
     @external_links = @current_school.external_links.find(:all, :conditions => ['label = ?', "Home Page"])
     @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ["access_name = ?", "Home Page"])
-    #@from_principals = @current_school.announcements.find(:all, :conditions => ["label = ?", "from_principal"], :limit => 2)
-    # @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :order => "created_at DESC", :limit => 4 )
-    @classrooms = @current_school.classrooms.find(:all)
+    @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true], :order => "class_name ASC")
+    @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ?', "Classes", true], :order => "class_name ASC")
+    @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ?', "Extra Cirrcular", true ], :order => "class_name ASC")
     render
   end
   
   def principal_articles
-     @from_principals = @current_school.announcements.find(:all, :conditions => ['label = ?', 'from_principal'] )
-     @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :order => "created_at DESC" )
-     render
+      @from_principals = @current_school.announcements.paginate(:all, :conditions => ['label = ?', 'from_principal'], :per_page => 10,
+ :page => params[:page] )
+      @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :order => "created_at DESC", :per_page => 10,
+ :page => params[:page] )
+      render
   end
   
   def show
     if params[:label] == "class_ann"
+       @select = "classrooms" 
        @selected = "announcements"
-       @announcement = Announcement.find(params[:id])
-       @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @announcement.access_name] )
+       @announcement = @current_school.announcements.find(params[:id])
+       @classroom = @current_school.classrooms.find_by_class_name(@announcement.access_name)
        render :layout => 'class_change', :id => @classroom.id
+    elsif params[:label] == "sports_announcement"
+       @selected = "announcements"
+       @select = "sports"
+       @announcement = Announcement.find(params[:id])
+       render :layout => 'sports'
     else
        @announcement = Announcement.find(params[:id])
        render :layout => 'home'
@@ -41,10 +49,17 @@ class Homes < Application
   end
   
   def bio
-     @selected = "bio"
-     @select = "classrooms"
-     @classroom = @current_school.classrooms.find(params[:id])
-     render :layout => 'class_change', :id => @classroom.id
+    if params[:label] == "classes"
+       @selected = "bio_classes"
+       @select = "classrooms"
+       @classroom = @current_school.classrooms.find(params[:id])
+       render :layout => 'class_change', :id => @classroom.id
+    else
+      @selected = "bio_sports"
+      @select = "sports"
+      @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', "Sports"])
+      render :layout => 'sports'
+    end
   end
 
   def download

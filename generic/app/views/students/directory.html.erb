@@ -8,36 +8,37 @@
       <% end %>
   <% end =%> 
   
-    
-    <% if params[:class_name].nil? %>
-        <%if @stds.empty?%>
-          <p class="subText">There are no students listed yet.</p>
-          <% else %>
-          <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> 
-          <table id="mytable">
-               <thead>
-                   <th>Last Name</th>
-                   <th>First Name</th>
-                   <th>Contact Number</th>
-               </thead>
-               <tbody>
-                    <% for student in @stds %>
-                         <tr>
-                             <td><%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %> </td>
-                             <td><%= student.first_name %></td>
-                             <td><%= student.phone %></td>
-                         </tr>
-                     <% end %>
-                </tbody>
-           </table>
-         <% end %>
-    <% elsif params[:class_name] == "All Students" %>
-         
-    <%if @students.empty?%>
-      <p class="subText">There are no students listed yet.</p>
+
+<% if params[:class_name].nil? %>
+      <% if @stds.empty? %>
+           <p class="subText">There are no students listed yet.</p>
       <% else %>
-      <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> 
-          <table id="mytable">
+           <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> 
+           <table id="mytable">
+                 <thead>
+                        <th>Last Name</th>
+                        <th>First Name</th>
+                        <th>Contact Number</th>
+                 </thead>
+                  <tbody>
+                        <% for student in @stds %>
+                              <tr>
+                                  <td><%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %> </td>
+                                  <td><%= student.first_name %></td>
+                                  <td><%= number_to_phone(student.phone, :area_code => true) %></td>
+                               </tr>
+                         <% end %>
+                  </tbody>
+           </table>
+             <%= will_paginate (@stds, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+      <% end %>
+<% elsif params[:class_name] == "All Students" %>
+     
+      <% if @students.empty? %>
+           <p class="subText">There are no students listed yet.</p>
+      <% else %>
+            <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> 
+            <table id="mytable">
                <thead>
                    <th>Last Name</th>
                    <th>First Name</th>
@@ -48,17 +49,19 @@
                          <tr>
                              <td><%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %> </td>
                              <td><%= student.first_name %></td>
-                             <td><%= student.phone %></td>
+                             <td><%= number_to_phone(student.phone, :area_code => true) %></td>
                          </tr>
                      <% end %>
                 </tbody>
            </table>
-        <% end %> 
-    <% else %>
-    <%if @studs.empty?%>
-      <p class="subText">There are no students listed yet.</p>
-      <% else %>
-      <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> 
+         <%= will_paginate (@students, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+      <% end %> 
+<% else %>
+
+     <%if @studs.empty?%>
+          <p class="subText">There are no students listed yet.</p>
+     <% else %>
+          <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> 
           <table id="mytable">
                <thead>
                    <th>Last Name</th>
@@ -70,14 +73,23 @@
                          <tr>
                              <td><%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %> </td>
                              <td><%= student.first_name %></td>
-                             <td><%= student.phone %></td>
+                             <td><%= number_to_phone(student.phone, :area_code => true) %></td>
                          </tr>
                      <% end %>
                 </tbody>
            </table>
-        <% end %> 
-     <% end %>
+           <%= will_paginate (@studs, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+     <% end %> 
+     
+<% end %>
 
-
+<% unless session.user.type == "Parent" %>
+     <div class="right-sidebar">
+     <h3>Manage Students</h3>
+          <ul class="last">
+          <li <% if @selected == "students" %> class="on" <% end %>><%= link_to_right((right = "manage_directory"), "Manage Students", url(:students)  ) %></li>
+          </ul>
+      </div>
+<% end %>
 
 

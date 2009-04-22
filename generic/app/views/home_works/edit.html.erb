@@ -3,7 +3,7 @@
 <%= form_for(@home_work, :action => resource(@home_work), :id => 'home_work') do %>
     <fieldset>
        <ul>
-           <li><label>Home Work for:</label><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name } %></li>
+       <li><label>Home Work for:</label><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :selected => "#{@home_work.classroom.class_name.titleize}", :prompt => "Please Select" %></li>
            <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
            <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
            <li><%= text_field  :due_date, :id => "due_date", :label => "Due Date", :class=>"short" %></li>
@@ -44,8 +44,17 @@
 
  function preview()
  {
-   var s = $('home_work').serialize();
-   window.open('/home_works/preview/-/?' + s);
+     name = document.getElementById('home_work_classroom_id');
+    if (name.value == "")
+       {
+          alert("Please select the Classroom/Homepage from the dropdown menu");
+       }
+   else
+       {
+         var s = $('home_work').serialize();
+         window.open('/home_works/preview/-/?' + s);
+       }
+  
  }
   
  $j("#due_date").datepicker({minDate:'today'});

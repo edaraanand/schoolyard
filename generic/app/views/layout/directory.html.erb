@@ -1,14 +1,31 @@
    <%= partial 'layout/main' %>
-       <div id="sidebar">
-      <ul id="menu"><!-- Nested Lists -->
-          
-           <li <% if @selected == "current_students" %> class="on" <% end %> ><%= link_to "Current Students", url(:directory) %></li>
-           <li <% if @selected == "school_staff" %> class="on" <% end %> ><%= link_to "School Staff", url(:staff) %></li>
-            
-      </ul>
-       
+   
+        <% @classes =  @current_school.classrooms.find(:all, :conditions => ['activate = ?', true]) %>
+<div>&nbsp;</div>
+  <div id="classContainer">      
+     <div id="sidebar">
+           
+     <% if params[:label] == "forms" %>  
+              <ul id="menu">
+                   <li <% if @selected == "all_forms" %> class="on" <% end %> ><%= link_to "All Forms", url(:form_files, :l => "all_forms", :label => "forms") %></li>
+                   <% @classes.each do |f| %>
+                       <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:form_files, :id => "#{f.id}", :label => "forms") %></li>
+                   <% end %>
+              </ul>
+     <% elsif params[:label] == "calendars" %>
+              <ul id="menu">
+                  <li <% if @selected == "all_events" %> class="on" <% end %> ><%= link_to "All Events", url(:events, :l => "all_events", :label => "calendars") %></li>
+                  <% @classes.each do |f| %>
+                     <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:events, :id => "#{f.id}", :label => "calendars") %></li>
+                  <% end %>
+              </ul>
+     <% else %>
+            <ul id="menu"><!-- Nested Lists -->
+                 <li <% if @selected == "current_students" %> class="on" <% end %> ><%= link_to "Current Students", url(:directory) %></li>
+                 <li <% if @selected == "school_staff" %> class="on" <% end %> ><%= link_to "School Staff", url(:staff) %></li>
+            </ul>
+     <% end %>  
         
-     
     </div><!-- Sidebar Ends -->
     <div id="content-wrap"><!--Wraps The content Area-->
       <div class="hrule clear hidden "><hr /></div>
@@ -17,20 +34,13 @@
       </div><!--Content End-->
     </div><!--Content Wrap End -->
     
-                <% @classrooms = @current_school.classrooms.find(:all) %>
-    <div id="info" style="display:none;">
-         <h3>Please Select the classroom you would like to visit</h3>
-          <p>Classes:</p>  
-           <ul><% @classrooms.each do |f| %>
-                  <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
-           <% end %>
-         </ul>
-    </div> 
+<%= partial 'common/change' %>
     
+    <!--Right Sidebar to be inserted here-->
     
-    <!--Right Sidebar to be inserted here-->    
   <div class="hrule clear hidden "><hr /></div>
+   </div>
   </div><!--Pagewrap End -->
-  <%= partial 'common/footer' %>
+  <%= partial 'common/footer' %>                                        
 </body>
 </html>

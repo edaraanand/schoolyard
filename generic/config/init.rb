@@ -2,9 +2,6 @@
 Gem.clear_paths
 Gem.path.unshift(Merb.root / "gems")
 gem "pdf-writer"
-#gem "paginator"
-
-
 
 # ==== Dependencies
 
@@ -15,8 +12,6 @@ require  Merb.root / 'lib' / 'constantz'
 require  Merb.root / 'lib' / 'attachable'
 require "pdf/writer"
 require "pdf/simpletable"
-#require "mini_magick"
-#require "paginator"
 
 
   use_orm :activerecord
@@ -25,6 +20,9 @@ require "pdf/simpletable"
   #use_template_engine :haml
   
 Merb::BootLoader.after_app_loads do
+   
+   gem 'will_paginate', '~> 3.0.0'
+   require 'will_paginate'
 
   Merb::Mailer.config = {
     :host   => 'smtp.gmail.com',
@@ -35,6 +33,17 @@ Merb::BootLoader.after_app_loads do
     #:pass   => 'raja1213',
     :auth   => :plain 
   }
+  
+   WillPaginate::ViewHelpers::LinkRenderer.class_eval do
+     protected
+  
+     def url(page)
+       params = @template.request.params.except(:action, :controller).merge('page' => page)
+       @template.url(:this, params.merge(@options[:params] || {}))
+     end
+  end
+
+  Merb::AbstractController.send(:include, WillPaginate::ViewHelpers::Base)
   
   #Merb::Mailer.config = { :sendmail_path => /usr/sbin/sendmail}
   #Merb::Mailer.delivery_method = :sendmail

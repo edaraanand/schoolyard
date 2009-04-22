@@ -1,17 +1,18 @@
 <fieldset>
   <h2 class="current-page">Contact Us</h2>
   <p>If you have any comments, suggestions or questions, please contact us at:</p>
-  <dl>
-    <%unless @current_school.address.blank?%>
-      <dt>Address</dt><dd><%= san_content(@current_school.address) %>&nbsp;</dd>
-    <%end%>
-    <%unless @current_school.phone.blank?%>
-      <dt>Phone:</dt><dd><%= @current_school.phone %>&nbsp;</dd>
-    <%end%>
-    <%unless @current_school.email.blank?%>
-      <dt>Email:</dt><dd><%=email(@current_school.email) %>&nbsp;</dd>
-    <%end%>
-  </dl>
+<%= partial 'common/contact' %>
  
 
 </fieldset>
+<hr size="1"/>
+
+
+<% unless session.user.type == "Parent" %>
+     <div class="right-sidebar"> 
+     <h3>Manage Contact Information</h3>
+           <ul class="last">
+           <li <% if @selected == "school_profile" %> class="on" <% end %>><%= link_to_right((right = "basic_settings"), "Manage Contact Information", url(:schools) )  %></li>
+           </ul>
+     </div>
+<% end %> 

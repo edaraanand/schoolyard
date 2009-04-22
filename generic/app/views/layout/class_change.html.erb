@@ -1,26 +1,27 @@
 <%= partial 'layout/main' %>
+<div id="cusImg">&nbsp;</div>
+<div id="classContainer">
     <div id="sidebar">
-          
+           
           <table cellpadding="0" cellspacing="0" order="0" class="class-name">
-            <tr><td class="class-name-top"><img src="/images/class-name-top.gif"/></td></tr>
-            <tr><td class="class-name-backgr"><p><%= @classroom.class_name %></p></td></tr>
-            <tr><td  class="class-name-bottom"><img src="/images/class-name-bottom.gif"/></td></tr>
+                <tr><td class="class-name-top"><img src="/images/class-name-top.gif"/></td></tr>
+                <tr><td class="class-name-backgr"><p><%= @classroom.class_name.titleize %></p></td></tr>
+                <tr><td  class="class-name-bottom"><img src="/images/class-name-bottom.gif"/></td></tr>
           </table>
           
           
       <ul id="menu"><!-- Nested Lists -->
-        <li <% if @selected == nil %> class="on" <% end %>><%= link_to "<span>Home</span>", url(:class_details, :id =>  @classroom.id) %></li>
+        <li <% if @selected == nil %> class="on" <% end %>><%= link_to "Home", url(:class_details, :id =>  @classroom.id) %></li>
         <li <% if @selected == "calendars" %> class="on" <% end %> ><%= link_to "Class Calendar", url(:class_details, :id =>  @classroom.id, :label => "calendars") %></li>
         <li <% if @selected == "homeworks" %> class="on" <% end %>><%= link_to "Homework Corner", url(:class_details, :id =>  @classroom.id, :label => "homeworks") %></li>
         <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to "Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %></li>
         <li>&nbsp;</li>
         <li class="change"><a rel="facebox" href="#info"> Change Classroom</a></li>
       </ul>
-      <% @classrooms = @current_school.classrooms.find(:all) %>
+        <% @classrooms = @current_school.classrooms.find(:all, :conditions => ['class_name != ? and activate = ?', "Sports", true]) %>
       <ul id="menu1">
         <% s = @classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
-         <% if @classroom.class_name != "Sports" %> 
-                 <% t = s.delete_if{ |x| x.role != "class_teacher" } %>
+              <% t = s.delete_if{ |x| x.role != "class_teacher" } %>
                  <% t.each do |f| %>
                      <li>
                         <table cellpadding="0" cellspacing="0" order="0" class="teach-name">
@@ -28,33 +29,20 @@
                           <tr><td class="teach-name-backgr"><p><%= f.role.titleize %></p></td></tr>
                           <tr><td  class="teach-name-bottom"><img src="/images/teach-name-bottom.gif"/></td></tr>
                         </table>
-                        
                      </li>
+                          <% @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", f.person.id]) %>
+                          <% unless @pic.nil? %>
+                               <li><img src = "/uploads/user_pictures/<%= @pic.filename %>"  alt="<%= @pic.filename %>" class ="teacherPic"/></li>
+                          <% end %>
                      <li><b><%= f.person.name %></b>
                             <% unless f.person.person_bio.blank? %>
-                                | <span <% if @selected == "bio" %> class="on" <% end %> > <%= link_to "Bio", url(:bio, :id => @classroom.id) %> 
+                                | <span <% if @selected == "bio_classes" %> class="on" <% end %> > <%= link_to "Bio", url(:bio, :id => @classroom.id, :label => "classes") %> 
                                 </span>
-                              <% end %>
-                       
-                       
-                       </li>
+                            <% end %>
+                     </li>
                      <li><%= email(f.person.email) %></li>
-                 
-                  <% end %>
-         <% else %>
-                <% t = s.delete_if{ |x| x.role != "Athletic Director" } %>
-                 <% t.each do |f| %>
-                     <li><%= f.role %>
-                        <% unless f.person.person_bio.blank? %>
-                             | <span <% if @selected == "bio" %> class="on" <% end %> > <%= link_to "Bio", url(:bio, :id => @classroom.id) %> 
-                             </span>
-                           <% end %></li>
-                     <li><%= f.person.name %></li>
-                     <li><%= f.person.email %> </li>
-                     
-                  <% end %>
-          <% end %>
-       </ul>
+                 <% end %>
+         </ul>
     </div><!-- Sidebar Ends -->
     
     <div id="content-wrap"><!--Wraps The content Area-->
@@ -62,16 +50,8 @@
         <%= catch_content :for_layout %>
       
     </div><!--Content Wrap End -->  
-
-    <div id="info" style="display:none;">
-          <b>Please Select the classroom you would like to visit</b>
-          <p>Classes:  </p>
-           <ul>
-              <% @classrooms.each do |f| %>
-                 <li><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></li>
-              <% end %>
-          </ul>
-    </div> 
+</div>
+<%= partial 'common/change' %>
     
     
     

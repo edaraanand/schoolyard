@@ -12,15 +12,16 @@
        <th>Phone</th>
     </thead>
     <% for person in @people %>
-          <tr onclick="location.href='<%= url(:edit_person, person.id) %>'">
+          <tr onclick="location.href='<%= url(:edit_person, person.id) %>'" style="cursor:pointer">
                <% unless person.title.nil? %>
                   <td><%= person.title %> </td>
                <% end %>
                 <td><%= person.last_name %> </td>
                 <td><%= person.first_name %> </td>
-                <td><%= person.email %> </td>
-                <td><%= person.phone %> </td>
+                <td><%= email(person.email) %> </td>
+                <td nowrap><%= number_to_phone(person.phone, :area_code => true) %></td>
           </tr>  
     <% end %>
   </table>
+  <%= will_paginate (@people, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
 <% end %>

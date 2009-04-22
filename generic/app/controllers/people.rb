@@ -6,7 +6,7 @@ class People < Application
   before :find_school
   
   def index
-     @people = @current_school.people.find(:all, :conditions => ['type = ?', "Staff"])
+     @people = @current_school.people.paginate(:all, :conditions => ['type = ?', "Staff"], :per_page => 25,  :page => params[:page])
      render
   end
   
@@ -24,7 +24,6 @@ class People < Application
      @p = @accesses.collect{|x| x.id.to_s}
      if @person.valid?
         @person.type = "Staff"
-       # @person.school_id = @current_school.id
         @person.save
         unless params[:access].nil?
 	         @access = params[:access][:access_ids]

@@ -32,7 +32,7 @@
                    <% end %>
              </tbody>
          </table>
-       
+          <%= will_paginate (@forms, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
      <% end %>
  <% elsif  params[:class_name] == "All Forms" %>
      <% if @forms_f.empty? %>
@@ -56,6 +56,7 @@
                    <% end %>
              </tbody>
          </table>
+       <%= will_paginate (@forms_f, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
      <% end %>  
  <% else %>
  
@@ -80,6 +81,7 @@
                    <% end %>
              </tbody>
          </table>
+       <%= will_paginate (@files, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
      <% end %>  
 <% end %>
 

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 56) do
+ActiveRecord::Schema.define(:version => 58) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(:version => 56) do
     t.string   "class_type"
     t.integer  "person_id"
     t.integer  "school_id"
+    t.boolean  "activate"
   end
 
   create_table "classtypes", :force => true do |t|
@@ -212,7 +213,12 @@ ActiveRecord::Schema.define(:version => 56) do
     t.string   "domain"
     t.string   "folder"
     t.string   "subdomain"
-    t.text     "address"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip_code"
+    t.string   "fax"
   end
 
   create_table "spot_lights", :force => true do |t|

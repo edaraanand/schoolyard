@@ -2,15 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
   <head>
   <% unless @current_school.nil? %>
-      <title><%= @current_school.school_name %></title>
+      <title><%= @current_school.school_name %>, <%= @current_school.email %>, <%= number_to_phone(@current_school.phone, :area_code => true) %> </title>
   <% end %>
   
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="/stylesheets/global.css" type="text/css" media="screen" charset="utf-8" />
+
     <link rel="stylesheet" href="/stylesheets/ui.datepicker.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/stylesheets/clockpick.1.2.4.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/stylesheets/rte.css" type="text/css" media="screen" charset="utf-8" />
-    
+    <link rel="stylesheet" href="/stylesheets/global.css" type="text/css" media="screen" charset="utf-8" />    
   
     <script src='/javascripts/prototype.js'></script>
     <script src='/javascripts/jquery.js'></script>
@@ -36,18 +36,15 @@
       </div><!--Content End-->
     </div><!--Content Wrap End -->
     <div class="right-sidebar">
-      <h3>
-        <span class="main">Registration Process</span>
-        <span class="desc"><a href="#">Privacy Policy</a></span>
-      </h3><!--Two Spans, Main and Desc. Desc shouldnt be very long.-->
-      <p >Eget magna. Donec quis massa. Quisque ac arcu et mauris convallis cursus. Sed viverra, ligula ac congue ultrices, lectus dolor fermentum massa.</p>
-      <ul class="last">
-        <li>Step 1: Fill this form</li>
-        <li>Step2: You'll receive an email with a conﬁrmation link. This is to ensure.</li>
-        <li>Step3: School Approval after review of applications</li>
-      </ul>
+      <h3>Registration Process
+      </h3>
+      <ol class="last">
+        <li>Fill this form</li>
+        <li>You'll receive an email with a conﬁrmation link. Your application shall be sent for approval once you click that link.</li>
+        <li>School Approval after review of applications</li>
+      </ol>
     </div>
-    <div class="right-sidebar">
+    <div class="right-sidebar" style="display:none">
       <h3>
         <span class="main">Benefits</span>
         <span class="desc"><a href="#">Privacy Policy</a></span>

@@ -1,9 +1,15 @@
 <%= error_messages_for @calendar %>
+<ul class='error_messages'>
+     <% if flash[:error] %>
+        <li><%= flash[:error] %> </li>
+     <% end %>
+ </ul>
+ 
 <h2 class="current-page"> Calendars > Edit </h2>
 <%= form_for(@calendar, :action => resource(@calendar), :id => "event") do %>
 <fieldset>
   <ul>
-    <li><label>Add for:</label><%= select :class_name, :collection => @class_rooms.collect{|x| x.class_name} %></li>
+  <li><label>Add for:</label><%= select :class_name, :collection => @class_rooms.collect{|x| x.class_name.titleize}, :prompt => "Please Select" %></li>
     <li><%= text_field :title,  :label => "Event Title" %></li>
     <li><%= text_area  :description,  :label => "Event Description",  :rows => "10", :cols => "25" %></li>
     <li>
@@ -75,8 +81,16 @@
  
    function preview()
  {
-   var s = $('event').serialize();
-   window.open('/calendars/preview/-/?' + s);
+     name = document.getElementById('calendar_class_name');
+    if (name.value == "")
+       {
+          alert("Please select the Classroom/Homepage from the dropdown menu");
+       }
+   else
+       {
+         var s = $('event').serialize();
+         window.open('/calendars/preview/-/?' + s);
+       }
    
  }
  

@@ -12,7 +12,7 @@
         <tr>
           <td><%= link_to "#{student.last_name}", resource(student, :edit) %> </td>
           <td><%= student.first_name %></td>
-          <td><%= student.phone %></td>
+          <td><%= number_to_phone(student.phone, :area_code => true) %></td>
           <td><%= student.address %></td>
         </tr>
       <% end %>
@@ -20,3 +20,4 @@
   </table>
 
 <% end %>
+<%= will_paginate (@students, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>

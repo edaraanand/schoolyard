@@ -1,9 +1,14 @@
 <%= error_messages_for @announcement %>
+<ul class='error_messages'>
+     <% if flash[:error] %>
+        <li><%= flash[:error] %> </li>
+     <% end %>
+</ul>
 <h2 class="current-page">Announcements &gt; Edit </h2>
 <%= form_for(@announcement, :action => resource(@announcement), :id => 'announcement' ) do %>
     <fieldset>
           <ul>
-              <li><label>Announcement for:</label><%= select :access_name, :collection => rooms %></li>
+              <li><label>Announcement for:</label><%= select :access_name, :collection => rooms, :prompt => "Please Select" %></li>
               <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
               <li><%= text_area  :content,  :label => "Description", :rows => "10", :cols => "50" %></li>
               <li><%= text_field  :expiration, :id => "expiration", :label => "Expiration" %></li>
@@ -45,8 +50,19 @@
      
  function preview()
  {
-   var s = $('announcement').serialize();
-   window.open('/announcements/preview/-/?' + s);
+    name = document.getElementById('announcement_access_name');
+     title = document.getElementById('announcement_title');
+     content = document.getElementById('announcement_content');
+     
+     if (name.value == "")
+       {
+          alert("Please select the Classroom/Homepage from the dropdown menu");
+       }
+    else
+       {
+          var s = $('announcement').serialize();
+          window.open('/announcements/preview/-/?' + s);
+       }
    
  }
   

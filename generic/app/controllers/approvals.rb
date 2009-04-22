@@ -11,7 +11,8 @@ class Approvals < Application
   
   def index
      @selected = "approve"
-     @announcements = @current_school.announcements.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ])
+     @announcements = @current_school.announcements.paginate(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ], :per_page => 10,
+ :page => params[:page])
      render
   end
   
@@ -73,38 +74,37 @@ class Approvals < Application
      render :layout => 'preview'
   end
   
-  def parent_approvals
+ def parent_approvals
      if params[:approve_status] == "Approved"
-       @approved_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 1] )
+       @approved_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 1], :order => "created_at DESC", :per_page => 25,  :page => params[:page] )
      end
      if params[:approve_status] == "Pending Approvals"
-        @pending_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 2] )
+       @pending_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 2], :order => "created_at DESC", :per_page => 25,  :page => params[:page] )
      end
      if params[:approve_status] == "Rejected"
-       @reject_parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 3 ] )
+       @reject_parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 3 ], :order => "created_at DESC", :per_page => 25,  :page => params[:page] )
      end
      if params[:approve_status].nil?
-        @parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 2] )
+       @parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 2], :order => "created_at DESC", :per_page => 25,  :page => params[:page] )
      end
      if params[:approve_status] == "All Registrations"
-       @all_parents = @current_school.parents.find(:all)
+       @all_parents = @current_school.parents.paginate(:all, :order => "created_at DESC", :per_page => 25,  :page => params[:page])
      end
-     @parents = @current_school.parents.find(:all)
+     @parents = @current_school.parents.paginate(:all, :order => "created_at DESC", :per_page => 25,  :page => params[:page])
      render
   end
   
   def approval_review
      @parent = @current_school.parents.find(params[:id])
      @students = @current_school.students.find(:all)
-     @classrooms = @current_school.classrooms.find(:all)
+     @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
-     @exist = "Following Student was found"
-     @not_exist = "Following Student was not found"
+     @exist = "Student details entered by the parent match the school records"
+     @not_exist = "Student details entered by the parent do not match the school records"
      render
   end
   
   def parent_grant
-    #raise params.inspect
      @parent = @current_school.parents.find(params[:id])
      @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
      if params[:approvetype] == "Approve & Grant Access"
@@ -114,7 +114,7 @@ class Approvals < Application
           else
                unless params[:student_not_found].nil?
                   params[:student_not_found].each do |f|
-                      params[:class_not_found].each do |c|
+                      #params[:class_not_found].each do |c|
                           @st = f.split
                           @student = @current_school.students.find(:first, :conditions => [" first_name in (?) AND last_name in (?)", @st, @st ] )
                           @class = @current_school.classrooms.find_by_class_name("#{c}") 
@@ -122,7 +122,7 @@ class Approvals < Application
                           @studs = @current_school.students.find(:all, :joins => :studies, :conditions => [" first_name in (?) AND last_name in (?) AND studies.classroom_id = ?" , @st, @st, @class.id ] )
                           Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
                           Study.update(@study_id.id, {:student_id => @student.id, :classroom_id => @class.id})
-                       end
+                       #end
                    end
                 end
                 unless params[:student_found].nil?
@@ -140,7 +140,8 @@ class Approvals < Application
          @parent.approved = 3
          @parent.save
          #Guardian.delete_all(["parent_id = ?", @parent.id])
-         redirect url(:approval_review)
+         #redirect url(:approval_review)
+         redirect url(:parent_approvals)
      end
    
   end
@@ -179,8 +180,8 @@ class Approvals < Application
   end
    
   def classrooms
-     @class = @current_school.classrooms.find(:all)
-     room = @class.collect{|x| x.class_name }
+     @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+     room = @class.collect{|x| x.class_name.titleize }
      @classrooms = room.insert(0, "HomePage")
   end
   

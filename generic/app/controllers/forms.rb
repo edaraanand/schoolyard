@@ -9,12 +9,12 @@ class Forms < Application
     
   def index
     if params[:class_name].nil?
-      @forms = @current_school.forms.find(:all)
+      @forms = @current_school.forms.paginate(:all, :per_page => 25,  :page => params[:page])
     end
     if params[:class_name] == "All Forms"
-      @forms_f = @current_school.forms.find(:all)
+      @forms_f = @current_school.forms.paginate(:all, :per_page => 25,  :page => params[:page])
     end
-    @files = @current_school.forms.find(:all, :conditions => ['class_name = ?', params[:class_name] ] )
+    @files = @current_school.forms.paginate(:all, :conditions => ['class_name = ?', params[:class_name] ], :per_page => 25,  :page => params[:page] )
     render
   end
   
@@ -28,24 +28,30 @@ class Forms < Application
      @form = @current_school.forms.new(params[:form])
      i=0
      if @form.valid?
-        unless params[:attachment]['file_'+i.to_s].empty?
-            @form.save
-            @attachment = Attachment.create( :attachable_type => "Form",
+        if ( (params[:form][:class_name] != "") && (params[:form][:year] != "") )
+            unless params[:attachment]['file_'+i.to_s].empty?
+                @form.save
+                @attachment = Attachment.create( :attachable_type => "Form",
                                         :attachable_id => @form.id,
                                         :filename => params[:attachment]['file_'+i.to_s][:filename],
                                         :content_type => params[:attachment]['file_'+i.to_s][:content_type],
                                         :size => params[:attachment]['file_'+i.to_s][:size]
-             )
-              File.makedirs("public/uploads/#{@attachment.id}")
-              FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
-              redirect resource(:forms)
+                  )
+                 File.makedirs("public/uploads/#{@attachment.id}")
+                 FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+                 redirect resource(:forms)
+             else
+                flash[:error] = "please upload a File"
+                render :new
+             end
         else
-            flash[:error] = "please upload a File"
+            flash[:error] = "Please select classroom and year"
             render :new
         end
      else
         render :new
      end
+     
   end
    
   def edit
@@ -61,30 +67,40 @@ class Forms < Application
      @allowed = 1 - @attachments.size
      i=0
      if params[:attachment]
-        if @form.update_attributes(params[:form])
-            unless params[:attachment]['file_'+i.to_s].empty?
-                @attachment = Attachment.create( :attachable_type => "Form",
+        if ( (params[:form][:class_name] != "") && (params[:form][:year] != "") )
+            if @form.update_attributes(params[:form])
+               unless params[:attachment]['file_'+i.to_s].empty?
+                    @attachment = Attachment.create( :attachable_type => "Form",
                                         :attachable_id => @form.id,
                                         :filename => params[:attachment]['file_'+i.to_s][:filename],
                                         :content_type => params[:attachment]['file_'+i.to_s][:content_type],
                                         :size => params[:attachment]['file_'+i.to_s][:size]
-                )
-                  File.makedirs("public/uploads/#{@attachment.id}")
-                  FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
-                  redirect resource(:forms)
-             else
-                 flash[:error] = "please upload a File"
-                 render :edit
-             end
-         else
-             render :edit
-         end
-    else
-         if @form.update_attributes(params[:form])
-            redirect resource(:forms)
-         else
+                     )
+                     File.makedirs("public/uploads/#{@attachment.id}")
+                     FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+                     redirect resource(:forms)
+               else
+                  flash[:error] = "please upload a File"
+                  render :edit
+               end
+            else
+               render :edit
+            end
+        else
+            flash[:error] = "Please select classroom and year"
             render :edit
-         end
+        end
+   else
+       if ( (params[:form][:class_name] != "") && (params[:form][:year] != "") )
+           if @form.update_attributes(params[:form])
+              redirect resource(:forms)
+           else
+              render :edit
+           end
+        else
+            flash[:error] = "Please select classroom and year"
+            render :edit
+        end    
      end
   end
   
@@ -107,28 +123,30 @@ class Forms < Application
   
   def form_files
      @select = "forms"
-     if params[:class_name].nil?
-        @forms = @current_school.forms.find(:all)
+     @selected = "all_forms"
+     unless params[:id].nil?
+         @class = @current_school.classrooms.find(params[:id])
+         @forms = @current_school.forms.paginate(:all, :conditions => ["class_name = ?", @class.class_name ], :per_page => 25,  :page => params[:page] )
+         @selected = @class.class_name 
      end
-     if params[:class_name] == "All Forms"
-        @forms_f = @current_school.forms.find(:all)
+     if params[:l] == "all_forms"
+       @all_forms = @current_school.forms.paginate(:all, :per_page => 25,  :page => params[:page])
      end
-     @files = @current_school.forms.find(:all, :conditions => ['class_name = ?', params[:class_name] ] )
-     render :layout => 'home'
+     render :layout => 'directory'
   end
  
   
   private
   
   def forms
-     @class = @current_school.classrooms.find(:all)
-     room = @class.collect{|x| x.class_name }
+     @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+     room = @class.collect{|x| x.class_name.titleize }
      @classrooms = room.insert(0, "All Forms")
   end
   
   def classrooms
-    classes = @current_school.classrooms.find(:all)
-    room = classes.collect{|x| x.class_name }
+    classes = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    room = classes.collect{|x| x.class_name.titleize }
     @classrooms = room.insert(0, "All Classes")
     @years = (2009..2025).to_a
   end

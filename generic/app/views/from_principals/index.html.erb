@@ -1,7 +1,7 @@
 <div id="fullpage">
   <h2 class="current-page">
     From the Principal <span class="actions">
-      <%= link_to "Add New", resource(:from_principals, :new) %>  <%#= link_to "Settings" &#124; %>
+    <%= link_to "Add New", resource(:from_principals, :new) %> | <%= link_to "Settings", url(:settings) %>
       </span>
   </h2>
     
@@ -23,7 +23,7 @@
            </div>
   <% end %>
          
-         
+         <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
 
 </div>
   

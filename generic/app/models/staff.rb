@@ -2,7 +2,7 @@ class Staff < Person
   
     belongs_to :school
     
-    validates_length_of :password, :within => 4..40, :if => :password
+    validates_length_of :password, :within => 8..40, :if => :password
    
   def self.make_key
       Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
@@ -21,7 +21,7 @@ class Staff < Person
   end
   
   def send_password
-      deliver_email(:password_staff, :subject => "Choose your Password to login in to schoolapps" )
+      deliver_email(:password_staff, :subject => "Choose your Password to login to " + self.school.school_name )
   end
  
   def deliver_email(action, params)
