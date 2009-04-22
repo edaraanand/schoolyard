@@ -1,100 +1,72 @@
   <h2 class="current-page">School Staff</h2> 
- 
- <%= form_for(@student, :action => url(:staff), :method => 'get', :id => 'student') do %>
   
-     <% if params[:class_name].nil? %> 
-         <span class="select-announce"><%= select :name => "class_name", :collection => @teachers, :label => "View :"  %><%= submit "    Go    " %></span>
-     <% else %>
-         <span class="select-announce"><%= select :name => "class_name", :selected => params[:class_name], :collection => @teachers, :label => "View :"  %><%= submit "    Go    " %></span>
-     <% end %>
- <% end =%> 
+         <select id = 'staffID'>
+                  <option value = '/staff' <% if (@test == "All Staff") %> selected <% end %> >All Staff</option>
+                  <% @class_rooms.each do |f| %>
+                      <option value='/staff?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+                         <%= f.class_name %> 
+                      </option>
+	                <% end %>
+	       </select>
+         
+<% if params[:label] == "classes" %>
  
-   
-<% if params[:class_name].nil? %>
-    
-         <%if @stf.empty?%>
-           <p class="subText">There are no staff members listed yet.</p>
-           <% else %>
-        <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
-            <table id="mytable">
-              <thead> 
-                    <th>Last Name</th>
-                    <th>First Name</th>
-                    <th>Role</th>
-                    <th>Contact Number</th>
-             </thead>
-              <% for person in @stf %>
-                   <tr>
-                   <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
-                       <td><%= link_to "#{person.first_name}", url(:student, person.id, :label => "staff") %>&nbsp;</td>
-                       <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
-                       <td nowrap><% s.each do |f| %>
-                          <%= f.role.titleize %>-<%= f.classroom.class_name.titleize %><br/>
-                       <% end %>&nbsp;</td>
-      	               <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>
-                   </tr>  
-              <% end %>
-            </table>
-              <%= will_paginate (@stf, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-         <% end %> 
-       
-<% elsif params[:class_name] == "All Staff" %>
-
-         <%if @staff.empty?%>
-           <p class="subText">There are no staff members listed yet.</p>
-           <% else %>
-           <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
-            <table id="mytable">
-              <thead> 
-                    <th>Last Name</th>
-                    <th>First Name</th>
-                    <th>Role</th>
-                    <th>Contact Number</th>
-                    
-              </thead>
-              <% for person in @staff %>
-                   <tr>
-                       <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
-                       <td><%= person.first_name %>&nbsp;</td>
-                       <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
-                       <td><% s.each do |f| %>
-                          <%= f.role.titleize %>-<%= f.classroom.class_name %>
-                       <% end %>&nbsp;</td> 
-      	               <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>
-                   </tr>  
-              <% end %>
-            </table>
-              <%= will_paginate (@staff, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-         <% end %>
-       
+            <% if @class_peoples.empty? %>
+                     <p class="subText">There are no staff members listed yet.</p>
+            <% else %>
+                   <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
+                   <table id="mytable">
+                       <thead> 
+                             <th>Last Name</th>
+                             <th>First Name</th>
+                             <th>Role</th>
+                             <th>Email</th>
+                             <th>Contact Number</th>
+                       </thead>
+                       <% @class_peoples.each do |f| %>
+                            <tr>
+                                <td class="click-block"><%= link_to "#{f.person.last_name}", url(:student, f.person.id, :label => "staff") %></td>
+                                <td><%= f.person.first_name %>&nbsp;</td>
+                 	              <td><%= f.role.titleize %>-<%= f.classroom.class_name %>&nbsp;</td>
+                                <td><%= email(f.person.email) %>&nbsp;</td>
+                                <td nowrap><%= number_to_phone(f.person.phone, :area_code => true) %>&nbsp;</td>
+                            </tr>  
+                       <% end %>
+                   </table>
+            <% end %>
+         
 <% else %>
-                                     
-        <%if @class_peoples.empty?%>
-          <p class="subText">There are no staff members listed yet.</p>
-          <% else %>
-          <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
-            <table id="mytable">
-              <thead> 
-                    <th>Last Name</th>
-                    <th>First Name</th>
-                    <th>Role</th>
-                    <th>Contact Number</th>
-              </thead>
-                <% @class_peoples.each do |f| %>
-                   <tr>
-                       <td class="click-block"><%= link_to "#{f.person.last_name}", url(:student, f.person.id, :label => "staff") %></td>
-                       <td><%= f.person.first_name %>&nbsp;</td>
-      	               <td><%= f.role.titleize %>-<%= f.classroom.class_name %>&nbsp;</td>
-                       <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>
-                   </tr>  
-              <% end %>
-            </table>
-              
-        <% end %>
 
+           <% if @staff.empty? %>
+                 <p class="subText">There are no staff members listed yet.</p>
+           <% else %>
+                 <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
+                 <table id="mytable">
+                        <thead> 
+                              <th>Last Name</th>
+                              <th>First Name</th>
+                              <th>Role</th>
+                              <th>Email</th>
+                              <th>Contact Number</th>
+                        </thead>
+                        <% for person in @staff %>
+                             <tr>
+                                 <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
+                                 <td><%= person.first_name %>&nbsp;</td>
+                                 <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
+                                 <td><% s.each do |f| %>
+                                    <%= f.role.titleize %>-<%= f.classroom.class_name %>
+                                 <% end %>&nbsp;</td> 
+                                 <td><%= email(person.email) %>&nbsp;</td>
+      	                         <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>
+                             </tr>  
+                        <% end %>
+                 </table>
+                 <%= will_paginate (@staff, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+           <% end %>
+       
 <% end %>
-
-
+        
 <% unless session.user.type == "Parent" %>
      <div class="right-sidebar">
      <h3>Manage Staff</h3>
@@ -105,3 +77,13 @@
 <% end %>
 
 
+<script type = 'text/javascript'>
+
+        $( 'staffID' ).observe( 'change', function()
+         {
+           
+           document.location.href = $( 'staffID' ).value;
+          
+          });
+       
+</script>

@@ -4,7 +4,6 @@ class Students < Application
   before :find_school
   before :access_rights, :exclude => [:directory, :show, :staff, :generate_csv]
   before :classrooms, :only => [:directory, :staff]
-  before :school_staff, :only => [:staff]
   before :selected_tab, :only => [:directory, :show, :staff]
   
   def index 
@@ -281,15 +280,15 @@ class Students < Application
   
   
    def directory
+      if  params[:label] == "classes"
+          @class = @current_school.classrooms.find(params[:id])
+          @studs = @current_school.students.paginate(:all, :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id], :per_page => 25,  :page => params[:page] )
+          @test = params[:id]
+      else
+          @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
+          @test = "All Students"
+      end
       @selected = "current_students"
-      @class = @current_school.classrooms.find_by_class_name(params[:class_name])
-      @studs = @current_school.students.paginate(:all, :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id], :per_page => 25,  :page => params[:page] )
-      if params[:class_name] == "All Students"
-        @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
-      end
-      if params[:class_name].nil?
-        @stds = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
-      end
       render :layout => 'directory'
    end
    
@@ -309,20 +308,15 @@ class Students < Application
    end
    
    def staff
-       @selected = "school_staff"
-       if params[:class_name] == "All Staff"
+      if params[:label] == "classes"
+          @classroom = @current_school.classrooms.find(params[:id])
+          @class_peoples = @classroom.class_peoples.delete_if{ |x| x.team_id != nil }
+          @test = params[:id]
+      else
          @staff = @current_school.staff.paginate(:all, :per_page => 25,  :page => params[:page])
-       end
-       unless params[:class_name].nil?
-         unless params[:class_name] == "All Staff"
-           @class = @current_school.classrooms.find_by_class_name(params[:class_name])
-           @class_peoples = @class.class_peoples.delete_if{ |x| x.team_id != nil }
-         end
-       end  
-      if params[:class_name].nil?
-        @stf = @current_school.staff.paginate(:all, :per_page => 25,  :page => params[:page])
-      end    
-      
+         @test = "All Staff"
+      end
+      @selected = "school_staff"
       render :layout => 'directory'
    end
    
@@ -358,31 +352,23 @@ class Students < Application
    private
    
    def classrooms
-      @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-      room = @class.collect{|x| x.class_name.titleize }
-      @classrooms = room.insert(0, "All Students")
+      @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
    end  
    
-   def school_staff
-      @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-      room = @class.collect{|x| x.class_name.titleize }
-      @teachers = room.insert(0, "All Staff")
-   end
-   
    def access_rights
-     @selected = "students"
-     have_access = false
-     @view = Access.find_by_name('view_all')
-     @ann = Access.find_by_name('manage_directory')
-     @access_people = session.user.access_peoples.delete_if{|x| x.access_id == @view.id }
-     @access_people.each do |f|
-       have_access = (f.all == true) || (f.access_id == @ann.id)
-       break if have_access
-     end
-     unless have_access
-       redirect resource(:homes)
-     end
-  end  
+      @selected = "students"
+      have_access = false
+      @view = Access.find_by_name('view_all')
+      @ann = Access.find_by_name('manage_directory')
+      @access_people = session.user.access_peoples.delete_if{|x| x.access_id == @view.id }
+      @access_people.each do |f|
+        have_access = (f.all == true) || (f.access_id == @ann.id)
+        break if have_access
+      end
+      unless have_access
+        redirect resource(:homes)
+      end
+   end  
   
   def selected_tab
      @select = "directory"
