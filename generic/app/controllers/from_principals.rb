@@ -4,9 +4,12 @@ class FromPrincipals < Application
   before :access_rights
 
   def index
-    @announcements = @current_school.announcements.paginate(:all, :conditions => ['label=?', "from_principal"], :order => "created_at DESC", :per_page => 10,
- :page => params[:page] )
-    render
+      @announcements = @current_school.announcements.paginate(:all, 
+                                                              :conditions => ['label=?', "from_principal"], 
+                                                              :order => "created_at DESC", 
+                                                              :per_page => 10,
+                                                              :page => params[:page] )
+      render
   end
   
   def new
@@ -110,29 +113,39 @@ class FromPrincipals < Application
    end
    
    def settings_update
-       @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"])
-       @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
-       unless params[:image][:filename] == nil
-           if @content_types.include?(params[:image][:content_type])
-                unless @attachment.nil?
-                       @attachment.destroy
-                end
-              @attachment = Attachment.create( :attachable_type => "principal_image",
-                                               :filename => params[:image][:filename],
-                                               :content_type => params[:image][:content_type],
-                                               :size => params[:image][:size]
-                )
-              File.makedirs("public/uploads/principal_images")
-              FileUtils.mv(params[:image][:tempfile].path, "public/uploads/principal_images/#{@attachment.filename}")
-              redirect url(:settings)   
-           else
-               flash[:error1] = "You can only upload images"
-               render :settings
-           end
-       else
-          flash[:error] = "Please upload a picture"
-          render :settings
-       end
+      @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"])
+      @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
+      if params[:image][:filename] != nil
+          if @content_types.include?(params[:image][:content_type])
+               unless @attachment.nil?
+                      @attachment.destroy
+               end
+             @attachment = Attachment.create( :attachable_type => "principal_image",
+                                              :filename => params[:image][:filename],
+                                              :content_type => params[:image][:content_type],
+                                              :size => params[:image][:size]
+               )
+             if params[:principal_email] == "on"
+                @attachment.principal_email = true
+                @attachment.save
+             end
+             File.makedirs("public/uploads/principal_images")
+             FileUtils.mv(params[:image][:tempfile].path, "public/uploads/principal_images/#{@attachment.filename}")
+             redirect url(:settings)   
+          else
+              flash[:error1] = "You can only upload images"
+              render :settings
+          end
+      else
+          if params[:principal_email] == "on"
+             @attachment.principal_email = true
+             @attachment.save
+          else
+             @attachment.principal_email = false
+             @attachment.save
+          end
+          redirect url(:settings)
+      end
    end
    
   

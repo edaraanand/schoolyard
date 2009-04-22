@@ -11,5 +11,6 @@ class Announcement < ActiveRecord::Base
      attr_accessor :attachment
      attr_accessor :image
     
+    
 
 end
