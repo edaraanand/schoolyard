@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
   <head>
   <% unless @current_school.nil? %>
-      <title><%= @current_school.school_name %>, <%= @current_school.email %>, <%= number_to_phone(@current_school.phone, :area_code => true) %> </title>
+      <title><%= @current_school.school_name %></title>
   <% end %>
   
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -25,12 +25,10 @@
 <body class="fixed-width">
   <div id="page-wrap"><!-- Wraps everything -->
     <div id="header"><!--The Header -->
-      <h1><a href="#"><span></span><%= @current_school.school_name %></a></h1>
+      <h1><a href="#"><span></span><%= @current_school.school_name %>, <%= @current_school.email %>, <%= number_to_phone(@current_school.phone, :area_code => true) %></a></h1>
     </div><!--Header End -->
     <div id="content-wrap"><!--Wraps The content Area-->
-      <div class="hrule clear hidden">
-        <hr />
-      </div>
+
       <div id="content" class="widen">
         <%= catch_content :for_layout %>
       </div><!--Content End-->

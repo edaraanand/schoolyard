@@ -1,10 +1,10 @@
-<h2 class="current-page">Announcements  &gt; <%= link_to "Add New", resource(:announcements, :new) %></h2>
+<h2 class="current-page">Announcements  &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:announcements, :new) %></h2>
 <div class="fullpage announcemt">
    <%= form_for(@announcement, :action => resource(:announcements), :method => 'get', :id => 'announcement') do %>
        <% if params[:label] ==  "home_a" %>
             <span class="select-announce"><%= select :name => "access_name", :collection => classrooms, :selected => "Home Page", :label => "View  " %><%= submit "    Go    " %></span>
        <% elsif params[:label] ==  "class_announcements" %>
-       <span class="select-announce"><%= select :name => "access_name", :collection => classrooms, :selected => @classroom.class_name, :label => "View  " %><%= submit "    Go    " %></span>
+            <span class="select-announce"><%= select :name => "access_name", :collection => classrooms, :selected => @classroom.class_name, :label => "View  " %><%= submit "    Go    " %></span>
        <% elsif params[:access_name].nil? %>
             <span class="select-announce"><%= select :name => "access_name", :collection => classrooms, :label => "View :" %><%= submit "    Go    " %></span>
        <% else %>

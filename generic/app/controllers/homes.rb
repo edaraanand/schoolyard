@@ -14,14 +14,21 @@ class Homes < Application
     @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true], :order => "class_name ASC")
     @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ?', "Classes", true], :order => "class_name ASC")
     @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ?', "Extra Cirrcular", true ], :order => "class_name ASC")
+    @spot_light = @current_school.spot_lights.find(:first, :conditions => ['class_name = ?', "Home Page"], :order => 'created_at DESC')
     render
   end
   
   def principal_articles
-      @from_principals = @current_school.announcements.paginate(:all, :conditions => ['label = ?', 'from_principal'], :per_page => 10,
- :page => params[:page] )
-      @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :order => "created_at DESC", :per_page => 10,
- :page => params[:page] )
+      @from_principals = @current_school.announcements.paginate(:all, 
+                                                                :conditions => ['label = ?', 'from_principal'], 
+                                                                :order => "created_at DESC",
+                                                                :per_page => 10,
+                                                                :page => params[:page] )
+      @announcements = @current_school.announcements.paginate(:all, 
+                                                              :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], 
+                                                              :order => "created_at DESC", 
+                                                              :per_page => 10,
+                                                              :page => params[:page] )
       render
   end
   
@@ -47,6 +54,22 @@ class Homes < Application
     @select = "contact"
     render :layout => 'help'
   end
+  
+  
+  def home_spot_light
+     @spot_light = @current_school.spot_lights.find(params[:l])
+     render
+  end
+  
+  def lights
+     @spot_lights = @current_school.spot_lights.paginate(:all, 
+                                                      :conditions => ['class_name = ?', "Home Page"],
+                                                      :per_page => 3,
+                                                      :page => params[:page],
+                                                      :order => 'created_at DESC')
+      render
+  end
+  
   
   def bio
     if params[:label] == "classes"

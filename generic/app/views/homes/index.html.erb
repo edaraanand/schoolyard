@@ -1,127 +1,141 @@
 <div id="classContainer">
-  <div id="sidebar" class="left-block">
-       <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
-       <% unless @attachment.nil? %>
-            <img src="/uploads/principal_images/<%= @attachment.filename %>" alt=" ", class = "prinPic"/>
-       <% else %>
-            <img src="/images/principal.png" alt="From The Principal"/>
-       <% end %>
-       <% if @announcements.blank? %>
-            <p class="subText">There are no messages at this time.</p>
-       <% else %>
-  
-               <% for principal in @from_principals %>
-                   <div class="data-block long-block">
-                   <% if principal.expiration.nil? or principal.expiration >= @date%>
-                        <div class="ddmmm">
-                             <span class="date"><%=  principal.created_at.strftime("%d")%></span>
-                             <span class="month"><%=  principal.created_at.strftime("%b")%></span>
-                        </div>
-                         <span><%= link_to "#{principal.title}", url(:home, principal.id, :label => 'principal') %></span>
-                        <p class="separator"><%= snippet(principal.content, 50) %></p>
-                   <% end %>
-                   </div>
-               <% end %>
-        <% end %>
-           <p class="separator">&nbsp;</p>
-           <div class="page-links">
-             <%= link_to "All Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
-           </div>
-  </div>
-  <div id="content" class="homes-content">
-      <% unless @welcome_messages.empty? %>
-        <% for message in @welcome_messages %>
-           <p class="post-content"><%= san_content(message.content) %></p>
-           <br />
-        <% end %>
-      <% end %>
-<h2 class="home">Announcements</h2>
-
-<%if @announcements.blank?%>
-  <p class="subText">There are no Announcements at this time.</p>
-<%else%>
-   <% for announcement in @announcements %>
-
-       <% if announcement.expiration.nil? or announcement.expiration >= @date %>
-          <div class="data-block long-block">
-            <div class="ddmmm">
-              <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
-              <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
-            </div>
-              <p><%= link_to "#{announcement.title}", url(:home, announcement.id) %></p>
-               <p class="separator"><%= snippet(announcement.content, 50) %></p>
-              <% @attachment = Attachment.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
-                  <% unless @attachment.nil? %>
-                   <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+     <div id="sidebar" class="left-block">
+          <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
+          <% unless @attachment.nil? %>
+               <img src="/uploads/principal_images/<%= @attachment.filename %>" alt=" ", class = "prinPic"/>
+          <% else %>
+               <img src="/images/principal.png" alt="From The Principal"/>
+          <% end %>
+          <% if @from_principals.blank? %>
+               <p class="subText">There are no messages at this time.</p>
+          <% else %>
+                 <% for principal in @from_principals %>
+                      <div class="data-block long-block">
+                            <div class="ddmmm">
+                                <span class="date"><%=  principal.created_at.strftime("%d")%></span>
+                                <span class="month"><%=  principal.created_at.strftime("%b")%></span>
+                           </div>
+                            <span><%= link_to "#{principal.title}", url(:home, principal.id, :label => 'principal') %></span>
+                           <p class="separator"><%= snippet(principal.content, 50) %></p>
+                      </div>
                   <% end %>
-           </div>           
-      <% else %>
-           <p class="separator">There are no Announcements at this time.</p>
-        
-      <% end %>    
-   <% end %>
-<% end %>
-<p class="separator">&nbsp;</p>
- <div class="page-links">
-     <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements')   %> 
-     <% if session.user.type == "Parent" %>
-         | <%= link_to "Submit an announcement", resource(:parents, :new) %>
-     <% end %>
-</div>
+           <% end %>
+              <p class="separator">&nbsp;</p>
+              <div class="page-links">
+                   <%= link_to "All Principal’s Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
+              </div>
+     </div>
+     <div id="content" class="homes-content">
+           <% unless @welcome_messages.empty? %>
+                <% for message in @welcome_messages %>
+                   <p class="post-content"><%= san_content(message.content) %></p>
+                   <br />
+                <% end %>
+           <% end %>
+           <div class="hrule clear"><hr /></div>
+           <h2 class="home">Announcements</h2>
 
-</div>
+           <% if @announcements.blank? %>
+               <p class="subText">There are no Announcements at this time.</p>
+           <% else %>
+              <% for announcement in @announcements %>
+                    <% if announcement.expiration.nil? or announcement.expiration >= @date %>
+                        <div class="data-block long-block">
+                          <div class="ddmmm">
+                            <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
+                            <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
+                          </div>
+                            <p><%= link_to "#{announcement.title}", url(:home, announcement.id) %></p>
+                             <p class="separator"><%= snippet(announcement.content, 50) %></p>
+                            <% @attachment = Attachment.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
+                                <% unless @attachment.nil? %>
+                                 <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+                                <% end %>
+                         </div>           
+                    <% else %>
+                          <p class="separator">There are no Announcements at this time.</p>
+                   
+                    <% end %>    
+              <% end %>
+           <% end %>
+           
+           <p class="separator">&nbsp;</p>
+            <div class="page-links">
+                <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements')   %> 
+                <% if session.user.type == "Parent" %>
+                    | <%= link_to "Submit an announcement", resource(:parents, :new) %>
+                <% end %>
+           </div>
+
+     </div>
 <div class="right-sidebar">
-  <% unless session.user.type == "Parent" %>
-      <h3>Manage Homepage</h3>
-      <ul class="last">
-          <li <% if @selected == "from_principal" %> class="on" <% end %>><%= link_to_right((right = "from_principal"), "Manage From the Principal", url(:from_principals)) %></li>
-          <li <% if @selected == "welcome_messages" %> class="on" <% end %>><%= link_to_right( (right = "welcome_messages"), "Manage Welcome Messages", url(:welcome_messages, :label => "home_messages") ) %></li>
-          <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :label => "home_a")) %></li>
-          <li <% if @selected == "e_links" %> class="on" <% end %>><%= link_to_right((right = "external_links"), "Manage External Links", url(:external_links) ) %></li>
-      </ul>
-  <% end %>
-  <% unless @classrooms.empty? %>
-   <h3>Quick Links </h3>
+  
+     <% unless @classrooms.empty? %>
+          <h3>Quick Links </h3>
+          <div class="last">
+               <% unless @classes.empty? %>
+                     <li class="noBullet">Classes:
+                       <ul>
+                      <% @classes.each do |f| %>
+                            <% if f.class_name == "Sports" %>
+                                  <li><%= link_to "#{f.class_name}".titleize, url(:sports) %></li>
+                            <% else %>
+                                  <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => f.id) %></li>
+                            <% end %>
+                      <% end %>
+                      </li>
+                      </ul>
+                     </ul>
+               <%end%>
+               <%unless @extracurricular.empty?%>
+                     <li class="noBullet">Subjects:
+                       <ul>
+                      <% @extracurricular.each do |f| %>
+                            <% if f.class_name == "Sports" %>
+                                  <li><%= link_to "#{f.class_name}".titleize, url(:sports) %></li>
+                            <% else %>
+                                  <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => f.id) %></li>
+                            <% end %>
+                      <% end %>
+                      </li>
+                      </ul>
+                     </ul>
+               <%end%>
+          </div>
+     <% end %>
 
-   <div class="last">
-         <% unless @classes.empty? %>
-               <li class="noBullet">Classes:
-                 <ul>
-                <% @classes.each do |f| %>
-                      <% if f.class_name == "Sports" %>
-                            <li><%= link_to "#{f.class_name}".titleize, url(:sports) %></li>
-                      <% else %>
-                            <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => f.id) %></li>
-                      <% end %>
-                <% end %>
-                </li>
-                </ul>
-               </ul>
-         <%end%>
-         <%unless @extracurricular.empty?%>
-               <li class="noBullet">Subjects:
-                 <ul>
-                <% @extracurricular.each do |f| %>
-                      <% if f.class_name == "Sports" %>
-                            <li><%= link_to "#{f.class_name}".titleize, url(:sports) %></li>
-                      <% else %>
-                            <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => f.id) %></li>
-                      <% end %>
-                <% end %>
-                </li>
-                </ul>
-               </ul>
-         <%end%>
-    </div>
+     <% unless  @external_links.empty? %>
+        <h3>External Links </h3>
+       <ul class="last"> 
+         <% for link in @external_links %>
+          <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
+        <% end %>
+       </ul> 
+     <% end %>
      
-   <% end %>
-<%unless  @external_links.empty?%>
-   <h3>External Links </h3>
-  <ul class="last"> 
-    <% for link in @external_links %>
-     <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
-   <% end %>
-  </ul> 
-  <%end%>
+     <% unless @spot_light.nil? %>
+          <h3>Spotlight</h3>
+          <ul class="last">
+                <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @spot_light.id]) %>
+                <% unless @attachment.nil? %>  
+                     <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
+                <% end %>
+                <h6><%= link_to "#{@spot_light.student_name}", url(:home_spot_light, :l => @spot_light.id) %></h6>
+                <%= snippet(@spot_light.content, 25) %>
+                <%= link_to "Previous Spot Lights", url(:lights) %>
+          </ul>
+     <% end %>
+   
+     <% unless session.user.type == "Parent" %>
+        <h3>Manage Home Page</h3>
+        <ul class="last">
+            <li <% if @selected == "from_principal" %> class="on" <% end %>><%= link_to_right((right = "from_principal"), "Manage From the Principal", url(:from_principals)) %></li>
+            <li <% if @selected == "welcome_messages" %> class="on" <% end %>><%= link_to_right( (right = "welcome_messages"), "Manage Welcome Messages", url(:welcome_messages, :label => "home_messages") ) %></li>
+            <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :label => "home_a")) %></li>
+            <li <% if @selected == "e_links" %> class="on" <% end %>><%= link_to_right((right = "external_links"), "Manage External Links", url(:external_links) ) %></li>
+        </ul>
+     <% end %>
+    
+   
 </div></div>
 

@@ -8,26 +8,25 @@
 
 <h2 class="current-page">Announcements &gt; Add New </h2>
 <%= form_for (@announcement, :action => resource(:announcements), :id => 'announcement', :name => "announce") do %>
-    <fieldset>
-          <ul>
-              <li><label>Announcement for:</label><%= select :access_name, :collection => rooms, :prompt => "Please Select" %></li>
-              <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
-              <li><%= text_area  :content,  :label => "Description", :rows => "20", :cols => "50" %></li>
-              <li><%= text_field  :expiration, :id => "expiration", :label => "Expiration", :size => "12" %></li>
-              <li><%= file_field :attachment,  :label => "Attach a File" %></li>
-          </ul>
-          
+     <fieldset>
+           <ul>
+               <li><label>Announcement for:</label><%= select :access_name, :collection => rooms, :prompt => "Please Select" %></li>
+               <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
+               <li><%= text_area  :content,  :label => "Description", :rows => "20", :cols => "50" %></li>
+               <li><%= text_field  :expiration, :id => "expiration", :label => "Expiration", :size => "12" %></li>
+               <li><%= file_field :attachment,  :label => "Attach a File" %></li>
+           </ul>
+           
            <ul id="pending_files"></ul>
-             <script type="text/javascript">
-                 var multi_selector = new MultiSelector($('pending_files'), 1);
-                 multi_selector.addElement($('announcement_attachment'));
-             </script>
-          
-    </fieldset>
+           <script type="text/javascript">
+               var multi_selector = new MultiSelector($('pending_files'), 1);
+               multi_selector.addElement($('announcement_attachment'));
+           </script>
+     </fieldset>
       
           <div class="save-cancel">
-	               <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
-	               <%= submit "    Submit for Approval    " %></br> Or <%= link_to "Cancel", resource(:announcements), :class => "cancel" %>
+	            <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
+	            <%= submit "    Submit for Approval    " %></br> Or <%= link_to "Cancel", resource(:announcements), :class => "cancel" %>
           </div>        
 <% end =%>
 

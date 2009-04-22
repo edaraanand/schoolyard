@@ -7,7 +7,14 @@
     <% end %>
 </ul>
 
-
+<div id="disable" style="display:none;">
+    <h3 style="text-align:center; font-size:100%">Disable Access for this user.</h3> 
+         <p>Are you sure you want to disable access for this user?</p>
+         <div class="save-cancel">
+             <%= link_to "Yes, disable access", url(:disable, :id => @person.id) %>&nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;<%= link_to "Cancel this action", url(:edit_person, @person.id), :class => "cancel" %>
+         </div>
+    
+ </div>
 <fieldset>
   <h2 class="current-page">Access Rights &gt; Edit</h2>
   <%= form_for :person, :action => url(:person, @person) , :id => 'people' do %>
@@ -19,39 +26,17 @@
     <li><%= text_field  :phone,  :label => "Phone Number (optional)" %></li>
    
   </ul>
-   <div id="disable" style="display:none;">
-      <h3>  Disable Access for this user. 
-           Are you sure you want to do this?
+  <div id="enable" style="display:none;">
+      <h3 style="text-align:center; font-size:100%">Enable Access for this user.</h3> 
+           <p>Are you sure you want to enable access for this user?</p>
            <div class="save-cancel">
-               <%= link_to "Yes, Disable Access for this User", url(:disable, :id => @person.id) %> Or <%= link_to "Cancel this action", url(:edit_person, @person.id), :class => "cancel" %>
+                <%= link_to "Yes, enable access", url(:enable, :id => @person.id) %>&nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;<%= link_to "Cancel this action", url(:edit_person, @person.id), :class => "cancel" %>
            </div>
-      </h3>
    </div> 
-   
-     <div id="enable" style="display:none;">
-     <h3> Enable Access for this user. 
-           Are you sure you want to do this?
-           <div class="save-cancel">
-                <%= link_to "Yes, Enable Access for this User", url(:enable, :id => @person.id) %> Or <%= link_to "Cancel this action", url(:edit_person, @person.id), :class => "cancel" %>
-           </div>
-      </h3>
-   </div> 
-     
-  <ul>
-    <li><h2 class="current-page">Rights:</h2></li>
-	  <li>
-      This person can:
-      <% if (@person.crypted_password != "" ) || (@person.password_reset_key != "" ) %>
-        <a rel="facebox" href="#disable" class="deactivate cancel"><span>Disable Access for this User</span></a>
-      <% else %>
-        <a rel="facebox" href="#enable" class="deactivate enable">
-          <span>Enable Access for the User</span>
-        </a>
-      <% end %>
-    </li> 
+     <br class="clear"/>
+<h2 class="current-page">Rights:</h2>
 
-	</ul>
-	   
+	    <p>This person can:</p>
   
     
 	<dl class="check-box-set">
@@ -77,7 +62,16 @@
 	  </dl>
        <div class="save-cancel">
           <%= submit "Save & Notify" %> Or <%= link_to "Cancel", url(:people), :class => "cancel" %>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <% if (@person.crypted_password != "" ) || (@person.password_reset_key != "" ) %>
+            <a rel="facebox" href="#disable" class="deactivate cancel"><span>Disable Access for this User</span></a>
+          <% else %>
+            <a rel="facebox" href="#enable" class="deactivate enable">
+              <span>Enable Access for the User</span>
+            </a>
+          <% end %>
       </div>
+
 </fieldset>
     
         

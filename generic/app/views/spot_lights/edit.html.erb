@@ -1,0 +1,32 @@
+<%= error_messages_for @spot_light %>
+<ul class='error_messages'>
+     <% if flash[:error] %> 
+		    <li><%= flash[:error] %></li>
+     <% end %>
+</ul>	 
+
+
+<h2 class="current-page">SpotLight &gt; Edit </h2>
+<%= form_for(@spot_light, :action => resource(@spot_light) ) do %>
+
+       <fieldset>
+            <ul>
+               <li><label>Spotlight for:</label><%= select :class_name, :collection => @classrooms, :prompt => "Please Select" %></li>
+               <li><label>Student </label><%= select :student_name, :collection => @students.collect{|x| x.name }, :prompt => "Please Select" %></li>
+                <li><%= file_field :image, :label => "Upload Picture (optional)" %>
+                    <% unless @pic.nil? %>                          
+                         <span class="picEdit"><img src="/uploads/spotlights/<%= @pic.filename %>" alt="<%= @pic.filename %>" class="teacherPic"/></span>
+                    <% end %>
+                </li>
+               <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
+              
+            </ul>
+       </fieldset>
+
+       <div class="save-cancel">
+            <%= submit "    Publish    " %> Or 
+            <%= link_to "Cancel", resource(:spot_lights), :class => "cancel" %>
+       </div>
+ 
+
+<% end =%>

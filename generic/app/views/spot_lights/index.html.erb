@@ -1,15 +1,31 @@
-<h2 class="current-page">Spot Light &gt; <span class="add-link"><%= link_to "Add New", resource(:spot_lights, :new) %></span></h2>
-<% unless @spot_lights.empty? %>
-  <ul class="spotlight-list">
-    <% for spot in @spot_lights %>
-       <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", spot.id, "SpotLight"]) %>
-       <li>
-           <img src="uploads/<%= @attachment.id %>/<%= @attachment.filename %>" alt="image"/>
-           <%= spot.student_name %>
-       </li>
-           <%= link_to "Delete", resource(spot, :delete), :class=>"delete-btn"  %>
+<div id="fullpage">
+     <h2 class="current-page">
+         Spotlight <span class="actions">
+         <%= link_to "Add New", resource(:spot_lights, :new) %></span>
+     </h2>
+   <% unless @spot_lights.empty? %>
+    
+         <% for spot in @spot_lights %>
+             <div class="data-block short-block">
+                  <div class="ddmm">
+                        <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", spot.id]) %>
+                      <% unless @attachment.nil? %>  
+                         <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
+                      <% end %>
+                  </div>
+                  
+                  <h3><%= link_to "#{spot.student_name}", url(:spot_light, spot.id) %></h3>
+                  <span class="subText">Spotlight for: <%= spot.class_name %></span><br/>
+                  <span  class="subText">Created by <%= spot.created_at.strftime("%b %d %Y") %></span>
+                  <p><%= snippet(spot.content, 50) %></p>
+                  
+                   <%= link_to "Edit", resource(spot, :edit), :class=>"edit-btn" %>
+                   <%= link_to "Delete", resource(spot, :delete), :class=>"delete-btn"  %>
+                  <p class="separator">&nbsp;</p>
+              </div>
+         <% end %>
+    
     <% end %>
-  </ul>
-<% end %>
-
+    
+</div>
 
