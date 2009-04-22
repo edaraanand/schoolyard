@@ -10,10 +10,10 @@
     <tbody>
       <% for student in @students %>
         <tr>
-          <td><%= link_to "#{student.last_name}", resource(student, :edit) %> </td>
-          <td><%= student.first_name %></td>
-          <td><%= number_to_phone(student.phone, :area_code => true) %></td>
-          <td><%= student.address %></td>
+          <td>&nbsp;<%= link_to "#{student.last_name}", resource(student, :edit) %> </td>
+          <td>&nbsp;<%= student.first_name %></td>
+          <td>&nbsp;<%= number_to_phone(student.phone, :area_code => true) %></td>
+          <td>&nbsp;<%= student.address %></td>
         </tr>
       <% end %>
     </tbody>
