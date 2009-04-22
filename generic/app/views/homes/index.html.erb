@@ -3,6 +3,14 @@
           <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
           <% unless @attachment.nil? %>
                <img src="/uploads/principal_images/<%= @attachment.filename %>" alt=" ", class = "prinPic"/>
+              
+                 <% @principal = Principal.find(:first) %>
+              <% if @principal.principal_email == true %>
+                    <%= email(@principal.email) %>
+               <% end %>
+               <% if @principal.principal_name == true %>
+                    <%= @principal.name %>
+               <% end %>
           <% else %>
                <img src="/images/principal.png" alt="From The Principal"/>
           <% end %>

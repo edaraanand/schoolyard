@@ -121,10 +121,4 @@ class Person < ActiveRecord::Base
 end            
 
 
-class Principle < Person
-	
-end
-
-
-
 
