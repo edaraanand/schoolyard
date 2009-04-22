@@ -23,9 +23,9 @@
                   <tbody>
                         <% for student in @stds %>
                               <tr>
-                                  <td><%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %> </td>
-                                  <td><%= student.first_name %></td>
-                                  <td><%= number_to_phone(student.phone, :area_code => true) %></td>
+                                  <td>&nbsp;<%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %> </td>
+                                  <td>&nbsp;<%= student.first_name %></td>
+                                  <td>&nbsp;<%= number_to_phone(student.phone, :area_code => true) %></td>
                                </tr>
                          <% end %>
                   </tbody>
@@ -47,9 +47,9 @@
                <tbody>
                     <% for student in @students %>
                          <tr>
-                             <td><%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %> </td>
-                             <td><%= student.first_name %></td>
-                             <td><%= number_to_phone(student.phone, :area_code => true) %></td>
+                             <td>&nbsp;<%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %> </td>
+                             <td>&nbsp;<%= student.first_name %></td>
+                             <td>&nbsp;<%= number_to_phone(student.phone, :area_code => true) %></td>
                          </tr>
                      <% end %>
                 </tbody>
@@ -71,9 +71,9 @@
                <tbody>
                     <% for student in @studs %>
                          <tr>
-                             <td><%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %> </td>
-                             <td><%= student.first_name %></td>
-                             <td><%= number_to_phone(student.phone, :area_code => true) %></td>
+                             <td>&nbsp;<%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %> </td>
+                             <td>&nbsp;<%= student.first_name %></td>
+                             <td>&nbsp;<%= number_to_phone(student.phone, :area_code => true) %></td>
                          </tr>
                      <% end %>
                 </tbody>
