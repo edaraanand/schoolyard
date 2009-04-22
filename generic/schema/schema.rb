@@ -83,20 +83,12 @@ ActiveRecord::Schema.define(:version => 62) do
     t.string   "filename"
     t.string   "content_type"
     t.integer  "size"
-    t.integer  "height"
-    t.integer  "width"
-    t.integer  "parent_id"
-    t.integer  "position"
     t.integer  "attachable_id"
-    t.string   "thumbnail"
     t.string   "attachable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "principal_email"
   end
-
-  add_index "attachments", ["attachable_id", "attachable_type"], :name => "index_attachments_on_attachable_id_and_attachable_type"
-  add_index "attachments", ["parent_id"], :name => "index_attachments_on_parent_id"
 
   create_table "calendars", :force => true do |t|
     t.string   "class_name"

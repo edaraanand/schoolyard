@@ -1,6 +1,4 @@
-
 <%= error_messages_for @student %>
-
 <ul class='error_messages'>
      <% if flash[:error2] %> 
 		    <li><%= flash[:error2] %></li>
@@ -11,10 +9,8 @@
      <% if flash[:error4] %> 
 		    <li><%= flash[:error4] %></li>
      <% end %>
-</ul>	       		
-
+</ul>
 <h2 class="current-page">Students &gt; <span class="add-link">Edit</span></h2>
-  
 <fieldset>
 <%= form_for(@student, :action => resource(@student), :id => 'student', :name => "studs", :onsubmit => "MPClearAll()") do %>
 

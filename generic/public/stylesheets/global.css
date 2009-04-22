@@ -37,7 +37,7 @@ td{vertical-align="top"}
 /*Base Layout*/
 body{ font:12px/16px "lucida grande","Lucida Sans Unicode",tahoma,verdana,arial,sans-serif; background:url(/images/header-bg.gif) repeat-x;}
 body.fixed-width{width:100%;}
-#pagewrap{width:980px}
+/*#page-wrap{width:980px}*/
   /*Wraps Everything*/
 #content{ width:450px; float:left; margin-left:1em; min-height:500px;}
 .homes-content{width:420px!important;min-width:420px!important; padding:12px;}
@@ -46,7 +46,7 @@ body.fixed-width{width:100%;}
 
 .widen{width:600px!important;}
   /*The center Content Area*/
-#sidebar{float:left; clear:both;}
+#sidebar{float:left; clear:both; width:232px;}
 .left-block{width:240px;}
   /*Left Side Menu. term 'Sidebar' defaults for LEFT SIDEBAR/MENU*/
 #content p{font-size:13px; padding:.5em 0 .5em 0;}
@@ -106,7 +106,7 @@ fieldset td label{display:block; width:120px;}
 
 /*User Control Panel Section*/
 #user-cp{position:absolute; top:6px; right:6px;}
-#user-cp .welcome{}
+#user-cp .welcome{position:relative; top:-12px;}
 #user-cp ul li{display:inline;}
 #user-cp{float:right; background:url(/images/usercp-bg.gif) no-repeat top center; font-size:11px; padding:10px; width:302px; margin-top:6px;}
 #user-cp p{float:left; padding:0 6px 0 12px; color:#949490;}
@@ -203,9 +203,12 @@ input.long{width:200px}
 
 /*Tables*/
 #mytable {border-left:1px solid #C1DAD7; width:480px; padding:0; margin:10px 0 20px 0; font-size:12px; }/*Set Table width here if needed*/
-#mytable caption{padding: 0 0 5px 0; font:italic 11px "Trebuchet MS", Arial, Helvetica, sans-serif; text-align:right;}
-#mytable th {font: bold 11px "Trebuchet MS", Arial, Helvetica, sans-serif; color:#4f6b72; border: 1px solid #c1dad7; border-left:0; letter-spacing: 1px; text-transform:uppercase; text-align: left; padding:6px 6px 6px 12px; background:#cae8ea url(/images/mytable/bg_header.jpg) no-repeat;}
-#mytable th.thead1, #mytable th.thead2{border-left: 1px solid #c1dad7; border-top: 0; background: #fff url(/images/mytable/bullet1.gif) no-repeat; font:bold 10px "Trebuchet MS", Arial, Helvetica, sans-serif;}
+#mytable caption{padding: 0 0 5px 0; font:italic 11px Arial, Helvetica, sans-serif; text-align:right;}
+#mytable th {font: bold 11px  Arial, Helvetica, sans-serif; color:#4f6b72; border: 1px solid #c1dad7; border-left:0; 
+  letter-spacing: 1px; text-transform:uppercase; text-align: left; padding:6px 6px 6px 12px; 
+  background:#cae8ea url(/images/mytable/bg_header.jpg) no-repeat;}
+#mytable th.thead1, #mytable th.thead2{border-left: 1px solid #c1dad7; border-top: 0; 
+  background: #fff url(/images/mytable/bullet1.gif) no-repeat; font:normal 10px Arial, Helvetica, sans-serif;}
 #mytable th.thead2{background: #f5fafa url(/images/mytable/bullet2.gif) no-repeat; color: #797268;}
 #mytable th.firsthead{border-left:1px solid #C1DAD7;}/*First TH*/
 #mytable td{border-right:1px solid #C1DAD7; border-bottom:1px solid #C1DAD7; background:#fff; padding:6px 6px 6px 12px; color: #4f6b72;}
@@ -217,7 +220,9 @@ input.long{width:200px}
 
 
   /*Simple Table*/
-#simple-table{width:480px; padding:0; margin:0 0 20px 0; border-top: 1px solid #69c; border-bottom: 1px solid #69c; font-family:"lucida grande","Lucida Sans Unicode",tahoma,verdana,arial,sans-serif; font-size: 12px;  text-align: left; border-collapse: collapse; }
+#simple-table{width:480px; padding:0; margin:0 0 20px 0; border: 1px solid #69c;
+  font-family:"lucida grande","Lucida Sans Unicode",tahoma,verdana,arial,sans-serif; font-size: 12px;  
+  text-align: left; border-collapse: collapse; }
 #simple-table caption{padding:0 0 5px 0; font:italic 11px "Trebuchet MS", Arial, Helvetica, sans-serif; text-align:right;}
 #simple-table th{padding:15px 10px 10px; font-weight: normal; font-size: 13px; color:#003399;}
 #simple-table tbody{background:#e8edff none repeat scroll 0% 0%;}
@@ -477,4 +482,6 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 #classContainer {background:url("/images/vertical-separator.gif") repeat-y 230px 0px; overflow: auto; padding:10px 0; height:100%;}
 
 .picEdit{padding:0 0 0 200px;}
+
 #parent3, #parent4, #parent2{padding:5px 0 0 0;}
+
