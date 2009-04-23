@@ -149,26 +149,27 @@
        </div><!--Content End--> 
       
        <div class="right-sidebar">
-          <% unless session.user.type == "Parent" %>
-                 <h3>Manage Classroom</h3>
-                 <ul class="last">
-                     <li <% if @selected == "calendars" %> class="on" <% end %>><%= link_to_right((right = "calendar"), "Manage Calendars", url(:calendars) )  %></li>
-                   <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_right((right = "homework"), "Manage Homeworks", url(:home_works, :id => @classroom.id, :label => "class_home_works") )  %></li>
-                   <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :id => @classroom.id, :label => "class_announcements")) %></li>
-                 </ul>
-           <% end %>
-              <% unless @sp_light.nil? %>
-                   <h3>Spotlight</h3>
+              
+              <% unless session.user.type == "Parent" %>
+                   <h3>Manage Classroom</h3>
                    <ul class="last">
-                        <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @sp_light.id]) %>
-                        <% unless @attachment.nil? %>  
-                             <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
-                        <% end %>
-                        <h6><%= link_to "#{@sp_light.student_name}", url(:spot_light, @sp_light.id, :label => "class_spot_light") %></h6>
-                        <%= snippet(@sp_light.content, 25) %>
-                        <li><%= link_to "All spotlights", url(:class_details, :id => @classroom.id, :label => "spot_light") %></li>
+                        <li <% if @selected == "calendars" %> class="on" <% end %>><%= link_to_right((right = "calendar"), "Manage Calendars", url(:calendars) )  %></li>
+                        <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_right((right = "homework"), "Manage Homeworks", url(:home_works, :id => @classroom.id, :label => "class_home_works") )  %></li>
+                        <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :id => @classroom.id, :label => "class_announcements")) %></li>
                    </ul>
-                   
+              <% end %>
+              
+              <% unless @sp_light.nil? %>
+                    <h3>Spotlight</h3>
+                    <ul class="last">
+                         <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @sp_light.id]) %>
+                         <% unless @attachment.nil? %>  
+                              <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
+                         <% end %>
+                         <h6><%= link_to "#{@sp_light.student_name}", url(:spot_light, @sp_light.id, :label => "class_spot_light") %></h6>
+                         <%= snippet(@sp_light.content, 25) %>
+                         <li><%= link_to "All spotlights", url(:class_details, :id => @classroom.id, :label => "spot_light") %></li>
+                    </ul>
               <% end %>
              
               <h3>Current Homework</h3>
@@ -190,7 +191,7 @@
                      <% end %>
                    </ul>
               <% end %>
-               
+             
          </div>
     
 <% end %>   
