@@ -163,25 +163,27 @@ class FromPrincipals < Application
                                                 :content_type => params[:image][:content_type],
                                                 :size => params[:image][:size]
                  )
-               if ((params[:principal_email] == "on") || (params[:principal_name] == "on") )
-                    if params[:principal_name] == "on"
-                       @principal.principal_name = true
-                       @principal.principal_email = false
-                    end
-                    if params[:principal_email] == "on"
-                        @principal.principal_email = true
-                        @principal.principal_name = false
-                    end
-                    if (params[:principal_email]) && (params[:principal_name])
-                         @principal.principal_email = true
-                         @principal.principal_name = true
-                    end
-               else
-                  @principal.principal_email = false
-                  @principal.principal_name = false
-                  @principal.save
+               unless @principal.nil?
+                   if ((params[:principal_email] == "on") || (params[:principal_name] == "on") )
+                        if params[:principal_name] == "on"
+                           @principal.principal_name = true
+                           @principal.principal_email = false
+                        end
+                        if params[:principal_email] == "on"
+                            @principal.principal_email = true
+                            @principal.principal_name = false
+                        end
+                        if (params[:principal_email]) && (params[:principal_name])
+                             @principal.principal_email = true
+                             @principal.principal_name = true
+                        end
+                   else
+                      @principal.principal_email = false
+                      @principal.principal_name = false
+                      @principal.save
+                   end
+                   @principal.save
                end
-               @principal.save
                File.makedirs("public/uploads/principal_images")
                FileUtils.mv(params[:image][:tempfile].path, "public/uploads/principal_images/#{@attachment.filename}")
                redirect url(:settings)   
@@ -190,24 +192,26 @@ class FromPrincipals < Application
               render :settings
           end
       else
-          if ((params[:principal_email] == "on") || (params[:principal_name] == "on") )
-             if params[:principal_name] == "on"
-                @principal.principal_name = true
-                @principal.principal_email = false
-             end
-             if params[:principal_email] == "on"
-                 @principal.principal_email = true
-                 @principal.principal_name = false
-             end
-             if (params[:principal_email]) && (params[:principal_name])
-                  @principal.principal_email = true
-                  @principal.principal_name = true
-             end
-             @principal.save
-          else
-             @principal.principal_email = false
-             @principal.principal_name = false
-             @principal.save
+          unless @principal.nil?
+              if ((params[:principal_email] == "on") || (params[:principal_name] == "on") )
+                 if params[:principal_name] == "on"
+                    @principal.principal_name = true
+                    @principal.principal_email = false
+                 end
+                 if params[:principal_email] == "on"
+                     @principal.principal_email = true
+                     @principal.principal_name = false
+                 end
+                 if (params[:principal_email]) && (params[:principal_name])
+                      @principal.principal_email = true
+                      @principal.principal_name = true
+                 end
+                 @principal.save
+              else
+                 @principal.principal_email = false
+                 @principal.principal_name = false                     
+                 @principal.save
+              end
           end
           redirect url(:settings)
       end                                         

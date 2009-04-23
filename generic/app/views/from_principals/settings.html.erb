@@ -28,15 +28,19 @@
                                                  end
                              %>
                 </li>
-                <% if (@principal.principal_email == true) %>
-                    <li><input type="checkbox" name="principal_email" checked="true" />Display Principal's  Email Address</li>
-                <% else %>
-                    <li><input type="checkbox" name="principal_email"  />Display Principal's  Email Address</li>
+                <% unless @principal.nil? %>
+                      <% if (@principal.principal_email == true) %>
+                          <li><input type="checkbox" name="principal_email" checked="true" />Display Principal's  Email Address</li>
+                      <% else %>
+                          <li><input type="checkbox" name="principal_email"  />Display Principal's  Email Address</li>
+                      <% end %>
                 <% end %>
-                <% if (@principal.principal_name == true) %>
-                      <li><input type="checkbox" name="principal_name" checked="true" />Display Principal's Name</li>
-                <% else %>
-                      <li><input type="checkbox" name="principal_name" />Display Principal's Name</li>       
+                <% unless @principal.nil? %>
+                     <% if (@principal.principal_name == true) %>
+                           <li><input type="checkbox" name="principal_name" checked="true" />Display Principal's Name</li>
+                     <% else %>
+                           <li><input type="checkbox" name="principal_name" />Display Principal's Name</li>       
+                     <% end %>
                 <% end %>
             </ul>
               <% if @principal.nil? %>

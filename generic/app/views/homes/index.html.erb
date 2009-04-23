@@ -4,12 +4,14 @@
           <% unless @attachment.nil? %>
                <img src="/uploads/principal_images/<%= @attachment.filename %>" alt=" ", class = "prinPic"/>
                    <% @principal = Principal.find(:first) %>
-                   <% if @principal.principal_email == true %>
-                         <%= email(@principal.email) %>
-                    <% end %>
-                    <% if @principal.principal_name == true %>
-                         <%= @principal.name %>
-                    <% end %>
+                   <% unless @principal.nil? %>
+                       <% if @principal.principal_email == true %>
+                             <%= email(@principal.email) %>
+                       <% end %>
+                       <% if @principal.principal_name == true %>
+                            <%= @principal.name %>
+                       <% end %>
+                   <% end %>
           <% else %>
                     <img src="/images/principal.png" alt="From The Principal"/>
           <% end %>
