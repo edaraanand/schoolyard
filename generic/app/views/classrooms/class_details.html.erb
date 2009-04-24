@@ -1,4 +1,5 @@
 <%  if params[:label] == "calendars" %>
+  <div id="content" class="two-col">
         <h2 class="current-page">Class Calendar</h2>
         <% if @calendars.empty? %>
             <span class="subText">There are no events planned at this time</span>
@@ -31,10 +32,11 @@
                     </div>
                 <% end %>
                  <%= will_paginate (@calendars, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+                 </div>
         <% end %>
         
 <% elsif params[:label] == "homeworks" %>
-
+      <div id="content"  class="two-col">
         <h2 class="current-page"> Homework </h2>
         <% if @home_works.empty? %>
            <span class="subText">There are no Homework assignments at this time</span>
@@ -65,10 +67,12 @@
                 </div>           
             <% end %>    
                  <%= will_paginate (@home_works, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>      
+        </div>
         <% end %>
         
                 
 <% elsif params[:label] == "announcements" %>
+      <div id="content"  class="two-col">
         <h2 class="current-page"> Announcements </h2>
         <% if @announcements.blank? %>
             <span class="subText">There are no Announcements at this time</span>
@@ -89,10 +93,11 @@
                  </div>
             <% end %>
                <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-               
+           </div>    
         <% end %>
           
-<% elsif params[:label] == "spot_light" %>    
+<% elsif params[:label] == "spot_light" %>
+      <div id="content"  class="two-col">
         <h2 class="current-page"> Spotlight </h2>
         <% if @spot_lights.blank? %>
             <span class="subText">There are no Spotlights at this time</span>
@@ -112,9 +117,10 @@
                    <p class="separator">&nbsp;</p>
               <% end %>
               <%= will_paginate (@spot_lights, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+        </div>
         <% end %>
 <% else %>
-        <div id="content"><!--Content Area Starts here-->
+      <div id="content">
                <% for message in @welcome_messages %>
                  <p class="post-content"><%= message.content %></p>
                <% end %>
@@ -144,9 +150,7 @@
                            <% end %>
                      </div>
               <% end %>
-        
-       </div><!--Content End--> 
-      
+      </div>
        <div class="right-sidebar">
               
               <% unless session.user.type == "Parent" %>
