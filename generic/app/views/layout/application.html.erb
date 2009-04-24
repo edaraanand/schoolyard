@@ -21,14 +21,16 @@
     <script>  var $j = jQuery; </script>
         <%= include_required_js %>
    
-  </head>
-<body class="fixed-width">
+  	<link rel="stylesheet" type="text/css" href="style.css" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="style-ie.css" />
+	<![endif]--></head>
+<body>
   <div id="page-wrap"><!-- Wraps everything -->
     <div id="header"><!--The Header -->
       <h1><a href="#"><span></span><%= @current_school.school_name %>, <%= @current_school.email %>, <%= number_to_phone(@current_school.phone, :area_code => true) %></a></h1>
     </div><!--Header End -->
     <div id="content-wrap"><!--Wraps The content Area-->
-
       <div id="content" class="widen">
         <%= catch_content :for_layout %>
       </div><!--Content End-->
