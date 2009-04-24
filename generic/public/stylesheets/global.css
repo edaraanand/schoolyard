@@ -49,8 +49,8 @@ body.fixed-width{width:100%;}
 
 #content p{font-size:13px; padding:.5em 0 .5em 0;}
 
-  /*Wraps the content section*/
-#fullpage{width:650px; float:left;}
+
+#fullpage{width:500px; float:left;}
 
 
 
