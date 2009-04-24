@@ -14,15 +14,15 @@ require "pdf/writer"
 require "pdf/simpletable"
 
 
-  use_orm :activerecord
-  use_test :rspec
-  #use_template_engine :erb
-  #use_template_engine :haml
-  
+use_orm :activerecord
+use_test :rspec
+#use_template_engine :erb
+#use_template_engine :haml
+
 Merb::BootLoader.after_app_loads do
-   
-   gem 'will_paginate', '~> 3.0.0'
-   require 'will_paginate'
+
+  gem 'will_paginate', '~> 3.0.0'
+  require 'will_paginate'
 
   Merb::Mailer.config = {
     :host   => 'smtp.gmail.com',
@@ -31,23 +31,23 @@ Merb::BootLoader.after_app_loads do
     :pass   => '75F633',
     # :user   => 'raja.naidu13@gmail.com',
     #:pass   => 'raja1213',
-    :auth   => :plain 
+    :auth   => :plain
   }
-  
-   WillPaginate::ViewHelpers::LinkRenderer.class_eval do
-     protected
-  
-     def url(page)
-       params = @template.request.params.except(:action, :controller).merge('page' => page)
-       @template.url(:this, params.merge(@options[:params] || {}))
-     end
+
+  WillPaginate::ViewHelpers::LinkRenderer.class_eval do
+    protected
+
+    def url(page)
+      params = @template.request.params.except(:action, :controller).merge('page' => page)
+      @template.url(:this, params.merge(@options[:params] || {}))
+    end
   end
 
   Merb::AbstractController.send(:include, WillPaginate::ViewHelpers::Base)
-  
+
   #Merb::Mailer.config = { :sendmail_path => /usr/sbin/sendmail}
   #Merb::Mailer.delivery_method = :sendmail
- 
+
 end
 
 # ==== Set up your basic configuration
