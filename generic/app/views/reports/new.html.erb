@@ -24,7 +24,7 @@
                      <%= fields_for @category do %>
                            <ul>
                                 <li><label>Category(optional)</label><li>
-                                <li><input name="category_1[category]"  value="" /></li>
+                                <li><input name="category[]"  value="" /></li>
                            </ul>
                      <% end =%>
                      <%= fields_for @assignment do %>
@@ -78,12 +78,7 @@
        for (var r=0;r<sr.length;r++)
          {
             nam = sr[r].name
-            if (nam == "category_1[category]")
-              {
-                 sr[r].name = 'category_' + counter + '[category]'
-                 sr[r].value = ""
-              }
-            else if (nam == "category_1[assignment][name][]")
+            if (nam == "category_1[assignment][name][]")
               {
                  sr[r].name = 'category_' + counter + '[assignment][name][]'
                  sr[r].value = ""
