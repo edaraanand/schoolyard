@@ -7,12 +7,14 @@
   <li><%= text_field  :city,  :label => "City", :maxlength => "75" %></li>
   <li><%= text_field  :state,  :label => "State", :maxlength => "75" %></li>
   <li><%= text_field  :zip_code,  :label => "Zip Code", :maxlength => "75" %></li>
-  <li><%= text_field  :fax,  :label => "Fax", :maxlength => "75" %></li>
   <li>
       <%= text_field :phone,  :label => "Phone", :class=>"short text", :maxlength => "75" %>
       <span class="phone-hint">(e.g. 1239076897)</span>
   </li>
   <li><%= text_field :email,  :label => "E-mail", :maxlength => "75" %></li>
+  <li><%= text_field  :fax,  :label => "Fax", :class => "short text", :maxlength => "75" %>
+      <span class="phone-hint">(e.g. 3210987654)</span>
+  </li>
 </ul>
 <br />
 <div class="save-cancel">

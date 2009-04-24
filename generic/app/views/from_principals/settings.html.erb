@@ -7,14 +7,13 @@
        <% end %>
 </ul>
 
-<h2 class="current-page">From the Principal &gt; Settings</h2>
-
+<h2 class="current-page">From the Principal &gt; Settings  </h2> 
 
 <% unless @attachment.nil? %>
-<img src="uploads/principal_images/<%= @attachment.filename %>" alt="<%= @attachment.filename %>", class = "prinPic"/>
+      <img src="uploads/principal_images/<%= @attachment.filename %>" alt="<%= @attachment.filename %>", class = "prinPic"/>
 <% else %>
-<img src="images/principal.png" alt="From The Principal" />
-<br class="clear"/><br/><br/>
+      <img src="images/principal.png" alt="From The Principal" />
+      <br class="clear"/><br/><br/>
 <% end %>
 
 
@@ -22,22 +21,42 @@
        <fieldset>
             <ul>
                 <li><%= file_field :image,  :label => 
-                  if @attachment.nil?
-                    "Upload a Photograph" 
-                  else
-                    "Upload a different Photograph"
-                  end
-                    
-                    
-                  %></li>
+                                                 if @attachment.nil?
+                                                   "Upload a Photograph" 
+                                                 else
+                                                   "Upload a different Photograph"
+                                                 end
+                             %>
+                </li>
+                <% unless @principal.nil? %>
+                      <% if (@principal.principal_email == true) %>
+                          <li><input type="checkbox" name="principal_email" checked="true" />Display Principal's  Email Address</li>
+                      <% else %>
+                          <li><input type="checkbox" name="principal_email"  />Display Principal's  Email Address</li>
+                      <% end %>
+                <% end %>
+                <% unless @principal.nil? %>
+                     <% if (@principal.principal_name == true) %>
+                           <li><input type="checkbox" name="principal_name" checked="true" />Display Principal's Name</li>
+                     <% else %>
+                           <li><input type="checkbox" name="principal_name" />Display Principal's Name</li>       
+                     <% end %>
+                <% end %>
             </ul>
+              <% if @principal.nil? %>
+                   <%= link_to "Add Principal Details", url(:new_settings) %>
+             <% else %>
+                   <%= link_to "Edit Principal Details", url(:edit_details) %>
+             <% end %>
+             
        </fieldset>
       
-            <div class="save-cancel">
-                <%= submit "    Upload    " %>  Or <%= link_to "Cancel", url(:from_principals), :class => "cancel" %>
+           <div class="save-cancel">
+                <%= submit "    Save   " %>  Or <%= link_to "Cancel", url(:from_principals), :class => "cancel" %>
             </div>
   <% end =%>
 
+  
 
 
   

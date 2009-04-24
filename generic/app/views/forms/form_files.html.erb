@@ -56,11 +56,15 @@
       <% end %>  
 
 <% end %>
-<% unless session.user.type == "Parent" %>
-     <div class="right-sidebar">
-         <h3>Manage Forms</h3>
-          <ul class="last">
-               <li <% if @selected == "forms" %> class="on" <% end %>><%= link_to_right((right = "forms"), "Manage Forms", url(:forms)  ) %></li>
-          </ul>
-      </div>
-<% end %>
+
+</div>
+  
+  
+    <% unless session.user.type == "Parent" %>
+         <div class="right-sidebar">
+             <h3>Manage Forms</h3>
+              <ul class="last">
+                   <li <% if @selected == "forms" %> class="on" <% end %>><%= link_to_right((right = "forms"), "Manage Forms", url(:forms)  ) %></li>
+              </ul>
+          </div>
+    <% end %>

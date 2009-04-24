@@ -72,15 +72,18 @@
                           </div>
                      <% end %>
       <% end %>
-<% end %>
+   <% end %>
+   
  </div>
 
-<% unless session.user.type == "Parent" %>
-     <div class="right-sidebar"> 
-           <h3>Events Administration</h3>
-           <ul class="last">
-               <li <% if @selected == "calendars" %> class="on" <% end %>><%= link_to_right((right = "calendar"), "Manage Calendars", url(:calendars) )  %></li>
-           </ul>
-     </div>
-<% end %>       
+ </div>
+ 
+     <% unless session.user.type == "Parent" %>
+          <div class="right-sidebar"> 
+                <h3>Events Administration</h3>
+                <ul class="last">
+                    <li <% if @selected == "calendars" %> class="on" <% end %>><%= link_to_right((right = "calendar"), "Manage Calendars", url(:calendars) )  %></li>
+                </ul>
+          </div>
+     <% end %>       
 

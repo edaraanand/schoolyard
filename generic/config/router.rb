@@ -122,6 +122,10 @@ Merb::Router.prepare do
        match("/school_admin").to(:controller => 'schools', :action => 'school_admin').name(:school_admin)
        match("/home_spot_light").to(:controller => 'homes', :action => 'home_spot_light').name(:home_spot_light)
        match("/lights").to(:controller => 'homes', :action => 'lights').name(:lights)
+       match("/new_settings").to(:controller => 'from_principals', :action => 'new_settings').name(:new_settings)
+       match("/create_settings").to(:controller => 'from_principals', :action => 'create_settings').name(:create_settings)
+       match("/edit_details").to(:controller => 'from_principals', :action => 'edit_details').name(:edit_details)
+       match("/update_details").to(:controller => 'from_principals', :action => 'update_details').name(:update_details)
        match(:first_subdomain => 'admin').to(:controller => 'admin', :action => 'index') 
    end
    

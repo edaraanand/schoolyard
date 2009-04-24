@@ -3,9 +3,19 @@
           <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
           <% unless @attachment.nil? %>
                <img src="/uploads/principal_images/<%= @attachment.filename %>" alt=" ", class = "prinPic"/>
+                   <% @principal = Principal.find(:first) %>
+                   <% unless @principal.nil? %>
+                       <% if @principal.principal_email == true %>
+                             <%= email(@principal.email) %>
+                       <% end %>
+                       <% if @principal.principal_name == true %>
+                            <%= @principal.name %>
+                       <% end %>
+                   <% end %>
           <% else %>
-               <img src="/images/principal.png" alt="From The Principal"/>
+                    <img src="/images/principal.png" alt="From The Principal"/>
           <% end %>
+          
           <% if @from_principals.blank? %>
                <p class="subText">There are no messages at this time.</p>
           <% else %>
@@ -70,72 +80,74 @@
      </div>
 <div class="right-sidebar">
   
-     <% unless @classrooms.empty? %>
-          <h3>Quick Links </h3>
-          <div class="last">
-               <% unless @classes.empty? %>
-                     <li class="noBullet">Classes:
-                       <ul>
-                      <% @classes.each do |f| %>
-                            <% if f.class_name == "Sports" %>
-                                  <li><%= link_to "#{f.class_name}".titleize, url(:sports) %></li>
-                            <% else %>
-                                  <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => f.id) %></li>
-                            <% end %>
-                      <% end %>
-                      </li>
-                      </ul>
-                     </ul>
-               <%end%>
-               <%unless @extracurricular.empty?%>
-                     <li class="noBullet">Subjects:
-                       <ul>
-                      <% @extracurricular.each do |f| %>
-                            <% if f.class_name == "Sports" %>
-                                  <li><%= link_to "#{f.class_name}".titleize, url(:sports) %></li>
-                            <% else %>
-                                  <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => f.id) %></li>
-                            <% end %>
-                      <% end %>
-                      </li>
-                      </ul>
-                     </ul>
-               <%end%>
-          </div>
-     <% end %>
+       <% unless session.user.type == "Parent" %>
+            <h3>Manage Home Page</h3>
+            <ul class="last">
+                <li <% if @selected == "from_principal" %> class="on" <% end %>><%= link_to_right((right = "from_principal"), "Manage From the Principal", url(:from_principals)) %></li>
+                <li <% if @selected == "welcome_messages" %> class="on" <% end %>><%= link_to_right( (right = "welcome_messages"), "Manage Welcome Messages", url(:welcome_messages, :label => "home_messages") ) %></li>
+                <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :label => "home_a")) %></li>
+                <li <% if @selected == "e_links" %> class="on" <% end %>><%= link_to_right((right = "external_links"), "Manage External Links", url(:external_links) ) %></li>
+            </ul>
+       <% end %>
+       
+       <% unless @spot_light.nil? %>
+            <h3>Spotlight</h3>
+            <ul class="last">
+                  <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @spot_light.id]) %>
+                  <% unless @attachment.nil? %>  
+                       <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
+                  <% end %>
+                  <h6><%= link_to "#{@spot_light.student_name}", url(:home_spot_light, :l => @spot_light.id) %></h6>
+                  <%= snippet(@spot_light.content, 20) %>
+                  <%= link_to "Previous Spot Lights", url(:lights) %>
+            </ul>
+       <% end %>
+       
+       <% unless @classrooms.empty? %>
+            <h3>Quick Links </h3>
+            <div class="last">
+                 <% unless @classes.empty? %>
+                       <li class="noBullet">Classes:
+                         <ul>
+                        <% @classes.each do |f| %>
+                              <% if f.class_name == "Sports" %>
+                                    <li><%= link_to "#{f.class_name}".titleize, url(:sports) %></li>
+                              <% else %>
+                                    <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => f.id) %></li>
+                              <% end %>
+                        <% end %>
+                        </li>
+                        </ul>
+                       </ul>
+                 <%end%>
+                 <%unless @extracurricular.empty?%>
+                       <li class="noBullet">Subjects:
+                         <ul>
+                        <% @extracurricular.each do |f| %>
+                              <% if f.class_name == "Sports" %>
+                                    <li><%= link_to "#{f.class_name}".titleize, url(:sports) %></li>
+                              <% else %>
+                                    <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => f.id) %></li>
+                              <% end %>
+                        <% end %>
+                        </li>
+                        </ul>
+                       </ul>
+                 <%end%>
+            </div>
+       <% end %>
 
-     <% unless  @external_links.empty? %>
-        <h3>External Links </h3>
-       <ul class="last"> 
-         <% for link in @external_links %>
-          <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
-        <% end %>
-       </ul> 
-     <% end %>
+       <% unless  @external_links.empty? %>
+           <h3>External Links </h3>
+           <ul class="last"> 
+               <% for link in @external_links %>
+                     <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
+               <% end %>
+           </ul> 
+       <% end %>
      
-     <% unless @spot_light.nil? %>
-          <h3>Spotlight</h3>
-          <ul class="last">
-                <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @spot_light.id]) %>
-                <% unless @attachment.nil? %>  
-                     <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
-                <% end %>
-                <h6><%= link_to "#{@spot_light.student_name}", url(:home_spot_light, :l => @spot_light.id) %></h6>
-                <%= snippet(@spot_light.content, 25) %>
-                <%= link_to "Previous Spot Lights", url(:lights) %>
-          </ul>
-     <% end %>
+       
+   </div>
    
-     <% unless session.user.type == "Parent" %>
-        <h3>Manage Home Page</h3>
-        <ul class="last">
-            <li <% if @selected == "from_principal" %> class="on" <% end %>><%= link_to_right((right = "from_principal"), "Manage From the Principal", url(:from_principals)) %></li>
-            <li <% if @selected == "welcome_messages" %> class="on" <% end %>><%= link_to_right( (right = "welcome_messages"), "Manage Welcome Messages", url(:welcome_messages, :label => "home_messages") ) %></li>
-            <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :label => "home_a")) %></li>
-            <li <% if @selected == "e_links" %> class="on" <% end %>><%= link_to_right((right = "external_links"), "Manage External Links", url(:external_links) ) %></li>
-        </ul>
-     <% end %>
-    
-   
-</div></div>
+</div>
 
