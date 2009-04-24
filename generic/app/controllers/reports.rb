@@ -16,9 +16,11 @@ class Reports < Application
    end
    
    def create
-       raise params.inspect
       @report = Report.new(params[:report])
       if @report.valid?
+        params[:category].each do |f|
+            
+        end
          params[:assignment_1][:name].each_with_index do |l, i|
                @assignment = Assignment.create({ :name => l, 
                                                  :date => params[:assignment_1][:date][i], 
