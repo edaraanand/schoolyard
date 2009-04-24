@@ -48,7 +48,7 @@
    function addFormField()
   {
     var id = document.getElementById('id').value;
-    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short text' name='external_link[title][]' id='txt" + id + "' value='title' onfocus='cl(this);'><input type='text' id='txt" + id + "' name='external_link[url][]' class='long apart text' value='url' onfocus='cl(this);' /><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a><p>");
+    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short text' name='external_link[title][]' id='txt" + id + "' value='title' onfocus='cl(this);'><input type='text' id='txt" + id + "' name='external_link[url][]' class='long apart text' value='url' onfocus='cl(this);' /><a href='#' class='delete-btn' onclick='removeFormField(\"#row" + id + "\"); return false;'></a><p>");
     //$('txt'+id).focus();
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
