@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
   <head>
   <% unless @current_school.nil? %>
@@ -12,13 +12,13 @@
     <link rel="stylesheet" href="/stylesheets/rte.css" type="text/css" media="screen" charset="utf-8" />
     
     
-    <script src='/javascripts/prototype.js'></script>
-    <script src='/javascripts/jquery.js'></script>
-    <script src='/javascripts/ui-datepicker-1.5.2.min.js'></script>
-    <script src='/javascripts/jquery.clockpick.1.2.4.js'></script>
-    <script src='/javascripts/jquery.rte.js'></script>
-    <script>  jQuery.noConflict(); </script>
-    <script>  var $j = jQuery; </script>
+    <script type="text/javascript" src='/javascripts/prototype.js'></script>
+    <script type="text/javascript"  src='/javascripts/jquery.js'></script>
+    <script type="text/javascript"  src='/javascripts/ui-datepicker-1.5.2.min.js'></script>
+    <script type="text/javascript"  src='/javascripts/jquery.clockpick.1.2.4.js'></script>
+    <script type="text/javascript"  src='/javascripts/jquery.rte.js'></script>
+    <script type="text/javascript">  jQuery.noConflict(); </script>
+    <script type="text/javascript">  var $j = jQuery; </script>
         <%= include_required_js %>               
    
   </head>
@@ -30,7 +30,8 @@
         <h1 class="login"><%= @current_school.school_name %></h1>
       <% end %>
     </div><!--Header End -->
-    <div style="margin:0 auto;"><%= catch_content :for_layout %></div>
+    <div style="margin:0 auto; width:890px;"><%= catch_content :for_layout %></div>
+  </div>
   <%= partial 'common/footer' %>
 </body>
 </html>                                  

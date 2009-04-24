@@ -63,8 +63,9 @@ a:visited{color:#445978;}
 a:hover{color:#08225c; text-decoration:underline;}
 a:active{color:#000;}
 .fltlft{float:left;}
-.clear{clear:both; height:0;font-size: 1px;line-height: 0px;}
 .fltrt{float:right;}
+.clear{clear:both; height:0;font-size: 1px;line-height: 0px;}
+
 
 h2 {font-size:120%; font-weight:bold; padding:10px 0; border-bottom:1px solid #ebebeb; }
 h3{font-size:120%; font-weight:bold; padding:4px 0; margin:0 0 8px 0; }
