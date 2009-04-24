@@ -1,6 +1,8 @@
   <%= partial 'layout/main' %>
     <div id="content-wrap"><!--Wraps The content Area-->
-      <%= catch_content :for_layout %>
+      <div id="content">
+        <%= catch_content :for_layout %>
+      </div>
     </div><!--Content Wrap End -->
   <%= partial 'common/change' %>
     <div class="hrule clear hidden "><hr /></div>

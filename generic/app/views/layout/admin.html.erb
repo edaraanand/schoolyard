@@ -22,7 +22,10 @@
   <script>  jQuery.noConflict(); </script>
   <script>  var $j = jQuery; </script>
         <%= include_required_js %>
-</head>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="style-ie.css" />
+	<![endif]--></head>
 <body>
   <div id="page-wrap"><!-- Wraps everything -->
   <div id="header"><!--The Header -->
@@ -37,7 +40,7 @@
    </div>
    
     <div id="content-wrap"><!--Wraps The content Area-->
-      <div class="hrule clear hidden "><hr /></div>
+
       <div id="content"><!--Content Area Starts here-->
         <%= catch_content :for_layout %>
       </div><!--Content End-->
