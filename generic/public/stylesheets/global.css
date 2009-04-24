@@ -57,7 +57,7 @@ body.fixed-width{width:100%;}
 
 
 /*Generic*/
-a{color:#445978; text-decoration:none; }
+a{color:#445978; text-decoration:none;}
 a:link{color:#1a3e8f;}
 a:visited{color:#445978;}
 a:hover{color:#08225c; text-decoration:underline;}
@@ -77,7 +77,7 @@ h2 span.actions {padding-left:12px; font-weight:normal;}
 h2 span.actions a{font-weight:normal;}
 
 dl{width:480px; float:left; padding:4px 0; margin:4px 0; }
-dt{width:120px; padding:4px 0; margin:0 3px 0 3px; float:left; }
+dt{width:120px; padding:4px 0; margin:0 3px 0 3px; float:left;}
 dd{width:300px; padding:4px 0; float:left; }
 
 /*dl.check-box-set{ margin:0 0 0 180px;}*/
@@ -260,8 +260,8 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 #checkboxes #check-fields span{display:block;}
 
 /*Rules for Right Sidebar*/
-.right-sidebar{ line-height:15px; width:200px; float:left; margin:30px 0 0 20px; padding:0px 0px 0px 30px ;}
-.right-sidebar h3{font-weight:bold ; background:url("/images/right-sidebar-top.gif") no-repeat top center; padding:12px; margin:10px 0 0 0; min-height:15px;}
+.right-sidebar{position:absolute; top:90px; right:20px; line-height:15px; width:200px; clear:both; margin:0 0 0 20px;}
+.right-sidebar h3{font-weight:bold; background:url("/images/right-sidebar-top.gif") no-repeat top center; padding:12px; margin:10px 0 0 0; min-height:15px;}
 .right-sidebar .last{background:url("/images/right-sidebar-bottom.gif") no-repeat bottom center; border-top:1px solid #becfdb; }
   /*Styles applied to these three elements provide chrome for the right sidebar*/
 
