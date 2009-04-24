@@ -65,6 +65,7 @@ a:active{color:#000;}
 .fltlft{float:left;}
 .fltrt{float:right;}
 .clear{clear:both; height:0;font-size: 1px;line-height: 0px;}
+.empty-li{visibility:hidden; height:0px!important; padding:0!important;}
 
 
 h2 {font-size:120%; font-weight:bold; padding:10px 0; border-bottom:1px solid #ebebeb; }

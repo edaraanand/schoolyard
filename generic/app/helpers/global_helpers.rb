@@ -11,7 +11,7 @@ module Merb
     
      def error_messages_for(object)
       #return if !object.respond_to?(:errors) || object.errors.empty?
-      "<ul class='error_messages'>#{object.errors.full_messages.map{|msg| "<li>#{msg}</li>" }.join}</ul>"
+      "<ul class='error_messages'><li class="empty-li"></li>#{object.errors.full_messages.map{|msg| "<li>#{msg}</li>" }.join}</ul>"
      end
    
      def link_to_if(right, name, url = "")
