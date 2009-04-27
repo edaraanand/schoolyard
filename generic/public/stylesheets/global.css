@@ -279,7 +279,7 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 
 
 #footer{clear:both; padding:10px 10px 30px 10px; text-align:center; border-top:1px solid #ccc; margin:150px 0 40px 0;
-  position:absolute; left:250px; right:250px;
+  position:absolute; left:20px; right:20px;
   }
 
 .lightbox{width:480px; border:10px solid #ccc; padding:20px; margin:10px 0;}
@@ -299,13 +299,17 @@ span.cancel a:hover{text-decoration:underline;}
 .short-block{width:480px;}
 .long-block{width:640px;}
 .left-block .long-block{width:230px; padding:5px;}
+#content .data-block p.post-content{margin:4px 0 8px 48px; padding:0;}
+.data-block .edit-btn{margin:0 0 0 48px;}
+
+
 
 .data{width:300px;}
-.ddmmm{width:36px; height:48px; border:1px solid #C1DAD7; margin:10px 10px 10px 0; float:left;}
+.ddmmm{width:36px; height:48px; border:1px solid #C1DAD7; margin:6px 10px 10px 0; float:left;}
 .ddmmm .date{display:block; text-align:center; padding:5px 0 6px 0; font-size:14px; font-weight:bold; color:#333}
 .ddmmm .month{display:block; text-align:center; background:#f5fafa; padding:2px 0;font-size:12px; border-top:1px solid #C1DAD7;}
 .ddmmm-x{width:36px; height:42px;margin:0px 10px 10px 0; float:left; visibility:hidden;}
-.edit-btn, .delete-btn, .deactive, .reactive{width:50px; padding:10px 0 10px 20px;}
+.edit-btn, .delete-btn, .deactive, .reactive{width:50px; padding:10px 0 10px 20px; margin:0 10px;}
 .edit-btn{background:url(/images/edit-btn-bg.gif) no-repeat 0 50%;}
 .deactive{background:url("/images/ico_deactivate.gif") no-repeat 0 50%; color:red;}
 .reactive{background:url("/images/ico_activate.gif") no-repeat 0 50%; color:#169609;}
