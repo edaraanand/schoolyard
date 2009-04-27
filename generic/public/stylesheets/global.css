@@ -35,16 +35,18 @@ td{vertical-align="top"}
 
 
 /*Base Layout*/
+html, body{height:100%;}
+#page-wrap{min-height:100%}
 body{ font:12px/16px "lucida grande","Lucida Sans Unicode",tahoma,verdana,arial,sans-serif; background:url(/images/header-bg.gif) repeat-x;}
 body.fixed-width{width:100%;}
-#page-wrap{height:100%;	min-width: 780px;	max-width: 1260px; margin:0 auto;}
+#page-wrap{min-width: 780px;	max-width: 1260px; margin:0 auto; position:relative; overflow:visible;}
 
 #content{padding: 0 280px 0 260px;}
 
 #content.two-col{padding: 0 50px 0 260px;}
 #content.one-col{padding:20px}
 .widen{width:600px!important;}
-#sidebar{float:left; clear:both; width:232px;}
+#sidebar{float:left; clear:both; width:228px; padding:4px;}
 .left-block{width:240px;}
 
 #content p{font-size:13px; padding:.5em 0 .5em 0;}
@@ -84,7 +86,7 @@ dl.check-box-set dd{width:420px; padding:4px 0; margin:0 0 0 12px;}
 
 dl.check-box-set.origin{margin-left:0;}
 
-.save-cancel{clear:both;  padding:12px; border-top:4px solid #e8e8e8; margin-top:8px;}
+.save-cancel{padding:12px; border-top:4px solid #e8e8e8; margin-top:8px; clear:both;}
 .add-link {margin:0 12px;}
 
 
@@ -197,7 +199,8 @@ ul#menu li ul li a:active{color:#1b67ed;}
 .apart4{margin-left:4px;}
 input.long{width:200px}
 
-#am1, #am2, #am3, #am4{padding:10px 10px; border-top:1px solid #eee; margin-top:10px;}
+#am1, #am2, #am3, #am4{padding:10px 10px; border-top:1px solid #eee; margin-top:10px; clear:both;}
+fieldset ul{padding-top:8px;}
 
 
 
@@ -275,7 +278,9 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 .email-alerts li{margin:10px 0 0 30px; padding:3px 0 3px 20px; background:url"(/images/bullet-dash.gif") no-repeat left center; border-bottom:1px dotted #eee;}
 
 
-#footer{clear:both; padding:10px; text-align:center; border-top:1px solid #ccc; margin:10px 0 40px 0;}
+#footer{clear:both; padding:10px 10px 30px 10px; text-align:center; border-top:1px solid #ccc; margin:150px 0 40px 0;
+  position:absolute; left:250px; right:250px;
+  }
 
 .lightbox{width:480px; border:10px solid #ccc; padding:20px; margin:10px 0;}
 .lightbox .close{float:right}
@@ -311,7 +316,7 @@ span.cancel a:hover{text-decoration:underline;}
 .delete-btn{background:url(/images/delete-btn-bg.gif) no-repeat 0 50%;}
 
 .data-block .data{float:left;}
-.data-block h3{font-weight:bold; margin-bottom:6px;}
+.data-block h3{font-weight:bold; margin:0px;}
 .data-block h3 a { margin:6px 0 12px 0!important;}
 #content h3 a{margin:0 0 0 10px;}
 .data-block li{padding:0 0 4px 0;}
