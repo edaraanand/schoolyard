@@ -17,7 +17,7 @@
           <% end %>
           
           <% if @from_principals.blank? %>
-               <p class="subText">There are no messages at this time.</p>
+               <p class="subText">There are no articles at this time.</p>
           <% else %>
                  <% for principal in @from_principals %>
                       <div class="data-block long-block">
@@ -25,7 +25,7 @@
                                 <span class="date"><%=  principal.created_at.strftime("%d")%></span>
                                 <span class="month"><%=  principal.created_at.strftime("%b")%></span>
                            </div>
-                            <span><%= link_to "#{principal.title}", url(:home, principal.id, :label => 'principal') %></span>
+                            <span><br/><%= link_to "#{principal.title}", url(:home, principal.id, :label => 'principal') %></span>
                            <p class="separator"><%= snippet(principal.content, 50) %></p>
                       </div>
                   <% end %>
