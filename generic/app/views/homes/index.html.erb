@@ -36,12 +36,15 @@
               </div>
      </div>
      <div id="content" class="homes-content">
-           <% unless @welcome_messages.empty? %>
+           <p class="post-content">
+               <% if @welcome_messages.empty? %>
+                 Welcome to <%=@current_school.school_name%>
+               <%else%>
                 <% for message in @welcome_messages %>
-                   <p class="post-content"><%= san_content(message.content) %></p>
-                   <br />
+                   <%= san_content(message.content) %>
                 <% end %>
            <% end %>
+           </p>
            <h2 class="home">Announcements</h2>
 
            <% if @announcements.blank? %>
