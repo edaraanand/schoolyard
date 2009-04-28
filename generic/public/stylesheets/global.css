@@ -270,7 +270,7 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 
 .right-sidebar p{padding:10px 8px 10px 12px}
 
-.right-sidebar ul{padding:10px 8px 6px 20px;}
+.right-sidebar ul{padding:10px 8px 6px 10px;}
 .right-sidebar ul li{padding:0 0 6px 10px; background:url("/images/bullet-dash.gif") no-repeat left top;}
 .right-sidebar ol{padding:10px 8px 6px 20px; list-style:decimal inside;}
 .right-sidebar ol li{padding:0 0 6px 0;}
@@ -300,8 +300,7 @@ span.cancel a:hover{text-decoration:underline;}
 .long-block{width:640px;}
 .left-block .long-block{width:230px; padding:5px;}
 #content .data-block p.post-content{margin:4px 0 8px 48px; padding:0;}
-.data-block .edit-btn{margin:0 0 0 48px;}
-
+.announcemt .data-block .edit-btn{margin:0px;}
 
 
 .data{width:300px;}
