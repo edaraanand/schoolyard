@@ -489,3 +489,19 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 
 .picEdit{padding:0 0 0 200px;}
 #parent3, #parent4, #parent2{padding:5px 0 0 0;}
+.from-principal{position:relative;}
+.caption{
+    line-height:1em;
+	background:#000;
+	color:#fff;
+	position:absolute;
+	bottom:0;
+	left:0;
+	text-align:left;
+	width:213px;
+	padding: 0 0 5px 5px;
+	opacity:.75;
+	filter:alpha(opacity=85);
+	}
+.caption a{color:#fff;}
+	.caption h2{border:none;}
