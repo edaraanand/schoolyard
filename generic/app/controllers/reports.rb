@@ -16,29 +16,34 @@ class Reports < Application
    end
    
    def create
+      raise params.inspect
       @report = Report.new(params[:report])
+      @n = (1..50).to_a
+      @messages = []
       if @report.valid?
-        params[:category].each do |f|
-            
-        end
-         params[:assignment_1][:name].each_with_index do |l, i|
-               @assignment = Assignment.create({ :name => l, 
-                                                 :date => params[:assignment_1][:date][i], 
-                                                 :max_point => params[:assignment_1][:max_point][i]
-                                                })
-         end
-         if @assignment.valid? && @assignment.save
-            @report.save
-            params[:category].each do |f|
-               @report.categories.create({ :category_name => f })
+         @n.each do |f|
+            if params["category_#{f}".intern]
+               params["category_#{f}".intern][:assignment][:name].each_with_index do |l, i|
+                       @assignment = Assignment.create({:name => l, 
+                                                        :date => params["category_#{f}".intern][:assignment][:date][i], 
+                                                        :max_point => params["category_#{f}".intern][:assignment][:max_point][i]
+                                                        })
+               end
+               if @assignment.valid?
+                  @messages << @assignment
+               else
+                  render :new
+               end
             end
-            raise params.inspect  
-         else
-            flash[:error] = "You should provide atleast one assignment for each category"
+         end
+         if @messages.empty?
+            flash[:error] = "please enter Assignment Details"
             render :new
+         else 
+           redirect resource(:reports)
          end
       else
-         render :new
+        render :new
       end
    end
    

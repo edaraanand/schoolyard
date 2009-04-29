@@ -1,6 +1,6 @@
 
 <%= error_messages_for @report %>
-<%= error_messages_for @assignment %>
+<%#= error_messages_for @assignment %>
 <ul class='error_messages'>
      
        <% if flash[:error] %>
@@ -14,17 +14,21 @@
 
 <fieldset>
 
-      <%= form_for(@report, :action => resource(:reports) ) do %>
+<%= form_for(@report, :id => "esh", :action => resource(:reports), :onsubmit => "ClearAll()" ) do %>
        
               <ul>
-                  <li><label>Main Subject</label><%= text_field  :subject_name %></li>
+                   <li>
+                     <%= text_field  :subject_name,  :class => "required defaultText defaultTextActive", :label => "Main Subject", :title => "Main Subject" %>
+                   </li>
               </ul>
                      
             <div id="readroot_1" style="display:block" value="1">
                      <%= fields_for @category do %>
                            <ul>
-                                <li><label>Category(optional)</label><li>
-                                <li><input name="category[]"  value="" /></li>
+                                <li>
+                                    <label>Category(optional)</label>
+                                    <%= text_field :name => "category_1[category]", :class => "short" %>
+                                </li>
                            </ul>
                      <% end =%>
                      <%= fields_for @assignment do %>
@@ -48,6 +52,8 @@
 <script type= "text/javascript">
   
      // $j("#readroot_1 input.date").datepicker({minDate:'today + 1'});
+  
+      $j("#esh").validate();
    
       $j("#date1").datepicker({minDate:'today + 1'});
       $j("#date2").datepicker({minDate:'today + 1'});
@@ -57,6 +63,7 @@
        
      var counter = 1;
       t = 6;
+   
     function moreFields()
     {
        counter++;
@@ -65,12 +72,6 @@
        newFields.style.display = 'block';
        newFields.value = counter;
        var newField = newFields.childNodes;
-       for (var i=1;i<newField.length;i++)
-       {
-		      var theName = newField[i].name
-          if (theName)
-			      newField[i].name = theName + counter;
-        }
        var insertHere = document.getElementById('writeroot');
        insertHere.parentNode.insertBefore(newFields,insertHere);
        $j(newFields).append('<a href="#" class="cancel" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"> Remove Category </a>')
@@ -78,17 +79,22 @@
        for (var r=0;r<sr.length;r++)
          {
             nam = sr[r].name
-            if (nam == "category_1[assignment][name][]")
+             if (nam == "category_1[category]")
+              {
+                sr[r].name = 'category_' + counter + '[category]'
+              }
+            else if (nam == "category_1[assignment][name][]")
               {
                  sr[r].name = 'category_' + counter + '[assignment][name][]'
                  sr[r].value = ""
+                 
               }
             else if (nam == "category_1[assignment][date][]")
               {
                  sr[r].name = 'category_' + counter + '[assignment][date][]'
                  sr[r].id = 'date' + t
                  sr[r].value = ""
-                 id = sr[r].id
+                  id = sr[r].id
                  $j("#" + sr[r].id ).removeClass("hasDatepicker").datepicker({ minDate:'today + 1' });
                  t++;
               }
@@ -96,18 +102,18 @@
               {
                  sr[r].name = 'category_' + counter + '[assignment][max_point][]'
                  sr[r].value = ""
+                
               }      
              
           }
           
       }
     
-    //window.onload = moreFields;
+   
     
     id = 1
     function test(counter)
     {  
-      //id = 1
       var div = document.getElementById(counter) 
       var r = document.getElementById(counter).id
       var k = r.split('_')
@@ -115,10 +121,6 @@
       $j(div).append("<p id='row" + id + "'><input type='text' class='short text' name='category_" +  a  + "[assignment][name][]' id='txt" + id + "'><input type='text' class='short text apart' name='category_" + a + "[assignment][date][]' id='newdate" + id + "'><input type='text' class='short text apart' name='category_" +  a  + "[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a><p>");
       $j("#newdate" + id + "").datepicker({minDate:'today + 1'});
       id = (id - 1) + 2;
-     
-      //document.getElementById('id').value = id;
-      
-  
     }
   
      function removeFormField(id) 
@@ -126,6 +128,65 @@
       $j(id).remove();
     }
   
+    // Removing Deafult Text
     
+      $j(document).ready(function()
+      {
+          $j(".defaultText").focus(function(srcc)
+          {
+              if ($j(this).val() == $j(this)[0].title)
+              {
+                  $j(this).removeClass('defaultTextActive');
+                  $j(this).val("");
+              }
+          });
+          
+          $j(".defaultText").blur(function()
+          {
+              if ($j(this).val() == "")
+              {
+                  $j(this).addClass("defaultTextActive");
+                  $j(this).val($j(this)[0].title);
+              }
+          });
+          
+          $j(".defaultText").blur();        
+      });
+             
+     // Clearing Default values on submit
+      
+     function ClearAll()
+     {
+        var ee = document.getElementById('report_subject_name')
+        if (ee.value == ee.title) 
+         {
+           ee.value = ""
+          }
+          
+        var div = document.getElementById('readroot_1')
+         var sr = div.getElementsByTagName('input');
+         for (var r=0;r<sr.length;r++)
+         {
+           dd = sr[r].id
+           var elm = document.getElementById(dd);
+           value = elm.value
+           title =  elm.title
+           if (value == title)
+              {
+                sr[r].value = ""
+              }
+         }
+          
+     }         
  
+     
+     
+     
 </script>
+
+<style type="text/css">
+  
+    input.error { border: 2px solid #c00;}
+  
+</style>
+
