@@ -42,11 +42,20 @@
     <div id="inside">
       <div id="header"><!--The Header -->
         <h1>
-          <%= link_to "#{@current_school.school_name}, #{@current_school.email}, #{number_to_phone(@current_school.phone, :area_code => true)}", resource(:homes) %>
+          <%= link_to "#{@current_school.school_name}", resource(:homes) %>
         </h1>
+        <div class="school-contact">
+          <%= email(@current_school.email)%>
+          <%unless @current_school.phone.blank?%>
+            <%="| #{number_to_phone(@current_school.phone, :area_code => true)})"%>
+          <%end%>
+        </div>
         <div id="user-cp"><!--User Control Panel -->
-         <p class="welcome">Welcome <em><%= session.user.name %></em></p>
-          <ul>  <% @access_rights = session.user.access_peoples  %>
+         
+          <ul> 
+            <li class="first">Welcome <%= session.user.name %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+            
+             <% @access_rights = session.user.access_peoples  %>
            <% if @access_rights.length == 0 %>
            <li class="first"><%= link_to "My Account", url(:parent_account) %></li>
            <% else %>

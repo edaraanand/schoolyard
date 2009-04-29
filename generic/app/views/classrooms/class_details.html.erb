@@ -121,9 +121,17 @@
         <% end %>
 <% else %>
       <div id="content">
-               <% for message in @welcome_messages %>
-                 <p class="post-content"><%= message.content %></p>
-               <% end %>
+        <p class="post-content">
+              <%if @welcome_messages.empty?%>
+                Welcome to <%=@current_school.school_name%>'s <%=@classroom.class_name.titleize%> classroom.
+              <% else %>
+                <% for message in @welcome_messages %>
+                        <%= message.content %>
+                 <% end %>
+              
+              <%end%>
+               
+               </p>
                <h2 class="current-page">Announcements &amp; Updates </h2>
         
                <% if @ann.blank? %>
