@@ -27,7 +27,7 @@
           <li <% if @selected == "grades" %> class="on" <% end %>><%#= link_to_if((right = "grades"), "Grades/Reports", url(:reports) ) %></li>
           <li <% if @selected == "e_links" %> class="on" <% end %>><%= link_to_if((right = "external_links"), "External Links", url(:external_links) ) %></li>
           <% unless @sports_class.nil? %>
-              <li <% if @selected == "teams" %> class="on" <% end %>><%= link_to_if((right = "teams"), "Sports Teams", url(:teams)) %></li>
+              <li <% if @selected == "teams" %> class="on" <% end %>><%#= link_to_if((right = "teams"), "Sports Teams", url(:teams)) %></li>
           <% end %>
           <li <% if @selected == "forms" %> class="on" <% end %>><%= link_to_if((right = "forms"), "Forms", url(:forms)  ) %></li>
           <li><%#= link_to "Advertising" %></li>
