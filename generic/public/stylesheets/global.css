@@ -46,20 +46,24 @@ html, body{height:100%;}
 #page-wrap{min-height:100%}
 body{ font:12px/16px "lucida grande","Lucida Sans Unicode",tahoma,verdana,arial,sans-serif; background:url(/images/header-bg.gif) repeat-x;}
 body.fixed-width{width:100%;}
-#page-wrap{min-width: 780px;	max-width: 1260px; margin:0 auto; position:relative; overflow:visible;}
-
-#content{padding: 0 280px 0 260px;}
+/*#page-wrap{width:980px}*/
+  /*Wraps Everything*/
+#content{ width:450px; float:left; margin-left:1em; min-height:500px; margin-right:20px;}
+.homes-content{width:420px!important;min-width:420px!important; padding:12px;}
+.homes-content .post-content{width:420px;}
+.homes-content .long-block{width:420px;}
 
 #content.two-col{padding: 0 50px 0 260px;}
 #content.one-col{padding:20px}
 .widen{width:600px!important;}
-#sidebar{float:left; clear:both; width:228px; padding:4px;}
+  /*The center Content Area*/
+#sidebar{float:left; clear:both; width:232px;}
 .left-block{width:240px;}
-
+  /*Left Side Menu. term 'Sidebar' defaults for LEFT SIDEBAR/MENU*/
 #content p{font-size:13px; padding:.5em 0 .5em 0;}
-
-
-#fullpage{width:500px; float:left;}
+#content-wrap{float:left; padding:0 0 0 30px; margin:20px 0 0 0; min-width:500px;}
+  /*Wraps the content section*/
+#fullpage{width:700px;}
 
 
 
@@ -303,9 +307,7 @@ span.cancel a:hover{text-decoration:underline;}
 .short-block{width:480px;}
 .long-block{width:640px;}
 .left-block .long-block{width:230px; padding:5px;}
-#content .data-block p.post-content{margin:4px 0 8px 48px; padding:0;}
-.announcemt .data-block .edit-btn{margin:0px;}
-
+.post-content{width:445px; float:left;}
 
 .data{width:300px;}
 .ddmmm{width:36px; height:48px; border:1px solid #C1DAD7; margin:6px 10px 10px 0; float:left;}
