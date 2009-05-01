@@ -1,0 +1,51 @@
+<h2 class="current-page">Grades/Reports &gt; <span class="add-link">Add New</span></h2>
+  
+  <h2 class="current-page"><%= @report.subject_name %> <%= link_to "Add/Edit Assignments", resource(@report, :edit), :class => "edit-btn" %> </h2> 
+  
+
+
+    <% @categories.each do |f| %>
+    
+          <table id="mytable">
+                   <thead> 
+                         <% unless f.category_name.nil? %>
+                            <th><%= f.category_name %></th>
+                         <% end %>
+                   </thead>
+                   <thead>
+                        <% assignments = f.assignments %>
+                               <th>Your Students</th>
+                        <% assignments.each do |a| %>
+                               <th><%= a.name %><br/>
+                                   <%= a.date.strftime("%B %d %Y") %><br/>
+                                   (Max Points : <%= a.max_point %>)
+                               </th>
+                        <% end %>
+                   </thead>
+                        <% classes = @report.person.class_peoples %>
+                   <% classes.each do |f| %>
+                         <tr>
+                             <% unless f.classroom.class_type == "Sports" %>
+                                 <td><%= f.classroom.class_name %></td>
+                             <% end %>
+                         </tr>
+                             <% students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', f.classroom.id] ) %>
+                             <% students.each do |f| %>
+                                   <tr>
+                                         <td><%= f.name %></td>
+                                         <% assignments.each do |a| %>
+                                            <td><%= text_field :class => "short" %></td>
+                                         <% end %>
+                                   </tr>
+                             <% end %>
+                         
+                   <% end %>
+                   
+           </table>
+       
+    <% end %>
+  
+    <div class="save-cancel">
+         <%= submit "Publish" %> Or  <%= link_to "Cancel", resource(:reports), :class => "cancel" %>
+    </div>
+    
