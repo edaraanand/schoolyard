@@ -110,7 +110,8 @@
                   <% end %>
                   <h6><%= link_to "#{@spot_light.student_name}", url(:home_spot_light, :l => @spot_light.id) %></h6>
                   <%= snippet(@spot_light.content, 20) %>
-                  <%= link_to "Previous Spot Lights", url(:lights) %>
+                  <hr size="1"/>
+                  <%= link_to "All Spotlights", url(:lights) %>
             </ul>
        <% end %>
        
@@ -163,6 +164,7 @@
                 <li <% if @selected == "from_principal" %> class="on" <% end %>><%= link_to_right((right = "from_principal"), "Manage From the Principal", url(:from_principals)) %></li>
                 <li <% if @selected == "welcome_messages" %> class="on" <% end %>><%= link_to_right( (right = "welcome_messages"), "Manage Welcome Messages", url(:welcome_messages, :label => "home_messages") ) %></li>
                 <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :label => "home_a")) %></li>
+                <li <% if @selected == "spotlight" %> class="on" <% end %>><%= link_to_right((right = "spotlight"), "Manage Spotlight", url(:external_links) ) %></li>
                 <li <% if @selected == "e_links" %> class="on" <% end %>><%= link_to_right((right = "external_links"), "Manage External Links", url(:external_links) ) %></li>
             </ul>
        <% end %>
