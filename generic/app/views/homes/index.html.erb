@@ -20,7 +20,19 @@
                        <% end %>
                     </div>
           <% else %>
-                    <img src="/images/principal.png" alt="From The Principal"/>
+                    <% @principal = Principal.find(:first) %>
+                     <div class="caption nopic">
+                         <h2>From the Principal</h2>
+                         <% unless @principal.nil? %>
+                            <% if @principal.principal_name? %>
+                                 <%= @principal.name %>
+                            <% end %>
+                            <% if @principal.principal_email? %>
+                                  <br/>
+                                   <%= email(@principal.email) %>
+                             <% end %>
+                         <% end %>
+                      </div>
           <% end %>
           </div>
           <% if @from_principals.blank? %>
