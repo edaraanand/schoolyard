@@ -26,8 +26,8 @@
                        <% @class_peoples.each do |f| %>
                             <tr>
                                 <td class="click-block"><%= link_to "#{f.person.last_name}", url(:student, f.person.id, :label => "staff") %></td>
-                                <td><%= f.person.first_name %>&nbsp;</td>
-                 	              <td><%= f.role.titleize %>-<%= f.classroom.class_name %>&nbsp;</td>
+                                <td><%= link_to "#{f.person.first_name}", url(:student, f.person.id, :label => "staff") %>&nbsp;</td>
+                 	              <td nowrap><%= f.role.titleize %>-<%= f.classroom.class_name %>&nbsp;</td>
                                 <td><%= email(f.person.email) %>&nbsp;</td>
                                 <td nowrap><%= number_to_phone(f.person.phone, :area_code => true) %>&nbsp;</td>
                             </tr>  
@@ -52,10 +52,10 @@
                         <% for person in @staff %>
                              <tr>
                                  <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
-                                 <td><%= person.first_name %>&nbsp;</td>
+                                 <td><%= link_to "#{person.first_name}", url(:student, person.id, :label => "staff") %>&nbsp;</td>
                                  <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
-                                 <td><% s.each do |f| %>
-                                    <%= f.role.titleize %>-<%= f.classroom.class_name %>
+                                 <td nowrap><% s.each do |f| %>
+                                    <%= f.role.titleize %>-<%= f.classroom.class_name %><br/>
                                  <% end %>&nbsp;</td> 
                                  <td><%= email(person.email) %>&nbsp;</td>
       	                         <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>

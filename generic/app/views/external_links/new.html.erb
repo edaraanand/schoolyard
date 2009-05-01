@@ -1,15 +1,14 @@
-<div class=" data-block short-block">
-  <div id="errors">
-      <ul>
-        <li><%= @external_link.errors.full_messages.join('</li><li>') %></li>
-      </ul>
-  </div>
-  
-  
   <h2 class="current-page"><%= params[:label] %> &gt; New</h2>
+<div class=" data-block short-block">
+  <%unless @external_link.errors.blank?%>
+    <div id="errors">
+        <ul>
+          <li><%= @external_link.errors.full_messages.join('</li><li>') %></li>
+        </ul>
+    </div>
+  <%end%>
   <%= form_for(@external_link, :action => resource(:external_links), :id => 'links', :name => "external_link", :onsubmit => "ClearAll()" ) do %>
     <ul class="edit-ext-links"  id="link">
-    
       <li>
         <%= text_field :title, :name => 'external_link[title][]', :maxlength => "75", :class=>"short text defaultText defaultTextActive", :title => "title" %>
         <%= text_field :url, :name => 'external_link[url][]', :maxlength => "75", :class=>"long text apart defaultText defaultTextActive", :title => "url" %>
@@ -18,12 +17,14 @@
     
          <%= hidden_field :name => "label", :value => params[:label] %>
           <input type="hidden" id="id" value="1">
+          
             <div id="divTxt"></div>
+            <span class="add-link"> <%= link_to_function 'Add More',"add();"%></span>
              
           
             
     <div class="save-cancel">
-          <span class="add-link"> <%= link_to_function 'Add More',"add();"%></span>
+          
           <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
           <%= submit "    Publish    " %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
     </div>

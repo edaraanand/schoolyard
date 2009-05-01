@@ -24,7 +24,7 @@
                        <%= link_to "Edit", url(:edit_parent, announcement.id), :class=>"edit-btn" %>
                        <%= link_to "Delete", url(:delete_parent, announcement.id), :class=>"delete-btn"  %>
                   <% end %>   
-              <div class="hrule clear"><hr /></div>
+             <p class="separator">&nbsp;</p>
            </div>
     <% end %>
     <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>

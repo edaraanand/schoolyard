@@ -12,7 +12,7 @@
 <% unless @attachment.nil? %>
       <img src="uploads/principal_images/<%= @attachment.filename %>" alt="<%= @attachment.filename %>", class = "prinPic"/>
 <% else %>
-      <img src="images/principal.png" alt="From The Principal" />
+      <span class="subText">Principal's photograph has not been uploaded yet.</span>
       <br/><br/>
 <% end %>
 
@@ -28,6 +28,7 @@
                                                  end
                              %>
                 </li>
+                <li><hr size="1"/></li>
                 <% unless @principal.nil? %>
                       <% if (@principal.principal_email == true) %>
                           <li><input type="checkbox" name="principal_email" checked="true" />Display Principal's  Email Address</li>
