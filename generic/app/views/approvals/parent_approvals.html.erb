@@ -17,7 +17,7 @@
       <%if  @all_parents.empty? %>
         <p class="subText">There are no registrations at this time.</p>
     <%else%>
-            <table id="mytable">
+            <table id="mytable"  cellspacing="0" cellpadding="0">
                <thead>
                      <th>Name</th>
                      <th>Student</th>
@@ -52,7 +52,7 @@
                <% if @approved_parents.nil? %>
                    <p class="subText">There are no approved registrations at this time.</p>
                <%else%>
-                     <table id="mytable">
+                     <table id="mytable"  cellspacing="0" cellpadding="0">
                          <thead>
                                <th>Name</th>
                                <th>Student</th>
@@ -89,7 +89,7 @@
                   <p class="subText">There are no registrations that are pending approvals.</p>
                 <%else%>
                      <% for ap in @pending_parents %>
-                      <table id="mytable">
+                      <table id="mytable"  cellspacing="0" cellpadding="0">
                          <thead>
                                <th>Name</th>
                                <th>Student</th>
@@ -124,7 +124,7 @@
               <p class="subText">There are no rejected registrations at this time.</p>
             <%else%>
                   <% for rp in @reject_parents %>
-                       <table id="mytable">
+                       <table id="mytable"  cellspacing="0" cellpadding="0">
                            <thead>
                                  <th>Name</th>
                                  <th>Student</th>
@@ -158,7 +158,7 @@
      <%if  @parents.empty? %>
        <p class="subText">There are no registrations at this time.</p>
       <%else%>
-              <table id="mytable">
+              <table id="mytable"  cellspacing="0" cellpadding="0">
                <thead>
                      <th>Name</th>
                      <th>Student</th>
