@@ -39,25 +39,28 @@ html, body{height:100%;}
 #page-wrap{min-height:100%}
 body{ font:12px/16px "lucida grande","Lucida Sans Unicode",tahoma,verdana,arial,sans-serif; background:url(/images/header-bg.gif) repeat-x;}
 body.fixed-width{width:100%;}
-#page-wrap{min-width: 780px;	max-width: 1260px; margin:0 auto; position:relative; overflow:visible;}
+/*#page-wrap{width:980px}*/
+  /*Wraps Everything*/
+#content{ width:450px; float:left; margin-left:1em; min-height:500px; margin-right:20px;}
+.homes-content{width:420px!important;min-width:420px!important; padding:12px;}
+.homes-content .post-content{width:420px;}
+.homes-content .long-block{width:420px;}
 
-#content{padding: 0 280px 0 260px;}
-
-#content.two-col{padding: 0 50px 0 260px;}
 #content.one-col{padding:20px}
 .widen{width:600px!important;}
-#sidebar{float:left; clear:both; width:228px; padding:4px;}
+  /*The center Content Area*/
+#sidebar{float:left; clear:both; width:232px;}
 .left-block{width:240px;}
-
+  /*Left Side Menu. term 'Sidebar' defaults for LEFT SIDEBAR/MENU*/
 #content p{font-size:13px; padding:.5em 0 .5em 0;}
-
-
-#fullpage{width:500px; float:left;}
+#content-wrap{float:left; padding:0 0 0 30px; margin:20px 0 0 0; min-width:500px;}
+  /*Wraps the content section*/
+#fullpage{width:700px;}
 
 
 
 /*Generic*/
-a{color:#445978; text-decoration:none;}
+a{color:#445978; text-decoration:none; }
 a:link{color:#1a3e8f;}
 a:visited{color:#445978;}
 a:hover{color:#08225c; text-decoration:underline;}
@@ -77,7 +80,7 @@ h2 span.actions {padding-left:12px; font-weight:normal;}
 h2 span.actions a{font-weight:normal;}
 
 dl{width:480px; float:left; padding:4px 0; margin:4px 0; }
-dt{width:120px; padding:4px 0; margin:0 3px 0 3px; float:left;}
+dt{width:120px; padding:4px 0; margin:0 3px 0 3px; float:left; }
 dd{width:300px; padding:4px 0; float:left; }
 
 /*dl.check-box-set{ margin:0 0 0 180px;}*/
@@ -260,8 +263,8 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 #checkboxes #check-fields span{display:block;}
 
 /*Rules for Right Sidebar*/
-.right-sidebar{position:absolute; top:90px; right:20px; line-height:15px; width:200px; clear:both; padding:0 0 0 20px; background:#fff;}
-.right-sidebar h3{font-size:12px; font-weight:bold; background:url("/images/right-sidebar-top.gif") no-repeat top center; padding:12px; margin:10px 0 0 0; min-height:15px;}
+.right-sidebar{ line-height:15px; width:200px; float:left; margin:30px 0 0 20px; padding:0px 0px 0px 30px ;}
+.right-sidebar h3{font-weight:bold ; background:url("/images/right-sidebar-top.gif") no-repeat top center; padding:12px; margin:10px 0 0 0; min-height:15px;}
 .right-sidebar .last{background:url("/images/right-sidebar-bottom.gif") no-repeat bottom center; border-top:1px solid #becfdb; }
   /*Styles applied to these three elements provide chrome for the right sidebar*/
 
@@ -300,9 +303,7 @@ span.cancel a:hover{text-decoration:underline;}
 .short-block{width:480px;}
 .long-block{width:640px;}
 .left-block .long-block{width:230px; padding:5px;}
-#content .data-block p.post-content{margin:4px 0 8px 48px; padding:0;}
-.announcemt .data-block .edit-btn{margin:0px;}
-
+.post-content{width:445px; float:left;}
 
 .data{width:300px;}
 .ddmmm{width:36px; height:48px; border:1px solid #C1DAD7; margin:6px 10px 10px 0; float:left;}

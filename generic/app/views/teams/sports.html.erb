@@ -1,5 +1,5 @@
 <%  if params[:label] == "calendars" %>
-
+<div id="content">
   <h2 class="current-page"> Calendars</h2>
   <%if @calendars.empty?%>
     <span class="subText">There are no events planned at this time</span>
@@ -47,7 +47,7 @@
         <% if @teams.empty? %>
             <p class="subText">There are no sports teams specified</p>
         <%else%>
-             <table id="mytable" class="sports-teams">
+             <table id="mytable"  cellspacing="0" cellpadding="0" class="sports-teams">
                  <thead>
                        <tr >
                             <th colspan="4" scope="col">
@@ -127,7 +127,7 @@
                   <% end %>
             </div>
         <%end%>
-      
+</div>      
       <div class="right-sidebar">
         <!--<h3>Spotlight</h3>
           <ul class="last">
