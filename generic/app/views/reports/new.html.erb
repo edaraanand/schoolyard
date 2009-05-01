@@ -14,13 +14,13 @@
 
 <fieldset>
 
-<%= form_for(@report, :id => "esh", :action => resource(:reports), :onsubmit => "ClearAll()" ) do %>
+<%= form_for(@report, :id => "report", :action => resource(:reports), :onsubmit => "ClearAll()" ) do %>
        
-              <ul>
-                   <li>
-                     <%= text_field  :subject_name,  :class => "required defaultText defaultTextActive", :label => "Main Subject", :title => "Main Subject" %>
-                   </li>
-              </ul>
+            <ul>
+                <li>
+                  <%= text_field  :subject_name,  :class => "required defaultText defaultTextActive", :label => "Main Subject", :title => "Subject" %>
+                </li>
+            </ul>
                      
             <div id="readroot_1" style="display:block" value="1">
                      <%= fields_for @category do %>
@@ -35,13 +35,13 @@
                           <%= partial 'grade' %>
                      <% end =%>
                      <a href="#"  class="add-more"  onClick="test(this.parentNode.id); return false;">Add More Assignments</a>                        
-              </div>
+            </div>
                    <span id="writeroot">
                    </span>
                      
                    <div class="save-cancel">
-                      <a href="#"  class="add-more"  id="moreFields" onClick="moreFields(); return false;">Add Another Category</a>
-                      <%= submit "Save and Add Grades" %> Or  <%= link_to "Cancel", resource(:reports), :class => "cancel" %>
+                        <a href="#"  class="add-more"  id="moreFields" onClick="moreFields(); return false;">Add Another Category</a>
+                        <%= submit "Save and Add Grades" %> Or  <%= link_to "Cancel", resource(:reports), :class => "cancel" %>
                    </div>
       <% end =%> 
 
@@ -52,15 +52,22 @@
 <script type= "text/javascript">
   
      // $j("#readroot_1 input.date").datepicker({minDate:'today + 1'});
-  
-      $j("#esh").validate();
-   
+      
+        $j("#report").validate();
+        
+       // $j.validator.methods.equal = function(value, element, param) {return value == param; };
+      
+    
+    
       $j("#date1").datepicker({minDate:'today + 1'});
       $j("#date2").datepicker({minDate:'today + 1'});
       $j("#date3").datepicker({minDate:'today + 1'});
       $j("#date4").datepicker({minDate:'today + 1'});
       $j("#date5").datepicker({minDate:'today + 1'});
        
+      
+    // Adding New Categories
+    
      var counter = 1;
       t = 6;
    
@@ -82,19 +89,24 @@
              if (nam == "category_1[category]")
               {
                 sr[r].name = 'category_' + counter + '[category]'
+                $j(sr[r]).addClass("required");
               }
             else if (nam == "category_1[assignment][name][]")
               {
                  sr[r].name = 'category_' + counter + '[assignment][name][]'
                  sr[r].value = ""
-                 
+                 $j(sr[r]).removeClass("defaultTextActive");
+                 $j(sr[r]).removeClass("defaultText");
+                
               }
             else if (nam == "category_1[assignment][date][]")
               {
                  sr[r].name = 'category_' + counter + '[assignment][date][]'
                  sr[r].id = 'date' + t
                  sr[r].value = ""
-                  id = sr[r].id
+                 $j(sr[r]).removeClass("defaultTextActive");
+                 $j(sr[r]).removeClass("defaultText");
+                 id = sr[r].id
                  $j("#" + sr[r].id ).removeClass("hasDatepicker").datepicker({ minDate:'today + 1' });
                  t++;
               }
@@ -102,31 +114,34 @@
               {
                  sr[r].name = 'category_' + counter + '[assignment][max_point][]'
                  sr[r].value = ""
+                 $j(sr[r]).removeClass("defaultTextActive");
+                 $j(sr[r]).removeClass("defaultText");
                 
               }      
              
           }
           
       }
-    
-   
-    
-    id = 1
-    function test(counter)
-    {  
-      var div = document.getElementById(counter) 
-      var r = document.getElementById(counter).id
-      var k = r.split('_')
-      var a = k[1]
-      $j(div).append("<p id='row" + id + "'><input type='text' class='short text' name='category_" +  a  + "[assignment][name][]' id='txt" + id + "'><input type='text' class='short text apart' name='category_" + a + "[assignment][date][]' id='newdate" + id + "'><input type='text' class='short text apart' name='category_" +  a  + "[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a><p>");
-      $j("#newdate" + id + "").datepicker({minDate:'today + 1'});
-      id = (id - 1) + 2;
-    }
   
-     function removeFormField(id) 
-   {
-      $j(id).remove();
-    }
+    // Adding New Assignments
+    
+       id = 1
+       function test(counter)
+       {  
+         var div = document.getElementById(counter) 
+         var r = document.getElementById(counter).id
+         var k = r.split('_')
+         var a = k[1]
+         $j(div).append("<p id='row" + id + "'><input type='text' class='short text' name='category_" +  a  + "[assignment][name][]' id='txt" + id + "'><input type='text' class='short text apart' name='category_" + a + "[assignment][date][]' id='newdate" + id + "'><input type='text' class='short text apart' name='category_" +  a  + "[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a><p>");
+         $j("#newdate" + id + "").datepicker({minDate:'today + 1'});
+         id = (id - 1) + 2;
+       
+       }
+  
+        function removeFormField(id) 
+      {
+         $j(id).remove();
+       }
   
     // Removing Deafult Text
     
@@ -159,34 +174,29 @@
      {
         var ee = document.getElementById('report_subject_name')
         if (ee.value == ee.title) 
-         {
-           ee.value = ""
+          {
+            ee.value = ""
           }
           
-        var div = document.getElementById('readroot_1')
+         var div = document.getElementById('readroot_1')
          var sr = div.getElementsByTagName('input');
          for (var r=0;r<sr.length;r++)
          {
-           dd = sr[r].id
-           var elm = document.getElementById(dd);
-           value = elm.value
-           title =  elm.title
-           if (value == title)
+             if (sr[r].value == sr[r].title)
               {
                 sr[r].value = ""
               }
          }
-          
-     }         
+      }         
  
      
-     
-     
 </script>
+
 
 <style type="text/css">
   
     input.error { border: 2px solid #c00;}
-  
+    label.error { display:block; color: red; padding-left: .5em; vertical-align: top; }
+ 
 </style>
 

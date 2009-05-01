@@ -2,8 +2,10 @@ class Reports < Application
 
    layout 'default'
    before :access_rights
+   before :find_school
    
    def index
+     @reports = @current_school.reports.find(:all)
      render
    end
    
@@ -16,43 +18,41 @@ class Reports < Application
    end
    
    def create
-      raise params.inspect
-      @report = Report.new(params[:report])
-      @n = (1..50).to_a
-      @messages = []
-      if @report.valid?
-         @n.each do |f|
-            if params["category_#{f}".intern]
-               params["category_#{f}".intern][:assignment][:name].each_with_index do |l, i|
-                       @assignment = Assignment.create({:name => l, 
-                                                        :date => params["category_#{f}".intern][:assignment][:date][i], 
-                                                        :max_point => params["category_#{f}".intern][:assignment][:max_point][i]
-                                                        })
-               end
-               if @assignment.valid?
-                  @messages << @assignment
-               else
-                  render :new
+      @report = @current_school.reports.new(params[:report].merge(:person_id => session.user.id))
+      @n = (1..100).to_a
+      @n.each do |f|
+         if params["category_#{f}".intern]
+            names = params["category_#{f}".intern][:assignment][:name]
+            dates = params["category_#{f}".intern][:assignment][:date]
+            max_points = params["category_#{f}".intern][:assignment][:max_point]
+            @report.save
+            @category = @report.categories.create({:category_name => params["category_#{f}".intern][:category] })
+            s = names.zip(dates, max_points)
+            s.each do |l|
+               if ( ( (l[0] != "") && (l[1] != "") ) && (l[2] != "") )
+                  @assignment = @category.assignments.create({  :name => l[0], :date => l[1], :max_point => l[2] })
                end
             end
          end
-         if @messages.empty?
-            flash[:error] = "please enter Assignment Details"
-            render :new
-         else 
-           redirect resource(:reports)
-         end
-      else
-        render :new
       end
+      redirect url(:grades, :id => @report.id)
+   end
+   
+   def grades
+      @report = @current_school.reports.find(params[:id])
+      @categories = @report.categories
+      render
    end
    
    def edit
-     render
+      @report = @current_school.reports.find(params[:id])
+      @categories = @report.categories
+      render
    end
    
    def update
-     render
+      raise params.inspect
+      render
    end
    
    
