@@ -89,16 +89,6 @@
      </div>
 <div class="right-sidebar">
   
-       <% unless session.user.type == "Parent" %>
-            <h3>Manage Home Page</h3>
-            <ul class="last">
-                <li <% if @selected == "from_principal" %> class="on" <% end %>><%= link_to_right((right = "from_principal"), "Manage From the Principal", url(:from_principals)) %></li>
-                <li <% if @selected == "welcome_messages" %> class="on" <% end %>><%= link_to_right( (right = "welcome_messages"), "Manage Welcome Messages", url(:welcome_messages, :label => "home_messages") ) %></li>
-                <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :label => "home_a")) %></li>
-                <li <% if @selected == "e_links" %> class="on" <% end %>><%= link_to_right((right = "external_links"), "Manage External Links", url(:external_links) ) %></li>
-            </ul>
-       <% end %>
-       
        <% unless @spot_light.nil? %>
             <h3>Spotlight</h3>
             <ul class="last">
@@ -153,6 +143,16 @@
                      <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
                <% end %>
            </ul> 
+       <% end %>
+       
+        <% unless session.user.type == "Parent" %>
+            <h3>Manage Home Page</h3>
+            <ul class="last">
+                <li <% if @selected == "from_principal" %> class="on" <% end %>><%= link_to_right((right = "from_principal"), "Manage From the Principal", url(:from_principals)) %></li>
+                <li <% if @selected == "welcome_messages" %> class="on" <% end %>><%= link_to_right( (right = "welcome_messages"), "Manage Welcome Messages", url(:welcome_messages, :label => "home_messages") ) %></li>
+                <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :label => "home_a")) %></li>
+                <li <% if @selected == "e_links" %> class="on" <% end %>><%= link_to_right((right = "external_links"), "Manage External Links", url(:external_links) ) %></li>
+            </ul>
        <% end %>
      
        
