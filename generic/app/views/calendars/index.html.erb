@@ -24,8 +24,10 @@
                               <span class="cal-title">
                                   <%= link_to calendar.title, resource(calendar, :edit)%> <small>(<%= calendar.class_name %>)</small>
                               </span>
+                              <br/>
                               <%= link_to "Edit", resource(calendar, :edit), :class=>"edit-btn" %>
                               <%= link_to "Delete", resource(calendar, :delete), :class=>"delete-btn" %>
+<br/><br/>
                         </li>
                     </ul>
                 </div>   
