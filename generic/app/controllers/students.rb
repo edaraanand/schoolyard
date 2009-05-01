@@ -132,10 +132,11 @@ class Students < Application
      @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @sp = @student.protectors
      @study_id = Study.find_by_student_id(@student.id)
+     @class = @current_school.classrooms.find_by_class_name(params[:classroom_id])
      protector_id = @sp.collect{|x| x.id }
      sp = params[:parent][:first_name].zip(params[:parent][:last_name], params[:parent][:email], protector_id)
     if @student.update_attributes(params[:student])
-        Study.update(@study_id.id, {:student_id => @student.id, :classroom_id => params[:classroom_id]})
+       Study.update(@study_id.id, {:student_id => @student.id, :classroom_id => @class.id})
      if @sp.length == 1
        if ( ( (params[:f_name_parent2] != "") || (params[:l_name_parent2] != "") ) || (params[:email_parent2] != "") )
            if ( ( (params[:f_name_parent2] != "") && (params[:l_name_parent2] != "") ) && (params[:email_parent2] != "") )
