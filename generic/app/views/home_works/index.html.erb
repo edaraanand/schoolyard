@@ -39,7 +39,7 @@
                                       <p class="post-content"><%= snippet(homework.content, 50) %></p>
                                      <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
                                      <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
-                                 <div class="hrule clear"><hr /></div>
+                                <p class="separator">&nbsp;</p>
                          </div>
                  <% end %>
                  <%= will_paginate (@class_works, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
@@ -71,7 +71,7 @@
                                       <p class="post-content"><%= snippet(homework.content, 50) %></p>
                                      <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
                                      <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
-                                 <div class="hrule clear"><hr /></div>
+                                <p class="separator">&nbsp;</p>
                          </div>
                  <% end %>
                  <%= will_paginate (@h_works, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
@@ -102,7 +102,7 @@
                                       <p class="post-content"><%= snippet(homework.content, 50) %></p>
                                      <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
                                      <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
-                                 <div class="hrule clear"><hr /></div>
+                                <p class="separator">&nbsp;</p>
                          </div>
                  <% end %>
                  <%= will_paginate (@works, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
@@ -133,7 +133,7 @@
                                       <p class="post-content"><%= snippet(homework.content, 50) %></p>
                                      <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
                                      <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
-                                 <div class="hrule clear"><hr /></div>
+                                <p class="separator">&nbsp;</p>
                          </div>
                  <% end %>
                  <%= will_paginate (@home_works, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>

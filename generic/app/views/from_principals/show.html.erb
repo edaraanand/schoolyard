@@ -17,7 +17,7 @@
     <%= link_to '< Previous', url(:from_principal, @announcement.previous_id),:class => "alignleft" if @announcement.previous_id %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
     <%= link_to "All Articles", url(:from_principals) %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
     <%= link_to 'Next >',  url(:from_principal, @announcement.next_id),:class => "alignright" if @announcement.next_id %>
-    <div class="hrule clear"><hr /></div>
+   <p class="separator">&nbsp;</p>
   </div>
 </div>
 
