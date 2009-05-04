@@ -12,14 +12,14 @@ class Announcements < Application
     @message2 = "Pending"
     @message3 = "Rejected"
     if params[:label] == "home_a"
-      @home_announcements = @current_school.announcements.paginate(:all,
+      @announcements = @current_school.announcements.paginate(:all,
       :conditions => ["access_name = ? and label = ?", "Home Page", 'staff' ],
       :order => "created_at DESC",
       :per_page => 10,
       :page => params[:page])
     elsif params[:label] == "class_announcements"
       @classroom = @current_school.classrooms.find_by_id(params[:id])
-      @class_announcements = @current_school.announcements.paginate(:all,
+      @announcements = @current_school.announcements.paginate(:all,
       :conditions => ["access_name = ? and label = ?", @classroom.class_name, 'staff' ],
       :order => "created_at DESC",
       :per_page => 10,
@@ -31,14 +31,14 @@ class Announcements < Application
       :per_page => 10,
       :page => params[:page])
       if params[:access_name].nil?
-        @announce = @current_school.announcements.paginate(:all,
+        @announcements = @current_school.announcements.paginate(:all,
         :conditions => ['label = ?', 'staff'],
         :order => "created_at DESC",
         :per_page => 10,
         :page => params[:page])
       end
       if params[:access_name] == "All Announcements"
-        @all_announcements = @current_school.announcements.paginate(:all,
+        @announcements = @current_school.announcements.paginate(:all,
         :conditions => ['label = ?', 'staff'],
         :order => "created_at DESC",
         :per_page => 10,
