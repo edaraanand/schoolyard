@@ -8,13 +8,14 @@ class Forms < Application
 
 
   def index
-    if params[:class_name].nil?
+    if params[:label] == "classes"
+      @classroom = @current_school.classrooms.find_by_id(params[:id])
+      @forms = @current_school.forms.paginate(:all, :conditions => ['class_name = ?', @classroom.class_name], :per_page => 25,  :page => params[:page] )
+      @test = params[:id]
+    else
       @forms = @current_school.forms.paginate(:all, :per_page => 25,  :page => params[:page])
+      @test = "All Forms"
     end
-    if params[:class_name] == "All Forms"
-      @forms = @current_school.forms.paginate(:all, :per_page => 25,  :page => params[:page])
-    end
-      @forms = @current_school.forms.paginate(:all, :conditions => ['class_name = ?', params[:class_name] ], :per_page => 25,  :page => params[:page] )
     render
   end
 
@@ -139,9 +140,7 @@ class Forms < Application
   private
 
   def forms
-    @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-    room = @class.collect{|x| x.class_name.titleize }
-    @classrooms = room.insert(0, "All Forms")
+    @classes = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
   end
 
   def classrooms

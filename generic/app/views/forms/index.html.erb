@@ -1,18 +1,18 @@
 <h2 class="current-page">Forms &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:forms, :new) %></h2>
 
-<%= form_for(@form, :action => resource(:forms), :method => 'get') do %>
-      <% if params[:class_name].nil? %>
-            <span class="select-announce"><%= select :name => "class_name", :collection => forms %> <%= submit "    Go    " %>
-      <% else %>
-            <span class="select-announce"><%= select :name => "class_name", :selected => params[:class_name], :collection => forms %> <%= submit "    Go    " %>
-      <% end %>
-  
-<% end =%>
 
+ View :  <select id = 'formID'>
+               <option value = '/forms' <% if (@test == "All Forms") %> selected <% end %> >All Forms</option>
+                  <% @classes.each do |f| %>
+                      <option value='/forms?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+                         <%= f.class_name %> 
+                      </option>
+	                <% end %>
+	       </select>
 
  
      <% if @forms.empty? %>
-          <p class="subText">There are no forms uploaded yet.</p>
+          <p class="subText">There are no forms uploaded yet. <%= link_to "Add New", resource(:forms, :new) %></p>
      <% else %>
           <table id="mytable"  cellspacing="0" cellpadding="0">
                <thead>
@@ -37,3 +37,13 @@
  
 
 
+     
+<script type = 'text/javascript'>
+
+        $( 'formID' ).observe( 'change', function()
+          {
+            document.location.href = $( 'formID' ).value;
+          
+          });
+       
+</script>
