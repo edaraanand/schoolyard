@@ -4,19 +4,16 @@
          <%= link_to "Add New", resource(:spot_lights, :new) %></span>
      </h2>
      
-   <%= form_for(@spot_light, :action => resource(:spot_lights), :method => 'get') do %>
-        <% if params[:label] ==  "home_spot_light" %>
-             <span class="select-announce"><%= select :name => "class_name", :collection => classrooms, :selected => "Home Page", :label => "View  " %><%= submit "    Go    " %></span>
-        <% elsif params[:label] ==  "class_spot_light" %>
-             <span class="select-announce"><%= select :name => "class_name", :collection => classrooms, :selected => @classroom.class_name, :label => "View  " %><%= submit "    Go    " %></span>
-        <% elsif params[:class_name].nil? %>
-             <span class="select-announce"><%= select :name => "class_name", :collection => classrooms, :label => "View :" %><%= submit "    Go    " %></span>
-        <% else %>
-             <span class="select-announce"><%= select :name => "class_name", :selected => params[:class_name], :collection => classrooms, :label => "View :" %><%= submit "    Go    " %></span>
-        <% end %>
-   <% end =%> 
-   
-   
+      View :  <select id = 'spotID'>
+         <option value = '/spot_lights' <% if (@test == "All Spot Lights") %> selected <% end %> >All Spot Lights</option>
+         <option value = '/spot_lights?label=Home Page' <% if (@test == "Home Page") %> selected <% end %> >Home Page</option>
+                  <% @classes.each do |f| %>
+                      <option value='/spot_lights?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+                         <%= f.class_name %> 
+                      </option>
+	                <% end %>
+	   </select>
+ 
         <% if @spot_lights.empty? %>
                  <p>There are no Spot Lights created yet <%= link_to "Add New", url(:new_spot_light) %>
         <% else %>
@@ -44,4 +41,16 @@
   
     
 </div>
+
+
+
+<script type = 'text/javascript'>
+
+        $( 'spotID' ).observe( 'change', function()
+          {
+            document.location.href = $( 'spotID' ).value;
+          
+          });
+       
+</script>
 

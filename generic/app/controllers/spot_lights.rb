@@ -7,19 +7,16 @@ class SpotLights < Application
 
   def index
      classrooms
-     if params[:label] == "home_spot_light"
-        @spot_lights = @current_school.spot_lights.find(:all, :conditions => ['class_name =?', "Home Page"], :order => "created_at DESC")
-     elsif params[:label] == "class_spot_light"
+     if params[:label] == "classes"
         @classroom = @current_school.classrooms.find_by_id(params[:id])
         @spot_lights = @current_school.spot_lights.find(:all, :conditions => ['class_name =?', @classroom.class_name], :order => "created_at DESC")
+        @test = params[:id]
+     elsif params[:label] == "Home Page"
+        @spot_lights = @current_school.spot_lights.find(:all, :conditions => ['class_name =?', "Home Page"], :order => "created_at DESC")
+        @test = "Home Page"
      else
-        if params[:class_name].nil?
-           @spot_lights = @current_school.spot_lights.find(:all, :order => "created_at DESC")
-        elsif params[:class_name] == "All Spot Lights"
-           @spot_lights = @current_school.spot_lights.find(:all, :order => "created_at DESC")
-        else
-           @spot_lights = @current_school.spot_lights.find(:all, :conditions => ['class_name =?', params[:class_name]], :order => "created_at DESC")
-        end
+        @spot_lights = @current_school.spot_lights.find(:all, :order => "created_at DESC")
+        @test = "All Spot Lights"
      end
      render
   end
@@ -148,17 +145,14 @@ class SpotLights < Application
   private
 
   def class_students
-    @class = Classroom.find(:all)
+    @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     room = @class.collect{|x| x.class_name }
     @classrooms = room.insert(0, "Home Page")
     @students = Student.find(:all)
   end
   
   def classrooms
-    @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-    room = @class.collect{|x| x.class_name.titleize }
-    @classrooms = room.insert(0, "All Spot Lights")
-    @classrooms = room.insert(1, "Home Page")
+    @classes = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
   end
 
   def access_rights
