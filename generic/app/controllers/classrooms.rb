@@ -27,18 +27,18 @@ class Classrooms < Application
       unless id.include?("please")
         if role.nil?
           if @classroom.class_type == "Sports"
-            @classroom.class_name = "Sports"
-            if @classroom.valid?
-              @classroom.activate = true
-              @classroom.save
-              ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "Athletic Director"})
-              redirect resource(:classrooms)
-            else
-              flash[:error2] = "There is already a Sports class, You can modify that"
-              @id = params[:class][:people][:ids]
-              @class_type = params[:classroom][:class_type]
-              render :new
-            end
+             @classroom.class_name = "Sports"
+             if @classroom.valid?
+               @classroom.activate = true
+               @classroom.save
+               ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "Athletic Director"})
+               redirect resource(:classrooms)
+             else
+               flash[:error2] = "There is already a Sports class, You can modify that"
+               @id = params[:class][:people][:ids]
+               @class_type = params[:classroom][:class_type]
+               render :new
+             end
           else
             @classroom.activate = true
             @classroom.class_name = params[:classroom][:class_name].titleize
@@ -50,32 +50,32 @@ class Classrooms < Application
           unless teachers.include?("please")
             unless role.include?("")
               if @classroom.class_type == "Sports"
-                @classroom.class_name = "Sports"
-                if @classroom.valid?
-                  @classroom.activate = true
-                  @classroom.save
-                  @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "Athletic Director"})
-                  s = teachers.zip(role)
-                  s.each do |f|
-                    @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
-                  end
-                  redirect resource(:classrooms)
-                else
-                  flash[:error2] = "There is already a Sports class, You can modify that"
-                  @id = params[:class][:people][:ids]
-                  @class_type = params[:classroom][:class_type]
-                  render :new
-                end
+                 @classroom.class_name = "Sports"
+                 if @classroom.valid?
+                   @classroom.activate = true
+                   @classroom.save
+                   @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "Athletic Director"})
+                   s = teachers.zip(role)
+                   s.each do |f|
+                     @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
+                   end
+                   redirect resource(:classrooms)
+                 else
+                   flash[:error2] = "There is already a Sports class, You can modify that"
+                   @id = params[:class][:people][:ids]
+                   @class_type = params[:classroom][:class_type]
+                   render :new
+                 end
               else
-                @classroom.activate = true
-                @classroom.class_name = params[:classroom][:class_name].titleize
-                @classroom.save
-                @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
-                s = teachers.zip(role)
-                s.each do |f|
-                  @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
-                end
-                redirect resource(:classrooms)
+                 @classroom.activate = true
+                 @classroom.class_name = params[:classroom][:class_name].titleize
+                 @classroom.save
+                 @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => "#{id}", :role => "class_teacher"})
+                 s = teachers.zip(role)
+                 s.each do |f|
+                   @class_peoples << ClassPeople.create({:classroom_id => @classroom.id, :person_id => f[0], :role => f[1] })
+                 end
+                 redirect resource(:classrooms)
               end
             else
               flash[:error] = "Please enter the Role"

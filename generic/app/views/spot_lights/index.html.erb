@@ -3,29 +3,45 @@
          Spotlight <span class="actions">
          <%= link_to "Add New", resource(:spot_lights, :new) %></span>
      </h2>
-   <% unless @spot_lights.empty? %>
-    
-         <% for spot in @spot_lights %>
-             <div class="data-block short-block">
-                  <div class="ddmm">
-                        <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", spot.id]) %>
-                      <% unless @attachment.nil? %>  
-                         <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
-                      <% end %>
-                  </div>
-                  
-                  <h3><%= link_to "#{spot.student_name}", url(:spot_light, spot.id) %></h3>
-                  <span class="subText">Spotlight for: <%= spot.class_name %></span><br/>
-                  <span  class="subText">Created by <%= spot.created_at.strftime("%b %d %Y") %></span>
-                  <p><%= snippet(spot.content, 50) %></p>
-                  
-                   <%= link_to "Edit", resource(spot, :edit), :class=>"edit-btn" %>
-                   <%= link_to "Delete", resource(spot, :delete), :class=>"delete-btn"  %>
-                  <p class="separator">&nbsp;</p>
-              </div>
-         <% end %>
-    
-    <% end %>
+     
+   <%= form_for(@spot_light, :action => resource(:spot_lights), :method => 'get') do %>
+        <% if params[:label] ==  "home_spot_light" %>
+             <span class="select-announce"><%= select :name => "class_name", :collection => classrooms, :selected => "Home Page", :label => "View  " %><%= submit "    Go    " %></span>
+        <% elsif params[:label] ==  "class_spot_light" %>
+             <span class="select-announce"><%= select :name => "class_name", :collection => classrooms, :selected => @classroom.class_name, :label => "View  " %><%= submit "    Go    " %></span>
+        <% elsif params[:class_name].nil? %>
+             <span class="select-announce"><%= select :name => "class_name", :collection => classrooms, :label => "View :" %><%= submit "    Go    " %></span>
+        <% else %>
+             <span class="select-announce"><%= select :name => "class_name", :selected => params[:class_name], :collection => classrooms, :label => "View :" %><%= submit "    Go    " %></span>
+        <% end %>
+   <% end =%> 
+   
+   
+        <% if @spot_lights.empty? %>
+                 <p>There are no Spot Lights created yet <%= link_to "Add New", url(:new_spot_light) %>
+        <% else %>
+                 <% for spot in @spot_lights %>
+                     <div class="data-block short-block">
+                          <div class="ddmm">
+                                <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", spot.id]) %>
+                              <% unless @attachment.nil? %>  
+                                 <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
+                              <% end %>
+                          </div>
+                          
+                          <h3><%= link_to "#{spot.student_name}", url(:spot_light, spot.id) %></h3>
+                          <span class="subText">Spotlight for: <%= spot.class_name %></span><br/>
+                          <span  class="subText">Created by <%= spot.created_at.strftime("%b %d %Y") %></span>
+                          <p><%= snippet(spot.content, 50) %></p>
+                          
+                           <%= link_to "Edit", resource(spot, :edit), :class=>"edit-btn" %>
+                           <%= link_to "Delete", resource(spot, :delete), :class=>"delete-btn"  %>
+                          <p class="separator">&nbsp;</p>
+                      </div>
+                 <% end %>
+        <% end %>
+ 
+  
     
 </div>
 
