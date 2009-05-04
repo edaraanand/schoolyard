@@ -12,9 +12,9 @@ class Forms < Application
       @forms = @current_school.forms.paginate(:all, :per_page => 25,  :page => params[:page])
     end
     if params[:class_name] == "All Forms"
-      @forms_f = @current_school.forms.paginate(:all, :per_page => 25,  :page => params[:page])
+      @forms = @current_school.forms.paginate(:all, :per_page => 25,  :page => params[:page])
     end
-    @files = @current_school.forms.paginate(:all, :conditions => ['class_name = ?', params[:class_name] ], :per_page => 25,  :page => params[:page] )
+      @forms = @current_school.forms.paginate(:all, :conditions => ['class_name = ?', params[:class_name] ], :per_page => 25,  :page => params[:page] )
     render
   end
 
