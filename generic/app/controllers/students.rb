@@ -22,13 +22,14 @@ class Students < Application
     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     @student = @current_school.students.new(params[:student])
     @protector = @current_school.protectors.new(params[:protector])
+    @class = @current_school.classrooms.find_by_class_name(params[:classroom_id])
     if ( ( (params[:f_name_parent2] == "") && (params[:l_name_parent2] == "") ) && (params[:email_parent2] == "") )
       if params[:classroom_id] !=  ""
         if (@student.valid?) && (@protector.valid?)
           @student.save
           @protector.save
           Ancestor.create({:student_id => @student.id, :protector_id => @protector.id })
-          Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })
+          Study.create({:student_id => @student.id, :classroom_id => @class.id })
           redirect resource(:students)
         else
           @class_id = params[:classroom_id]
