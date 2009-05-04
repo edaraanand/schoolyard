@@ -7,18 +7,13 @@ class HomeWorks < Application
   before :rooms, :only => [:index]
 
   def index
-    if params[:label] == "class_home_works"
-      @classroom = @current_school.classrooms.find_by_id(params[:id], :conditions => ['activate = ?', true])
-      @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 10, :page => params[:page])
+    if params[:label] == "classes"
+       @classroom = @current_school.classrooms.find_by_id(params[:id], :conditions => ['activate = ?', true])
+       @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 10, :page => params[:page])
+       @test = params[:id]
     else
-      if params[:classroom_id].nil?
-        @home_works = @current_school.home_works.paginate(:all, :order => "due_date DESC", :per_page => 10, :page => params[:page])
-      elsif params[:classroom_id] == "All Homework"
-        @home_works = @current_school.home_works.paginate(:all, :order => "due_date DESC", :per_page => 10, :page => params[:page])
-      else
-        @classroom = @current_school.classrooms.find_by_class_name(params[:classroom_id])
-        @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 10, :page => params[:page])
-      end
+       @home_works = @current_school.home_works.paginate(:all, :order => "due_date DESC", :per_page => 10, :page => params[:page])
+       @test = "All Homeworks"
     end
     @error = "There are no Homeworks at this time."
     render
@@ -177,9 +172,7 @@ class HomeWorks < Application
 
 
   def rooms
-    classes = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-    room = classes.collect{|x| x.class_name.titleize }
-    @classes = room.insert(0, "All Homework")
+    @classes = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
   end
 
   def access_rights

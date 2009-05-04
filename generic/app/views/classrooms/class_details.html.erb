@@ -200,13 +200,13 @@
                    <ul class="last">
                         <li <% if @selected == "spotlight" %> class="on" <% end %>><%= link_to_right((right = "spotlight"), "Manage Spotlight", url(:spot_lights, :id => @classroom.id, :label => "classes") ) %></li>
                         <li <% if @selected == "calendars" %> class="on" <% end %>><%= link_to_right((right = "calendar"), "Manage Calendars", url(:calendars) )  %></li>
-                        <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_right((right = "homework"), "Manage Homeworks", url(:home_works, :id => @classroom.id, :label => "class_home_works") )  %></li>
+                        <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_right((right = "homework"), "Manage Homeworks", url(:home_works, :id => @classroom.id, :label => "classes") )  %></li>
                         <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :id => @classroom.id, :label => "classes")) %></li>
                    </ul>
               <% end %>
              
          </div>
-</div>
+</div>                                                                                                                                         
 <% end %>   
 
 

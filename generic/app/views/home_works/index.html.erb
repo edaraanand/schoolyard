@@ -1,19 +1,16 @@
 <h2 class="current-page">Home Work  &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:home_works, :new) %></h2>
 
 <div class="fullpage announcemt">
-   <%= form_for(@home_work, :action => resource(:home_works), :method => 'get', :id => 'home_work') do %>
-          <% if params[:label] == "class_home_works" %>
-               <span class="select-announce">
-                    <%= select :classroom_id, :collection => @classes, :selected => @classroom.class_name  %>
-                    <%= submit "    Go    " %>
-               </span>
-          <% else %>
-               <span class="select-announce">
-                    <%= select :classroom_id, :collection => @classes %>
-                    <%= submit "    Go    " %>
-               </span>
-          <% end %>
-   <% end =%>
+  
+   View :  <select id = 'workID'>
+             <option value = '/home_works' <% if (@test == "All Homeworks") %> selected <% end %> >All Homeworks</option>
+                  <% @classes.each do |f| %>
+                      <option value='/home_works?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+                         <%= f.class_name %> 
+                      </option>
+	                <% end %>
+	         </select>
+  
 
           <% if @home_works.empty? %>
                  <p><%= @error %><%= link_to "Add New", resource(:home_works, :new) %></p>
@@ -47,4 +44,15 @@
           <% end %>
     
 </div>
+  
+  
+  <script type = 'text/javascript'>
+
+        $( 'workID' ).observe( 'change', function()
+          {
+            document.location.href = $( 'workID' ).value;
+          
+          });
+       
+</script>
  
