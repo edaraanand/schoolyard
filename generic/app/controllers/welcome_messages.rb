@@ -8,18 +8,18 @@ class WelcomeMessages < Application
 
   def index
     classrooms
-    if params[:label] == "home_messages"
-      @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name =?', "Home Page"], :order => "created_at DESC")
+    if params[:label] == "classes"
+       @classroom = @current_school.classrooms.find_by_id(params[:id])
+       @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name =?', @classroom.class_name], :order => "created_at DESC")
+       @test = params[:id]
+    elsif params[:label] == "Home Page"
+       @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name =?', "Home Page"], :order => "created_at DESC")
+       @test = "Home Page"
     else
-      @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name =?', params[:access_name]], :order => "created_at DESC")
-      if params[:access_name].nil?
-        @welcome_messages = @current_school.welcome_messages.find(:all, :order => "created_at DESC")
-      end
-      if params[:access_name] == "All Messages"
-        @welcome_messages = @current_school.welcome_messages.find(:all, :order => "created_at DESC")
-      end
+       @welcome_messages = @current_school.welcome_messages.find(:all, :order => "created_at DESC")
+       @test = "All Messages"
     end
-    render
+      render
   end
 
   def new
@@ -85,10 +85,7 @@ class WelcomeMessages < Application
   private
 
   def classrooms
-    @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-    room = @class.collect{|x| x.class_name.titleize }
-    @classrooms = room.insert(0, "All Messages")
-    @classrooms = room.insert(1, "Home Page")
+    @classes = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
   end
 
   def rooms

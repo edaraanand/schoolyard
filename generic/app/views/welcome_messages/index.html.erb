@@ -3,17 +3,15 @@
 
 <div class="fullpage announcemt">
 
-<%= form_for(@welcome_message, :action => url(:controller => 'welcome_messages', :action => 'index'), :id => 'welcome_message') do %>
-         <% if params[:label] ==  "home_messages" %>
-             <%= select :name => "access_name", :collection => @classrooms, :selected => "Home Page", :label => "View  " %>
-         <% elsif params[:access_name].nil? %>
-             <%= select :name => "access_name", :collection => @classrooms, :label => "View  " %>
-         <% else %>
-             <%= select :name => "access_name", :selected => params[:access_name], :collection => @classrooms, :label => "View  " %>
-         <% end %>
-             <%= submit "    Go    " %>
-<% end =%>
-
+      View :  <select id = 'messageID'>
+         <option value = '/welcome_messages' <% if (@test == "All Messages") %> selected <% end %> >All Messages</option>
+         <option value = '/welcome_messages?label=Home Page' <% if (@test == "Home Page") %> selected <% end %> >Home Page</option>
+                  <% @classes.each do |f| %>
+                  <option value='/welcome_messages?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+                         <%= f.class_name %> 
+                      </option>
+	                <% end %>
+	   </select>
 
        <% if  @welcome_messages.blank?  %>
              <p>There are not welcome messages created yet. <%= link_to "Add New", url(:new_welcome_message) %>
@@ -41,5 +39,16 @@
    
 </div> 
 
+
+  
+<script type = 'text/javascript'>
+
+        $( 'messageID' ).observe( 'change', function()
+          {
+            document.location.href = $( 'messageID' ).value;
+          
+          });
+       
+</script>
 
 	 
