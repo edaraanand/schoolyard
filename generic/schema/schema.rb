@@ -69,6 +69,16 @@ ActiveRecord::Schema.define(:version => 62) do
     t.integer  "school_id"
   end
 
+  create_table "assignments", :force => true do |t|
+    t.integer  "category_id"
+    t.string   "name"
+    t.date     "date"
+    t.integer  "max_point"
+    t.integer  "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "attachments", :force => true do |t|
     t.string   "filename"
     t.string   "content_type"
@@ -100,6 +110,13 @@ ActiveRecord::Schema.define(:version => 62) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "school_id"
+  end
+
+  create_table "categories", :force => true do |t|
+    t.integer  "report_id"
+    t.string   "category_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "class_peoples", :force => true do |t|
@@ -204,6 +221,14 @@ ActiveRecord::Schema.define(:version => 62) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "school_id"
+  end
+
+  create_table "reports", :force => true do |t|
+    t.string   "subject_name"
+    t.integer  "person_id"
+    t.integer  "school_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "schools", :force => true do |t|
