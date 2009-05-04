@@ -284,7 +284,7 @@ class Students < Application
   def directory
     if  params[:label] == "classes"
       @class = @current_school.classrooms.find(params[:id])
-      @studs = @current_school.students.paginate(:all, :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id], :per_page => 25,  :page => params[:page] )
+      @students = @current_school.students.paginate(:all, :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id], :per_page => 25,  :page => params[:page] )
       @test = params[:id]
     else
       @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
