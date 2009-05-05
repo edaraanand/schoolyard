@@ -3,7 +3,7 @@ set :repository,  "git@github.com:eshwardeep/schoolapp.git"
 #set :scm_passphrase, 'eshwar'
 set :branch, 'master'
 set :revision, "HEAD"
-set :domain,   "forge@ec2-174-129-125-45.compute-1.amazonaws.com"
+set :domain,   "forge@174.129.200.101"
 set :deploy_to,  "/home/forge/schoolapp"
 set :start_port, 7001
 set :log_path, "#{shared_path}/log/production.log"
