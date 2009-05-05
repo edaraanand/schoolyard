@@ -4,15 +4,15 @@ namespace :bootstrap do
   desc "creating a school information"
    task :school do
      @school = School.create({
-         :school_name => "St Benecia School",
+         :school_name => "St Domnic School",
          :phone => "7077451266",
          :address1 => "935 East 5th Street",
          :city => "Benecia",
          :state => "CA",
          :zip_code => "94510",
          :fax => "7077451841",
-         :email => "sdb@schoolyardapp.net",
-         :domain => "http://sdb.schoolyardapp.net",
+         :email => "sdb@schoolyardapp.com",
+         :domain => "http://sdb.schoolyardapp.com",
          :folder => "schoolyardappcom",
          :subdomain => 'sdb'
         })
@@ -53,8 +53,8 @@ namespace :bootstrap do
            :last_name => "Meyer",
            :email => "school@insightmethods.com",
            :type => 'Staff',
-           :password => 'admin',
-           :password_confirmation => 'admin',
+           :password => 'administration',
+           :password_confirmation => 'administration',
            :school_id => @school.id,
            :admin => 'true'
       })

@@ -6,8 +6,8 @@ namespace:admin do
      @school = School.create({
          :school_name => "Insight Methods",
          :phone => "1234567890",
-         :email => "admin@schoolyardapp.net",
-         :domain => "http://admin.schoolyardapp.net",
+         :email => "admin@schoolyardapp.com",
+         :domain => "http://admin.schoolyardapp.com",
          :folder => "schoolyardappcom",
          :subdomain => 'admin'
         })
@@ -20,8 +20,8 @@ namespace:admin do
            :last_name => "Bolz",
            :email => "brian.bolz@insightmethods.com",
            :type => 'Staff',
-           :password => 'brian',
-           :password_confirmation => 'brian',
+           :password => 'brianbolz',
+           :password_confirmation => 'brianbolz',
            :school_id => @school.id,
            :admin => 'true'
       })

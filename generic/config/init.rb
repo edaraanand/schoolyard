@@ -29,8 +29,6 @@ Merb::BootLoader.after_app_loads do
     :port   => '587',
     :user   => 'noreply@schoolyardapp.com',
     :pass   => '75F633',
-    # :user   => 'raja.naidu13@gmail.com',
-    #:pass   => 'raja1213',
     :auth   => :plain
   }
 
