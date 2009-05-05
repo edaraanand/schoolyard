@@ -34,12 +34,5 @@ namespace :vlad do
       run "merb -m #{deploy_to}/current -K all"
    end
    
-   desc "Running the server and updating the code"
-   remote_task :update do
-      Rake::Task["vlad:after_update"].invoke
-      Rake::Task["vlad:start"].invoke
-      Rake::Task["vlad:stop"].invoke
-   end
-
-  
+     
 end
