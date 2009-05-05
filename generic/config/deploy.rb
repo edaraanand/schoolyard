@@ -1,6 +1,6 @@
 set :application, "schoolapp"
 set :repository,  "git@github.com:eshwardeep/schoolapp.git"
-#set :scm_passphrase, 'eshwar'
+set :scm_passphrase, 'eshwar'
 set :branch, 'master'
 set :revision, "HEAD"
 set :domain,   "forge@174.129.200.101"
