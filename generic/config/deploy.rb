@@ -1,10 +1,12 @@
 set :application, "schoolapp"
+set :scm, "git"
 set :repository,  "git@github.com:eshwardeep/schoolapp.git"
 set :scm_passphrase, 'eshwar'
 set :branch, 'master'
 set :revision, "HEAD"
 set :domain,   "forge@174.129.200.101"
 set :deploy_to,  "/home/forge"
+set :deploy_via, :remote_cache
 set :start_port, 7001
 set :log_path, "#{shared_path}/log/production.log"
 set :adapter, 'mongrel'
