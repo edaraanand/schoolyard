@@ -4,7 +4,7 @@ set :scm_passphrase, 'eshwar'
 set :branch, 'master'
 set :revision, "HEAD"
 set :domain,   "eshwar@sdb.schoolyardapp.com"
-set :deploy_to,  "/home/eshwar/schoolapp"
+set :deploy_to,  "/home/eshwardeep/schoolapp"
 set :start_port, 7001
 set :log_path, "#{shared_path}/log/production.log"
 set :adapter, 'mongrel'
@@ -34,7 +34,7 @@ namespace :vlad do
       run "merb -m #{deploy_to}/current -K all"
    end
    
-   desc "Running the server"
+   desc "Running the server and updating the code"
    remote_task :update do
       Rake::Task["vlad:after_update"].invoke
       Rake::Task["vlad:start"].invoke
