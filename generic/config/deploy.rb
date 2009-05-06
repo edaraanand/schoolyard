@@ -46,9 +46,9 @@ namespace :vlad do
     run merb("-K all")
   end
 
-  remote_task :migrate_merb, :roles => :db do
-    run "cd #{current_release}; rake db:migrate MERB_ENV=#{merb_environment}"
-  end
+  #remote_task :migrate_merb, :roles => :db do
+  #  run "cd #{current_release}; rake db:migrate MERB_ENV=#{merb_environment}"
+  #end
 
   task :update do
     run "cp #{shared_path}/database.yml #{current_path}/config/database.yml"
@@ -61,7 +61,7 @@ namespace :vlad do
   
 end
 
-task :deploy => ["vlad:update", "vlad:migrate_merb", "vlad:start_app"]
+task :deploy => ["vlad:update", "vlad:start_app"]
 
 
 
