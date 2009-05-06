@@ -10,7 +10,6 @@ namespace :vlad do
    desc "Change the database configuration file"
    remote_task :after_update do
       run "mv #{current_path}/generic/config/database.yml.production #{current_path}/generic/config/database.yml"
-      run "mkdir -p #{current_path}/generic/db"
       run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
       run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
       run "cd #{current_path}/generic && rake bootstrap:alerts"
@@ -28,5 +27,12 @@ namespace :vlad do
       run "merb -m #{deploy_to}/current -K all"
    end
    
+   desc "Deploying the application"
+   remote_task :deploy, :roles => :app do
+      Rake::Task['vlad:update'].invoke
+      Rake::Task['vlad:after_update'].invoke
+      Rake::Task['vlad:start'].invoke
+      Rake::Task['vlad:stop'].invoke
+   end
      
 end
