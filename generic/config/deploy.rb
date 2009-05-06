@@ -6,7 +6,9 @@ set :repository,  "git@github.com:eshwardeep/schoolapp.git"
 set :branch, 'master'
 set :revision, "HEAD"
 set :start_port, 7001
-
+set :deploy_via, :remote_cache
+set :adapter, 'mongrel'
+set :processes, 1
 
 
 namespace :vlad do
