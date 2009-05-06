@@ -1,9 +1,8 @@
-set :application, "schoolapp"
+
 set :domain, "forge@schoolyardapp.com"
-set :deploy_to, "/home/forge/schoolapp/"
+set :deploy_to, "/home/forge/schoolapp"
 set :repository,  "git@github.com:eshwardeep/schoolapp.git"
 set :branch, 'master'
-set :revision, "HEAD"
 set :start_port, 7001
 set :adapter, 'mongrel'
 set :processes, 1
