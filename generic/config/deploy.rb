@@ -46,22 +46,30 @@ namespace :vlad do
     run merb("-K all")
   end
 
-  #remote_task :migrate_merb, :roles => :db do
-  #  run "cd #{current_release}; rake db:migrate MERB_ENV=#{merb_environment}"
-  #end
+  remote_task :migrate_merb, :roles => :db do
+    run "cd #{current_release}; rake db:migrate MERB_ENV=#{merb_environment}"
+  end
 
   task :update do
     run "cp #{shared_path}/database.yml #{current_path}/config/database.yml"
     run "cp #{shared_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
-    run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
+    #run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
+    #run "cd #{current_path}/generic && rake bootstrap:alerts"
+    #run "cd #{current_path}/generic && rake contact:school"
+    #run "cd #{current_path}/generic && rake admin:person"
+  end
+  
+  desc "rake tasks for schoolapps"
+  remote_task :rake_files do
     run "cd #{current_path}/generic && rake bootstrap:alerts"
     run "cd #{current_path}/generic && rake contact:school"
     run "cd #{current_path}/generic && rake admin:person"
   end
   
+  
 end
 
-task :deploy => ["vlad:update", "vlad:start_app"]
+task :deploy => ["vlad:update", "vlad:migrate_merb", "vlad:rake_files", "vlad:start_app"]
 
 
 
