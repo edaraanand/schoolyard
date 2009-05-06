@@ -33,7 +33,7 @@ namespace :vlad do
    end
    
    desc "Deploying the application"
-   remote_task :deploy, :roles => :app do
+   remote_task :deploy do
       Rake::Task['vlad:update'].invoke
       Rake::Task['vlad:after_update'].invoke
       Rake::Task['vlad:start'].invoke
