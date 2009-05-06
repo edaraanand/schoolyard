@@ -7,6 +7,11 @@ set :revision, "HEAD"
 set :start_port, 7001
 set :adapter, 'mongrel'
 set :processes, 1
+set :scm_passphrase, 'eshwar'
+set :branch, 'master'
+set :deploy_via, :remote_cache
+default_run_options[:pty] = true
+set :ssh_options, { :forward_agent => true }
 
 
 namespace :vlad do
