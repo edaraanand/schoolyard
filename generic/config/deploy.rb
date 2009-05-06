@@ -2,7 +2,10 @@ set :application, "schoolapp"
 set :domain, "forge@schoolyardapp.com"
 set :deploy_to, "/home/forge/schoolapp/"
 set :repository,  "git@github.com:eshwardeep/schoolapp.git"
+set :scm_passphrase, 'eshwar'
+set :branch, 'master'
 set :revision, "HEAD"
+set :start_port, 7001
 
 
 
