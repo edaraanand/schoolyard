@@ -47,31 +47,31 @@ namespace :vlad do
     run merb("-K all")
   end
   
+  desc "Symlinks the configuration files"
+  remote_task :symlink_config, :roles => :web do
+    "ln -s #{shared_path}/system #{latest_release}/generic/public/system",
+  end
+  
   desc "Running migrations with some rake tasks for production"
   remote_task :migration, :roles => :app do
+     run "cp #{shared_path}/generic/config/database.yml #{current_path}/generic/config/database.yml"
+     run "cp #{shared_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
      run "cd #{current_path}/generic && rake bootstrap:alerts"
      run "cd #{current_path}/generic && rake contact:school"
      run "cd #{current_path}/generic && rake admin:person"
   end
   
-  desc "moving database and constantz files for production"
-  remote_task :update do
-     run "cp #{shared_path}/generic/config/database.yml #{current_path}/generic/config/database.yml"
-     run "cp #{shared_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
-     Rake::Task['vlad:update_symlinks'].invoke
+  desc "Full deployment cycle"
+  remote_task :deploy, :roles => :app do
+     Rake::Task['vlad:update'].invoke
+     Rake::Task['vlad:symlink_config'].invoke
+     Rake::Task['vlad:migration'].invoke
+     Rake::Task['vlad:start_app'].invoke
+     Rake::Task['vlad:cleanup'].invoke
   end
   
-  desc "Updates the symlinks for shared paths".cleanup
-  remote_task :update_symlinks, :roles => :app do
-    run [ "ln -s #{shared_path}/log #{latest_release}/log",
-          "ln -s #{shared_path}/system #{latest_release}/generic/public/system",
-          "ln -s #{shared_path}/pids #{latest_release}/tmp/pids" ].join(" && ")
-  end
- 
 end
-
-task :deploy => ["vlad:update", "vlad:migration" "vlad:start_app"]
 
 
 
