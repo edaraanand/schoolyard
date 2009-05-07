@@ -70,7 +70,7 @@ namespace :vlad do
  
 end
 
-task :deploy => ["vlad:update", "vlad:migration" "vlad:start_app"]
+task :deploy => ["vlad:update", "vlad:update_symlinks" "vlad:migration" "vlad:start_app"]
 
 
 
