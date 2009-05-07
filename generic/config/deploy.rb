@@ -59,6 +59,7 @@ namespace :vlad do
   remote_task :update do
      run "cp #{shared_path}/generic/config/database.yml #{current_path}/generic/config/database.yml"
      run "cp #{shared_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
+     Rake::Task['vlad:update_symlinks'].invoke
   end
   
   desc "Updates the symlinks for shared paths".cleanup
@@ -70,7 +71,7 @@ namespace :vlad do
  
 end
 
-task :deploy => ["vlad:update", "vlad:update_symlinks" "vlad:migration" "vlad:start_app"]
+task :deploy => ["vlad:update", "vlad:migration" "vlad:start_app"]
 
 
 
