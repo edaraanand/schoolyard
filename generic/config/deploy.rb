@@ -45,8 +45,11 @@ namespace :vlad do
   remote_task :stop_app, :roles => :app do
     run merb("-K all")
   end
-
+  
   task :update do
+    puts "#{shared_path}".inspect
+    puts "#{current_path}".inspect
+    puts "Eshwar".inspect
     run "cp #{shared_path}/generic/config/database.yml #{current_path}/generic/config/database.yml"
     run "cp #{shared_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
     run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
@@ -55,6 +58,12 @@ namespace :vlad do
     run "cd #{current_path}/generic && rake admin:person"
   end
   
+ #desc "Symlink custom directories"
+ #remote_task :symlink, :roles => :app do
+ #    # Do Stuff
+ #    run "cd #{shared_path}"
+ #    run "cd #{current_path}/public && ln -s  #{shared_path}/avatars/ avatars" 
+ #end
  
 end
 
