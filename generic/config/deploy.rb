@@ -41,35 +41,34 @@ namespace :vlad do
 
   remote_task :start_app => :stop_app
 
-  desc "Stop the app servers"
-
-  remote_task :stop_app, :roles => :app do
-    run merb("-K all")
-  end
+   desc "Stop the app servers"
+   remote_task :stop_app, :roles => :app do
+     run merb("-K all")
+   end
+   
+   desc "Symlinks the configuration files"
+   remote_task :symlink_config, :roles => :web do
+     "ln -s #{shared_path}/system #{latest_release}/generic/public/system"
+   end
   
-  desc "Symlinks the configuration files"
-  remote_task :symlink_config, :roles => :web do
-    "ln -s #{shared_path}/system #{latest_release}/generic/public/system",
-  end
+   desc "Running migrations with some rake tasks for production"
+   remote_task :migration, :roles => :app do
+      run "cp #{shared_path}/generic/config/database.yml #{current_path}/generic/config/database.yml"
+      run "cp #{shared_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
+      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
+      run "cd #{current_path}/generic && rake bootstrap:alerts"
+      run "cd #{current_path}/generic && rake contact:school"
+      run "cd #{current_path}/generic && rake admin:person"
+   end
   
-  desc "Running migrations with some rake tasks for production"
-  remote_task :migration, :roles => :app do
-     run "cp #{shared_path}/generic/config/database.yml #{current_path}/generic/config/database.yml"
-     run "cp #{shared_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
-     run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
-     run "cd #{current_path}/generic && rake bootstrap:alerts"
-     run "cd #{current_path}/generic && rake contact:school"
-     run "cd #{current_path}/generic && rake admin:person"
-  end
-  
-  desc "Full deployment cycle"
-  remote_task :deploy, :roles => :app do
-     Rake::Task['vlad:update'].invoke
-     Rake::Task['vlad:symlink_config'].invoke
-     Rake::Task['vlad:migration'].invoke
-     Rake::Task['vlad:start_app'].invoke
-     Rake::Task['vlad:cleanup'].invoke
-  end
+   desc "Full deployment cycle"
+   remote_task :deploy, :roles => :app do
+      Rake::Task['vlad:update'].invoke
+      Rake::Task['vlad:symlink_config'].invoke
+      Rake::Task['vlad:migration'].invoke
+      Rake::Task['vlad:start_app'].invoke
+      Rake::Task['vlad:cleanup'].invoke
+   end
   
 end
 
