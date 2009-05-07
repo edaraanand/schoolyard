@@ -3,10 +3,7 @@
 :development: &defaults
   :adapter: mysql
   :database: schoolapp_development
-  :host: localhost
-  :user: root
-  :password: forge
-
+  
 :test:
   <<: *defaults
   :database: schoolapp_test
