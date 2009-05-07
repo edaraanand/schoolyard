@@ -47,7 +47,7 @@ namespace :vlad do
   end
 
   task :update do
-    run "cp #{shared_path}/database.yml #{current_path}/config/database.yml"
+    run "cp #{shared_path}/generic/config/database.yml #{current_path}/generic/config/database.yml"
     run "cp #{shared_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
     run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
     run "cd #{current_path}/generic && rake bootstrap:alerts"
