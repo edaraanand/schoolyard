@@ -52,13 +52,13 @@ namespace :vlad do
       run "cp #{latest_release}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
    end
    
-   desc "Updates the symlinks for shared paths".cleanup
-   remote_task :symlink_config, :roles => :app do
+   desc "Symlink configuration".cleanup
+   remote_task :update_symlinks, :roles => :app do
      run [ "ln -s #{shared_path}/log #{latest_release}/log",
            "ln -s #{shared_path}/system #{latest_release}/generic/public/system",
            "ln -s #{shared_path}/pids #{latest_release}/tmp/pids" ].join(" && ")
    end
-  
+   
    desc "Running migrations with some rake tasks for production"
    remote_task :migrate, :roles => :app do
       run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
@@ -70,7 +70,6 @@ namespace :vlad do
    desc "Full deployment cycle"
    remote_task :deploy, :roles => :app do
       Rake::Task['vlad:update'].invoke
-      Rake::Task['vlad:symlink_config'].invoke
       Rake::Task['vlad:migrate'].invoke
       Rake::Task['vlad:start_app'].invoke
       Rake::Task['vlad:cleanup'].invoke
