@@ -1,5 +1,6 @@
+set :application, "schoolapp"
 set :domain, "forge@schoolyardapp.com"
-set :deploy_to, "/home/forge/schoolapp"
+set :deploy_to, "/home/forge/#{application}"
 set :repository,  "git@github.com:eshwardeep/schoolapp.git"
 set :revision, "HEAD"
 set :branch, "master"
@@ -46,28 +47,30 @@ namespace :vlad do
     run merb("-K all")
   end
   
-  task :update do
-    puts "#{shared_path}".inspect
-    puts "#{current_path}".inspect
-    puts "Eshwar".inspect
-    run "cp #{shared_path}/generic/config/database.yml #{current_path}/generic/config/database.yml"
-    run "cp #{shared_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
-    run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
-    run "cd #{current_path}/generic && rake bootstrap:alerts"
-    run "cd #{current_path}/generic && rake contact:school"
-    run "cd #{current_path}/generic && rake admin:person"
+  desc "Running migrations with some rake tasks for production"
+  remote_task :migration, :roles => :app do
+     run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
+     run "cd #{current_path}/generic && rake bootstrap:alerts"
+     run "cd #{current_path}/generic && rake contact:school"
+     run "cd #{current_path}/generic && rake admin:person"
   end
   
- #desc "Symlink custom directories"
- #remote_task :symlink, :roles => :app do
- #    # Do Stuff
- #    run "cd #{shared_path}"
- #    run "cd #{current_path}/public && ln -s  #{shared_path}/avatars/ avatars" 
- #end
+  desc "moving database and constantz files for production"
+  remote_task :update do
+     run "cp #{shared_path}/generic/config/database.yml #{current_path}/generic/config/database.yml"
+     run "cp #{shared_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
+  end
+  
+  desc "Updates the symlinks for shared paths".cleanup
+  remote_task :update_symlinks, :roles => :app do
+    run [ "ln -s #{shared_path}/log #{latest_release}/log",
+          "ln -s #{shared_path}/system #{latest_release}/generic/public/system",
+          "ln -s #{shared_path}/pids #{latest_release}/tmp/pids" ].join(" && ")
+  end
  
 end
 
-task :deploy => ["vlad:update", "vlad:start_app"]
+task :deploy => ["vlad:update", "vlad:migration" "vlad:start_app"]
 
 
 
