@@ -5,6 +5,7 @@ set :deploy_to, "/home/forge/#{application}"
 set :repository,  "git@github.com:eshwardeep/schoolapp.git"
 set :revision, "HEAD"
 set :branch, "master"
+set :adapter, "mongrel"
 
 
 namespace :vlad do
