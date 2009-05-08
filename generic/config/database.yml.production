@@ -3,6 +3,9 @@
 :development: &defaults
   :adapter: mysql
   :database: schoolapp_development
+  :host: localhost
+  :user: root
+  :password:
   
 :test:
   <<: *defaults
