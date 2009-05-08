@@ -34,12 +34,11 @@ namespace :vlad do
   #   "cd #{current_path} && #{merb_command} -p #{merb_port} -c #{merb_servers} -e #{merb_environment} #{cmd}"
   # end
    
-   desc "Restart the app servers"
-   
+   desc 'Restart Passenger'
    remote_task :start_app, :roles => :app do
-     run merb('')
+     run "touch #{current_release}/tmp/restart.txt"
    end
-   
+  
    remote_task :start_app => :stop_app
 
    desc "Stop the app servers"
