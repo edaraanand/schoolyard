@@ -48,6 +48,7 @@ namespace :vlad do
    
    desc "updates the code and changing symlink files"
    remote_task :update, :roles => :app do
+      run "mkdir -p #{current_path}/generic/db"
       run "mv #{latest_release}/generic/config/database.yml.production #{current_path}/generic/config/database.yml"
       run "cp #{latest_release}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
    end
