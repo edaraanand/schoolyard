@@ -1,5 +1,6 @@
 set :application, "schoolapp"
-set :domain, "forge@schoolyardapp.com"
+set :user, "forge"
+set :domain, "sdb.schoolyardapp.com"
 set :deploy_to, "/home/forge/#{application}"
 set :repository,  "git@github.com:eshwardeep/schoolapp.git"
 set :revision, "HEAD"
@@ -9,18 +10,18 @@ set :branch, "master"
 namespace :vlad do
     Rake.clear_tasks('vlad:start_app', 'vlad:migrate', 'vlad:update_symlinks')
     
-   # Merb app server
-   set :merb_address,       "127.0.0.1"
-   set :merb_clean,         false
-   set :merb_command,       'merb'
-   set :merb_conf,          nil
-   set :merb_extra_config,  nil
-   set :merb_environment,   "production"
-   set :merb_group,         nil
-   set :merb_port,          7001
-   set :merb_prefix,        nil
-   set :merb_servers,       1
-   set :merb_user,          nil
+# # Merb app server
+## set :merb_address,       "127.0.0.1"
+# #set :merb_clean,         false
+# set :merb_command,       'merb'
+# set :merb_conf,          nil
+# set :merb_extra_config,  nil
+# set :merb_environment,   "production"
+# set :merb_group,         nil
+# set :merb_port,          7001
+# set :merb_prefix,        nil
+# set :merb_servers,       1
+# set :merb_user,          nil
   
    desc "Prepares application servers for deployment. merb
         configuration is set via the merb_* variables.".cleanup
@@ -29,9 +30,9 @@ namespace :vlad do
      "rake"
    end
    
-   def merb(cmd) # :nodoc:
-     "cd #{current_path} && #{merb_command} -p #{merb_port} -c #{merb_servers} -e #{merb_environment} #{cmd}"
-   end
+  # def merb(cmd) # :nodoc:
+  #   "cd #{current_path} && #{merb_command} -p #{merb_port} -c #{merb_servers} -e #{merb_environment} #{cmd}"
+  # end
    
    desc "Restart the app servers"
    
