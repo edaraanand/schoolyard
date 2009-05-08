@@ -6,7 +6,7 @@ set :repository,  "git@github.com:eshwardeep/schoolapp.git"
 set :revision, "HEAD"
 set :branch, "master"
 set :adapter, "mongrel"
-set :start_port, 7001
+#set :start_port, 7001
 set :processes, 1
 set :log_path, "#{shared_path}/log/production.log"
 
@@ -35,11 +35,11 @@ namespace :vlad do
    
   # def merb(cmd) # :nodoc:
   #   "cd #{current_path} && #{merb_command} -p #{merb_port} -c #{merb_servers} -e #{merb_environment} #{cmd}"
-  # end
+  # end --port #{start_port}
    
    desc "Restart the app servers"
    remote_task :start_app, :roles => :app do
-      run "merb -a #{adapter} -e production -c #{processes} --port #{start_port} -m #{current_path}/generic -L #{log_path}"
+      run "merb -a #{adapter} -e production -c #{processes} -m #{current_path}/generic -L #{log_path}"
    end
    
    remote_task :start_app => :stop_app
