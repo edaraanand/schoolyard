@@ -1,30 +1,29 @@
 <div id="classContainer">
      <div id="sidebar" class="left-block">
-       
         <%= partial 'common/principal_image' %>
-          <% if @from_principals.blank? %>
-               <p class="subText">There are no articles at this time.</p>
-          <% else %>
-                 <% for principal in @from_principals %>
-                      <div class="data-block long-block">
-                            <div class="ddmmm">
-                                <span class="date"><%=  principal.created_at.strftime("%d")%></span>
-                                <span class="month"><%=  principal.created_at.strftime("%b")%></span>
-                           </div>
-                            <span><br/><%= link_to "#{principal.title}", url(:home, principal.id, :label => 'principal') %></span>
-                           <p class="separator"><%= snippet(principal.content, 50) %></p>
-                      </div>
-                  <% end %>
+        <% if @from_principals.blank? %>
+          <p class="subText">There are no articles at this time</p>
+        <% else %>
+          <% for principal in @from_principals %>
+            <div class="data-block long-block">
+              <div class="ddmmm">
+                            <span class="date"><%=  principal.created_at.strftime("%d")%></span>
+                            <span class="month"><%=  principal.created_at.strftime("%b")%></span>
+                       </div>
+                        <span><br/><%= link_to "#{principal.title}", url(:home, principal.id, :label => 'principal') %></span>
+                       <p class="separator"><%= snippet(principal.content, 50) %></p>
+                  </div>
+              <% end %>
            <% end %>
               <p class="separator">&nbsp;</p>
               <div class="page-links">
-                <% if @from_principals.blank? %>
-                   <%= link_to "All Principal’s Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
-                <%else%>
-                  <%= link_to "View Previous Articles", url(:principal_articles, :label => 'announcements')   %>
-                <%end%>
+                  <% if @from_principals.blank? %>
+                    <%= link_to "View previous articles", url(:principal_articles, :label => 'announcements')   %>
+                  <%else%>
+                     <%= link_to "All Principal’s Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
+                  <%end%>
               </div>
-     </div>
+            </div>
      <div id="content" class="homes-content">
            <p class="post-content">
                <% if @welcome_messages.empty? %>
@@ -41,7 +40,7 @@
                <p class="subText">There are no announcements at this time</p>
                <p class="separator">&nbsp;</p>
                 <div class="page-links">
-                  <%= link_to "View All Previous Announcements", url(:principal_articles, :label => 'announcements')   %>
+                  <%= link_to "View all previous announcements", url(:principal_articles, :label => 'announcements')   %>
                </div>
              <% else %>
               <% for announcement in @announcements %>
@@ -92,7 +91,7 @@
             <h3>Quick Links </h3>
             <div class="last">
                  <% unless @classes.empty? %>
-                       <li class="noBullet">Classes:
+                       <li class="noBullet">Classrooms:
                          <ul>
                         <% @classes.each do |f| %>
                               <% if f.class_name == "Sports" %>
@@ -134,7 +133,7 @@
         <% unless session.user.type == "Parent" %>
             <h3>Manage Home Page</h3>
             <ul class="last">
-                <li <% if @selected == "from_principal" %> class="on" <% end %>><%= link_to_right((right = "from_principal"), "Manage From the Principal", url(:from_principals)) %></li>
+                <li <% if @selected == "from_principal" %> class="on" <% end %>><%= link_to_right((right = "from_principal"), "Manage 'From the Principal'", url(:from_principals)) %></li>
                   <li <% if @selected == "welcome_messages" %> class="on" <% end %>><%= link_to_right( (right = "welcome_messages"), "Manage Welcome Messages", url(:welcome_messages, :label => "Home Page") ) %></li>
                 <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :label => "Home Page")) %></li>
                 <li <% if @selected == "spotlight" %> class="on" <% end %>><%= link_to_right((right = "spotlight"), "Manage Spotlight", url(:spot_lights, :label => "Home Page") ) %></li>
