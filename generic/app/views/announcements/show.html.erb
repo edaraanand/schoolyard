@@ -21,9 +21,9 @@
     <br class="clear"/>
     <p><%= san_content(@announcement.content) %></p>
       
-      <%= link_to '< Previous', url(:announcement, @announcement.previous_announcement),:class => "alignleft" if @announcement.previous_announcement %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-      <%= link_to "Back to List", resource(:announcements) %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-      <%= link_to 'Next >',  url(:announcement, @announcement.next_announcement),:class => "alignright" if @announcement.next_announcement %>
+      <%= link_to '< Previous |', url(:announcement, @announcement.previous_announcement),:class => "alignleft" if @announcement.previous_announcement %>
+      <%= link_to " Back to List ", resource(:announcements) %>
+      <%= link_to '| Next >',  url(:announcement, @announcement.next_announcement),:class => "alignright" if @announcement.next_announcement %>
 
    <p class="separator">&nbsp;</p>
     <br/><br/><br/>
