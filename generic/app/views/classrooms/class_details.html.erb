@@ -59,11 +59,12 @@
                       <% end %>
                          <h3><%= link_to "#{homework.title}", url(:home_work, homework.id) %></h3>
                          <span class="subText">Assigned <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></span>
-                         <p class="separator"><%= snippet(homework.content, 50) %></p>
+                         <p><%= snippet(homework.content, 50) %></p>
                          <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
-                      <% unless @attachment.nil? %>
+                        <% unless @attachment.nil? %>
                            <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
                       <% end %>
+                      <p class="separator">&nbsp;</p>
                 </div>           
             <% end %>    
                  <%= will_paginate (@home_works, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>      
@@ -149,7 +150,12 @@
                                     </div>
                                <% end %>
                                <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann") %></h3>
-                               <p class="separator"><%= snippet(announcement.content,50) %></p>
+                               <p><%= snippet(announcement.content,50) %></p>
+                               <% @attachment = Attachment.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
+                               <% unless @attachment.nil? %>
+                                <span class="attachment"><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></span>
+                               <% end %>
+                                <p class="separator">&nbsp;</p>
                           </div>
                      <% end %>
                      <div class="page-links">

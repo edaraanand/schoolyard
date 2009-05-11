@@ -20,14 +20,13 @@
                                    <% end %>
                                     <h3> <%= @home_work.title %> </h3> 
                                       <p class="subText">Assigned on <%= @home_work.created_at.strftime("%b %d, %Y") %>  by <%= @home_work.person.name %></p>
-                                      <p class="post-content"><%= san_content(@home_work.content) %></p>
+                                      <p><%= san_content(@home_work.content) %></p>
                                       
                                        <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"]) %>
                                         <% unless @attachment.nil? %>
                                              <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
                                         <% end %>
-                                     
-                                <p class="separator">&nbsp;</p>
+                                        <p class="separator">&nbsp;</p>
                          </div>
                          <hr size="1"/>
           <% if params[:label] == "home_w" %>

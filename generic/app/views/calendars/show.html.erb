@@ -18,6 +18,11 @@
 
   <hr size="1"/>
     <p><%= san_content(@calendar.description) %></p>
+    <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ?", @calendar.id]) %>
+      <% unless @attachment.nil? %>
+           <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+      <% end %>
+      <p class="separator">&nbsp;</p>
     
     <hr size="1"/>
     <% if params[:l] == "calendar" %>
