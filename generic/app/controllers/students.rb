@@ -301,10 +301,11 @@ class Students < Application
       @parents = @student.parents
       @protectors = @student.protectors
       @mess = "Testing"
-    end
-    if params[:label] == "staff"
+    elsif params[:label] == "staff"
       @selected = "school_staff"
       @staff = Staff.find(params[:id])
+    else
+      raise NotFound
     end
     render :layout => 'directory'
   end
