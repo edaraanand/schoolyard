@@ -43,7 +43,7 @@
             <div class="school-contact">
               <%= email(@current_school.email)%>
               <%unless @current_school.phone.blank?%>
-                <%="| #{number_to_phone(@current_school.phone, :area_code => true)})"%>
+                <%="| #{number_to_phone(@current_school.phone, :area_code => true)}"%>
               <%end%>
             </div>
       <div id="user-cp"><!--User Control Panel -->
