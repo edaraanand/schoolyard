@@ -1,12 +1,43 @@
 <%  if params[:label] == "principal" %>
 <div id="classContainer">
     <div id="sidebar" class="left-block">
-     <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
-      <% unless @attachment.nil? %>
-         <img src="/uploads/principal_images/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class = "prinPic"/>
-      <% else %>
-         <img src="/images/principal.png" alt="From The Principal"/>
-      <% end %>
+     
+      <div class="from-principal">
+       
+          <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
+          <% unless @attachment.nil? %>
+               <img src="/uploads/principal_images/<%= @attachment.filename %>" alt=" ", class = "prinPic"/>
+                   <% @principal = Principal.find(:first) %>
+                   <div class="caption">
+                       <h2>From the Principal</h2>
+                       <% unless @principal.nil? %>
+                          <% if @principal.principal_name? %>
+                               <%= @principal.name %>
+                          <% end %>
+                          <% if @principal.principal_email? %>
+                                <br/>
+                                 <%= email(@principal.email) %>
+                           <% end %>
+                       <% end %>
+                    </div>
+          <% else %>
+                    <% @principal = Principal.find(:first) %>
+                     <div class="caption nopic">
+                         <h2>From the Principal</h2>
+                         <% unless @principal.nil? %>
+                            <% if @principal.principal_name? %>
+                                 <%= @principal.name %>
+                            <% end %>
+                            <% if @principal.principal_email? %>
+                                  <br/>
+                                   <%= email(@principal.email) %>
+                             <% end %>
+                         <% end %>
+                      </div>
+          <% end %>
+          </div>
+     
+     
     </div>
     <div id="content" class="homes-content">
       <h2>From the Principal</h2>

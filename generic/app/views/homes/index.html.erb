@@ -51,7 +51,11 @@
            <% end %>
               <p class="separator">&nbsp;</p>
               <div class="page-links">
+                <% if @from_principals.blank? %>
                    <%= link_to "All Principal’s Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
+                <%else%>
+                  <%= link_to "View Previous Articles", url(:principal_articles, :label => 'announcements')   %>
+                <%end%>
               </div>
      </div>
      <div id="content" class="homes-content">
@@ -67,8 +71,12 @@
            <h2 class="home">Announcements</h2>
 
            <% if @announcements.blank? %>
-               <p class="subText">There are no Announcements at this time.</p>
-           <% else %>
+               <p class="subText">There are no announcements at this time</p>
+               <p class="separator">&nbsp;</p>
+                <div class="page-links">
+                  <%= link_to "View All Previous Announcements", url(:principal_articles, :label => 'announcements')   %>
+               </div>
+             <% else %>
               <% for announcement in @announcements %>
                     <% if announcement.expiration.nil? or announcement.expiration >= @date %>
                         <div class="data-block long-block">
@@ -82,22 +90,20 @@
                                 <% unless @attachment.nil? %>
                                  <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
                                 <% end %>
-                         </div>           
+                         </div> 
+                         <div class="page-links">
+                           <%= link_to "View All Announcements", url(:principal_articles, :label => 'announcements')   %> 
+                        </div>         
                     <% else %>
-                          <p class="separator">There are no Announcements at this time.</p>
-                   
+                          <p class="subText">There are no announcements at this time</p>
+                          <p class="separator">&nbsp;</p>
+                           <div class="page-links">
+                             <%= link_to "View All Previous Announcements", url(:principal_articles, :label => 'announcements')   %>
+                          </div>
                     <% end %>    
               <% end %>
            <% end %>
            
-           <p class="separator">&nbsp;</p>
-            <div class="page-links">
-                <%= link_to "All Announcements", url(:principal_articles, :label => 'announcements')   %> 
-                <% if session.user.type == "Parent" %>
-                    | <%= link_to "Submit an announcement", resource(:parents, :new) %>
-                <% end %>
-           </div>
-
      </div>
 <div class="right-sidebar">
   
