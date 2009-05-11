@@ -31,6 +31,7 @@
                          </ul>
                     </div>
                 <% end %>
+                
                  <%= will_paginate (@calendars, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
                  </div>
         <% end %>
@@ -67,6 +68,7 @@
                       <p class="separator">&nbsp;</p>
                 </div>           
             <% end %>    
+              
                  <%= will_paginate (@home_works, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>      
         </div>
         <% end %>
@@ -93,6 +95,7 @@
                       
                  </div>
             <% end %>
+                
                <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
            </div>    
         <% end %>
@@ -118,6 +121,7 @@
                    </div>
                    <p class="separator">&nbsp;</p>
               <% end %>
+              
               <%= will_paginate (@spot_lights, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
         </div>
         <% end %>
