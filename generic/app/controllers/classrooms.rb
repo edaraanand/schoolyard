@@ -269,7 +269,7 @@ class Classrooms < Application
     a = []
     type1 = a.insert(0, "Classes")
    # type2 = a.insert(1, "Sports")
-    @class_types = a.insert(1, "Extra Curricular")
+    @class_types = a.insert(1, "Subject")
   end
 
 
