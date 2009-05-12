@@ -11,15 +11,15 @@
   <% if flash[:error2] %><li><%= flash[:error2] %> </li><% end %>
 </ul>
 
-<%= form_for(@parent, :action => resource(:registrations), :name => "registration" ) do %>
+<%= form_for(@parent, :action => resource(:registrations), :name => "registration", :onsubmit => "ClearAll()" ) do %>
   <fieldset>
     <ul>
       <li>
-      <%= text_field  :first_name,  :label => "Your Name", :class => "semi-short" %>
-      <%= text_field  :last_name, :class => "semi-short apart" %>
+      <%= text_field  :first_name,  :label => "Your Name", :class => "semi-short defaultText defaultTextActive", :title => "First Name" %>
+      <%= text_field  :last_name, :class => "semi-short apart defaultText defaultTextActive", :title => "Last Name" %>
       </li>
       <li>
-      <%= text_field  :email,  :label => "Your Email ID"%>
+      <%= text_field  :email, :class => "defaultText defaultTextActive",  :label => "Your Email ID", :title => "e.g. someone@example.com" %>
       </li>
     </ul>
   </fieldset>
@@ -30,8 +30,8 @@
   <fieldset>
     <ul>
       <li>
-        <%= text_field  :first_name,  :label => "Name", :class => "semi-short" %>
-        <%= text_field  :last_name, :class => "semi-short apart" %>
+        <%= text_field  :first_name,  :label => "Name", :class => "semi-short defaultText defaultTextActive", :title => "First Name" %>
+        <%= text_field  :last_name, :class => "semi-short apart defaultText defaultTextActive", :title => "Last Name" %>
       </li>
       <li>
         <label>Current Class:</label>
@@ -100,8 +100,8 @@
                      <div id="student2" style="display:none">
                        <fieldset><ul>
                           <li>
-                              <%= text_field  :name => "f_name_student2", :class => "semi-short", :label => "Name" %>
-                              <%= text_field  :name => "l_name_student2", :class => "semi-short apart" %>
+                            <%= text_field  :name => "f_name_student2", :class => "semi-short defaultText defaultTextActive", :label => "Name", :title => "First Name" %>
+                            <%= text_field  :name => "l_name_student2", :class => "semi-short apart defaultText defaultTextActive", :title => "Last Name" %>
                           </li>
                           <li>
                               <label>Current Class:</label>
@@ -165,8 +165,8 @@
                         <div id="student3" style="display:none">
                           <fieldset><ul>
                             <li>
-                                <%= text_field  :name => "f_name_student3", :class => "semi-short", :label => "Name" %>
-                                <%= text_field  :name => "l_name_student3", :class => "semi-short apart" %>
+                                <%= text_field  :name => "f_name_student3", :class => "semi-short defaultText defaultTextActive", :label => "Name", :title => "First Name" %>
+                                <%= text_field  :name => "l_name_student3", :class => "semi-short apart defaultText defaultTextActive", :title => "Last Name" %>
                             </li>
                             <li>
                                 <label>Current Class:</label>
@@ -197,8 +197,8 @@
                 <% else %>
                        <div id="student4" style="display:none">
                             <fieldset><ul><li>
-                                <%= text_field  :name => "f_name_student4", :class => "semi-short", :label => "Name" %>
-                                <%= text_field  :name => "l_name_student4", :class => "semi-short apart" %>
+                                <%= text_field  :name => "f_name_student4", :class => "semi-short defaultText defaultTextActive", :label => "Name", :title => "First Name" %>
+                                <%= text_field  :name => "l_name_student4", :class => "semi-short apart defaultText defaultTextActive", :title => "Last Name" %>
                             </li>
                             <li>
                                 <label>Current Class:</label>
@@ -254,10 +254,96 @@
    }
 
    $j("#DOB1").datepicker({ yearRange: '1970:2040'});
-    $j("#DOB2").datepicker({ yearRange: '1970:2040'});
-     $j("#DOB3").datepicker({ yearRange: '1970:2040'});
-      $j("#DOB4").datepicker({ yearRange: '1970:2040'});
+   $j("#DOB2").datepicker({ yearRange: '1970:2040'});
+   $j("#DOB3").datepicker({ yearRange: '1970:2040'});
+   $j("#DOB4").datepicker({ yearRange: '1970:2040'});
       
+      
+   $j(document).ready(function()
+  {
+      $j(".defaultText").focus(function(srcc)
+      {
+          if ($j(this).val() == $j(this)[0].title)
+          {
+              $j(this).removeClass("defaultTextActive");
+              $j(this).val("");
+          }
+      });
+    
+   $j(".defaultText").blur(function()
+   {
+       if ($j(this).val() == "")
+       {
+           $j(this).addClass("defaultTextActive");
+           $j(this).val($j(this)[0].title);
+       }
+   });
+    
+    $j(".defaultText").blur();        
+});
+      
+   
+   function ClearAll()
+{
+   var parent_first = document.getElementById('parent_first_name');
+   var parent_last = document.getElementById('parent_last_name');
+   var parent_mail = document.getElementById('parent_email');
+   
+   var student_f1 = document.getElementById('registration_first_name');
+   var student_l1 = document.getElementById('registration_last_name');
+   
+   var student_f2 = document.getElementById('f_name_student2');
+   var student_l2 = document.getElementById('l_name_student2');
+   var student_f3 = document.getElementById('f_name_student3');
+   var student_l3 = document.getElementById('l_name_student3');
+   var student_f4 = document.getElementById('f_name_student4');
+   var student_l4 = document.getElementById('l_name_student4');
+   
+   if (parent_first.value == parent_first.title) 
+   {
+     parent_first.value = ""
+    }
+  if (parent_last.value == parent_last.title) 
+   {
+     parent_last.value = ""
+    }
+   if (parent_mail.value == parent_mail.title) 
+   {
+     parent_mail.value = ""
+    }
+    if (student_f1.value == student_f1.title) 
+   {
+     student_f1.value = ""
+    }
+     if (student_l1.value == student_l1.title) 
+   {
+     student_l1.value = ""
+    }
+    if (student_f2.value == student_f2.title) 
+   {
+     student_f2.value = ""
+    }
+     if (student_l2.value == student_l2.title) 
+   {
+     student_l2.value = ""
+    }
+    if (student_f3.value == student_f3.title) 
+   {
+     student_f3.value = ""
+    }
+     if (student_l3.value == student_l3.title) 
+   {
+     student_l3.value = ""
+    }
+     if (student_f4.value == student_f4.title) 
+   {
+     student_f4.value = ""
+    }
+     if (student_l4.value == student_l4.title) 
+   {
+     student_l4.value = ""
+    }
+}
       
  
 
