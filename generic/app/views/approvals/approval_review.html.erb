@@ -36,16 +36,16 @@
                    <span class="reject"><%= @not_exist %></span><br/>                                                                                                                                                          
                        Please select the student & class to map this parent to:<br/>
                     <% if params[:label] %>
-                        <dd><%= select :name => "class_not_found[]",  :prompt => "Please Select", :collection => @classrooms.collect{|x| x.class_name }, :selected => @room.class_name, :onchange => "javascript:window.location.href='/approval_review?label='+(this.value)+'&id=#{f.parent_id}'" %></dd>
+             <dd><%= select :name => "class_not_found[]",  :prompt => "Classroom - Please Select", :collection => @classrooms.collect{|x| x.class_name }, :selected => @room.class_name, :onchange => "javascript:window.location.href='/approval_review?label='+(this.value)+'&id=#{f.parent_id}'" %></dd>
                     <% else %>
-                        <dd><%= select :name => "class_not_found[]",  :prompt => "Please Select", :collection => @classrooms.collect{|x| x.class_name }, :onchange => "javascript:window.location.href='/approval_review?label='+(this.value)+'&id=#{f.parent_id}'" %></dd>
+                        <dd><%= select :name => "class_not_found[]",  :prompt => "Classroom - Please Select", :collection => @classrooms.collect{|x| x.class_name }, :onchange => "javascript:window.location.href='/approval_review?label='+(this.value)+'&id=#{f.parent_id}'" %></dd>
                     <% end %>
-                     <dd><%= select :name => "student_not_found[]", :prompt => "Please Select", :collection => @students.collect{|x| x.name } %></dd>
+                    <dd><%= select :name => "student_not_found[]", :prompt => "Student - Please Select", :collection => @students.collect{|x| x.name } %></dd>
             <% else %>
                    <dt></dt>
                    <dd><%= @exist %></dd>
-                   <dd><%= select :name => "class_found[]", :prompt => "Please Select", :collection => @classrooms.collect{|x| x.class_name } %></dd>
-                   <dd><%= select :name => "student_found[]", :prompt => "Please Select", :collection => @students.collect{|x| x.name } %></dd>
+                   <dd><%= select :name => "class_found[]", :prompt => "Classroom - Please Select", :collection => @classrooms.collect{|x| x.class_name } %></dd>
+                   <dd><%= select :name => "student_found[]", :prompt => "Student - Please Select", :collection => @students.collect{|x| x.name } %></dd>
             <% end %> 
                <br/><br/><br/>
                <h4><b>Details entered by the parent</b></h4>
