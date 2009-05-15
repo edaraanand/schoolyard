@@ -8,4 +8,7 @@
     <%= "<dt>Phone </dt><dd>#{number_to_phone(@current_school.phone, :area_code => true)}</dd>" if @current_school.phone?  %>
     <%= "<dt>E-Mail </dt><dd>#{email(@current_school.email)}</dd>" if @current_school.email?  %>
     <%= "<dt>Fax </dt><dd>#{number_to_phone(@current_school.fax, :area_code => true)}</dd>" if @current_school.fax?  %>
+   
 </dl>
+    <h5>Twitter Account Information</h5>
+    <%= "<dt>User Name </dt><dd>#{@current_school.username}</dd>" if @current_school.username?  %>
