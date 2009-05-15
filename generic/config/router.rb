@@ -79,6 +79,7 @@ Merb::Router.prepare do
        resources :forms
        resources :spot_lights
        resources :admin
+       resources :notifications
        #resources :reports
        match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
        match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
