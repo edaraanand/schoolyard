@@ -15,6 +15,7 @@ class School < ActiveRecord::Base
   has_many :parents
   has_many :registrations
   has_many :spot_lights
+  has_one :twitter
 
   validates_presence_of :school_name
   validates_presence_of :address1
@@ -32,7 +33,7 @@ class School < ActiveRecord::Base
   validates_presence_of :subdomain, :if => :subdomain
   validates_uniqueness_of :school_name
   validates_uniqueness_of :subdomain, :if => :subdomain
-
+  
 
 end
 
