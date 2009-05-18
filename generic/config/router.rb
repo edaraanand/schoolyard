@@ -79,7 +79,9 @@ Merb::Router.prepare do
        resources :forms
        resources :spot_lights
        resources :admin
+       resources :feedbacks
        #resources :reports
+       match("/feedback_reply").to(:controller => 'feedbacks', :action => 'feedback_reply').name(:feedback_reply)
        match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
        match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
        match("/alerts_edit").to(:controller => 'alerts', :action => 'edit').name(:alert_edit)
