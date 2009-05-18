@@ -42,18 +42,19 @@
             </h1>
             <div class="school-contact">
               <%= email(@current_school.email)%>
-              <%unless @current_school.phone.blank?%>
+              <% unless @current_school.phone.blank? %>
                 <%="| #{number_to_phone(@current_school.phone, :area_code => true)}"%>
-              <%end%>
+              <% end %>
             </div>
       <div id="user-cp"><!--User Control Panel -->
        <p class="welcome">Welcome <em><%= session.user.name %></em></p>
         <ul>  <% @access_rights = session.user.access_peoples  %>
          <% if @access_rights.length == 0 %>
-         <li class="first"><%= link_to "My Account", url(:parent_account) %></li>
+             <li class="first"><%= link_to "My Account", url(:parent_account) %></li>
          <% else %>
              <li class="first"><%= link_to "My Account", url(:staff_account) %>&nbsp;</li>
          <% end %>
+            <li>&nbsp;<%= link_to "Feedback", url(:feedback, :new)  %></li>
             <li>&nbsp;<%= link_to "Logout", url(:logout) %></li>
         </ul>
       </div><% @sports_class = @current_school.classrooms.find(:first, :conditions => ['class_name = ? and activate =  ?', "Sports", true] ) %>

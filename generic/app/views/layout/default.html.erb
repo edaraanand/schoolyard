@@ -5,6 +5,7 @@
       <ul id="menu"><!-- Nested Lists -->
         <li>Site Settings<ul>
            <li <% if @selected == "school_profile" %> class="on" <% end %>><%= link_to_if((right = "basic_settings"), "Basic Settings", url(:schools)) %></li>
+           <li <% if @selected == "feedback" %> class="on" <% end %>><%= link_to_if((right = "feedback"), "Feedback", url(:feedbacks)) %></li>
            <li <% if @selected == "class_rooms" %> class="on" <% end %>><%= link_to_if((right = "classes"), "Classrooms", url(:classrooms) )  %></li>
           </ul>
         </li>
