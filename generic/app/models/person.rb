@@ -26,6 +26,8 @@ class Person < ActiveRecord::Base
   has_many :home_works
 
   has_many :reports
+  
+
 
 
   # Validations
