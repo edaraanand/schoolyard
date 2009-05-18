@@ -15,9 +15,9 @@ class Feedbacks < Application
   end
   
   def create
-     @announcement = session.user.announcements.build(params[:announcement])
+    @announcement = @current_school.announcements.new(params[:announcement])
       if @announcement.valid?
-         @announcement.school_id = @current_school.id
+         @announcement.person_id = session.user.id
          @announcement.label = "feedback"
          @announcement.approved = false
          @announcement.approve_announcement = true
@@ -38,6 +38,7 @@ class Feedbacks < Application
     if params[:approvetype] == "reply"
        @announcement.approve_comments = params[:announcement][:approve_comments]
        @announcement.approved_by = session.user.id  # this is for storing who replied the feedback
+       @announcement.approved = @announcement.approve_announcement = false
        @announcement.save
        @announcement.reply_person
     else

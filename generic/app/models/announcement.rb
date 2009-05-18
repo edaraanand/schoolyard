@@ -28,10 +28,10 @@ class Announcement < ActiveRecord::Base
  
   # sending the email reply to the person who has sent the feedback
   def reply_person
-    deliver_mail(:reply_person, :subject => "Feedback Reply from " + self.school.school_name)
+     deliver(:reply_person, :subject => "Feedback Reply from " + self.school.school_name)
   end
 
-  def deliver_mail(action, params)
+  def deliver(action, params)
     from = "no-reply@insightmethods.com"
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.person.email), self )
   end
