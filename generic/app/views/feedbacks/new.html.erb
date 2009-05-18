@@ -1,0 +1,17 @@
+<%= error_messages_for @announcement %>
+
+<h2 class="current-page">Feedback </h2>
+
+<%= form_for ( @announcement, :action => resource(:feedbacks) ) do %>
+      
+       <fieldset>
+              <ul>
+                 <li><%= text_area  :content,  :label => "Feedback", :rows => "20", :cols => "50" %></li>
+              </ul>
+      </fieldset>
+      
+      <div class="save-cancel">
+          <%= submit "    Send    " %> Or <a href="javascript:history.back();" class="cancel">Cancel</a>
+      </div>  
+<% end =%>
+

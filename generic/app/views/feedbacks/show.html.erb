@@ -1,0 +1,83 @@
+<h2 class="current-page">Feedback </h2>
+     
+  <div class="fullpage announcemt"> 
+
+           <div class="data-block long-block">
+                   <div class="ddmmm">
+                      <span class="date"><%= @announcement.created_at.strftime("%d") %></span>
+                      <span class="month"><%= @announcement.created_at.strftime("%b") %></span>
+	                 </div>
+              
+                   <h3><%= @announcement.person.name %> said</h3><br/>
+                   <p class="post-content"><%= @announcement.content %></p>
+           </div> 
+           <hr class="clear">
+             
+         <%= form_for :announcement, :action => url(:feedback_reply, :id => @announcement), :name => "approveform" do %>
+              
+              <input type="hidden" name="approvetype" value="reply" />
+              <div id="reply_span" style="display:block">
+                 <span class="subText">Your Reply</span> |
+              </div>
+              <div id="reply_link" style="display:none">
+                 <a href="javascript:getsupport('reply')">Your Reply </a> |
+              </div>
+                <div id="post_span" style="display:none">
+                 <span class="subText">Post to Collaborative Methods</span> <br/><br/>
+              </div>
+              <div id="post_link" style="display:block">
+                 <a href="javascript:getsupport('post')">Post to Collaborative Methods</a> <br/><br/>
+              </div>
+              
+              <ul>
+                  <li><%= text_area  :approve_comments, :rows => "10", :cols => "50" %></li>
+              </ul>
+              
+              <div id="reply" class="save-cancel" style="display:block">
+                  <%= submit "    Send Reply    " %> 
+              </div>  
+              <div id="post" class="save-cancel" style="display:none">
+                  <%= submit "    Post to Collaborative Methods    " %> 
+              </div>
+              
+        <% end =%>
+      
+  </div>     
+ 
+<script language="JavaScript" type="text/javascript">
+
+   function getsupport ( selectedtype )
+   {
+     var reply     = document.getElementById('reply');
+     var post     = document.getElementById('post');
+     var reply_span     = document.getElementById('reply_span');
+     var post_span     = document.getElementById('post_span');
+     var reply_link     = document.getElementById('reply_link');
+     var post_link     = document.getElementById('post_link');
+     
+     if (selectedtype == "reply")
+        {
+          reply_span.style.display      =  "block";
+          post_span.style.display      =  "none";
+          reply_link.style.display      =  "none";
+          post_link.style.display      =  "block";
+          reply.style.display      =  "block";
+          post.style.display      =  "none"; 
+          document.approveform.approvetype.value = selectedtype ;
+          document.approveform.submit() ;
+        }
+     else
+        {
+          reply_span.style.display      =  "none";
+          post_span.style.display      =  "block";
+          reply_link.style.display      =  "block";
+          post_link.style.display      =  "none";
+          reply.style.display      =  "none";
+          post.style.display      =  "block"; 
+          document.approveform.approvetype.value = selectedtype ;
+          document.approveform.submit() ;
+        }
+   }
+    
+    
+</script>
