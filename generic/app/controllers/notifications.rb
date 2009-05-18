@@ -1,5 +1,21 @@
 class Notifications < Application
    
+   require "twiliorest.rb"
+  
+   # your Twilio authentication credentials  
+   ACCOUNT_SID = 'ACa1b7ee5abe50974956bda599447b1f04'  
+   ACCOUNT_TOKEN = '208232dfbc82563e6c2f9cdc54cafbe5' 
+   
+   # Twilio REST API version
+   API_VERSION = '2008-08-01'
+   
+   # # base URL of this application  
+   BASE_URL = "http://sdb.schoolyard.in:4000"
+   
+   # # Outgoing Caller ID you have previously validated with Twilio  
+   CALLER_ID = 'NNNNNNNNNN'  
+   
+   
    layout 'default'
    before :find_school
    before :access_rights
@@ -21,6 +37,7 @@ class Notifications < Application
   def create
      @announcement = @current_school.announcements.new(params[:announcement])    
      if @announcement.valid?
+        makecall
         @announcement.label = "urgent"
         @announcement.save
         twitter = Twitter.new(@current_school.username, @current_school.password)
@@ -55,7 +72,54 @@ class Notifications < Application
      redirect resource(:notifications)
   end
   
+  def makecall
+    #raise "Eshwar".inspect
+    # parameters sent to Twilio REST API  
+     d = {  
+          'Caller' => CALLER_ID,  
+          'Called' => params['number'],  
+          'Url' => BASE_URL + '/reminder',  
+         }  
+     begin  
+         account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)  
+         resp = account.request(  
+             "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",  
+             'POST', d)  
+         resp.error! unless resp.kind_of? Net::HTTPSuccess  
+     rescue StandardError => bang  
+         redirect_to({ :action => '.', 'msg' => "Error #{ bang }" })  
+         return  
+     end  
+     redirect_to({ :action => '',   
+         'msg' => "Calling #{ params['number'] }..." }) 
+  end
   
+  def reminder  
+      @postto = BASE_URL + '/directions'  
+      
+      respond_to do |format|  
+          format.xml { @postto }  
+      end  
+  end  
+  
+  def directions  
+      if params['Digits'] == '3'  
+         redirect_to :action => 'goodbye'  
+         return  
+      end  
+        
+      if !params['Digits'] or params['Digits'] != '2'  
+         redirect_to :action => 'reminder'  
+         return  
+      end  
+        
+      @redirectto = BASE_URL + '/reminder',  
+      respond_to do |format|  
+          format.xml { @redirectto }  
+      end  
+  end  
+
+
   private
 
   def access_rights
