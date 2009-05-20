@@ -80,6 +80,8 @@ class Approvals < Application
     elsif params[:label] == "rejected"
        @parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 3 ], :order => "created_at DESC", :per_page => 25,  :page => params[:page] )
        @test = "rejected"
+       puts @parents.inspect
+       puts "Eshwar".inspect
     elsif params[:label] == "pending"
        @parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 2], :order => "created_at DESC", :per_page => 25,  :page => params[:page] )
        @test = "pending"
