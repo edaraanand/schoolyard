@@ -145,7 +145,7 @@ class Announcements < Application
       @allowed = 1 - @attachments.size
       render :edit, :id => @announcement.id
     else
-      @announcement = Announcement.find(params[:id])
+      @announcement = @current_school.announcements.find(params[:id])
       Attachment.delete_all(['attachable_id = ?', @announcement.id])
       @announcement.destroy
       redirect resource(:announcements)

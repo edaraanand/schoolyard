@@ -12,7 +12,7 @@
 	   </select>
 
    <% if @announcements.empty? %>
-         <p>There are no Announcements created yet. <%= link_to "Add New", resource(:home_works, :new) %></p>
+        <p>There are no Announcements created yet. <%= link_to "Add New", resource(:announcements, :new) %></p>
    <% else %>
           <% for announcement in @announcements %>
           
