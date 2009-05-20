@@ -145,7 +145,7 @@ class Approvals < Application
        end
     else
       @parent.approved = 3
-      @parent.save
+      @parent.save!
       redirect url(:parent_approvals)
     end
 
