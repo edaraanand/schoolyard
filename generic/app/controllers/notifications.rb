@@ -1,5 +1,3 @@
-class Notifications < Application
-   
    require "twiliorest.rb"
   
    # your Twilio authentication credentials  
@@ -10,16 +8,18 @@ class Notifications < Application
    API_VERSION = '2008-08-01'
    
    # # base URL of this application  
-   BASE_URL = "http://sdb.schoolyard.in:4000"
-   
-   # # Outgoing Caller ID you have previously validated with Twilio  
+   BASE_URL = "http://sdb.#{Schoolapp.config(:app_domain)}" 
+     
+   # Outgoing Caller ID you have previously validated with Twilio  
    CALLER_ID = 'NNNNNNNNNN'  
+   CALLED = '571 332 0672'
    
-   
+
+class Notifications < Application
    layout 'default'
+   before :access_rights 
    before :find_school
-   before :access_rights
-   
+      
   def index
      @announcements = @current_school.announcements.paginate(:all,
                                                              :conditions => ['label=?', "urgent"],
@@ -32,12 +32,13 @@ class Notifications < Application
   def new
     @announcement = Announcement.new
     render
-  end
+  end                                
   
   def create
      @announcement = @current_school.announcements.new(params[:announcement])    
      if @announcement.valid?
         makecall
+        raise "Naidu".inspect
         @announcement.label = "urgent"
         @announcement.save
         twitter = Twitter.new(@current_school.username, @current_school.password)
@@ -64,7 +65,7 @@ class Notifications < Application
  #    end
  #   render
  # end
- 
+
  
   def delete
      @announcement = @current_school.announcements.find(params[:id])
@@ -73,25 +74,30 @@ class Notifications < Application
   end
   
   def makecall
-    #raise "Eshwar".inspect
-    # parameters sent to Twilio REST API  
+      #raise "hip".inspect
+     # parameters sent to Twilio REST API  
      d = {  
           'Caller' => CALLER_ID,  
-          'Called' => params['number'],  
-          'Url' => BASE_URL + '/reminder',  
+          'Called' => '571 332 0672',  
+          'Url' => BASE_URL + '/reminder'
          }  
-     begin  
-         account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)  
-         resp = account.request(  
-             "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",  
-             'POST', d)  
-         resp.error! unless resp.kind_of? Net::HTTPSuccess  
-     rescue StandardError => bang  
-         redirect_to({ :action => '.', 'msg' => "Error #{ bang }" })  
-         return  
-     end  
-     redirect_to({ :action => '',   
-         'msg' => "Calling #{ params['number'] }..." }) 
+      begin  
+          account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
+          puts account.inspect
+          puts "indu".inspect
+          resp = account.request(  
+              "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",  
+              'POST', d)  
+          puts resp.inspect
+          resp.error! unless resp.kind_of? Net::HTTPSuccess  
+      rescue StandardError => bang  
+          render :new 
+          #return  
+      end  
+        
+     # redirect_to({ :action => '',   
+     #     'msg' => "Calling #{ params['number'] }..." })  
+     redirect resource(:notifications)
   end
   
   def reminder  
