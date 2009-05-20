@@ -19,8 +19,6 @@ class Feedbacks < Application
       if @announcement.valid?
          @announcement.person_id = session.user.id
          @announcement.label = "feedback"
-         @announcement.approved = false
-         @announcement.approve_announcement = true
          @announcement.save
          redirect url(:homes)
       else
