@@ -85,11 +85,11 @@ class Notifications < Application
           account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
           puts account.inspect
           puts "indu".inspect
-          resp = account.request(  
-              "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",  
-              'POST', d)  
+          resp = account.request( "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)  
           puts resp.inspect
           resp.error! unless resp.kind_of? Net::HTTPSuccess  
+          puts resp.inspect
+          puts "raja".inspect
       rescue StandardError => bang  
           render :new 
           #return  
