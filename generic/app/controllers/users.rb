@@ -32,7 +32,7 @@ class Users < Application
                                                 :filename => params[:person][:image][:filename],
                                                 :content_type => params[:person][:image][:content_type],
                                                 :size => params[:person][:image][:size],
-                                                :id => @cuurent_school.id
+                                                :id => @current_school.id
                  )
                 File.makedirs("public/uploads/user_pictures")
                 FileUtils.mv(params[:person][:image][:tempfile].path, "public/uploads/user_pictures/#{@attachment.filename}")

@@ -39,7 +39,7 @@ class SpotLights < Application
             :filename => params[:spot_light][:image][:filename],
             :size => params[:spot_light][:image][:size],
             :content_type => params[:spot_light][:image][:content_type],
-            :id => @cuurent_school.id
+            :id => @current_school.id
             )
             File.makedirs("public/uploads/spotlights")
             FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/spotlights/#{@attachment.filename}")
