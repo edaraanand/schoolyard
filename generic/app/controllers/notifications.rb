@@ -9,7 +9,7 @@
    
    # # base URL of this application  
   # BASE_URL = "http://sdb.#{Schoolapp.config(:app_domain)}"
-    BASE_URL = "https://school@insightmethods.com:administration@sdb.schoolyardapp.com"
+    BASE_URL = "http://sdb.schoolyardapp.com"
    
    #school@insightmethods.com:administration@
    
@@ -17,8 +17,8 @@
     
    # Outgoing Caller ID you have previously validated with Twilio  
    CALLER_ID = 'NNNNNNNNNN'  
-   CALLED = '571 332 0672'
-   #CALLED = '+14152870729'
+  # CALLED = '571 332 0672'
+   CALLED = '+14152870729'
 
 class Notifications < Application
    layout 'default'
@@ -81,7 +81,7 @@ class Notifications < Application
      # parameters sent to Twilio REST API  
      d = {  
           'Caller' => CALLER_ID,  
-          'Called' => '571 332 0672',  
+          'Called' => '+14152870729',  
           'Url' => BASE_URL + '/reminder'
          }  
       begin  
