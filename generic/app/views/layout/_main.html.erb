@@ -45,7 +45,9 @@
               <%= link_to "#{@current_school.school_name}", resource(:homes) %>
             </h1>
             <div class="school-contact">
-              <%= email(@current_school.email)%>
+             <% unless @current_school.email.blank? %>
+                <%= email(@current_school.email)%>
+             <% end %>
               <% unless @current_school.phone.blank? %>
                 <%="| #{number_to_phone(@current_school.phone, :area_code => true)}"%>
               <% end %>
