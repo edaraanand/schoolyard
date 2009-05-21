@@ -18,7 +18,7 @@ class Admin < Application
     @person = Person.new(params[:person])
     if @school.valid? && @person.valid?
        @subdomain = params[:school][:subdomain]
-       @school.domain = "http://" + "#{@subdomain}" + ".schoolyardapp.net"
+       @school.domain = "http://" + "#{@subdomain}" + ".schoolyardapp.com"
        @school.folder = "schoolyardappcom"
        @school.save
        @person.school_id = @school.id
@@ -26,8 +26,8 @@ class Admin < Application
        @person.admin = true
        @person.save
        @view = Access.find_by_name('view_all')
-        AccessPeople.create({:person_id => @person.id, :access_id => @view.id })
-        AccessPeople.create({:person_id => @person.id, :all => true })
+       AccessPeople.create({:person_id => @person.id, :access_id => @view.id })
+       AccessPeople.create({:person_id => @person.id, :all => true })
        @person.send_pass
        redirect resource(:admin)
     else
