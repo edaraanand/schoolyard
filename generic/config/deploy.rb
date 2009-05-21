@@ -4,7 +4,7 @@ set :domain, "#{user}@schoolyardapp.com"
 set :deploy_to, "/home/forge/#{application}"
 set :repository,  "git@github.com:eshwardeep/schoolapp.git"
 set :revision, "HEAD"
-set :branch, "master"
+set :branch, "twilio"
 set :adapter, "mongrel"
 set :processes, 1
 set :log_path, "#{shared_path}/log/production.log"
@@ -41,6 +41,7 @@ namespace :vlad do
       run "mv /home/forge/db  #{current_path}/generic" 
       run "cp #{latest_release}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
       #run "cd #{current_path}/generic && rake feedback:person"
+      run "cd #{current_path}/generic && rake admin:person"
    end
    
    desc "Symlink configuration".cleanup
