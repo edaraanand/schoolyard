@@ -100,7 +100,7 @@
        
        <% unless @classrooms.empty? %>
             <h3>Quick Links </h3>
-            <div class="last">
+            <ul class="last">
                  <% unless @classes.empty? %>
                        <li class="noBullet">Classrooms:
                          <ul>
@@ -129,7 +129,7 @@
                         </ul>
                        </ul>
                  <%end%>
-            </div>
+            </ul>
        <% end %>
 
        <% unless  @external_links.empty? %>
