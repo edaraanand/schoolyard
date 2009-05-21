@@ -111,16 +111,16 @@ class FromPrincipals < Application
   end
 
   def settings
-    @principal = Principal.find(:first)
+    @principal = Principal.find(:first, :conditions => ['school_id = ?', @current_school.id])
     @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ?', "principal_image"])
     render
   end
 
   def new_settings
-    @pr = Principal.find(:first)
+    @pr = Principal.find(:first, :conditions => ['school_id = ?', @current_school.id])
     if @pr.nil?
-      @principal = Principal.new
-      render
+       @principal = Principal.new
+       render
     else
       raise NotFound
     end
@@ -129,30 +129,30 @@ class FromPrincipals < Application
   def create_settings
     @principal = Principal.new(params[:principal])
     if @principal.valid?
-      @principal.school_id = @current_school.id
-      @principal.save
-      redirect url(:settings)
+       @principal.school_id = @current_school.id
+       @principal.save!
+       redirect url(:settings)
     else
       render :new_settings
     end
   end
 
   def edit_details
-    @principal = Principal.find(:first)
+    @principal = Principal.find(:first, :conditions => ['school_id = ?', @current_school.id])
     render
   end
 
   def update_details
-    @principal = Principal.find(:first)
+    @principal = Principal.find(:first, :conditions => ['school_id = ?', @current_school.id])
     if @principal.update_attributes(params[:principal])
-      redirect url(:settings)
+       redirect url(:settings)
     else
-      render :edit_details
+       render :edit_details
     end
   end
 
   def settings_update
-    @principal = Principal.find(:first)
+    @principal = Principal.find(:first, :conditions => ['school_id = ?', @current_school.id])
     @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ?', "principal_image"])
     @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
     if params[:image][:filename] != nil
@@ -163,7 +163,8 @@ class FromPrincipals < Application
         @attachment = Attachment.create( :attachable_type => "principal_image",
         :filename => params[:image][:filename],
         :content_type => params[:image][:content_type],
-        :size => params[:image][:size]
+        :size => params[:image][:size],
+        :id => @current_school.id
         )
         unless @principal.nil?
           if ((params[:principal_email] == "on") || (params[:principal_name] == "on") )
