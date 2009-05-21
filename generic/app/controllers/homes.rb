@@ -88,7 +88,7 @@ class Homes < Application
   end
 
   def download
-     @attachment = Attachment.find(params[:id])
+     @attachment = @current_school.attachments.find(params[:id])
      send_file("#{Merb.root}/public/uploads/#{@attachment.id}/#{@attachment.filename}") 
   end
   

@@ -15,6 +15,7 @@ class School < ActiveRecord::Base
   has_many :parents
   has_many :registrations
   has_many :spot_lights
+  has_many :attachments
   
 
   validates_presence_of :school_name

@@ -36,7 +36,8 @@ class Forms < Application
           :attachable_id => @form.id,
           :filename => params[:attachment]['file_'+i.to_s][:filename],
           :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-          :size => params[:attachment]['file_'+i.to_s][:size]
+          :size => params[:attachment]['file_'+i.to_s][:size],
+          :id =>  @current_school.id
           )
           File.makedirs("public/uploads/#{@attachment.id}")
           FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
@@ -57,14 +58,14 @@ class Forms < Application
 
   def edit
     @form = Form.find(params[:id])
-    @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type = ?", @form.id, "Form"])
+    @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type = ?", @form.id, "Form"])
     @allowed = 1 - @attachments.size
     render
   end
 
   def update
     @form = Form.find(params[:id])
-    @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type = ?", @form.id, "Form"])
+    @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type = ?", @form.id, "Form"])
     @allowed = 1 - @attachments.size
     i=0
     if params[:attachment]
@@ -75,7 +76,8 @@ class Forms < Application
             :attachable_id => @form.id,
             :filename => params[:attachment]['file_'+i.to_s][:filename],
             :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-            :size => params[:attachment]['file_'+i.to_s][:size]
+            :size => params[:attachment]['file_'+i.to_s][:size],
+            :id =>  @current_school.id
             )
             File.makedirs("public/uploads/#{@attachment.id}")
             FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
@@ -107,10 +109,10 @@ class Forms < Application
 
   def delete
     if params[:label] == "attachment"
-      @attachment = Attachment.find(params[:id])
+      @attachment = @current_school.attachments.find(params[:id])
       @form = Form.find_by_id(@attachment.attachable_id)
       @attachment.destroy
-      @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type = ?", @form.id, "Form"])
+      @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type = ?", @form.id, "Form"])
       @allowed = 1 - @attachments.size
       render :edit, :id => @form.id
     else

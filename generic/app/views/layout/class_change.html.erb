@@ -31,7 +31,7 @@
                           <tr><td  class="teach-name-bottom"><img src="/images/teach-name-bottom.gif"/></td></tr>
                         </table>
                      </li>
-                          <% @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", f.person.id]) %>
+                          <% @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", f.person.id]) %>
                           <% unless @pic.nil? %>
                                <li><img src = "/uploads/user_pictures/<%= @pic.filename %>"  alt="<%= @pic.filename %>" class ="teacherPic"/></li>
                           <% end %>

@@ -26,7 +26,7 @@
                                to <%= calendar.end_time.strftime("%I:%M %p") %>
                              <% end %>
                              <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
-                             <% @attachments = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
+                             <% @attachments = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
                              <% unless @attachment.nil? %>
                                &nbsp;<%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %>
                              <% end %>
@@ -86,7 +86,7 @@
                          </div>
                             <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :label => "sports_announcement") %></h3>
                             <p class="separator"><%= snippet(announcement.content,50) %></p>
-                            <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
+                            <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
                              <% unless @attachment.nil? %>
                                   <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
                              <% end %>

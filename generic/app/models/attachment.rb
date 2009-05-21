@@ -5,5 +5,6 @@ class Attachment < ActiveRecord::Base
     "/public/uploads/#{self.id}/#{self.filename}"
   end
 
+  belongs_to :school
 
 end

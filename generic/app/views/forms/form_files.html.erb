@@ -18,7 +18,7 @@
                  </thead>
                 <tbody>
                    <% for form in @all_forms %>
-                        <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
+                        <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
                         <tr>
                             <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
                             <td><%= form.class_name %></td>
@@ -43,7 +43,7 @@
                 </thead>
                  <tbody>
                        <% for form in @forms %>
-                             <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
+                             <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
                              <tr>
                                  <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
                                  <td><%= form.class_name %></td>

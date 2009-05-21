@@ -60,7 +60,7 @@
                                              to <%= calendar.end_time.strftime("%I:%M %p") %>
                                         <% end %>
                                         <%= link_to "#{calendar.title}", url(:calendar, calendar.id, :l => "calendar", :label => "calendars") %>
-                                         <% @attachments = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
+                                         <% @attachments = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
                                          <% unless @attachment.nil? %>
                                              &nbsp;<%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %>
                                          <% end %>
