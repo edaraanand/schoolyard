@@ -9,14 +9,14 @@
    
    # # base URL of this application  
   # BASE_URL = "http://sdb.#{Schoolapp.config(:app_domain)}"
-    BASE_URL = "http://sdb.schoolyardapp.com"
+    BASE_URL = "http://school@insightmethods.com:administration@sdb.schoolyardapp.com"
    
    #school@insightmethods.com:administration@
    
    #https://username:password@api.twilio.com/2008-08-01 ..
     
    # Outgoing Caller ID you have previously validated with Twilio  
-   CALLER_ID = 'NNNNNNNNNN'  
+   CALLER_ID = '0123456789'  
   # CALLED = '571 332 0672'
    CALLED = '+14152870729'
 
