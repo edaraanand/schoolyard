@@ -8,7 +8,7 @@ set :revision,    "origin/twilio"
 #set :branch, "twilio"
 set :adapter, "mongrel"
 set :processes, 1
-set :log_path, "#{current_path}/log/production.log"
+set :log_path, "#{current_path}/generic/log/production.log"
 
 namespace :vlad do
     Rake.clear_tasks('vlad:start_app', 'vlad:migrate', 'vlad:update_symlinks')
