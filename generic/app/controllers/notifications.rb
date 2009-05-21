@@ -16,9 +16,9 @@
    #https://username:password@api.twilio.com/2008-08-01 ..
     
    # Outgoing Caller ID you have previously validated with Twilio  
-   CALLER_ID = '0123456789'  
-  # CALLED = '571 332 0672'
-   CALLED = '+14152870729'
+   CALLER_ID = '+14152870729'  
+   CALLED = '571 332 0672'
+  # CALLED = '+14152870729'
 
 class Notifications < Application
    layout 'default'
@@ -81,7 +81,7 @@ class Notifications < Application
      # parameters sent to Twilio REST API  
      d = {  
           'Caller' => CALLER_ID,  
-          'Called' => '+14152870729',  
+          'Called' => '571 332 0672',  
           'Url' => BASE_URL + '/reminder'
          }  
       begin  
