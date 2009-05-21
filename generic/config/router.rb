@@ -80,6 +80,7 @@ Merb::Router.prepare do
        resources :spot_lights
        resources :admin
        resources :feedbacks
+       resources :notifications
        #resources :reports
        match("/feedback_reply").to(:controller => 'feedbacks', :action => 'feedback_reply').name(:feedback_reply)
        match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
@@ -128,6 +129,8 @@ Merb::Router.prepare do
        match("/create_settings").to(:controller => 'from_principals', :action => 'create_settings').name(:create_settings)
        match("/edit_details").to(:controller => 'from_principals', :action => 'edit_details').name(:edit_details)
        match("/update_details").to(:controller => 'from_principals', :action => 'update_details').name(:update_details)
+       match("/reminder").to(:controller => 'notifications', :action => 'reminder').name(:reminder)
+       match("/directions").to(:controller => 'notifications', :action => 'directions').name(:directions)
        match(:first_subdomain => 'admin').to(:controller => 'admin', :action => 'index') 
    end
    

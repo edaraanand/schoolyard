@@ -6,10 +6,10 @@ class FromPrincipals < Application
 
   def index
     @announcements = @current_school.announcements.paginate(:all,
-    :conditions => ['label=?', "from_principal"],
-    :order => "created_at DESC",
-    :per_page => 10,
-    :page => params[:page] )
+                                                            :conditions => ['label=?', "from_principal"],
+                                                            :order => "created_at DESC",
+                                                            :per_page => 10,
+                                                            :page => params[:page] )
     render
   end
 

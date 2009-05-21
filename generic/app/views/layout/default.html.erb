@@ -18,6 +18,7 @@
         <% @announcements = @current_school.announcements.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ]) %>
         <% @sports_class = @current_school.classrooms.find(:first, :conditions => ['class_name = ? and activate =  ?', "Sports", true] ) %>
         <li>Content<ul>
+          <li <% if @selected == "urgent_announcement" %> class="on" <% end %> ><%= link_to "Urgent Announcements", url(:notifications) %></li>
           <li <% if @selected == "approve" %> class="on" <% end %> ><%= link_to_if((right = "approve_announcement"), "Pending Approvals <span><b>#{@announcements.length}</b></span>", url(:approvals) ) %></li>
           <li <% if @selected == "from_principal" %> class="on" <% end %>><%= link_to_if((right = "from_principal"), "From the Principal", url(:from_principals)) %></li>
           <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_if((right = "announcements"), "Announcements", url(:announcements)) %></li>

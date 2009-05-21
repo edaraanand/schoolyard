@@ -12,6 +12,8 @@ require  Merb.root / 'lib' / 'constantz'
 require  Merb.root / 'lib' / 'attachable'
 require "pdf/writer"
 require "pdf/simpletable"
+require 'rubygems'
+require 'httparty'
 
 
 use_orm :activerecord

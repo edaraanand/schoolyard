@@ -12,7 +12,7 @@ class Announcement < ActiveRecord::Base
 
   attr_accessor :attachment
   attr_accessor :image
-
+                                                             
   
   # sending email to Collaborative Methods on Feedback
   
