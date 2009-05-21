@@ -8,12 +8,17 @@
    API_VERSION = '2008-08-01'
    
    # # base URL of this application  
-   BASE_URL = "http://sdb.#{Schoolapp.config(:app_domain)}" 
-     
+  # BASE_URL = "http://sdb.#{Schoolapp.config(:app_domain)}"
+    BASE_URL = "https://school@insightmethods.com:administration@sdb.schoolyardapp.com"
+   
+   #school@insightmethods.com:administration@
+   
+   #https://username:password@api.twilio.com/2008-08-01 ..
+    
    # Outgoing Caller ID you have previously validated with Twilio  
    CALLER_ID = 'NNNNNNNNNN'  
    CALLED = '571 332 0672'
-   
+   #CALLED = '+14152870729'
 
 class Notifications < Application
    layout 'default'
@@ -38,7 +43,6 @@ class Notifications < Application
      @announcement = @current_school.announcements.new(params[:announcement])    
      if @announcement.valid?
         makecall
-        raise "Naidu".inspect
         @announcement.label = "urgent"
         @announcement.save
         twitter = Twitter.new(@current_school.username, @current_school.password)
@@ -74,7 +78,6 @@ class Notifications < Application
   end
   
   def makecall
-      #raise "hip".inspect
      # parameters sent to Twilio REST API  
      d = {  
           'Caller' => CALLER_ID,  
@@ -85,45 +88,48 @@ class Notifications < Application
           account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
           puts account.inspect
           puts "indu".inspect
-          resp = account.request( "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)  
+          resp = account.request( "https://eshwar.gouthama@insightmethods.com:ashwini@api.twilio.com/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)  
           puts resp.inspect
           resp.error! unless resp.kind_of? Net::HTTPSuccess  
           puts resp.inspect
           puts "raja".inspect
-      rescue StandardError => bang  
+      rescue StandardError => bang
+          puts "Hello".inspect
           render :new 
           #return  
       end  
-        
-     # redirect_to({ :action => '',   
-     #     'msg' => "Calling #{ params['number'] }..." })  
-     redirect resource(:notifications)
+      redirect resource(:notifications)
   end
   
   def reminder  
+      provides :xml
       @postto = BASE_URL + '/directions'  
-      
-      respond_to do |format|  
-          format.xml { @postto }  
-      end  
+      puts "testing".inspect
+      render @postto
   end  
   
   def directions  
+      provides :xml
       if params['Digits'] == '3'  
-         redirect_to :action => 'goodbye'  
-         return  
+         render 'goodbye'
+         #return  
       end  
-        
       if !params['Digits'] or params['Digits'] != '2'  
-         redirect_to :action => 'reminder'  
-         return  
+         puts "raja".inspect
+         render 'reminder'
+         #return  
       end  
-        
-      @redirectto = BASE_URL + '/reminder',  
-      respond_to do |format|  
-          format.xml { @redirectto }  
-      end  
+      @redirectto = BASE_URL + '/reminder'
+      render @redirectto
   end  
+  
+  # TwiML response saying with the goodbye message. Twilio will detect no
+  # further commands after the Say and hangup
+  def goodbye
+     provides :xml
+     render
+  end
+
 
 
   private
