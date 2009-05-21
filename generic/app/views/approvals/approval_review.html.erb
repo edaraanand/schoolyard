@@ -8,7 +8,7 @@
 <h2 class="current-page">Parent Registrations </h2>
 
   
-<div class="fullpage announcemt">
+<div class="">
   
     <dl>
        <dt>Name</dt>
@@ -48,7 +48,7 @@
                    <dd><%= select :name => "student_found[]", :prompt => "Student - Please Select", :collection => @students.collect{|x| x.name } %></dd>
             <% end %> 
                <br/><br/><br/>
-               <h4><b>Details entered by the parent</b></h4>
+               <h4 style="clear:both"><b>Details entered by the parent</b></h4>
                <dl>                                                                                        
                   <dt>Name</dt>
                   <dd> <%= f.name %> </dd>
@@ -68,7 +68,10 @@
       <hr size="1"  class="clear"/>
       <br/><br/>
             <input type="hidden" name="approvetype" />
-            <a href="javascript:getsupport('Approve &amp; Grant Access')" class="reactive">Approve &amp; Grant Access </a>&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:getsupport('Reject')" class="deactive">Reject</a> 
+            <a href="javascript:getsupport('Approve &amp; Grant Access')" class="reactive">Approve &amp; Grant Access </a>
+            <br />
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:getsupport('Reject')" class="deactive">Reject</a> 
       </div>
       
  
