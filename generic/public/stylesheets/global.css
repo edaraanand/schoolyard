@@ -110,13 +110,12 @@ fieldset td label{display:block; width:120px;}
 
 
 /*User Control Panel Section*/
-#user-cp{position:absolute; top:6px; right:6px;}
-#user-cp .welcome{position:relative; top:-12px;}
+#user-cp{position:absolute; top:6px; right:6px;background:url(/images/usercp-bg.gif) no-repeat top center; font-size:11px; padding:10px; width:402px; height:40px;}
+#user-cp .welcome{position:relative; margin:0; position:absolute; top:12px; left:20px; color:#949490;}
+#user-cp ul{position:absolute; top:12px; right:20px; display:inline;}
 #user-cp ul li{display:inline;}
-#user-cp{float:right; background:url(/images/usercp-bg.gif) no-repeat top center; font-size:11px; padding:10px; width:302px; margin-top:6px;}
-#user-cp p{float:left; padding:0 6px 0 12px; color:#949490;}
 #user-cp em{font-style:normal;}
-#user-cp ul{float:right; margin-right:10px; display:inline;}
+
 
 
 
