@@ -39,7 +39,8 @@ class HomeWorks < Application
           :attachable_id => @home_work.id,
           :filename => params[:attachment]['file_'+i.to_s][:filename],
           :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-          :size => params[:attachment]['file_'+i.to_s][:size]
+          :size => params[:attachment]['file_'+i.to_s][:size],
+          :id =>  @current_school.id
           )
           File.makedirs("public/uploads/#{@attachment.id}")
           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
@@ -58,14 +59,14 @@ class HomeWorks < Application
 
   def edit
     @home_work = HomeWork.find(params[:id])
-    @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
+    @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
     @allowed = 1 - @attachments.size
     render
   end
 
   def update
     @classroom = Classroom.find_by_class_name(params[:home_work][:classroom_id])
-    @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
+    @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
     @allowed = 1 - @attachments.size
     @home_work = HomeWork.find(params[:id])
     i=0
@@ -77,7 +78,8 @@ class HomeWorks < Application
             :attachable_id => @home_work.id,
             :filename => params[:attachment]['file_'+i.to_s][:filename],
             :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-            :size => params[:attachment]['file_'+i.to_s][:size]
+            :size => params[:attachment]['file_'+i.to_s][:size],
+            :id =>  @current_school.id
             )
             File.makedirs("public/uploads/#{@attachment.id}")
             FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
@@ -114,10 +116,10 @@ class HomeWorks < Application
 
   def delete
     if params[:label] == "attachment"
-      @attachment = Attachment.find(params[:id])
+      @attachment = @current_school.attachments.find(params[:id])
       @home_work = HomeWork.find_by_id(@attachment.attachable_id)
       @attachment.destroy
-      @attachments = Attachment.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
+      @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
       @allowed = 1 - @attachments.size
       render :edit, :id => @home_work.id
     else

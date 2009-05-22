@@ -61,7 +61,7 @@
                          <h3><%= link_to "#{homework.title}", url(:home_work, homework.id) %></h3>
                          <span class="subText">Assigned <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></span>
                          <p><%= snippet(homework.content, 50) %></p>
-                         <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
+                         <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
                         <% unless @attachment.nil? %>
                            <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
                       <% end %>
@@ -88,7 +88,7 @@
                        </div>
                        <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann" ) %></h3>
                           <p class="separator"><%= snippet(announcement.content,50) %></p>
-                        <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
+                        <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
                            <% unless @attachment.nil? %>
                                 <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
                            <% end %>
@@ -110,7 +110,7 @@
               <% for spot in @spot_lights %>
                    <div class="data-block short-block">
                         <div class="ddmm">
-                            <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", spot.id]) %>
+                            <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", spot.id]) %>
                             <% unless @attachment.nil? %>  
                                <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
                             <% end %>
@@ -155,7 +155,7 @@
                                <% end %>
                                <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann") %></h3>
                                <p><%= snippet(announcement.content,50) %></p>
-                               <% @attachment = Attachment.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
+                               <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
                                <% unless @attachment.nil? %>
                                 <span class="attachment"><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></span>
                                <% end %>
@@ -175,7 +175,7 @@
               <% unless @sp_light.nil? %>
                     <h3>Spotlight</h3>
                     <ul class="last">
-                         <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @sp_light.id]) %>
+                         <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @sp_light.id]) %>
                          <% unless @attachment.nil? %>  
                               <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
                          <% end %>

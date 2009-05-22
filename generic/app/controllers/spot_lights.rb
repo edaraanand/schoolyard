@@ -38,7 +38,8 @@ class SpotLights < Application
             :attachable_type => "spot_light",
             :filename => params[:spot_light][:image][:filename],
             :size => params[:spot_light][:image][:size],
-            :content_type => params[:spot_light][:image][:content_type]
+            :content_type => params[:spot_light][:image][:content_type],
+            :id => @current_school.id
             )
             File.makedirs("public/uploads/spotlights")
             FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/spotlights/#{@attachment.filename}")
@@ -77,19 +78,19 @@ class SpotLights < Application
 
   def edit
     @spot_light = SpotLight.find(params[:id])
-    @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
+    @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
     render
   end
 
   def update
     @spot_light = SpotLight.find(params[:id])
     @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
-    @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
+    @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
     if params[:spot_light][:image] != ""
       if @content_types.include?(params[:spot_light][:image][:content_type])
         if ( (params[:spot_light][:class_name] != "") && (params[:spot_light][:student_name] != "") )
           if @spot_light.update_attributes(params[:spot_light])
-            @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
+            @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
             unless @pic.nil?
               @pic.destroy
             end
@@ -97,7 +98,8 @@ class SpotLights < Application
             :attachable_type => "spot_light",
             :filename => params[:spot_light][:image][:filename],
             :size => params[:spot_light][:image][:size],
-            :content_type => params[:spot_light][:image][:content_type]
+            :content_type => params[:spot_light][:image][:content_type],
+            :id =>  @current_school.id
             )
             FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/spotlights/#{@attachment.filename}")
             redirect resource(:spot_lights)

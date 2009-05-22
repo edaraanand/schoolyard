@@ -58,8 +58,7 @@
                       <%= link_to "View all previous announcements", url(:principal_articles, :label => 'announcements')   %>
                    </div>
                  <% end %>
-               
-            <% else %>
+          <% else %>
                  <% for announcement in @announcements %>
                          
                        <% if announcement.expiration >= @date %>
@@ -99,7 +98,7 @@
        <% unless @spot_light.nil? %>
             <h3>Spotlight</h3>
             <ul class="last">
-                  <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @spot_light.id]) %>
+                  <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @spot_light.id]) %>
                   <% unless @attachment.nil? %>  
                        <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
                   <% end %>

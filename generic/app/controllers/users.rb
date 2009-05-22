@@ -7,13 +7,13 @@ class Users < Application
    
   def staff_account
     @person = session.user
-    @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
+    @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
     render 
   end
   
   def staff_account_edit
     @person = session.user
-    @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
+    @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
     render
   end
   
@@ -23,7 +23,7 @@ class Users < Application
      if params[:person][:image] != ""
         if @content_types.include?(params[:person][:image][:content_type])
             if @person.update_attributes(params[:person])
-               @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
+               @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
                unless @pic.nil?
                  @pic.destroy
                end
@@ -31,7 +31,8 @@ class Users < Application
                                                 :attachable_id => @person.id, 
                                                 :filename => params[:person][:image][:filename],
                                                 :content_type => params[:person][:image][:content_type],
-                                                :size => params[:person][:image][:size]
+                                                :size => params[:person][:image][:size],
+                                                :id => @current_school.id
                  )
                 File.makedirs("public/uploads/user_pictures")
                 FileUtils.mv(params[:person][:image][:tempfile].path, "public/uploads/user_pictures/#{@attachment.filename}")

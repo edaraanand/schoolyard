@@ -20,7 +20,7 @@
                  <% for spot in @spot_lights %>
                      <div class="data-block short-block">
                           <div class="ddmm">
-                                <% @attachment = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", spot.id]) %>
+                                <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", spot.id]) %>
                               <% unless @attachment.nil? %>  
                                  <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
                               <% end %>

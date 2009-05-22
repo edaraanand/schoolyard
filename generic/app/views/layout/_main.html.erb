@@ -46,7 +46,7 @@
             </h1>
             <div class="school-contact">
              <% unless @current_school.email.blank? %>
-                <%= email(@current_school.email)%>
+                <%= email(@current_school.email) %>
              <% end %>
               <% unless @current_school.phone.blank? %>
                 <%="| #{number_to_phone(@current_school.phone, :area_code => true)}"%>

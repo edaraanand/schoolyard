@@ -31,7 +31,7 @@
                           <tr><td  class="teach-name-bottom"><img src="/images/teach-name-bottom.gif"/></td></tr>
                         </table>
                      </li>
-                          <% @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", f.person.id]) %>
+                          <% @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", f.person.id]) %>
                           <% unless @pic.nil? %>
                                <li><img src = "/uploads/user_pictures/<%= @pic.filename %>"  alt="<%= @pic.filename %>" class ="teacherPic"/></li>
                           <% end %>
@@ -53,6 +53,6 @@
 <%= partial 'common/change' %>
 <%= partial 'common/footer' %>
   </div><!--Pagewrap End -->
-  
+  <script type="text/javascript"> var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); </script> <script type="text/javascript"> try { var pageTracker = _gat._getTracker("UA-8953231-1"); pageTracker._trackPageview(); } catch(err) {}</script>
 </body>
 </html>
