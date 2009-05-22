@@ -10,8 +10,7 @@
   <%= form_for(@external_link, :action => resource(:external_links), :id => 'links', :name => "external_link", :onsubmit => "ClearAll()" ) do %>
     <ul class="edit-ext-links"  id="link">
       <li>
-        <%= text_field :title, :name => 'external_link[title][]', :maxlength => "75", :class=>"short text defaultText defaultTextActive", :title => "title" %>
-        <%= text_field :url, :name => 'external_link[url][]', :maxlength => "75", :class=>"long text apart defaultText defaultTextActive", :title => "url" %>
+        <%= text_field :title, :name => 'external_link[title][]', :maxlength => "75", :class=>"short text defaultText defaultTextActive", :title => "title" %><%= text_field :url, :name => 'external_link[url][]', :maxlength => "75", :class=>"long text apart defaultText defaultTextActive", :title => "url" %>
       </li>
     </ul>
     
@@ -42,14 +41,14 @@
    {
       var links = document.getElementById('link');
       var li = document.createElement('li');
-      li.innerHTML = "<input type='text' id='external_link_title' name='external_link[title][]' class='short text' value='title' onfocus='cl(this);' />" + "<input type='text' id='external_link_url' name='external_link[url][]' class='long apart text' value='url' onfocus='cl(this);' />";
+      li.innerHTML = "<input type='text' name='external_link[title][]' class='short text ext-link-name' value='title' onfocus='cl(this);' /><input type='text' name='external_link[url][]' class='long apart text ext-link-url' value='url' onfocus='cl(this);' />";
       links.appendChild(li);
    }
  
    function addFormField()
   {
     var id = document.getElementById('id').value;
-    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short text' name='external_link[title][]' id='txt" + id + "' value='title' onfocus='cl(this);'><input type='text' id='txt" + id + "' name='external_link[url][]' class='long apart text' value='url' onfocus='cl(this);' /><a href='#' class='delete-btn' onclick='removeFormField(\"#row" + id + "\"); return false;'></a><p>");
+    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short text ext-link-name' name='external_link[title][]' id='txt" + id + "' value='title' onfocus='cl(this);'><input type='text' id='txt" + id + "' name='external_link[url][]' class='long apart text ext-link-url' value='url' onfocus='cl(this);' /><a href='#' class='delete-btn' onclick='removeFormField(\"#row" + id + "\"); return false;'></a><p>");
     //$('txt'+id).focus();
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
