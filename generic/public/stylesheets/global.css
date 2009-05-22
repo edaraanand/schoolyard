@@ -209,8 +209,8 @@ fieldset ul{padding-top:8px;}
 /*Tables*/
 #mytable {border-left:1px solid #C1DAD7;padding:0; margin:10px 0 20px 0; font-size:12px; }/*Set Table width here if needed*/
 #mytable caption{padding: 0 0 5px 0; font:italic 11px Arial, Helvetica, sans-serif; text-align:right;}
-#mytable th {font-weight: bold; font-size:11px; color:#4f6b72; border: 1px solid #c1dad7; border-left:0; 
-  letter-spacing: .01em; text-transform:uppercase; text-align: left; padding:6px 12px; 
+#mytable th {font-size:11px; color:#32494B; border: 1px solid #c1dad7; border-left:0; 
+  letter-spacing: .01em; text-transform:uppercase; text-align: left; padding:6px; 
   background:#cae8ea url(/images/mytable/bg_header.jpg) no-repeat;}
 #mytable th.thead1, #mytable th.thead2{border-left: 1px solid #c1dad7; border-top: 0; 
   background: #fff url(/images/mytable/bullet1.gif) no-repeat; font:normal 10px Arial, Helvetica, sans-serif;}
