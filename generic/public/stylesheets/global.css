@@ -52,7 +52,7 @@ body.fixed-width{width:100%;}
 #sidebar{float:left; clear:both; width:232px;}
 .left-block{width:240px;}
   /*Left Side Menu. term 'Sidebar' defaults for LEFT SIDEBAR/MENU*/
-#content p{font-size:13px; padding:.5em 0 .5em 0;}
+#content p{font-size:13px; padding:.5em 0 .5em 0; margin: 0 0 14px 0;}
 #content-wrap{float:left; padding:0 0 0 30px; margin:20px 0 0 0; min-width:500px;}
   /*Wraps the content section*/
 #fullpage{width:700px;}
