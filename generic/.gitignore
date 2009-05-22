@@ -1,5 +1,4 @@
 lib/constantz.rb
-lib/tasks/vlad.rake
 log/*
 db/*
 config/database.yml
