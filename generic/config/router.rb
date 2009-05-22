@@ -58,7 +58,8 @@ Merb::Router.prepare do
     match("/new_staff_password").to(:controller => 'registrations', :action => 'new_staff_password').name(:new_staff_password)
     match("/password_staff").to(:controller => 'registrations', :action => 'password_staff').name(:password_staff)
     match("/staff_password_save").to(:controller => 'registrations', :action => 'staff_password_save').name(:staff_password_save)
-
+    match("/reminder").to(:controller => 'notifications', :action => 'reminder').name(:reminder)
+    match("/directions").to(:controller => 'notifications', :action => 'directions').name(:directions)
  
   authenticate do
        resources :parents
@@ -129,8 +130,6 @@ Merb::Router.prepare do
        match("/create_settings").to(:controller => 'from_principals', :action => 'create_settings').name(:create_settings)
        match("/edit_details").to(:controller => 'from_principals', :action => 'edit_details').name(:edit_details)
        match("/update_details").to(:controller => 'from_principals', :action => 'update_details').name(:update_details)
-       match("/reminder").to(:controller => 'notifications', :action => 'reminder').name(:reminder)
-       match("/directions").to(:controller => 'notifications', :action => 'directions').name(:directions)
        match(:first_subdomain => 'admin').to(:controller => 'admin', :action => 'index') 
    end
    
