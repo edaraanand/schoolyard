@@ -478,6 +478,11 @@ td.class-name-top, td.class-name-bottom, td.teach-name-top, td.teach-name-bottom
 .teach-name-backgr {background:url("/images/teach-name-backgr.gif"); }
  {height:9px; padding:0px; margin:0px; line-height:1px;} 
 
+.classroom-listing .data ul{}
+.classroom-listing .data {width:420px; position:relative;}
+.classroom-listing .data p{position:absolute; right:0; top:0; float:right; width:100px; margin:0!important; padding:0;}
+.classroom-listing .edit-btn, .classroom-listing .deactive, .classroom-listing .reactive{padding:4px 0 4px 20px; display:block;}
+.classroom-listing .deactive, .classroom-listing .reactive{width:85px;}
 
 .page-links{text-align:center;padding:10px;}
 .page-links a{padding:4px;}
