@@ -330,9 +330,13 @@ span.cancel a:hover{text-decoration:underline;}
 .external-links ul li a{display:block; border-bottom:1px solid #fcfcfc; padding:4px 0 2px 0;  background:url(/images/link-bullet.gif) no-repeat left center;}
 .external-links ul li a:hover{background: url(/images/link-bullet-hover.gif) no-repeat left center;}
 
-ul.edit-ext-links li{position:relative; float:left; clear:left;}
+ul.edit-ext-links li{position:relative; float:left; clear:left; height:24px;}
 ul.edit-ext-links .delete-btn{padding:4px 0 4px 20px; position:absolute;top:0; right:-72px; text-indent:-9999px;}
 ul.edit-ext-links li{background:url(/images/link-bullet.gif) no-repeat left center; padding-left:16px;}
+
+input.ext-link-name{float:none!important;}
+input.ext-link-url{float:none!important; position:relative; top:-22px; right:-106px;}
+
 
 .external-links .section{width:180px; margin: 0 10px 0 0px; float:left; clear:none; border-right:1px dashed #e8e8e8; padding:8px;}
 .section h4, .section em{font-weight:bold;}
