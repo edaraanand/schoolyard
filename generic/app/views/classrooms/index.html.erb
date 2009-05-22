@@ -6,7 +6,7 @@
   <p>There are no classrooms created yet.  <%= link_to "Add New", resource(:classrooms, :new) %></p>
 
 <%else%>
-<div class="data-block short-block">
+<div class="classroom-listing">
   <% for classroom in @classrooms %>
       <div class="data">
            <ul>
@@ -20,14 +20,15 @@
                      <li><%= f.role.titleize %> : <%= f.person.name %></li>
                   <% end %>
            </ul>
-      </div>
-       <%= link_to "Edit",  resource(classroom, :edit), :class=> "edit-btn" %>&nbsp;&nbsp;
-       <% if classroom.activate == true %>
-            <a rel="facebox" href="#<%= classroom.id %>" class="deactive" >De-Activate </a>
-       <% else %>
-           <a rel="facebox" href="#<%= classroom.id %>" class="reactive" >Re-Activate </a>
-       <% end %>
-       
+           <p>
+             <%= link_to "Edit",  resource(classroom, :edit), :class=> "edit-btn" %>
+              <% if classroom.activate == true %>
+                   <a rel="facebox" href="#<%= classroom.id %>" class="deactive" >De-Activate </a>
+              <% else %>
+                  <a rel="facebox" href="#<%= classroom.id %>" class="reactive" >Re-Activate </a>
+              <% end %>
+           </p>
+      </div>       
          <div id="<%= classroom.id %>" style="display:none;">
              <% if classroom.activate == true %>
                    <h4> Are you sure you want to De Activate the classroom ?</h4>

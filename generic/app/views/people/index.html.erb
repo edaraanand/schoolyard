@@ -5,11 +5,13 @@
  
     <table id="mytable"  cellspacing="0" cellpadding="0">
     <thead> 
-       <th>Title</th>
-       <th>Last Name</th>
-       <th>First Name</th>
-       <th>Email</th>
-       <th>Phone</th>
+      <tr>
+        <th>Title</th>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+      </tr>
     </thead>
     <% for person in @people %>
           <tr onclick="location.href='<%= url(:edit_person, person.id) %>'" style="cursor:pointer">
