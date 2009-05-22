@@ -2,9 +2,8 @@ set :application, "schoolyard"
 set :domain,   "eshwar@sdb.schoolyardapp.net"
 set :deploy_to,  "/home/eshwar/#{application}"
 set :repository,  "git@github.com:eshwardeep/schoolapp.git"
-#set :revision, "HEAD"
+set :scm_passphrase, 'eshwar'
 set :revision,    "origin/twilio"
-#set :branch, "twilio"
 set :adapter, "mongrel"
 set :processes, 1
 set :log_path, "#{current_path}/generic/log/production.log"
