@@ -9,7 +9,7 @@
    
    # # base URL of this application  
   # BASE_URL = "http://sdb.#{Schoolapp.config(:app_domain)}"
-    BASE_URL = "http://school@insightmethods.com:administration@sdb.schoolyardapp.com"
+  BASE_URL = "http://sdb.schoolyardapp.net"
    
    #school@insightmethods.com:administration@
    
