@@ -35,7 +35,7 @@ namespace :deploy do
 	   run "mv /home/eshwar/db  #{current_path}/generic"   
      run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
-     run "cd #{current_path}/generic && rake announcement:person"
+     #run "cd #{current_path}/generic && rake announcement:person"
   end
   
   desc "Start Merb Instances"  
