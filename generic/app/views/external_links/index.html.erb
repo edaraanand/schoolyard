@@ -3,8 +3,7 @@
   <h2 class="current-page">External Links</h2>
   <div class="section">
     <% if @home_links.empty? %>
-      <p><em>For Home Page</em> 
-        <br/>
+      <h4>For Home Page</h4>
         <span class="subText">There are no external links specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Home Page') %></span></p> 
     <% else %>
       <h4>For Home Page</h4>
@@ -18,7 +17,8 @@
   </div>
   <div class="section">
     <% if @class_links.empty? %>
-      <p><em>For All Classrooms</em> are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Classrooms') %></p>
+    <h4>For All Classrooms</h4>
+      <span class="subText"> No links are specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Classrooms') %></span>
     <% else %>
     <h4>For All Classrooms</h4>
     <ul>
