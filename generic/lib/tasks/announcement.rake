@@ -1,6 +1,5 @@
 Merb.start_environment(:environment => ENV['MERB_ENV'] || 'rake')
 namespace :announcement do
-  
   desc "creating a urgent Announcement access"
   task :person do
       access = {:urgent_announcement => "Add/Edit Urgent Announcements"}
