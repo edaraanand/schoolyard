@@ -9,7 +9,7 @@
    
    # # base URL of this application  
   # BASE_URL = "http://sdb.#{Schoolapp.config(:app_domain)}"
-  BASE_URL = "http://sdb.schoolyardapp.net"
+   BASE_URL = "http://sdb.schoolyardapp.net"
    
    #school@insightmethods.com:administration@
    
@@ -22,9 +22,10 @@
 
 class Notifications < Application
    layout 'default'
-   before :access_rights 
+   before :access_rights, :exclude => [:reminder, :directions] 
    before :find_school
-      
+   
+   
   def index
      @announcements = @current_school.announcements.paginate(:all,
                                                              :conditions => ['label=?', "urgent"],
@@ -102,22 +103,22 @@ class Notifications < Application
   end
   
   def reminder  
-      provides :xml
+      only_provides :xml
       @postto = BASE_URL + '/directions'  
       puts "testing".inspect
-      render @postto
+      display @postto, :layout => nil
   end  
   
   def directions  
-      provides :xml
+       only_provides :xml
       if params['Digits'] == '3'  
-         render 'goodbye'
-         #return  
+         display 'goodbye', :layout => nil
+         return  
       end  
       if !params['Digits'] or params['Digits'] != '2'  
          puts "raja".inspect
-         render 'reminder'
-         #return  
+         display 'reminder', :layout => nil
+         return  
       end  
       @redirectto = BASE_URL + '/reminder'
       render @redirectto
