@@ -28,10 +28,10 @@ role :db,  "sdb.schoolyardapp.net", :primary => true
 
 namespace :deploy do 
   
-   desc "Copying the database to somewhere"
-   task :before_update do
-     run "mv #{current_path}/generic/db  /home/eshwar"
-   end
+  # desc "Copying the database to somewhere"
+  # task :before_update do
+  #   run "mv #{current_path}/generic/db  /home/eshwar"
+  # end
   
   desc "Change the database configuration file"
   task :after_update do
