@@ -52,17 +52,17 @@ class Announcements < Application
          @announcement.label = 'staff'
          @announcement.school_id = @current_school.id
          @announcement.save
-        unless params[:attachment]['file_'+i.to_s].empty?
-          @attachment = Attachment.create( :attachable_type => "Announcement",
-          :attachable_id => @announcement.id,
-          :filename => params[:attachment]['file_'+i.to_s][:filename],
-          :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-          :size => params[:attachment]['file_'+i.to_s][:size],
-          :school_id => @current_school.id
-          )
-          File.makedirs("public/uploads/#{@attachment.id}")
-          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
-        end
+         unless params[:attachment]['file_'+i.to_s].empty?
+             @attachment = Attachment.create( :attachable_type => "Announcement",
+             :attachable_id => @announcement.id,
+             :filename => params[:attachment]['file_'+i.to_s][:filename],
+             :content_type => params[:attachment]['file_'+i.to_s][:content_type],
+             :size => params[:attachment]['file_'+i.to_s][:size],
+             :school_id => @current_school.id
+             )
+             File.makedirs("public/uploads/#{@attachment.id}")
+             FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+         end
         redirect resource(:announcements)
       else
         render :new
