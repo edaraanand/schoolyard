@@ -30,7 +30,7 @@
               <%= text_field  :last_name, :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
 	        </li>
           <li>
-              <%= text_field  :birth_date, :id => "birth_date", :label => "Birth Date", :class => "short" %>
+            <%= text_field  :birth_date, :id => "birth_date", :label => "Birth Date", :class => "short date" %>
           </li>
          </ul>
          <hr size="1" class="clear"/>
@@ -48,8 +48,8 @@
                 
                      <ul id="parent2" style="display:block">
                           <li>
-                              <%= text_field  :name => "f_name_parent2", :id => "f_parent2", :maxlength => "75", :class => "short", :label => "Parents/Guardian", :value => "#{@fname2}" %>
-                              <%= text_field  :name => "l_name_parent2", :id => "l_parent2", :maxlength => "75", :class => "short apart", :value => "#{@lname2}" %>
+                              <%= text_field  :name => "f_name_parent2", :id => "f_name_parent2", :maxlength => "75", :class => "short", :label => "Parents/Guardian", :value => "#{@fname2}" %>
+                              <%= text_field  :name => "l_name_parent2", :id => "l_name_parent2", :maxlength => "75", :class => "short apart", :value => "#{@lname2}" %>
                           </li> 
                           <li>
                               <%= text_field  :name => "email_parent2",  :label => "E-Mail", :value => "#{@mail2}" %> 
@@ -77,8 +77,8 @@
                <% else %>
                       <ul id="parent2" style="display:none">
                           <li>
-                               <%= text_field  :name => "f_name_parent2", :id => "f_parent2", :maxlength => "75", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :title => "First Name" %>
-                               <%= text_field  :name => "l_name_parent2", :id => "l_parent2", :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
+                               <%= text_field  :name => "f_name_parent2", :id => "f_name_parent2", :maxlength => "75", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :title => "First Name" %>
+                               <%= text_field  :name => "l_name_parent2", :id => "l_name_parent2", :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
                           </li>
                           <li>
                                <%= text_field  :name => "email_parent2",  :label => "E-Mail" %> 
@@ -98,8 +98,8 @@
          
                        <il id="parent3" style="display:block">
                             <li>
-                                <%= text_field  :name => "f_name_parent3",  :id => "f_parent3", :maxlength => "75", :class => "short", :label => "Parents/Guardian", :value => "#{@fname3}" %>
-                                <%= text_field  :name => "l_name_parent3",  :id => "l_parent3", :maxlength => "75", :class => "short apart", :value => "#{@lname3}" %>
+                                <%= text_field  :name => "f_name_parent3",  :id => "f_name_parent3", :maxlength => "75", :class => "short", :label => "Parents/Guardian", :value => "#{@fname3}" %>
+                                <%= text_field  :name => "l_name_parent3",  :id => "l_name_parent3", :maxlength => "75", :class => "short apart", :value => "#{@lname3}" %>
                             </li>
                             <li>
                                 <%= text_field  :name => "email_parent3",  :label => "E-Mail", :value => "#{@mail3}" %> 
@@ -125,8 +125,8 @@
                <% else %>
                         <ul id="parent3" style="display:none">
                              <li>
-                                 <%= text_field  :name => "f_name_parent3",  :id => "f_parent3", :maxlength => "75", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :title => "First Name" %>
-                                 <%= text_field  :name => "l_name_parent3",  :id => "l_parent3", :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
+                                 <%= text_field  :name => "f_name_parent3",  :id => "f_name_parent3", :maxlength => "75", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :title => "First Name" %>
+                                 <%= text_field  :name => "l_name_parent3",  :id => "l_name_parent3", :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
                              </li>
                              <li>
                                  <%= text_field  :name => "email_parent3",  :label => "E-Mail" %> 
@@ -141,8 +141,8 @@
                
                        <ul id="parent4" style="display:block">
                             <li>
-                                <%= text_field  :name => "f_name_parent4",  :id => "f_parent4", :maxlength => "75", :class => "short", :label => "Parents/Guardian", :value => "#{@fname4}" %>
-                                <%= text_field  :name => "l_name_parent4",  :id => "l_parent4", :maxlength => "75", :class => "short apart", :value => "#{@lname4}" %>
+                                <%= text_field  :name => "f_name_parent4",  :id => "f_name_parent4", :maxlength => "75", :class => "short", :label => "Parents/Guardian", :value => "#{@fname4}" %>
+                                <%= text_field  :name => "l_name_parent4",  :id => "l_name_parent4", :maxlength => "75", :class => "short apart", :value => "#{@lname4}" %>
                             </li>
                             <li>
                                 <%= text_field  :name => "email_parent4",  :label => "E-Mail", :value => "#{@mail4}" %> 
@@ -151,8 +151,8 @@
                <% else %>
                        <ul id="parent4" style="display:none">
                             <li>
-                            <%= text_field  :name => "f_name_parent4", :id => "f_parent4", :maxlength => "75", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :title => "First Name" %>
-                            <%= text_field  :name => "l_name_parent4", :id => "l_parent4", :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
+                            <%= text_field  :name => "f_name_parent4", :id => "f_name_parent4", :maxlength => "75", :class => "short defaultText defaultTextActive", :label => "Parents/Guardian", :title => "First Name" %>
+                            <%= text_field  :name => "l_name_parent4", :id => "l_name_parent4", :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
                             </li>
                             <li>
                                 <%= text_field  :name => "email_parent4",  :label => "E-Mail" %> 
@@ -178,7 +178,7 @@
    
 </fieldset>
 
-   <script type="text/javascript" src='/javascripts/students.js'></script>
+   <script type="text/javascript" src='/javascripts/st.js'></script>
     
 
  

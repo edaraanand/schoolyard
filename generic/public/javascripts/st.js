@@ -1,17 +1,18 @@
 $j("input.date").datepicker({ yearRange: '1970:2040'});
-   
+
    var parent2_obj = document.getElementById('parent2');
    var parent3_obj = document.getElementById('parent3');
    var parent4_obj = document.getElementById('parent4');
    var am2_obj     = document.getElementById('am2');
    var am3_obj     = document.getElementById('am3');
    var am4_obj     = document.getElementById('am4');
- 
- function add_parent2()
+   
+   
+   function add_parent2()
    {
-     parent2_obj.style.display  =  "block";
-     am2_obj.style.display      =  "none";
-     am3_obj.style.display      =  "block";
+      parent2_obj.style.display  =  "block";
+      am2_obj.style.display      =  "none";
+      am3_obj.style.display      =  "block";
    }
  function add_parent3()
    {
@@ -26,9 +27,9 @@ $j("input.date").datepicker({ yearRange: '1970:2040'});
      
     }
     
- function preview()
+    function preview()
  {
-   ClearAll();
+    ClearAll();
     name = document.getElementById('classroom_person');
     if (name.value == "")
        {
@@ -39,8 +40,32 @@ $j("input.date").datepicker({ yearRange: '1970:2040'});
           var s = $('student').serialize();
           window.open('/students/preview/-/?' + s);
        }
+  
  }
  
+ $j(document).ready(function()
+{
+    $j(".defaultText").focus(function(srcc)
+    {
+        if ($j(this).val() == $j(this)[0].title)
+        {
+            $j(this).removeClass("defaultTextActive");
+            $j(this).val("");
+        }
+    });
+    
+    $j(".defaultText").blur(function()
+    {
+        if ($j(this).val() == "")
+        {
+            $j(this).addClass("defaultTextActive");
+            $j(this).val($j(this)[0].title);
+        }
+    });
+    
+    $j(".defaultText").blur();        
+});
+
  var thisForm = "studs";
  
  var defaultVals = new Array();
@@ -53,7 +78,26 @@ $j("input.date").datepicker({ yearRange: '1970:2040'});
  defaultVals[4] = new Array("f_name_parent2", "First Name");
  defaultVals[5] = new Array("l_name_parent2", "Last Name");
  
-  function MPLoadDefaults()
+ defaultVals[6] = new Array("student_first_name", "First Name");
+ defaultVals[7] = new Array("student_last_name", "Last Name");
+ 
+ defaultVals[8] = new Array("protector_first_name", "First Name");
+ defaultVals[9] = new Array("protector_last_name", "Last Name");
+ 
+ 
+ function ClearAll() 
+  {
+     with (document.forms[thisForm]) 
+      {
+         for (var n=0; n<defaultVals.length; n++) 
+         {
+            var thisField = defaultVals[n][0];
+            var thisDefault = defaultVals[n][1];
+            if (elements[thisField].value == elements[thisField].title)
+             elements[thisField].value = '';
+   }}}
+   
+   function MPLoadDefaults()
   {
     with (document.forms[thisForm])
     {
@@ -96,3 +140,4 @@ $j("input.date").datepicker({ yearRange: '1970:2040'});
          thisfield.value = defaulttext;
        }
     }
+ 

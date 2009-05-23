@@ -1,4 +1,4 @@
-$j("#birth_date").datepicker({ yearRange: '1970:2040'});
+$j("input.date").datepicker({ yearRange: '1970:2040'});
 
 
    var parent2_obj = document.getElementById('parent2');
@@ -66,64 +66,37 @@ $j("#birth_date").datepicker({ yearRange: '1970:2040'});
 });
 
 
-function ClearAll()
-{
-   var student_f = document.getElementById('student_first_name');
-   var student_l = document.getElementById('student_last_name');
-   var parent_f = document.getElementById('protector_first_name');
-   var parent_l = document.getElementById('protector_last_name');
-   
-   var f_parent2 = document.getElementById('f_parent2')
-   var l_parent2 = document.getElementById('l_parent2')
-   
-   var f_parent3 = document.getElementById('f_parent3')
-   var l_parent3 = document.getElementById('l_parent3')
-   
-   var f_parent4 = document.getElementById('f_parent4')
-   var l_parent4 = document.getElementById('l_parent4')
-   
-  
-   if (student_f.value == student_f.title) 
-   {
-     student_f.value = ""
-    }
-  if (student_l.value == student_l.title) 
-   {
-     student_l.value = ""
-    }
-    if (parent_f.value == parent_f.title) 
-   {
-     parent_f.value = ""
-    }
-  if (parent_l.value == parent_l.title) 
-   {
-     parent_l.value = ""
-    }
-  
-    if ( f_parent2.value == f_parent2.title )
-    {
-        f_parent2.value = ""
-     }
-      if (l_parent2.value == l_parent2.title )
-    {
-        l_parent2.value = ""
-     }
-   
-    if (f_parent3.value == f_parent3.title) 
-   {
-      f_parent3.value = ""
-    }
-     if (l_parent3.value == l_parent3.title) 
-   {
-      l_parent3.value = ""
-    }
-     if (f_parent4.value == f_parent4.title) 
-   {
-      f_parent4.value = ""
-    }
-     if (l_parent4.value == l_parent4.title) 
-   {
-      l_parent4.value = ""
-    }
-}
-
+var thisForm = "studs";
+ 
+ var defaultVals = new Array();
+ defaultVals[0] = new Array("f_name_parent4", "First Name");
+ defaultVals[1] = new Array("l_name_parent4", "Last Name");
+ 
+ defaultVals[2] = new Array("f_name_parent3", "First Name");
+ defaultVals[3] = new Array("l_name_parent3", "Last Name");
+ 
+ defaultVals[4] = new Array("f_name_parent2", "First Name");
+ defaultVals[5] = new Array("l_name_parent2", "Last Name");
+ 
+ defaultVals[6] = new Array("student_first_name", "First Name");
+ defaultVals[7] = new Array("student_last_name", "Last Name");
+ 
+ defaultVals[8] = new Array("protector_first_name", "First Name");
+ defaultVals[9] = new Array("protector_last_name", "Last Name");
+ 
+ 
+ 
+ function ClearAll() 
+  {
+     with (document.forms[thisForm]) 
+      {
+         for (var n=0; n<defaultVals.length; n++) 
+         {
+            var thisField = defaultVals[n][0];
+           if (elements[thisField].value == elements[thisField].title)
+              elements[thisField].value = '';
+         }
+      }
+  }  
+ 
+ 
