@@ -197,7 +197,7 @@ class Registrations < Application
     else
       @person = @current_school.people.find_by_email_and_school_id(params[:email], @current_school.id)
       if @person.nil?
-        flash[:error1] = "You should enter correct Email that you have provided for the school"
+        flash[:error] = "You should enter correct Email that you have provided for the school"
         render :forgot_password, :layout => 'login'
       else
         @person.reset_password
@@ -232,11 +232,11 @@ class Registrations < Application
           redirect url(:reset_password_edit, :id => @person.password_reset_key)
         end
       else
-        flash[:error1] = "Your Password doesn't match"
+        flash[:error] = "Your Password doesn't match"
         redirect url(:reset_password_edit, :id => @person.password_reset_key )
       end
     else
-      flash[:error2] = "Password cant be blank"
+      flash[:error] = "Password cant be blank"
       redirect url(:reset_password_edit, :id => @person.password_reset_key )
     end
   end
@@ -261,11 +261,11 @@ class Registrations < Application
           redirect url(:new_staff_password, :id => @staff.password_reset_key)
         end
       else
-        flash[:error1] = "Your Password doesn't match"
+        flash[:error] = "Your Password doesn't match"
         render :new_staff_password, :id => @staff.password_reset_key, :layout => 'login'
       end
     else
-      flash[:error2] = "Password cant be blank"
+      flash[:error] = "Password cant be blank"
       render :new_staff_password, :id => @staff.password_reset_key, :layout => 'login'
     end
   end
