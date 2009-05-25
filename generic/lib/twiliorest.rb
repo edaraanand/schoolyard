@@ -79,18 +79,9 @@ module TwilioRest
                 req.set_form_data(params)
             else
                 req = Net::HTTP::Post.new(uri.request_uri)
-                puts "tej".inspect
-                puts req.inspect
-                puts uri.request_uri.inspect
-                puts "uuu".inspect
                 req.set_form_data(params)
-                puts  req.set_form_data(params).inspect
-                puts params.inspect
-                puts "sss".inspect
             end
             req.basic_auth(@id, @token)
-            puts http.request(req).inspect
-            puts "iii".inspect
             return http.request(req)
         end
         

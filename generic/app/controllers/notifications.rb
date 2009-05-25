@@ -87,17 +87,14 @@ class Notifications < Application
          }  
       begin  
           account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
-          puts account.inspect
-          puts "indu".inspect
-          resp = account.request( "https://eshwar.gouthama@insightmethods.com:ashwini@api.twilio.com/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)  
-          puts resp.inspect
+       #   resp = account.request( "http://api.twilio.com/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)
+          resp =  account.request( "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)  
           resp.error! unless resp.kind_of? Net::HTTPSuccess  
-          puts resp.inspect
-          puts "raja".inspect
+          puts "code: %s\nbody: %s" % [resp.code, resp.body]
+          puts "Eshwar"
       rescue StandardError => bang
-          puts "Hello".inspect
-          render :new 
-          #return  
+         # render :new 
+          return  
       end  
       redirect resource(:notifications)
   end
@@ -105,30 +102,28 @@ class Notifications < Application
   def reminder  
       only_provides :xml
       @postto = BASE_URL + '/directions'  
-      puts "testing".inspect
-      display @postto, :layout => nil
+      display @postto
   end  
   
   def directions  
-       only_provides :xml
-      if params['Digits'] == '3'  
-         display 'goodbye', :layout => nil
-         return  
-      end  
-      if !params['Digits'] or params['Digits'] != '2'  
-         puts "raja".inspect
-         display 'reminder', :layout => nil
-         return  
-      end  
-      @redirectto = BASE_URL + '/reminder'
-      render @redirectto
+     only_provides :xml
+     if params['Digits'] == '3'  
+        display 'goodbye'
+        return  
+     end  
+     if !params['Digits'] or params['Digits'] != '2'  
+        display 'reminder'
+        return  
+     end  
+     @redirectto = BASE_URL + '/reminder'
+     display @redirectto
   end  
   
   # TwiML response saying with the goodbye message. Twilio will detect no
   # further commands after the Say and hangup
   def goodbye
      provides :xml
-     render
+     display
   end
 
 
