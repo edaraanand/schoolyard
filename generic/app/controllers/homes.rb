@@ -1,6 +1,6 @@
 class Homes < Application
   
-    #before :ensure_authenticated
+    before :ensure_authenticated
     layout 'home'
     before :find_school
     before :selected, :exclude => [:help]
