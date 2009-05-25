@@ -8,7 +8,7 @@
    API_VERSION = '2008-08-01'
    
    # # base URL of this application  
-  # BASE_URL = "http://sdb.#{Schoolapp.config(:app_domain)}"
+   # BASE_URL = "http://sdb.#{Schoolapp.config(:app_domain)}"
    BASE_URL = "http://sdb.schoolyardapp.net"
    
    #school@insightmethods.com:administration@
