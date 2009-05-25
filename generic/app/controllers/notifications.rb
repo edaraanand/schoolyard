@@ -112,7 +112,7 @@ class Notifications < Application
   def directions  
        only_provides :xml
       if params['Digits'] == '3'  
-         display 'goodbye', :layout => nil
+        display 'goodbye', :layout => nil
          return  
       end  
       if !params['Digits'] or params['Digits'] != '2'  
