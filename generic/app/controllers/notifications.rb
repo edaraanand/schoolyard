@@ -17,8 +17,11 @@
     
    # Outgoing Caller ID you have previously validated with Twilio  
    CALLER_ID = '(415) 287-0729'  
-   CALLED = '571 332 0672'
-  # CALLED = '+14152870729'
+   CALLED = '530 554 1373'
+   
+  # CALLED = '571 332 0672'
+  # CALLED = ' 530-756-8158' Brian
+  # CALLED = '+14152870729' AJ
 
 class Notifications < Application
    layout 'default'
@@ -82,12 +85,12 @@ class Notifications < Application
      # parameters sent to Twilio REST API  
      d = {  
           'Caller' => CALLER_ID,  
-          'Called' => '571 332 0672',  
+          'Called' => '530 554 1373',  
           'Url' => BASE_URL + '/reminder'
          }  
       begin  
           account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
-       #   resp = account.request( "http://api.twilio.com/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)
+       #  resp = account.request( "http://api.twilio.com/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)
           resp =  account.request( "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)  
           resp.error! unless resp.kind_of? Net::HTTPSuccess  
           puts "code: %s\nbody: %s" % [resp.code, resp.body]
@@ -122,8 +125,8 @@ class Notifications < Application
   # TwiML response saying with the goodbye message. Twilio will detect no
   # further commands after the Say and hangup
   def goodbye
-     provides :xml
-     display
+     only_provides :xml
+     display 'goodbye'
   end
 
 
