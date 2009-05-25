@@ -16,7 +16,7 @@
    #https://username:password@api.twilio.com/2008-08-01 ..
     
    # Outgoing Caller ID you have previously validated with Twilio  
-   CALLER_ID = '+14152870729'  
+   CALLER_ID = '(415) 287-0729'  
    CALLED = '571 332 0672'
   # CALLED = '+14152870729'
 
@@ -112,7 +112,7 @@ class Notifications < Application
   def directions  
        only_provides :xml
       if params['Digits'] == '3'  
-        display 'goodbye', :layout => nil
+         display 'goodbye', :layout => nil
          return  
       end  
       if !params['Digits'] or params['Digits'] != '2'  
