@@ -43,6 +43,36 @@ $j("input.date").datepicker({ yearRange: '1970:2040'});
   
  }
  
+ function edit_preview()
+ {
+   var thisForm = "studs";
+    var defaultVals = new Array();
+    defaultVals[0] = new Array("f_name_parent4", "First Name");
+    defaultVals[1] = new Array("l_name_parent4", "Last Name");
+    
+    defaultVals[2] = new Array("f_name_parent3", "First Name");
+    defaultVals[3] = new Array("l_name_parent3", "Last Name");
+    
+    defaultVals[4] = new Array("f_name_parent2", "First Name");
+    defaultVals[5] = new Array("l_name_parent2", "Last Name");
+  
+    with (document.forms[thisForm]) 
+      {
+         for (var n=0; n<defaultVals.length; n++) 
+         {
+            var thisField = defaultVals[n][0];
+            var thisDefault = defaultVals[n][1];
+            if (elements[thisField].value == thisDefault)
+             elements[thisField].value = '';
+           
+   }}
+     var r = $('student').serialize();
+     window.open('/students/preview/-/?' + r);
+    
+ }
+ 
+ 
+ 
  $j(document).ready(function()
 {
     $j(".defaultText").focus(function(srcc)
@@ -131,6 +161,7 @@ $j("input.date").datepicker({ yearRange: '1970:2040'});
             var thisDefault = defaultVals[n][1];
             if (elements[thisField].value == thisDefault)
              elements[thisField].value = '';
+           
    }}}
    
    function clickrecall(thisfield, defaulttext) 

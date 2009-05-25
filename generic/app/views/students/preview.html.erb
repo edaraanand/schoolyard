@@ -2,19 +2,34 @@
       <h4><span>Student</span></h4>
         <dl>
             <dt>First Name :</dt><dd><%= params[:student][:first_name] %></dd>
-            <dt>Last Name :</dt><dd>&nbsp;<%= params[:student][:first_name] %></dd>
+            <dt>Last Name :</dt><dd>&nbsp;<%= params[:student][:last_name] %></dd>
         </dl>
         <div class="hrule clear hidden"><hr /></div>
-      <h4><span>Parent</span></h4>
-      <% @parent.each do |f| %>
-             <dl>
-                 <dt>First Name:</dt>
-                 <dd><%= f[0] %></dd>
-                 <dt>Last Name:</dt>
-                 <dd><%= f[1] %></dd>
-                 <dt>Email:</dt>
-                 <dd><%= f[2] %></dd>
-             </dl>
+      <h4><span>Parents</span></h4>
+       <% unless @parents.nil? %>
+            <% @parents.each do |f| %>
+                   <dl>
+                       <dt>First Name:</dt>
+                         <dd><%= f.first_name %></dd>
+                       <dt>Last Name:</dt>
+                       <dd><%= f.last_name %></dd>
+                       <dt>Email:</dt>
+                       <dd><%= f.email %></dd>
+                   </dl>
+            <% end %>
+      <% end %>
+      
+      <% unless @parent.nil? %>
+            <% @parent.each do |f| %>
+                   <dl>
+                       <dt>First Name:</dt>
+                       <dd><%= f[0] %></dd>
+                       <dt>Last Name:</dt>
+                       <dd><%= f[1] %></dd>
+                       <dt>Email:</dt>
+                       <dd><%= f[2] %></dd>
+                   </dl>
+            <% end %>
       <% end %>
       <% if ( ( (params[:f_name_parent2] != "") && (params[:l_name_parent2] != "") ) && (params[:email_parent2] != "") ) %>
             <h4><span>Parent2</span></h4>

@@ -18,7 +18,7 @@
 <%= form_for(@student, :action => resource(@student), :id => 'student', :name => "studs", :onsubmit => "MPClearAll()") do %>
 
 	        <ul>
-                  <% @lt.each do |l| %>
+                 <% @student_class.each do |l| %>
                      <li>
                          <label>Student for:</label>
                          <%= select :name => "classroom_id", :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name.titleize}, :selected => "#{l.classroom.class_name.titleize}", :value_method => :id, :text_method => :name %>
@@ -174,7 +174,7 @@
                                 <li><%= text_area :address, :label => "Address", :rows => "4", :cols => "50" %></li>
 	    
                            <div class="save-cancel">		 
-	                             <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
+                               <input type = 'button' value = '    Preview    ' onclick="edit_preview();return false;" />
 	                             <%= submit "    Publish    " %>  Or <%= link_to "Cancel", resource(:students), :class => "cancel" %>
 	                         </div>
 	         </ul>
