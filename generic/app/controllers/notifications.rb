@@ -90,7 +90,7 @@ class Notifications < Application
          }  
       begin  
           account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
-       #  resp = account.request( "http://api.twilio.com/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)
+          #resp = account.request( "http://eshwar.gouthama@insightmethods.com:ashwini@api.twilio.com/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)
           resp =  account.request( "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)  
           resp.error! unless resp.kind_of? Net::HTTPSuccess  
           puts "code: %s\nbody: %s" % [resp.code, resp.body]
@@ -105,21 +105,21 @@ class Notifications < Application
   def reminder  
       only_provides :xml
       @postto = BASE_URL + '/directions'  
-      display @postto
+      display @postto, :layout => false
   end  
   
   def directions  
      only_provides :xml
      if params['Digits'] == '3'  
-        display 'goodbye'
+        display 'goodbye', :layout => false
         return  
      end  
      if !params['Digits'] or params['Digits'] != '2'  
-        display 'reminder'
+        display 'reminder', :layout => false
         return  
      end  
      @redirectto = BASE_URL + '/reminder'
-     display @redirectto
+     display @redirectto, :layout => false
   end  
   
   # TwiML response saying with the goodbye message. Twilio will detect no
