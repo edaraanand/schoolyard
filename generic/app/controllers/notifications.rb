@@ -25,7 +25,7 @@
 
 class Notifications < Application
    layout 'default'
-   before :access_rights, :exclude => [:reminder, :directions] 
+   before :access_rights, :exclude => [:reminder, :directions, :goodbye] 
    before :find_school
    provides :html, :xml
    
