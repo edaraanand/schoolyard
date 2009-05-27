@@ -19,9 +19,9 @@
    CALLER_ID = '(415) 287-0729'  
    CALLED = '530 554 1373'
    
-  # CALLED = '571 332 0672'
+  # CALLED = '571 332 0672' AJ
   # CALLED = ' 530-756-8158' Brian
-  # CALLED = '+14152870729' AJ
+  # CALLED = '+14152870729' Niket
 
 class Notifications < Application
    layout 'default'
@@ -47,9 +47,9 @@ class Notifications < Application
   def create
      @announcement = @current_school.announcements.new(params[:announcement])    
      if @announcement.valid?
-        makecall
         @announcement.label = "urgent"
-        @announcement.save
+        @announcement.save!
+        makecall(@announcement.id)
         twitter = Twitter.new(@current_school.username, @current_school.password)
         twitter.post(params[:announcement][:content]) 
         redirect url(:notifications)
@@ -82,12 +82,13 @@ class Notifications < Application
      redirect resource(:notifications)
   end
   
-  def makecall
+  def makecall(id)
+     @announcement = @current_school.announcements.find_by_id(id)
      # parameters sent to Twilio REST API  
      d = {  
           'Caller' => CALLER_ID,  
           'Called' => '530 554 1373',  
-          'Url' => BASE_URL + '/reminder'
+          'Url' => BASE_URL + "/reminder?id=#{@announcement.id}"
          }  
       begin  
           account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
@@ -105,6 +106,7 @@ class Notifications < Application
   
   def reminder  
       only_provides :xml
+      @announcement = @current_school.announcements.find_by_id(params[:id])
       @postto = BASE_URL + '/directions'  
       display @postto, :layout => false
   end  

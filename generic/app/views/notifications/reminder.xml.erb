@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 <Response>  
    <Gather action="/reminder" numDigits="1" method="GET">  
-        <Say>Hello AJ how are You From Eshwar.</Say>  
+        <Say><%= @announcement.content %></Say>  
         <Say>Please press 1 to repeat this menu. Press 2 for directions.Or press 3 if you are done</Say>
    </Gather>  
 </Response>                 
