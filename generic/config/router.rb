@@ -60,6 +60,7 @@ Merb::Router.prepare do
     match("/staff_password_save").to(:controller => 'registrations', :action => 'staff_password_save').name(:staff_password_save)
     match("/reminder").to(:controller => 'notifications', :action => 'reminder').name(:reminder)
     match("/directions").to(:controller => 'notifications', :action => 'directions').name(:directions)
+    match("/goodbye").to(:controller => 'notifications', :action => 'goodbye').name(:goodbye)
  
   authenticate do
        resources :parents
