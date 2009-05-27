@@ -105,20 +105,22 @@ class Notifications < Application
   end
   
   def reminder  
-      only_provides :xml
-      @announcement = @current_school.announcements.find_by_id(params[:id])
-      @postto = BASE_URL + '/directions'  
-      display @postto, :layout => false
+     only_provides :xml
+     @announcement = @current_school.announcements.find_by_id(params[:id])
+     @postto = BASE_URL + '/directions'  
+     display @postto, :layout => false
   end  
   
   def directions  
      only_provides :xml
      if params['Digits'] == '3'  
-        display 'goodbye', :layout => false
+        redirect url(:goodbye)
+        #display 'goodbye', :layout => false
         return  
      end  
      if !params['Digits'] or params['Digits'] != '2'  
-        display 'reminder', :layout => false
+        redirect url(:reminder)
+        # display 'reminder', :layout => false
         return  
      end  
      @redirectto = BASE_URL + '/reminder'
@@ -129,7 +131,7 @@ class Notifications < Application
   # further commands after the Say and hangup
   def goodbye
      only_provides :xml
-     display 'goodbye'
+     display 'goodbye', :layout => false
   end
 
 
