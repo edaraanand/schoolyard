@@ -120,12 +120,16 @@ class Notifications < Application
   def directions  
      only_provides :xml
      @announcement = @current_school.announcements.find_by_id(params[:id])
-     if params['Digits'] == '3'  
+     puts params.inspect
+     puts params[:digit]
+     puts "Raja".inspect
+     puts params[:digit].inspect
+     if params['Digits'] == 3  
         redirect url(:goodbye)
         #display 'goodbye', :layout => false
         return  
      end  
-     if !params['Digits'] or params['Digits'] != '2'  
+     if !params['Digits'] or params['Digits'] != 2  
         redirect url(:reminder, :id => @announcement.id)
         # display 'reminder', :layout => false
         return  

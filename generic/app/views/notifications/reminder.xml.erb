@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 <Response>  
-<Gather action="/directions?id=<%= @announcement.id %>" numDigits="1">  
-        <Say voice="woman" ><%= @announcement.content %></Say>  
-        <Say voice="woman">
+<Gather action="/directions?id=<%= @announcement.id %>" numDigits="1" method="GET">  
+        <Say><%= @announcement.content %></Say>  
+        <Say>
               Please press 1 to repeat this menu. 
               Press 2 for directions.
               Press 3 if you are done
