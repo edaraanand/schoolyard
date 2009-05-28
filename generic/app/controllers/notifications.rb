@@ -100,8 +100,6 @@ class Notifications < Application
                                                'Called' => "#{f.phone}",
                                                'Url' => BASE_URL + "/reminder?id=#{@announcement.id}" }  )
            resp.error! unless resp.kind_of? Net::HTTPSuccess  
-           puts "code: %s\nbody: %s" % [resp.code, resp.body]
-           puts "Eshwar"
        rescue StandardError => bang
           # render :new 
            return  
@@ -118,20 +116,13 @@ class Notifications < Application
   end  
   
   def directions  
-   #  only_provides :xml
      @announcement = @current_school.announcements.find_by_id(params[:id])
-     puts params.inspect
-     puts params[:digit]
-     puts "Raja".inspect
-     puts params[:digit].inspect
      if params['Digits'] == '2'
         redirect url(:goodbye)
-        #display 'goodbye', :layout => false
-        #return
-     else
-        #@redirectto = BASE_URL + "/reminder?id=#{@announcement.id}"
-        #display @redirectto, :layout => false
+     elsif params['Digits'] == '1'
         redirect url(:reminder, :id => @announcement.id)
+     else
+       redirect url(:sorry)
      end  
   end  
   
@@ -141,6 +132,12 @@ class Notifications < Application
      only_provides :xml
      display 'goodbye', :layout => false
   end
+  
+  def sorry
+     only_provides :xml
+     display 'sorry', :layout => false
+  end
+    
 
 
 
