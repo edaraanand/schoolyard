@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 <Response>  
-<Gather action="/directions?id=<%= @announcement.id %>" numDigits="1" method="GET">  
+   <Gather action="/directions?id=<%= @announcement.id %>" numDigits="1" method="GET">  
         <Say><%= @announcement.content %></Say>  
         <Say>
               Please press 1 to repeat this menu. 
               Press 2 for directions.
               Press 3 if you are done
         </Say>
+        <Redirect method="GET">http://sdb.schoolyardapp.net/directions?id=<%= @announcement.id %></Redirect>
    </Gather>  
 </Response>                 
 
