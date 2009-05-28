@@ -85,7 +85,7 @@ class Notifications < Application
   def makecall(id)
      @announcement = @current_school.announcements.find_by_id(id)
     # @parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 1] )
-    @staff = @current_school.people.find(:all, :conditions => ["type = ? and last_name = ?", "Staff", "Gouthama"]
+    @staff = @current_school.people.find(:all, :conditions => ["type = ? and last_name = ?", "Staff", "Gouthama"] )
      # parameters sent to Twilio REST API  
     # d = {  
     #      'Caller' => CALLER_ID,  
