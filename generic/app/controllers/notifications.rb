@@ -119,10 +119,8 @@ class Notifications < Application
      @announcement = @current_school.announcements.find_by_id(params[:id])
      if params['Digits'] == '2'
         redirect url(:goodbye)
-     elsif params['Digits'] == '1'
-        redirect url(:reminder, :id => @announcement.id)
      else
-       redirect url(:sorry)
+        redirect url(:reminder, :id => @announcement.id)
      end  
   end  
   
@@ -133,10 +131,10 @@ class Notifications < Application
      display 'goodbye', :layout => false
   end
   
-  def sorry
-     only_provides :xml
-     display 'sorry', :layout => false
-  end
+ # def sorry
+ #    only_provides :xml
+ #    display 'goodbye', :layout => false
+ # end
     
 
 
