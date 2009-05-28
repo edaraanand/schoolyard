@@ -100,6 +100,8 @@ class Notifications < Application
                                                'Called' => "#{f.phone}",
                                                'Url' => BASE_URL + "/reminder?id=#{@announcement.id}" }  )
            resp.error! unless resp.kind_of? Net::HTTPSuccess  
+           puts "code: %s\nbody: %s" % [resp.code, resp.body]
+           puts "Eshwar"
        rescue StandardError => bang
           # render :new 
            return  
@@ -130,12 +132,6 @@ class Notifications < Application
      only_provides :xml
      display 'goodbye', :layout => false
   end
-  
- # def sorry
- #    only_provides :xml
- #    display 'goodbye', :layout => false
- # end
-    
 
 
 

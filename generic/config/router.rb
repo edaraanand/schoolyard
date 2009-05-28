@@ -61,7 +61,7 @@ Merb::Router.prepare do
     match("/reminder").to(:controller => 'notifications', :action => 'reminder').name(:reminder)
     match("/directions").to(:controller => 'notifications', :action => 'directions').name(:directions)
     match("/goodbye").to(:controller => 'notifications', :action => 'goodbye').name(:goodbye)
-    match("/sorry").to(:controller => 'notifications', :action => 'sorry').name(:sorry)
+    
  
   authenticate do
        resources :parents
