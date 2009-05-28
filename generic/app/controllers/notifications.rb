@@ -123,7 +123,7 @@ class Notifications < Application
         redirect url(:reminder, :id => @announcement.id)
      else
         redirect url(:goodbye)
-     else
+     end
   end  
   
   # TwiML response saying with the goodbye message. Twilio will detect no
