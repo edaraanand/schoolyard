@@ -118,24 +118,21 @@ class Notifications < Application
   end  
   
   def directions  
-     only_provides :xml
+   #  only_provides :xml
      @announcement = @current_school.announcements.find_by_id(params[:id])
      puts params.inspect
      puts params[:digit]
      puts "Raja".inspect
      puts params[:digit].inspect
-     if params['Digits'] == 3  
+     if params['Digits'] == 2 
         redirect url(:goodbye)
         #display 'goodbye', :layout => false
-        return  
-     end  
-     if !params['Digits'] or params['Digits'] != 2  
+        #return
+     else
+        #@redirectto = BASE_URL + "/reminder?id=#{@announcement.id}"
+        #display @redirectto, :layout => false
         redirect url(:reminder, :id => @announcement.id)
-        # display 'reminder', :layout => false
-        return  
      end  
-     @redirectto = BASE_URL + "/reminder?id=#{@announcement.id}"
-     display @redirectto, :layout => false
   end  
   
   # TwiML response saying with the goodbye message. Twilio will detect no

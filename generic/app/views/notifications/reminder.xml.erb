@@ -4,10 +4,9 @@
         <Say><%= @announcement.content %></Say>  
         <Say>
               Please press 1 to repeat this menu. 
-              Press 2 for directions.
-              Press 3 if you are done
+              Press 2 if you are done
         </Say>
-        <Redirect method="GET">http://sdb.schoolyardapp.net/directions?id=<%= @announcement.id %></Redirect>
+        
    </Gather>  
 </Response>                 
 
