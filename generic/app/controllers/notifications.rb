@@ -124,8 +124,7 @@ class Notifications < Application
      puts params[:digit]
      puts "Raja".inspect
      puts params[:digit].inspect
-     #if params['Digits'] == 2
-     if params[:digits] == 2
+     if params['Digits'] == '2'
         redirect url(:goodbye)
         #display 'goodbye', :layout => false
         #return
