@@ -113,7 +113,7 @@ class Notifications < Application
   def reminder  
      only_provides :xml
      @announcement = @current_school.announcements.find_by_id(params[:id])
-     @postto = BASE_URL + '/directions'  
+     @postto = BASE_URL + "/directions?id=#{@announcement.id}"  
      display @postto, :layout => false
   end  
   
