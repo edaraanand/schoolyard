@@ -86,7 +86,7 @@ class Notifications < Application
      @announcement = @current_school.announcements.find_by_id(id)
     # @parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 1] )
     @staff = @current_school.people.find(:all, :conditions => ["type = ? and last_name = ?", "Staff", "Gouthama"] )
-     # parameters sent to Twilio REST API  
+    # parameters sent to Twilio REST API  
     # d = {  
     #      'Caller' => CALLER_ID,  
     #      'Called' => '530 554 1373',  
@@ -119,17 +119,18 @@ class Notifications < Application
   
   def directions  
      only_provides :xml
+     @announcement = @current_school.announcements.find_by_id(params[:id])
      if params['Digits'] == '3'  
         redirect url(:goodbye)
         #display 'goodbye', :layout => false
         return  
      end  
      if !params['Digits'] or params['Digits'] != '2'  
-        redirect url(:reminder)
+        redirect url(:reminder, :id => @announcement.id)
         # display 'reminder', :layout => false
         return  
      end  
-     @redirectto = BASE_URL + '/reminder'
+     @redirectto = BASE_URL + "/reminder?id=#{@announcement.id}"
      display @redirectto, :layout => false
   end  
   
