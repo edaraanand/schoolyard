@@ -117,7 +117,7 @@ class People < Application
     redirect url(:edit_person, @person.id)
   end
 
-
+ 
   private
 
   def access_rights

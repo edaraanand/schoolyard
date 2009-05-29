@@ -85,27 +85,29 @@ class Notifications < Application
   def makecall(id)
      @announcement = @current_school.announcements.find_by_id(id)
     # @parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 1] )
-    @staff = @current_school.people.find(:all, :conditions => ["type = ? and last_name = ?", "Staff", "Gouthama"] )
+    @parents = @current_school.people.find(:all, :conditions => ['type = ?', "Parent"] )
     # parameters sent to Twilio REST API  
     # d = {  
     #      'Caller' => CALLER_ID,  
     #      'Called' => '530 554 1373',  
     #      'Url' => BASE_URL + "/reminder?id=#{@announcement.id}"
     #     }
-    @staff.each do |f|
-       begin  
-           account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
-           resp =  account.request( "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST',
-                                         d = { 'Caller' => CALLER_ID,
-                                               'Called' => "#{f.phone}",
-                                               'Url' => BASE_URL + "/reminder?id=#{@announcement.id}" }  )
-           resp.error! unless resp.kind_of? Net::HTTPSuccess  
-           puts "code: %s\nbody: %s" % [resp.code, resp.body]
-           puts "Eshwar"
-       rescue StandardError => bang
-          # render :new 
-           return  
-       end  
+    @parents.each do |f|
+        unless f.voice_alert.blank?
+             begin  
+                 account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
+                 resp =  account.request( "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST',
+                                               d = { 'Caller' => CALLER_ID,
+                                                     'Called' => "#{f.voice_alert}",
+                                                     'Url' => BASE_URL + "/reminder?id=#{@announcement.id}" }  )
+                 resp.error! unless resp.kind_of? Net::HTTPSuccess  
+                 puts "code: %s\nbody: %s" % [resp.code, resp.body]
+                 puts "Eshwar"
+             rescue StandardError => bang
+                # render :new 
+                 return  
+             end  
+        end
     end
       redirect resource(:notifications)
   end
@@ -133,8 +135,7 @@ class Notifications < Application
      display 'goodbye', :layout => false
   end
 
-
-
+ 
   private
 
   def access_rights

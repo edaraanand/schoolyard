@@ -167,21 +167,21 @@ class Registrations < Application
     @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
     if ( !params[:parent][:password].blank? ) && (!params[:parent][:password_confirmation].blank? )
       if ( params[:parent][:password] == params[:parent][:password_confirmation] )
-        @parent.password = params[:parent][:password]
-        @parent.password_confirmation = params[:parent][:password_confirmation]
-        @parent.school_id = @current_school.id
-        if @parent.save
-          redirect url(:login)
-        else
-          flash[:error] = "You should enter Minimum Length of 8 Characters"
-          redirect url(:new_password, :id => @parent.password_reset_key)
-        end
+         @parent.password = params[:parent][:password]
+         @parent.password_confirmation = params[:parent][:password_confirmation]
+         @parent.school_id = @current_school.id
+         if @parent.save
+           redirect url(:login)
+         else
+           flash[:error] = "You should enter Minimum Length of 8 Characters"
+           redirect url(:new_password, :id => @parent.password_reset_key)
+         end
       else
-        flash[:error1] = "Your Password doesn't match"
+        flash[:error] = "Your Password doesn't match"
         redirect url(:new_password, :id => @parent.password_reset_key)
       end
     else
-      flash[:error2] = "Password cant be blank"
+      flash[:error] = "Password cant be blank"
       redirect url(:new_password, :id => @parent.password_reset_key)
     end
   end
