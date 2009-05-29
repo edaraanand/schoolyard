@@ -50,7 +50,7 @@
                            </div>
                       <% end %>
                 <% end %>
-           <% if @announcements.blank? %>
+          <% if (@announcements.blank?) && (@urgent_announcements.blank?) %>
                  <p class="subText">There are no announcements at this time</p>
                  <p class="separator">&nbsp;</p>
                  <% unless @all_announcements.blank? %>

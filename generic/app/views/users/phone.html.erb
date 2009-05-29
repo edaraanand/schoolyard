@@ -39,25 +39,30 @@
      <% end %>
     
 <% else %>
-
-          <p>Urgent Announcements will be sent</p>
           
-          <% if @number != nil %>
-                <div id="voice" style="display:none">
-                    <%= partial 'phone' %>
-                </div>
-                <div id="alert" style="display:block">
-                    <%= partial 'phone_form' %>
-                </div>
-          <% else %>
-                <div id="voice" style="display:block">
-                     <%= partial 'phone' %>
-                </div>
-                <div id="alert" style="display:none">
-                     <%= partial 'phone_form' %>
-                </div>
-          <% end %>
-     
+             <span class="deactivate enable">
+                  You are now subscribed to receieve Urgent Announcements
+             </span>
+             
+             <p>Urgent Announcements will be sent</p>
+             
+             <% if @number != nil %>
+                   <div id="voice" style="display:none">
+                       <%= partial 'phone' %>
+                   </div>
+                   <div id="alert" style="display:block">
+                       <%= partial 'phone_form' %>
+                   </div>
+             <% else %>
+                   <div id="voice" style="display:block">
+                        <%= partial 'phone' %>
+                   </div>
+                   <div id="alert" style="display:none">
+                        <%= partial 'phone_form' %>
+                   </div>
+             <% end %> <br/><br/>
+            
+      
 <% end %>
 
 
