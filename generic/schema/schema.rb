@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 66) do
+ActiveRecord::Schema.define(:version => 67) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -202,6 +202,8 @@ ActiveRecord::Schema.define(:version => 66) do
     t.boolean  "admin"
     t.boolean  "principal_email"
     t.boolean  "principal_name"
+    t.string   "voice_alert"
+    t.string   "sms_alert"
   end
 
   create_table "protectors", :force => true do |t|
