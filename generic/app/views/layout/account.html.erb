@@ -11,6 +11,7 @@
          <% else %>
               <li <% if @selected == "staff_profile" %> class="on" <% end %>><%= link_to "My Profile", url(:staff_account) %></li>
               <li <% if @selected == "alerts" %> class="on" <% end %>><%#= link_to "Alert Settings", url(:alerts) %></li>
+              <li <% if @selected == "phone" %> class="on" <% end %>><%= link_to "Phone Alert Settings", url(:phone) %></li>
          <% end %>
   
       </ul>

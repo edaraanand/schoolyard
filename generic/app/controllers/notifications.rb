@@ -85,14 +85,15 @@ class Notifications < Application
   def makecall(id)
      @announcement = @current_school.announcements.find_by_id(id)
     # @parents = @current_school.parents.find(:all, :conditions => ['approved = ?', 1] )
-    @parents = @current_school.people.find(:all, :conditions => ['type = ?', "Parent"] )
+    # @parents = @current_school.people.find(:all, :conditions => ['type = ?', "Parent"] )
+    @people = @current_school.people.find(:all)
     # parameters sent to Twilio REST API  
     # d = {  
     #      'Caller' => CALLER_ID,  
     #      'Called' => '530 554 1373',  
     #      'Url' => BASE_URL + "/reminder?id=#{@announcement.id}"
     #     }
-    @parents.each do |f|
+    @people.each do |f|
         unless f.voice_alert.blank?
              begin  
                  account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
