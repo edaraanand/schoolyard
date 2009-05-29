@@ -10,7 +10,10 @@
              <fieldset>                  
                   <%= form_for :person, :action => url(:voice_update)  do  %>
                        <ul>
-                          <li><%= text_field :voice_alert,  :label => "For voice Alert", :id => "phone", :value => "#{@test}" %></li>
+                          <li>
+                              <%= text_field :voice_alert,  :label => "For voice Alert", :class => "short text", :id => "phone", :value => "#{@test}" %>
+                              <span class="phone-hint">(e.g. 3210987654)</span>
+                          </li>
                        </ul>
                        <div class="save-cancel">
                            <p>Charges may apply as per your agreement with the cellphone provider.</p><br/>
@@ -22,7 +25,10 @@
             <fieldset>                  
                     <%= form_for :person, :action => url(:voice_update)  do  %>
                          <ul>
-                             <li><%= text_field :voice_alert,  :label => "For voice Alert", :id => "phone" %></li>
+                             <li>
+                                 <%= text_field :voice_alert,  :label => "For voice Alert", :id => "phone", :class => "short text" %>
+                                 <span class="phone-hint">(e.g. 3210987654)</span>
+                             </li>
                          </ul>
                          <div class="save-cancel">
                              <p>Charges may apply as per your agreement with the cellphone provider.</p><br/>
