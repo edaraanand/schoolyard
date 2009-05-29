@@ -85,6 +85,10 @@ Merb::Router.prepare do
        resources :feedbacks
        resources :notifications
        #resources :reports
+       match("/subscription").to(:controller => 'users', :action => 'subscription').name(:subscription)
+       match("/phone").to(:controller => 'users', :action => 'phone').name(:phone)
+       match("/voice_update").to(:controller => 'users', :action => 'voice_update').name(:voice_update)
+       match("/phone_update").to(:controller => 'users', :action => 'phone_update').name(:phone_update)
        match("/feedback_reply").to(:controller => 'feedbacks', :action => 'feedback_reply').name(:feedback_reply)
        match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
        match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
