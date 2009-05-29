@@ -1,0 +1,7 @@
+    <ul>
+        <li>
+            <%= number_to_phone(@person.voice_alert, :area_code => true)  %>
+            <a href="#"  class="edit-btn"  onclick="phone_edit(); return false;">edit number</a>
+            <%= link_to "cancel subscription", url(:subscription, :id => @person.id), :class =>"delete-btn" %>
+        </li>
+    </ul>

@@ -1,0 +1,72 @@
+<h2 class="current-page"> Phone Alert Settings </h2>
+
+<% if @person.voice_alert.blank? %>
+     <%= error_messages_for @person %>
+     <p>  
+         Urgent alerts would be sent on your email and displayed on homepage of this application. 
+         If you would also like to receive text/voice alerts, please provide phone numbers below
+     </p>
+     <% if @test != nil %>
+             <fieldset>                  
+                  <%= form_for :person, :action => url(:voice_update)  do  %>
+                       <ul>
+                          <li><%= text_field :voice_alert,  :label => "For voice Alert", :id => "phone", :value => "#{@test}" %></li>
+                       </ul>
+                       <div class="save-cancel">
+                           <p>Charges may apply as per your agreement with the cellphone provider.</p><br/>
+                           <%= submit "    Save    " %> 
+                       </div>                                           
+                  <% end =%>
+             </fieldset>
+     <% else %>
+            <fieldset>                  
+                    <%= form_for :person, :action => url(:voice_update)  do  %>
+                         <ul>
+                             <li><%= text_field :voice_alert,  :label => "For voice Alert", :id => "phone" %></li>
+                         </ul>
+                         <div class="save-cancel">
+                             <p>Charges may apply as per your agreement with the cellphone provider.</p><br/>
+                             <%= submit "    Save    " %> 
+                         </div>                                           
+                    <% end =%>
+            </fieldset>
+     <% end %>
+    
+<% else %>
+
+          <p>Urgent Announcements will be sent</p>
+          
+          <% if @number != nil %>
+                <div id="voice" style="display:none">
+                    <%= partial 'phone' %>
+                </div>
+                <div id="alert" style="display:block">
+                    <%= partial 'phone_form' %>
+                </div>
+          <% else %>
+                <div id="voice" style="display:block">
+                     <%= partial 'phone' %>
+                </div>
+                <div id="alert" style="display:none">
+                     <%= partial 'phone_form' %>
+                </div>
+          <% end %>
+     
+<% end %>
+
+
+<script type= "text/javascript">
+  
+    // $j("#phone").mask("999 999 9999");
+  
+      function phone_edit()
+      {
+        var display_phone = document.getElementById('voice');
+        var edit_phone = document.getElementById('alert');
+        
+        display_phone.style.display  =  "none";
+        edit_phone.style.display      =  "block";
+        
+      }
+ 
+</script>

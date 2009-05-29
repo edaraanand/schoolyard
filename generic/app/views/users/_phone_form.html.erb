@@ -1,0 +1,7 @@
+ <%= error_messages_for @person %>
+ <%= form_for :person, :action => url(:phone_update)  do  %>
+      <ul>
+          <li><%= text_field :voice_alert,  :label => "as voice Alerts to", :id => "phone" %></li>
+          <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:phone), :class => "cancel" %>
+      </ul>
+ <% end =%>
