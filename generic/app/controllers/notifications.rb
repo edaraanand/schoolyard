@@ -20,7 +20,8 @@
    #https://username:password@api.twilio.com/2008-08-01 ..
     
    # Outgoing Caller ID you have previously validated with Twilio  
-   CALLER_ID = '(415) 287-0729'  
+   # CALLER_ID = '(415) 287-0729'  
+     CALLER_ID = '530 554 1373'
    # CALLED = '530 554 1373' Myself
    
    # CALLED = '571 332 0672' AJ
