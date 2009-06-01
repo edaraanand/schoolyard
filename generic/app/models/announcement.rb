@@ -27,6 +27,7 @@ class Announcement < ActiveRecord::Base
   end
  
   # sending the email reply to the person who has sent the feedback
+  
   def reply_person
      deliver(:reply_person, :subject => "Feedback Reply from " + self.school.school_name)
   end
@@ -36,4 +37,22 @@ class Announcement < ActiveRecord::Base
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.person.email), self )
   end
 
+  # sending the mail for urgent Announcements
+  
+  def urgent
+     mail(:urgent_announcement, :subject => "Urgent Announcement for " + self.school.school_name)
+  end
+  
+  
+  def mail(action, params)
+    from = "no-reply@insightmethods.com"
+    @current_school = self.school
+    @people = @current_school.people.find(:all)
+    array = @people.collect{|x| x.email}
+    to = array.compact!
+    PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => to.join(',') ), self )
+  end
+                                                                                                  
+  
+  
 end
