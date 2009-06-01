@@ -107,6 +107,8 @@ class Person < ActiveRecord::Base
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
 
+  ## Notifying the Staff about their Account Details
+  
   def changed_details
     mail_deliver(:notify_staff_details, :subject => "Your Details has Changed for " + self.school.school_name)
   end
