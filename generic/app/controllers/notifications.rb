@@ -54,10 +54,12 @@ class Notifications < Application
      if @announcement.valid?
         @announcement.label = "urgent"
         @announcement.save!
-       # makecall(@announcement.id)
-       # twitter = Twitter.new(@current_school.username, @current_school.password)
-       # twitter.post(params[:announcement][:content])
-        @announcement.urgent
+        makecall(@announcement.id)
+        twitter = Twitter.new(@current_school.username, @current_school.password)
+        twitter.post(params[:announcement][:content])
+        run_later do
+           @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
+        end
         redirect url(:notifications)
      else
         render :new

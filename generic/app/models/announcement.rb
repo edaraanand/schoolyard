@@ -39,36 +39,13 @@ class Announcement < ActiveRecord::Base
 
   # sending the mail for urgent Announcements
   
-  def urgent
-     mail(:urgent_announcement, :subject => "Urgent Announcement for " + self.school.school_name)
-  end
-  
-  
   def mail(action, params)
     from = "no-reply@example.com"
-   # @current_school = self.school
-   # @people = @current_school.people.find(:all)
-   # array = @people.collect{|x| x.email}
-   # to = array.compact!
-   to =  ["shaan_lve007@yahoo.co.in", "dharmeshsanora@hotmail.com", "raja.gupta@kolkatacdac.in",
-          "santu57@gmail.com", "ashu784@yahoo.com", "sunil_rishi2003@yahoo.com", 
-          "ramit_bit@yahoo.co.in", "sujeethkv@yahoo.com", "ankbansal@gmail.com", 
-          "subbiah_enmas@rediffmail.com", "vikas_the_gr8@yahoo.co.in", "jagadeesh.c27@gmail.com", 
-          "prashil_gpta@yahoo.com", "rahulisdanger@rediffmail.com", "vj.madonna@gmail.com", 
-          "santu57@gmail.com", "esh_as@yahoo.com", "toocool2bforu@hotmail.com",
-          "foc_blacklotus@sify.com", "vinothan_87@yahoo.com", "rahulshri00@aol.com",
-          "SIKANDER_CHHURI007@YAHOO.COM", "sumagrawal@gmail.com", "be_myfriend20in@yahoo.co.in",
-          "lukes_shakes@yahoo.com", "asimjust4u@hotmail.co", "mayur.kirpekar@gmail.com",
-          "ritwick.1981@gmail.com", "sindhuvenkat1947@gmail.com", "ashok78praveen@yahoo.co.in",
-          "83.varsha@gmail.com", "urdude_05@yahoo.co.in", "pierce8686@gmail.com",
-          "ronak007in@gmail.com", "anilkumargorantla@gmail.com", "alam_jmi@hotmail.com",
-          "krezkewl@rediffmail.com", "aks_bakliwal@yahoo.co.in", "hafsarhsm@yahoo.co.in",
-          "nitin_malik24@yahoo.com", "ratnesh_kumar@yahoo.co.in", "antony2810@yahoo.com",
-          "anu2023@yahoo.com", "drsht_jain@yahoo.co.in", "archit_great@yahoo.com",
-          "777simple@gmail.com", "test@gmail.com", "example@yahoo.com",
-          "hello@methods.com", "testing@twitter.com"]
-          
-      PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => to.join(',') ), self )
+    @current_school = self.school
+    @people = @current_school.people.find(:all)
+    array = @people.collect{|x| x.email}
+    to = array.compact!
+    PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => to.join(',') ), self )
   end
                                                                                                   
   
