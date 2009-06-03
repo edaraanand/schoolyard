@@ -40,7 +40,7 @@ class Announcement < ActiveRecord::Base
   # sending the mail for urgent Announcements
   
   def mail(action, params)
-    from = "no-reply@example.com"
+    from = "no-reply@schoolyardapp.com"
     @current_school = self.school
     @people = @current_school.people.find(:all)
     array = @people.collect{|x| x.email}
