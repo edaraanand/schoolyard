@@ -33,7 +33,7 @@ $j("input.date").datepicker({ yearRange: '1970:2040'});
     name = document.getElementById('classroom_person');
     if (name.value == "")
        {
-          alert("Please select the Classroom/Homepage from the dropdown menu");
+          alert("Please select the Classroom from the dropdown menu");
        }
    else
        {

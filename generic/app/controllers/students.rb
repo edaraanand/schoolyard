@@ -274,6 +274,7 @@ class Students < Application
 
 
   def preview
+     @selected = "students"
     if params[:_method] == "put"
       first = params[:student][:first_name]
       last = params[:student][:last_name]
