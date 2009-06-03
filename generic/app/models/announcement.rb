@@ -43,9 +43,13 @@ class Announcement < ActiveRecord::Base
     from = "no-reply@schoolyardapp.com"
     @current_school = self.school
     @people = @current_school.people.find(:all)
-    array = @people.collect{|x| x.email}
-    to = array.compact!
-    PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => to.join(',') ), self )
+    @people.each do |f|
+      self.approved_by = f.id
+      self.save
+      unless f.email.blank?
+        PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => "#{f.email}" ), self )
+      end
+    end
   end
                                                                                                   
   
