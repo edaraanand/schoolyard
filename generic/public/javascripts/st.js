@@ -116,6 +116,7 @@ $j("input.date").datepicker({ yearRange: '1970:2040'});
              var thisDefault = defaultVals[n][1];
              if (elements[thisField].value == '')
                 elements[thisField].value = thisDefault;
+                //elements[thisfield].addClass("defaultTextActive");
     }}}
  
  function MPClearField(field) 
@@ -148,6 +149,9 @@ $j("input.date").datepicker({ yearRange: '1970:2040'});
      if (thisfield.value == "")
        {
          thisfield.value = defaulttext;
+         //thisfield.className = defaultTextActive;
+         thisfield.className += ' defaultTextActive';
+         //thisfield.addClass("defaultTextActive");
        }
     }
  
