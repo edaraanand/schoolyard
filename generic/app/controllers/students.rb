@@ -123,7 +123,7 @@ class Students < Application
     @student = Student.find(params[:id])
     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     @sp = @student.protectors
-    @lt = @student.studies
+    @student_class = @student.studies
     render
   end
 
@@ -131,6 +131,7 @@ class Students < Application
     @student = Student.find(params[:id])
     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     @sp = @student.protectors
+    @student_class = @student.studies
     @study_id = Study.find_by_student_id(@student.id)
     @class = @current_school.classrooms.find_by_class_name(params[:classroom_id])
     protector_id = @sp.collect{|x| x.id }
@@ -273,10 +274,18 @@ class Students < Application
 
 
   def preview
-    first = params[:protector][:first_name]
-    last = params[:protector][:last_name]
-    email = params[:protector][:email]
-    @parent = first.zip(last, email)
+     @selected = "students"
+    if params[:_method] == "put"
+      first = params[:student][:first_name]
+      last = params[:student][:last_name]
+      @student = @current_school.students.find(:first, :conditions => ["first_name = ? and last_name = ?", first, last ])
+      @parents = @student.protectors
+   else
+      first = params[:protector][:first_name]
+      last = params[:protector][:last_name]
+      email = params[:protector][:email]
+      @parent = first.zip(last, email)
+    end
     render :layout => 'preview'
   end
 

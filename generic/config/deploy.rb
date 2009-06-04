@@ -1,17 +1,17 @@
 set :application, "schoolapp"
 set :scm, "git"
 set :repository,  "git@github.com:eshwardeep/schoolapp.git"
-#set :revision, "HEAD"
-set :branch, 'twilio'
+set :revision, "HEAD"
 set :use_sudo, false
 set :scm_passphrase, 'eshwar'
-
-
+set :branch, 'master'
 set :deploy_via, :remote_cache
 
 default_run_options[:pty] = true
 set :ssh_options, { :forward_agent => true }
+#set :user, 'eshwar'
 
+#set :domain,   "sdb.schoolyardapp.net"
 set :domain,   "eshwar@sdb.schoolyardapp.net"
 set :deploy_to,  "/home/eshwar/schoolapp"
 set :adapter, 'mongrel' # or 'thin' 

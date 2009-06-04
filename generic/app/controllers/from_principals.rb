@@ -30,7 +30,7 @@ class FromPrincipals < Application
         :filename => params[:attachment]['file_'+i.to_s][:filename],
         :content_type => params[:attachment]['file_'+i.to_s][:content_type],
         :size => params[:attachment]['file_'+i.to_s][:size],
-        :id =>  @current_school.id
+        :school_id =>  @current_school.id
         )
         File.makedirs("public/uploads/#{@attachment.id}")
         FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
@@ -63,7 +63,7 @@ class FromPrincipals < Application
           :filename => params[:attachment]['file_'+i.to_s][:filename],
           :content_type => params[:attachment]['file_'+i.to_s][:content_type],
           :size => params[:attachment]['file_'+i.to_s][:size],
-          :id =>  @current_school.id
+          :school_id =>  @current_school.id
           )
           File.makedirs("public/uploads/#{@attachment.id}")
           FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
@@ -164,7 +164,7 @@ class FromPrincipals < Application
         :filename => params[:image][:filename],
         :content_type => params[:image][:content_type],
         :size => params[:image][:size],
-        :id => @current_school.id
+        :school_id => @current_school.id
         )
         unless @principal.nil?
           if ((params[:principal_email] == "on") || (params[:principal_name] == "on") )
