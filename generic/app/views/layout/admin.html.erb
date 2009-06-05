@@ -24,23 +24,22 @@
 </head>
 <body class="fixed-width">
   <div id="page-wrap"><!-- Wraps everything -->
-  <div id="header"><!--The Header -->
-     <h1>School Apps Setup</h1>
-      <div id="user-cp"><!--User Control Panel -->
-          <p class="welcome">Welcome <em><%= session.user.name %></em></p>
-          <ul>  
-              <li>&nbsp;<%= link_to "Logout", url(:logout) %></li>
-          </ul>
-      </div>
-   </div>
-   </div>
+     <div id="header"><!--The Header -->
+        <h1>School Apps Setup</h1>
+        <div id="user-cp"><!--User Control Panel -->
+            <p class="welcome">Welcome <em><%= session.user.name %></em></p>
+            <ul>  
+                <li>&nbsp;<%= link_to "Logout", url(:logout) %></li>
+            </ul>
+        </div>
+     </div>
    
-    <div id="content-wrap"><!--Wraps The content Area-->
-
-      <div id="content"><!--Content Area Starts here-->
-        <%= catch_content :for_layout %>
-      </div><!--Content End-->
-    </div><!--Content Wrap End -->
+     <div id="content-wrap"><!--Wraps The content Area-->
+        <div id="content"><!--Content Area Starts here-->
+          <%= catch_content :for_layout %>
+        </div><!--Content End-->
+     </div><!--Content Wrap End -->
+     </div><!--Page Wrap End -->
     <%= partial 'common/footer' %>
        <script type="text/javascript"> var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); </script> <script type="text/javascript"> try { var pageTracker = _gat._getTracker("UA-8953231-1"); pageTracker._trackPageview(); } catch(err) {}</script>
       </body>
