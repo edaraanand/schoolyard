@@ -24,7 +24,7 @@ class School < ActiveRecord::Base
   validates_presence_of :city, :if => :city
   validates_presence_of :state, :if => :state
   validates_presence_of :zip_code, :if => :zip_code
-  validates_format_of :zip_code, :with => %r{\d{5}(-\d{4})?}, :message => "should be 12345 or 12345-1234"
+  validates_format_of :zip_code, :with => %r{\d{5}(-\d{4})?}, :message => "should be 12345 or 12345-1234", :if => :zip_code
 
   #validates_presence_of :phone, :if => :phone
   validates_presence_of :email, :if => :email
