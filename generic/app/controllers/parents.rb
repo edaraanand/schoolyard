@@ -37,7 +37,8 @@ class Parents < Application
         :attachable_id => @announcement.id,
         :filename => params[:announcement][:attachment][:filename],
         :content_type => params[:announcement][:attachment][:content_type],
-        :size => params[:announcement][:attachment][:size]
+        :size => params[:announcement][:attachment][:size],
+        :school_id => @current_school.id
         )
         File.makedirs("public/uploads/#{@attachment.id}")
         FileUtils.mv(params[:announcement][:attachment][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
@@ -62,7 +63,8 @@ class Parents < Application
         :attachable_id => @announcement.id,
         :filename => params[:announcement][:attachment][:filename],
         :content_type => params[:announcement][:attachment][:content_type],
-        :size => params[:announcement][:attachment][:size]
+        :size => params[:announcement][:attachment][:size],
+        :school_id => @current_school.id
         )
       end
       @announcement.person_id = session.user.id

@@ -2,6 +2,7 @@ class Users < Application
    
    before :ensure_authenticated
    layout 'account'
+   before :find_school
    before :staff_selected_link, :only => [:staff_account, :staff_account_edit, :staff_password, :staff_account_update]
    
    
@@ -32,7 +33,7 @@ class Users < Application
                                                 :filename => params[:person][:image][:filename],
                                                 :content_type => params[:person][:image][:content_type],
                                                 :size => params[:person][:image][:size],
-                                                :id => @current_school.id
+                                                :school_id => @current_school.id
                  )
                 File.makedirs("public/uploads/user_pictures")
                 FileUtils.mv(params[:person][:image][:tempfile].path, "public/uploads/user_pictures/#{@attachment.filename}")

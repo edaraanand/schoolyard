@@ -27,4 +27,5 @@ class Staff < Person
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
 
+  
 end

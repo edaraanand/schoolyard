@@ -1,14 +1,14 @@
 $j("input.date").datepicker({ yearRange: '1970:2040'});
 
-
    var parent2_obj = document.getElementById('parent2');
    var parent3_obj = document.getElementById('parent3');
    var parent4_obj = document.getElementById('parent4');
    var am2_obj     = document.getElementById('am2');
    var am3_obj     = document.getElementById('am3');
    var am4_obj     = document.getElementById('am4');
- 
- function add_parent2()
+   
+   
+   function add_parent2()
    {
       parent2_obj.style.display  =  "block";
       am2_obj.style.display      =  "none";
@@ -26,13 +26,14 @@ $j("input.date").datepicker({ yearRange: '1970:2040'});
       am4_obj.style.display      =  "none";
      
     }
- function preview()
+    
+    function preview()
  {
     ClearAll();
     name = document.getElementById('classroom_person');
     if (name.value == "")
        {
-          alert("Please select the Classroom/Homepage from the dropdown menu");
+          alert("Please select the Classroom from the dropdown menu");
        }
    else
        {
@@ -41,8 +42,17 @@ $j("input.date").datepicker({ yearRange: '1970:2040'});
        }
   
  }
-
-  $j(document).ready(function()
+ 
+ function edit_preview()
+ {
+     var r = $('student').serialize();
+     window.open('/students/preview/-/?' + r);
+    
+ }
+ 
+ 
+ 
+ $j(document).ready(function()
 {
     $j(".defaultText").focus(function(srcc)
     {
@@ -65,8 +75,7 @@ $j("input.date").datepicker({ yearRange: '1970:2040'});
     $j(".defaultText").blur();        
 });
 
-
-var thisForm = "studs";
+ var thisForm = "studs";
  
  var defaultVals = new Array();
  defaultVals[0] = new Array("f_name_parent4", "First Name");
@@ -85,7 +94,6 @@ var thisForm = "studs";
  defaultVals[9] = new Array("protector_last_name", "Last Name");
  
  
- 
  function ClearAll() 
   {
      with (document.forms[thisForm]) 
@@ -93,10 +101,57 @@ var thisForm = "studs";
          for (var n=0; n<defaultVals.length; n++) 
          {
             var thisField = defaultVals[n][0];
-           if (elements[thisField].value == elements[thisField].title)
-              elements[thisField].value = '';
-         }
-      }
-  }  
+            var thisDefault = defaultVals[n][1];
+            if (elements[thisField].value == elements[thisField].title)
+             elements[thisField].value = '';
+   }}}
+   
+   function MPLoadDefaults()
+  {
+    with (document.forms[thisForm])
+    {
+        for (var n=0; n<defaultVals.length; n++) 
+          {
+             var thisField = defaultVals[n][0];
+             var thisDefault = defaultVals[n][1];
+             if (elements[thisField].value == '')
+                elements[thisField].value = thisDefault;
+                //elements[thisfield].addClass("defaultTextActive");
+    }}}
  
+ function MPClearField(field) 
+  {
+      var fieldName = field.name;
+     for (var n=0; n<defaultVals.length; n++) 
+       {
+         var thisField = defaultVals[n][0];
+         var thisDefault = defaultVals[n][1];
+       if (thisField == fieldName) {
+          if (field.value == thisDefault) field.value = '';
+        break;
+   }}}
+   
+ function MPClearAll() 
+  {
+     with (document.forms[thisForm]) 
+      {
+         for (var n=0; n<defaultVals.length; n++) 
+         {
+            var thisField = defaultVals[n][0];
+            var thisDefault = defaultVals[n][1];
+            if (elements[thisField].value == thisDefault)
+             elements[thisField].value = '';
+           
+   }}}
+   
+   function clickrecall(thisfield, defaulttext) 
+   {
+     if (thisfield.value == "")
+       {
+         thisfield.value = defaulttext;
+         //thisfield.className = defaultTextActive;
+         thisfield.className += ' defaultTextActive';
+         //thisfield.addClass("defaultTextActive");
+       }
+    }
  

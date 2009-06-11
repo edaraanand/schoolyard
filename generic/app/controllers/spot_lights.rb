@@ -39,7 +39,7 @@ class SpotLights < Application
             :filename => params[:spot_light][:image][:filename],
             :size => params[:spot_light][:image][:size],
             :content_type => params[:spot_light][:image][:content_type],
-            :id => @current_school.id
+            :school_id => @current_school.id
             )
             File.makedirs("public/uploads/spotlights")
             FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/spotlights/#{@attachment.filename}")
@@ -99,7 +99,7 @@ class SpotLights < Application
             :filename => params[:spot_light][:image][:filename],
             :size => params[:spot_light][:image][:size],
             :content_type => params[:spot_light][:image][:content_type],
-            :id =>  @current_school.id
+            :school_id =>  @current_school.id
             )
             FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/spotlights/#{@attachment.filename}")
             redirect resource(:spot_lights)

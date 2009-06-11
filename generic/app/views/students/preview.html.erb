@@ -1,47 +1,18 @@
-<div class='preview-container'>
-      <h4><span>Student</span></h4>
-        <dl>
-            <dt>First Name :</dt><dd><%= params[:student][:first_name] %></dd>
-            <dt>Last Name :</dt><dd>&nbsp;<%= params[:student][:first_name] %></dd>
-        </dl>
-        <div class="hrule clear hidden"><hr /></div>
-      <h4><span>Parent</span></h4>
-      <% @parent.each do |f| %>
-             <dl>
-                 <dt>First Name:</dt>
-                 <dd><%= f[0] %></dd>
-                 <dt>Last Name:</dt>
-                 <dd><%= f[1] %></dd>
-                 <dt>Email:</dt>
-                 <dd><%= f[2] %></dd>
-             </dl>
-      <% end %>
-      <% if ( ( (params[:f_name_parent2] != "") && (params[:l_name_parent2] != "") ) && (params[:email_parent2] != "") ) %>
-            <h4><span>Parent2</span></h4>
-            <dl>
-                <dt>First Name :</dt><dd><%= params[:f_name_parent2] %></dd>
-                <dt>Last Name :</dt><dd>&nbsp;<%= params[:l_name_parent2] %></dd>
-                <dt>Email :</dt><dd>&nbsp;<%= params[:email_parent2] %></dd>
-            </dl>
-      <% end %>
-      <% if ( ( (params[:f_name_parent3] != "") && (params[:l_name_parent3] != "") ) && (params[:email_parent3] != "") ) %>
-            <h4><span>Parent3</span></h4>
-            <dl>
-                <dt>First Name :</dt><dd><%= params[:f_name_parent3] %></dd>
-                <dt>Last Name :</dt><dd>&nbsp;<%= params[:l_name_parent3] %></dd>
-                <dt>Email :</dt><dd>&nbsp;<%= params[:email_parent3] %></dd>
-            </dl>
-      <% end %>
-      <% if ( ( (params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") ) && (params[:email_parent4] != "") ) %>
-             <h4><span>Parent4</span></h4>
-             <dl>
-                 <dt>First Name :</dt><dd><%= params[:f_name_parent4] %></dd>
-                 <dt>Last Name :</dt><dd>&nbsp;<%= params[:l_name_parent4] %></dd>
-                 <dt>Email :</dt><dd>&nbsp;<%= params[:email_parent4] %></dd>
-             </dl>
-      <% end %>
-      
-<div class="hrule clear hidden"><hr /></div>
-</div>
-  
-   
+<h2 class="current-page">Students > Preview</h2>
+ 
+   <table id="mytable"  cellspacing="0" cellpadding="0">
+       <thead>
+         <th>Last Name</th>
+         <th>First Name</th>
+         <th>Contact Number</th>
+         <th>Address</th>
+       </thead>
+        <tbody>
+            <tr>
+                <td>&nbsp;<%= params[:student][:last_name] %> </td>
+                <td>&nbsp;<%= params[:student][:first_name] %></td>
+                <td>&nbsp;<%= number_to_phone(params[:student][:phone], :area_code => true) %></td>
+                <td>&nbsp;<%= params[:student][:address] %></td>
+            </tr>
+        </tbody>
+    </table>
