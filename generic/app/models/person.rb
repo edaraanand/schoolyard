@@ -40,7 +40,7 @@ class Person < ActiveRecord::Base
   validates_length_of :password, :within => 8..40, :if => :password
   validates_length_of :phone, :is => 10, :message => 'must be 10 digits, excluding special characters such as spaces and dashes.', :if => Proc.new{|o| !o.phone.blank?}
   validates_length_of :voice_alert, :is => 10, :message => 'must be 10 digits', :if => Proc.new{|o| !o.voice_alert.blank?}    
-
+  validates_length_of :sms_alert, :is => 10, :message => 'must be 10 digits', :if => Proc.new{|o| !o.sms_alert.blank?}
 
 
   def self.authenticate(email, school_id, password)

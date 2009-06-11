@@ -468,37 +468,38 @@ class Users < Application
     render
   end
   
-  def phone_update
-    @person = session.user
-    @selected = "phone"
-    @person.voice_alert = params[:person][:voice_alert]
-    if @person.valid?
-       @person.save!
-       redirect url(:phone)
-    else
-       @number = params[:person][:voice_alert]
-       render :phone
-    end
-      
-  end
-  
   def voice_update
     @person = session.user
     @selected = "phone"
-    @person.voice_alert = params[:person][:voice_alert]
-    if @person.valid?
-       @person.save
+    if params[:person][:voice_alert]
+       @person.voice_alert = params[:person][:voice_alert]
+    end
+    if params[:person][:sms_alert]
+       @person.sms_alert = params[:person][:sms_alert]
+    end
+    if @person.valid?                                                                        
+       @person.save!
        redirect url(:phone)
     else
-       @test = @person.voice_alert
-       @person.voice_alert = ""
+       if params[:person][:voice_alert]
+          @voice = params[:person][:voice_alert]
+          @person.voice_alert = ""
+       end
+       if params[:person][:sms_alert]
+          @sms = params[:person][:sms_alert]
+          @person.sms_alert = ""
+       end
        render :phone
     end
   end
   
   def subscription
     @person = @current_school.people.find_by_id(params[:id])
-    @person.voice_alert = ""
+    if params[:l] == "sms"
+       @person.sms_alert = ""
+    else
+       @person.voice_alert = ""
+    end
     @person.save!
     redirect url(:phone)
   end
