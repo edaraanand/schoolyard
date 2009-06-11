@@ -1,8 +1,10 @@
    require "twiliorest.rb"
+   require 'net/http'
+   require 'uri'
   
-   # your Twilio authentication credentials   (Eshwar's Twilio Account )
-  # ACCOUNT_SID = 'ACa1b7ee5abe50974956bda599447b1f04'  
-  # ACCOUNT_TOKEN = '208232dfbc82563e6c2f9cdc54cafbe5' 
+  # your Twilio authentication credentials   (Eshwar's Twilio Account )
+    # ACCOUNT_SID = 'ACa1b7ee5abe50974956bda599447b1f04'  
+    # ACCOUNT_TOKEN = '208232dfbc82563e6c2f9cdc54cafbe5' 
   
   # Brian's Twilio Account Details
    ACCOUNT_SID = 'ACaccbef6e62668da72003aea3ec585f89'
@@ -58,13 +60,34 @@ class Notifications < Application
         makecall(@announcement.id)
         twitter = Twitter.new(@current_school.username, @current_school.password)
         twitter.post(params[:announcement][:content])
+        #run_later do
+        #  @people = @current_school.people.find(:all)
+        #  numbers = @people.collect{ |x| x.sms_alert }
+        #  num     = numbers.compact.join(',')
+        #  @sms_numbers = num.collect{ |x| "1" + x }
+        #  api = Clickatell::API.authenticate('3175462', 'benetton', 'benetton1')
+        #  t = api.auth_options[:session_id]
+        #  s = Net::HTTP.get_response(URI.parse("http://api.clickatell.com/http_batch/startbatch?session_id=#{t}&template=#{@announcement.content}"))
+        #  id = s.body.split
+        #  id.each do |f|
+        #     if f != "ID:"
+        #        r = Net::HTTP.get_response(URI.parse("http://api.clickatell.com/http_batch/quicksend?session_id=#{t}&batch_id=#{f}&to=#{@sms_numbers}&template='#{@announcement.content}'"))
+        #     end
+        #   end
+        #end
+        @people = @current_school.people.find(:all)
+        numbers = @people.collect{ |x| x.sms_alert }
+        num     = numbers.compact.join(',')
+        @sms_numbers = num.collect{ |x| "1" + x }
+        api.send_message("#{@sms_numbers}", "#{@announcement.content}")
         run_later do
            @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
         end
+        #num = ['14158899280', '15713320672', '919998805789', '919227587555', '919998805789'].join(',')
         redirect url(:notifications)
      else
-        render :new
-     end
+        render :new                
+     end 
   end
   
   def delete
@@ -90,18 +113,7 @@ class Notifications < Application
              end  
         end
     end
-     # begin  
-     #     account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
-     #     resp =  account.request( "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls.csv", 'POST',
-     #                                   d = { 'Caller' => CALLER_ID,
-     #                                         'Called' => CALLED,
-     #                                         'Url' => BASE_URL + "/reminder?id=#{@announcement.id}" }  )
-     #     puts resp.inspect
-     #     resp.error! unless resp.kind_of? Net::HTTPSuccess  
-     # rescue StandardError => bang
-     #     return  
-     # end  
-      redirect resource(:notifications)
+    redirect resource(:notifications)
   end
    
   def reminder  
@@ -127,34 +139,6 @@ class Notifications < Application
      display 'goodbye', :layout => false
   end
 
-  #def records
-  #  #raise params.inspect
-  #  client = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
-  #  response = client.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls.csv",  'GET') 
-  #  puts response.code.inspect
-  #  puts "indu".inspect
-  #  #response = client.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Notifications.csv", 'GET')
-  # # puts response.inspect
-  # # puts "esh".inspect
-  # # test = "%s\nbody: %s" % [response.code, response.body]
-  # # puts test.inspect
-  #  #for s in response
-  #  #  puts s.called.inspect
-  #  #end
-  #  response.body.each do |key, val|
-  #    key.each do |f|
-  #      puts "#{f}".inspect
-  #    end
-  #      #  puts "indu".inspect
-  #      #  puts "#{key.Called}".inspect
-  #      #  puts "raj".inspect
-  #  end
-  #  raise params.inspect
-  #  filename = "hello.csv"
-  #  send_data(test, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
-  #end
-  
-  
   
   private
 
