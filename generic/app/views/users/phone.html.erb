@@ -1,84 +1,59 @@
 <h2 class="current-page"> Phone Alert Settings </h2>
 
-<% if @person.voice_alert.blank? %>
-     <%= error_messages_for @person %>
-     <p>  
-         Urgent alerts would be sent on your email and displayed on homepage of this application. 
-         If you would also like to receive text/voice alerts, please provide phone numbers below
-     </p>
-     <% if @test != nil %>
-             <fieldset>                  
-                  <%= form_for :person, :action => url(:voice_update)  do  %>
-                       <ul>
-                          <li>
-                              <%= text_field :voice_alert,  :label => "For voice Alert", :class => "short text", :id => "phone", :value => "#{@test}" %>
-                              <span class="phone-hint">(e.g. 3210987654)</span>
-                          </li>
-                       </ul>
-                       <div class="save-cancel">
-                           <p>Charges may apply as per your agreement with the cellphone provider.</p><br/>
-                           <%= submit "    Save    " %> 
-                       </div>                                           
-                  <% end =%>
-             </fieldset>
-     <% else %>
-            <fieldset>                  
-                    <%= form_for :person, :action => url(:voice_update)  do  %>
-                         <ul>
-                             <li>
-                                 <%= text_field :voice_alert,  :label => "For voice Alert", :id => "phone", :class => "short text" %>
-                                 <span class="phone-hint">(e.g. 3210987654)</span>
-                             </li>
-                         </ul>
-                         <div class="save-cancel">
-                             <p>Charges may apply as per your agreement with the cellphone provider.</p><br/>
-                             <%= submit "    Save    " %> 
-                         </div>                                           
-                    <% end =%>
-            </fieldset>
-     <% end %>
-    
-<% else %>
-          
-             <span class="deactivate enable">
-                  You are now subscribed to receieve Urgent Announcements
-             </span>
-             
-             <p>Urgent Announcements will be sent</p>
-             
-             <% if @number != nil %>
-                   <div id="voice" style="display:none">
-                       <%= partial 'phone' %>
-                   </div>
-                   <div id="alert" style="display:block">
-                       <%= partial 'phone_form' %>
-                   </div>
-             <% else %>
-                   <div id="voice" style="display:block">
-                        <%= partial 'phone' %>
-                   </div>
-                   <div id="alert" style="display:none">
-                        <%= partial 'phone_form' %>
-                   </div>
-             <% end %>
-          
-     
-      
-<% end %>
-
-
-<script type= "text/javascript">
-  
-    // $j("#phone").mask("999 999 9999");
-  
-      function phone_edit()
+       <%= error_messages_for @person %>
+       <p>  
+           Urgent alerts would be sent on your email and displayed on homepage of this application. 
+           If you would also like to receive text/voice alerts, please provide phone numbers below
+       </p>
+       
+       <fieldset>                  
+                  <% if @person.sms_alert.blank? %>
+                      <%= partial 'sms_form' %>
+                  <% end %>
+                  
+                  <% if @person.voice_alert.blank? %>
+                         <%= partial 'voice_form' %>
+                  <% end %>
+                       
+                  <% unless @person.voice_alert.blank? %>
+                        <div id="voice" style="display:block">
+                            <%= partial 'voice' %>
+                        </div>
+                        <div id="alert" style="display:none">
+                            <%= partial 'voice_form' %>
+                        </div>
+                  <% end %>
+                  
+                  <% unless @person.sms_alert.blank? %>
+                        <div id="sms" style="display:block">
+                             <%= partial 'sms' %>
+                        </div>
+                        <div id="sms_f" style="display:none">
+                             <%= partial 'sms_form' %>
+                        </div>
+                  <% end %>
+                  
+      </fieldset>
+        
+        
+<script type= "text/javascript">       
+        
+    function voice()
       {
-        var display_phone = document.getElementById('voice');
-        var edit_phone = document.getElementById('alert');
+        var voice = document.getElementById('voice');
+        var voice_edit = document.getElementById('alert');
         
-        display_phone.style.display  =  "none";
-        edit_phone.style.display      =  "block";
-        
+        voice.style.display  =  "none";
+        voice_edit.style.display   =  "block";
       }
- 
-</script>
+  
+      function sms()
+      {
+        var sms = document.getElementById('sms');
+        var sms_edit = document.getElementById('sms_f');
+        
+        sms.style.display  =  "none";
+        sms_edit.style.display   =  "block";
+      }
+  
+</script>        
