@@ -35,9 +35,14 @@
            <p class="post-content">
                <% if @welcome_messages.empty? %>
                  Welcome to <%=@current_school.school_name%>
-               <%else%>
+               <% else %>
                 <% for message in @welcome_messages %>
                    <%= san_content(message.content) %>
+                   <ul>
+                      <li <% if @selected == "welcome_messages" %> class="on" <% end %>>
+                        <%= link_to_right( (right = "welcome_messages"), "Edit Welcome Message", resource(message, :edit) ) %>
+                      </li>
+                   </ul>
                 <% end %>
            <% end %>
            <div class="hrule clear"><hr /></div>
