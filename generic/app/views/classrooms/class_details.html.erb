@@ -82,7 +82,10 @@
                 
 <% elsif params[:label] == "announcements" %>
       <div id="content"  class="two-col">
-        <h2 class="current-page"> Announcements </h2>
+        <h2 class="current-page"> 
+            Announcements &nbsp;&nbsp;&nbsp;
+            <%= link_to_right((right = "announcement"), "Add New Announcement", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+        </h2> 
         <% if @announcements.blank? %>
             <span class="subText">There are no Announcements at this time</span>
         <% else %>
