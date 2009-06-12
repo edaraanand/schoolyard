@@ -29,7 +29,8 @@
           <%= link_to "&larr; Back to All Events", url(:events, :l => "all_events", :label =>  "calendars") %>
     <% else %>
           <%  @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name]) %>
-          <%= link_to "&larr; Back to All Events", url(:class_details, :id => @classroom.id, :label => "calendars") %>
+          <%= link_to "&larr; Back to All Events", url(:class_details, :id => @classroom.id, :label => "calendars") %> |
+          <%= link_to_right((right = "calendar"), "Edit Calendar", resource(@calendar, :edit) )  %>
     <% end %>
     
    <p class="separator">&nbsp;</p>
