@@ -30,8 +30,8 @@
                       <%= link_to '| Next >', url(:home, @announcement.next_id, :label => 'principal'),:class => "alignright" if @announcement.next_id %>
                       <div class="page-links">
                           <%= link_to_right((right = "from_principal"), "Add New", resource(:from_principals, :new)) %> |
-                          <%= link_to_right((right = "from_principal"), "Edit Announcement", url(:edit_from_principal, @annoouncement.id)) %> |
-                          <%= link_to_right((right = "from_principal"), "Delete Announcement", url(:delete_from_principal, @annoouncement.id)) %>
+                          <%= link_to_right((right = "from_principal"), "Edit", url(:edit_from_principal, @annoouncement.id)) %> |
+                          <%= link_to_right((right = "from_principal"), "Delete", url(:delete_from_principal, @annoouncement.id)) %>
                       </div>
               <% elsif params[:label] == "class_ann" %>
                       <%= link_to '< Previous |', url(:home, @announcement.previous_class_announcement, :label => "class_ann") if @announcement.previous_class_announcement %>
@@ -44,9 +44,9 @@
                       <%= link_to "Back to All Announcements", url(:principal_articles, :label => 'announcements') %> |
                       <%= link_to 'Next >', url(:home, @announcement.next_record),:class => "alignright" if @announcement.next_record %>
                       <div class="page-links">
-                          <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "Home Page")) %> |
-                          <%= link_to_right((right = "announcements"), "Edit Announcement", resource(@announcement, :edit)) %> |
-                          <%= link_to_right((right = "announcements"), "Delete Announcement", resource(@announcement, :delete)) %> 
+                          <%= link_to_right((right = "announcements"), "Add New", resource(:announcements, :new, :l => "Home Page")) %> |
+                          <%= link_to_right((right = "announcements"), "Edit", resource(@announcement, :edit)) %> |
+                          <%= link_to_right((right = "announcements"), "Delete", resource(@announcement, :delete)) %> 
                       </div>
               <% end %>
            </p>
