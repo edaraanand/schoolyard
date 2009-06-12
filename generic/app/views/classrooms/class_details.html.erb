@@ -162,13 +162,18 @@
                                 <p class="separator">&nbsp;</p>
                           </div>
                      <% end %>
-                     <div class="page-links">
-                          <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>
-                          <% if session.user.type == "Parent" %>
-                                | <%= link_to "Submit an announcement", resource(:parents, :new) %>
-                           <% end %>
-                     </div>
               <% end %>
+              <div class="page-links">
+                     <ul>
+                         <li <% if @selected == "announcements" %> class="on" <% end %>>
+                             <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>    
+                             | <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}")) %>
+                             <% if session.user.type == "Parent" %>
+                                  | <%= link_to "Submit an announcement", resource(:parents, :new) %>
+                             <% end %>
+                         </li>
+                      </ul> 
+               </div>
       </div>
        <div class="right-sidebar">
               
