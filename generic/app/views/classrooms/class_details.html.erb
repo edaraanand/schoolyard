@@ -2,7 +2,7 @@
   <div id="content" class="two-col">
         <h2 class="current-page">
            Class Calendar &nbsp;&nbsp;&nbsp;
-           <%= link_to_right((right = "calendar"), "Add New Calendar", resource(:calendars, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+           <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
         </h2>
         <% if @calendars.empty? %>
             <span class="subText">There are no events planned at this time</span>
@@ -28,7 +28,8 @@
                                        All day event
                                   <% end %>
                                   <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
-                                  <%= link_to_right((right = "calendar"), "Edit Calendar", resource(calendar, :edit) )  %>
+                                  <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) )  %> |
+                                  <%= link_to_right((right = "calendar"), "Delete", resource(calendar, :delete) )  %>
                              </li>
                         </ul>
                     </div>
@@ -42,7 +43,7 @@
       <div id="content"  class="two-col">
         <h2 class="current-page"> 
             Homeworks &nbsp;&nbsp;&nbsp;
-            <%= link_to_right((right = "homework"), "Add New Homework", resource(:home_works, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+            <%= link_to_right((right = "homework"), "Add New", resource(:home_works, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
         </h2> 
         <% if @home_works.empty? %>
            <span class="subText">There are no Homework assignments at this time</span>
@@ -65,7 +66,8 @@
                       <% end %>
                          <h3><%= link_to "#{homework.title}", url(:home_work, homework.id) %></h3>
                          <span class="subText">Assigned <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></span>
-                         <%= link_to_right((right = "homework"), "Edit Homework", resource(homework, :edit) )  %>
+                         <%= link_to_right((right = "homework"), "Edit", resource(homework, :edit) )  %> |
+                         <%= link_to_right((right = "homework"), "Delete", resource(homework, :delete) )  %>
                          <p><%= snippet(homework.content, 50) %></p>
                          <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
                         <% unless @attachment.nil? %>
@@ -84,7 +86,7 @@
       <div id="content"  class="two-col">
         <h2 class="current-page"> 
             Announcements &nbsp;&nbsp;&nbsp;
-            <%= link_to_right((right = "announcement"), "Add New Announcement", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+            <%= link_to_right((right = "announcement"), "Add New", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
         </h2> 
         <% if @announcements.blank? %>
             <span class="subText">There are no Announcements at this time</span>
@@ -96,13 +98,13 @@
                             <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
                        </div>
                        <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann" ) %></h3>
-                       <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %>
-                       </span>
-                          <p class="separator"><%= snippet(announcement.content,50) %></p>
-                        <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
-                           <% unless @attachment.nil? %>
-                                <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
-                           <% end %>
+                       <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> |
+                       <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
+                       <p class="separator"><%= snippet(announcement.content,50) %></p>
+                       <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
+                          <% unless @attachment.nil? %>
+                               <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+                          <% end %>
                 </div>
             <% end %>
                 
