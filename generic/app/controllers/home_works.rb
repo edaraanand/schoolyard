@@ -140,15 +140,15 @@ class HomeWorks < Application
 
   def show
     if params[:label] == "home_w"
-      @selected = "home_work"
-      @home_work = HomeWork.find(params[:id])
-      render :layout => 'default'
+       @selected = "home_work"
+       @home_work = HomeWork.find(params[:id])
+       render :layout => 'default'
     else
-      @selected = "homeworks"
-      @select = "classrooms"
-      @home_work = HomeWork.find(params[:id])
-      @classroom = @home_work.classroom
-      render :layout => 'class_change', :id => @classroom.id
+       @selected = "homeworks"
+       @select = "classrooms"
+       @home_work = HomeWork.find(params[:id])
+       @classroom = @home_work.classroom
+       render :layout => 'class_change', :id => @classroom.id
     end
   end
 
