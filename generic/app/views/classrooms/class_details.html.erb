@@ -1,6 +1,9 @@
 <%  if params[:label] == "calendars" %>
   <div id="content" class="two-col">
-        <h2 class="current-page">Class Calendar</h2>
+        <h2 class="current-page">
+           Class Calendar &nbsp;&nbsp;&nbsp;
+           <%= link_to_right((right = "calendar"), "Add New Calendar", resource(:calendars, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+        </h2>
         <% if @calendars.empty? %>
             <span class="subText">There are no events planned at this time</span>
         <% else %>
@@ -16,7 +19,6 @@
                               <%end%>
                               >
                               <%= cdate %> </h3> 
-                              
                         <% end %> 
                         <ul class="calendar-items">
                              <li>
@@ -25,10 +27,10 @@
                                   <% else %>
                                        All day event
                                   <% end %>
-                                    <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
-                              </li>
-                       
-                         </ul>
+                                  <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
+                                  <%= link_to_right((right = "calendar"), "Edit Calendar", resource(calendar, :edit) )  %>
+                             </li>
+                        </ul>
                     </div>
                 <% end %>
                 
@@ -38,7 +40,10 @@
         
 <% elsif params[:label] == "homeworks" %>
       <div id="content"  class="two-col">
-        <h2 class="current-page"> Homework </h2>
+        <h2 class="current-page"> 
+            Homeworks &nbsp;&nbsp;&nbsp;
+            <%= link_to_right((right = "homework"), "Add New Homework", resource(:home_works, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+        </h2> 
         <% if @home_works.empty? %>
            <span class="subText">There are no Homework assignments at this time</span>
         <% else %>
@@ -60,6 +65,7 @@
                       <% end %>
                          <h3><%= link_to "#{homework.title}", url(:home_work, homework.id) %></h3>
                          <span class="subText">Assigned <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></span>
+                         <%= link_to_right((right = "homework"), "Edit Homework", resource(homework, :edit) )  %>
                          <p><%= snippet(homework.content, 50) %></p>
                          <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
                         <% unless @attachment.nil? %>
@@ -87,13 +93,14 @@
                             <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
                        </div>
                        <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann" ) %></h3>
+                       <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %>
+                       </span>
                           <p class="separator"><%= snippet(announcement.content,50) %></p>
                         <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
                            <% unless @attachment.nil? %>
                                 <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
                            <% end %>
-                      
-                 </div>
+                </div>
             <% end %>
                 
                <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
@@ -131,18 +138,16 @@
               <% if @welcome_messages.empty? %>
                   Welcome to <%=@current_school.school_name%>'s <%=@classroom.class_name.titleize%> classroom.
               <% else %>
-                 <% for message in @welcome_messages %>
-                     <%= message.content %>
-                     <ul>
-                         <li <% if @selected == "welcome_messages" %> class="on" <% end %>>
-                             <%= link_to_right( (right = "welcome_messages"), "Edit Welcome Message", resource(message, :edit) ) %>
-                         </li>
-                     </ul>
-                 <% end %>
-          
+                   <% for message in @welcome_messages %>
+                       <%= message.content %>
+                       <ul>
+                           <li <% if @selected == "welcome_messages" %> class="on" <% end %>>
+                               <%= link_to_right( (right = "welcome_messages"), "Edit Welcome Message", resource(message, :edit) ) %>
+                           </li>
+                       </ul>
+                   <% end %>
               <% end %>
-               
-               </p>
+         </p>
                <h2 class="current-page">Announcements &amp; Updates </h2>
         
                <% if @ann.blank? %>
