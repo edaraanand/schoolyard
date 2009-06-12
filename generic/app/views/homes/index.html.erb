@@ -24,8 +24,11 @@
                          <%= link_to "View All Principal’s Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
                       <%end%>
                   </div>
-                <%end%>
-              
+                <% end %>
+                 <li <% if @selected == "from_principal" %> class="on" <% end %>>
+                      <%= link_to_right((right = "from_principal"), "Add New", resource(:from_principals, :new)) %>
+                      <%= link_to_right((right = "from_principal"), "| Settings", url(:settings)) %>
+                 </li>
               
             </div>
      <div id="content" class="homes-content">
