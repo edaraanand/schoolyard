@@ -1,4 +1,7 @@
-  <h2 class="current-page">School Staff</h2> 
+  <h2 class="current-page">
+      School Staff &nbsp;&nbsp;&nbsp;
+      <%= link_to_right((right = "rights_others"), "Add New", resource(:people, :new)  ) %>
+  </h2> 
   
          <select id = 'staffID'>
                   <option value = '/staff' <% if (@test == "All Staff") %> selected <% end %> >All Staff</option>
@@ -22,6 +25,7 @@
                              <th>Role</th>
                              <th>Email</th>
                              <th>Contact Number</th>
+                             <th></th>
                        </thead>
                        <% @class_peoples.each do |f| %>
                             <tr>
@@ -30,6 +34,7 @@
                  	              <td nowrap><%= f.role.titleize %>-<%= f.classroom.class_name %>&nbsp;</td>
                                 <td><%= email(f.person.email) %>&nbsp;</td>
                                 <td nowrap><%= number_to_phone(f.person.phone, :area_code => true) %>&nbsp;</td>
+                                <td><%= link_to_right((right = "rights_others"), "Edit", url(:edit_person, f.person.id)  ) %></td>
                             </tr>  
                        <% end %>
                    </table>
@@ -48,6 +53,7 @@
                               <th>Role</th>
                               <th>Email</th>
                               <th>Contact Number</th>
+                              <th></th>
                         </thead>
                         <% for person in @staff %>
                              <tr>
@@ -59,6 +65,7 @@
                                  <% end %>&nbsp;</td> 
                                  <td><%= email(person.email) %>&nbsp;</td>
       	                         <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>
+                                 <td><%= link_to_right((right = "rights_others"), "Edit", url(:edit_person, person.id)  ) %></td>
                              </tr>  
                         <% end %>
                  </table>
