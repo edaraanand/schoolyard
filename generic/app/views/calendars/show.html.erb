@@ -2,7 +2,7 @@
      
         <h2 class="current-page">
            Class Calendar &nbsp;&nbsp;&nbsp;
-           <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+           <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@calendar.class_name.titleize}" ) )  %>
         </h2>
     <%= link_to "Download as PDF", url(:pdf_events, :id => @calendar.id, :label => "single") , :class=> "pdf" %><br/><br/>
  
@@ -11,12 +11,12 @@
                 <span class="month"><%=  @calendar.start_date.strftime("%b")%></span>
            </div><br/>
            <h3> <%= @calendar.title %> </h3> 
-           <% if params[:l] != "calendar" %> 
+         
                <div class="page-links">
                     <%= link_to_right((right = "calendar"), "Edit", resource(@calendar, :edit) )  %> |
                     <%= link_to_right((right = "calendar"), "delete", resource(@calendar, :delete) )  %> 
                </div>
-           <% end %>
+          
            <span class="subText"><% unless @calendar.start_time.nil? &&  @calendar.end_time.nil? %>
              <%= @calendar.start_time.strftime("%I:%M %p") %> to <%= @calendar.end_time.strftime("%I:%M %p") %>, 
            <% else %>
