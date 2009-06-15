@@ -1,6 +1,11 @@
  <h2 class="current-page">
       Students &nbsp;&nbsp;&nbsp;
-      <%= link_to_right((right = "manage_directory"), "Add New", resource(:students, :new)  ) %></td>
+     <% if params[:label] == "classes" %>
+        <%= link_to_right((right = "manage_directory"), "Add New", resource(:students, :new, :l => "#{@class.class_name.titleize}")  ) %>
+     <% else %>
+        <%= link_to_right((right = "manage_directory"), "Add New", resource(:students, :new)  ) %>
+     <% end %>
+      
  </h2>
 
         <select id = 'studentID'>
