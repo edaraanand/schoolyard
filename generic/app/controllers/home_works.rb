@@ -45,7 +45,7 @@ class HomeWorks < Application
           File.makedirs("public/uploads/#{@attachment.id}")
           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
         end
-        redirect resource(:home_works)
+        redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
       else
         @class_id =  params[:home_work][:classroom_id]
         render :new
@@ -88,7 +88,7 @@ class HomeWorks < Application
           @home_work.person_id = session.user.id
           @home_work.school_id = @current_school.id
           @home_work.save
-          redirect resource(:home_works)
+          redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
         else
           render :edit
         end
@@ -99,11 +99,11 @@ class HomeWorks < Application
     else
       if params[:home_work][:classroom_id] != ""
         if @home_work.update_attributes(params[:home_work])
-          @home_work.classroom_id = @classroom.id
-          @home_work.person_id = session.user.id
-          @home_work.school_id = @current_school.id
-          @home_work.save
-          redirect resource(:home_works)
+           @home_work.classroom_id = @classroom.id
+           @home_work.person_id = session.user.id
+           @home_work.school_id = @current_school.id
+           @home_work.save
+           redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
         else
           render :edit
         end
@@ -124,9 +124,10 @@ class HomeWorks < Application
       render :edit, :id => @home_work.id
     else
       @home_work = HomeWork.find(params[:id])
+      @classroom = @home_work.classroom
       Attachment.delete_all(['attachable_id = ?', @home_work.id])
       @home_work.destroy
-      redirect resource(:home_works)
+      redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
     end
   end
 
