@@ -11,7 +11,7 @@
   <%= form_for(@form, :action => resource(:forms), :name => "form", :html => { :multipart => true } ) do %>
      <ul>
          <li><%= text_field :title,  :label => "Title", :maxlength => "75" %></li>
-         <li><%= select :class_name, :collection => @classrooms, :label => "Classroom", :prompt => "Please Select" %></li>
+         <li><%= select :class_name, :collection => @classrooms, :label => "Classroom", :selected => "#{params[:l]}", :prompt => "Please Select" %></li>
          <li><%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year", :prompt => "Please Select" %></li>
          <li><%= file_field :attachment,  :label => "Upload Form" %></li>
      </ul>

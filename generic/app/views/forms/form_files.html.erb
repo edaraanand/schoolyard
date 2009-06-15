@@ -1,9 +1,14 @@
+
       <% if params[:l] == "all_forms" %>
-           <h2 class="current-page"> All Forms </h2>
-      <% elsif params[:id].nil? %>
-           <h2 class="current-page"> All Forms </h2>
+           <h2 class="current-page"> 
+               All Forms &nbsp;&nbsp;&nbsp;
+               <%= link_to_right((right = "forms"), "Add New", resource(:forms, :new)  ) %>
+           </h2>
       <% else %> 
-           <h2 class="current-page"> Forms for <%= @class.class_name.titleize %> </h2>
+           <h2 class="current-page"> 
+               Forms for <%= @class.class_name.titleize %> &nbsp;&nbsp;&nbsp;
+               <%= link_to_right((right = "forms"), "Add New", resource(:forms, :new, :l => "#{@class.class_name.titleize}")  ) %>               
+           </h2>
       <% end %>
 
 <% if params[:l] == "all_forms" %>
