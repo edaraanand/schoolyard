@@ -1,6 +1,9 @@
 <%  if params[:label] == "calendars" %>
   <div id="content" class="two-col">
-        <h2 class="current-page">Class Calendar</h2>
+        <h2 class="current-page">
+           Class Calendar &nbsp;&nbsp;&nbsp;
+           <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+        </h2>
         <% if @calendars.empty? %>
             <span class="subText">There are no events planned at this time</span>
         <% else %>
@@ -16,7 +19,6 @@
                               <%end%>
                               >
                               <%= cdate %> </h3> 
-                              
                         <% end %> 
                         <ul class="calendar-items">
                              <li>
@@ -25,10 +27,11 @@
                                   <% else %>
                                        All day event
                                   <% end %>
-                                    <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
-                              </li>
-                       
-                         </ul>
+                                  <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
+                                  <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) )  %> |
+                                  <%= link_to_right((right = "calendar"), "Delete", resource(calendar, :delete) )  %>
+                             </li>
+                        </ul>
                     </div>
                 <% end %>
                 
@@ -38,7 +41,10 @@
         
 <% elsif params[:label] == "homeworks" %>
       <div id="content"  class="two-col">
-        <h2 class="current-page"> Homework </h2>
+        <h2 class="current-page"> 
+            Homeworks &nbsp;&nbsp;&nbsp;
+            <%= link_to_right((right = "homework"), "Add New", resource(:home_works, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+        </h2> 
         <% if @home_works.empty? %>
            <span class="subText">There are no Homework assignments at this time</span>
         <% else %>
@@ -60,6 +66,8 @@
                       <% end %>
                          <h3><%= link_to "#{homework.title}", url(:home_work, homework.id) %></h3>
                          <span class="subText">Assigned <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></span>
+                         <%= link_to_right((right = "homework"), "Edit", resource(homework, :edit) )  %> |
+                         <%= link_to_right((right = "homework"), "Delete", resource(homework, :delete) )  %>
                          <p><%= snippet(homework.content, 50) %></p>
                          <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
                         <% unless @attachment.nil? %>
@@ -76,7 +84,10 @@
                 
 <% elsif params[:label] == "announcements" %>
       <div id="content"  class="two-col">
-        <h2 class="current-page"> Announcements </h2>
+        <h2 class="current-page"> 
+            Announcements &nbsp;&nbsp;&nbsp;
+            <%= link_to_right((right = "announcement"), "Add New", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+        </h2> 
         <% if @announcements.blank? %>
             <span class="subText">There are no Announcements at this time</span>
         <% else %>
@@ -87,13 +98,14 @@
                             <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
                        </div>
                        <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann" ) %></h3>
-                          <p class="separator"><%= snippet(announcement.content,50) %></p>
-                        <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
-                           <% unless @attachment.nil? %>
-                                <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
-                           <% end %>
-                      
-                 </div>
+                       <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> |
+                       <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
+                       <p class="separator"><%= snippet(announcement.content,50) %></p>
+                       <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
+                          <% unless @attachment.nil? %>
+                               <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+                          <% end %>
+                </div>
             <% end %>
                 
                <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
@@ -102,7 +114,10 @@
           
 <% elsif params[:label] == "spot_light" %>
       <div id="content"  class="two-col">
-        <h2 class="current-page"> Spotlight </h2>
+        <h2 class="current-page"> 
+            Spotlight &nbsp;&nbsp;&nbsp;
+            <%= link_to_right((right = "spotlight"), "Add New", resource(:spot_lights, :new, :l => "#{@classroom.class_name.titleize}" ) ) %>
+        </h2>
         <% if @spot_lights.blank? %>
             <span class="subText">There are no Spotlights at this time</span>
             <p class="separator">&nbsp;</p>
@@ -117,27 +132,33 @@
                         </div>
                         <h3><%= link_to "#{spot.student_name}", url(:spot_light, spot.id, :label => "class_spot_light") %></h3>
                         <span class="subText"><%= spot.created_at.strftime("%b %d %Y") %></span>
+                        <%= link_to_right((right = "spotlight"), "Edit", resource(spot, :edit ) ) %> |
+                        <%= link_to_right((right = "spotlight"), "Delete", resource(spot, :delete ) ) %>
                         <p class="post-content"><%= snippet(spot.content, 50) %></p>
                    </div>
                    <p class="separator">&nbsp;</p>
               <% end %>
               
               <%= will_paginate (@spot_lights, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+              
         </div>
         <% end %>
 <% else %>
       <div id="content">
         <p class="post-content">
-              <%if @welcome_messages.empty?%>
-                Welcome to <%=@current_school.school_name%>'s <%=@classroom.class_name.titleize%> classroom.
+              <% if @welcome_messages.empty? %>
+                  Welcome to <%=@current_school.school_name%>'s <%=@classroom.class_name.titleize%> classroom.
               <% else %>
-                <% for message in @welcome_messages %>
-                        <%= message.content %>
-                 <% end %>
-              
-              <%end%>
-               
-               </p>
+                   <% for message in @welcome_messages %>
+                       <%= message.content %>
+                       <ul>
+                           <li <% if @selected == "welcome_messages" %> class="on" <% end %>>
+                               <%= link_to_right( (right = "welcome_messages"), "Edit Welcome Message", resource(message, :edit) ) %>
+                           </li>
+                       </ul>
+                   <% end %>
+              <% end %>
+         </p>
                <h2 class="current-page">Announcements &amp; Updates </h2>
         
                <% if @ann.blank? %>
@@ -162,13 +183,18 @@
                                 <p class="separator">&nbsp;</p>
                           </div>
                      <% end %>
-                     <div class="page-links">
-                          <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>
-                          <% if session.user.type == "Parent" %>
-                                | <%= link_to "Submit an announcement", resource(:parents, :new) %>
-                           <% end %>
-                     </div>
               <% end %>
+              <div class="page-links">
+                     <ul>
+                         <li <% if @selected == "announcements" %> class="on" <% end %>>
+                             <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>    
+                             | <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}")) %>
+                             <% if session.user.type == "Parent" %>
+                                  | <%= link_to "Submit an announcement", resource(:parents, :new) %>
+                             <% end %>
+                         </li>
+                      </ul> 
+               </div>
       </div>
        <div class="right-sidebar">
               

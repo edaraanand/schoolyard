@@ -30,9 +30,9 @@ class WelcomeMessages < Application
   def create
     @welcome_message = @current_school.welcome_messages.new(params[:welcome_message])
     if params[:welcome_message][:access_name] != ""
-      @welcome_message.person_id = @current_user.id
+       @welcome_message.person_id = @current_user.id
       if @welcome_message.save
-        redirect resource(:welcome_messages)
+         redirect resource(:welcome_messages)
       else
         render :new
       end
@@ -54,8 +54,13 @@ class WelcomeMessages < Application
     @welcome_message = WelcomeMessage.find(params[:id])
     if params[:welcome_message][:access_name] != ""
       if @welcome_message.update_attributes(params[:welcome_message])
-        @welcome_message.person_id = @current_user.id
-        redirect resource(:welcome_messages)
+         @welcome_message.person_id = @current_user.id
+         if @welcome_message.access_name == "Home Page"
+            redirect resource(:homes)
+         else
+           @classroom = @current_school.classrooms.find_by_class_name(@welcome_message.access_name)
+           redirect url(:class_details, :id => @classroom.id )
+         end
       else
         render :edit
       end

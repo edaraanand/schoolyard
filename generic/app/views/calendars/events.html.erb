@@ -1,13 +1,23 @@
 <div id="fullpage">
   
       <% if params[:l] == "all_events" %>
-           <h2 class="current-page"> All Events </h2>
+           <h2 class="current-page"> 
+               All Events &nbsp;&nbsp;&nbsp;
+               <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new) )  %>
+           </h2>
       <% elsif params[:id].nil? %>
-           <h2 class="current-page"> All Events </h2>
+           <h2 class="current-page"> 
+              All Events &nbsp;&nbsp;&nbsp;
+              <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new) )  %>
+           </h2>
       <% else %> 
-           <h2 class="current-page"> Events for <%= @class.class_name.titleize %> </h2>
+           <h2 class="current-page"> 
+               Events for <%= @class.class_name.titleize %> &nbsp;&nbsp;&nbsp;
+               <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@class.class_name.titleize}" ) )  %>
+           </h2>
       <% end %>
-     
+      
+               
 <% if params[:l] == "all_events" %>
    
             <% if @calendars.empty? %>
@@ -31,6 +41,8 @@
       
                                         <%= link_to "#{calendar.title}", url(:calendar, calendar.id, :l => "calendar", :label => "calendars") %>
                                          <small>(<%= calendar.class_name %>)</small>
+                                         <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) )  %> |
+                                         <%= link_to_right((right = "calendar"), "Delete", resource(calendar, :delete) )  %>
                                     </li>
                                </ul>
                           </div>
@@ -67,6 +79,8 @@
                                          <%unless calendar.location.blank? %>
                                                (Location: <%= calendar.location %>)
                                          <%end%>
+                                           <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) )  %> |
+                                           <%= link_to_right((right = "calendar"), "Delete", resource(calendar, :delete) )  %>
                                     </li>
                                </ul>
                           </div>

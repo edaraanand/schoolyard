@@ -39,8 +39,10 @@ class People < Application
           end
         end
       end
-      @person.send_pass
-      redirect url(:people)
+      run_later do
+         @person.send_pass
+      end
+      redirect url(:staff)
     else
       unless params[:access].nil?
         @access = params[:access][:access_ids]
@@ -94,8 +96,10 @@ class People < Application
           end
         end
       end
-      @person.changed_details
-      redirect url(:people)
+      run_later do
+         @person.changed_details
+      end
+      redirect url(:staff)
     else
       render :edit
     end

@@ -1,28 +1,29 @@
-<div id="fullpage">
-    <% if params[:label] == "principal" %>
-      <div id="classContainer">
-          <div id="sidebar" class="left-block">
-              <%= partial 'common/principal_image' %>
-          </div>
-          <div id="content" class="homes-content">
-              <h2>From the Principal > <%= @announcement.title %></h2>
- 
-    <% else %>
-          <div>
+<% if params[:label] == "principal" %>
+    
+    <div id="classContainer">   
+         <div id="sidebar" class="left-block">
+             <%= partial 'common/principal_image' %>
+         </div>
+         <div id="content" class="homes-content">
+             <h2>From the Principal > <%= @announcement.title %></h2>
+           
+<% elsif params[:label] == "class_ann" %>
+           <div id="content"  class="two-col">
+              <h2>
+                Announcements > <%= @announcement.title %>  &nbsp;&nbsp;&nbsp;
+                <%= link_to_right((right = "announcement"), "Add New", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+              </h2>
+           
+<% else %>
              <h2>Announcements > <%= @announcement.title %></h2>
-         
-              <br/><%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) , :class=> "pdf" %><br/><br/>
-    <% end %>
+             <br/><%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) , :class=> "pdf" %><br/><br/>
+<% end %>
      
- 
-      <% if @announcement.expiration.nil? %>
-          <div class="ddmmm-x"></div>
-      <% else %>
           <div class="ddmmm">
              <span class="date"><%= @announcement.expiration.strftime("%d") %></span>
              <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
-          </div>
-      <% end %>
+          </div>                                                                        
+     
           <p><%= san_content(@announcement.content) %></p>
           <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id =? and attachable_type =?", @announcement.id, "Announcement"] ) %>
                <% unless @attachment.nil? %>
@@ -30,22 +31,38 @@
                <% end %>
            <p class="separator">&nbsp;</p>
            <p>
-            <% if @announcement.label == "from_principal" %>
-                     <%= link_to '< Previous |', url(:home, @announcement.previous_id, :label => 'principal'),:class => "alignleft" if @announcement.previous_id %>
-                     <%= link_to "Back to All Principal’s Articles", url(:principal_articles, :label => 'principal') %>
-                     <%= link_to '| Next >', url(:home, @announcement.next_id, :label => 'principal'),:class => "alignright" if @announcement.next_id %>
-            <% elsif params[:label] == "class_ann" %>
-                    <%= link_to '< Previous |', url(:home, @announcement.previous_class_announcement, :label => "class_ann") if @announcement.previous_class_announcement %>
-                    <%= link_to "Back to All Announcements", url(:class_details, :id => @classroom.id, :label => "announcements") %>
-                    <%= link_to '| Next >', url(:home, @announcement.next_class_announcement, :label => "class_ann") if @announcement.next_class_announcement %>
-            <% elsif params[:label] == "sports_announcement" %>
-                    <%= link_to " back to All Announcements", url(:sports, :label => "announcements") %>
-            <% else %>
-                    <%= link_to '< Previous |', url(:home, @announcement.previous_record),:class => "alignleft" if @announcement.previous_record %>
-                    <%= link_to "Back to All Announcements", url(:principal_articles, :label => 'announcements') %>
-                    <%= link_to '| Next >', url(:home, @announcement.next_record),:class => "alignright" if @announcement.next_record %>
-            <% end %>
-            </p>
+              <% if @announcement.label == "from_principal" %>
+                      <%= link_to '< Previous |', url(:home, @announcement.previous_id, :label => 'principal'),:class => "alignleft" if @announcement.previous_id %>
+                      <%= link_to "Back to All Principal’s Articles", url(:principal_articles, :label => 'principal') %>
+                      <%= link_to '| Next >', url(:home, @announcement.next_id, :label => 'principal'),:class => "alignright" if @announcement.next_id %>
+                      <div class="page-links">
+                          <%= link_to_right((right = "from_principal"), "Add New", resource(:from_principals, :new)) %> |
+                          <%= link_to_right((right = "from_principal"), "Edit", url(:edit_from_principal, @annoouncement.id)) %> |
+                          <%= link_to_right((right = "from_principal"), "Delete", url(:delete_from_principal, @annoouncement.id)) %>
+                      </div>
+              <% elsif params[:label] == "class_ann" %>
+                      <%= link_to '< Previous |', url(:home, @announcement.previous_class_announcement, :label => "class_ann") if @announcement.previous_class_announcement %>
+                      <%= link_to "Back to All Announcements", url(:class_details, :id => @classroom.id, :label => "announcements") %>
+                      <%= link_to '| Next >', url(:home, @announcement.next_class_announcement, :label => "class_ann") if @announcement.next_class_announcement %>
+                      <div class="page-links">
+                          <%= link_to_right((right = "announcements"), "Edit", resource(@announcement, :edit)) %> |
+                          <%= link_to_right((right = "announcements"), "Delete", resource(@announcement, :delete)) %>
+                      </div>
+              <% elsif params[:label] == "sports_announcement" %>
+                      <%= link_to " back to All Announcements", url(:sports, :label => "announcements") %>
+              <% else %>
+                      <%= link_to '< Previous', url(:home, @announcement.previous_record),:class => "alignleft" if @announcement.previous_record %> |
+                      <%= link_to "Back to All Announcements", url(:principal_articles, :label => 'announcements') %> |
+                      <%= link_to 'Next >', url(:home, @announcement.next_record),:class => "alignright" if @announcement.next_record %>
+                      <div class="page-links">
+                          <%= link_to_right((right = "announcements"), "Add New", resource(:announcements, :new, :l => "Home Page")) %> |
+                          <%= link_to_right((right = "announcements"), "Edit", resource(@announcement, :edit)) %> |
+                          <%= link_to_right((right = "announcements"), "Delete", resource(@announcement, :delete)) %> 
+                      </div>
+              <% end %>
+           </p>
+             
         </div>
+      
     </div>
-</div>
+
