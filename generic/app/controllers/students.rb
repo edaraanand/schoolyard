@@ -30,7 +30,7 @@ class Students < Application
           @protector.save
           Ancestor.create({:student_id => @student.id, :protector_id => @protector.id })
           Study.create({:student_id => @student.id, :classroom_id => @class.id })
-          redirect resource(:students)
+          redirect url(:directory)
         else
           @class_id = params[:classroom_id]
           render :new
@@ -56,7 +56,7 @@ class Students < Application
                 Ancestor.create({:student_id => @student.id, :protector_id => @p3.id })
                 @p4 = @current_school.protectors.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
                 Ancestor.create({:student_id => @student.id, :protector_id => @p4.id })
-                redirect resource(:students)
+                redirect url(:directory)
               else
                 flash[:error4] = "Please enter the Parent4 details"
                 @fname4 = params[:f_name_parent4]
@@ -81,7 +81,7 @@ class Students < Application
                 Ancestor.create({:student_id => @student.id, :protector_id => @p2.id })
                 @p3 = @current_school.protectors.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                 Ancestor.create({:student_id => @student.id, :protector_id => @p3.id })
-                redirect resource(:students)
+                redirect url(:directory)
               else
                 flash[:error3] = "Please enter the Parent3 details"
                 @fname3 = params[:f_name_parent3]
@@ -101,7 +101,7 @@ class Students < Application
             Study.create({:student_id => @student.id, :classroom_id => params[:classroom_id] })
             @p2 = @current_school.protectors.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
             Ancestor.create({:student_id => @student.id, :protector_id => @p2.id })
-            redirect resource(:students)
+            redirect url(:directory)
           end
 
         else
@@ -151,7 +151,7 @@ class Students < Application
                     Ancestor.create({:student_id => @student.id, :protector_id => @p3.id })
                     @p4 = @current_school.protectors.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
                     Ancestor.create({:student_id => @student.id, :protector_id => @p4.id })
-                    redirect resource(:students)
+                    redirect url(:directory)
                   else
                     flash[:error4] = "Please enter the Parent4 details"
                     @fname4 = params[:f_name_parent4]
@@ -170,7 +170,7 @@ class Students < Application
                   Ancestor.create({:student_id => @student.id, :protector_id => @p2.id })
                   @p3 = @current_school.protectors.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
                   Ancestor.create({:student_id => @student.id, :protector_id => @p3.id })
-                  redirect resource(:students)
+                  redirect url(:directory)
                 end
               else
                 flash[:error3] = "Please enter the Parent3 details"
@@ -185,7 +185,7 @@ class Students < Application
             else
               @p2 = @current_school.protectors.create({:first_name => params[:f_name_parent2], :last_name => params[:l_name_parent2], :email => params[:email_parent2] })
               Ancestor.create({:student_id => @student.id, :protector_id => @p2.id })
-              redirect resource(:students)
+              redirect url(:directory)
             end
           else
             flash[:error2] = "Please enter parent2 details"
@@ -198,7 +198,7 @@ class Students < Application
           sp.each do |f|
             @current_school.protectors.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
           end
-          redirect resource(:students)
+          redirect url(:directory)
         end
       elsif @sp.length == 2
         if( ( (params[:f_name_parent3] != "") || (params[:l_name_parent3] != "") ) || (params[:email_parent3] != "") )
@@ -209,7 +209,7 @@ class Students < Application
                 Ancestor.create({:student_id => @student.id, :protector_id => @p3.id })
                 @p4 = @current_school.protectors.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
                 Ancestor.create({:student_id => @student.id, :protector_id => @p4.id })
-                redirect resource(:students)
+                redirect url(:directory)
               else
                 flash[:error4] = "Please enter the Parent4 details"
                 @fname4 = params[:f_name_parent4]
@@ -223,7 +223,7 @@ class Students < Application
             else
               @p3 = @current_school.protectors.create({:first_name => params[:f_name_parent3], :last_name => params[:l_name_parent3], :email => params[:email_parent3] })
               Ancestor.create({:student_id => @student.id, :protector_id => @p3.id })
-              redirect resource(:students)
+              redirect url(:directory)
             end
           else
             flash[:error3] = "Please enter the Parent3 details"
@@ -236,14 +236,14 @@ class Students < Application
           sp.each do |f|
             @current_school.protectors.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
           end
-          redirect resource(:students)
+          redirect url(:directory)
         end
       elsif @sp.length == 3
         if ( ( (params[:f_name_parent4] != "") || (params[:l_name_parent4] != "") ) || (params[:email_parent4] != "") )
           if ( ( (params[:f_name_parent4] != "") && (params[:l_name_parent4] != "") ) && (params[:email_parent4] != "") )
             @p4 = @current_school.protectors.create({:first_name => params[:f_name_parent4], :last_name => params[:l_name_parent4], :email => params[:email_parent4] })
             Ancestor.create({:student_id => @student.id, :protector_id => @p4.id })
-            redirect resource(:students)
+            redirect url(:directory)
           else
             flash[:error4] = "Please enter the Parent4 details"
             @fname4 = params[:f_name_parent4]
@@ -255,13 +255,13 @@ class Students < Application
           sp.each do |f|
             @current_school.protectors.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
           end
-          redirect resource(:students)
+          redirect url(:directory)
         end
       elsif @sp.length == 4
         sp.each do |f|
           @current_school.protectors.update(f[3],{:first_name => f[0], :last_name => f[1], :email => f[2] } )
         end
-        redirect resource(:students)
+        redirect url(:directory)
       else
         render :edit
       end
