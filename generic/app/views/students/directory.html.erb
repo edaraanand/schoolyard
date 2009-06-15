@@ -23,7 +23,6 @@
                          <th>First Name</th>
                          <th>Contact Number</th>
                          <th></th>
-                         <th></th>
                      </thead>
                      <tbody>
                           <% for student in @students %>
@@ -32,8 +31,7 @@
                                    <td>&nbsp;<%= student.first_name %></td>
                                    <td>&nbsp;<%= number_to_phone(student.phone, :area_code => true) %></td>
                                    <td>&nbsp;<%= link_to_right((right = "manage_directory"), "Edit", url(student, :edit)  ) %></td>
-                                   <td>&nbsp;<%= link_to_right((right = "manage_directory"), "Delete", url(student, :delete)  ) %></td>
-                               </tr>
+                              </tr>
                            <% end %>
                      </tbody>
                </table>
