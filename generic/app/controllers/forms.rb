@@ -96,7 +96,7 @@ class Forms < Application
     else
       if ( (params[:form][:class_name] != "") && (params[:form][:year] != "") )
         if @form.update_attributes(params[:form])
-          redirect resource(:forms)
+          redirect url(:form_files, :l => "all_forms", :label => "forms")
         else
           render :edit
         end
