@@ -57,15 +57,15 @@ class Notifications < Application
      if @announcement.valid?
         @announcement.label = "urgent"
         @announcement.save!
-       # makecall(@announcement.id)
-       # twitter = Twitter.new(@current_school.username, @current_school.password)
-       # twitter.post(params[:announcement][:content])
+        makecall(@announcement.id)
+        twitter = Twitter.new(@current_school.username, @current_school.password)
+        twitter.post(params[:announcement][:content])
         #run_later do
         #  @people = @current_school.people.find(:all)
         #  numbers = @people.collect{ |x| x.sms_alert }
         #  num     = numbers.compact.join(',')
         #  @sms_numbers = num.collect{ |x| "1" + x }
-        api = Clickatell::API.authenticate('3175693', 'brianbolz', 'MupanoOCMLGLxHTdrQlIDY5tgMXoOeausulUjzIMNtsas6Bvvu')
+      #  api = Clickatell::API.authenticate('3175693', 'brianbolz', 'MupanoOCMLGLxHTdrQlIDY5tgMXoOeausulUjzIMNtsas6Bvvu')
         #  t = api.auth_options[:session_id]
         #  s = Net::HTTP.get_response(URI.parse("http://api.clickatell.com/http_batch/startbatch?session_id=#{t}&template=#{@announcement.content}"))
         #  id = s.body.split
@@ -79,11 +79,11 @@ class Notifications < Application
        # numbers = @people.collect{ |x| x.sms_alert }
        # num     = numbers.compact.join(',')
        # @sms_numbers = num.collect{ |x| "1" + x }
-        @sms_numbers = ['919998805789', '15305541373', '15713320672', '14158899280'].join(',')
-        api.send_message("#{@sms_numbers}", "#{@announcement.content}")
-       # run_later do
-       #    @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
-       # end
+       # @sms_numbers = ['15713320672', '14158899280'].join(',')
+        #api.send_message("#{@sms_numbers}", "#{@announcement.content}")
+        run_later do
+           @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
+        end
         #num = ['14158899280', '15713320672', '919998805789', '919227587555', '919998805789'].join(',')
         redirect url(:notifications)
      else
