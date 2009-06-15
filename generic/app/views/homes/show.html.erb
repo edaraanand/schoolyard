@@ -6,7 +6,14 @@
          </div>
          <div id="content" class="homes-content">
              <h2>From the Principal > <%= @announcement.title %></h2>
-          
+           
+<% elsif params[:label] == "class_ann" %>
+           <div id="content"  class="two-col">
+              <h2>
+                Announcements > <%= @announcement.title %>  &nbsp;&nbsp;&nbsp;
+                <%= link_to_right((right = "announcement"), "Add New", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+              </h2>
+           
 <% else %>
              <h2>Announcements > <%= @announcement.title %></h2>
              <br/><%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) , :class=> "pdf" %><br/><br/>
@@ -37,6 +44,10 @@
                       <%= link_to '< Previous |', url(:home, @announcement.previous_class_announcement, :label => "class_ann") if @announcement.previous_class_announcement %>
                       <%= link_to "Back to All Announcements", url(:class_details, :id => @classroom.id, :label => "announcements") %>
                       <%= link_to '| Next >', url(:home, @announcement.next_class_announcement, :label => "class_ann") if @announcement.next_class_announcement %>
+                      <div class="page-links">
+                          <%= link_to_right((right = "announcements"), "Edit", resource(@announcement, :edit)) %> |
+                          <%= link_to_right((right = "announcements"), "Delete", resource(@announcement, :delete)) %>
+                      </div>
               <% elsif params[:label] == "sports_announcement" %>
                       <%= link_to " back to All Announcements", url(:sports, :label => "announcements") %>
               <% else %>

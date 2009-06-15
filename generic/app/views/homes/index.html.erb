@@ -19,9 +19,9 @@
                 <% unless @all_from_principals.blank?%>
                   <div class="page-links">
                       <% if @from_principals.blank? %>
-                        <%= link_to "View previous articles", url(:principal_articles, :label => 'announcements')   %>
-                      <%else%>
-                         <%= link_to "View All Principal’s Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
+                          <%= link_to "View previous articles", url(:principal_articles, :label => 'principal')   %>
+                      <% else %>
+                          <%= link_to "View All Principal’s Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
                       <%end%>
                   </div>
                 <% end %>
