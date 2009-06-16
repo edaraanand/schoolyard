@@ -1,148 +1,19 @@
 <%  if params[:label] == "calendars" %>
-  <div id="content" class="two-col">
-        <h2 class="current-page">
-           Class Calendar &nbsp;&nbsp;&nbsp;
-           <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
-        </h2>
-        <% if @calendars.empty? %>
-            <span class="subText">There are no events planned at this time</span>
-        <% else %>
-             <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id)  , :class=> "pdf"%>
-             <br/><br/>
-                  <% cdate=""
-               for calendar in @calendars %>
-                  <div class="calendar-block" style="width:480px;">
-                        <% if(cdate!=calendar.start_date.strftime("%b %d"))
-                              cdate=calendar.start_date.strftime("%b %d") %>
-                              <br/><h3<% unless (Time.now.strftime("%b %d")!=cdate) %>
-                                class="today"
-                              <%end%>
-                              >
-                              <%= cdate %> </h3> 
-                        <% end %> 
-                        <ul class="calendar-items">
-                             <li>
-                                  <% unless calendar.start_time.nil? %>
-                                      <%= calendar.start_time.strftime("%I:%M %p") %> 
-                                  <% else %>
-                                       All day event
-                                  <% end %>
-                                  <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
-                                  <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) )  %> |
-                                  <%= link_to_right((right = "calendar"), "Delete", resource(calendar, :delete) )  %>
-                             </li>
-                        </ul>
-                    </div>
-                <% end %>
-                
-                 <%= will_paginate (@calendars, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-                 </div>
-        <% end %>
+ 
+        <%= partial 'calendars' %>
         
 <% elsif params[:label] == "homeworks" %>
-      <div id="content"  class="two-col">
-        <h2 class="current-page"> 
-            Homeworks &nbsp;&nbsp;&nbsp;
-            <%= link_to_right((right = "homework"), "Add New", resource(:home_works, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
-        </h2> 
-        <% if @home_works.empty? %>
-           <span class="subText">There are no Homework assignments at this time</span>
-        <% else %>
-             <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id)  , :class=> "pdf"%>
-             <% for homework in @home_works %>
-                 <div class="data-block short-block">
-                      <span class="hidden">
-                        <% unless homework.due_date.nil? %>
-                          <%= homework.due_date.strftime("%B-%d") %>
-                        <% end %>
-                      </span>
-                      <% if homework.due_date.nil? %>
-                          <div class="ddmmm-x"></div>
-                      <% else %>
-                          <div class="ddmmm">
-                             <span class="date"><%= homework.due_date.strftime("%d") %></span>
-                             <span class="month"><%= homework.due_date.strftime("%b") %></span>
-                          </div>
-                      <% end %>
-                         <h3><%= link_to "#{homework.title}", url(:home_work, homework.id) %></h3>
-                         <span class="subText">Assigned <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></span>
-                         <%= link_to_right((right = "homework"), "Edit", resource(homework, :edit) )  %> |
-                         <%= link_to_right((right = "homework"), "Delete", resource(homework, :delete) )  %>
-                         <p><%= snippet(homework.content, 50) %></p>
-                         <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
-                        <% unless @attachment.nil? %>
-                           <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
-                      <% end %>
-                      <p class="separator">&nbsp;</p>
-                </div>           
-            <% end %>    
-              
-                 <%= will_paginate (@home_works, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>      
-        </div>
-        <% end %>
+      
+        <%= partial 'home_works' %>        
         
-                
 <% elsif params[:label] == "announcements" %>
-      <div id="content"  class="two-col">
-        <h2 class="current-page"> 
-            Announcements &nbsp;&nbsp;&nbsp;
-            <%= link_to_right((right = "announcement"), "Add New", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
-        </h2> 
-        <% if @announcements.blank? %>
-            <span class="subText">There are no Announcements at this time</span>
-        <% else %>
-            <% for announcement in @announcements %>
-                 <div class="data-block short-block">
-                       <div class="ddmmm">
-                            <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
-                            <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
-                       </div>
-                       <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann" ) %></h3>
-                       <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> |
-                       <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
-                       <p class="separator"><%= snippet(announcement.content,50) %></p>
-                       <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
-                          <% unless @attachment.nil? %>
-                               <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
-                          <% end %>
-                </div>
-            <% end %>
-                
-               <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-           </div>    
-        <% end %>
-          
+     
+       <%= partial 'announcements' %>
+       
 <% elsif params[:label] == "spot_light" %>
-      <div id="content"  class="two-col">
-        <h2 class="current-page"> 
-            Spotlight &nbsp;&nbsp;&nbsp;
-            <%= link_to_right((right = "spotlight"), "Add New", resource(:spot_lights, :new, :l => "#{@classroom.class_name.titleize}" ) ) %>
-        </h2>
-        <% if @spot_lights.blank? %>
-            <span class="subText">There are no Spotlights at this time</span>
-            <p class="separator">&nbsp;</p>
-        <% else %>
-              <% for spot in @spot_lights %>
-                   <div class="data-block short-block">
-                        <div class="ddmm">
-                            <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", spot.id]) %>
-                            <% unless @attachment.nil? %>  
-                               <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
-                            <% end %>
-                        </div>
-                        <h3><%= link_to "#{spot.student_name}", url(:spot_light, spot.id, :label => "class_spot_light") %></h3>
-                        <span class="subText"><%= spot.created_at.strftime("%b %d %Y") %></span>
-                        <%= link_to_right((right = "spotlight"), "Edit", resource(spot, :edit ) ) %> |
-                        <%= link_to_right((right = "spotlight"), "Delete", resource(spot, :delete ) ) %>
-                        <p class="post-content"><%= snippet(spot.content, 50) %></p>
-                   </div>
-                   <p class="separator">&nbsp;</p>
-              <% end %>
-              
-              <%= will_paginate (@spot_lights, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-              
-        </div>
-        <% end %>
+     
+        <%= partial 'spot_lights' %>      
+
 <% else %>
       <div id="content">
         <p class="post-content">
@@ -166,23 +37,19 @@
                <% else %>
                      <% for announcement in @ann %>
                           <div class="data-block short-block">
-                               <% if announcement.created_at.nil? %>
-                                    <div class="ddmmm-x"></div>
-                               <% else %>
-                                    <div class="ddmmm">
-                                        <span class="date"><%= announcement.created_at.strftime("%d") %></span>
-                                        <span class="month"><%= announcement.created_at.strftime("%b") %></span>
-                                    </div>
-                               <% end %>
+                               <div class="ddmmm">
+                                   <span class="date"><%= announcement.created_at.strftime("%d") %></span>
+                                   <span class="month"><%= announcement.created_at.strftime("%b") %></span>
+                               </div>
                                <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann") %></h3>
-                                <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> |
-                       <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
+                               <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> |
+                               <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
                                <p><%= snippet(announcement.content,50) %></p>
                                <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
                                <% unless @attachment.nil? %>
                                 <span class="attachment"><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></span>
                                <% end %>
-                                <p class="separator">&nbsp;</p>
+                               <p class="separator">&nbsp;</p>
                           </div>
                      <% end %>
               <% end %>
