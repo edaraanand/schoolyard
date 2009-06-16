@@ -58,7 +58,7 @@ class HomeWorks < Application
   end
 
   def edit
-    @home_work = HomeWork.find(params[:id])
+    @home_work = @current_school.home_works.find(params[:id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
     @allowed = 1 - @attachments.size
     render
@@ -68,7 +68,7 @@ class HomeWorks < Application
     @classroom = Classroom.find_by_class_name(params[:home_work][:classroom_id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
     @allowed = 1 - @attachments.size
-    @home_work = HomeWork.find(params[:id])
+    @home_work = @current_school.home_works.find(params[:id])
     i=0
     if params[:attachment]
       if params[:home_work][:classroom_id] != ""
@@ -117,13 +117,13 @@ class HomeWorks < Application
   def delete
     if params[:label] == "attachment"
       @attachment = @current_school.attachments.find(params[:id])
-      @home_work = HomeWork.find_by_id(@attachment.attachable_id)
+      @home_work = @current_school.home_works.find_by_id(@attachment.attachable_id)
       @attachment.destroy
       @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
       @allowed = 1 - @attachments.size
       render :edit, :id => @home_work.id
     else
-      @home_work = HomeWork.find(params[:id])
+      @home_work = @current_school.home_works.find(params[:id])
       @classroom = @home_work.classroom
       Attachment.delete_all(['attachable_id = ?', @home_work.id])
       @home_work.destroy
