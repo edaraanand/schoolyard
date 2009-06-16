@@ -35,7 +35,7 @@ class FromPrincipals < Application
         File.makedirs("public/uploads/#{@attachment.id}")
         FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
       end
-      redirect resource(:from_principals)
+      redirect url(:homes)
     else
       render :new
     end
@@ -68,15 +68,15 @@ class FromPrincipals < Application
           File.makedirs("public/uploads/#{@attachment.id}")
           FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
         end
-        redirect resource(:from_principals)
+         redirect url(:homes)
       else
         render :edit
       end
     else
       if @announcement.update_attributes(params[:announcement])
-        @announcement.label = "from_principal"
-        @announcement.save
-        redirect resource(:from_principals)
+         @announcement.label = "from_principal"
+         @announcement.save
+         redirect url(:homes)
       else
         render :edit
       end
@@ -100,7 +100,7 @@ class FromPrincipals < Application
       @announcement = Announcement.find(params[:id])
       Attachment.delete_all(['attachable_id = ?', @announcement.id])
       @announcement.destroy
-      redirect resource(:from_principals)
+      redirect url(:homes)
     end
   end
 
