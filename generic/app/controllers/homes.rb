@@ -17,7 +17,7 @@ class Homes < Application
     @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ?', "Classes", true], :order => "class_name ASC")
     @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ?', "Extra Cirrcular", true ], :order => "class_name ASC")
     @spot_light = @current_school.spot_lights.find(:first, :conditions => ['class_name = ?', "Home Page"], :order => 'created_at DESC')
-    @urgent_announcements = @current_school.announcements.find(:all, :conditions => ["label = ? and expiration >= ?", 'urgent', @date], :order => "created_at DESC")
+    @urgent_announcements = @current_school.announcements.find(:all, :conditions => ["label = ? and expiration >= ?", 'urgent', @date], :order => "created_at DESC", :limit => 3)
     render
   end
   
