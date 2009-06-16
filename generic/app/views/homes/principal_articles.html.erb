@@ -31,6 +31,16 @@
            <%= link_to_right((right = "announcements"), "Add New", resource(:announcements, :new, :l => "Home Page")) %>
       </h2>
       <%= link_to " &larr; Back to Home Page", url(:homes) %> <br/>
+        <% for announcement in @urgent_announcements %>
+                       <div class="data-block long-block">
+                           <div class="ddmmm">
+                                <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
+                                <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
+                           </div>
+                           <p><%= announcement.content %></p>
+                           <p class="separator">&nbsp;</p>
+                       </div>
+         <% end %>
          <% for announcement in @announcements %>
                <div class="data-block long-block">
                     <div class="ddmmm">
@@ -50,6 +60,7 @@
                     <p class="separator">&nbsp;</p>
                </div>
          <% end %>
+       
            <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
  <% end %>
 </div>

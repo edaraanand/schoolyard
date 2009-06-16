@@ -49,26 +49,25 @@
            <% end %>
            <div class="hrule clear"><hr /></div>
            <h2 class="home">Announcements</h2>
-                <% unless  @urgent_announcements.empty? %>
-                     <% for announcement in @urgent_announcements %>
-                           <div class="data-block long-block">
-                               <div class="ddmmm">
-                                    <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
-                                    <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
-                               </div>
-                               <p><%= announcement.content %></p>
-                           </div>
-                      <% end %>
-                <% end %>
-          <% if (@announcements.blank?) && (@urgent_announcements.blank?) %>
+           <% if (@announcements.empty?) && (@urgent_announcements.empty?) %>
                  <p class="subText">There are no announcements at this time</p>
                  <p class="separator">&nbsp;</p>
-                 <% unless @all_announcements.blank? %>
-                    <div class="page-links">
-                      <%= link_to "View all previous announcements", url(:principal_articles, :label => 'announcements')   %>
-                    </div>
+                 <% unless @all_announcements.empty? %>
+                     <div class="page-links">
+                        <%= link_to "View all previous announcements", url(:principal_articles, :label => 'announcements')   %>
+                     </div>
                  <% end %>
-          <% else %>
+           <% else %>
+                 <% for announcement in @urgent_announcements %>
+                       <div class="data-block long-block">
+                           <div class="ddmmm">
+                                <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
+                                <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
+                           </div>
+                           <p><%= announcement.content %></p>
+                           <p class="separator">&nbsp;</p>
+                       </div>
+                 <% end %>
                  <% for announcement in @announcements %>
                        <div class="data-block long-block">
                             <div class="ddmmm">
@@ -84,20 +83,11 @@
                             <p class="separator">&nbsp;</p>
                        </div> 
                  <% end %>
-                       <% unless @all_announcements.blank? %>
-                            <div class="page-links">
-                               <%= link_to "View All Announcements", url(:principal_articles, :label => 'announcements')   %> 
-                            </div>    
-                       <% end %>
-                       <% if @announcements.blank? %>
-                             <p class="subText">There are no announcements at this time</p>
-                             <p class="separator">&nbsp;</p>
-                             <div class="page-links">
-                                <%= link_to "View All Previous Announcements", url(:principal_articles, :label => 'announcements')   %>
-                             </div>
-                       <% end %>
-          <% end %>
-            <div class="page-links">
+                <div class="page-links">
+                     <%= link_to "View All Announcements", url(:principal_articles, :label => 'announcements') %> 
+                </div>
+           <% end %>
+           <div class="page-links">
                 <ul>
                     <li <% if @selected == "announcements" %> class="on" <% end %>>
                        <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "Home Page")) %>
