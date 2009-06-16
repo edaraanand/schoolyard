@@ -55,6 +55,7 @@ class Notifications < Application
   def create
      @announcement = @current_school.announcements.new(params[:announcement])    
      if @announcement.valid?
+        @announcement.access_name = "Home Page"
         @announcement.label = "urgent"
         @announcement.save!
         #makecall(@announcement.id)

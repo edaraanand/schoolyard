@@ -97,7 +97,7 @@ class Parents < Application
   def classroom
     @class = @current_school.classrooms.find(:all)
     room = @class.collect{|x| x.class_name }
-    @classrooms = room.insert(0, "HomePage")
+    @classrooms = room.insert(0, "Home Page")
   end
 
   def tab_select
