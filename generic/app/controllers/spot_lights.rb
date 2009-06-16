@@ -43,7 +43,12 @@ class SpotLights < Application
             )
             File.makedirs("public/uploads/spotlights")
             FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/spotlights/#{@attachment.filename}")
-            redirect resource(:spot_lights)
+            if @spot_light.class_name == "Home Page"
+               redirect url(:homes)
+            else
+               @classroom = @current_school.classrooms.find_by_class_name(@spot_light.class_name)
+               redirect url(:class_details, :id => @classroom.id, :label => "spot_light")
+            end
           else
             flash[:error1] = "You can only upload images"
             render :new
@@ -66,24 +71,24 @@ class SpotLights < Application
     if params[:label] == "class_spot_light"
       @selected = "spot_light"
       @select = "classrooms"
-      @spot_light = SpotLight.find(params[:id])
+      @spot_light = @current_school.spot_lights.find(params[:id])
       @classroom = @current_school.classrooms.find_by_class_name(@spot_light.class_name)
       render :layout => 'class_change', :id => @classroom.id
     else
-      @spot_light = SpotLight.find(params[:id])
+      @spot_light = @current_school.spot_lights.find(params[:id])
       render :layout => 'default'
     end
   end
 
 
   def edit
-    @spot_light = SpotLight.find(params[:id])
+    @spot_light = @current_school.spot_lights.find(params[:id])
     @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
     render
   end
 
   def update
-    @spot_light = SpotLight.find(params[:id])
+    @spot_light = @current_school.spot_lights.find(params[:id])
     @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
     @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
     if params[:spot_light][:image] != ""
@@ -102,7 +107,12 @@ class SpotLights < Application
             :school_id =>  @current_school.id
             )
             FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/spotlights/#{@attachment.filename}")
-            redirect resource(:spot_lights)
+            if @spot_light.class_name == "Home Page"
+               redirect url(:homes)
+            else
+               @classroom = @current_school.classrooms.find_by_class_name(@spot_light.class_name)
+               redirect url(:class_details, :id => @classroom.id, :label => "spot_light")
+            end
           else
             render :edit
           end
@@ -117,7 +127,12 @@ class SpotLights < Application
     else
       if ( (params[:spot_light][:class_name] != "") && (params[:spot_light][:student_name] != "") )
         if @spot_light.update_attributes(params[:spot_light])
-          redirect resource(:spot_lights)
+            if @spot_light.class_name == "Home Page"
+               redirect url(:homes)
+            else
+               @classroom = @current_school.classrooms.find_by_class_name(@spot_light.class_name)
+               redirect url(:class_details, :id => @classroom.id, :label => "spot_light")
+            end
         else
           render :edit
         end
@@ -129,10 +144,16 @@ class SpotLights < Application
   end
 
   def delete
-    @spot_light = SpotLight.find(params[:id])
+    @spot_light = @current_school.spot_lights.find(params[:id])
+    @page = @spot_light.class_name
     Attachment.delete_all(['attachable_id = ?', @spot_light.id])
     @spot_light.destroy
-    redirect resource(:spot_lights)
+    if @page == "Home Page"
+       redirect url(:homes)
+    else
+       @classroom = @current_school.classrooms.find_by_class_name(@page)
+       redirect url(:class_details, :id => @classroom.id, :label => "spot_light")
+    end
   end
 
   def preview

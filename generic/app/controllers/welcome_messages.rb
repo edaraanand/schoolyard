@@ -32,7 +32,12 @@ class WelcomeMessages < Application
     if params[:welcome_message][:access_name] != ""
        @welcome_message.person_id = @current_user.id
       if @welcome_message.save
-         redirect resource(:welcome_messages)
+         if @welcome_message.access_name == "Home Page"
+            redirect url(:homes)
+         else
+            @classroom = @current_school.classrooms.find_by_class_name(@welcome_message.access_name)
+            redirect url(:class_details, :id => @classroom.id)
+         end
       else
         render :new
       end
@@ -43,7 +48,7 @@ class WelcomeMessages < Application
   end
 
   def edit
-    @welcome_message = WelcomeMessage.find(params[:id])
+    @welcome_message = @current_school.welcome_messages.find(params[:id])
     ss = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     om = ss.collect{|x| x.class_name.titleize }
     @test = om.insert(0, "Home Page")
@@ -51,7 +56,7 @@ class WelcomeMessages < Application
   end
 
   def update
-    @welcome_message = WelcomeMessage.find(params[:id])
+    @welcome_message = @current_school.welcome_messages.find(params[:id])
     if params[:welcome_message][:access_name] != ""
       if @welcome_message.update_attributes(params[:welcome_message])
          @welcome_message.person_id = @current_user.id
@@ -71,8 +76,15 @@ class WelcomeMessages < Application
   end
 
   def delete
-    WelcomeMessage.find(params[:id]).destroy
-    redirect resource(:welcome_messages)
+    @welcome_message = @current_school.welcome_messages.find(params[:id])
+    @page = @welcome_message.access_name
+    @welcome_message.destroy
+    if @welcome_message.access_name == "Home Page"
+        redirect resource(:homes)
+    else
+       @classroom = @current_school.classrooms.find_by_class_name(@page)
+       redirect url(:class_details, :id => @classroom.id )
+    end
   end
 
   def preview
