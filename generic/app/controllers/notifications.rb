@@ -77,17 +77,18 @@ class Notifications < Application
         #     end
         #   end
         #end
-       # @people = @current_school.people.find(:all)
-       # numbers = @people.collect{ |x| x.sms_alert }
-       # num     = numbers.compact.join(',')
-       # @sms_numbers = num.collect{ |x| "1" + x } , '919998805789'
-       #@sms_numbers = ['15713320672'].join(',')
+       @people = @current_school.people.find(:all)
+       numbers = @people.collect{ |x| x.sms_alert }
+       num     = numbers.compact.join(',')
+       @sms_numbers = num.collect{ |x| "1" + x } 
+       #@sms_numbers = ['15713320672', '14158899280'].join(',')
        #api = Clickatell::API.authenticate('3175693', 'brianbolz', 'MupanoOCMLGLxHTdrQlIDY5tgMXoOeausulUjzIMNtsas6Bvvu')
+       api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
        #api = Clickatell::API.authenticate('3176340', 'rajesh.v', 'rajesh1')
-      # api.send_message("#{@sms_numbers}", "#{@announcement.content}")
-        run_later do
-           @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
-        end
+       api.send_message("#{@sms_numbers}", "#{@announcement.content}")
+       run_later do
+          @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
+       end
         #num = ['14158899280', '15713320672', '919998805789', '919227587555', '919998805789'].join(',')
         redirect url(:homes)
      else
