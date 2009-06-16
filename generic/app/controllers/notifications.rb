@@ -1,4 +1,5 @@
    require "twiliorest.rb"
+   
   # require 'net/http'
    # require 'uri'
   
@@ -58,9 +59,9 @@ class Notifications < Application
         @announcement.access_name = "Home Page"
         @announcement.label = "urgent"
         @announcement.save!
-        #makecall(@announcement.id)
-        #twitter = Twitter.new(@current_school.username, @current_school.password)
-        #twitter.post(params[:announcement][:content])
+        makecall(@announcement.id)
+        twitter = Twitter.new(@current_school.username, @current_school.password)
+        twitter.post(params[:announcement][:content])
         #run_later do
         #  @people = @current_school.people.find(:all)
         #  numbers = @people.collect{ |x| x.sms_alert }
@@ -79,12 +80,14 @@ class Notifications < Application
        # @people = @current_school.people.find(:all)
        # numbers = @people.collect{ |x| x.sms_alert }
        # num     = numbers.compact.join(',')
-       # @sms_numbers = num.collect{ |x| "1" + x }
-       # @sms_numbers = ['15713320672', '14158899280'].join(',')
-        #api.send_message("#{@sms_numbers}", "#{@announcement.content}")
-        #run_later do
-        #   @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
-        #end
+       # @sms_numbers = num.collect{ |x| "1" + x } , '919998805789'
+       #@sms_numbers = ['15713320672'].join(',')
+       #api = Clickatell::API.authenticate('3175693', 'brianbolz', 'MupanoOCMLGLxHTdrQlIDY5tgMXoOeausulUjzIMNtsas6Bvvu')
+       #api = Clickatell::API.authenticate('3176340', 'rajesh.v', 'rajesh1')
+      # api.send_message("#{@sms_numbers}", "#{@announcement.content}")
+        run_later do
+           @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
+        end
         #num = ['14158899280', '15713320672', '919998805789', '919227587555', '919998805789'].join(',')
         redirect url(:homes)
      else
