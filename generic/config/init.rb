@@ -17,7 +17,6 @@ require 'httparty'
 require 'clickatell'
 
 
-
 use_orm :activerecord
 use_test :rspec
 #use_template_engine :erb
@@ -28,7 +27,7 @@ Merb::BootLoader.after_app_loads do
   gem 'will_paginate', '~> 3.0.0'
   require 'will_paginate'
   Clickatell::API.debug_mode = true
-
+ 
   Merb::Mailer.config = {
     :host   => 'smtp.gmail.com',
     :port   => '587',
