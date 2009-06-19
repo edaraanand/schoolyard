@@ -19,6 +19,9 @@
            <li>
                <%= text_field  :subject_name,  :class => "required defaultText defaultTextActive", :label => "Main Subject", :title => "Subject" %>
            </li>
+           <li>
+               <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :label => "Classroom", :prompt => "Please Select" %>
+           </li>
        </ul>
                      
        <div id="test">
@@ -64,7 +67,7 @@
          if (r == 'test')
            {
              var ul = document.getElementById('assignment')
-             $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='category_" +  a  + "[assignment][name][]' id='txt" + id + "'><input type='text' class='short text apart' name='category_" +  a  + "[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
+             $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='name[]' id='txt" + id + "'><input type='text' class='short text apart' name='max_point[]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
            }
          else
            {
