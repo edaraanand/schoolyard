@@ -3,6 +3,7 @@ class Reports < Application
    layout 'default'
    before :access_rights
    before :find_school
+   before :classrooms
    
    def index
      @reports = @current_school.reports.find(:all)
@@ -13,29 +14,53 @@ class Reports < Application
      @report = Report.new
      @category = Category.new
      @assignment = Assignment.new
-     #5.times { @category.assignments.build }
      render
    end
    
    def create
-      @report = @current_school.reports.new(params[:report].merge(:person_id => session.user.id))
-      @n = (1..100).to_a
-      @n.each do |f|
-         if params["category_#{f}".intern]
-            names = params["category_#{f}".intern][:assignment][:name]
-            dates = params["category_#{f}".intern][:assignment][:date]
-            max_points = params["category_#{f}".intern][:assignment][:max_point]
-            @report.save
-            @category = @report.categories.create({:category_name => params["category_#{f}".intern][:category] })
-            s = names.zip(dates, max_points)
-            s.each do |l|
-               if ( ( (l[0] != "") && (l[1] != "") ) && (l[2] != "") )
-                  @assignment = @category.assignments.create({  :name => l[0], :date => l[1], :max_point => l[2] })
+      @report = @current_school.reports.new(params[:report].merge(:person_id => session.user.id, :school_id => @current_school.id))
+      if @report.valid?
+         if params[:report][:classroom_id] != ""
+             @classroom = @current_school.classrooms.find_by_class_name(params[:report][:classroom_id])
+             @report.classroom_id = @classroom.id
+             @report.save
+             name = params[:category][:assignment][:name]
+             max_p = params[:category][:assignment][:max_point]
+             category_names = params[:category][:category_name]
+             category_names.each do |f|
+               @category = @report.categories.create({:category_name => "#{f}", :school_id => @current_school.id })
+             end
+             s = name.zip(max_p)
+             s.each do |l|
+                if ( (l[0] != "") && (l[1] != "")  )
+                   @assignments = @category.assignments.create({  :name => l[0], :max_point => l[1], :school_id => @current_school.id })
+                end
+             end
+            @category_array = (0..50).to_a
+            @category_array.each do |f|
+               if params["category_#{f}".intern]
+                  names = params["category_#{f}".intern][:assignment][:name]
+                  max_points = params["category_#{f}".intern][:assignment][:max_point]
+                  category_n = params["category_#{f}".intern][:category_name]
+                  category_n.each do |f|
+                    @category_e = @report.categories.create({:category_name => "#{f}", :school_id => @current_school.id })
+                  end
+                  s = names.zip(max_points)
+                  s.each do |l|
+                     if ( (l[0] != "") && (l[1] != "")  )
+                        @assignments_e = @category_e.assignments.create({  :name => l[0], :max_point => l[1], :school_id => @current_school.id })
+                     end
+                  end
                end
             end
+            redirect resource(:reports)
+         else
+            flash[:error] = "please select the classroom"
+            render :new
          end
+      else
+        render :new
       end
-      redirect url(:grades, :id => @report.id)
    end
    
    def grades
@@ -73,5 +98,8 @@ class Reports < Application
       end
    end  
    
+   def classrooms
+      @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+   end
   
 end
