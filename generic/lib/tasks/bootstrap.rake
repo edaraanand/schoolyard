@@ -53,8 +53,8 @@ namespace :bootstrap do
            :last_name => "Meyer",
            :email => "school@insightmethods.com",
            :type => 'Staff',
-           :password => 'admin',
-           :password_confirmation => 'admin',
+           :password => 'administration',
+           :password_confirmation => 'administration',
            :school_id => @school.id,
            :admin => 'true'
       })

@@ -20,8 +20,8 @@ namespace:admin do
            :last_name => "Bolz",
            :email => "brian.bolz@insightmethods.com",
            :type => 'Staff',
-           :password => 'brian',
-           :password_confirmation => 'brian',
+           :password => 'brianbolz',
+           :password_confirmation => 'brianbolz',
            :school_id => @school.id,
            :admin => 'true'
       })
