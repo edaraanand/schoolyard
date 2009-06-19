@@ -6,6 +6,7 @@ class AssignmentMigration < ActiveRecord::Migration
       t.column :date, :date
       t.column :max_point, :integer
       t.column :score, :integer
+      t.column :school_id, :integer
       t.timestamps
     end
   end

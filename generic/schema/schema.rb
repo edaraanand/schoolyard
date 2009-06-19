@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 62) do
+ActiveRecord::Schema.define(:version => 67) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(:version => 62) do
     t.date     "date"
     t.integer  "max_point"
     t.integer  "score"
+    t.integer  "school_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -115,6 +116,7 @@ ActiveRecord::Schema.define(:version => 62) do
   create_table "categories", :force => true do |t|
     t.integer  "report_id"
     t.string   "category_name"
+    t.integer  "school_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -199,8 +201,6 @@ ActiveRecord::Schema.define(:version => 62) do
     t.string   "title"
     t.integer  "school_id"
     t.boolean  "admin"
-    t.boolean  "principal_email"
-    t.boolean  "principal_name"
   end
 
   create_table "protectors", :force => true do |t|
@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(:version => 62) do
 
   create_table "reports", :force => true do |t|
     t.string   "subject_name"
+    t.integer  "classroom_id"
     t.integer  "person_id"
     t.integer  "school_id"
     t.datetime "created_at"

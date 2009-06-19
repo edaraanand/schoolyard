@@ -3,6 +3,7 @@ class CategoryMigration < ActiveRecord::Migration
     create_table :categories do |t|
       t.column :report_id, :integer
       t.column :category_name, :string
+      t.column :school_id, :integer
       t.timestamps
     end
   end
