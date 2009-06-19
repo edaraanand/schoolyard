@@ -4,6 +4,6 @@ class Report < ActiveRecord::Base
     belongs_to :person
     belongs_to :school
     
-    #validates_presence_of :subject_name
+    validates_presence_of :subject_name
     
 end
