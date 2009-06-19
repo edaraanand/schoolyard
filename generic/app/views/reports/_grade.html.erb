@@ -1,32 +1,22 @@
   <ul>    
       <li>
-          <%= text_field  :name => "category_1[assignment][name][]", :class => "short required defaultText defaultTextActive", :title => "Assignment" %>
-          <%= text_field  :name => "category_1[assignment][date][]", :id => "date1", :class => "short apart date required defaultText defaultTextActive", :title => "dd/mm/yy" %>
-          <%= text_field  :name => "category_1[assignment][max_point][]", :class => "short apart required number defaultText defaultTextActive", :min => "1", :title => "Max Points" %>
-         
+          <%= text_field  :name => "name[]", :class => "short required defaultText defaultTextActive", :title => "Assignment" %>
+          <%= text_field  :name => "max_point[]",  :id => "testing", :class => "short apart required number defaultText defaultTextActive", :min => "1", :title => "Max Points" %>
       </li>
       <li>
-          <%= text_field  :name => "category_1[assignment][name][]", :class => "short defaultText defaultTextActive", :id => "name2", :title => "Assignment" %>
-          <%= text_field  :name => "category_1[assignment][date][]", :id => "date2", :class => "short apart date defaultText defaultTextActive", :title => "dd/mm/yy" %>
-          <%= text_field  :name => "category_1[assignment][max_point][]", :class => "short apart number defaultText defaultTextActive", :id => "point2", :min => "1", :title => "Max Points" %>
+          <%= text_field  :name => "name[]", :class => "short defaultText defaultTextActive", :title => "Assignment" %>
+          <%= text_field  :name => "max_point[]", :class => "short apart number defaultText defaultTextActive", :min => "1", :title => "Max Points" %>
           <a href="#"  class="delete-btn"  onclick="this.parentNode.parentNode.removeChild(this.parentNode);"></a>
       </li>
       <li>
-          <%= text_field  :name => "category_1[assignment][name][]", :class => "short defaultText defaultTextActive", :title => "Assignment" %>
-          <%= text_field  :name => "category_1[assignment][date][]", :id => "date3", :class => "short apart date defaultText defaultTextActive", :title => "dd/mm/yy" %>
-          <%= text_field  :name => "category_1[assignment][max_point][]", :class => "short apart number defaultText defaultTextActive", :min => "1", :title => "Max Points" %>
+          <%= text_field  :name => "name[]", :class => "short defaultText defaultTextActive", :title => "Assignment" %>
+          <%= text_field  :name => "max_point[]", :class => "short apart number defaultText defaultTextActive", :min => "1", :title => "Max Points" %>
           <a href="#"  class="delete-btn"  onclick="this.parentNode.parentNode.removeChild(this.parentNode);"></a>
       </li>
       <li>
-          <%= text_field  :name => "category_1[assignment][name][]", :class => "short defaultText defaultTextActive", :title => "Assignment" %>
-          <%= text_field  :name => "category_1[assignment][date][]", :id => "date4", :class => "short apart date defaultText defaultTextActive", :title => "dd/mm/yy" %>
-          <%= text_field  :name => "category_1[assignment][max_point][]", :class => "short apart number defaultText defaultTextActive", :min => "1", :title => "Max Points" %>
-          <a href="#"  class="delete-btn"  onclick="this.parentNode.parentNode.removeChild(this.parentNode);"></a>
-      </li>
-      <li>
-          <%= text_field  :name => "category_1[assignment][name][]", :class => "short defaultText defaultTextActive", :title => "Assignment" %>
-          <%= text_field  :name => "category_1[assignment][date][]",  :id => "date5",:class => "short apart date defaultText defaultTextActive", :title => "dd/mm/yy" %>
-          <%= text_field  :name => "category_1[assignment][max_point][]", :class => "short apart number defaultText defaultTextActive", :min => "1", :title => "Max Points" %>
+          <%= text_field  :name => "name[]", :class => "short defaultText defaultTextActive", :title => "Assignment" %>
+          <%= text_field  :name => "max_point[]", :class => "short apart number defaultText defaultTextActive", :min => "1", :title => "Max Points" %>
           <a href="#"  class="delete-btn"  onclick="this.parentNode.parentNode.removeChild(this.parentNode);"></a>
       </li>
   </ul>
+  <ul id="assignment"></ul>
