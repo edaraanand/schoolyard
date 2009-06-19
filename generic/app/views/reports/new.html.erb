@@ -1,6 +1,7 @@
 
 <%= error_messages_for @report %>
 <%#= error_messages_for @assignment %>
+
 <ul class='error_messages'>
      <% if flash[:error] %>
          <li><%= flash[:error] %> </li>
@@ -27,10 +28,10 @@
        <div id="test">
            <%= fields_for @category do %>
                  <ul>
-                      <li>
-                          <label>Category</label>
-                          <%= text_field :name => "category[category_name][]", :class => "short" %>
-                      </li>
+                     <li>
+                         <label>Category</label>
+                         <%= text_field :name => "category[category_name][]", :class => "short" %>
+                     </li>
                  </ul>
             <% end =%>
             <%= fields_for @assignment do %> 
@@ -67,7 +68,7 @@
          if (r == 'test')
            {
              var ul = document.getElementById('assignment')
-             $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='name[]' id='txt" + id + "'><input type='text' class='short text apart' name='max_point[]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
+             $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='category[assignment][name][]' id='txt" + id + "'><input type='text' class='short text apart' name='category[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
            }
          else
            {
@@ -114,6 +115,22 @@
           
           $j(".defaultText").blur();        
       });
+  
+  // clearing default values
+  
+   function ClearAll()
+   { 
+      var r = document.getElementById('report')
+      var pr =  r.getElementsByTagName('input');
+      for (var r=0;r<pr.length;r++)
+      {
+          if (pr[r].value == pr[r].title)
+           {
+             pr[r].value = ""
+           }
+      }
+   }
+
   
 </script>
 

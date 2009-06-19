@@ -1,12 +1,24 @@
 
 <h2 class="current-page">
-         Grades/Reports 
-         <span class="actions">
-              <%= link_to "Set Up Subjects", resource(:reports, :new) %> &nbsp; &nbsp;
-              <%= link_to "Edit Grades Definition " %>
-         </span>
+      Grades/Reports 
+      <span class="actions">
+           <%= link_to "Set Up Subjects", resource(:reports, :new) %> &nbsp; &nbsp;
+           <%= link_to "Edit Grades Definition " %>
+      </span>
 </h2>
 
 
-
-You're in index of the Reports controller.
+<table id="mytable">
+    <thead>
+        <th>Subject</th>
+        <th>Last Updated</th>                                                 
+    </thead>
+    <tbody>
+         <% for report in @reports %>
+              <tr>
+                  <td><%= link_to "#{report.subject_name}" %> </td>
+                  <td><%= report.updated_at.strftime("%B %d %Y") %></td>
+              </tr>
+         <% end %>
+    </tbody>
+</table>
