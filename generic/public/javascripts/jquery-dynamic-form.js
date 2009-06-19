@@ -35,14 +35,19 @@ jQuery.fn.dynamicForm = function (plusElmnt, minusElmnt, options)
               jQuery(this).attr("name", "field" + fieldId + "[]");
 			      }
           
-             if (nameAttr == "name[]")
+             if (nameAttr == "category[assignment][name][]")
               {
                 jQuery(this).attr("name", "category_" + clones.length + "[assignment][name]" + "[]");
               }
-              if (nameAttr == "max_point[]")
+              if (nameAttr == "category[assignment][max_point][]")
               {
                 jQuery(this).attr("name", "category_" + clones.length + "[assignment][max_point]" + "[]");
               }
+               if (nameAttr == "category[category_name][]")
+              {
+                jQuery(this).attr("name", "category_" + clones.length + "[category_name]" + "[]" );
+              }
+             
 			 
             if (!/\[\]$/.exec(nameAttr)) 
             {
