@@ -74,7 +74,6 @@ ActiveRecord::Schema.define(:version => 67) do
     t.string   "name"
     t.date     "date"
     t.integer  "max_point"
-    t.integer  "score"
     t.integer  "school_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -163,6 +162,16 @@ ActiveRecord::Schema.define(:version => 67) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "school_id"
+  end
+
+  create_table "grades", :force => true do |t|
+    t.integer  "student_id"
+    t.integer  "assignment_id"
+    t.integer  "score"
+    t.float    "percentage"
+    t.string   "grade"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "guardians", :force => true do |t|
