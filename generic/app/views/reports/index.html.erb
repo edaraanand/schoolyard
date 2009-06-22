@@ -16,7 +16,7 @@
     <tbody>
          <% for report in @reports %>
               <tr>
-                  <td><%= link_to "#{report.subject_name}" %> </td>
+                  <td><%= link_to "#{report.subject_name}", url(:assignments, :id => report.id) %> </td>
                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
               </tr>
          <% end %>

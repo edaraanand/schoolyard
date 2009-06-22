@@ -81,6 +81,8 @@ Merb::Router.prepare do
        resources :spot_lights
        resources :admin
        match("/grades").to(:controller => 'reports', :action => 'grades').name(:grades)
+       match("/score").to(:controller => 'reports', :action => 'score').name(:score)
+       match("/assignments").to(:controller => 'reports', :action => 'assignments').name(:assignments)
        match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
        match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
        match("/alerts_edit").to(:controller => 'alerts', :action => 'edit').name(:alert_edit)
