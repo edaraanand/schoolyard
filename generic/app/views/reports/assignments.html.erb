@@ -1,0 +1,20 @@
+
+<h2 class="current-page">
+     Grades/Reports > Add Grade 
+</h2>
+
+<h5><%= @report.subject_name %> &nbsp;
+       ( <%= link_to "Edit" %> | <%= link_to "View Report" %> ) 
+  </h5> <br/> <br/>
+
+    <% @categories.each do |f| %>
+        <% unless f.category_name.nil? %>
+           <%= f.category_name %> <br/> <br/>
+        <% end %>
+        <% assignments = f.assignments %>
+        <ul>
+            <% assignments.each do |a| %>
+               <li> <%= link_to "#{a.name}", url(:grades, :id => a.id) %></li> <br/>
+            <% end %>
+        </ul>
+    <% end %>
