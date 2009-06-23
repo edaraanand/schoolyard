@@ -428,7 +428,10 @@ fieldset.logbox  li{width:400px; margin: 0 20px;}
 #facebox .content ul{ padding:4px 0 0 30px;}
 #facebox .content ul li{list-style:square outside; margin:4px 0;}
 #facebox .content ul li a{display:block;}
-#facebox .content p{padding:4px 0 0 8px;}
+#facebox .content p{padding:0 0 0 8px; margin:0;}
+#facebox .content p.separator{margin:0 0 6px 0;}
+
+#facebox td{vertical-align:top;}
 
 .phone-hint{float:left; padding:0 6px;}
 
