@@ -59,7 +59,7 @@
                  <% end %>
            <% else %>
                  <% for announcement in @urgent_announcements %>
-                       <div class="data-block long-block">
+                       <div class="data-block long-block urgent-display">
                            <div class="ddmmm">
                                 <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
                                 <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
