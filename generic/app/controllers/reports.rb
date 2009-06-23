@@ -70,7 +70,7 @@ class Reports < Application
    end
    
    
-   def grades
+   def add_grades
      @assignment = @current_school.assignments.find(params[:id])
      @category = @assignment.category
      @report = @category.report
@@ -78,15 +78,68 @@ class Reports < Application
      render
    end
    
+   def edit_grades
+     @assignment = @current_school.assignments.find(params[:id])
+     @category = @assignment.category
+     @report = @category.report
+     @classroom = @report.classroom
+     @students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
+     render
+   end
+   
+   def update_grades
+     @assignment = @current_school.assignments.find(params[:id])
+     @category = @assignment.category
+     @report = @category.report
+     @classroom = @report.classroom
+     @assignment.date = params[:assignment][:date]
+     @assignment.save
+     @students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
+     @grades = @assignment.grades.collect{|x| x.id}
+     students_id = @students.collect{|x| x.id}
+     scores = params[:assignment][:score]
+     s = students_id.zip(scores, @grades)
+     s.each do |l|
+         Grade.update(l[2], {:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer ("#{l[1]}")*100/@assignment.max_point })
+     end
+     redirect url(:assignments, :id => @report.id) 
+   end
+   
    def score
-     raise params.inspect
+     @assignment = @current_school.assignments.find(params[:id])
+     @assignment.date = params[:assignment][:date]
+     @assignment.save
+     @category = @assignment.category
+     @report = @category.report
+     @classroom = @report.classroom
+     students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
+     students_id = students.collect{|x| x.id}
+     scores = params[:assignment][:score]
+     s = students_id.zip(scores)
+     s.each do |l|
+        Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer ("#{l[1]}")*100/@assignment.max_point })
+     end
+     redirect url(:assignments, :id => @report.id)
+   end
+   
+   def grades
+      @assignment = @current_school.assignments.find(params[:id])
+      @category = @assignment.category
+      @report = @category.report
+      @classroom = @report.classroom
+      @students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
+      render
    end
    
    def edit
-      @report = @current_school.reports.find(params[:id])
-      @categories = @report.categories
+      @assignment = @current_school.assignments.find(params[:id])
+      @category = @assignment.category
+      @report = @category.report
+      @classroom = @report.classroom
+      @students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
       render
    end
+   
    
    def update
       raise params.inspect
