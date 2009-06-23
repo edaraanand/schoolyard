@@ -9,6 +9,9 @@ class Student < Person
      
      has_many :ancestors
      has_many :protectors, :through => :ancestors, :source => :protector
+     
+     has_one :grade
+     
       
      validates_presence_of :birth_date
      validates_presence_of :address
