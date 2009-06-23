@@ -6,6 +6,11 @@ namespace:admin do
      @school = School.create({
          :school_name => "Insight Methods",
          :phone => "1234567890",
+         :address1 => "935 East 5th Street",
+         :city => "Benecia",
+         :state => "CA",
+         :zip_code => "94510",
+         :fax => "7077451841",
          :email => "admin@schoolyardapp.net",
          :domain => "http://admin.schoolyardapp.net",
          :folder => "schoolyardappcom",
