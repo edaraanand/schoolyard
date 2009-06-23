@@ -519,6 +519,7 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 .nopic{line-height:1em; background:#000;color:#fff; position:relative;text-align:left;width:207px;padding: 0 0 5px 10px;opacity:.75;
         filter:alpha(opacity=85);}
 .urgent-announce #announcement_content{height:5em;}
+#content .urgent-title{color:#f63; font-size:14px;}
 .phone-alert-settings #sms li span{font-size:18px; padding:0 8px 0 0;}
 .phone-alert-settings #voice li span{font-size:18px; padding:0 8px 0 0;}
 .phone-alert-settings #sms, .phone-alert-settings #voice {margin:0 0 6px 0;}
