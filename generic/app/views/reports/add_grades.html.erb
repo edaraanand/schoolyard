@@ -1,0 +1,40 @@
+<h2 class="current-page">
+     Grades/Reports > <%= @assignment.name %> 
+</h2>
+
+
+<%= form_for(@assignment, :action => url(:score, :id => @assignment.id) ) do %>
+
+      <ul>
+            <li><%= text_field  :date, :class => "short date", :label => "Assignment Date" %></li>
+      </ul>
+      
+       <table id="mytable">
+             <thead>
+                    <th>Your Students</th>
+                    <th>Student Score (Max Points : <%= @assignment.max_point %> )</th>
+             </thead>
+                                
+             <% students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] ) %>
+             <% students.each do |f| %>
+                   <tr>
+                       <td><%= f.name %></td>
+                       <td><%= text_field :name => "assignment[score][]", :class => "short" %></td>
+                   </tr>
+             <% end %>
+           
+       </table>
+      
+        <div class="save-cancel">
+            <%= submit "save" %> Or  <%= link_to "Cancel", url(:assignments,  :id => @report.id), :class => "cancel" %>
+        </div>
+      
+<% end =%>
+
+   
+     
+<script type= "text/javascript">
+
+    $j("input.date").datepicker({minDate:'today + 1'});
+   
+</script>

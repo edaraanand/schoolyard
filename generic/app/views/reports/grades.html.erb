@@ -3,38 +3,29 @@
 </h2>
 
 
-<%= form_for(@assignment, :action => url(:score) ) do %>
+<span class="actions">
+  <%= @assignment.name %> &nbsp; ( <%= @assignment.date.strftime("%B %d %Y") %> ) &nbsp;
+  <%= link_to "Edit", url(:edit_grades, :id => @assignment.id) %>
+</span> <br/> <br/>
+  
+  
+  
+<table id="mytable">
+    <thead>
+        <th>Your Students</th>
+        <th>Score (Max Points : <%= @assignment.max_point %> )</th>
+        <th>Grade </th>
+    </thead>
+    <tbody>
+         <%= @classroom.class_name %>
+         <% @students.each do |f| %>
+               <tr>
+                   <td><%= f.name %></td>
+                   <td><%= f.grade.score %></td>
+                   <td><%= f.grade.grade %></td>
+               </tr>
+         <% end %>
+    </tbody>
+</table>
 
-      <ul>
-      <li><%= text_field  :date, :class => "short date", :label => "Assignment Date" %></li>
-      </ul>
-      
-       <table id="mytable">
-             <thead>
-                    <th>Your Students</th>
-                    <th>Student Score (Max Points : <%= @assignment.max_point %> )</th>
-             </thead>
-                                
-             <% students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] ) %>
-             <% students.each do |f| %>
-                   <tr>
-                      <td><%= f.name %></td>
-                      <td><%= text_field :name => "assignment[score][]", :class => "short" %></td>
-                   </tr>
-             <% end %>
-           
-       </table>
-      
-        <div class="save-cancel">
-            <%= submit "save" %> Or  <%= link_to "Cancel", resource(:reports), :class => "cancel" %>
-        </div>
-      
-<% end =%>
-
-   
-     
-<script type= "text/javascript">
-
-    $j("input.date").datepicker({minDate:'today + 1'});
-   
-</script>
+<%= link_to "All Assignments", url(:assignments,  :id => @report.id) %>
