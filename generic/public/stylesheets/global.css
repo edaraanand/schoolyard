@@ -218,7 +218,7 @@ fieldset ul{padding-top:8px;}
 #mytable th.firsthead{border-left:1px solid #C1DAD7;}/*First TH*/
 #mytable td{border-right:1px solid #ecfef1; border-bottom:1px solid #ecfef1; background:#fff; padding:6px 6px 6px 8px; color: #4f6b72;}
 #mytable td.alt{background: #f5fafa; color: #797268;}/*Zebra style*/
-#mytable tbody tr:hover td{background-color:#ecfef1;}
+#mytable tbody tr:hover td{background-color:#ecfef1; border-color:#bed9c3;}
 #mytable .click-block{padding:0!important}
 .click-block a{display:block; padding:6px 6px 6px 12px;}
 
