@@ -7,6 +7,7 @@ class Reports < Application
    
    def index
      @reports = @current_school.reports.find(:all)
+     @ranks = @current_school.ranks.find(:all)
      render
    end
    
@@ -82,8 +83,7 @@ class Reports < Application
      @assignment = @current_school.assignments.find(params[:id])
      @category = @assignment.category
      @report = @category.report
-     @classroom = @report.classroom
-     @students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
+     @grades = @assignment.grades
      render
    end
    
@@ -100,7 +100,8 @@ class Reports < Application
      scores = params[:assignment][:score]
      s = students_id.zip(scores, @grades)
      s.each do |l|
-         Grade.update(l[2], {:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer ("#{l[1]}")*100/@assignment.max_point })
+        calculate(l[1], @assignment.max_point)
+        Grade.update(l[2], {:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
      end
      redirect url(:assignments, :id => @report.id) 
    end
@@ -112,32 +113,33 @@ class Reports < Application
      @category = @assignment.category
      @report = @category.report
      @classroom = @report.classroom
+     @ranks = @current_school.ranks.find(:all)
      students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
      students_id = students.collect{|x| x.id}
      scores = params[:assignment][:score]
      s = students_id.zip(scores)
      s.each do |l|
-        Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer ("#{l[1]}")*100/@assignment.max_point })
+        calculate(l[1], @assignment.max_point)
+        Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
      end
      redirect url(:assignments, :id => @report.id)
    end
    
    def grades
-      @assignment = @current_school.assignments.find(params[:id])
-      @category = @assignment.category
-      @report = @category.report
-      @classroom = @report.classroom
-      @students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
-      render
+     @assignment = @current_school.assignments.find(params[:id])
+     @category = @assignment.category
+     @report = @category.report
+     @grades = @assignment.grades 
+     render
    end
    
    def edit
-      @assignment = @current_school.assignments.find(params[:id])
-      @category = @assignment.category
-      @report = @category.report
-      @classroom = @report.classroom
-      @students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
-      render
+     @assignment = @current_school.assignments.find(params[:id])
+     @category = @assignment.category
+     @report = @category.report
+     @classroom = @report.classroom
+     @students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
+     render
    end
    
    
@@ -145,7 +147,7 @@ class Reports < Application
       raise params.inspect
       render
    end
-   
+    
    
    private
    
@@ -166,6 +168,19 @@ class Reports < Application
    
    def classrooms
       @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+   end
+   
+   
+   def calculate(id, max)
+      @ranks = Rank.find(:all)
+      @ranks.each do |f|
+         range = Range.new(Integer(f.from), Integer(f.to))
+         array = range.to_a
+         x = Integer(id)*100/max
+         if array.include?(x)
+            @gr = "#{f.name}"
+         end
+      end
    end
   
 end
