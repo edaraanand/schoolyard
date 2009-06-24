@@ -18,6 +18,7 @@ class School < ActiveRecord::Base
    has_many :reports
    has_many :assignments
    has_many :categories
+   has_many :ranks
    
    validates_presence_of :school_name 
    validates_presence_of :address1

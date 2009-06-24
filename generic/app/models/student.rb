@@ -12,6 +12,8 @@ class Student < Person
      
      has_one :grade
      
+     has_one :rank
+     
       
      validates_presence_of :birth_date
      validates_presence_of :address
