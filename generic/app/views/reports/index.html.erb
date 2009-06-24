@@ -3,7 +3,11 @@
       Grades/Reports 
       <span class="actions">
            <%= link_to "Set Up Subjects", resource(:reports, :new) %> &nbsp; &nbsp;
-           <%= link_to "Edit Grades Definition " %>
+         <% if @ranks.empty? %>
+             <%= link_to "Add Grades Definition", resource(:ranks, :new) %>
+         <% else %>
+             <%= link_to "Edit Grades Definition", url(:ranks_edit) %>
+         <% end %>
       </span>
 </h2>
 

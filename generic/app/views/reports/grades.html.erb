@@ -14,18 +14,22 @@
     <thead>
         <th>Your Students</th>
         <th>Score (Max Points : <%= @assignment.max_point %> )</th>
+        <th>Percentage</th>
         <th>Grade </th>
     </thead>
     <tbody>
-         <%= @classroom.class_name %>
-         <% @students.each do |f| %>
+         <%= @report.classroom.class_name %>
+         <% @grades.each do |f| %>
                <tr>
-                   <td><%= f.name %></td>
-                   <td><%= f.grade.score %></td>
-                   <td><%= f.grade.grade %></td>
+                   <td><%= f.student.name %></td>
+                   <td><%= f.score %></td>
+                   <td><%= f.percentage %></td>
+                   <td><%= f.grade %></td>
                </tr>
          <% end %>
     </tbody>
 </table>
 
-<%= link_to "All Assignments", url(:assignments,  :id => @report.id) %>
+<div class="page-links">
+    <%= link_to "All Assignments", url(:assignments,  :id => @report.id) %>
+</div>
