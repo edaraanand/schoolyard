@@ -25,17 +25,20 @@
                       <%end%>
                   </div>
                 <% end %>
-                 <li <% if @selected == "from_principal" %> class="on" <% end %>>
-                      <%= link_to_right((right = "from_principal"), "Add New", resource(:from_principals, :new)) %>
-                      <%= link_to_right((right = "from_principal"), "| Settings", url(:settings)) %>
-                 </li>
+                 <span class="admin-links block" <% if @selected == "from_principal" %> class="on" <% end %>>
+                      <span><%= link_to_right((right = "from_principal"), "Add New", resource(:from_principals, :new)) %></span>
+                      &#124;
+                      <span><%= link_to_right((right = "from_principal"), "Settings", url(:settings)) %></span>
+                 </span>
               
             </div>
      <div id="content" class="homes-content">
            <p class="post-content">
                <% if @welcome_messages.empty? %>
                  Welcome to <%=@current_school.school_name%>
-                 <%= link_to_right( (right = "welcome_messages"), "Add New", url(:new_welcome_message, :l => "Home Page" ) ) %>
+                 <span class="admin-links">
+                  <%= link_to_right( (right = "welcome_messages"), "Add New", url(:new_welcome_message, :l => "Home Page" ) ) %>
+                 </span>
                <% else %>
                 <% for message in @welcome_messages %>
                    <%= san_content(message.content) %>
@@ -59,11 +62,12 @@
                  <% end %>
            <% else %>
                  <% for announcement in @urgent_announcements %>
-                       <div class="data-block long-block">
+                       <div class="data-block long-block urgent-display">
                            <div class="ddmmm">
                                 <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
                                 <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
                            </div>
+                           <p class="urgent-title">Urgent Announcement</p>
                            <p><%= announcement.content %></p>
                            <p class="separator">&nbsp;</p>
                        </div>
@@ -87,13 +91,13 @@
                      <%= link_to "View All Announcements", url(:principal_articles, :label => 'announcements') %> 
                 </div>
            <% end %>
-           <div class="page-links">
-                <ul>
-                    <li <% if @selected == "announcements" %> class="on" <% end %>>
-                       <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "Home Page")) %>
-                       <%= link_to_right((right = "urgent_announcement"), "| Add New Urgent Announcement", resource(:notifications, :new) ) %>
-                    </li>
-                </ul>
+           <div class="admin-links">
+                <span>
+                  <% if @selected == "announcements" %> class="on" <% end %>
+                  <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "Home Page")) %>
+                  &#124;
+                  <%= link_to_right((right = "urgent_announcement"), "Add New Urgent Announcement", resource(:notifications, :new) ) %>
+                </span>
             </div>
            
      </div>

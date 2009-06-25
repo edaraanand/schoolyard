@@ -19,7 +19,9 @@
         <p class="post-content">
               <% if @welcome_messages.empty? %>
                   Welcome to <%= @current_school.school_name%>'s <%=@classroom.class_name.titleize%> classroom
-                  <%= link_to_right( (right = "welcome_messages"), "Add New", url(:new_welcome_message, :l => "#{@classroom.class_name.titleize}" ) ) %>
+                  <span class="admin-links">
+                    <%= link_to_right( (right = "welcome_messages"), "Add New", url(:new_welcome_message, :l => "#{@classroom.class_name.titleize}" ) ) %>
+                  </span>
               <% else %>
                    <% for message in @welcome_messages %>
                        <%= message.content %>
