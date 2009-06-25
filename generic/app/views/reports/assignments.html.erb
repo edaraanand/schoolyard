@@ -18,7 +18,7 @@
     
         
 <h5><%= @report.subject_name %> &nbsp;
-    ( <%= link_to "Edit" %> | <%= link_to "View Report",  url(:view_report, :id => @report.id) %> ) 
+  ( <%= link_to "Edit", resource(@report, :edit) %> | <%= link_to "View Report",  url(:view_report, :id => @report.id) %> ) 
 </h5> <br/> <br/>
 
     <% @categories.each do |f| %>

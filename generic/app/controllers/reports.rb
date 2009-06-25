@@ -160,11 +160,12 @@ class Reports < Application
    end
    
    def edit
-     @assignment = @current_school.assignments.find(params[:id])
-     @category = @assignment.category
-     @report = @category.report
-     @classroom = @report.classroom
-     @students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
+     raise params.inspect
+    # @assignment = @current_school.assignments.find(params[:id])
+    # @category = @assignment.category
+    # @report = @category.report
+    # @classroom = @report.classroom
+    # @students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
      render
    end
    
