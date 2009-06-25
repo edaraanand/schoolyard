@@ -81,6 +81,7 @@ Merb::Router.prepare do
        resources :spot_lights
        resources :admin
        resources :ranks
+       match("/view_report").to(:controller => 'reports', :action => 'view_report').name(:view_report)
        match("/rank/edit").to(:controller => 'ranks', :action => 'edit').name(:ranks_edit)
        match("/rank/update").to(:controller => 'ranks', :action => 'update').name(:ranks_update)
        match("/add_grades").to(:controller => 'reports', :action => 'add_grades').name(:add_grades)

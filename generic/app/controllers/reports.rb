@@ -6,6 +6,7 @@ class Reports < Application
    before :classrooms
    
    def index
+    # raise params.inspect
      @reports = @current_school.reports.find(:all)
      @ranks = @current_school.ranks.find(:all)
      render
@@ -21,20 +22,25 @@ class Reports < Application
    def create
       @report = @current_school.reports.new(params[:report].merge(:person_id => session.user.id, :school_id => @current_school.id))
       if @report.valid?
+         @classroom = @current_school.classrooms.find_by_class_name(params[:report][:classroom_id])
+         #@students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
+         #student_id = @students.collect{|x| x.id}
          if params[:report][:classroom_id] != ""
-             @classroom = @current_school.classrooms.find_by_class_name(params[:report][:classroom_id])
              @report.classroom_id = @classroom.id
              @report.save
              name = params[:category][:assignment][:name]
              max_p = params[:category][:assignment][:max_point]
              category_names = params[:category][:category_name]
              category_names.each do |f|
-               @category = @report.categories.create({:category_name => "#{f}", :school_id => @current_school.id })
+                @category = @report.categories.create({:category_name => "#{f}", :school_id => @current_school.id })
              end
              s = name.zip(max_p)
              s.each do |l|
                 if ( (l[0] != "") && (l[1] != "")  )
-                   @assignments = @category.assignments.create({  :name => l[0], :max_point => l[1], :school_id => @current_school.id })
+                    @assignment = @category.assignments.create({  :name => l[0], :max_point => l[1], :school_id => @current_school.id })
+                   # unless l[2].nil?
+                   #    StudentAssignment.create({:student_id => l[2], :assignment_id => @assignment.id })
+                   # end
                 end
              end
             @category_array = (0..50).to_a
@@ -49,7 +55,10 @@ class Reports < Application
                   s = names.zip(max_points)
                   s.each do |l|
                      if ( (l[0] != "") && (l[1] != "")  )
-                        @assignments_e = @category_e.assignments.create({  :name => l[0], :max_point => l[1], :school_id => @current_school.id })
+                        @assignment_e = @category_e.assignments.create({  :name => l[0], :max_point => l[1], :school_id => @current_school.id })
+                       # unless l[2].nil?
+                       #    StudentAssignment.create({:student_id => l[2], :assignment_id => @assignment_e.id })
+                       # end
                      end
                   end
                end
@@ -148,6 +157,12 @@ class Reports < Application
       render
    end
     
+   def view_report
+     @report = @current_school.reports.find(params[:id])
+     @categories = @report.categories
+     render
+   end
+   
    
    private
    
@@ -168,8 +183,9 @@ class Reports < Application
    
    def classrooms
       @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+      room = @classrooms.collect{|x| x.class_name.titleize }
+      @classrooms = room.insert(0, "All Subjects")
    end
-   
    
    def calculate(id, max)
       @ranks = Rank.find(:all)
