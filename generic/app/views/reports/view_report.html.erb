@@ -19,17 +19,15 @@
                       <% @assignments = c.assignments %>
                       
                       <% @assignments.each do |a| %>
-                        
-                     
                              <% @grades = a.grades %>
-                              
-                              <% @grades.each do |g| %>
-                                     <tr>
-                                          <td><%= g.student.name %></td>
-                                          <td><%= g.grade %></td>
-                                     </tr>
-                              <% end %>
-                         
+                             <% @grades.each do |g| %>
+                                  <tr>
+                                       <td><%= g.student.name %></td>
+                                       <td><%= g.grade %></td>
+                                  </tr>
+                                  
+                             <% end %>
+                             <% @assignments.delete_if {|x| x == a } %>
                       <% end %>
                 <% end %>
              
