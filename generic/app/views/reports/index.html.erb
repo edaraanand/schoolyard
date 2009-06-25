@@ -23,7 +23,9 @@ For :  <select id = 'reportID'>
 
 <% if @reports.empty? %>
                                                                                    
-There are no subjects defined for this classroom. Would you like to <%= link_to "Set Up Subjects", resource(:reports, :new) %> 
+<p>There are no subjects defined for this classroom. <br/>
+   Would you like to <%= link_to "Set Up Subjects", resource(:reports, :new) %>
+</p>
 
 <% else %>
          <table id="mytable">
