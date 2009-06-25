@@ -34,14 +34,14 @@ namespace :deploy do
   desc "Change the database configuration file"
   task :after_update do
      run "mv #{current_path}/generic/config/database.yml.production #{current_path}/generic/config/database.yml"
-     #run "mv /home/eshwar/db #{current_path}/generic"
+     run "mv /home/eshwar/db #{current_path}/generic"
      #run "rm -fr #{current_path}/generic/db"
-	   run "mkdir -p #{current_path}/generic/db"
+	   #run "mkdir -p #{current_path}/generic/db"
      run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
-     run "cd #{current_path}/generic && rake bootstrap:alerts"
-     run "cd #{current_path}/generic && rake contact:school"
-     run "cd #{current_path}/generic && rake admin:person"
+     #run "cd #{current_path}/generic && rake bootstrap:alerts"
+     #run "cd #{current_path}/generic && rake contact:school"
+     #run "cd #{current_path}/generic && rake admin:person"
   end
   
   desc "Start Merb Instances"
