@@ -79,8 +79,20 @@ class Reports < Application
    end
    
    def assignments
-     @report = @current_school.reports.find(params[:id])
-     @categories = @report.categories 
+     if params[:label]
+        @classroom = @current_school.classrooms.find_by_class_name(params[:label])
+        @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', @classroom.id ])
+        @report = @current_school.reports.find_by_classroom_id(@classroom.id)
+        @categories = @report.categories
+     elsif params[:ref]
+        @report = @current_school.reports.find_by_subject_name(params[:ref])
+        @categories = @report.categories
+        @reports = @current_school.reports.find(:all)
+     else
+        @report = @current_school.reports.find(params[:id])
+        @categories = @report.categories
+        @reports = @current_school.reports.find(:all)
+     end
      render
    end
    

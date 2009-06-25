@@ -3,6 +3,20 @@
      Grades/Reports > Add Grade 
 </h2>
 
+ For : 
+ <% if params[:label] %>
+    <%= select :name => "class_report",  :collection => @classrooms.collect{|x| x.class_name.titleize }, :selected => @classroom.class_name, :onchange => "javascript:window.location.href='/assignments?label='+(this.value)+'&id=#{@classroom.id}'" %> &nbsp;
+ <% else %>
+    <%= select :name => "class_report", :selected => @report.classroom.class_name, :collection => @classrooms.collect{|x| x.class_name.titleize }, :onchange => "javascript:window.location.href='/assignments?label='+(this.value)+'&id=#{@report.classroom.id}'" %> &nbsp;
+ <% end %>
+ 
+ <% if params[:label] %>
+   <%= select :name => "subject", :collection => @reports.collect{|x| x.subject_name }, :onchange => "javascript:window.location.href='/assignments?ref='+(this.value)+'&id=#{@classroom.id}'" %> <br/> <br/>
+ <% else %>
+ <%= select :name => "subject", :selected => "#{@report.subject_name}", :collection => @reports.collect{|x| x.subject_name }, :onchange => "javascript:window.location.href='/assignments?ref='+(this.value)+'&id=#{@classroom.id}'" %> <br/> <br/>
+ <% end %>
+    
+        
 <h5><%= @report.subject_name %> &nbsp;
     ( <%= link_to "Edit" %> | <%= link_to "View Report",  url(:view_report, :id => @report.id) %> ) 
 </h5> <br/> <br/>
