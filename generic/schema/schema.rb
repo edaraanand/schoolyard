@@ -9,6 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+
 ActiveRecord::Schema.define(:version => 68) do
 
   create_table "access_peoples", :force => true do |t|
@@ -92,6 +93,7 @@ ActiveRecord::Schema.define(:version => 68) do
     t.string   "attachable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "school_id"
   end
 
   add_index "attachments", ["attachable_id", "attachable_type"], :name => "index_attachments_on_attachable_id_and_attachable_type"
@@ -210,6 +212,10 @@ ActiveRecord::Schema.define(:version => 68) do
     t.string   "title"
     t.integer  "school_id"
     t.boolean  "admin"
+    t.boolean  "principal_email"
+    t.boolean  "principal_name"
+    t.string   "voice_alert"
+    t.string   "sms_alert"
   end
 
   create_table "protectors", :force => true do |t|
@@ -267,6 +273,8 @@ ActiveRecord::Schema.define(:version => 68) do
     t.string   "state"
     t.string   "zip_code"
     t.string   "fax"
+    t.string   "username"
+    t.string   "password"
   end
 
   create_table "spot_lights", :force => true do |t|

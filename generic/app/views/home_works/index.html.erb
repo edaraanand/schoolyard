@@ -1,114 +1,17 @@
 <h2 class="current-page">Home Work  &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:home_works, :new) %></h2>
 
 <div class="fullpage announcemt">
-   <%= form_for(@home_work, :action => resource(:home_works), :method => 'get', :id => 'home_work') do %>
-          <% if params[:label] == "class_home_works" %>
-               <span class="select-announce">
-                    <%= select :classroom_id, :collection => @classes, :selected => @classroom.class_name  %>
-                    <%= submit "    Go    " %>
-               </span>
-          <% else %>
-               <span class="select-announce">
-                    <%= select :classroom_id, :collection => @classes %>
-                    <%= submit "    Go    " %>
-               </span>
-          <% end %>
-   <% end =%>
-<% if params[:label] == "class_home_works" %>
-          <% if @class_works.empty? %>
-                 <%= @error %><h2 class="current-page"><%= link_to "Add New", resource(:home_works, :new) %></h2>
-           <% else %>
-                 <% for homework in @class_works %>
-                        <div class="data-block long-block">
-                              <span class="hidden">
-                                  <% unless homework.due_date.nil? %>
-                                         <%= homework.due_date.strftime("%B-%d") %>
-                                  <% end %>
-                              </span>
-                                   <% if homework.due_date.nil? %>
-	                                       <div class="ddmmm-x"></div>
-	                                 <% else %>
-                                         <div class="ddmmm">
-                                               <span class="date"><%= homework.due_date.strftime("%d") %></span>
-                                               <span class="month"><%= homework.due_date.strftime("%b") %></span>
-                                         </div>
-                                   <% end %>
-                                      <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
-                                      <span class="subText">HomeWork for: <%= homework.classroom.class_name %></span><br/>
-                                      <p class="subText">Assigned on <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></p>
-                                      <p class="post-content"><%= snippet(homework.content, 50) %></p>
-                                     <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
-                                     <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
-                                 <div class="hrule clear"><hr /></div>
-                         </div>
-                 <% end %>
-                 <%= will_paginate (@class_works, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-          <% end %>
+  
+   View :  <select id = 'workID'>
+             <option value = '/home_works' <% if (@test == "All Homeworks") %> selected <% end %> >All Homeworks</option>
+                  <% @classes.each do |f| %>
+                      <option value='/home_works?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+                         <%= f.class_name %> 
+                      </option>
+	                <% end %>
+	         </select>
+  
 
-<% else %>
-  <% if params[:classroom_id].nil? %>
-           <% if @h_works.empty? %>
-                 <%= @error %><h2 class="current-page"><%= link_to "Add New", resource(:home_works, :new) %></h2>
-           <% else %>
-                 <% for homework in @h_works %>
-                        <div class="data-block long-block">
-                              <span class="hidden">
-                                  <% unless homework.due_date.nil? %>
-                                         <%= homework.due_date.strftime("%B-%d") %>
-                                  <% end %>
-                              </span>
-                                   <% if homework.due_date.nil? %>
-	                                       <div class="ddmmm-x"></div>
-	                                 <% else %>
-                                         <div class="ddmmm">
-                                               <span class="date"><%= homework.due_date.strftime("%d") %></span>
-                                               <span class="month"><%= homework.due_date.strftime("%b") %></span>
-                                         </div>
-                                   <% end %>
-                                      <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
-                                      <span class="subText">HomeWork for: <%= homework.classroom.class_name %></span><br/>
-                                      <p class="subText">Assigned on <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></p>
-                                      <p class="post-content"><%= snippet(homework.content, 50) %></p>
-                                     <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
-                                     <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
-                                 <div class="hrule clear"><hr /></div>
-                         </div>
-                 <% end %>
-                 <%= will_paginate (@h_works, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-          <% end %>
-  <% elsif params[:classroom_id] == "All Homework" %>   
-  
-           <% if @works.empty? %>
-                 <%= @error %><h2 class="current-page"><%= link_to "Add New", resource(:home_works, :new) %></h2>
-           <% else %>
-                 <% for homework in @works %>
-                        <div class="data-block long-block">
-                              <span class="hidden">
-                                  <% unless homework.due_date.nil? %>
-                                         <%= homework.due_date.strftime("%B-%d") %>
-                                  <% end %>
-                              </span>
-                                   <% if homework.due_date.nil? %>
-	                                       <div class="ddmmm-x"></div>
-	                                 <% else %>
-                                         <div class="ddmmm">
-                                               <span class="date"><%= homework.due_date.strftime("%d") %></span>
-                                               <span class="month"><%= homework.due_date.strftime("%b") %></span>
-                                         </div>
-                                   <% end %>
-                                   <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
-                                      <span class="subText">HomeWork for: <%= homework.classroom.class_name %></span><br/>
-                                      <p class="subText">Assigned on <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></p>
-                                      <p class="post-content"><%= snippet(homework.content, 50) %></p>
-                                     <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
-                                     <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
-                                 <div class="hrule clear"><hr /></div>
-                         </div>
-                 <% end %>
-                 <%= will_paginate (@works, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-          <% end %>
-  
-  <% else %>
           <% if @home_works.empty? %>
                  <p><%= @error %><%= link_to "Add New", resource(:home_works, :new) %></p>
            <% else %>
@@ -119,26 +22,37 @@
                                          <%= homework.due_date.strftime("%B-%d") %>
                                   <% end %>
                               </span>
-                                   <% if homework.due_date.nil? %>
-	                                       <div class="ddmmm-x"></div>
-	                                 <% else %>
-                                         <div class="ddmmm">
-                                               <span class="date"><%= homework.due_date.strftime("%d") %></span>
-                                               <span class="month"><%= homework.due_date.strftime("%b") %></span>
-                                         </div>
-                                   <% end %>
-                                      <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
-                                      <span class="subText">HomeWork for: <%= homework.classroom.class_name %></span><br/>
-                                      <p class="subText">Assigned on <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></p>
-                                      <p class="post-content"><%= snippet(homework.content, 50) %></p>
-                                     <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
-                                     <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
-                                 <div class="hrule clear"><hr /></div>
+                              <% if homework.due_date.nil? %>
+	                                  <div class="ddmmm-x"></div>
+	                            <% else %>
+                                    <div class="ddmmm">
+                                          <span class="date"><%= homework.due_date.strftime("%d") %></span>
+                                          <span class="month"><%= homework.due_date.strftime("%b") %></span>
+                                    </div>
+                              <% end %>
+                              <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
+                              <span class="subText">Homework for: <%= homework.classroom.class_name %></span><br/>
+                              <p class="subText">Assigned on <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></p>
+                              <p class="post-content"><%= snippet(homework.content, 50) %></p>
+                              <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
+                              <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
+                              <p class="separator clear">&nbsp;</p>
+                              <br class="clear"/>
                          </div>
-                 <% end %>
+                    <% end %>
                  <%= will_paginate (@home_works, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
           <% end %>
-   <% end %>
-<% end %> 
+    
 </div>
+  
+  
+  <script type = 'text/javascript'>
+
+        $( 'workID' ).observe( 'change', function()
+          {
+            document.location.href = $( 'workID' ).value;
+          
+          });
+       
+</script>
  

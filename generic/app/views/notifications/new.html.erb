@@ -1,0 +1,63 @@
+<%= error_messages_for @announcement %>
+<h2 class="current-page">Urgent Announcements &gt; Add New</h2>
+
+<%= form_for(@announcement, :action => url(:notifications), :name => 'announcement_form', :onsubmit => " return test();") do %>
+    <fieldset>                                                                                            
+         <ul>
+            <span id="text" class="twitter-textarea"></span>
+            <li><%= text_area  :content, :label => "Message", :rows => "2", :cols => "40" %></li>
+            <li><%= text_field  :expiration, :id => "expiration",  :label => "Expiration", :class => "short" %></li>
+        </ul>
+   </fieldset>
+      
+      <div class="save-cancel">
+          <input type = 'button' value = '    Preview    ' /> 
+          <%= submit "    Publish and Send Alerts    " %>  Or <%= link_to "Cancel", url(:notifications ), :class => "cancel" %>
+        
+      </div>
+              
+<% end =%>                                                                 
+
+
+<script type= "text/javascript">
+
+    document.announcement_form.announcement_content.focus();
+    
+    $j("#expiration").datepicker({minDate:'today + 1'});
+    
+    $j("#announcement_content").charCounter(140, {
+                                         container: "#text",
+	                                       classname: "twitter-textarea",
+	                                       format: "%1 characters to go!",
+	                                       pulse: true,
+	                                       delay: 100
+                                   });
+    function test()
+    {
+       input_box = confirm("Are you sure you want send this urgent announcement? Click OK to send the announcements");
+       
+       if (input_box==true)
+         {
+           return true;
+         }                       
+       else
+         {
+           return false;
+         }
+     
+      
+         
+     //  $j.prompt('Example 2', {
+     //                           buttons: { Ok: true, Cancel: false },
+     //                           Default: { Cancel: false  },
+     //                           submit:function(v,m)
+     //                           { 
+     //                             if (v == true){ return true; }
+     //                             else { return false ;}
+     //                            }
+     //                        }
+     //           ); 
+     //   
+         
+    }
+</script>

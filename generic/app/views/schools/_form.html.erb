@@ -7,12 +7,19 @@
   <li><%= text_field  :city,  :label => "City", :maxlength => "75" %></li>
   <li><%= text_field  :state,  :label => "State", :maxlength => "75" %></li>
   <li><%= text_field  :zip_code,  :label => "Zip Code", :maxlength => "75" %></li>
-  <li><%= text_field  :fax,  :label => "Fax", :maxlength => "75" %></li>
   <li>
       <%= text_field :phone,  :label => "Phone", :class=>"short text", :maxlength => "75" %>
       <span class="phone-hint">(e.g. 1239076897)</span>
   </li>
   <li><%= text_field :email,  :label => "E-mail", :maxlength => "75" %></li>
+  <li><%= text_field  :fax,  :label => "Fax", :class => "short text", :maxlength => "75" %>
+      <span class="phone-hint">(e.g. 3210987654)</span>
+  </li>
+  <li><h3>Twitter Account (optional)</h3></li>
+  <li><h6>Following will be used for posting urgent announcements to your twitter account.</h6></li> <br/>
+  <li><%= text_field :username,  :label => "User Name", :maxlength => "75" %></li>
+  <li><%= password_field :password,  :label => "Password", :maxlength => "75" %></li>
+  
 </ul>
 <br />
 <div class="save-cancel">

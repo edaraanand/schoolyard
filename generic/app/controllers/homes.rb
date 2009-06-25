@@ -7,21 +7,33 @@ class Homes < Application
     
   def index
     @date = Date.today
+    @all_announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true])
     @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ? and expiration >= ?", 'Home Page', true, true, @date], :order => "created_at DESC", :limit => 4 )
+    @all_from_principals = @current_school.announcements.find(:all, :conditions => ["label = ?", 'from_principal'])
+    @urgent_announcements = @current_school.announcements.find(:all, :conditions => ["label = ? and expiration >= ?", 'urgent', @date], :order => "created_at DESC", :limit => 2)
     @from_principals = @current_school.announcements.find(:all, :conditions => ["label = ? and expiration >= ?", 'from_principal', @date], :order => "created_at DESC", :limit => 2)
     @external_links = @current_school.external_links.find(:all, :conditions => ['label = ?', "Home Page"])
     @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ["access_name = ?", "Home Page"])
     @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true], :order => "class_name ASC")
     @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ?', "Classes", true], :order => "class_name ASC")
     @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ?', "Extra Cirrcular", true ], :order => "class_name ASC")
+    @spot_light = @current_school.spot_lights.find(:first, :conditions => ['class_name = ?', "Home Page"], :order => 'created_at DESC')
+    
     render
   end
   
   def principal_articles
-      @from_principals = @current_school.announcements.paginate(:all, :conditions => ['label = ?', 'from_principal'], :per_page => 10,
- :page => params[:page] )
-      @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :order => "created_at DESC", :per_page => 10,
- :page => params[:page] )
+      @from_principals = @current_school.announcements.paginate(:all, 
+                                                                :conditions => ['label = ?', 'from_principal'], 
+                                                                :order => "created_at DESC",
+                                                                :per_page => 10,
+                                                                :page => params[:page] )
+      @announcements = @current_school.announcements.paginate(:all, 
+                                                              :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], 
+                                                              :order => "created_at DESC", 
+                                                              :per_page => 10,
+                                                              :page => params[:page] )
+      @urgent_announcements = @current_school.announcements.find(:all, :conditions => ["label = ?", "urgent"], :order => "created_at DESC")
       render
   end
   
@@ -48,6 +60,22 @@ class Homes < Application
     render :layout => 'help'
   end
   
+  
+  def home_spot_light
+     @spot_light = @current_school.spot_lights.find(params[:l])
+     render
+  end
+  
+  def lights
+     @spot_lights = @current_school.spot_lights.paginate(:all, 
+                                                      :conditions => ['class_name = ?', "Home Page"],
+                                                      :per_page => 3,
+                                                      :page => params[:page],
+                                                      :order => 'created_at DESC')
+      render
+  end
+  
+  
   def bio
     if params[:label] == "classes"
        @selected = "bio_classes"
@@ -63,7 +91,7 @@ class Homes < Application
   end
 
   def download
-     @attachment = Attachment.find(params[:id])
+     @attachment = @current_school.attachments.find(params[:id])
      send_file("#{Merb.root}/public/uploads/#{@attachment.id}/#{@attachment.filename}") 
   end
   

@@ -11,15 +11,15 @@
   <% if flash[:error2] %><li><%= flash[:error2] %> </li><% end %>
 </ul>
 
-<%= form_for(@parent, :action => resource(:registrations), :name => "registration" ) do %>
+<%= form_for(@parent, :action => resource(:registrations), :name => "registration", :onsubmit => "ClearAll()" ) do %>
   <fieldset>
     <ul>
       <li>
-      <%= text_field  :first_name,  :label => "Your Name", :class => "semi-short" %>
-      <%= text_field  :last_name, :class => "semi-short apart" %>
+      <%= text_field  :first_name,  :label => "Your Name", :class => "semi-short defaultText defaultTextActive", :title => "First Name" %>
+      <%= text_field  :last_name, :class => "semi-short apart defaultText defaultTextActive", :title => "Last Name" %>
       </li>
       <li>
-      <%= text_field  :email,  :label => "Your Email ID"%>
+      <%= text_field  :email, :class => "defaultText defaultTextActive",  :label => "Your Email ID", :title => "e.g. someone@example.com" %>
       </li>
     </ul>
   </fieldset>
@@ -30,8 +30,8 @@
   <fieldset>
     <ul>
       <li>
-        <%= text_field  :first_name,  :label => "Name", :class => "semi-short" %>
-        <%= text_field  :last_name, :class => "semi-short apart" %>
+        <%= text_field  :first_name,  :label => "Name", :class => "semi-short defaultText defaultTextActive", :title => "First Name" %>
+        <%= text_field  :last_name, :class => "semi-short apart defaultText defaultTextActive", :title => "Last Name" %>
       </li>
       <li>
         <label>Current Class:</label>
@@ -100,8 +100,8 @@
                      <div id="student2" style="display:none">
                        <fieldset><ul>
                           <li>
-                              <%= text_field  :name => "f_name_student2", :class => "semi-short", :label => "Name" %>
-                              <%= text_field  :name => "l_name_student2", :class => "semi-short apart" %>
+                            <%= text_field  :name => "f_name_student2", :class => "semi-short defaultText defaultTextActive", :label => "Name", :title => "First Name" %>
+                            <%= text_field  :name => "l_name_student2", :class => "semi-short apart defaultText defaultTextActive", :title => "Last Name" %>
                           </li>
                           <li>
                               <label>Current Class:</label>
@@ -165,8 +165,8 @@
                         <div id="student3" style="display:none">
                           <fieldset><ul>
                             <li>
-                                <%= text_field  :name => "f_name_student3", :class => "semi-short", :label => "Name" %>
-                                <%= text_field  :name => "l_name_student3", :class => "semi-short apart" %>
+                                <%= text_field  :name => "f_name_student3", :class => "semi-short defaultText defaultTextActive", :label => "Name", :title => "First Name" %>
+                                <%= text_field  :name => "l_name_student3", :class => "semi-short apart defaultText defaultTextActive", :title => "Last Name" %>
                             </li>
                             <li>
                                 <label>Current Class:</label>
@@ -197,8 +197,8 @@
                 <% else %>
                        <div id="student4" style="display:none">
                             <fieldset><ul><li>
-                                <%= text_field  :name => "f_name_student4", :class => "semi-short", :label => "Name" %>
-                                <%= text_field  :name => "l_name_student4", :class => "semi-short apart" %>
+                                <%= text_field  :name => "f_name_student4", :class => "semi-short defaultText defaultTextActive", :label => "Name", :title => "First Name" %>
+                                <%= text_field  :name => "l_name_student4", :class => "semi-short apart defaultText defaultTextActive", :title => "Last Name" %>
                             </li>
                             <li>
                                 <label>Current Class:</label>
@@ -221,45 +221,4 @@
 
       
  
-<script type= "text/javascript">
-
-  document.registration.parent_first_name.focus();
-
-
-  var student2_obj = document.getElementById('student2');
-  var student3_obj = document.getElementById('student3');
-  var student4_obj = document.getElementById('student4');
-  var am2_obj     = document.getElementById('am2');
-  var am3_obj     = document.getElementById('am3');
-  var am4_obj     = document.getElementById('am4');
- 
-  function add_student2()
-  {
-    student2_obj.style.display  =  "block";
-    am2_obj.style.display      =  "none";
-    am3_obj.style.display     =  "block";
-  }
-  
-  function add_student3()
-   {
-     student3_obj.style.display  =  "block";
-     am3_obj.style.display      =  "none";
-     am4_obj.style.display      =  "block"; 
-    }
-    
-  function add_student4()
-   {
-     student4_obj.style.display  =  "block";
-     am4_obj.style.display      =  "none";
-   }
-
-   $j("#DOB1").datepicker({ yearRange: '1970:2040'});
-    $j("#DOB2").datepicker({ yearRange: '1970:2040'});
-     $j("#DOB3").datepicker({ yearRange: '1970:2040'});
-      $j("#DOB4").datepicker({ yearRange: '1970:2040'});
-      
-      
- 
-
-</script>
-</div>
+<script type="text/javascript" src='/javascripts/registration.js'></script>

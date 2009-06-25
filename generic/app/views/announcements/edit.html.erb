@@ -11,7 +11,7 @@
               <li><label>Announcement for:</label><%= select :access_name, :collection => rooms, :prompt => "Please Select" %></li>
               <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
               <li><%= text_area  :content,  :label => "Description", :rows => "10", :cols => "50" %></li>
-              <li><%= text_field  :expiration, :id => "expiration", :label => "Expiration" %></li>
+              <li><%= text_field  :expiration, :class => "short date", :label => "Expiration" %></li>
               <li>
                  <% if @attachments.size >= 1 %>
                         <%= file_field :attachment,  :label => "Attach a File", :disabled => "true" %>
@@ -66,7 +66,7 @@
    
  }
   
-  $j("#expiration").datepicker({minDate:'today + 1'});
+   $j("input.date").datepicker({minDate:'today + 1'});
   
   
   

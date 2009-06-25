@@ -1,4 +1,3 @@
----
 # This is a sample database file for the ActiveRecord ORM
 :development: &defaults
   :adapter: sqlite3
@@ -15,5 +14,3 @@
 :rake:
   <<: *defaults
   :database: db/schoolapp_production
-  
-  

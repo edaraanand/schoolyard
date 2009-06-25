@@ -1,8 +1,7 @@
    <%= partial 'layout/main' %>
        
     <div id="content-wrap"><!--Wraps The content Area-->
-      <div class="hrule clear hidden "><hr /></div>
-      <div id="content"><!--Content Area Starts here-->
+      <div id="content" class="one-col"><!--Content Area Starts here-->
         <%= catch_content :for_layout %>
       </div><!--Content End-->
     </div><!--Content Wrap End -->
@@ -12,7 +11,8 @@
     
     <!--Right Sidebar to be inserted here-->    
   <div class="hrule clear hidden "><hr /></div>
-  </div><!--Pagewrap End -->
   <%= partial 'common/footer' %>
+  </div><!--Pagewrap End -->
+  <script type="text/javascript"> var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); </script> <script type="text/javascript"> try { var pageTracker = _gat._getTracker("UA-8953231-1"); pageTracker._trackPageview(); } catch(err) {}</script>
 </body>
 </html>

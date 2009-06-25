@@ -8,14 +8,14 @@
 <h2 class="current-page">Parent Registrations </h2>
 
   
-<div class="fullpage announcemt">
+<div class="">
   
     <dl>
        <dt>Name</dt>
-         <dd> <%= @parent.name %></dd>
-       </dl>
+       <dd> <%= @parent.name %></dd>
+    </dl>
     <dl>
-    <dt class="separator">Email:</dt>
+       <dt class="separator">Email:</dt>
        <dd class="separator"> <%= @parent.email %></dd>
     </dl>
      <br class="clear"/>
@@ -31,33 +31,36 @@
          <% @studs = Student.find( :all, :joins => :studies, :conditions => ["first_name = ? AND last_name = ? AND birth_date = ? AND studies.classroom_id = ?" , f.first_name, f.last_name, f.birth_date, @class.id ] ) %>
              
             <% if @studs.empty? %>
-              <br class="clear"/>
-              <div>
-                <span class="reject"><%= @not_exist %></span><br/>
-                Please select the student to map this parent to:<br/>
-                <%= select :name => "student_not_found[]", :prompt => "Please Select", :collection => @students.collect{|x| x.name } %>
-                
+                 <br class="clear"/>
+                 <div>
+                   <span class="reject"><%= @not_exist %></span><br/>                                                                                                                                                          
+                       Please select the student &amp; class to map this parent to:<br/>
+                    <% if params[:label] %>
+             <dd><%= select :name => "class_not_found[]",  :prompt => "Classroom - Please Select", :collection => @classrooms.collect{|x| x.class_name }, :selected => @room.class_name, :onchange => "javascript:window.location.href='/approval_review?label='+(this.value)+'&id=#{f.parent_id}'" %></dd>
+                    <% else %>
+                        <dd><%= select :name => "class_not_found[]",  :prompt => "Classroom - Please Select", :collection => @classrooms.collect{|x| x.class_name }, :onchange => "javascript:window.location.href='/approval_review?label='+(this.value)+'&id=#{f.parent_id}'" %></dd>
+                    <% end %>
+                    <dd><%= select :name => "student_not_found[]", :prompt => "Student - Please Select", :collection => @students.collect{|x| x.name } %></dd>
             <% else %>
-            <dt></dt>
-            
-                 <dd><%= @exist %></dd>
-                   <dd><%= select :name => "class_found[]", :prompt => "Please Select", :collection => @classrooms.collect{|x| x.class_name.titleize } %></dd>
-                   <dd><%= select :name => "student_found[]", :prompt => "Please Select", :collection => @students.collect{|x| x.name } %></dd>
-              <% end %> 
+                   <dt></dt>
+                   <dd><%= @exist %></dd>
+                   <dd><%= select :name => "class_found[]", :prompt => "Classroom - Please Select", :collection => @classrooms.collect{|x| x.class_name } %></dd>
+                   <dd><%= select :name => "student_found[]", :prompt => "Student - Please Select", :collection => @students.collect{|x| x.name } %></dd>
+            <% end %> 
                <br/><br/><br/>
-               <h4><b>Details entered by the parent</b></h4>
-            <dl>                                                                                        
-               <dt>Name</dt>
-               <dd> <%= f.name %> </dd>
-               
-            </dl> 
-          </dl>    
+               <h4 style="clear:both"><b>Details entered by the parent</b></h4>
+               <dl>                                                                                        
+                  <dt>Name</dt>
+                  <dd> <%= f.name %> </dd>
+               </dl>
            
           <dl> 
              <dt>Current Class</dt>
              <dd><%= f.current_class.titleize %> </dd>
-              
-               </dl> 
+          </dl> 
+          <dl> 
+              <dt>Date of Birth</dt>
+              <dd><%= f.birth_date.strftime("%B %d %Y") %> </dd>
           </dl> 
             
      <% end %>
@@ -65,7 +68,10 @@
       <hr size="1"  class="clear"/>
       <br/><br/>
             <input type="hidden" name="approvetype" />
-            <a href="javascript:getsupport('Approve & Grant Access')" class="reactive">Approve &amp; Grant Access </a>&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:getsupport('Reject')" class="deactive">Reject</a> 
+            <a href="javascript:getsupport('Approve &amp; Grant Access')" class="reactive">Approve &amp; Grant Access </a>
+            <br />
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:getsupport('Reject')" class="deactive">Reject</a> 
       </div>
       
  
@@ -83,14 +89,8 @@
       document.approveform.submit() ;
     }
 
-   function students(x)
-    {
-      alert("Eshwar");
-      alert(x);
-      var y = document.getElementById('class_not_found[]').options.selectedIndex
-      alert(y);
-     
-    }
+  
+                         
     
   
 

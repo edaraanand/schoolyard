@@ -1,0 +1,28 @@
+ <div id="content"  class="two-col">
+        <h2 class="current-page"> 
+            Announcements &nbsp;&nbsp;&nbsp;
+            <%= link_to_right((right = "announcement"), "Add New", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+        </h2> 
+        <% if @announcements.blank? %>
+            <span class="subText">There are no Announcements at this time</span>
+        <% else %>
+            <% for announcement in @announcements %>
+                 <div class="data-block short-block">
+                       <div class="ddmmm">
+                            <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
+                            <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
+                       </div>
+                       <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann" ) %></h3>
+                       <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> |
+                       <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
+                       <p class="separator"><%= snippet(announcement.content,50) %></p>
+                       <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", announcement.id, "Announcement"] ) %>
+                          <% unless @attachment.nil? %>
+                               <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
+                          <% end %>
+                </div>
+            <% end %>
+                
+               <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+           </div>    
+        <% end %>

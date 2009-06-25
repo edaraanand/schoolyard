@@ -1,54 +1,61 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
 <head> 
-<title><%= @current_school.school_name %>, <%= @current_school.email %>, <%= number_to_phone(@current_school.phone, :area_code => true) %> </title>
+<title><%= @current_school.school_name %></title>
 
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-  <link rel="stylesheet" href="/stylesheets/ui.datepicker.css" type="text/css" media="screen" charset="utf-8" />
   <link rel="stylesheet" href="/stylesheets/clockpick.1.2.4.css" type="text/css" media="screen" charset="utf-8" />
-  <link rel="stylesheet" href="/stylesheets/modalpreview.css" type="text/css" media="screen" charset="utf-8" />
   <link rel="stylesheet" href="/stylesheets/listnav.css" type="text/css" media="screen" charset="utf-8" />
-  <link rel="stylesheet" href="/stylesheets/rte.css" type="text/css" media="screen" charset="utf-8" />
   <link rel="stylesheet" href="/stylesheets/global.css" type="text/css" media="screen" />
   <link rel="stylesheet" href="/stylesheets/facebox.css" type="text/css" media="screen" charset="utf-8" />
-  <link rel="stylesheet" href="/stylesheets/widgEditor.css" type="text/css" media="screen" charset="utf-8" />
- 
+  <link rel="stylesheet" href="/stylesheets/ui.datepicker.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="/stylesheets/prompt.css" type="text/css" media="screen" charset="utf-8" />
   
-  <script src='/javascripts/prototype.js'></script>
-  <script src='/javascripts/removefile.js'></script>
-  <script src='/javascripts/jquery.js'></script>
-  <script src='/javascripts/jquery.highlightFade.js'></script>
-  <script src='/javascripts/jquery.MultiFile.js'></script>
-  <script src='/javascripts/jquery.hint.js'></script>
-  <script src='/javascripts/jquery.modalpreview.js'></script>
-  <script src='/javascripts/jquery-dynamic-form.js'></script>
-  <script src='/javascripts/ui-datepicker-1.5.2.min.js'></script>
-  <script src='/javascripts/jquery.clockpick.1.2.4.js'></script>
-  <script src='/javascripts/util-functions.js'></script>
-  <script src='/javascripts/clear-default-text.js'></script>
-  <script src='/javascripts/facebox.js'></script>
-  <script src='/javascripts/face.js'></script>
-  <script src='/javascripts/jquery.validate.js'></script>
-  <script src='/javascripts/jquery.rte.js'></script>
-  <script src='/javascripts/widgEditor.js'></script>
-  <script src='/javascripts/default.js'></script>
-  <script>  jQuery.noConflict(); </script>
-  <script>  var $j = jQuery; </script>
-        <%= include_required_js %>
+  
+ 
+  <script type="text/javascript" src='/javascripts/prototype.js'></script>
+  <script type="text/javascript" src='/javascripts/jquery.js'></script>
+  <script type="text/javascript" src='/javascripts/ui-datepicker-1.5.2.min.js'></script>
+  <script type="text/javascript" src='/javascripts/facebox.js'></script>
+  <script type="text/javascript" src='/javascripts/face.js'></script>
+  <script type="text/javascript" src='/javascripts/jquery.rte.js'></script>
+  <script type="text/javascript" src='/javascripts/widgEditor.js'></script>
+  <script type="text/javascript" src='/javascripts/jquery.charcounter.js'></script>
+  <script type="text/javascript" src='/javascripts/jquery-impromptu.2.5.js'></script>
+  <script type="text/javascript" src='/javascripts/jquery.maskedinput-1.2.2.js'></script>
+  <script type="text/javascript" src='/javascripts/removefile.js'></script>
+  <script type="text/javascript" src='/javascripts/jquery.MultiFile.js'></script>
+  <script type="text/javascript" src='/javascripts/jquery.clockpick.1.2.4.js'></script>
+  <script type="text/javascript">  jQuery.noConflict(); </script>
+  <script type="text/javascript">  var $j = jQuery; </script>
+      
+  <%= include_required_js %>    
+  
 </head>
 <body class="fixed-width">
   <div id="page-wrap"><!-- Wraps everything -->
   <div id="header"><!--The Header -->
-  <h1><%= link_to "#{@current_school.school_name}", resource(:homes) %></h1>
+    <h1>
+              <%= link_to "#{@current_school.school_name}", resource(:homes) %>
+            </h1>
+            <div class="school-contact">
+             <% unless @current_school.email.blank? %>
+                <%= email(@current_school.email) %>
+             <% end %>
+              <% unless @current_school.phone.blank? %>
+                <%="| #{number_to_phone(@current_school.phone, :area_code => true)}"%>
+              <% end %>
+            </div>
       <div id="user-cp"><!--User Control Panel -->
        <p class="welcome">Welcome <em><%= session.user.name %></em></p>
         <ul>  <% @access_rights = session.user.access_peoples  %>
          <% if @access_rights.length == 0 %>
-         <li class="first"><%= link_to "My Account", url(:parent_account) %></li>
+             <li class="first"><%= link_to "My Account", url(:parent_account) %></li>
          <% else %>
              <li class="first"><%= link_to "My Account", url(:staff_account) %>&nbsp;</li>
          <% end %>
+            <li>&nbsp;<%= link_to "Feedback", url(:feedback, :new)  %></li>
             <li>&nbsp;<%= link_to "Logout", url(:logout) %></li>
         </ul>
       </div><% @sports_class = @current_school.classrooms.find(:first, :conditions => ['class_name = ? and activate =  ?', "Sports", true] ) %>

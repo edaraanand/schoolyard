@@ -1,0 +1,26 @@
+<div id="fullpage">
+  <h2 class="current-page"> Spotlights for Home Page </h2>
+   
+     <% unless @spot_lights.empty? %>
+      
+           <% for spot in @spot_lights %>
+               <div class="data-block short-block">
+                    <div class="ddmm">
+                          <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", spot.id]) %>
+                        <% unless @attachment.nil? %>  
+                           <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
+                        <% end %>
+                    </div>
+                    
+                    <h3><%= link_to "#{spot.student_name}", url(:home_spot_light, :l => spot.id) %></h3>
+                    <span  class="subText"><%= spot.created_at.strftime("%b %d %Y") %></span>
+                    <p><%= snippet(spot.content, 50) %></p>
+                       <p class="separator">&nbsp;</p> 
+                </div>
+           <% end %>
+           <%= will_paginate (@spot_lights, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+      <%= link_to " < Back to Home Page ", url(:homes) %>
+     <% end %>
+    
+</div>
+

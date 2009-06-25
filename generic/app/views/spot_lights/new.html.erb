@@ -8,15 +8,16 @@
        <% end %>
    </ul>
  
- <h2 class="current-page">Spot Light &gt; Add New</h2>
+ <h2 class="current-page">Spotlight &gt; Add New</h2>
  
  <%= form_for(@spot_light, :action => resource(:spot_lights) ) do %>
     <fieldset>
          <ul>
-            <li><label>Spotlight for:</label><%= select :class_name, :collection => @classrooms, :prompt => "Please Select" %></li>
+         <li><label>Spotlight for:</label><%= select :class_name, :collection => @classrooms, :prompt => "Please Select", :selected => "#{params[:l]}" %></li>
             <li><label>Student </label><%= select :student_name, :collection => @students.collect{|x| x.name }, :prompt => "Please Select" %></li>
+            <li><%= file_field :image, :label => "Upload Picture (optional)" %></li>
             <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
-            <li><%= file_field :image, :label => "Upload Picture" %></li>
+
          </ul>
     </fieldset>
  

@@ -17,17 +17,17 @@
                <li><%= select :class_type, :label => "Class Type", :collection => @class_types, :onchange => "class_type();return false;" %></li>
                    
                 <% if (@id == ["please"]) && (@class_type == "Classes") %>
-                     <div id="class_name" style="display:block">
-                          <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></li>
-                     </div>
+                     
+                          <li><div id="class_name" style="display:block"><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></div></li>
+                     
                 <% elsif (@id == ["please"]) || (@class_type == "Sports") %>
-                     <div id="class_name" style="display:none">
-                          <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></li>
-                     </div>
+                     
+                          <li><div id="class_name" style="display:none"><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></div></li>
+                     
                 <% else %>
-                     <div id="class_name" style="display:block">
-                          <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></li>
-                     </div>
+                     
+                          <li><div id="class_name" style="display:block"><%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %></div></li>
+                     
                 <% end %>
                      
               <li>
@@ -67,7 +67,7 @@
            <input type="hidden" id="id" value="1">
             <div id="divTxt"></div>
              
-          <a href="#"  class="add-more"  onClick="addFormField(); return false;">Add More</a>
+          <div><a href="#"  class="add-more"  onclick="addFormField(); return false;">Add More</a></div>
             
         <div class="save-cancel">
             <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
@@ -77,12 +77,12 @@
 
 <script type= "text/javascript">
   
-  document.class.classroom_class_name.focus();
+  
 
   function addFormField()
   {
     var id = document.getElementById('id').value;
-    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short text' name='class[people][role][]' id='txt" + id + "'><select class='apart' name='class[people][teacher][]'><option value='please'>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' class='remove' onClick='removeFormField(\"#row" + id + "\"); return false;'>remove</a><p>");
+    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short text' name='class[people][role][]' id='txt" + id + "'><select class='apart' name='class[people][teacher][]'><option value='please'>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' class='remove' onclick='removeFormField(\"#row" + id + "\"); return false;'>remove</a><p>");
     $('txt'+id).focus();
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
@@ -93,6 +93,7 @@
          $j(id).remove();
     }
     
+    document.class.classroom_class_name.focus();
     
     function class_type()
     {

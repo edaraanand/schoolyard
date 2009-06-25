@@ -1,11 +1,26 @@
 
+<% if params[:welcome_message][:access_name] == "Home Page" %>
 
+        <div id="sidebar" class="left-block">
+             <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
+             <% unless @attachment.nil? %>
+                  <img src="/uploads/principal_images/<%= @attachment.filename %>" alt=" ", class = "prinPic"/>
+             <% else %>
+                  <img src="/images/principal.png" alt="From The Principal"/>
+             <% end %>
+             
+             <p class="separator">&nbsp;</p>
+             <div class="page-links">
+                 <%= link_to "All Articles", url(:principal_articles, :label => 'principal'), :class =>'all-articles' %>
+             </div>
+         </div>
+<% end %>
 
 
   <div id="content"><!--Content Area Starts here-->
        
           <p class="post-content"><%= params[:welcome_message][:content] %></p>
         
-        <h2 class="current-page">Announcements &amp; Updates </h2>
-          <p class="subText">There are no Announcements at this time.</p>
+          <h2 class="current-page">Announcements &amp; Updates </h2>
+          <p class="subText">There are no announcements at this time</p>
   </div>

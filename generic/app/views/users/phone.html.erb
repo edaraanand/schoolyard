@@ -1,0 +1,59 @@
+<h2 class="current-page"> Phone Alert Settings </h2>
+
+       <%= error_messages_for @person %>
+       <p>  
+           Urgent alerts would be sent on your email and displayed on homepage of this application. 
+           If you would also like to receive text/voice alerts, please provide phone numbers below
+       </p>
+       
+       <fieldset>                  
+                  <% if @person.sms_alert.blank? %>
+                      <%= partial 'sms_form' %>
+                  <% end %>
+                  
+                  <% if @person.voice_alert.blank? %>
+                         <%= partial 'voice_form' %>
+                  <% end %>
+                       
+                  <% unless @person.voice_alert.blank? %>
+                        <div id="voice" style="display:block">
+                            <%= partial 'voice' %>
+                        </div>
+                        <div id="alert" style="display:none">
+                            <%= partial 'voice_form' %>
+                        </div>
+                  <% end %>
+                  
+                  <% unless @person.sms_alert.blank? %>
+                        <div id="sms" style="display:block">
+                             <%= partial 'sms' %>
+                        </div>
+                        <div id="sms_f" style="display:none">
+                             <%= partial 'sms_form' %>
+                        </div>
+                  <% end %>
+                  
+      </fieldset>
+        
+        
+<script type= "text/javascript">       
+        
+    function voice()
+      {
+        var voice = document.getElementById('voice');
+        var voice_edit = document.getElementById('alert');
+        
+        voice.style.display  =  "none";
+        voice_edit.style.display   =  "block";
+      }
+  
+      function sms()
+      {
+        var sms = document.getElementById('sms');
+        var sms_edit = document.getElementById('sms_f');
+        
+        sms.style.display  =  "none";
+        sms_edit.style.display   =  "block";
+      }
+  
+</script>        

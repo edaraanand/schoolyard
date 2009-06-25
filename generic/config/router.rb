@@ -58,7 +58,10 @@ Merb::Router.prepare do
     match("/new_staff_password").to(:controller => 'registrations', :action => 'new_staff_password').name(:new_staff_password)
     match("/password_staff").to(:controller => 'registrations', :action => 'password_staff').name(:password_staff)
     match("/staff_password_save").to(:controller => 'registrations', :action => 'staff_password_save').name(:staff_password_save)
-
+    match("/reminder").to(:controller => 'notifications', :action => 'reminder').name(:reminder)
+    match("/directions").to(:controller => 'notifications', :action => 'directions').name(:directions)
+    match("/goodbye").to(:controller => 'notifications', :action => 'goodbye').name(:goodbye)
+    
  
   authenticate do
        resources :parents
@@ -80,6 +83,8 @@ Merb::Router.prepare do
        resources :forms
        resources :spot_lights
        resources :admin
+       resources :feedbacks
+       resources :notifications
        resources :ranks
        match("/view_report").to(:controller => 'reports', :action => 'view_report').name(:view_report)
        match("/rank/edit").to(:controller => 'ranks', :action => 'edit').name(:ranks_edit)
@@ -90,6 +95,11 @@ Merb::Router.prepare do
        match("/score").to(:controller => 'reports', :action => 'score').name(:score)
        match("/grades").to(:controller => 'reports', :action => 'grades').name(:grades)
        match("/assignments").to(:controller => 'reports', :action => 'assignments').name(:assignments)
+       match("/subscription").to(:controller => 'users', :action => 'subscription').name(:subscription)
+       match("/phone").to(:controller => 'users', :action => 'phone').name(:phone)
+       match("/voice_update").to(:controller => 'users', :action => 'voice_update').name(:voice_update)
+       match("/phone_update").to(:controller => 'users', :action => 'phone_update').name(:phone_update)
+       match("/feedback_reply").to(:controller => 'feedbacks', :action => 'feedback_reply').name(:feedback_reply)
        match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
        match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
        match("/alerts_edit").to(:controller => 'alerts', :action => 'edit').name(:alert_edit)
@@ -130,6 +140,12 @@ Merb::Router.prepare do
        match("/settings_update").to(:controller => 'from_principals', :action => 'settings_update').name(:settings_update)
        match("/sports").to(:controller => 'teams', :action => 'sports').name(:sports)
        match("/school_admin").to(:controller => 'schools', :action => 'school_admin').name(:school_admin)
+       match("/home_spot_light").to(:controller => 'homes', :action => 'home_spot_light').name(:home_spot_light)
+       match("/lights").to(:controller => 'homes', :action => 'lights').name(:lights)
+       match("/new_settings").to(:controller => 'from_principals', :action => 'new_settings').name(:new_settings)
+       match("/create_settings").to(:controller => 'from_principals', :action => 'create_settings').name(:create_settings)
+       match("/edit_details").to(:controller => 'from_principals', :action => 'edit_details').name(:edit_details)
+       match("/update_details").to(:controller => 'from_principals', :action => 'update_details').name(:update_details)
        match(:first_subdomain => 'admin').to(:controller => 'admin', :action => 'index') 
    end
    

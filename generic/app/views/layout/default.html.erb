@@ -5,6 +5,7 @@
       <ul id="menu"><!-- Nested Lists -->
         <li>Site Settings<ul>
            <li <% if @selected == "school_profile" %> class="on" <% end %>><%= link_to_if((right = "basic_settings"), "Basic Settings", url(:schools)) %></li>
+           <li <% if @selected == "feedback" %> class="on" <% end %>><%= link_to_if((right = "feedback"), "Feedback", url(:feedbacks)) %></li>
            <li <% if @selected == "class_rooms" %> class="on" <% end %>><%= link_to_if((right = "classes"), "Classrooms", url(:classrooms) )  %></li>
           </ul>
         </li>
@@ -17,6 +18,7 @@
         <% @announcements = @current_school.announcements.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ]) %>
         <% @sports_class = @current_school.classrooms.find(:first, :conditions => ['class_name = ? and activate =  ?', "Sports", true] ) %>
         <li>Content<ul>
+          <li <% if @selected == "urgent_announcement" %> class="on" <% end %> ><%= link_to "Urgent Announcements", url(:notifications) %></li>
           <li <% if @selected == "approve" %> class="on" <% end %> ><%= link_to_if((right = "approve_announcement"), "Pending Approvals <span><b>#{@announcements.length}</b></span>", url(:approvals) ) %></li>
           <li <% if @selected == "from_principal" %> class="on" <% end %>><%= link_to_if((right = "from_principal"), "From the Principal", url(:from_principals)) %></li>
           <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_if((right = "announcements"), "Announcements", url(:announcements)) %></li>
@@ -27,20 +29,19 @@
           <li  <% if @selected == "grades" %> class="on" <% end %>><%= link_to_if((right = "grades"), "Grades/Reports", url(:reports) ) %></li>
           <li <% if @selected == "e_links" %> class="on" <% end %>><%= link_to_if((right = "external_links"), "External Links", url(:external_links) ) %></li>
           <% unless @sports_class.nil? %>
-              <li <% if @selected == "teams" %> class="on" <% end %>><%= link_to_if((right = "teams"), "Sports Teams", url(:teams)) %></li>
+              <li <% if @selected == "teams" %> class="on" <% end %>><%#= link_to_if((right = "teams"), "Sports Teams", url(:teams)) %></li>
           <% end %>
           <li <% if @selected == "forms" %> class="on" <% end %>><%= link_to_if((right = "forms"), "Forms", url(:forms)  ) %></li>
           <li><%#= link_to "Advertising" %></li>
           </ul>                                                                                                      
         </li>
-        <li>Directories<ul>
+        <li>Directory<ul>
         <li <% if @selected == "students" %> class="on" <% end %>><%= link_to_if((right = "manage_directories"), "Students", url(:students)) %></li>
           </ul>
         </li>
       </ul>
     </div><!-- Sidebar Ends -->
     <div id="content-wrap"><!--Wraps The content Area-->
-      <div class="hrule clear hidden "><hr /></div>
       <div id="content"><!--Content Area Starts here-->
         <%= catch_content :for_layout %>
       </div><!--Content End-->
@@ -50,7 +51,9 @@
     
     <!--Right Sidebar to be inserted here-->    
   <div class="hrule clear hidden "><hr /></div>
-  </div><!--Pagewrap End -->
   <%= partial 'common/footer' %>
+  </div><!--Pagewrap End -->
+  
+  <script type="text/javascript"> var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); </script> <script type="text/javascript"> try { var pageTracker = _gat._getTracker("UA-8953231-1"); pageTracker._trackPageview(); } catch(err) {}</script>
 </body>
 </html>

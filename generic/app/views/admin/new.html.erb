@@ -2,14 +2,11 @@
 <%= error_messages_for @person %>
 
 
-<h2 class="current-page">School Apps Setup > Add New School</h2>
-<fieldset>
-
-      <%= form_for(@school, :action => resource(:admin), :name => "school") do  %>
-    
+<%= form_for(@school, :action => resource(:admin), :name => "school") do  %>
+     <h2 class="current-page">School Apps Setup > Add New School</h2>
              <%= partial 'form' %>
   
-      <% end =%>
+<% end =%>
       
-</fieldset>
+
 

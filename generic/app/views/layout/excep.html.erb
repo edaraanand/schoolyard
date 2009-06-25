@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
   <head>
     <title>There was an error</title>
@@ -17,7 +17,10 @@
         a:active{color:#000;}
     </style>
       
-  </head>
+  	<link rel="stylesheet" type="text/css" href="style.css" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="style-ie.css" />
+	<![endif]--></head>
 <body>
   
   <div id="container">
@@ -25,5 +28,6 @@
     <%= catch_content :for_layout %>
     <%= partial 'common/footer' %>
   </div>
+  <script type="text/javascript"> var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); </script> <script type="text/javascript"> try { var pageTracker = _gat._getTracker("UA-8953231-1"); pageTracker._trackPageview(); } catch(err) {}</script>
 </body>
 </html>                                  

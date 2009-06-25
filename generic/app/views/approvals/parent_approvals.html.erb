@@ -2,191 +2,59 @@
 
 
 
-<%= form_for(@parent, :action => url(:parent_approvals), :method => 'get') do %>
-       <% if params[:approve_status].nil? %>
-               <span class="select-announce"><%= select :name => "approve_status", :collection => @app, :label => "View :" %><%= submit "    Go    " %></span>
+View :  <select id = 'parentID'>
+             <option value = '/parent_approvals' <% if (@test == "registrations") %> selected <% end %> >All Registrations</option>
+             <option value = '/parent_approvals?label=approved' <% if (@test == "approved") %> selected <% end %> >Approved</option>
+             <option value = '/parent_approvals?label=rejected' <% if (@test == "rejected") %> selected <% end %> >Rejected</option>
+             <option value = '/parent_approvals?label=pending' <% if (@test == "pending") %> selected <% end %> >Pending Approvals</option>
+        </select>
+
+        
+       <% if  @parents.empty? %>
+             <p class="subText">There are no registrations at this time.</p>
        <% else %>
-               <span class="select-announce"><%= select :name => "approve_status", :selected => params[:approve_status], :collection => @app, :label => "View :" %><%= submit "    Go    " %></span>
-       <% end %>
-<% end =%>
-
-
-
-
-    <% if params[:approve_status] == "All Registrations" %>
-      <%if  @all_parents.empty? %>
-        <p class="subText">There are no registrations at this time.</p>
-    <%else%>
-            <table id="mytable">
-               <thead>
-                     <th>Name</th>
-                     <th>Student</th>
-                     <th>Date of Birth</th>
-                     <th>Status</th>
-               </thead>
-            <tbody>
-           <% for parent in @all_parents %>
-                  <tr>
-                      <td><%= link_to "#{parent.name}", url(:approval_review, :id => parent) %> </td>
-                      <% @students = Registration.find(:all, :conditions => ['parent_id = ?', parent.id]) %>
-                        <% @students.each do |f| %>
-                            <td><%= f.name %></td>
-                            <td><%= f.birth_date.strftime("%b %d, %Y") %></td>
-                            <td>
-                                <% if parent.approved==1%>
-                                   <span class="approved">Approved</span>
-                                <%elsif parent.approved==2%>
-                                  Pending Approval
-                                <%else%>
-                                  <span class="reject">Rejected</span>
-                                  <%end%>
-                              </td>
-                        <% end %>
-                  </tr>
-             <% end %>
-                </tbody>
-          </table>
-          <%= will_paginate (@all_parents, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-        <% end %>
- <% elsif params[:approve_status] == "Approved" %>
-               <% if @approved_parents.nil? %>
-                   <p class="subText">There are no approved registrations at this time.</p>
-               <%else%>
-                     <table id="mytable">
-                         <thead>
-                               <th>Name</th>
-                               <th>Student</th>
-                                <th>Date of Birth</th>
-                                <th>Status</th>
-                         </thead>
-                         <tbody>
-                                <% for ap in @approved_parents %>
-                                       <tr>
-                                           <td><%= link_to "#{ap.name}", url(:approval_review, :id => ap) %> </td>
-                                            <% @students = Registration.find(:all, :conditions => ['parent_id = ?', ap.id]) %>
-                                            <% @students.each do |f| %>
-                                                 <td><%= f.name %></td>
-                                                 <td><%= f.birth_date.strftime("%b %d, %Y") %></td>
-                                                  <td>
-                                <% if ap.approved==1%>
-                                 <span class="approved">Approved</span>
-                                <%elsif ap.approved==2%>
-                                  Pending Approval
-                                <%else%>
-                                  <span class="reject">Rejected</span>
-                                  <%end%>
-                              </td>
-                                            <% end %>
-                                       </tr>
-                                <% end %>
-                         </tbody>
-                    </table>
-                    <%= will_paginate (@approved_parents, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-              <% end %>
-              
-  <% elsif params[:approve_status] == "Pending Approvals" %>   
-                <% if  @pending_parents.blank? %>
-                  <p class="subText">There are no registrations that are pending approvals.</p>
-                <%else%>
-                     <% for ap in @pending_parents %>
-                      <table id="mytable">
-                         <thead>
-                               <th>Name</th>
-                               <th>Student</th>
-                                <th>Date of Birth</th>
-                                <th>Status</th>
-                         </thead>
-                         <tbody>
+              <table id="mytable"  cellspacing="0" cellpadding="0">
+                   <thead>
+                         <th>Name</th>
+                         <th>Student</th>
+                         <th>Date of Birth</th>
+                         <th>Status</th>
+                   </thead>
+                   <tbody>
+                         <% for parent in @parents %>
                                 <tr>
-                                    <td><%= link_to "#{ap.name}", url(:approval_review, :id => ap) %> </td>
-                                    <% @students = Registration.find(:all, :conditions => ['parent_id = ?', ap.id]) %>
-                                    <% @students.each do |f| %>
-                                          <td><%= f.name %></td>
-                                          <td><%= f.birth_date.strftime("%b %d, %Y") %></td>
-                                           <td>
-                                <% if ap.approved==1%>
-                                  <span class="approved">Approved</span>
-                                <%elsif ap.approved==2%>
-                                  Pending Approval
-                                <%else%>
-                                  <span class="reject">Rejected</span>
-                                  <%end%>
-                              </td>
-                                    <% end %>
-                                </tr>
-                         </tbody>
-                    </table>
-                  <% end %>
-                <%= will_paginate (@pending_parents, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>          
-              <% end %>
-  <% elsif params[:approve_status] == "Rejected" %>           
-            <% if @reject_parents.nil? %>
-              <p class="subText">There are no rejected registrations at this time.</p>
-            <%else%>
-                  <% for rp in @reject_parents %>
-                       <table id="mytable">
-                           <thead>
-                                 <th>Name</th>
-                                 <th>Student</th>
-                                 <th>Date of Birth</th>
-                                 <th>Status</th>
-                          </thead>
-                           <tbody>
-                                   <tr>
-                                       <td><%= link_to "#{rp.name}", url(:approval_review, :id => rp) %> </td>
-                                       <% @students = Registration.find(:all, :conditions => ['parent_id = ?', rp.id]) %>
-                                       <% @students.each do |f| %>
+                                    <td><%= link_to "#{parent.name}", url(:approval_review, :id => parent) %> </td>
+                                        <% @students = Registration.find(:all, :conditions => ['parent_id = ?', parent.id]) %>
+                                        <% @students.each do |f| %>
                                             <td><%= f.name %></td>
                                             <td><%= f.birth_date.strftime("%b %d, %Y") %></td>
                                              <td>
-                                <% if rp.approved==1%>
-                                 <span class="approved">Approved</span>
-                                <%elsif rp.approved==2%>
-                                  Pending Approval
-                                <%else%>
-                                  <span class="reject">Rejected</span>
-                                  <%end%>
-                              </td>
-                                       <% end %>
-                                   </tr>
-                           </tbody>
-                     </table>
-                 <% end %>
-               <%= will_paginate (@reject_parents, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-             <% end %>
-   <% else %>
-     <%if  @parents.empty? %>
-       <p class="subText">There are no registrations at this time.</p>
-      <%else%>
-              <table id="mytable">
-               <thead>
-                     <th>Name</th>
-                     <th>Student</th>
-                     <th>Date of Birth</th>
-                     <th>Status</th>
-               </thead>
-            <tbody>
-           <% for parent in @parents %>
-                  <tr>
-                      <td><%= link_to "#{parent.name}", url(:approval_review, :id => parent) %> </td>
-                      <% @students = Registration.find(:all, :conditions => ['parent_id = ?', parent.id]) %>
-                        <% @students.each do |f| %>
-                            <td><%= f.name %></td>
-                            <td><%= f.birth_date.strftime("%b %d, %Y") %></td>
-                             <td>
-                                <% if parent.approved==1%>
-                                  <span class="approved">Approved</span>
-                                <%elsif parent.approved==2%>
-                                  Pending Approval
-                                <%else%>
-                                  <span class="reject">Rejected</span>
-                                <%end%>
-                              </td>
-                        <% end %>
-                      </tr>
-            <% end %>
-            </tbody>
-          </table>
-          <%= will_paginate (@parents, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-   <% end %> 
-  <% end %> 
+                                                <% if parent.approved==1 %>
+                                                  <span class="approved">Approved</span>
+                                                <% elsif parent.approved==2 %>
+                                                  Pending Approval
+                                                <% else %>
+                                                  <span class="reject">Rejected</span>
+                                                <%end%>
+                                              </td>
+                                        <% end %>
+                                    </tr>
+                         <% end %>
+                  </tbody>
+             </table>
+               <%= will_paginate (@parents, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+        <% end %> 
+
+        
+        
+        
+        
+<script type = 'text/javascript'>
+
+        $( 'parentID' ).observe( 'change', function()
+          {
+            document.location.href = $( 'parentID' ).value;
+          
+          });
+       
+</script>

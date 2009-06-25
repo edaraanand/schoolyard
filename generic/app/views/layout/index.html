@@ -1,11 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>School Apps : Tryout HTML</title>
     <link rel="stylesheet" href="css/all.css" media="all" />
     <link rel="stylesheet" href="../../../public/stylesheets/global.css" type="text/css" media="screen" />
-</head>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="style-ie.css" />
+	<![endif]--></head>
 
 <body class="fixed-width">
 <div id="page-wrap"><!-- Wraps everything -->
@@ -29,7 +32,7 @@
                     <li><a href="#" class="admin"><span>Administration</span></a></li>
                     <li><a href="#" class="help-contact"><span>help/contact</span></a></li>
                 </ul>
-    <div class="hrule clear"><hr /></div><!-- gives bottom border to the Navigation.-->
+   <p class="separator">&nbsp;</p><!-- gives bottom border to the Navigation.-->
             </div><!--Navbar End-->
         </div><!--Header End -->
         <div id="sidebar">
@@ -68,7 +71,6 @@
 
     <div id="content-wrap"><!--Wraps The content Area-->
     <h2 class="current-page">Basic Settings<a href="#" class="edit-btn">Edit</a></h2>
-      <div class="hrule clear"><hr /></div>
       <div id="content"><!--Content Area Starts here-->
       <p>Where there are eyeballs, there are usually ads. And the most eye-catching gadget of late has been the iPhone, which can now run thousands of software programs available at Apple's App store.More than 100 million apps have been downloaded since the store launched in July, according to Apple Those numbers have caught the attention</p>
       <!--Tables-->
@@ -109,7 +111,7 @@
         </table>
   <p>Where there are eyeballs, there are usually ads. And the most eye-catching gadget of late has been the iPhone, which can now run thousands of software programs available at Apple's App store.More than 100 million apps have been downloaded since the store launched in July, according to Apple Those numbers have caught the attention</p>
   <!--Table #2-->
-        <table id="mytable" cellspacing="0" summary="Another table design">
+        <table id="mytable"  cellspacing="0" cellpadding="0" cellspacing="0" summary="Another table design">
             <caption>Table 2: This is another design, using images</caption>
             <tr>
                 <th scope="col" abbr="" class="firsthead">Team</th>
@@ -344,7 +346,7 @@
           <p class="last">Nullam eget magna. Donec quis massa. Quisque ac arcu et mauris convallis cursus. Sed viverra, ligula ac congue ultrices, lectus dolor fermentum massa.</p>
         </div>
     <div class="hrule clear hidden "><hr /></div>
-  </div><!--Pagewrap End -->
   <%= partial 'common/footer' %>
+  </div><!--Pagewrap End -->
 </body>
 </html>

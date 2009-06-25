@@ -40,7 +40,7 @@
 
          <input type="hidden" id="id" value="1">
             <div id="divTxt"></div>
-	         <a href="#" class="add-more" onClick="addFormField(); return false;">Add More</a>
+	         <a href="#" class="add-more" onclick="addFormField(); return false;">Add More</a>
      
         <div class="save-cancel">
              <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:classrooms), :class => "cancel" %>
@@ -55,7 +55,7 @@
  function addFormField()
   {
     var id = document.getElementById('id').value;
-    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short text' name='class[people][roles][]' id='txt" + id + "'><select class='apart' name='class[people][ids][]'><option value='please'>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' class='remove' onClick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a><p>");
+    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short text' name='class[people][roles][]' id='txt" + id + "'><select class='apart' name='class[people][ids][]'><option value='please'>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' class='remove' onclick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a><p>");
    $('txt'+id).focus();
     id = (id - 1) + 2;
     document.getElementById('id').value = id;

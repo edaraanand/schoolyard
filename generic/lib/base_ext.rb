@@ -79,7 +79,7 @@ module ActiveRecord #:nodoc:
     end
     
     
-    # used for home works and spot lights
+    # used for home works and Spotlights
     def next_common
        @next ||= self.class.find(:first, :select => ['id'],:conditions => ["id > ?", id], :order => 'id')
        @next ? @next.id : nil

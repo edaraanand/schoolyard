@@ -1,46 +1,60 @@
    <%= partial 'layout/main' %>
    
-        <% @classes =  @current_school.classrooms.find(:all, :conditions => ['activate = ?', true]) %>
-<div>&nbsp;</div>
+        <% #@classes =  @current_school.classrooms.find(:all, :conditions => ['activate = ?', true]) %>
+        <% @classrooms = @current_school.classrooms.find(:all, :conditions => ['class_name != ? and activate = ?', "Sports", true]) %>
+        <% @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and  activate = ?' , "Classes", true], :order => "class_name ASC") %>
+        <% @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ? ', "Extra Cirrcular", true], :order => "class_name ASC") %>
+
+
+
+  <div>&nbsp;</div>
   <div id="classContainer">      
-     <div id="sidebar">
+        <div id="sidebar">
            
-     <% if params[:label] == "forms" %>  
-              <ul id="menu">
-                   <li <% if @selected == "all_forms" %> class="on" <% end %> ><%= link_to "All Forms", url(:form_files, :l => "all_forms", :label => "forms") %></li>
-                   <% @classes.each do |f| %>
-                       <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:form_files, :id => "#{f.id}", :label => "forms") %></li>
-                   <% end %>
-              </ul>
-     <% elsif params[:label] == "calendars" %>
-              <ul id="menu">
-                  <li <% if @selected == "all_events" %> class="on" <% end %> ><%= link_to "All Events", url(:events, :l => "all_events", :label => "calendars") %></li>
-                  <% @classes.each do |f| %>
-                     <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:events, :id => "#{f.id}", :label => "calendars") %></li>
-                  <% end %>
-              </ul>
-     <% else %>
-            <ul id="menu"><!-- Nested Lists -->
-                 <li <% if @selected == "current_students" %> class="on" <% end %> ><%= link_to "Current Students", url(:directory) %></li>
-                 <li <% if @selected == "school_staff" %> class="on" <% end %> ><%= link_to "School Staff", url(:staff) %></li>
-            </ul>
-     <% end %>  
-        
-    </div><!-- Sidebar Ends -->
-    <div id="content-wrap"><!--Wraps The content Area-->
-      <div class="hrule clear hidden "><hr /></div>
-      <div id="content"><!--Content Area Starts here-->
-        <%= catch_content :for_layout %>
-      </div><!--Content End-->
-    </div><!--Content Wrap End -->
+             <% if params[:label] == "forms" %>  
+                      <ul id="menu">
+                           <li <% if @selected == "all_forms" %> class="on" <% end %> ><%= link_to "All Forms", url(:form_files, :l => "all_forms", :label => "forms") %></li>
+                           <% @classes.each do |f| %>
+                                <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:form_files, :id => "#{f.id}", :label => "forms") %></li>
+                            <% end %>
+                        
+                            <% @extracurricular.each do |f| %>
+                                 <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:form_files, :id => "#{f.id}", :label => "forms") %></li>
+                             <% end %>
+
+                      </ul>
+             <% elsif params[:label] == "calendars" %>
+                      <ul id="menu">
+                          <li <% if @selected == "all_events" %> class="on" <% end %> ><%= link_to "All Events", url(:events, :l => "all_events", :label => "calendars") %></li>
+                          <% @classes.each do |f| %>
+                             <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:events, :id => "#{f.id}", :label => "calendars") %></li>
+                          <% end %>
+                          <% @extracurricular.each do |f| %>
+                             <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:events, :id => "#{f.id}", :label => "calendars") %></li>
+                          <% end %>
+                      </ul>
+             <% else %>
+                    <ul id="menu"><!-- Nested Lists -->
+                         <li <% if @selected == "current_students" %> class="on" <% end %> ><%= link_to "Students", url(:directory) %></li>
+                         <li <% if @selected == "school_staff" %> class="on" <% end %> ><%= link_to "School Staff", url(:staff) %></li>
+                    </ul>
+             <% end %>  
+      </div><!-- Sidebar Ends -->
+      
+      <div id="content-wrap"><!--Wraps The content Area-->
+           <div id="content"><!--Content Area Starts here-->
+             <%= catch_content :for_layout %>
+           </div><!--Content End-->
+      </div><!--Content Wrap End -->
     
 <%= partial 'common/change' %>
     
     <!--Right Sidebar to be inserted here-->
-    
-  <div class="hrule clear hidden "><hr /></div>
+     
+          <div class="hrule clear hidden "><hr /></div>
    </div>
+   <%= partial 'common/footer' %>
   </div><!--Pagewrap End -->
-  <%= partial 'common/footer' %>                                        
+                       <script type="text/javascript"> var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); </script> <script type="text/javascript"> try { var pageTracker = _gat._getTracker("UA-8953231-1"); pageTracker._trackPageview(); } catch(err) {}</script>                   
 </body>
 </html>

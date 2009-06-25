@@ -1,28 +1,37 @@
+
       <% if params[:l] == "all_forms" %>
-           <h2 class="current-page"> All Forms </h2>
-      <% elsif params[:id].nil? %>
-           <h2 class="current-page"> All Forms </h2>
+           <h2 class="current-page"> 
+               All Forms &nbsp;&nbsp;&nbsp;
+               <%= link_to_right((right = "forms"), "Add New", resource(:forms, :new)  ) %>
+           </h2>
       <% else %> 
-           <h2 class="current-page"> Forms for <%= @class.class_name.titleize %> </h2>
+           <h2 class="current-page"> 
+               Forms for <%= @class.class_name.titleize %> &nbsp;&nbsp;&nbsp;
+               <%= link_to_right((right = "forms"), "Add New", resource(:forms, :new, :l => "#{@class.class_name.titleize}")  ) %>               
+           </h2>
       <% end %>
 
 <% if params[:l] == "all_forms" %>
      <% if @all_forms.empty? %>
          <p class="subText">There are no forms available.</p>
      <% else %>
-           <table id="mytable">
+           <table id="mytable"  cellspacing="0" cellpadding="0">
                  <thead>
                         <th>Form</th>
                         <th>for</th>
                         <th>Last Updated</th>
+                        <th></th>
+                        <th></th>
                  </thead>
                 <tbody>
                    <% for form in @all_forms %>
-                        <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
+                        <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
                         <tr>
                             <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
+                            <td><%= link_to_right((right = "forms"), "Edit", resource(form, :edit)  ) %></td>
+                            <td><%= link_to_right((right = "forms"), "Delete", resource(form, :delete)  ) %></td>
                         </tr>
                    <% end %>
              </tbody>
@@ -35,19 +44,23 @@
       <% if @forms.empty? %>
          <p class="subText">There are no forms available for <%= @class.class_name.titleize %>.</p>
       <% else %>
-            <table id="mytable">
+            <table id="mytable"  cellspacing="0" cellpadding="0">
                 <thead>
                        <th>Form</th>
                        <th>for</th>
                        <th>Last Updated</th>
+                       <th></th>
+                       <th></th>
                 </thead>
                  <tbody>
                        <% for form in @forms %>
-                             <% @attachment = Attachment.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
+                             <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
                              <tr>
                                  <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
                                  <td><%= form.class_name %></td>
                                  <td><%= form.updated_at.strftime("%b %d %Y") %></td>
+                                 <td><%= link_to_right((right = "forms"), "Edit", resource(form, :edit)  ) %></td>
+                                 <td><%= link_to_right((right = "forms"), "Delete", resource(form, :delete)  ) %></td>
                              </tr>
                         <% end %>
                  </tbody>
@@ -56,11 +69,15 @@
       <% end %>  
 
 <% end %>
-<% unless session.user.type == "Parent" %>
-     <div class="right-sidebar">
-         <h3>Manage Forms</h3>
-          <ul class="last">
-               <li <% if @selected == "forms" %> class="on" <% end %>><%= link_to_right((right = "forms"), "Manage Forms", url(:forms)  ) %></li>
-          </ul>
-      </div>
-<% end %>
+
+</div>
+  
+  
+    <% unless session.user.type == "Parent" %>
+         <div class="right-sidebar">
+             <h3>Manage Forms</h3>
+              <ul class="last">
+                   <li <% if @selected == "forms" %> class="on" <% end %>><%= link_to_right((right = "forms"), "Manage Forms", url(:forms)  ) %></li>
+              </ul>
+          </div>
+    <% end %>

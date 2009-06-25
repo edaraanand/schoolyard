@@ -2,18 +2,19 @@ class Users < Application
    
    before :ensure_authenticated
    layout 'account'
+   before :find_school
    before :staff_selected_link, :only => [:staff_account, :staff_account_edit, :staff_password, :staff_account_update]
    
    
   def staff_account
     @person = session.user
-    @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
+    @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
     render 
   end
   
   def staff_account_edit
     @person = session.user
-    @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
+    @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
     render
   end
   
@@ -23,7 +24,7 @@ class Users < Application
      if params[:person][:image] != ""
         if @content_types.include?(params[:person][:image][:content_type])
             if @person.update_attributes(params[:person])
-               @pic = Attachment.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
+               @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
                unless @pic.nil?
                  @pic.destroy
                end
@@ -31,7 +32,8 @@ class Users < Application
                                                 :attachable_id => @person.id, 
                                                 :filename => params[:person][:image][:filename],
                                                 :content_type => params[:person][:image][:content_type],
-                                                :size => params[:person][:image][:size]
+                                                :size => params[:person][:image][:size],
+                                                :school_id => @current_school.id
                  )
                 File.makedirs("public/uploads/user_pictures")
                 FileUtils.mv(params[:person][:image][:tempfile].path, "public/uploads/user_pictures/#{@attachment.filename}")
@@ -460,7 +462,48 @@ class Users < Application
                   
   end
   
- 
+  def phone
+    @selected = "phone"
+    @person = session.user
+    render
+  end
+  
+  def voice_update
+    @person = session.user
+    @selected = "phone"
+    if params[:person][:voice_alert]
+       @person.voice_alert = params[:person][:voice_alert]
+    end
+    if params[:person][:sms_alert]
+       @person.sms_alert = params[:person][:sms_alert]
+    end
+    if @person.valid?                                                                        
+       @person.save!
+       redirect url(:phone)
+    else
+       if params[:person][:voice_alert]
+          @voice = params[:person][:voice_alert]
+          @person.voice_alert = ""
+       end
+       if params[:person][:sms_alert]
+          @sms = params[:person][:sms_alert]
+          @person.sms_alert = ""
+       end
+       render :phone
+    end
+  end
+  
+  def subscription
+    @person = @current_school.people.find_by_id(params[:id])
+    if params[:l] == "sms"
+       @person.sms_alert = ""
+    else
+       @person.voice_alert = ""
+    end
+    @person.save!
+    redirect url(:phone)
+  end
+
   private
   
   def staff_selected_link

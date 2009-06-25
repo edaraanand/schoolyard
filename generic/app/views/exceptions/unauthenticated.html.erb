@@ -1,5 +1,5 @@
-<div class="fltlft"  style="border-right:1px solid #ccc; padding:20px">
-  <form action="<%= slice_url(:merb_auth_slice_password, :perform_login) %>" method="POST" name="login" accept-charset="utf-8">
+<div class="fltlft"  style="border-right:1px solid #ccc; padding:20px; width:428px">
+  <form action="<%= slice_url(:merb_auth_slice_password, :perform_login) %>" method="post" name="login" accept-charset="utf-8">
     <fieldset class="logbox"><input type="hidden" name="_method" value="PUT" />
 
     <%= error_messages_for session.authentication %>
@@ -15,19 +15,19 @@
     <% else %>
           <% @current_school = School.first(:domain => request.domain) %>
     <% end %>
-    <input type="hidden" name="<%= @site_id_param.to_s %>" value="<%= @current_school.id %>" id="<%= @site_id_param.to_s %>">
+    <input type="hidden" name="<%= @site_id_param.to_s %>" value="<%= @current_school.id %>" id="<%= @site_id_param.to_s %>" />
     <ul>
       <li>
         <label class="short"><%= @login_param.to_s.capitalize %>:</label>
-        <input type="text" class="text" name="<%= @login_param.to_s %>" value="" id="<%= @login_param.to_s %>">
+        <input type="text" class="text" name="<%= @login_param.to_s %>" value="" id="<%= @login_param.to_s %>" />
       </li>
       <li>
         <label class="short"><%= @password_param.to_s.capitalize %>:</label>
-        <input type="password" class="text" name="<%= @password_param.to_s %>" value="" id="<%= @password_param.to_s %>">
+        <input type="password" class="text" name="<%= @password_param.to_s %>" value="" id="<%= @password_param.to_s %>" />
       </li>
       <li>
         <label class="short">&nbsp;</label>
-        <input type="submit" name="Submit" value="    Login    " id="Submit">
+        <input type="submit" name="Submit" value="    Login    " id="Submit" />
         <span style="padding:0 0 0 40px"><%= link_to "Forgot Password", url(:forgot_password) %></span>
       </li>
     </ul>
@@ -41,9 +41,8 @@
   <% unless (request.first_subdomain == "admin") %>
 <div class="fltlft" style="padding:20px; width:300px; text-align:center">
   <h2>New Users</h2>
-  <p>Following registration is only available to parents of students studying at <%= @current_school.school_name %>. The registration goes through and approval process.</p><br/>
-
-    <span><input type = 'button' value = '    Parent Registration    ' onClick="javascript:window.location.href='/registrations/new'" /></span>
+  <p>Registration is only available to parents and students enrolled at <%= @current_school.school_name %>. Registration is subject to validation and school’s approval process. Thank you.</p><br/>
+  <span><input type = 'button' value = '    Parent Registration    ' onclick="javascript:window.location.href='/registrations/new'" /></span>
 
 </div>
   <% end %>

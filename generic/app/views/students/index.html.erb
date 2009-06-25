@@ -1,6 +1,6 @@
-<h2 class="current-page">Students &gt; <span class="add-link"><%= link_to "Add New", resource(:students, :new) %></span></h2>
+<h2 class="current-page">Students&nbsp;&nbsp;&nbsp;<span class="add-link"><%= link_to "Add New", resource(:students, :new) %></span></h2>
 <% unless @students.empty? %>
-  <table id="mytable">
+  <table id="mytable"  cellspacing="0" cellpadding="0">
     <thead>
       <th>Last Name</th>
       <th>First Name</th>
@@ -10,10 +10,10 @@
     <tbody>
       <% for student in @students %>
         <tr>
-          <td><%= link_to "#{student.last_name}", resource(student, :edit) %> </td>
-          <td><%= student.first_name %></td>
-          <td><%= number_to_phone(student.phone, :area_code => true) %></td>
-          <td><%= student.address %></td>
+          <td>&nbsp;<%= link_to "#{student.last_name}", resource(student, :edit) %> </td>
+          <td>&nbsp;<%= student.first_name %></td>
+          <td>&nbsp;<%= number_to_phone(student.phone, :area_code => true) %></td>
+          <td>&nbsp;<%= student.address %></td>
         </tr>
       <% end %>
     </tbody>

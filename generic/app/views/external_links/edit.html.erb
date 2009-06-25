@@ -11,8 +11,8 @@
      
       <% @external_links.each do |f| %>
         <li>
-            <%= text_field :id => 'external_link_title', :name => 'external_link[title][]', :maxlength => "75", :value => "#{f.title}", :class=>"short text defaultText", :title => "title" %>
-            <%= text_field :id => 'external_link_url', :name => 'external_link[url][]', :maxlength => "75", :value => "#{f.url}", :class=>"long text apart defaultText", :title => "url" %>
+            <%= text_field :id => 'external_link_title', :name => 'external_link[title][]', :maxlength => "75", :value => "#{f.title}", :class=>"short text defaultText ext-link-name", :title => "title" %>
+            <%= text_field :id => 'external_link_url', :name => 'external_link[url][]', :maxlength => "75", :value => "#{f.url}", :class=>"long text apart defaultText ext-link-url", :title => "url" %>
             <%= link_to "Delete", url(:delete_external_link, f.id), :class=>"delete-btn" %>
         </li>
       <% end %>
@@ -33,7 +33,7 @@
    {
       var links = document.getElementById('link');
     	var li = document.createElement('li');
-      li.innerHTML = "<input type='text' id='external_link_title' name='link[title][]' class='short text defaultText' title='title' />"  + "<input type='text' id='external_link_url' name='link[url][]' class='apart long text defaultText' title='url'/>";
+      li.innerHTML = "<input type='text' id='external_link_title' name='link[title][]' class='short text defaultText ext-link-name' title='title' />"  + "<input type='text' name='link[url][]' class='ext-link-url apart long text defaultText' title='url'/>";
 	    links.appendChild(li);
 	
     }

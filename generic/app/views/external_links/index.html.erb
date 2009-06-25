@@ -3,26 +3,30 @@
   <h2 class="current-page">External Links</h2>
   <div class="section">
     <% if @home_links.empty? %>
-      <p><em>Home Page Links</em> are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Home Page') %></p> 
+      <h4>For Home Page</h4>
+        <span class="subText">There are no external links specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Home Page') %></span></p> 
     <% else %>
-      <h4>Home Page<%= link_to "Edit", url(:external_links_edit, :label => 'Home Page'), :class=>"edit-btn" %></h4>
+      <h4>For Home Page</h4>
       <ul>
         <% for external_link in @home_links %>
           <li><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></li>
         <% end %>
       </ul>
+      <%= link_to "Edit", url(:external_links_edit, :label => 'Home Page'), :class=>"edit-btn" %>
     <% end %>
   </div>
   <div class="section">
     <% if @class_links.empty? %>
-      <p><em>Classroom links</em> are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Classrooms') %></p>
+    <h4>For All Classrooms</h4>
+      <span class="subText"> No links are specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Classrooms') %></span>
     <% else %>
-    <h4>Classrooms<%= link_to "Edit", url(:external_links_edit, :label => 'Classrooms'), :class=>"edit-btn"%></h4>
+    <h4>For All Classrooms</h4>
     <ul>
       <% for external_link in @class_links %>
         <li><%= link_to ("#{external_link.title}", "http://#{external_link.url}", {'target' => '_blank'}) %></li>
       <% end %>
     </ul>
+    <%= link_to "Edit", url(:external_links_edit, :label => 'Classrooms'), :class=>"edit-btn"%>
     <% end %>
   </div>
      <% @sports_class = @current_school.classrooms.find(:first, :conditions => ['class_name = ? and activate =  ?', "Sports", true] ) %>
@@ -42,7 +46,7 @@
      <% end %>
    
    
-  <div class="section">
+  <!--<div class="section">
     <% if @event_links.empty? %> 
       <p><em>Event Links</em> are not specified, <%= link_to "Add New", resource(:external_links, :new, :label => 'Events') %></p>
     <% else %>
@@ -53,7 +57,7 @@
         <% end %>
     </ul>
     <% end %>
-  </div>
+  </div>-->
 </div>
       
   

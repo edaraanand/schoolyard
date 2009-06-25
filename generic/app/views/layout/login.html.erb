@@ -1,36 +1,37 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
   <head>
   <% unless @current_school.nil? %>
-      <title><%= @current_school.school_name %>, <%= @current_school.email %>, <%= number_to_phone(@current_school.phone, :area_code => true) %> </title>
+      <title><%= @current_school.school_name %></title>
   <% end %>
   
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="/stylesheets/global.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="/stylesheets/ui.datepicker.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="/stylesheets/clockpick.1.2.4.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="/stylesheets/rte.css" type="text/css" media="screen" charset="utf-8" />
+        
     
-    
-    <script src='/javascripts/prototype.js'></script>
-    <script src='/javascripts/jquery.js'></script>
-    <script src='/javascripts/ui-datepicker-1.5.2.min.js'></script>
-    <script src='/javascripts/jquery.clockpick.1.2.4.js'></script>
-    <script src='/javascripts/jquery.rte.js'></script>
-    <script>  jQuery.noConflict(); </script>
-    <script>  var $j = jQuery; </script>
+    <script type="text/javascript" src='/javascripts/prototype.js'></script>
+    <script type="text/javascript" src='/javascripts/jquery.js'></script>
+    <script type="text/javascript" src='/javascripts/ui-datepicker-1.5.2.min.js'></script>
+    <script type="text/javascript">  jQuery.noConflict(); </script>
+    <script type="text/javascript">  var $j = jQuery; </script>
         <%= include_required_js %>               
    
-  </head>
+  	<link rel="stylesheet" type="text/css" href="style.css" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="style-ie.css" />
+	<![endif]--></head>
 <body>
-<div style="height:10px; background:#333;"></div>
+<div style="height:10px; background:#333; border-bottom:1px solid #fff"></div>
   <div id="page-wrap"><!-- Wraps everything -->
     <div id="header"><!--The Header -->
       <% unless @current_school.nil? %>
         <h1 class="login"><%= @current_school.school_name %></h1>
       <% end %>
     </div><!--Header End -->
-    <div style="margin:0 auto;"><%= catch_content :for_layout %></div>
+    <div style="margin:0 auto; width:890px;"><%= catch_content :for_layout %></div>
   <%= partial 'common/footer' %>
+  </div>
+  <script type="text/javascript"> var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); </script> <script type="text/javascript"> try { var pageTracker = _gat._getTracker("UA-8953231-1"); pageTracker._trackPageview(); } catch(err) {}</script>
 </body>
 </html>                                  

@@ -11,7 +11,7 @@
           
           
       <ul id="menu"><!-- Nested Lists -->
-        <li <% if @selected == nil %> class="on" <% end %>><%= link_to "<span>Home</span>", url(:sports) %></li>
+        <li <% if @selected == nil %> class="on" <% end %>><%= link_to "Home", url(:sports) %></li>
         <li <% if @selected == "teams" %> class="on" <% end %> ><%= link_to "Teams", url(:sports, :label => "teams") %></li>
         <li <% if @selected == "calendars" %> class="on" <% end %> ><%= link_to "Sports Calendar", url(:sports, :label => "calendars") %></li>
         <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to "Announcements", url(:sports, :label => "announcements") %></li>
@@ -48,17 +48,18 @@
     </div><!-- Sidebar Ends -->
     
     <div id="content-wrap"><!--Wraps The content Area-->
-      
+
         <%= catch_content :for_layout %>
-      
+
     </div><!--Content Wrap End -->  
       
 <%= partial 'common/change' %>
    
-    <!--Right Sidebar to be inserted here-->    
+    <!-- Right Sidebar to be inserted here-->    
   <div class="hrule clear hidden "><hr /></div>
   </div>
-  </div><!--Pagewrap End -->
   <%= partial 'common/footer' %>
+  </div><!-- Pagewrap End -->
+  <script type="text/javascript"> var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); </script> <script type="text/javascript"> try { var pageTracker = _gat._getTracker("UA-8953231-1"); pageTracker._trackPageview(); } catch(err) {}</script>
 </body>
 </html>
