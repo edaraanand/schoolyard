@@ -1,0 +1,43 @@
+<h2 class="current-page">
+     Grades/Reports > <%= @report.subject_name %> 
+</h2>
+
+
+   <table id="mytable">
+         <thead>
+                <th>Student</th>
+                <% @categories.each do |c| %>
+                   <% @assignments = c.assignments %>
+                   <% @assignments.each do |a| %>
+                       <th><%= a.name %></th>
+                   <% end %>
+                <% end %>
+         </thead>
+         <tbody>    
+             
+                <% @categories.each do |c| %>
+                      <% @assignments = c.assignments %>
+                      
+                      <% @assignments.each do |a| %>
+                        
+                     
+                             <% @grades = a.grades %>
+                              
+                              <% @grades.each do |g| %>
+                                     <tr>
+                                          <td><%= g.student.name %></td>
+                                          <td><%= g.grade %></td>
+                                     </tr>
+                              <% end %>
+                         
+                      <% end %>
+                <% end %>
+             
+        </tbody>
+   </table>
+   
+   
+    <div class="page-links">
+        <%= link_to "All Subjects", resource(:reports) %> |
+        <%= link_to "All Assignments", url(:assignments,  :id => @report.id) %>      
+    </div>

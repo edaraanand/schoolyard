@@ -31,5 +31,6 @@
 </table>
 
 <div class="page-links">
-    <%= link_to "All Assignments", url(:assignments,  :id => @report.id) %>
+     <%= link_to "All Subjects", resource(:reports) %> |
+    <%= link_to "All Assignments", url(:assignments,  :id => @report.id) %>   
 </div>
