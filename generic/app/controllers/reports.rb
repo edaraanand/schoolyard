@@ -6,9 +6,14 @@ class Reports < Application
    before :classrooms
    
    def index
-    # raise params.inspect
-     @reports = @current_school.reports.find(:all)
      @ranks = @current_school.ranks.find(:all)
+     if params[:label] == "classes"
+        @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', params[:id] ])
+        @test = params[:id].to_s
+     else
+        @reports = @current_school.reports.find(:all)
+        @test == "All Subjects"
+     end
      render
    end
    
@@ -183,8 +188,8 @@ class Reports < Application
    
    def classrooms
       @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-      room = @classrooms.collect{|x| x.class_name.titleize }
-      @classrooms = room.insert(0, "All Subjects")
+     # @classes = @classrooms.collect{|x| x.class_name.titleize }
+      #@classrooms = room.insert(0, "All Subjects")
    end
    
    def calculate(id, max)

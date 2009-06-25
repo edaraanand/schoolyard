@@ -10,11 +10,15 @@
          <% end %>
       </span>
 </h2>
-<%= form_for(@report, :action => resource(:reports), :method => 'get', :id => 'announcement') do %>
 
-     <%= select :name => "classroom", :collection => classrooms, :label => "For" %>
-     
-<% end =%>
+For :  <select id = 'reportID'>
+              <option value = '/reports' <% if (@test == "All Subjects") %> selected <% end %> >All Subjects</option>
+                  <% @classrooms.each do |f| %>
+                      <option value='/reports?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+                          <%= f.class_name.titleize %> 
+                      </option>
+	                <% end %>
+	      </select>
 
 
 <% if @reports.empty? %>
@@ -37,3 +41,16 @@ There are no subjects defined for this classroom. Would you like to <%= link_to 
              </tbody>
          </table>
 <% end %>
+
+
+
+
+<script type = 'text/javascript'>
+
+           $( 'reportID' ).observe( 'change', function()
+          {
+            document.location.href = $( 'reportID' ).value;
+          
+          });
+       
+</script>
