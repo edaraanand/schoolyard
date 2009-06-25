@@ -8,6 +8,9 @@ class Assignment < ActiveRecord::Base
     
     has_many :ranks
     
+    #has_many :student_assignments
+    #has_many :students, :through => :student_assignments, :source => :student
+    
     # validates_presence_of :name, :date, :max_point
     #validates_numericality_of :max_point
     

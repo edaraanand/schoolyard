@@ -10,11 +10,13 @@ class Student < Person
      has_many :ancestors
      has_many :protectors, :through => :ancestors, :source => :protector
      
+    # has_many :student_assignments
+    # has_many :assignments, :through => :student_assignments, :source => :assignment
+     
      has_one :grade
      
      has_one :rank
-     
-      
+          
      validates_presence_of :birth_date
      validates_presence_of :address
   
