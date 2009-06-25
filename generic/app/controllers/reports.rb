@@ -1,6 +1,6 @@
 class Reports < Application
 
-   layout 'default'
+   layout 'wide'
    before :access_rights
    before :find_school
    before :classrooms

@@ -11,37 +11,37 @@
       </span>
 </h2>
 
-For :  <select id = 'reportID'>
-              <option value = '/reports' <% if (@test == "All Subjects") %> selected <% end %> >All Subjects</option>
-                  <% @classrooms.each do |f| %>
-                      <option value='/reports?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
-                          <%= f.class_name.titleize %> 
-                      </option>
-	                <% end %>
-	      </select>
+<p>For: &nbsp;&nbsp; 
+  <select id = 'reportID'>
+    <option value = '/reports' <% if (@test == "All Subjects") %> selected <% end %> >All Subjects</option>
+    <% @classrooms.each do |f| %>
+    <option value='/reports?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+        <%= f.class_name.titleize %> 
+    </option>
+    <% end %>
+  </select>
+</p>
 
 
 <% if @reports.empty? %>
-                                                                                   
-<p>There are no subjects defined for this classroom. <br/>
-   Would you like to <%= link_to "Set Up Subjects", resource(:reports, :new) %>
-</p>
-
+  <p>There are no subjects defined for this classroom. <br/>
+     Would you like to <%= link_to "Set Up Subjects", resource(:reports, :new) %>
+  </p>
 <% else %>
-         <table id="mytable">
-             <thead>
-                 <th>Subject</th>
-                 <th>Last Updated</th>                                                 
-             </thead>
-             <tbody>
-                  <% for report in @reports %>
-                       <tr>
-                           <td><%= link_to "#{report.subject_name}", url(:assignments, :id => report.id) %> </td>
-                           <td><%= report.updated_at.strftime("%B %d %Y") %></td>
-                       </tr>
-                  <% end %>
-             </tbody>
-         </table>
+  <table id="mytable" class="grades">
+     <thead>
+         <th>Subject</th>
+         <th>Last Updated</th>                                                 
+     </thead>
+     <tbody>
+          <% for report in @reports %>
+               <tr>
+                   <td><%= link_to "#{report.subject_name}", url(:assignments, :id => report.id) %> </td>
+                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
+               </tr>
+          <% end %>
+     </tbody>
+  </table>
 <% end %>
 
 

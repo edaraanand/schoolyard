@@ -53,10 +53,9 @@ body.fixed-width{width:100%;}
 .left-block{width:240px;}
   /*Left Side Menu. term 'Sidebar' defaults for LEFT SIDEBAR/MENU*/
 #content p{font-size:13px; padding:.5em 0 .5em 0; margin: 0 0 14px 0;}
-#content-wrap{float:left; padding:0 0 0 12px; margin:20px 0 0 0; min-width:500px;}
+#content-wrap{float:left; padding:0 0 0 12px; margin:0; min-width:500px;}
   /*Wraps the content section*/
 #fullpage{width:700px;}
-
 
 
 /*Generic*/
@@ -533,6 +532,19 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 .block{display:block;}
 .admin-links{background:#D9F1D5; padding:3px 8px; text-align:center; border:1px solid #C8DDC0;}
 
+
+/* ========== */
+/* = GRADES = */
+/* ========== */
+
+#content-wrap.wide{width:700px;}
+#content-wrap.wide #content{width:100%;}
+.wide h2 {position:relative;}
+.wide h2 .actions{ text-align:right; position:absolute; right:0; bottom:4px;} 
+.wide #reportID{min-width:220px;}
+.add-subjects .defaultTextActive{width:200px;}
+.add-subjects label{display:inline; float:none;}
+#content-wrap.wide .add-subjects input{display:inline; float:none;}
 
 
 
