@@ -52,29 +52,29 @@
      
    });
    
-      id = 1
+      id = 1;
    function testing(counter)
        {  
-         var div = document.getElementById(counter) 
-         var r = document.getElementById(counter).id
-         var k = r.split('')
-         a = k[4]
+         var div = document.getElementById(counter);
+         var r = document.getElementById(counter).id;
+         var k = r.split('');
+         a = k[4];
          if (r == 'test')
            {
-             var ul = document.getElementById('assignment')
+             var ul = document.getElementById('assignment');
              $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='category[assignment][name][]' id='txt"+id+"'><input type='text' class='short text apart' name='category[assignment][max_point][]' id='txt"+id+"'><a href='#' class='delete-btn' onClick='removeFormField(\"#row"+id+"\"); return false;'></a></li>");
            }
          else
            {
-             var li = div.getElementsByTagName("ul")
+             var li = div.getElementsByTagName("ul");
              for (i=0; i<li.length; i++)
              {
                if (li[i].id == "assignment")
                {
-                 li[i].id = "assignment_" + a
+                 li[i].id = "assignment_" + a;
                 }
              }
-              var tt = document.getElementById('assignment_' + a)
+              var tt = document.getElementById('assignment_' + a);
               $j(tt).append("<li id='row" + id + "'><input type='text' class='short text' name='category_" +  a  + "[assignment][name][]' id='txt" + id + "'><input type='text' class='short text apart' name='category_" +  a  + "[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
            }
          id = (id - 1) + 2;
@@ -114,13 +114,13 @@
   
    function ClearAll()
    { 
-      var r = document.getElementById('report')
+      var r = document.getElementById('report');
       var pr =  r.getElementsByTagName('input');
       for (var r=0;r<pr.length;r++)
       {
           if (pr[r].value == pr[r].title)
            {
-             pr[r].value = ""
+             pr[r].value = "";
            }
       }
    }
