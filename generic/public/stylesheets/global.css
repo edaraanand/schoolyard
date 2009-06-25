@@ -542,11 +542,28 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 .wide h2 {position:relative;}
 .wide h2 .actions{ text-align:right; position:absolute; right:0; bottom:4px;} 
 .wide #reportID{min-width:220px;}
+.add-subjects {padding:8px 0 0 0; background:#f7f7f7;}
+.add-subjects .save-cancel{background:#fff;}
 .add-subjects .defaultTextActive{width:200px;}
-.add-subjects label{display:inline; float:none;}
-#content-wrap.wide .add-subjects input{display:inline; float:none;}
+
+#content-wrap .new-fieldset input{display:inline; float:none; width:140px;}
+.new-fieldset label{display:inline; float:none; padding:0 10px 0 0;}
+
+.add-subjects .category{float:left;}
+.add-subjects .category input{margin-top:8px;}
 
 
+
+div.test {position:relative; padding:0 6px;}
+div.test ul{margin:30px 0 0 12px; float:left; display:inline;}
+div.test ul.assignment, div.test ul#assignment{margin:0 0 0 158px; float:left; clear:both;}
+div.test ul.assignment input, div.test ul#assignment input{margin-right:4px;}
+div.test ul li{padding:2px 0;}
+#content .main-subject{background:#f0f0f0; padding:8px 4px 12px 4px; border-bottom:1px dashed #ddd;}
+.main-subject select{width:200px;}
+.add-subjects .add-more{clear:both; float:left; padding:2px 0 0 0; position:relative; left:160px;}
+
+.assignments-header{position: absolute; left: 158px;}
 
 
 
