@@ -18,10 +18,10 @@
    # BASE_URL = "http://sdb.#{Schoolapp.config(:app_domain)}"
    #BASE_URL = "http://sdb.schoolyardapp.net"
    
-   BASE_URL= "http://#{@current_school.subdomain}.schoolyardapp.net
+   BASE_URL= "http://#{@current_school.subdomain}.schoolyardapp.net"
    
-   #school@insightmethods.com:administration@
-   #resp = account.request( "http://eshwar.gouthama@insightmethods.com:ashwini@api.twilio.com/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)
+   # school@insightmethods.com:administration@
+   # resp = account.request( "http://eshwar.gouthama@insightmethods.com:ashwini@api.twilio.com/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)
    #https://username:password@api.twilio.com/2008-08-01 ..
     
    # Outgoing Caller ID you have previously validated with Twilio  
