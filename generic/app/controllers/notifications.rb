@@ -18,7 +18,7 @@
    # BASE_URL = "http://sdb.#{Schoolapp.config(:app_domain)}"
    #BASE_URL = "http://sdb.schoolyardapp.net"
    
-   BASE_URL= "http://#{@current_school.subdomain}.schoolyardapp.net"
+   #BASE_URL = "http://#{@current_school.subdomain}.schoolyardapp.net"
    
    # school@insightmethods.com:administration@
    # resp = account.request( "http://eshwar.gouthama@insightmethods.com:ashwini@api.twilio.com/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)
@@ -39,6 +39,8 @@ class Notifications < Application
    before :access_rights, :exclude => [:reminder, :directions, :goodbye] 
    before :find_school
    provides :html, :xml
+   
+   
    
    
   def index
@@ -114,7 +116,7 @@ class Notifications < Application
                  resp =  account.request( "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls.csv", 'POST',
                                                d = { 'Caller' => CALLER_ID,
                                                      'Called' => "#{f.voice_alert}",
-                                                     'Url' => BASE_URL + "/reminder?id=#{@announcement.id}" }  )
+                                                     'Url' => "http://#{@current_school.subdomain}.schoolyardapp.net" + "/reminder?id=#{@announcement.id}" }  )
                  resp.error! unless resp.kind_of? Net::HTTPSuccess  
              rescue StandardError => bang
                  return  
@@ -127,7 +129,7 @@ class Notifications < Application
   def reminder  
      only_provides :xml
      @announcement = @current_school.announcements.find_by_id(params[:id])
-     @postto = BASE_URL + "/directions?id=#{@announcement.id}"  
+     @postto = "http://#{@current_school.subdomain}.schoolyardapp.net" + "/directions?id=#{@announcement.id}"  
      display @postto, :layout => false
   end  
   
