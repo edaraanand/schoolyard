@@ -8,23 +8,17 @@
      <% end %>
 </ul>
 
-<h2 class="current-page">Grades/Reports &gt; <span class="add-link">Add New</span></h2>
+<h2 class="current-page">Grades/Reports &gt; <span class="add-link">Setup Subjects</span></h2>
  
 <span class="subText">Please specify the subjects for which you wish to add the grades</span><br/>
 
-<fieldset>
+<fieldset class="add-subjects">
 
 <%= form_for(@report, :id => "report", :action => resource(:reports), :onsubmit => "ClearAll()" ) do %>
-       
-       <ul>
-           <li>
-               <%= text_field  :subject_name,  :class => "required defaultText defaultTextActive", :label => "Main Subject", :title => "Subject" %>
-           </li>
-           <li>
-               <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :label => "Classroom", :prompt => "Please Select" %>
-           </li>
-       </ul>
-                     
+  <p>
+    <%= text_field  :subject_name,  :class => "required defaultText defaultTextActive", :label => "Main Subject", :title => "Subject" %>
+    <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :label => "for", :prompt => "Please Select" %>
+  </p>
        <div id="test">
            <%= fields_for @category do %>
                  <ul>
