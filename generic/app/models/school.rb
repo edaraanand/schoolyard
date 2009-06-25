@@ -17,6 +17,10 @@ class School < ActiveRecord::Base
   has_many :spot_lights
   has_one :twitter
   has_many :attachments
+  has_many :reports
+  has_many :ranks
+  has_many :categories
+  
 
   validates_presence_of :school_name, :if  => :school_name
   validates_presence_of :address1, :if  => :address1
