@@ -8,6 +8,9 @@ class Assignment < ActiveRecord::Base
     
     has_many :ranks
     
+    has_many :grades
+    has_many :students, :through => :grades, :source => :student
+    
     #has_many :student_assignments
     #has_many :students, :through => :student_assignments, :source => :student
     
