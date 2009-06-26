@@ -23,9 +23,13 @@
                        <% assignments = f.assignments  %>
                        <% assignments.each do |a| %>
                            <% grades = a.grades %>
-                           <% grades.each do |g| %>
-                               <td><%= g.grade %></td>
-                               <% grades.delete_if {|x| x == g } %>
+                           <% if grades.empty? %>
+                               <td></td>
+                           <% else %>
+                               <% grades.each do |g| %>
+                                   <td><%= g.grade %></td>
+                                   <% grades.delete_if {|x| x == g } %>
+                               <% end %>
                            <% end %>
                        <% end %>
                    <% end %>           
