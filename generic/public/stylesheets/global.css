@@ -530,7 +530,7 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 
 /*Admin- Links*/
 .block{display:block;}
-.admin-links{background:#D9F1D5; padding:3px 8px; text-align:center; border:1px solid #C8DDC0;}
+.admin-links{background:#f5fbed; padding:3px 8px; text-align:center; font-size:11px;}
 
 
 /* ========== */
