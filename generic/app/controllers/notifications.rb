@@ -71,8 +71,8 @@ class Notifications < Application
         num     = numbers.compact.join(',')
         @sms_numbers = num.collect{ |x| "1" + x } 
         unless @sms_numbers.empty? 
-           api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
            @sms_numbers.each do |f|
+               api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
                api.send_message("#{f}", "#{@announcement.content}")
            end
         end
