@@ -75,7 +75,11 @@ class Reports < Application
         @classroom = @current_school.classrooms.find_by_class_name(params[:label])
         @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', @classroom.id ])
         @report = @current_school.reports.find_by_classroom_id(@classroom.id)
-        @categories = @report.categories
+        if @report.nil?
+           raise NotFound
+        else
+           @categories = @report.categories
+        end
      elsif params[:ref]
         @report = @current_school.reports.find_by_subject_name(params[:ref])
         @categories = @report.categories
