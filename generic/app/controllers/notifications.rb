@@ -68,13 +68,12 @@ class Notifications < Application
         twitter.post(params[:announcement][:content])
         @people = @current_school.people.find(:all)
         numbers = @people.collect{ |x| x.sms_alert }
-        num     = numbers.compact.join(',')
-        @sms_numbers = num.collect{ |x| "1" + x } 
-        unless @sms_numbers.empty? 
-           @sms_numbers.each do |f|
-               api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
-               api.send_message("#{f}", "#{@announcement.content}")
-           end
+        num = numbers.compact
+        number = num.collect{|x| "1" + x }
+        @sms_numbers = number.join(',')
+        unless @sms_numbers.empty?
+           api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
+           api.send_message("#{@sms_numbers}", "#{@announcement.content}")
         end
         run_later do
            @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
