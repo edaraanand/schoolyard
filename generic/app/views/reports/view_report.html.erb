@@ -15,20 +15,25 @@
          </thead>
          <tbody>    
              
-                <% @categories.each do |c| %>
-                      <% @assignments = c.assignments %>
-                      
-                      <% @assignments.each do |a| %>
-                             <% @grades = a.grades %>
-                             <% @grades.each do |g| %>
-                                  <tr>
-                                       <td><%= g.student.name %></td>
-                                       <td><%= g.grade %></td>
-                                  </tr>
-                             <% end %>
-                      <% end %>
-                <% end %>
-             
+        <% @students.each do |st| %>
+         
+              <tr>
+                   <td><%= st.name %></td>
+                   <% @categories.each do |f| %>
+                       <% assignments = f.assignments  %>
+                       <% assignments.each do |a| %>
+                           <% grades = a.grades %>
+                           <% grades.each do |g| %>
+                               <td><%= g.grade %></td>
+                               <% grades.delete_if {|x| x == g } %>
+                           <% end %>
+                       <% end %>
+                   <% end %>           
+              </tr> 
+      
+        <% end %>
+                             
+                 
         </tbody>
    </table>
    
