@@ -3,10 +3,10 @@
 </h2>
 
 
-<%= form_for(@assignment, :action => url(:score, :id => @assignment.id) ) do %>
+<%= form_for(@assignment, :action => url(:score, :id => @assignment.id), :id => "grade" ) do %>
 
       <ul>
-            <li><%= text_field  :date, :class => "short date", :label => "Assignment Date" %></li>
+          <li><%= text_field  :date, :class => "short", :id => "assignment_date", :label => "Assignment Date" %></li>
       </ul>
       
        <table id="mytable">
@@ -19,7 +19,7 @@
              <% students.each do |f| %>
                    <tr>
                        <td><%= f.name %></td>
-                       <td><%= text_field :name => "assignment[score][]", :class => "short" %></td>
+                     <td><%= text_field :name => "assignment[score][]", :class => "short number", :max => "#{@assignment.max_point}" %></td>
                    </tr>
              <% end %>
            
@@ -35,6 +35,9 @@
      
 <script type= "text/javascript">
 
-    $j("input.date").datepicker({minDate:'today + 1'});
+    $j("#assignment_date").datepicker({minDate:'today + 1'});
+  
+    //  $j("#report").validate();
+    
    
 </script>
