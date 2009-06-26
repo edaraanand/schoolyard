@@ -20,7 +20,7 @@ class Schoolapp
   }
   
   @@production_config = {
-    :app_domain   => 'schoolyardapp.com'
+    :app_domain   => 'schoolyardapp.net'
   }
   
   def self.config(of)
