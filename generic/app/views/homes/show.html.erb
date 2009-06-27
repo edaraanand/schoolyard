@@ -57,7 +57,7 @@
               <% else %>
                       <%= link_to ' &larr; Previous', url(:home, @announcement.previous_record),:class => "alignleft" if @announcement.previous_record %> &#124;
                       <%= link_to "Back to All Announcements", url(:principal_articles, :label => 'announcements') %> &#124;
-                      <%= link_to 'Next  &larr;', url(:home, @announcement.next_record),:class => "alignright" if @announcement.next_record %>
+                      <%= link_to 'Next &rarr;', url(:home, @announcement.next_record),:class => "alignright" if @announcement.next_record %>
                       <% unless session.user.type == "Parent" %>
                          <div class="admin-links">
                              <%= link_to_right((right = "announcements"), "Add New", resource(:announcements, :new, :l => "Home Page")) %> &#124;
