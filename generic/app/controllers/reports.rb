@@ -28,8 +28,6 @@ class Reports < Application
       @report = @current_school.reports.new(params[:report].merge(:person_id => session.user.id, :school_id => @current_school.id))
       if @report.valid?
          @classroom = @current_school.classrooms.find_by_class_name(params[:report][:classroom_id])
-         #@students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
-         #student_id = @students.collect{|x| x.id}
          if params[:report][:classroom_id] != ""
              @report.classroom_id = @classroom.id
              @report.save
@@ -43,9 +41,6 @@ class Reports < Application
              s.each do |l|
                 if ( (l[0] != "") && (l[1] != "")  )
                     @assignment = @category.assignments.create({  :name => l[0], :max_point => l[1], :school_id => @current_school.id })
-                   # unless l[2].nil?
-                   #    StudentAssignment.create({:student_id => l[2], :assignment_id => @assignment.id })
-                   # end
                 end
              end
             @category_array = (0..50).to_a
@@ -61,9 +56,6 @@ class Reports < Application
                   s.each do |l|
                      if ( (l[0] != "") && (l[1] != "")  )
                         @assignment_e = @category_e.assignments.create({  :name => l[0], :max_point => l[1], :school_id => @current_school.id })
-                       # unless l[2].nil?
-                       #    StudentAssignment.create({:student_id => l[2], :assignment_id => @assignment_e.id })
-                       # end
                      end
                   end
                end
@@ -83,7 +75,11 @@ class Reports < Application
         @classroom = @current_school.classrooms.find_by_class_name(params[:label])
         @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', @classroom.id ])
         @report = @current_school.reports.find_by_classroom_id(@classroom.id)
-        @categories = @report.categories
+        if @report.nil?
+           raise NotFound
+        else
+           @categories = @report.categories
+        end
      elsif params[:ref]
         @report = @current_school.reports.find_by_subject_name(params[:ref])
         @categories = @report.categories
@@ -109,7 +105,8 @@ class Reports < Application
      @assignment = @current_school.assignments.find(params[:id])
      @category = @assignment.category
      @report = @category.report
-     @grades = @assignment.grades
+    # @grades = @assignment.grades
+     @students = @current_school.students.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @report.classroom.id] )
      render
    end
    
@@ -120,14 +117,19 @@ class Reports < Application
      @classroom = @report.classroom
      @assignment.date = params[:assignment][:date]
      @assignment.save
-     @students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
+     @students = @current_school.students.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
      @grades = @assignment.grades.collect{|x| x.id}
      students_id = @students.collect{|x| x.id}
      scores = params[:assignment][:score]
      s = students_id.zip(scores, @grades)
      s.each do |l|
-        calculate(l[1], @assignment.max_point)
-        Grade.update(l[2], {:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+        if l[2].nil?
+           calculate(l[1], @assignment.max_point)
+           Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+        else
+           calculate(l[1], @assignment.max_point)
+           Grade.update(l[2], {:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+        end
      end
      redirect url(:assignments, :id => @report.id) 
    end
@@ -140,13 +142,17 @@ class Reports < Application
      @report = @category.report
      @classroom = @report.classroom
      @ranks = @current_school.ranks.find(:all)
-     students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
+     students = @current_school.students.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] )
      students_id = students.collect{|x| x.id}
      scores = params[:assignment][:score]
      s = students_id.zip(scores)
      s.each do |l|
-        calculate(l[1], @assignment.max_point)
-        Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+        if l[1] != ""
+           calculate(l[1], @assignment.max_point)
+           Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+       # else
+       #    Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => 0, :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+        end
      end
      redirect url(:assignments, :id => @report.id)
    end
@@ -155,7 +161,7 @@ class Reports < Application
      @assignment = @current_school.assignments.find(params[:id])
      @category = @assignment.category
      @report = @category.report
-     @grades = @assignment.grades 
+     @students = @current_school.students.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @report.classroom.id] )
      render
    end
    
@@ -178,6 +184,7 @@ class Reports < Application
    def view_report
      @report = @current_school.reports.find(params[:id])
      @categories = @report.categories
+     @students = @current_school.students.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @report.classroom.id] )
      render
    end
    

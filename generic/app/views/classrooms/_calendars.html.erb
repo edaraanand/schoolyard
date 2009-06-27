@@ -27,8 +27,12 @@
                                        All day event
                                   <% end %>
                                   <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
-                                  <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) )  %> |
-                                  <%= link_to_right((right = "calendar"), "Delete", resource(calendar, :delete) )  %>
+                                  <% unless session.user.type == "Parent" %>
+                                      <div class="admin-links">
+                                           <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) ) %> &#124;
+                                           <%= link_to_right((right = "calendar"), "Delete", resource(calendar, :delete) )  %>
+                                      </div>
+                                  <% end %>
                              </li>
                         </ul>
                     </div>

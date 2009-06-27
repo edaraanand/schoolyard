@@ -189,7 +189,7 @@ class FromPrincipals < Application
         end
         File.makedirs("public/uploads/principal_images")
         FileUtils.mv(params[:image][:tempfile].path, "public/uploads/principal_images/#{@attachment.filename}")
-        redirect url(:settings)
+        redirect url(:homes)
       else
         flash[:error1] = "You can only upload images"
         render :settings
@@ -216,7 +216,7 @@ class FromPrincipals < Application
           @principal.save
         end
       end
-      redirect url(:settings)
+      redirect url(:homes)
     end
   end
 

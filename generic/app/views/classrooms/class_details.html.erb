@@ -19,16 +19,20 @@
         <p class="post-content">
               <% if @welcome_messages.empty? %>
                   Welcome to <%= @current_school.school_name%>'s <%=@classroom.class_name.titleize%> classroom
-                  <span class="admin-links">
-                    <%= link_to_right( (right = "welcome_messages"), "Add New", url(:new_welcome_message, :l => "#{@classroom.class_name.titleize}" ) ) %>
-                  </span>
+                  <% unless session.user.type == "Parent" %>
+                      <span class="admin-links">
+                        <%= link_to_right( (right = "welcome_messages"), "Add New", url(:new_welcome_message, :l => "#{@classroom.class_name.titleize}" ) ) %>
+                      </span>
+                  <% end %>
               <% else %>
                    <% for message in @welcome_messages %>
                        <%= message.content %>
-                       <ul>
-                           <%= link_to_right( (right = "welcome_messages"), "Edit Welcome Message", resource(message, :edit) ) %> |
-                           <%= link_to_right( (right = "welcome_messages"), "Delete Welcome Message", resource(message, :delete) ) %>
-                       </ul>
+                       <% unless session.user.type == "Parent" %>
+                           <ul>
+                               <%= link_to_right( (right = "welcome_messages"), "Edit Welcome Message", resource(message, :edit) ) %> &#124;
+                               <%= link_to_right( (right = "welcome_messages"), "Delete Welcome Message", resource(message, :delete) ) %>
+                           </ul>
+                       <% end %>
                    <% end %>
               <% end %>
          </p>
@@ -44,8 +48,12 @@
                                    <span class="month"><%= announcement.created_at.strftime("%b") %></span>
                                </div>
                                <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann") %></h3>
-                               <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> |
-                               <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
+                               <% unless session.user.type == "Parent" %>
+                                    <div class="admin-links">
+                                         <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> &#124;
+                                         <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
+                                    </div>
+                               <% end %>
                                <p><%= snippet(announcement.content,50) %></p>
                                <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
                                <% unless @attachment.nil? %>
@@ -55,18 +63,19 @@
                           </div>
                      <% end %>
               <% end %>
-
-              <div class="page-links">
-                     <ul>
-                         <li <% if @selected == "announcements" %> class="on" <% end %>>
-                             <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>    
-                             | <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}")) %>
-                             <% if session.user.type == "Parent" %>
-                                  | <%= link_to "Submit an announcement", resource(:parents, :new) %>
-                             <% end %>
-                         </li>
-                      </ul> 
-               </div>
+              <% unless session.user.type == "Parent" %>
+                   <div class="admin-links">
+                          <ul>
+                              <li <% if @selected == "announcements" %> class="on" <% end %>>
+                                  <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %> &#124;    
+                                  <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}")) %>
+                                  <% if session.user.type == "Parent" %>
+                                       &#124; <%= link_to "Submit an announcement", resource(:parents, :new) %>
+                                  <% end %>
+                              </li>
+                          </ul> 
+                   </div>
+              <% end %>
       </div>
 
        <div class="right-sidebar">

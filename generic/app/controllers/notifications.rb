@@ -16,10 +16,12 @@
    
    # # base URL of this application  
    # BASE_URL = "http://sdb.#{Schoolapp.config(:app_domain)}"
-   BASE_URL = "http://sdb.schoolyardapp.net"
+   #BASE_URL = "http://sdb.schoolyardapp.net"
    
-   #school@insightmethods.com:administration@
-   #resp = account.request( "http://eshwar.gouthama@insightmethods.com:ashwini@api.twilio.com/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)
+   #BASE_URL = "http://#{@current_school.subdomain}.schoolyardapp.net"
+   
+   # school@insightmethods.com:administration@
+   # resp = account.request( "http://eshwar.gouthama@insightmethods.com:ashwini@api.twilio.com/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls", 'POST', d)
    #https://username:password@api.twilio.com/2008-08-01 ..
     
    # Outgoing Caller ID you have previously validated with Twilio  
@@ -37,6 +39,8 @@ class Notifications < Application
    before :access_rights, :exclude => [:reminder, :directions, :goodbye] 
    before :find_school
    provides :html, :xml
+   
+   
    
    
   def index
@@ -62,34 +66,18 @@ class Notifications < Application
         makecall(@announcement.id)
         twitter = Twitter.new(@current_school.username, @current_school.password)
         twitter.post(params[:announcement][:content])
-        #run_later do
-        #  @people = @current_school.people.find(:all)
-        #  numbers = @people.collect{ |x| x.sms_alert }
-        #  num     = numbers.compact.join(',')
-        #  @sms_numbers = num.collect{ |x| "1" + x }
-        #api = Clickatell::API.authenticate('3175693', 'brianbolz', 'MupanoOCMLGLxHTdrQlIDY5tgMXoOeausulUjzIMNtsas6Bvvu')
-        #  t = api.auth_options[:session_id]
-        #  s = Net::HTTP.get_response(URI.parse("http://api.clickatell.com/http_batch/startbatch?session_id=#{t}&template=#{@announcement.content}"))
-        #  id = s.body.split
-        #  id.each do |f|
-        #     if f != "ID:"
-        #        r = Net::HTTP.get_response(URI.parse("http://api.clickatell.com/http_batch/quicksend?session_id=#{t}&batch_id=#{f}&to=#{@sms_numbers}&template='#{@announcement.content}'"))
-        #     end
-        #   end
-        #end
-       @people = @current_school.people.find(:all)
-       numbers = @people.collect{ |x| x.sms_alert }
-       num     = numbers.compact.join(',')
-       @sms_numbers = num.collect{ |x| "1" + x } 
-       #@sms_numbers = ['15713320672', '14158899280'].join(',')
-       #api = Clickatell::API.authenticate('3175693', 'brianbolz', 'MupanoOCMLGLxHTdrQlIDY5tgMXoOeausulUjzIMNtsas6Bvvu')
-       api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
-       #api = Clickatell::API.authenticate('3176340', 'rajesh.v', 'rajesh1')
-       api.send_message("#{@sms_numbers}", "#{@announcement.content}")
-       run_later do
-          @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
-       end
-        #num = ['14158899280', '15713320672', '919998805789', '919227587555', '919998805789'].join(',')
+        @people = @current_school.people.find(:all)
+        numbers = @people.collect{ |x| x.sms_alert }
+        num = numbers.compact
+        number = num.collect{|x| "1" + x }
+        @sms_numbers = number.join(',')
+        unless @sms_numbers.empty?
+           api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
+           api.send_message("#{@sms_numbers}", "#{@announcement.content}")
+        end
+        run_later do
+           @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
+        end
         redirect url(:homes)
      else
         render :new                
@@ -112,7 +100,7 @@ class Notifications < Application
                  resp =  account.request( "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls.csv", 'POST',
                                                d = { 'Caller' => CALLER_ID,
                                                      'Called' => "#{f.voice_alert}",
-                                                     'Url' => BASE_URL + "/reminder?id=#{@announcement.id}" }  )
+                                                     'Url' => "http://#{@current_school.subdomain}.schoolyardapp.net" + "/reminder?id=#{@announcement.id}" }  )
                  resp.error! unless resp.kind_of? Net::HTTPSuccess  
              rescue StandardError => bang
                  return  
@@ -125,7 +113,7 @@ class Notifications < Application
   def reminder  
      only_provides :xml
      @announcement = @current_school.announcements.find_by_id(params[:id])
-     @postto = BASE_URL + "/directions?id=#{@announcement.id}"  
+     @postto = "http://#{@current_school.subdomain}.schoolyardapp.net" + "/directions?id=#{@announcement.id}"  
      display @postto, :layout => false
   end  
   

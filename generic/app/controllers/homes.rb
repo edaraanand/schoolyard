@@ -89,6 +89,8 @@ class Homes < Application
       render :layout => 'sports'
     end
   end
+  
+  
 
   def download
      @attachment = @current_school.attachments.find(params[:id])

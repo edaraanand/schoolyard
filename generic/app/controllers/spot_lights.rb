@@ -3,7 +3,7 @@ class SpotLights < Application
   layout 'default'
   before :find_school
   before :class_students
-  before :access_rights
+  before :access_rights, :exclude => [:spots]
 
   def index
      classrooms
@@ -55,7 +55,8 @@ class SpotLights < Application
           end
         else
           @spot_light.save
-          redirect resource(:spot_lights)
+          @classroom = @current_school.classrooms.find_by_class_name(@spot_light.class_name)
+          redirect url(:class_details, :id => @classroom.id, :label => "spot_light")
         end
       else
         render :new
@@ -68,16 +69,16 @@ class SpotLights < Application
   end
 
   def show
-    if params[:label] == "class_spot_light"
-      @selected = "spot_light"
-      @select = "classrooms"
-      @spot_light = @current_school.spot_lights.find(params[:id])
-      @classroom = @current_school.classrooms.find_by_class_name(@spot_light.class_name)
-      render :layout => 'class_change', :id => @classroom.id
-    else
-      @spot_light = @current_school.spot_lights.find(params[:id])
-      render :layout => 'default'
-    end
+     @spot_light = @current_school.spot_lights.find(params[:id])
+     render :layout => 'default'
+  end
+  
+  def spots
+     @selected = "spot_light"
+     @select = "classrooms"
+     @spot_light = @current_school.spot_lights.find(params[:id])
+     @classroom = @current_school.classrooms.find_by_class_name(@spot_light.class_name)
+     render :layout => 'class_change', :id => @classroom.id
   end
 
 

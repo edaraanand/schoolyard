@@ -2,6 +2,7 @@
   
   <h2 class="current-page"> 
         Homework for <%= @home_work.classroom.class_name.titleize %> &nbsp;&nbsp;&nbsp;
+        <%= link_to_right((right = "homework"), "Add New", resource(:home_works, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
   </h2>
   <%= link_to "Download as PDF", url(:home_works_pdf, :id => @home_work.id, :label => "single") , :class=> "pdf" %>
  
@@ -17,6 +18,12 @@
                   </div>
                   <h3> <%= @home_work.title %> </h3> 
                   <p class="subText">Assigned on <%= @home_work.created_at.strftime("%b %d, %Y") %>  by <%= @home_work.person.name %></p>
+                     <% unless session.user.type == "Parent" %>
+                         <div class="admin-links">
+                             <%= link_to_right((right = "homework"), "Edit", resource(@home_work, :edit)) %> |
+                             <%= link_to_right((right = "homework"), "Delete", resource(@home_work, :delete)) %>
+                         </div>
+                      <% end %>
                   <p><%= san_content(@home_work.content) %></p>
                   <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"]) %>
                   <% unless @attachment.nil? %>
@@ -25,11 +32,18 @@
                   <p class="separator">&nbsp;</p>
             </div>
             <hr size="1"/>
-        
-         <%= link_to '< Previous', url(:home_work, @home_work.previous_common),:class => "alignleft" if @home_work.previous_common %> &#124;
-         <%= link_to " All Homeworks ", resource(:home_works) %> &#124;
-         <%= link_to 'Next >',  url(:home_work, @home_work.next_common),:class => "alignright" if @home_work.next_common %>
+          <%= link_to '< Previous', url(:class_works, :id => @home_work.previous_class_home_work), :class => "alignleft" if @home_work.previous_class_home_work %> &#124;
+          <%= link_to " All Homeworks ", url(:class_details, :id => @home_work.classroom.id, :label => "homeworks") %>  &#124;
+          <%= link_to ' Next >',  url(:class_works, :id => @home_work.next_class_home_work), :class => "alignright" if @home_work.next_class_home_work %>
+         
+       
          
           
 </div>
+
+
+
+
+
+
 
