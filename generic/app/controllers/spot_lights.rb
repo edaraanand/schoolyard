@@ -55,7 +55,8 @@ class SpotLights < Application
           end
         else
           @spot_light.save
-          redirect resource(:spot_lights)
+          @classroom = @current_school.classrooms.find_by_class_name(@spot_light.class_name)
+          redirect url(:class_details, :id => @classroom.id, :label => "spot_light")
         end
       else
         render :new

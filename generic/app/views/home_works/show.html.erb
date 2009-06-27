@@ -21,8 +21,12 @@
                   <h3> <%= @home_work.title %> </h3> 
                   <p class="subText">Assigned on <%= @home_work.created_at.strftime("%b %d, %Y") %>  by <%= @home_work.person.name %></p>
                   <% if params[:label] != "home_w" %>
-                      <%= link_to_right((right = "homework"), "Edit", resource(@home_work, :edit)) %> |
-                      <%= link_to_right((right = "homework"), "Delete", resource(@home_work, :delete)) %> 
+                      <% unless session.user.type == "Parent" %>
+                         <div class="admin-links">
+                             <%= link_to_right((right = "homework"), "Edit", resource(@home_work, :edit)) %> |
+                             <%= link_to_right((right = "homework"), "Delete", resource(@home_work, :delete)) %>
+                         </div>
+                      <% end %>
                   <% end %>
                   <p><%= san_content(@home_work.content) %></p>
                   <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"]) %>
@@ -34,13 +38,13 @@
             <hr size="1"/>
           
           <% if params[:label] == "home_w" %>
-                 <%= link_to '< Previous |', url(:home_work, @home_work.previous_common, :label => "home_w"),:class => "alignleft" if @home_work.previous_common %>
-                 <%= link_to " All Homeworks ", resource(:home_works) %>
-                 <%= link_to '| Next >',  url(:home_work, @home_work.next_common, :label => "home_w"),:class => "alignright" if @home_work.next_common %>
+                 <%= link_to '< Previous', url(:home_work, @home_work.previous_common, :label => "home_w"),:class => "alignleft" if @home_work.previous_common %> &#124;
+                 <%= link_to " All Homeworks ", resource(:home_works) %> &#124;
+                 <%= link_to 'Next >',  url(:home_work, @home_work.next_common, :label => "home_w"),:class => "alignright" if @home_work.next_common %>
           <% else %>
-                 <%= link_to '< Previous |', url(:home_work, @home_work.previous_class_home_work),:class => "alignleft" if @home_work.previous_class_home_work %>
-                 <%= link_to " All Homeworks ", url(:class_details, :id => @home_work.classroom.id, :label => "homeworks") %> |
-                 <%= link_to '| Next >',  url(:home_work, @home_work.next_class_home_work),:class => "alignright" if @home_work.next_class_home_work %>
+                 <%= link_to '< Previous', url(:home_work, @home_work.previous_class_home_work),:class => "alignleft" if @home_work.previous_class_home_work %> &#124;
+                 <%= link_to " All Homeworks ", url(:class_details, :id => @home_work.classroom.id, :label => "homeworks") %>  &#124;
+                 <%= link_to ' Next >',  url(:home_work, @home_work.next_class_home_work),:class => "alignright" if @home_work.next_class_home_work %>
           <% end %>
           
 </div>
