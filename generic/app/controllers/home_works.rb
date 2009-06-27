@@ -2,7 +2,7 @@ class HomeWorks < Application
 
   layout 'default'
   before :find_school
-  before :access_rights, :exclude => [:show]
+  before :access_rights, :exclude => [:class_works]
   before :classrooms, :exclude => [:preview]
   before :rooms, :only => [:index]
 
@@ -65,7 +65,7 @@ class HomeWorks < Application
   end
 
   def update
-    @classroom = Classroom.find_by_class_name(params[:home_work][:classroom_id])
+    @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
     @allowed = 1 - @attachments.size
     @home_work = @current_school.home_works.find(params[:id])
@@ -140,26 +140,27 @@ class HomeWorks < Application
   end
 
   def show
-    if params[:label] == "home_w"
-       @selected = "home_work"
-       @home_work = HomeWork.find(params[:id])
-       render :layout => 'default'
-    else
-       @selected = "homeworks"
-       @select = "classrooms"
-       @home_work = HomeWork.find(params[:id])
-       @classroom = @home_work.classroom
-       render :layout => 'class_change', :id => @classroom.id
-    end
+    @selected = "home_work"
+    @home_work = @current_school.home_works.find(params[:id])
+    render :layout => 'default'
   end
 
+  def class_works
+    @selected = "homeworks"
+    @select = "classrooms"
+    @home_work = @current_school.home_works.find(params[:id])
+    @classroom = @home_work.classroom
+    render :layout => 'class_change', :id => @classroom.id
+  end
+  
+  
   def home_works_pdf
     if params[:label] == "single"
-      @home_work = HomeWork.find(params[:id])
+      @home_work = @current_school.home_works.find(params[:id])
       pdf = pdf_prepare("single", @home_work)
       send_data(pdf.render, :filename => "#{@home_work.title}.pdf", :type => "application/pdf")
     else
-      @classroom = Classroom.find(params[:id])
+      @classroom = @current_school.classrooms.find(params[:id])
       @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id])
       pdf = pdf_prepare("multiple", @home_works)
       send_data(pdf.render, :filename => "Homework for #{@classroom.class_name}.pdf", :type => "application/pdf")

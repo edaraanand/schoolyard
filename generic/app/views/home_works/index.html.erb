@@ -30,7 +30,7 @@
                                           <span class="month"><%= homework.due_date.strftime("%b") %></span>
                                     </div>
                               <% end %>
-                              <h3><%= link_to "#{homework.title}", url(:home_work, homework.id, :label => "home_w") %></h3>
+                              <h3><%= link_to "#{homework.title}", url(:home_work, homework.id) %></h3>
                               <span class="subText">Homework for: <%= homework.classroom.class_name %></span><br/>
                               <p class="subText">Assigned on <%= homework.created_at.strftime("%b %d, %Y") %>  by <%= homework.person.name %></p>
                               <p class="post-content"><%= snippet(homework.content, 50) %></p>
