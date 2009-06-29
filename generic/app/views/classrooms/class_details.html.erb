@@ -27,11 +27,12 @@
               <% else %>
                    <% for message in @welcome_messages %>
                        <%= message.content %>
+                        <div class="clear"></div>
                        <% unless session.user.type == "Parent" %>
-                           <ul>
+                             <div class="admin-links">
                                <%= link_to_right( (right = "welcome_messages"), "Edit Welcome Message", resource(message, :edit) ) %> &#124;
                                <%= link_to_right( (right = "welcome_messages"), "Delete Welcome Message", resource(message, :delete) ) %>
-                           </ul>
+                             </div>
                        <% end %>
                    <% end %>
               <% end %>
@@ -113,17 +114,7 @@
                      <% end %>
                    </ul>
               <% end %>
-              
-              <% unless session.user.type == "Parent" %>
-                   <h3>Manage Classroom</h3>
-                   <ul class="last">
-                        <li <% if @selected == "spotlight" %> class="on" <% end %>><%= link_to_right((right = "spotlight"), "Manage Spotlight", url(:spot_lights, :id => @classroom.id, :label => "classes") ) %></li>
-                        <li <% if @selected == "calendars" %> class="on" <% end %>><%= link_to_right((right = "calendar"), "Manage Calendars", url(:calendars) )  %></li>
-                        <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_right((right = "homework"), "Manage Homeworks", url(:home_works, :id => @classroom.id, :label => "classes") )  %></li>
-                        <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to_right((right = "announcements"), "Manage Announcements", url(:announcements, :id => @classroom.id, :label => "classes")) %></li>
-                   </ul>
-              <% end %>
-             
+                          
          </div>
 </div>                                                                                                                                         
 <% end %>   

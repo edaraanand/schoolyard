@@ -454,7 +454,7 @@ ul#pending_files li a{padding:0 10px; color:#f00; text-transform:lowercase;}
 .previewWrapper .hrule{padding:10px; text-align:center; border-top:1px solid #ccc;}
 
 .separator {border-bottom:1px dashed #e8e8e8; padding:10px 0;}
-.data-block .separator {padding:0!important; margin:0!important;}
+.data-block .separator {padding:0!important; margin:0!important; clear:left;}
 p.separator{margin:0;}
 td.separator{padding:8px;}
 .subLink {padding:0 10px;}
