@@ -27,11 +27,12 @@
               <% else %>
                    <% for message in @welcome_messages %>
                        <%= message.content %>
+                        <div class="clear"></div>
                        <% unless session.user.type == "Parent" %>
-                           <ul>
+                             <div class="admin-links">
                                <%= link_to_right( (right = "welcome_messages"), "Edit Welcome Message", resource(message, :edit) ) %> &#124;
                                <%= link_to_right( (right = "welcome_messages"), "Delete Welcome Message", resource(message, :delete) ) %>
-                           </ul>
+                             </div>
                        <% end %>
                    <% end %>
               <% end %>

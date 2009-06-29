@@ -45,13 +45,12 @@
                <% else %>
                 <% for message in @welcome_messages %>
                    <%= san_content(message.content) %>
+                   <div class="clear"></div>
                    <% unless session.user.type == "Parent" %>
-                        <ul>
-                           <li>
-                             <%= link_to_right( (right = "welcome_messages"), "Edit Welcome Message", resource(message, :edit) ) %> &#124;
+                         <div class="admin-links">
+                         <span> <%= link_to_right( (right = "welcome_messages"), "Edit Welcome Message", resource(message, :edit) ) %> </span> &#124;
                              <%= link_to_right( (right = "welcome_messages"), "Delete Welcome Message", resource(message, :delete) ) %>
-                           </li>
-                        </ul>
+                         </div>
                    <% end %>
                 <% end %>
            <% end %>
