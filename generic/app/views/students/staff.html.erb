@@ -25,7 +25,9 @@
                              <th>Role</th>
                              <th>Email</th>
                              <th>Contact Number</th>
-                             <th></th>
+                             <% unless session.user.type == "Parent" %>
+                               <th></th>
+                             <% end %>
                        </thead>
                        <% @class_peoples.each do |f| %>
                             <tr>
@@ -34,7 +36,9 @@
                  	              <td nowrap><%= f.role.titleize %>-<%= f.classroom.class_name %>&nbsp;</td>
                                 <td><%= email(f.person.email) %>&nbsp;</td>
                                 <td nowrap><%= number_to_phone(f.person.phone, :area_code => true) %>&nbsp;</td>
-                                <td><%= link_to_right((right = "rights_others"), "Edit", url(:edit_person, f.person.id)  ) %></td>
+                                <% unless session.user.type == "Parent" %>
+                                   <td><%= link_to_right((right = "rights_others"), "Edit", url(:edit_person, f.person.id)  ) %></td>
+                                <% end %>
                             </tr>  
                        <% end %>
                    </table>
@@ -53,7 +57,9 @@
                               <th>Role</th>
                               <th>Email</th>
                               <th>Contact Number</th>
-                              <th></th>
+                              <% unless session.user.type == "Parent" %>
+                               <th></th>
+                             <% end %>
                         </thead>
                         <% for person in @staff %>
                              <tr>
@@ -65,7 +71,9 @@
                                  <% end %>&nbsp;</td> 
                                  <td><%= email(person.email) %>&nbsp;</td>
       	                         <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>
-                                 <td><%= link_to_right((right = "rights_others"), "Edit", url(:edit_person, person.id)  ) %></td>
+                                 <% unless session.user.type == "Parent" %>
+                                    <td><%= link_to_right((right = "rights_others"), "Edit", url(:edit_person, person.id)  ) %></td>
+                                 <% end %>
                              </tr>  
                         <% end %>
                  </table>

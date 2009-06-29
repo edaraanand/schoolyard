@@ -27,7 +27,9 @@
                          <th>Last Name</th>
                          <th>First Name</th>
                          <th>Contact Number</th>
-                         <th></th>
+                         <% unless session.user.type == "Parent" %>
+                            <th></th>
+                         <% end %>
                      </thead>
                      <tbody>
                           <% for student in @students %>
@@ -35,7 +37,9 @@
                                    <td>&nbsp;<%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %></td>
                                    <td>&nbsp;<%= student.first_name %></td>
                                    <td>&nbsp;<%= number_to_phone(student.phone, :area_code => true) %></td>
-                                   <td>&nbsp;<%= link_to_right((right = "manage_directory"), "Edit", url(student, :edit)  ) %></td>
+                                   <% unless session.user.type == "Parent" %>
+                                       <td>&nbsp;<%= link_to_right((right = "manage_directory"), "Edit", url(student, :edit)  ) %></td>
+                                   <% end %>
                               </tr>
                            <% end %>
                      </tbody>
