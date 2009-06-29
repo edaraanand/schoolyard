@@ -583,5 +583,5 @@ div.test ul li{padding:2px 0;}
 
 
 
-.data-block.urgent-display{background:#fcedcb; border-top:2px solid #ccc;}
+.data-block.urgent-display{background:#fcedcb; border-top:2px solid #ccc; margin-bottom:4px;}
 .data-block.urgent-display .separator{height:0;}
