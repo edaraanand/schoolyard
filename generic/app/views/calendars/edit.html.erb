@@ -73,11 +73,16 @@
 <script type= "text/javascript">
 
    
-  $j("#start").datepicker({minDate:'today'});
-  $j("#end").datepicker({minDate:'today'});
-  
-  $j("#start_time").clockpick({starthour : 0, endhour : 23 }); 
-  $j("#end_time").clockpick({starthour : 0, endhour : 23 }); 
+  $j(document).ready(function()
+{
+
+   	$j("#start").datepicker({minDate:'today'});
+	  $j("#end").datepicker({minDate:'today'});
+
+	  $j("#start_time").clockpick({starthour : 0, endhour : 23 }); 
+	  $j("#end_time").clockpick({starthour : 0, endhour : 23 });   
+  });
+
  
    function preview()
  {
