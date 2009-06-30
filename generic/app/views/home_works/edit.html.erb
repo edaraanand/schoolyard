@@ -6,7 +6,7 @@
        <li><label>Home Work for:</label><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :selected => "#{@home_work.classroom.class_name.titleize}", :prompt => "Please Select" %></li>
            <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
            <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
-           <li><%= text_field  :due_date, :id => "due_date", :label => "Due Date", :class=>"short" %></li>
+           <li><%= text_field  :due_date, :id => "due_date", :label => "Due Date", :class=>"short date" %></li>
            <li>
                <% if @attachments.size >= 1 %>
                    <%= file_field :attachment,  :label => "Attach a File", :disabled => "true" %>
@@ -40,7 +40,7 @@
 
 <script type= "text/javascript">
 
- document.home_work.home_work_title.focus();
+ // document.home_work.home_work_title.focus();
 
  function preview()
  {
@@ -57,7 +57,9 @@
   
  }
   
- $j("#due_date").datepicker({minDate:'today'});
+ $j(document).ready(function() {
+      $j("input.date").datepicker({minDate:'today + 1'});
+  });
  
  
 
