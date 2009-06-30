@@ -58,7 +58,10 @@ Merb::Router.prepare do
     match("/new_staff_password").to(:controller => 'registrations', :action => 'new_staff_password').name(:new_staff_password)
     match("/password_staff").to(:controller => 'registrations', :action => 'password_staff').name(:password_staff)
     match("/staff_password_save").to(:controller => 'registrations', :action => 'staff_password_save').name(:staff_password_save)
-
+    match("/reminder").to(:controller => 'notifications', :action => 'reminder').name(:reminder)
+    match("/directions").to(:controller => 'notifications', :action => 'directions').name(:directions)
+    match("/goodbye").to(:controller => 'notifications', :action => 'goodbye').name(:goodbye)
+    
  
   authenticate do
        resources :parents
@@ -73,6 +76,7 @@ Merb::Router.prepare do
        resources :calendars
        resources :students
        resources :teams
+       resources :reports
        resources :from_principals
        resources :home_works
        resources :external_links
@@ -80,7 +84,23 @@ Merb::Router.prepare do
        resources :spot_lights
        resources :admin
        resources :feedbacks
-       #resources :reports
+       resources :notifications
+       resources :ranks
+       match("/spots").to(:controller => 'spot_lights', :action => 'spots').name(:spots)
+       match("/class_works").to(:controller => 'home_works', :action => 'class_works').name(:class_works)
+       match("/view_report").to(:controller => 'reports', :action => 'view_report').name(:view_report)
+       match("/rank/edit").to(:controller => 'ranks', :action => 'edit').name(:ranks_edit)
+       match("/rank/update").to(:controller => 'ranks', :action => 'update').name(:ranks_update)
+       match("/add_grades").to(:controller => 'reports', :action => 'add_grades').name(:add_grades)
+       match("/edit_grades").to(:controller => 'reports', :action => 'edit_grades').name(:edit_grades)
+       match("/update_grades").to(:controller => 'reports', :action => 'update_grades').name(:update_grades)
+       match("/score").to(:controller => 'reports', :action => 'score').name(:score)
+       match("/grades").to(:controller => 'reports', :action => 'grades').name(:grades)
+       match("/assignments").to(:controller => 'reports', :action => 'assignments').name(:assignments)
+       match("/subscription").to(:controller => 'users', :action => 'subscription').name(:subscription)
+       match("/phone").to(:controller => 'users', :action => 'phone').name(:phone)
+       match("/voice_update").to(:controller => 'users', :action => 'voice_update').name(:voice_update)
+       match("/phone_update").to(:controller => 'users', :action => 'phone_update').name(:phone_update)
        match("/feedback_reply").to(:controller => 'feedbacks', :action => 'feedback_reply').name(:feedback_reply)
        match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
        match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)

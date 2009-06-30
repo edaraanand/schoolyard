@@ -20,10 +20,10 @@
 <%= form_for(@student, :action => resource(:students), :id => 'student', :name => "studs",  :onsubmit => "ClearAll()")  do %>
    
       <ul>
-          <% if @class_id != "" %>
+          <% if @class_id != nil %>
               <li><label>Student for:</label><%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name.titleize}, :selected => "#{@class_id}", :prompt => "Please Select" %></li>
           <% else %>
-              <li><label>Student for:</label><%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name.titleize}, :prompt => "Please Select" %></li>
+              <li><label>Student for:</label><%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name.titleize}, :selected => "#{params[:l]}", :prompt => "Please Select" %></li>
           <% end %>
           <li>
               <%= text_field  :first_name,  :label => "Student Name", :maxlength => "75", :class => "short defaultText defaultTextActive", :title => "First Name" %>

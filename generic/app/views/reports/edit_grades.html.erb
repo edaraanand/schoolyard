@@ -1,0 +1,68 @@
+<h2 class="current-page">
+     Grades/Reports > <%= @assignment.name %> 
+</h2>
+
+<%= form_for(@assignment, :action => url(:update_grades, :id => @assignment.id), :id => 'grade' ) do %>
+
+       <ul>
+       <li><%= text_field  :date, :class => "short", :id => "assignment_date", :label => "Assignment Date" %></li>
+       </ul>
+      
+       <table id="mytable">
+             <thead>
+                    <th>Your Students</th>
+                    <th>Student Score (Max Points : <%= @assignment.max_point %> )</th>
+             </thead>
+                       
+            <% @students.each do |f| %>
+            
+                <tr>
+                     <td><%= f.name %></td>
+                     <% grades = f.grades.find(:all, :conditions => ['assignment_id = ?', @assignment.id] ) %>
+                     <% if grades.empty? %>
+                          <td><%= text_field :name => "assignment[score][]", :class => "short required number", :max => "#{@assignment.max_point}" %></td>
+                     <% else %>
+                          <% grades.each do |g| %>
+                               <td><%= text_field :name => "assignment[score][]", :class => "short required number", :max => "#{@assignment.max_point}",  :value => "#{g.score}" %></td>
+                          <% end %>
+                     <% end %>
+                </tr>
+                
+            <% end %>
+             
+           
+       </table>
+      
+        <div class="save-cancel">
+            <%= submit "save" %> Or  <%= link_to "Cancel", url(:assignments,  :id => @report.id), :class => "cancel" %>
+        </div>
+
+<% end =%>
+
+<script type= "text/javascript">
+
+    $j("#grade").validate();
+
+// $j("#grade").validate({
+//                        rules: {
+//                                 field: {
+//                                          required: true,
+//                                          max: 25
+//                                        }
+//                                }
+//                    });
+
+
+    $j("#assignment_date").datepicker({minDate:'today + 1'});
+    
+   
+   
+</script>
+
+
+<style type="text/css">
+  
+    input.error { border: 2px solid #c00;}
+    label.error { display:block; color: red; padding-left: .5em; vertical-align: top; }
+ 
+</style>

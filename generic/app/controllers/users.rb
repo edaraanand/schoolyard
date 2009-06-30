@@ -462,7 +462,48 @@ class Users < Application
                   
   end
   
- 
+  def phone
+    @selected = "phone"
+    @person = session.user
+    render
+  end
+  
+  def voice_update
+    @person = session.user
+    @selected = "phone"
+    if params[:person][:voice_alert]
+       @person.voice_alert = params[:person][:voice_alert]
+    end
+    if params[:person][:sms_alert]
+       @person.sms_alert = params[:person][:sms_alert]
+    end
+    if @person.valid?                                                                        
+       @person.save!
+       redirect url(:phone)
+    else
+       if params[:person][:voice_alert]
+          @voice = params[:person][:voice_alert]
+          @person.voice_alert = ""
+       end
+       if params[:person][:sms_alert]
+          @sms = params[:person][:sms_alert]
+          @person.sms_alert = ""
+       end
+       render :phone
+    end
+  end
+  
+  def subscription
+    @person = @current_school.people.find_by_id(params[:id])
+    if params[:l] == "sms"
+       @person.sms_alert = ""
+    else
+       @person.voice_alert = ""
+    end
+    @person.save!
+    redirect url(:phone)
+  end
+
   private
   
   def staff_selected_link

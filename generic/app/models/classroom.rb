@@ -13,9 +13,11 @@ class Classroom < ActiveRecord::Base
   has_many :teams, :through => :class_peoples, :source => :team
 
   has_many :home_works
-
-
-  validates_presence_of :class_name, :if => Proc.new{|c| c.class_type != "Sports" }
+  
+  has_many :reports
+  
+  
+ 	validates_presence_of :class_name, :if => Proc.new{|c| c.class_type != "Sports" }
   validates_uniqueness_of :class_name, :scope => :school_id
   #validates_presence_of :person_id, :message => "please select Faculty from the list"
 

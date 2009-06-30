@@ -41,7 +41,7 @@ class Forms < Application
           )
           File.makedirs("public/uploads/#{@attachment.id}")
           FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
-          redirect resource(:forms)
+          redirect url(:form_files, :l => "all_forms", :label => "forms")
         else
           flash[:error] = "please upload a File"
           render :new
@@ -81,7 +81,7 @@ class Forms < Application
             )
             File.makedirs("public/uploads/#{@attachment.id}")
             FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
-            redirect resource(:forms)
+            redirect url(:form_files, :l => "all_forms", :label => "forms")
           else
             flash[:error] = "please upload a File"
             render :edit
@@ -96,7 +96,7 @@ class Forms < Application
     else
       if ( (params[:form][:class_name] != "") && (params[:form][:year] != "") )
         if @form.update_attributes(params[:form])
-          redirect resource(:forms)
+           redirect url(:form_files, :l => "all_forms", :label => "forms")
         else
           render :edit
         end
@@ -119,7 +119,7 @@ class Forms < Application
       @form = Form.find(params[:id])
       Attachment.delete_all(['attachable_id = ?', @form.id])
       @form.destroy
-      redirect resource(:forms)
+      redirect url(:form_files, :l => "all_forms", :label => "forms")
     end
   end
 

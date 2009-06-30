@@ -10,3 +10,4 @@ Merb::Config.use { |c|
   c[:log_stream] = STDOUT
   c[:log_file]   = nil
 }
+

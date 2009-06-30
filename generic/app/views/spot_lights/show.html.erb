@@ -15,18 +15,14 @@
            <br class="clear"/>
            <p class="post-content"><%= san_content(@spot_light.content) %></p>
      </div>
-      <br class="clear"/>
-     <p class="separator">&nbsp;</p>
    
-     <% if params[:label] == "class_spot_light" %>
-           <%= link_to '< Previous |', url(:spot_light, @spot_light.previous_class_spot_light, :label => 'class_spot_light'), :class => "alignleft" if @spot_light.previous_class_spot_light %>
-           <%= link_to " Back to all Spotlights ", url(:class_details, :id =>  @classroom.id, :label => "spot_light") %>
-           <%= link_to '| Next >', url(:spot_light, @spot_light.next_class_spot_light, :label => 'class_spot_light'),:class => "alignright" if @spot_light.next_class_spot_light %>
-     <% else %>
-           <%= link_to '< Previous |', url(:spot_light, @spot_light.previous_common), :class => "alignleft" if @spot_light.previous_common %>
-           <%= link_to " Back to all Spotlights ", resource(:spot_lights) %>
-           <%= link_to '| Next >', url(:spot_light, @spot_light.next_common),:class => "alignright" if @spot_light.next_common %>
-     <% end %>    
+           <br class="clear"/>
+           <p class="separator">&nbsp;</p>
+     
+     <%= link_to '< Previous', url(:spot_light, @spot_light.previous_common), :class => "alignleft" if @spot_light.previous_common %> &#124;
+     <%= link_to " Back to all Spotlights ", resource(:spot_lights) %> &#124;
+     <%= link_to 'Next >', url(:spot_light, @spot_light.next_common),:class => "alignright" if @spot_light.next_common %>
+     
     
   
 </div>

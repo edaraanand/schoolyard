@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="/stylesheets/global.css" type="text/css" media="screen" />
   <link rel="stylesheet" href="/stylesheets/facebox.css" type="text/css" media="screen" charset="utf-8" />
   <link rel="stylesheet" href="/stylesheets/ui.datepicker.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="/stylesheets/prompt.css" type="text/css" media="screen" charset="utf-8" />
+  
   
  
   <script type="text/javascript" src='/javascripts/prototype.js'></script>
@@ -17,6 +19,13 @@
   <script type="text/javascript" src='/javascripts/ui-datepicker-1.5.2.min.js'></script>
   <script type="text/javascript" src='/javascripts/facebox.js'></script>
   <script type="text/javascript" src='/javascripts/face.js'></script>
+  <script type="text/javascript" src='/javascripts/jquery-dynamic-form.js'></script>
+  <script type="text/javascript" src='/javascripts/jquery.validate.js'></script>
+  <script type="text/javascript" src='/javascripts/jquery.rte.js'></script>
+  <script type="text/javascript" src='/javascripts/widgEditor.js'></script>
+  <script type="text/javascript" src='/javascripts/jquery.charcounter.js'></script>
+  <script type="text/javascript" src='/javascripts/jquery-impromptu.2.5.js'></script>
+  <script type="text/javascript" src='/javascripts/jquery.maskedinput-1.2.2.js'></script>
   <script type="text/javascript" src='/javascripts/removefile.js'></script>
   <script type="text/javascript" src='/javascripts/jquery.MultiFile.js'></script>
   <script type="text/javascript" src='/javascripts/jquery.clockpick.1.2.4.js'></script>
@@ -34,7 +43,7 @@
             </h1>
             <div class="school-contact">
              <% unless @current_school.email.blank? %>
-                 <%= email(@current_school.email) %>
+                <%= email(@current_school.email) %>
              <% end %>
               <% unless @current_school.phone.blank? %>
                 <%="| #{number_to_phone(@current_school.phone, :area_code => true)}"%>

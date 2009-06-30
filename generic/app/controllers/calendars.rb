@@ -23,7 +23,7 @@ class Calendars < Application
     i=0
     if params[:calendar][:class_name] != ""
       if @calendar.valid?
-        @calendar.save
+         @calendar.save
         unless params[:attachment]['file_'+i.to_s].empty?
           @attachment = Attachment.create( :attachable_type => "Calendar",
           :attachable_id => @calendar.id,
@@ -35,7 +35,8 @@ class Calendars < Application
           File.makedirs("public/uploads/#{@attachment.id}")
           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
         end
-        redirect resource(:calendars)
+        @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
+        redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
       else
         @start_time = params[:calendar][:start_time]
         @end_time = params[:calendar][:end_time]
@@ -92,11 +93,12 @@ class Calendars < Application
             FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
           end
           if @calendar.day_event == true
-            @calendar.start_time = nil
-            @calendar.end_time = nil
+             @calendar.start_time = nil
+             @calendar.end_time = nil
           end
           @calendar.save
-          redirect resource(:calendars)
+          @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
+          redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
         else
           @start_time = params[:calendar][:start_time]
           @end_time = params[:calendar][:end_time]
@@ -114,7 +116,8 @@ class Calendars < Application
             @calendar.end_time = nil
           end
           @calendar.save
-          redirect resource(:calendars)
+          @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
+          redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
         else
           @start_time = params[:calendar][:start_time]
           @end_time = params[:calendar][:end_time]
@@ -138,9 +141,10 @@ class Calendars < Application
       render :edit, :id => @calendar.id
     else
       @calendar = Calendar.find(params[:id])
+      @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
       Attachment.delete_all(['attachable_id = ?', @calendar.id])
       @calendar.destroy
-      redirect resource(:calendars)
+      redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
     end
   end
 

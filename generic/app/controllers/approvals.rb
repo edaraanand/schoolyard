@@ -187,7 +187,7 @@ class Approvals < Application
   def classrooms
     @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     room = @class.collect{|x| x.class_name.titleize }
-    @classrooms = room.insert(0, "HomePage")
+    @classrooms = room.insert(0, "Home Page")
   end
 
  

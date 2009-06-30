@@ -31,7 +31,7 @@ class Person < ActiveRecord::Base
 
 
   # Validations
-
+  
   validates_presence_of :first_name, :last_name
   validates_presence_of :email, :if => :email
   validates_uniqueness_of :email, :if => :email, :scope => [:school_id, :type]
@@ -39,8 +39,8 @@ class Person < ActiveRecord::Base
   validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}, :scope => :school_id
   validates_length_of :password, :within => 8..40, :if => :password
   validates_length_of :phone, :is => 10, :message => 'must be 10 digits, excluding special characters such as spaces and dashes.', :if => Proc.new{|o| !o.phone.blank?}
-  
-
+  validates_length_of :voice_alert, :is => 10, :message => 'must be 10 digits', :if => Proc.new{|o| !o.voice_alert.blank?}    
+  validates_length_of :sms_alert, :is => 10, :message => 'must be 10 digits', :if => Proc.new{|o| !o.sms_alert.blank?}
 
 
   def self.authenticate(email, school_id, password)
@@ -107,6 +107,8 @@ class Person < ActiveRecord::Base
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
 
+  ## Notifying the Staff about their Account Details
+  
   def changed_details
     mail_deliver(:notify_staff_details, :subject => "Your Details has Changed for " + self.school.school_name)
   end

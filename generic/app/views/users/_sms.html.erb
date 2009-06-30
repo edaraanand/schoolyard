@@ -1,0 +1,9 @@
+    <ul>
+        <li>as sms/text message to</li>
+        <li>
+            <span><%= number_to_phone(@person.sms_alert, :area_code => true)  %></span>
+            <a href="#"  class="edit-btn"  onclick="sms(); return false;">edit number</a>
+            <%= link_to "cancel subscription", url(:subscription, :id => @person.id, :l => "sms"), :class =>"delete-btn" %>
+        </li>
+    </ul>
+    <div class="clear"></div>

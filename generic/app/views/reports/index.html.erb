@@ -1,0 +1,57 @@
+
+<h2 class="current-page">
+      Grades/Reports 
+      <span class="actions">
+         <%= link_to "Set Up Subjects", resource(:reports, :new) %> &nbsp; &nbsp;
+         <% if @ranks.empty? %>
+             <%= link_to "Add Grades Definition", resource(:ranks, :new) %>
+         <% else %>
+             <%= link_to "Edit Grades Definition", url(:ranks_edit) %>
+         <% end %>
+      </span>
+</h2>
+
+<p>For: &nbsp;&nbsp; 
+  <select id = 'reportID'>
+    <option value = '/reports' <% if (@test == "All Subjects") %> selected <% end %> >All Subjects</option>
+    <% @classrooms.each do |f| %>
+    <option value='/reports?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+        <%= f.class_name.titleize %> 
+    </option>
+    <% end %>
+  </select>
+</p>
+
+
+<% if @reports.empty? %>
+  <p>There are no subjects defined for this classroom. Please <%= link_to "Set Up Subjects", resource(:reports, :new) %>
+  </p>
+<% else %>
+  <table id="mytable" class="grades">
+     <thead>
+         <th>Subject</th>
+         <th>Last Updated</th>                                                 
+     </thead>
+     <tbody>
+          <% for report in @reports %>
+               <tr>
+                   <td><%= link_to "#{report.subject_name}", url(:assignments, :id => report.id) %> </td>
+                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
+               </tr>
+          <% end %>
+     </tbody>
+  </table>
+<% end %>
+
+
+
+
+<script type = 'text/javascript'>
+
+           $( 'reportID' ).observe( 'change', function()
+          {
+            document.location.href = $( 'reportID' ).value;
+          
+          });
+       
+</script>

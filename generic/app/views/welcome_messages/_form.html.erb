@@ -8,7 +8,7 @@
   <ul>
       <li>
           <label>Welcome Message for:</label>
-          <%= select :access_name, :collection => @eee, :prompt => "Please Select"  %>
+          <%= select :access_name, :collection => @eee, :selected => "#{params[:l]}", :prompt => "Please Select"  %>
       </li>
       <li><%= text_area :content, :label => "Content", :rows => "10", :cols => "50" %></li>
   </ul>

@@ -12,7 +12,7 @@ class Announcement < ActiveRecord::Base
 
   attr_accessor :attachment
   attr_accessor :image
-
+                                                             
   
   # sending email to Collaborative Methods on Feedback
   
@@ -27,6 +27,7 @@ class Announcement < ActiveRecord::Base
   end
  
   # sending the email reply to the person who has sent the feedback
+  
   def reply_person
      deliver(:reply_person, :subject => "Feedback Reply from " + self.school.school_name)
   end
@@ -36,4 +37,21 @@ class Announcement < ActiveRecord::Base
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.person.email), self )
   end
 
+  # sending the mail for urgent Announcements
+  
+  def mail(action, params)
+    from = "no-reply@schoolyardapp.com"
+    @current_school = self.school
+    @people = @current_school.people.find(:all)
+    @people.each do |f|
+      self.approved_by = f.id
+      self.save
+      unless f.email.blank?
+        PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => "#{f.email}" ), self )
+      end
+    end
+  end
+                                                                                                  
+  
+  
 end

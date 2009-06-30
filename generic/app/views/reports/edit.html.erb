@@ -1,0 +1,75 @@
+
+
+
+
+
+<h2 class="current-page">Grades/Reports &gt; <span class="add-link">Add/Edit Assignments</span></h2>
+<span class="subText">Please specify the subjects for which you wish to add the grades</span><br/>
+
+<fieldset>
+
+      <%= form_for(@report, :action => resource(@report) ) do %>
+       
+             <ul>
+                  <li><%= text_field  :subject_name,  :label => "Main Subject", :title => "Subject" %></li>
+             </ul>
+             
+             <% @categories.each do |f| %>
+                       <ul>
+                            <li>
+                                <label>Category(optional)</label>
+                                <%= text_field :name => "category_1[category]", :class => "short", :value => "#{f.category_name}" %>
+                            </li>
+                       </ul>
+                       <% f.assignments.each do |a| %>
+                            <li>
+                                <%= text_field  :class => "short", :value => "#{a.name}" %>
+                                <%= text_field  :class => "short apart date", :value => "#{a.date}" %>
+                                <%= text_field  :class => "short apart", :value => "#{a.max_point}" %>
+                            </li>
+                       <% end %>
+             <% end %>          
+                     <div id="test"></div>
+                     <a href="#"  class="add-more"  onClick="test(); return false;">Add More Assignments</a>
+             
+             
+              <div class="save-cancel">
+                    <a href="#"  class="add-more"  id="moreFields" onClick="moreFields(); return false;">Add Another Category</a>
+                    <%= submit "Save and Add Grades" %> Or  <%= link_to "Cancel", resource(:reports), :class => "cancel" %>
+              </div>
+             
+      <% end =%>                      
+  
+</fieldset> 
+
+
+<script type= "text/javascript">
+
+      id = 1
+     function test()
+       {  
+         div = document.getElementById('test')
+         $j(div).append("<p id='row" + id + "'><input type='text' class='short text' name='category_t[assignment][name][]' id='txt" + id + "'><input type='text' class='short text apart' name='category_t[assignment][date][]' id='newdate" + id + "'><input type='text' class='short text apart' name='category_t[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a><p>");
+         $j("#newdate" + id + "").datepicker({minDate:'today + 1'});
+         id = (id - 1) + 2;
+       }
+  
+        function removeFormField(id) 
+      {
+         $j(id).remove();
+       }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</script>

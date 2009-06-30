@@ -1,0 +1,45 @@
+<h2 class="current-page">
+     Grades/Reports > Add Grade's Definition 
+</h2>
+
+
+<span class="subText">
+      These changes affect only the future reports
+</span><br/><br/><br/>
+
+<fieldset>
+
+     <%= form_for(@report, :action => resource(:ranks) ) do %>
+     
+     
+         <%= partial 'rank' %>
+         
+         <a href="#"  class="add-more"  onClick="testing(); return false;">Add More</a>
+         
+         <div class="save-cancel">
+             <%= submit "save" %> Or  <%= link_to "Cancel", :class => "cancel" %>
+         </div>
+     
+     <% end =%>
+
+</fieldset>
+
+
+
+<script type= "text/javascript">
+
+  id = 1
+   function testing()
+   {
+        var ul = document.getElementById('ranking')
+        $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='rank[name][]' id='txt" + id + "'><input type='text' class='short apart text' name='rank[from][]' id='txt" + id + "'><input type='text' class='short apart text' name='rank[to][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
+        id = (id - 1) + 2;
+   } 
+    
+  function removeFormField(id) 
+  {
+     $j(id).remove();
+   }
+   
+       
+</script>

@@ -10,7 +10,10 @@
 <%= form_for (@announcement, :action => resource(:announcements), :id => 'announcement', :name => "announce") do %>
      <fieldset>
            <ul>
-               <li><label>Announcement for:</label><%= select :access_name, :collection => rooms, :prompt => "Please Select" %></li>
+               <li>
+                   <label>Announcement for:</label>
+                   <%= select :access_name, :collection => rooms, :prompt => "Please Select", :selected => "#{params[:l]}" %>
+               </li>
                <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
                <li><%= text_area  :content,  :label => "Description", :rows => "20", :cols => "50" %></li>
                <li><%= text_field  :expiration, :class => "short date", :label => "Expiration", :size => "12" %></li>

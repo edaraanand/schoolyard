@@ -1,9 +1,14 @@
+
       <% if params[:l] == "all_forms" %>
-           <h2 class="current-page"> All Forms </h2>
-      <% elsif params[:id].nil? %>
-           <h2 class="current-page"> All Forms </h2>
+           <h2 class="current-page"> 
+               All Forms &nbsp;&nbsp;&nbsp;
+               <%= link_to_right((right = "forms"), "Add New", resource(:forms, :new)  ) %>
+           </h2>
       <% else %> 
-           <h2 class="current-page"> Forms for <%= @class.class_name.titleize %> </h2>
+           <h2 class="current-page"> 
+               Forms for <%= @class.class_name.titleize %> &nbsp;&nbsp;&nbsp;
+               <%= link_to_right((right = "forms"), "Add New", resource(:forms, :new, :l => "#{@class.class_name.titleize}")  ) %>               
+           </h2>
       <% end %>
 
 <% if params[:l] == "all_forms" %>
@@ -15,6 +20,10 @@
                         <th>Form</th>
                         <th>for</th>
                         <th>Last Updated</th>
+                        <% unless session.user.type == "Parent" %>
+                           <th></th>
+                           <th></th>
+                        <% end %>
                  </thead>
                 <tbody>
                    <% for form in @all_forms %>
@@ -23,6 +32,10 @@
                             <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
+                            <% unless session.user.type == "Parent" %>
+                               <td><%= link_to_right((right = "forms"), "Edit", resource(form, :edit)  ) %></td>
+                               <td><%= link_to_right((right = "forms"), "Delete", resource(form, :delete)  ) %></td>
+                            <% end %>
                         </tr>
                    <% end %>
              </tbody>
@@ -40,6 +53,10 @@
                        <th>Form</th>
                        <th>for</th>
                        <th>Last Updated</th>
+                      <% unless session.user.type == "Parent" %>
+                         <th></th>
+                         <th></th>
+                      <% end %>
                 </thead>
                  <tbody>
                        <% for form in @forms %>
@@ -48,6 +65,10 @@
                                  <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
                                  <td><%= form.class_name %></td>
                                  <td><%= form.updated_at.strftime("%b %d %Y") %></td>
+                                 <% unless session.user.type == "Parent" %>
+                                    <td><%= link_to_right((right = "forms"), "Edit", resource(form, :edit)  ) %></td>
+                                    <td><%= link_to_right((right = "forms"), "Delete", resource(form, :delete)  ) %></td>
+                                 <% end %>
                              </tr>
                         <% end %>
                  </tbody>
@@ -60,11 +81,3 @@
 </div>
   
   
-    <% unless session.user.type == "Parent" %>
-         <div class="right-sidebar">
-             <h3>Manage Forms</h3>
-              <ul class="last">
-                   <li <% if @selected == "forms" %> class="on" <% end %>><%= link_to_right((right = "forms"), "Manage Forms", url(:forms)  ) %></li>
-              </ul>
-          </div>
-    <% end %>

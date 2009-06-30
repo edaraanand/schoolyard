@@ -1,0 +1,35 @@
+<div id="fullpage">
+    
+     <h2 class="current-page">SpotLight for <%= @spot_light.class_name %>
+            &nbsp;&nbsp;&nbsp;
+            <%= link_to_right((right = "spotlight"), "Add New", resource(:spot_lights, :new, :l => "#{@spot_light.class_name.titleize}" ) ) %>
+     </h2>
+  
+    <div class="data-block short-block">
+           
+           <div class="ddmm">
+                 <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @spot_light.id]) %>
+                 <% unless @attachment.nil? %>
+                      <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
+                 <% end %>
+           </div>
+           <h3><%= @spot_light.student_name %></h3>
+           <span class="subText"><%= @spot_light.created_at.strftime("%b %d %Y") %></span>
+               <% unless session.user.type == "Parent" %>
+                     <div class="admin-links">
+                         <%= link_to_right((right = "spotlight"), "Edit", resource(@spot_light, :edit ) ) %> |
+                         <%= link_to_right((right = "spotlight"), "Delete", resource(@spot_light, :delete ) ) %>
+                     </div>
+                <% end %>
+           <br class="clear"/>
+           <p class="post-content"><%= san_content(@spot_light.content) %></p>
+     </div>
+     <br class="clear"/>
+     <p class="separator">&nbsp;</p>
+       
+       <%= link_to '< Previous', url(:spots, :id => @spot_light.previous_class_spot_light), :class => "alignleft" if @spot_light.previous_class_spot_light %> &#124;
+       <%= link_to " Back to all Spotlights ", url(:class_details, :id =>  @classroom.id, :label => "spot_light") %> &#124;
+       <%= link_to 'Next >', url(:spots, :id => @spot_light.next_class_spot_light), :class => "alignright" if @spot_light.next_class_spot_light %>
+       
+     
+</div>

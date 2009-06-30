@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<Response>  
+        <Say>Your Appointment is located at a Road.</Say>  
+        <Redirect method="GET">http://<%= @current_school.subdomain %>.schoolyardapp.net/reminder?id=<%= @announcement.id %></Redirect>
+</Response> 
