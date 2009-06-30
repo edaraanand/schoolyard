@@ -38,7 +38,7 @@
                                    <td>&nbsp;<%= student.first_name %></td>
                                    <td>&nbsp;<%= number_to_phone(student.phone, :area_code => true) %></td>
                                    <% unless session.user.type == "Parent" %>
-                                       <td>&nbsp;<%= link_to_right((right = "manage_directory"), "Edit", url(student, :edit)  ) %></td>
+                                       <td>&nbsp;<%= link_to_right((right = "manage_directory"), "Edit", resource(student, :edit)  ) %></td>
                                    <% end %>
                               </tr>
                            <% end %>
