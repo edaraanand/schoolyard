@@ -1,4 +1,4 @@
-$j("input.date").datepicker({ yearRange: '1970:2040'});
+// $j("input.date").datepicker({ yearRange: '1970:2040'});
 
    var parent2_obj = document.getElementById('parent2');
    var parent3_obj = document.getElementById('parent3');
@@ -54,6 +54,9 @@ $j("input.date").datepicker({ yearRange: '1970:2040'});
  
  $j(document).ready(function()
 {
+	$j("input.date").datepicker({ yearRange: '1970:2040'});
+	
+	
     $j(".defaultText").focus(function(srcc)
     {
         if ($j(this).val() == $j(this)[0].title)
@@ -72,7 +75,8 @@ $j("input.date").datepicker({ yearRange: '1970:2040'});
         }
     });
     
-    $j(".defaultText").blur();        
+    $j(".defaultText").blur();   
+     
 });
 
  var thisForm = "studs";

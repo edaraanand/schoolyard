@@ -5,7 +5,7 @@
     <span id="text" class="twitter-textarea"></span>
     <ul>
       <li><%= text_area  :content, :label => "Message", :rows => "2", :cols => "40" %></li>
-      <li><%= text_field  :expiration, :id => "expiration",  :label => "Expiration", :class => "short" %></li>
+      <li><%= text_field  :expiration, :id => "expiration",  :label => "Expiration", :class => "short date" %></li>
     </ul>
   </fieldset>
       
@@ -18,9 +18,11 @@
 
 <script type= "text/javascript">
 
-    document.announcement_form.announcement_content.focus();
-    
-    $j("#expiration").datepicker({minDate:'today + 1'});
+     document.announcement_form.announcement_content.focus();
+     $j(document).ready(function() {
+                                      $j("input.date").datepicker({minDate:'today + 1'})
+                                   });
+
     $j("#announcement_content").charCounter(140, {
                                          container: "#text",
 	                                       classname: "twitter-textarea",
@@ -40,20 +42,7 @@
          {
            return false;
          }
-     
-      
-         
-     //  $j.prompt('Example 2', {
-     //                           buttons: { Ok: true, Cancel: false },
-     //                           Default: { Cancel: false  },
-     //                           submit:function(v,m)
-     //                           { 
-     //                             if (v == true){ return true; }
-     //                             else { return false ;}
-     //                            }
-     //                        }
-     //           ); 
-     //   
+   
          
     }
 </script>
