@@ -73,7 +73,9 @@ class Notifications < Application
         @sms_numbers = number.join(',')
         unless @sms_numbers.empty?
            api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
-           api.send_message("#{@sms_numbers}", "#{@announcement.content}")
+           @sms_numbers.each do |f|
+              api.send_message("#{f}", "#{@announcement.content}")
+           end
         end
         run_later do
            @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
