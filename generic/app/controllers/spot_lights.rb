@@ -107,6 +107,7 @@ class SpotLights < Application
             :content_type => params[:spot_light][:image][:content_type],
             :school_id =>  @current_school.id
             )
+            File.makedirs("public/uploads/spotlights")
             FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/spotlights/#{@attachment.filename}")
             if @spot_light.class_name == "Home Page"
                redirect url(:homes)
