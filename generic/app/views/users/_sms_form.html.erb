@@ -1,21 +1,17 @@
  
- <%= form_for :person, :action => url(:voice_update)  do  %>
+ 
      <ul>
           <% if @sms != nil %>
                 <li>
                     <%= text_field :sms_alert,  :label => "For Text message/sms", :class => "short text", :value => "#{@sms}" %>
-                    <span class="phone-hint">(e.g. 3210987654)</span>
+                    <span class="phone-hint">No Skype Numbers (e.g. 3210987654)</span>
                 </li>
            <% else %>
                 <li>
                     <%= text_field :sms_alert,  :label => "For Text message/sms", :class => "short text" %>
                     <span class="phone-hint">No Skype Numbers (e.g. 3210987654)</span>
-                   
                 </li>
            <% end %>
-          <div class="save-cancel">
-              <p>Charges may apply as per your agreement with the cellphone provider.</p>
-              <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:phone), :class => "cancel" %>
-          </div>
+         
       </ul>
- <% end =%>
+ 

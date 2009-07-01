@@ -471,12 +471,8 @@ class Users < Application
   def voice_update
     @person = session.user
     @selected = "phone"
-    if params[:person][:voice_alert]
-       @person.voice_alert = params[:person][:voice_alert]
-    end
-    if params[:person][:sms_alert]
-       @person.sms_alert = params[:person][:sms_alert]
-    end
+    @person.voice_alert = params[:person][:voice_alert]
+    @person.sms_alert = params[:person][:sms_alert]
     if @person.valid?                                                                        
        @person.save!
        redirect url(:phone)
