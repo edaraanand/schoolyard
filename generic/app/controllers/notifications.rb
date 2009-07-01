@@ -29,7 +29,7 @@
      CALLER_ID = '530 554 1373'
    # CALLED = '530 554 1373' Myself
    
-   # CALLED = '571 332 0672' AJ
+   # CALLED = '5713320672' AJ
    # CALLED = ' 530-756-8158' Brian
    # CALLED = '+14152870729' Niket
      #CALLED = '530 554 1373' Eshwar
@@ -76,7 +76,7 @@ class Notifications < Application
            api.send_message("#{@sms_numbers}", "#{@announcement.content}")
         end
         run_later do
-           @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
+          @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
         end
         redirect url(:homes)
      else
