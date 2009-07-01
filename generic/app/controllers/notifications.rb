@@ -68,7 +68,8 @@ class Notifications < Application
         twitter.post(params[:announcement][:content])
         @people = @current_school.people.find(:all)
         numbers = @people.collect{ |x| x.sms_alert }
-        num = numbers.compact
+        eee = numbers.compact
+        num = eee.delete_if{|x| x ==  ""}
         number = num.collect{|x| "1" + x }
         @num = number.join(',')
         unless @num.empty?
