@@ -12,9 +12,15 @@ class Announcement < ActiveRecord::Base
 
   attr_accessor :attachment
   attr_accessor :image
+  
+  def validate
+    if (self.expiration <= Date.today) 
+       self.errors.add(:expiration, "must be greater than today") 
+    end
+  end
                                                                           
   # sending email to Collaborative Methods on Feedback
-  
+    
   def feedback_email
     mail_deliver(:feedback, :subject => "Feedback from " + self.school.school_name)
   end

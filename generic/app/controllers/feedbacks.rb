@@ -16,7 +16,7 @@ class Feedbacks < Application
   
   def create
     @announcement = @current_school.announcements.new(params[:announcement])
-    @announcement.expiration = Date.today
+    @announcement.expiration = Date.today + 1
       if @announcement.valid?
          @announcement.person_id = session.user.id
          @announcement.label = "feedback"
