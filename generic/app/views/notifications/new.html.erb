@@ -5,13 +5,13 @@
     <span id="text" class="twitter-textarea"></span>
     <ul>
       <li><%= text_area  :content, :label => "Message", :rows => "2", :cols => "40" %></li>
-      <li><%= text_field  :expiration, :id => "expiration",  :label => "Expiration", :class => "short date" %></li>
+      <li><%= text_field  :expiration,  :label => "Expiration", :class => "short date" %></li>
     </ul>
   </fieldset>
       
   <div class="save-cancel">
-    <input type = 'button' value = '    Preview    ' /> 
-    <%= submit "    Publish and Send Alerts    " %>  Or <%= link_to "Cancel", url(:notifications ), :class => "cancel" %>
+       <input type = 'button' value = '    Preview    ' /> 
+       <%= submit "    Publish and Send Alerts    " %>  Or <%= link_to "Cancel", url(:notifications ), :class => "cancel" %>
   </div>  
 <% end =%>                                                                 
 
