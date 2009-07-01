@@ -73,9 +73,7 @@ class Notifications < Application
         @num = number.join(',')
         unless @num.empty?
            api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
-           @num.each do |f|
-              api.send_message("#{f}", "#{@announcement.content}")
-            end
+           api.send_message("#{@num}", "#{@announcement.content}")
         end 
         run_later do
           @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
