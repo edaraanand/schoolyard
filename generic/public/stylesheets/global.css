@@ -368,7 +368,7 @@ input.ext-link-url{float:none!important; position:relative; top:-22px; right:-10
 .calendar-block h3.today{background:#ff7b00; color:#fff;}
 .calendar-block a{padding:2px 0 2px 18px!important;}
 .calendar-block .cal-time{display:block; width:100px; float:left;}
-.cal-title{float:left; display:block; width:240px;}
+.cal-title{float:left; display:block; width:180px;}
 ul.calendar-items{clear:both;}
 ul.calendar-items li{clear:both; display:block; width:480px; float:left; padding:4px 0 2px 2px;}
 ul.calendar-items small{color:#666;}

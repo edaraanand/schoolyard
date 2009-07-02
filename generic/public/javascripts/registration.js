@@ -28,14 +28,17 @@ document.registration.parent_first_name.focus();
      am4_obj.style.display      =  "none";
    }
 
-   $j("#DOB1").datepicker({ yearRange: '1970:2040'});
-   $j("#DOB2").datepicker({ yearRange: '1970:2040'});
-   $j("#DOB3").datepicker({ yearRange: '1970:2040'});
-   $j("#DOB4").datepicker({ yearRange: '1970:2040'});
+  
       
       
    $j(document).ready(function()
   {
+	   $j("#DOB1").datepicker({ yearRange: '1970:2040'});
+	   $j("#DOB2").datepicker({ yearRange: '1970:2040'});
+	   $j("#DOB3").datepicker({ yearRange: '1970:2040'});
+	   $j("#DOB4").datepicker({ yearRange: '1970:2040'});
+	
+	
       $j(".defaultText").focus(function(srcc)
       {
           if ($j(this).val() == $j(this)[0].title)

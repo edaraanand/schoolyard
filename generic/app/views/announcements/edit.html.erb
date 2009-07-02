@@ -66,8 +66,9 @@
    
  }
   
-   $j("input.date").datepicker({minDate:'today + 1'});
-  
+   $j(document).ready(function() {
+            $j("input.date").datepicker({minDate:'today + 1'});
+  });
   
   
 </script>

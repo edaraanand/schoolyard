@@ -29,7 +29,7 @@
      CALLER_ID = '530 554 1373'
    # CALLED = '530 554 1373' Myself
    
-   # CALLED = '571 332 0672' AJ
+   # CALLED = '5713320672' AJ
    # CALLED = ' 530-756-8158' Brian
    # CALLED = '+14152870729' Niket
      #CALLED = '530 554 1373' Eshwar
@@ -59,7 +59,7 @@ class Notifications < Application
   
   def create
      @announcement = @current_school.announcements.new(params[:announcement])    
-     if @announcement.valid?
+     if @announcement.valid?                                                                                                                                                                                                                                                                
         @announcement.access_name = "Home Page"
         @announcement.label = "urgent"
         @announcement.save!
@@ -68,17 +68,18 @@ class Notifications < Application
         twitter.post(params[:announcement][:content])
         @people = @current_school.people.find(:all)
         numbers = @people.collect{ |x| x.sms_alert }
-        num = numbers.compact
+        eee = numbers.compact
+        num = eee.delete_if{|x| x ==  ""}
         number = num.collect{|x| "1" + x }
-        @sms_numbers = number.join(',')
-        unless @sms_numbers.empty?
+        @num = number.join(',')
+        unless @num.empty?
            api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
-           api.send_message("#{@sms_numbers}", "#{@announcement.content}")
-        end
+           api.send_message("#{@num}", "#{@announcement.content}")
+        end 
         run_later do
-           @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
+          @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
         end
-        redirect url(:homes)
+        redirect resource(:homes)
      else
         render :new                
      end 

@@ -1,3 +1,4 @@
+
 <h2 class="current-page"> Phone Alert Settings </h2>
 
        <%= error_messages_for @person %>
@@ -6,7 +7,9 @@
            If you would also like to receive text/voice alerts, please provide phone numbers below
        </p>
        
-       <fieldset class="phone-alert-settings">
+<fieldset class="phone-alert-settings">
+	
+	<%= form_for :person, :action => url(:voice_update)  do  %>
          <% unless @person.voice_alert.blank? %>
                <div id="voice" style="display:block">
                    <%= partial 'voice' %>
@@ -32,8 +35,13 @@
                <%= partial 'voice_form' %>
         <% end %>
                   
-      </fieldset>
-        
+          <div class="save-cancel">
+              <p>Charges may apply as per your agreement with the cellphone provider.</p>
+              <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:phone), :class => "cancel" %>
+          </div>
+    <% end =%>
+</fieldset>
+
         
 <script type= "text/javascript">       
         

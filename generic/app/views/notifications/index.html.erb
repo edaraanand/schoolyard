@@ -11,8 +11,8 @@
     <% else %>
          <% for announcement in @announcements %>
                <div class="data-block long-block">
-                    <div class="ddmmm">
-                        <span class="date"><%= announcement.expiration.strftime("%d") %></span>
+                      <div class="ddmmm">
+                          <span class="date"><%= announcement.expiration.strftime("%d") %></span>
 	                      <span class="month"><%= announcement.expiration.strftime("%b") %></span>
 	                  </div>
 	                  <p class="post-content"><%= announcement.content %></p>

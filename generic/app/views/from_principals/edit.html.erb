@@ -5,7 +5,7 @@
               <ul>
                   <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
                   <li><%= text_area  :content,  :label => "Message", :rows => "10", :cols => "50" %></li>
-                  <li><%= text_field  :expiration, :id => "expiration",  :label => "Expiration", :class=>"short" %></li>
+                  <li><%= text_field  :expiration, :id => "expiration",  :label => "Expiration", :class=>"short date" %></li>
                   <li>
                       <% if @attachments.size >= 1 %>
                             <%= file_field :attachment,  :label => "Attach a File", :disabled => "true" %>
@@ -48,6 +48,9 @@
    window.open('/from_principals/preview/-/?' + s);
  }
   
-  $j("#expiration").datepicker({minDate:'today + 1'});
+  $j(document).ready(function() {
+           $j("input.date").datepicker({minDate:'today + 1'});
+       });
+ 
 
 </script>
