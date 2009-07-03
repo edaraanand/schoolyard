@@ -12,13 +12,23 @@
  
 <span class="subText">Please specify the subjects for which you wish to add the grades</span><br/>
 
+<div class="container">
+	<h4>There are some errors in the form, please fill the details.</h4>
+	<ol>
+		<li><label for="report_subject_name" class="error">Please enter the Subject Name</label></li> 
+		<li><label for="report_classroom_id" class="error">Please select the Classroom</label></li> 
+		<li><label for="assign" class="error">Please enter the Assignment</label></li> 
+		<li><label for="testing" class="error">Please enter the Max Point correctly</label></li>
+		<li><label for="category[assignment][max_point][]" class="error">Please enter the Max Points with the minimum value of 1</label></li>
+	</ol>
+</div>
 
-
-<%= form_for(@report, :id => "report", :action => resource(:reports), :onsubmit => "ClearAll()" ) do %>
+<%= form_for(@report, :id => "report", :action => resource(:reports), :class => "cmxform", :onsubmit => "ClearAll()" ) do %>
 <div class="add-subjects new-fieldset">
   <p class="main-subject">
-    <%= text_field  :subject_name,  :class => "required defaultText defaultTextActive", :label => "Main Subject", :title => "Subject" %>
-    <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :label => "for", :prompt => "Please Select" %>
+         <%= text_field  :subject_name,  :class => "required defaultText defaultTextActive", :label => "Main Subject", :title => "Subject" %>
+         <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :label => "for", :prompt => "Please Select",
+               :class => "required" %>
   </p>
        <div id="test" class="test">
            <%= fields_for @category do %>
@@ -40,8 +50,8 @@
             <%= submit "Save" %> Or  <%= link_to "Cancel", resource(:reports), :class => "cancel" %>
             <a id="minus3" href="" class="cancel">Remove Category </a>
       </div>
-
-      </div>        
+   
+  </div>        
 <% end =%> 
 
 <script type= "text/javascript">
@@ -51,7 +61,23 @@
      $j("#test").dynamicForm("#plus3", "#minus3");
      
    });
-   
+
+
+  //  $j("#report").validate();
+
+	var container = $j('div.container');
+
+	// validate the form when it is submitted
+	var validator = $j("#report").validate({
+		errorContainer: container,
+		errorLabelContainer: $("ol", container),
+		wrapper: 'li',
+		meta: "validate"
+	});
+
+
+	
+
       id = 1;
    function testing(counter)
        {  
@@ -132,8 +158,27 @@
 
 <style type="text/css">
   
-    input.error { border: 2px solid #c00;}
-    label.error { display:block; color: red; padding-left: .5em; vertical-align: top; }
+ 	.cmxform fieldset li.error label { color: red; }
+	div.container {
+		background-color: #eee;
+		border: 1px solid red;
+		margin: 5px;
+		padding: 5px;
+	}
+	div.container ol li {
+		list-style-type: disc;
+		margin-left: 20px;
+	}
+	div.container { display: none }
+	.container label.error {
+		display: inline;
+	}
+
+	form.cmxform label.error {
+		display: block;
+		margin-left: 1em;
+		width: auto;
+	}
  
 </style>
 

@@ -166,8 +166,9 @@ class Reports < Application
    end
    
    def edit
-     raise params.inspect
-    # @assignment = @current_school.assignments.find(params[:id])
+     @report = @current_school.reports.find(params[:id])
+     @categories = @report.categories
+     #@assignment = @current_school.assignments.find(params[:id])
     # @category = @assignment.category
     # @report = @category.report
     # @classroom = @report.classroom

@@ -59,7 +59,7 @@ jQuery.fn.dynamicForm = function (plusElmnt, minusElmnt, options)
             {
                 /* Normalize attached label */
               
-				       jQuery("label[for='"+idAttr+"']").each(function()
+				      jQuery("label[for='"+idAttr+"']").each(function()
                {
                  
                  jQuery(this).attr("for", idAttr + fieldId);
