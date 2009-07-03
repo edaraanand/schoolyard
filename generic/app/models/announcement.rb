@@ -9,7 +9,7 @@ class Announcement < ActiveRecord::Base
   validates_presence_of :content, :if => :content, :scope => :school_id
   validates_presence_of :expiration
   validates_presence_of :access_name, :message => "Please select the access from the drop down", :if => :access_name, :scope => :school_id
-
+  
   attr_accessor :attachment
   attr_accessor :image
   

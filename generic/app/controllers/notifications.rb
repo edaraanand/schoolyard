@@ -62,6 +62,8 @@ class Notifications < Application
      if @announcement.valid?                                                                                                                                                                                                                                                                
         @announcement.access_name = "Home Page"
         @announcement.label = "urgent"
+        content = format(params[:announcement][:content])
+        @announcement.content = content
         @announcement.save!
         makecall(@announcement.id)
         twitter = Twitter.new(@current_school.username, @current_school.password)
@@ -69,7 +71,7 @@ class Notifications < Application
         @people = @current_school.people.find(:all)
         numbers = @people.collect{ |x| x.sms_alert }
         eee = numbers.compact
-        num = eee.delete_if{|x| x ==  ""}
+        num = eee.delete_if{|x| x == ""}
         number = num.collect{|x| "1" + x }
         @num = number.join(',')
         unless @num.empty?
@@ -133,7 +135,12 @@ class Notifications < Application
      only_provides :xml
      display 'goodbye', :layout => false
   end
-
+  
+  def format(str)
+    the_str = str.to_s
+    the_str = the_str.gsub(/[^a-zA-Z0-9-]/, " ")
+    the_str
+  end
   
   private
 
