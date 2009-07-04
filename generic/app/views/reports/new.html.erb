@@ -40,7 +40,7 @@
            <p class="assignments-header">Assignments (Add each assignment in a  new line):</p>
            <%= fields_for @assignment do %> 
              <%= partial 'grade' %>
-             <a href="#"  class="add-more"  onClick="testing(this.parentNode.id); return false;">Add More Assignments</a>       
+             <a href="#"  class="add-more"  onClick="testing(this.parentNode.id); return false;">Add Assignment</a>       
            <% end =%>
            <div class="clear" style="padding-bottom:8px">&nbsp;</div>
        </div>
@@ -54,105 +54,9 @@
   </div>        
 <% end =%> 
 
-<script type= "text/javascript">
-  
-   $j(document).ready(function()
-   {	
-     $j("#test").dynamicForm("#plus3", "#minus3");
-     
-   });
 
+ <script type="text/javascript" src='/javascripts/grades.js'></script>
 
-  //  $j("#report").validate();
-
-	var container = $j('div.container');
-
-	// validate the form when it is submitted
-	var validator = $j("#report").validate({
-		errorContainer: container,
-		errorLabelContainer: $("ol", container),
-		wrapper: 'li',
-		meta: "validate"
-	});
-
-
-	
-
-      id = 1;
-   function testing(counter)
-       {  
-         var div = document.getElementById(counter);
-         var r = document.getElementById(counter).id;
-         var k = r.split('');
-         a = k[4];
-         if (r == 'test')
-           {
-             var ul = document.getElementById('assignment');
-             $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='category[assignment][name][]' id='txt"+id+"'><input type='text' class='short text apart' name='category[assignment][max_point][]' id='txt"+id+"'><a href='#' class='delete-btn' onClick='removeFormField(\"#row"+id+"\"); return false;'></a></li>");
-           }
-         else
-           {
-             var li = div.getElementsByTagName("ul");
-             for (i=0; i<li.length; i++)
-             {
-               if (li[i].id == "assignment")
-               {
-                 li[i].id = "assignment_" + a;
-                }
-             }
-              var tt = document.getElementById('assignment_' + a);
-              $j(tt).append("<li id='row" + id + "'><input type='text' class='short text' name='category_" +  a  + "[assignment][name][]' id='txt" + id + "'><input type='text' class='short text apart' name='category_" +  a  + "[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
-           }
-         id = (id - 1) + 2;
-        
-       }
-    
-      function removeFormField(id) 
-      {
-         $j(id).remove();
-       }
-       
-   // Default Text on focus
-  $j(document).ready(function()
-      {
-          $j(".defaultText").focus(function(srcc)
-          {
-              if ($j(this).val() == $j(this)[0].title)
-              {
-                  $j(this).removeClass('defaultTextActive');
-                  $j(this).val("");
-              }
-          });
-          
-          $j(".defaultText").blur(function()
-          {
-              if ($j(this).val() == "")
-              {
-                  $j(this).addClass("defaultTextActive");
-                  $j(this).val($j(this)[0].title);
-              }
-          });
-          
-          $j(".defaultText").blur();        
-      });
-  
-  // clearing default values
-  
-   function ClearAll()
-   { 
-      var r = document.getElementById('report');
-      var pr =  r.getElementsByTagName('input');
-      for (var r=0;r<pr.length;r++)
-      {
-          if (pr[r].value == pr[r].title)
-           {
-             pr[r].value = "";
-           }
-      }
-   }
-
-  
-</script>
 
 
 

@@ -2,7 +2,7 @@
 <h2 class="current-page">Grades/Reports &gt; <span class="add-link">Add/Edit Assignments</span></h2>
 <span class="subText">Please specify the subjects for which you wish to add the grades</span><br/>
 
-<%= form_for(@report, :action => resource(@report) ) do %>
+<%= form_for(@report, :action => resource(@report), :onsubmit => "ClearAll()" ) do %>
        
   <div class="add-subjects new-fieldset">
 	     <p class="main-subject">        
@@ -11,34 +11,54 @@
 		                  :label => "for", :selected => "#{@report.classroom.class_name.titleize}", :prompt => "Please Select" %>
 	     </p>
              
-         <div id="test" class="test">
+         <div class="test">
 	          
                 <% @categories.each do |f| %>
                     <div id = "<%= f.id %>">
                          <p class="category">
                               <label>Category(optional)</label>
-                              <%= text_field :name => "category_1[category]", :class => "short", :value => "#{f.category_name}" %>
+                              <%= text_field :name => "cgories_#{f.id}[category_name][]", :class => "text", :value => "#{f.category_name}" %>
                          </p>  
+                
                          <ul id="ament<%= f.id %>">
                              <% f.assignments.each do |a| %>
                              
-	                              <li><%= text_field  :class => "short", :value => "#{a.name}" %>
-                                      <%= text_field  :class => "short apart", :value => "#{a.max_point}" %>
+	                              <li>
+	                                  <%= text_field  :name => "cgories_#{f.id}[assignment][name][]", :class => "short", :value => "#{a.name}" %>
+                                      <%= text_field  :name => "cgories_#{f.id}[assignment][max_point][]", :class => "short apart", 
+                                                      :value => "#{a.max_point}" %>
+                                      <%= link_to "", url(:delete_report, a, :label => "assignment"), :class => "delete-btn" %>
                                   </li>
                            
                              <% end %>
                          </ul>
-                         <a href="#"  class="add-more"  onClick="testing(this.parentNode.id); return false;">Add Assignment</a>
+                         <a href="#"  class="add-more"  onClick="assignments(this.parentNode.id); return false;">Add Assignment</a>
                          <div class="clear" style="padding-bottom:8px">&nbsp;</div>
                     </div>     
                 <% end %> 
                
           </div>
-                 
+
+                <div id="test" class="test" style="display:block;">
+		        	 <%= fields_for @category do %>
+		                   <p class="category">					
+			                    <label>Category (Optional)</label>				
+							    <%= text_field :name => "category[category_name][]", :class =>"text"%>
+							</p>
+			         <% end =%>
+				
+					 <%= fields_for @assignment do %> 
+					       <%= partial 'grade' %>
+					       <a href="#"  class="add-more"  onClick="testing(this.parentNode.id); return false;">Add Assignment</a>       
+					 <% end =%>
+					 <div class="clear" style="padding-bottom:8px">&nbsp;</div>
+			    </div>
+			
+			 				
 			   
           <div class="save-cancel">
 	            <a id="plus3" href="">Add Category </a>
-	            <%= submit "Save" %> Or  <%= link_to "Cancel", url(:assignments, :id => @report.id), :class => "cancel" %>
+                <%= submit "Save" %> Or  <%= link_to "Cancel", url(:assignments, :id => @report.id), :class => "cancel" %>
                 <a id="minus3" href="" class="cancel">Remove Category </a>
           </div>
 
@@ -47,45 +67,5 @@
   
 </fieldset> 
 
+ <script type="text/javascript" src='/javascripts/grades.js'></script>
 
-<script type= "text/javascript">
-
-   $j(document).ready(function()
-   {	
- 
-     $j("#").dynamicForm("#plus3", "#minus3");
-     
-   });
-
-  function category()
-{
-    var ccc = document.getElementById('cool');
-	var c = document.getElementById('category');
-	var d = document.getElementById('dyna');
-	ccc.style.display = "block";
-	c.style.display = "none";
-	d.style.display = "block";
-	
-}
-
-      id = 1
-     function testing(counter)
-       {  
-	      var r = document.getElementById(counter).id;
-	      // var k = r.split('');
-	      ul = document.getElementById('ament' + r)
-         $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='category_t[assignment][name][]' id='txt" + id + "'><input type='text' class='short apart text' name='category_t[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
-       
-         id = (id - 1) + 2;
-       }
-  
-        function removeFormField(id) 
-      {
-         $j(id).remove();
-       }
-
-
-
-
-  
-</script>
