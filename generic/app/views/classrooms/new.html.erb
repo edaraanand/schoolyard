@@ -11,7 +11,8 @@
 
 <fieldset>
       <h2 class="current-page"> Classrooms &gt; Add New </h2>
-      <%= form_for(@classroom, :action => resource(:classrooms), :name => "class" ) do %>
+
+      <%= form_for(@classroom, :action => resource(:classrooms) ) do %>
      
           <ul id="class_room">
                    <li>
@@ -23,7 +24,7 @@
                      
                        <li>
 	                        <div id="class_name" style="display:block">
-                                <%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %>
+                                <%= text_field :class_name, :id => "cls", :label => "Class Name", :maxlength => "75" %>
                             </div>
                        </li>
                      
@@ -31,7 +32,7 @@
                      
                           <li>
 	                           <div id="class_name" style="display:none">
-	                               <%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %>
+	                               <%= text_field :class_name, :id => "cls", :label => "Class Name", :maxlength => "75" %>
 	                           </div>
 	                      </li>
                      
@@ -39,7 +40,7 @@
                      
                           <li>
 	                           <div id="class_name" style="display:block">
-	                                 <%= text_field :class_name,  :label => "Class Name", :maxlength => "75" %>
+	                                 <%= text_field :class_name, :id => "cls", :label => "Class Name", :maxlength => "75" %>
 	                           </div>
 	                      </li>
                      
@@ -68,47 +69,44 @@
                              <label>Athletic Director</label>
                          </div>
                    <% end %>
-                   
-                       <select name = "class[people][class_teacher]" id="class_person",>
-                           <option value="please">Select Faculty</option>
-                               <% @teachers.each do |teacher| %>
-                                    <option value="<%= teacher.id %>">
-                                       <%= teacher.name %>
-                                    </option>
-                               <% end %>
-              </li>
+                                 
+                 	<%= select :class => "apart", :name => "class[people][class_teacher]", :collection => @current_school.staff, 
+	                           :value_method => :id, :text_method => :name, :prompt => "Select Faculty" %>
+	          </li>
               
         </ul>
-           <ul id="roles"></ul>
-           <input type="hidden" id="id" value="1">
-           <a href="#" class="add-more" onclick="addFormField(); return false;">Add More</a>
+            <ul id="roles"></ul>
+            <input type="hidden" id="id" value="1">
+            <a href="" class="add-more" onClick="addFormField(); return false;">Add More</a>
             
         <div class="save-cancel">
-            <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
+	        <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
         </div>
   <% end =%>
 </fieldset>
 
 <script type= "text/javascript">
   
-
+ $(cls).focus();
 
 function addFormField()
   {
+
     var id = document.getElementById('id').value;
     $j('#roles').append("<li id='row" + id + "'><input type='text' class='short text' name='class[people][roles][]' id='txt" + id + "'><select class='apart' name='class[people][ids][]'><option value='please'>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' class='remove' onclick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a></li>");
-   $('txt'+id).focus();
+    $('txt'+id).focus();
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
 }
-   function removeFormField(id) 
+
+ function removeFormField(id) 
    {
          $j(id).remove();
     }
     
-    document.class.classroom_class_name.focus();
-    
-    function class_type()
+   
+ function class_type()
+
     {
         var class_name = document.getElementById('class_name')
         var teacher = document.getElementById('teacher')
