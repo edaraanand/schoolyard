@@ -14,7 +14,7 @@
          <div class="test">
 	          
                 <% @categories.each do |f| %>
-                    <div id = "<%= f.id %>">
+                    <div id = "someclass<%= f.id %>">
                          <p class="category">
                               <label>Category(optional)</label>
                               <%= text_field :name => "cgories_#{f.id}[category_name][]", :class => "text", :value => "#{f.category_name}" %>
