@@ -3,7 +3,7 @@ class Calendars < Application
   layout 'default'
   before :find_school
   before :ensure_authenticated
-  before :access_rights, :exclude => [:events, :show]
+  before :access_rights, :exclude => [:events, :show, :pdf_events]
   before :classrooms, :only => [:events, :show]
 
   def index
@@ -171,11 +171,11 @@ class Calendars < Application
 
   def pdf_events
     if params[:label] == "single"
-      @calendar = Calendar.find(params[:id])
+      @calendar = @current_school.calendars.find(params[:id])
       pdf = pdf_prepare("single", @calendar)
       send_data(pdf.render, :filename => "#{@calendar.class_name}.pdf", :type => "application/pdf")
     else
-      @classroom = Classroom.find(params[:id])
+      @classroom = @current_school.classrooms.find(params[:id])
       @calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @classroom.class_name ])
       pdf = pdf_prepare("multiple", @calendars)
       send_data(pdf.render, :filename => "#{@classroom.class_name}.pdf", :type => "application/pdf")
