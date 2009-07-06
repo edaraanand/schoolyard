@@ -12,13 +12,23 @@
  
 <span class="subText">Please specify the subjects for which you wish to add the grades</span><br/>
 
+<div class="container">
+	<h4>There are some errors in the form, please fill the details.</h4>
+	<ol>
+		<li><label for="report_subject_name" class="error">Please enter the Subject Name</label></li> 
+		<li><label for="report_classroom_id" class="error">Please select the Classroom</label></li> 
+		<li><label for="assign" class="error">Please enter the Assignment</label></li> 
+		<li><label for="testing" class="error">Please enter the Max Point correctly</label></li>
+		<li><label for="category[assignment][max_point][]" class="error">Please enter the Max Points with the minimum value of 1</label></li>
+	</ol>
+</div>
 
-
-<%= form_for(@report, :id => "report", :action => resource(:reports), :onsubmit => "ClearAll()" ) do %>
+<%= form_for(@report, :id => "report", :action => resource(:reports), :class => "cmxform", :onsubmit => "ClearAll()" ) do %>
 <div class="add-subjects new-fieldset">
   <p class="main-subject">
-    <%= text_field  :subject_name,  :class => "required defaultText defaultTextActive", :label => "Main Subject", :title => "Subject" %>
-    <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :label => "for", :prompt => "Please Select" %>
+         <%= text_field  :subject_name,  :class => "required defaultText defaultTextActive", :label => "Main Subject", :title => "Subject" %>
+         <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :label => "for", :prompt => "Please Select",
+               :class => "required" %>
   </p>
        <div id="test" class="test">
            <%= fields_for @category do %>
@@ -30,7 +40,7 @@
            <p class="assignments-header">Assignments (Add each assignment in a  new line):</p>
            <%= fields_for @assignment do %> 
              <%= partial 'grade' %>
-             <a href="#"  class="add-more"  onClick="testing(this.parentNode.id); return false;">Add More Assignments</a>       
+             <a href="#"  class="add-more"  onClick="testing(this.parentNode.id); return false;">Add Assignment</a>       
            <% end =%>
            <div class="clear" style="padding-bottom:8px">&nbsp;</div>
        </div>
@@ -40,100 +50,39 @@
             <%= submit "Save" %> Or  <%= link_to "Cancel", resource(:reports), :class => "cancel" %>
             <a id="minus3" href="" class="cancel">Remove Category </a>
       </div>
-
-      </div>        
+   
+  </div>        
 <% end =%> 
 
-<script type= "text/javascript">
-  
-   $j(document).ready(function()
-   {	
-     $j("#test").dynamicForm("#plus3", "#minus3");
-     
-   });
-   
-      id = 1;
-   function testing(counter)
-       {  
-         var div = document.getElementById(counter);
-         var r = document.getElementById(counter).id;
-         var k = r.split('');
-         a = k[4];
-         if (r == 'test')
-           {
-             var ul = document.getElementById('assignment');
-             $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='category[assignment][name][]' id='txt"+id+"'><input type='text' class='short text apart' name='category[assignment][max_point][]' id='txt"+id+"'><a href='#' class='delete-btn' onClick='removeFormField(\"#row"+id+"\"); return false;'></a></li>");
-           }
-         else
-           {
-             var li = div.getElementsByTagName("ul");
-             for (i=0; i<li.length; i++)
-             {
-               if (li[i].id == "assignment")
-               {
-                 li[i].id = "assignment_" + a;
-                }
-             }
-              var tt = document.getElementById('assignment_' + a);
-              $j(tt).append("<li id='row" + id + "'><input type='text' class='short text' name='category_" +  a  + "[assignment][name][]' id='txt" + id + "'><input type='text' class='short text apart' name='category_" +  a  + "[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
-           }
-         id = (id - 1) + 2;
-        
-       }
-    
-      function removeFormField(id) 
-      {
-         $j(id).remove();
-       }
-       
-   // Default Text on focus
-  $j(document).ready(function()
-      {
-          $j(".defaultText").focus(function(srcc)
-          {
-              if ($j(this).val() == $j(this)[0].title)
-              {
-                  $j(this).removeClass('defaultTextActive');
-                  $j(this).val("");
-              }
-          });
-          
-          $j(".defaultText").blur(function()
-          {
-              if ($j(this).val() == "")
-              {
-                  $j(this).addClass("defaultTextActive");
-                  $j(this).val($j(this)[0].title);
-              }
-          });
-          
-          $j(".defaultText").blur();        
-      });
-  
-  // clearing default values
-  
-   function ClearAll()
-   { 
-      var r = document.getElementById('report');
-      var pr =  r.getElementsByTagName('input');
-      for (var r=0;r<pr.length;r++)
-      {
-          if (pr[r].value == pr[r].title)
-           {
-             pr[r].value = "";
-           }
-      }
-   }
 
-  
-</script>
+ <script type="text/javascript" src='/javascripts/grades.js'></script>
+
 
 
 
 <style type="text/css">
   
-    input.error { border: 2px solid #c00;}
-    label.error { display:block; color: red; padding-left: .5em; vertical-align: top; }
+ 	.cmxform fieldset li.error label { color: red; }
+	div.container {
+		background-color: #eee;
+		border: 1px solid red;
+		margin: 5px;
+		padding: 5px;
+	}
+	div.container ol li {
+		list-style-type: disc;
+		margin-left: 20px;
+	}
+	div.container { display: none }
+	.container label.error {
+		display: inline;
+	}
+
+	form.cmxform label.error {
+		display: block;
+		margin-left: 1em;
+		width: auto;
+	}
  
 </style>
 

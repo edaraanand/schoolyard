@@ -20,10 +20,16 @@
                      <td><%= f.name %></td>
                      <% grades = f.grades.find(:all, :conditions => ['assignment_id = ?', @assignment.id] ) %>
                      <% if grades.empty? %>
-                          <td><%= text_field :name => "assignment[score][]", :class => "short required number", :max => "#{@assignment.max_point}" %></td>
+                          <td>
+                              <%= text_field :name => "assignment[score][]", :class => "short required number",
+                                             :max => "#{@assignment.max_point}" %>
+                          </td>
                      <% else %>
                           <% grades.each do |g| %>
-                               <td><%= text_field :name => "assignment[score][]", :class => "short required number", :max => "#{@assignment.max_point}",  :value => "#{g.score}" %></td>
+                               <td>
+                                   <%= text_field :name => "assignment[score][]", :class => "short required number", 
+                                                  :max => "#{@assignment.max_point}",  :value => "#{g.score}" %>
+                               </td>
                           <% end %>
                      <% end %>
                 </tr>
