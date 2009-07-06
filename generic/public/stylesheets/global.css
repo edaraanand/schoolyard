@@ -552,6 +552,9 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 .add-subjects .category{float:left;}
 .add-subjects .category input{margin-top:8px;}
 
+table.grades th.subjects{width:200px;}
+table.grades th.last-upd{width:120px;}
+
 
 
 div.test {position:relative; padding:0 6px; border-top:1px dashed #eee;}
@@ -566,22 +569,6 @@ div.test ul li{padding:2px 0;}
 .add-subjects .add-more{clear:both; float:left; padding:2px 0 0 0; position:relative; left:160px;}
 
 .assignments-header{position: absolute; left: 164px;}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .data-block.urgent-display{background:#fcedcb; border-top:2px solid #ccc; margin-bottom:4px;}
 .data-block.urgent-display .separator{height:0;}
