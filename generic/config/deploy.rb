@@ -42,9 +42,6 @@ namespace :vlad do
       run "mkdir -p #{current_path}/generic/db"
       run "cp #{latest_release}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
      # run "mv /home/forge/db  #{current_path}/generic" 
-      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
-      run "cd #{current_path}/generic && rake bootstrap:alerts"
-      run "cd #{current_path}/generic && rake admin:person"
    end
    
    desc "Symlink configuration".cleanup
@@ -57,6 +54,9 @@ namespace :vlad do
    desc "Running migrations with some rake tasks for production"
    remote_task :migrate, :roles => :app do
       run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
+      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
+      run "cd #{current_path}/generic && rake bootstrap:alerts"
+      run "cd #{current_path}/generic && rake admin:person"
    end
   
    desc "Full deployment cycle"
