@@ -206,18 +206,18 @@ fieldset ul{padding-top:8px;}
 
 
 /*Tables*/
-#mytable {border-left:1px solid #C1DAD7;padding:0; margin:10px 0 20px 0; font-size:12px; }/*Set Table width here if needed*/
+#mytable {padding:0; margin:10px 0 20px 0; font-size:12px; border-collapse:collapse; 
+  border-top:2px solid #C1DAD7; border-bottom:2px solid #c1dad7;}
 #mytable caption{padding: 0 0 5px 0; font:italic 11px Arial, Helvetica, sans-serif; text-align:right;}
-#mytable th {font-size:11px; color:#32494B; border: 1px solid #c1dad7; border-left:0; 
-  letter-spacing: .01em; text-transform:uppercase; text-align: left; padding:6px; 
-  background:#cae8ea url(/images/mytable/bg_header.jpg) no-repeat;}
+#mytable th {font-size:11px; color:#32494B; border: 1px solid #c1dad7;  letter-spacing: .01em; text-transform:uppercase; text-align: left; padding:6px; 
+  background:#cae8ea;}
 #mytable th.thead1, #mytable th.thead2{border-left: 1px solid #c1dad7; border-top: 0; 
-  background: #fff url(/images/mytable/bullet1.gif) no-repeat; font:normal 10px Arial, Helvetica, sans-serif;}
+  background: #fff; font:normal 10px Arial, Helvetica, sans-serif;}
 #mytable th.thead2{background: #f5fafa url(/images/mytable/bullet2.gif) no-repeat; color: #797268;}
 #mytable th.firsthead{border-left:1px solid #C1DAD7;}/*First TH*/
-#mytable td{border-right:1px solid #ecfef1; border-bottom:1px solid #ecfef1; background:#fff; padding:6px 6px 6px 8px; color: #4f6b72;}
+#mytable td{border:1px solid #C1DAD7;background:#fff; padding:6px 6px 6px 8px; color: #4f6b72;}
 #mytable td.alt{background: #f5fafa; color: #797268;}/*Zebra style*/
-#mytable tbody tr:hover td{background-color:#ecfef1; border-color:#bed9c3;}
+#mytable tbody tr:hover td{background-color:#ecfef1;}
 #mytable .click-block{padding:0!important}
 .click-block a{display:block; padding:6px 6px 6px 12px;}
 
@@ -552,9 +552,31 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 .add-subjects .category{float:left;}
 .add-subjects .category input{margin-top:8px;}
 
+table.grades th.subjects{width:200px;}
+table.grades th.last-upd{width:120px;}
 
+.assignments h3{font-size:13px; font-weight:bold;}
+.assignments h4{font-weight:bold; padding:0 0 0 16px;}
+.assignments h5{}
+
+.assignment-date label{padding:0 20px 8px 0;}
+.assignment-date input{display:inline!important; float:none!important;}
+
+span.max-points{text-transform:capitalize;}
+
+.assign-tasks{margin:8px 0 0 0;}
+.assign-tasks li{padding:0 0 0 32px;}
+
+.page-links{background:#f7f7f7; margin:16px 0 0 0; clear:both;}
+
+
+#content .assignments h3 a{margin:0;}
+
+table.reports#mytable th.student{padding-right:30px;}
 
 div.test {position:relative; padding:0 6px; border-top:1px dashed #eee;}
+div.test .test{padding:0;}
+div.test .test ul{margin:20px 0 0 12px;}
 div.test ul{margin:30px 0 0 12px; float:left; display:inline;}
 div.test ul.assignment, div.test ul#assignment{margin:0 0 0 158px; float:left; clear:both;}
 div.test ul.assignment input, div.test ul#assignment input{margin-right:4px;}
@@ -566,22 +588,6 @@ div.test ul li{padding:2px 0;}
 .add-subjects .add-more{clear:both; float:left; padding:2px 0 0 0; position:relative; left:160px;}
 
 .assignments-header{position: absolute; left: 164px;}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .data-block.urgent-display{background:#fcedcb; border-top:2px solid #ccc; margin-bottom:4px;}
 .data-block.urgent-display .separator{height:0;}
