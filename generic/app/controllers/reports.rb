@@ -109,7 +109,7 @@ class Reports < Application
    def score
      @assignment = @current_school.assignments.find(params[:id])
      @assignment.date = params[:assignment][:date]
-     @assignment.save
+     @assignment.save!
      @category = @assignment.category
      @report = @category.report
      @classroom = @report.classroom
@@ -160,21 +160,58 @@ class Reports < Application
               s = names.zip(max_points, assignments_id)
               s.each do |l|
                 if l[2].nil?
-                    @assignment = @category.assignments.create({  :name => l[0], :max_point => l[1], :school_id => @current_school.id })
+                    @assignment = Assignment.create({  :name => l[0], :max_point => l[1], :category_id => @category.id, 
+                                                       :school_id => @current_school.id })
                 else
                     if ( (l[0] != "") && (l[1] != "")  )
-                        @assignment_e = @category.assignments.update(l[2], {:name => l[0], :max_point => l[1], :school_id => @current_school.id })
+                        @assignment_e = @category.assignments.update(l[2], {:name => l[0], :max_point => l[1], 
+                                                                            :school_id => @current_school.id })
                     end
                 end
-             end
+              end
            end
          end
-         cat_assignments
+         testing
          redirect url(:assignments, :id => @report.id)
       else
         render :new
       end
    end
+   
+   def testing
+     if params[:category]
+        name = params[:category][:assignment][:name]
+        max_p = params[:category][:assignment][:max_point]
+        category_name = params[:category][:category_name]
+        if "#{category_name}" != ""
+           @category = @report.categories.create({:category_name => "#{category_name}", :school_id => @current_school.id })
+           s = name.zip(max_p)
+           s.each do |l|
+             if ( (l[0] != "") && (l[1] != "")  )
+                @assignment = @category.assignments.create({  :name => l[0], :max_point => l[1], :school_id => @current_school.id })
+             end
+           end
+        end
+     end
+     @category_array = (0..50).to_a
+     @category_array.each do |f|
+        if params["category_#{f}".intern]
+           names = params["category_#{f}".intern][:assignment][:name]
+           max_points = params["category_#{f}".intern][:assignment][:max_point]
+           category_n = params["category_#{f}".intern][:category_name]
+           if "#{category_n}" != ""
+              @category_e = @report.categories.create({:category_name => "#{category_n}", :school_id => @current_school.id })
+              s = names.zip(max_points)
+              s.each do |l|
+                if ( (l[0] != "") && (l[1] != "")  )
+                   @assignment_e = @category_e.assignments.create({ :name => l[0], :max_point => l[1], :school_id => @current_school.id })
+                end
+              end
+           end
+        end
+     end
+   end
+   
    
    def delete
      @assignment = @current_school.assignments.find(params[:id])
@@ -192,9 +229,9 @@ class Reports < Application
          @category = @report.categories.create({:category_name => "#{category_name}", :school_id => @current_school.id })
          s = name.zip(max_p)
          s.each do |l|
-            if ( (l[0] != "") && (l[1] != "")  )
-               @assignment = @category.assignments.create({  :name => l[0], :max_point => l[1], :school_id => @current_school.id })
-            end
+           if ( (l[0] != "") && (l[1] != "")  )
+              @assignment = @category.assignments.create({  :name => l[0], :max_point => l[1], :school_id => @current_school.id })
+           end
          end
       end
       @category_array = (0..50).to_a
@@ -206,9 +243,9 @@ class Reports < Application
             @category_e = @report.categories.create({:category_name => "#{category_n}", :school_id => @current_school.id })
             s = names.zip(max_points)
             s.each do |l|
-               if ( (l[0] != "") && (l[1] != "")  )
-                   @assignment_e = @category_e.assignments.create({ :name => l[0], :max_point => l[1], :school_id => @current_school.id })
-               end
+              if ( (l[0] != "") && (l[1] != "")  )
+                 @assignment_e = @category_e.assignments.create({ :name => l[0], :max_point => l[1], :school_id => @current_school.id })
+              end
             end
          end
       end

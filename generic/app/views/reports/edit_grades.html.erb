@@ -2,12 +2,23 @@
      Grades/Reports > <%= @assignment.name %> 
 </h2>
 
-<%= form_for(@assignment, :action => url(:update_grades, :id => @assignment.id), :id => 'grade' ) do %>
 
+<div class="container">
+	<h4>There are some errors in the form, please fill the details.</h4>
+	<ol>
+		<li><label for="assignment_date" class="error">Please enter the Assignment Date</label></li> 
+	    <li><label for="assignment[score][]" class="error">Please enter number and it should be less than Max Point</label></li>
+	</ol>
+</div> <br/>
+
+<%= form_for(@assignment, :action => url(:update_grades, :id => @assignment.id), :class => "cmxform", :id => 'grade' ) do %>
+   
        <ul>
-       <li><%= text_field  :date, :class => "short", :id => "assignment_date", :label => "Assignment Date" %></li>
-       </ul>
-      
+           <li><%= text_field  :date, :class => "short required", :id => "assignment_date", 
+                               :value => "#{@assignment.date.strftime("%m/%d/%y")}", :label => "Assignment Date" %>
+          </li>
+       </ul> <br/>
+ 
        <table id="mytable">
              <thead>
                     <th>Your Students</th>
@@ -47,16 +58,19 @@
 
 <script type= "text/javascript">
 
-    $j("#grade").validate();
+  //  $j("#grade").validate();
 
-// $j("#grade").validate({
-//                        rules: {
-//                                 field: {
-//                                          required: true,
-//                                          max: 25
-//                                        }
-//                                }
-//                    });
+	 // Validation for Adding Grades
+
+	    var container = $j('div.container');
+
+	   // validate the form when it is submitted
+	    var validator = $j("#grade").validate({
+	         	errorContainer: container,
+	        	errorLabelContainer: $("ol", container),
+	         	wrapper: 'li',
+	        	meta: "validate"
+	});
 
 
     $j("#assignment_date").datepicker({minDate:'today + 1'});
@@ -68,7 +82,26 @@
 
 <style type="text/css">
   
-    input.error { border: 2px solid #c00;}
-    label.error { display:block; color: red; padding-left: .5em; vertical-align: top; }
+ 	.cmxform fieldset li.error label { color: red; }
+	div.container {
+		background-color: #eee;
+		border: 1px solid red;
+		margin: 5px;
+		padding: 5px;
+	}
+	div.container ol li {
+		list-style-type: disc;
+		margin-left: 20px;
+	}
+	div.container { display: none }
+	.container label.error {
+		display: inline;
+	}
+
+	form.cmxform label.error {
+		display: block;
+		margin-left: 1em;
+		width: auto;
+	}
  
 </style>
