@@ -11,5 +11,6 @@ dependency "merb_has_flash"
 dependency "fastercsv"
 dependency "will_paginate", '3.0.0'
 dependency "httparty"
-##dependency "pdf-writer"
+dependency "merb-exceptions"
+
 

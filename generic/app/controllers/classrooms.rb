@@ -21,9 +21,9 @@ class Classrooms < Application
     @teachers = @current_school.staff.find(:all)
     class_teacher = params[:class][:people][:class_teacher]
     @class_peoples = []
-    
+   
     if @classroom.valid?
-      unless class_teacher == "please"
+      unless class_teacher == ""
         unless params[:class][:people][:roles]
           if @classroom.class_type == "Sports"
              @classroom.class_name = "Sports"
@@ -48,6 +48,7 @@ class Classrooms < Application
         else
            id = params[:class][:people][:ids]
            role = params[:class][:people][:roles]
+           
          unless id.include?("please")
             unless role.include?("")
               if @classroom.class_type == "Sports"

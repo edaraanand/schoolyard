@@ -103,7 +103,7 @@ class Notifications < Application
                  resp =  account.request( "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls.csv", 'POST',
                                                d = { 'Caller' => CALLER_ID,
                                                      'Called' => "#{f.voice_alert}",
-                                                     'Url' => "http://#{@current_school.subdomain}.schoolyardapp.net" + "/reminder?id=#{@announcement.id}" }  )
+                                                     'Url' => "http://#{@current_school.subdomain}.schoolyardapp.com" + "/reminder?id=#{@announcement.id}" }  )
                  resp.error! unless resp.kind_of? Net::HTTPSuccess  
              rescue StandardError => bang
                  return  
@@ -116,7 +116,7 @@ class Notifications < Application
   def reminder  
      only_provides :xml
      @announcement = @current_school.announcements.find_by_id(params[:id])
-     @postto = "http://#{@current_school.subdomain}.schoolyardapp.net" + "/directions?id=#{@announcement.id}"  
+     @postto = "http://#{@current_school.subdomain}.schoolyardapp.com" + "/directions?id=#{@announcement.id}"  
      display @postto, :layout => false
   end  
   

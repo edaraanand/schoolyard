@@ -21,7 +21,7 @@ class ExternalLinks < Application
       @external_link = @current_school.external_links.create({:title => l, :url => params[:external_link][:url][i], :label => params[:label]})
     end
     if @external_link.valid?
-      redirect url(:external_links)
+       redirect url(:homes)
     else
       render :new
     end
@@ -47,7 +47,7 @@ class ExternalLinks < Application
         @external_link = @current_school.external_links.create({:title => e, :url => params[:link][:url][m], :label => params[:label]})
       end
       if @external_link.valid?
-        redirect url(:external_links)
+        redirect url(:homes)
       else
         flash[:error] = "please enter Title or Url"
         render :edit
@@ -58,13 +58,13 @@ class ExternalLinks < Application
       s.each do |l|
         links << @current_school.external_links.update(l[2], {:title => l[0], :url => l[1], :label => params[:label]})
       end
-      redirect url(:external_links)
+      redirect url(:homes)
     end
   end
 
   def delete
     ExternalLink.find(params[:id]).destroy
-    redirect url(:external_links)
+    redirect url(:homes)
   end
 
   def preview

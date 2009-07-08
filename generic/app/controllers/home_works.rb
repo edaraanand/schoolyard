@@ -2,7 +2,7 @@ class HomeWorks < Application
 
   layout 'default'
   before :find_school
-  before :access_rights, :exclude => [:class_works]
+  before :access_rights, :exclude => [:class_works, :home_works_pdf]
   before :classrooms, :exclude => [:preview]
   before :rooms, :only => [:index]
 

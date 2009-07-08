@@ -89,7 +89,7 @@
                          <% unless @attachment.nil? %>  
                               <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
                          <% end %>
-                         <h6><%= link_to "#{@sp_light.student_name}", url(:spot_light, @sp_light.id, :label => "class_spot_light") %></h6>
+                         <h6><%= link_to "#{@sp_light.student_name}", url(:spots, :id => @sp_light.id) %></h6>
                          <%= snippet(@sp_light.content, 25) %>
                          <li><%= link_to "All spotlights", url(:class_details, :id => @classroom.id, :label => "spot_light") %></li>
                     </ul>
