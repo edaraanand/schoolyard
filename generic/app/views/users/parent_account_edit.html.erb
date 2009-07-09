@@ -12,16 +12,16 @@
 </ul>	 
 
 <% if params[:label] == "other" %>
-<% @selected = "other_family" %>
-<h2 class="current-page">Other Family Members &gt; <span class="add-link">Edit</span></h2>
-<fieldset>
+      <% @selected = "other_family" %>
+      <h2 class="current-page">Other Family Members &gt; <span class="add-link">Edit</span></h2>
+      <fieldset>
 
 
    <%= form_for :parent, :action => url(:parent_update, :label => "other"), :id => @parent do %>
 
-       <% @students.each do |f| %>
-            <% @guardians = f.parents.delete_if{|x| x.name == @parent.name } %>
-       <% end %>
+          <% @students.each do |f| %>
+               <% @guardians = f.parents.delete_if{|x| x.name == @parent.name } %>
+          <% end %>
        
           <% @guardians.each do |m| %>
               <li>     
@@ -37,13 +37,16 @@
         <% if @guardians.length == 0 %>
                  <% if ((@fname2 != nil || @lname2 != nil ) || (@email2 != nil) ) %>  
                        <div id="parent2" style="display:block">
+	                      <ul>
                            <li>
-                               <%= text_field  :name => 'f_name_parent2', :class => "short", :label => "Parents/Guardian", :value => "#{@fname2}" %>
+                               <%= text_field  :name => 'f_name_parent2', :class => "short", :label => "Parents/Guardian", 
+                                               :value => "#{@fname2}" %>
                                <%= text_field  :name => 'l_name_parent2', :class => "short apart", :value => "#{@lname2}" %>
                            </li> 
                            <li>
                                <%= text_field  :name => 'email_parent2',  :label => "E-Mail", :value => "#{@email2}" %> 
                            </li>
+                          </ul>
                        </div>  
                        <% if( ( (@fname2 != "") && (@lname2 != "") ) && (@email2 != "") )   %>
                              <% if ( ( (@fname3 != "") || (@lname3 != "" ) ) || (@email3 != "") ) %>
@@ -62,15 +65,17 @@
 	                               <a onclick="add_parent3();return false;" href="#">Add More</a>
 	                           </div>
                        <% end %>
-                  <% else %>
+                 <% else %>
                        <div id="parent2" style="display:none">
-                            <li>
+                          <ul>
+	                        <li>
                                 <%= text_field  :name => 'f_name_parent2', :class => "short", :label => "Parents/Guardian" %>
                                 <%= text_field  :name => 'l_name_parent2', :class => "short apart" %>
                             </li> 
                             <li>
                                 <%= text_field  :name => 'email_parent2',  :label => "E-Mail" %> 
-                            </li>
+                            </li> 
+                          </ul>
                         </div> 
                         <div id="am2" style="display:block">
 	                          <a onclick="add_parent2();return false;" href="#">Add More</a>
@@ -79,23 +84,26 @@
            <% end %>
            <% if @guardians.length == 1 %>
                  <% unless ((@fname3 != nil || @lname3 != nil ) || (@email3 != nil) ) %>
-                      <div id="am3" style="display:block">
+                        <div id="am3" style="display:block">
 	                         <a onclick="add_parent3();return false;" href="#">Add More</a>
 	                    </div>
                  <% end %>
-           <% end %>
+          
                    <div id="am3" style="display:none">
                       <a onclick="add_parent3();return false;" href="#">Add More</a>
-	                 </div>
+	               </div>
                  <% if ((@fname3 != nil || @lname3 != nil ) || (@email3 != nil) ) %>
                       <div id="parent3" style="display:block">
+	                    <ul>
                           <li>
-                              <%= text_field  :name => 'f_name_parent3', :class => "short", :label => "Parents/Guardian", :value => "#{@fname3}" %>
+                              <%= text_field  :name => 'f_name_parent3', :class => "short", :label => "Parents/Guardian", 
+                                              :value => "#{@fname3}" %>
                               <%= text_field  :name => 'l_name_parent3', :class => "short apart", :value => "#{@lname3}" %>
                           </li> 
                           <li>
                               <%= text_field  :name => 'email_parent3',  :label => "E-Mail", :value => "#{@email3}" %> 
                           </li>
+                         </ul>
                       </div>
                          <% if( ( (@fname3 != "") && (@lname3 != "") ) && (@email3 != "") )   %>
                                <% if ( ( (@fname4 != "") || (@lname4 != "" ) ) || (@email4 != "") ) %>
@@ -107,15 +115,16 @@
 	                                  </div>
                                <% end %>
                         <% else %>
-                               <div id="am3" style="display:none">
+                                <div id="am3" style="display:none">
 	                                 <a onclick="add_parent3();return false;" href="#">Add More</a>
 	                             </div>
-                               <div id="am4" style="display:block">
+                                 <div id="am4" style="display:block">
 	                                  <a onclick="add_parent4();return false;" href="#">Add More</a>
 	                             </div>
                         <% end %>
                  <% else %>
                        <div id="parent3" style="display:none">
+	                    <ul>
                           <li>
                               <%= text_field  :name => 'f_name_parent3', :class => "short", :label => "Parents/Guardian" %>
                               <%= text_field  :name => 'l_name_parent3', :class => "short apart" %>
@@ -123,6 +132,7 @@
                           <li>
                               <%= text_field  :name => 'email_parent3',  :label => "E-Mail" %> 
                           </li>
+                         </ul>
                        </div>
                        <div id="am2" style="display:none">
 	                          <a onclick="add_parent2();return false;" href="#">Add More</a>
@@ -131,29 +141,33 @@
 	                          <a onclick="add_parent3();return false;" href="#">Add More</a>
 	                      </div>
                  <% end %>
-                 <% if @guardians.length == 2 %>
-                        <% unless ( ( (@fname4 != nil) || (@lname4 != nil) ) || (@email4 != nil) ) %>
-                             <div id="am4" style="display:block">
-	                                <a onclick="add_parent4();return false;" href="#">Add More</a>
-	                           </div>
-                        <% end %>
-                 <% end %>
-                 
+            <% end %>
+            <% if @guardians.length == 2 %>
+                  <% unless ( ( (@fname4 != nil) || (@lname4 != nil) ) || (@email4 != nil) ) %>
+                        <div id="am4" style="display:block">
+	                         <a onclick="add_parent4();return false;" href="#">Add More</a>
+	                    </div>
+	              <% end %>
+	        <% end %>    
                         <div id="am4" style="display:none">
-	                           <a onclick="add_parent4();return false;" href="#">Add More</a>
-	                      </div>
-                 <% if ( ( (@fname4 != nil) || (@lname4 != nil) ) || (@email4 != nil) ) %>
-                        <div id="parent4" style="display:block">
-                             <li>
-                                 <%= text_field  :name => "f_name_parent4", :class => "short", :label => "Parents/Guardian", :value => "#{@fname4}" %>
+	                        <a onclick="add_parent4();return false;" href="#">Add More</a>
+	                    </div>
+	              <% if ( ( (@fname4 != nil) || (@lname4 != nil) ) || (@email4 != nil) ) %>
+                        <div id="p4" style="display:block">
+	                       <ul>
+                              <li>
+                                 <%= text_field  :name => "f_name_parent4", :class => "short", :label => "Parents/Guardian", 
+                                                 :value => "#{@fname4}" %>
                                  <%= text_field  :name => "l_name_parent4", :class => "short apart", :value => "#{@lname4}" %>
-                             </li>
-                             <li>
+                              </li>
+                              <li>
                                  <%= text_field  :name => "email_parent4",  :label => "E-Mail", :value => "#{@email4}" %> 
-                             </li>
-                        </div>
-               <% else %>
-                        <div id="parent4" style="display:none">
+                              </li> 
+                           </ul>
+                       </div>
+                  <% else %>
+                       <div id="parent4" style="display:none">
+	                      <ul>
                              <li>
                                  <%= text_field  :name => "f_name_parent4", :class => "short", :label => "Parents/Guardian" %>
                                  <%= text_field  :name => "l_name_parent4", :class => "short apart" %>
@@ -161,17 +175,18 @@
                              <li>
                                  <%= text_field  :name => "email_parent4",  :label => "E-Mail" %> 
                              </li>
-                        </div>
-               <% end %>
-               
-       
+                           </ul>
+                       </div>
+                  <% end %>
+             
+            
         <div class="save-cancel">
-        <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:parent_account, :label => "other"), :class => "cancel" %>
+              <%= submit " Save " %> Or <%= link_to "Cancel", url(:parent_account, :label => "other"), :class => "cancel" %>
         </div>
 
    <% end =%>
    
-</fieldset>
+  </fieldset>
    
 <% else %>
 
@@ -182,8 +197,7 @@
 
 
       <%= form_for :parent, :action => url(:parent_update), :id => @parent do %>
-
-              <ul>
+               <ul>
                    <li>
                        <%= text_field  :first_name,:class =>"short",  :label => "Name" %>
                        <%= text_field  :last_name, :class=>"short apart"  %>
@@ -226,6 +240,7 @@
    {
       parent4_obj.style.display  =  "block";
       am4_obj.style.display      =  "none";
+
      
     }
    
