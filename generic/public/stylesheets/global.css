@@ -353,7 +353,7 @@ input.ext-link-url{float:none!important; position:relative; top:-22px; right:-10
 #errors ul li , ul.error_messages li{padding:10px;  text-indent:12px; float:none; background:url(/images/exclamation-bullet.gif) no-repeat left center;}
 
 .announcemt select{width:200px;}
-.announcemt{width:700px!important;}
+.announcemt{width:600px!important;}
 .select-announce{padding:10px 0 20px 0; display:block;}
 .announce-for-page{float:right; padding:6px; position:relative; top:-24px; background:#fff;}
 
@@ -531,7 +531,6 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 /*Admin- Links*/
 .block{display:block;}
 .admin-links{background:#f5fbed; padding:3px 8px; text-align:center; font-size:11px;}
-
 
 /* ========== */
 /* = GRADES = */
