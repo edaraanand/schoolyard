@@ -48,13 +48,16 @@
                                    <span class="date"><%= announcement.created_at.strftime("%d") %></span>
                                    <span class="month"><%= announcement.created_at.strftime("%b") %></span>
                                </div>
-                               <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann") %></h3>
-                               <% unless session.user.type == "Parent" %>
-                                    <div class="admin-links">
+                               <h3>
+								<%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann") %>
+								<% unless session.user.type == "Parent" %>
+                                    <span class="admin-links">
                                          <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> &#124;
                                          <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
-                                    </div>
-                               <% end %>
+                                    </span>
+                               <% end %>								
+								</h3>
+
                                <p><%= snippet(announcement.content,50) %></p>
                                <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
                                <% unless @attachment.nil? %>
