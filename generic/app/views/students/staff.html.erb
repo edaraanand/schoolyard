@@ -31,9 +31,11 @@
                        </thead>
                        <% @class_peoples.each do |f| %>
                             <tr>
-                                <td class="click-block"><%= link_to "#{f.person.last_name}", url(:student, f.person.id, :label => "staff") %></td>
+                                <td class="click-block">
+                                    <%= link_to "#{f.person.last_name}", url(:student, f.person.id, :label => "staff") %>
+                                </td>
                                 <td><%= link_to "#{f.person.first_name}", url(:student, f.person.id, :label => "staff") %>&nbsp;</td>
-                 	              <td nowrap><%= f.role.titleize %>-<%= f.classroom.class_name %>&nbsp;</td>
+                 	            <td nowrap><%= f.role.titleize %>-<%= f.classroom.class_name %>&nbsp;</td>
                                 <td><%= email(f.person.email) %>&nbsp;</td>
                                 <td nowrap><%= number_to_phone(f.person.phone, :area_code => true) %>&nbsp;</td>
                                 <% unless session.user.type == "Parent" %>
@@ -58,8 +60,8 @@
                               <th>Email</th>
                               <th>Contact Number</th>
                               <% unless session.user.type == "Parent" %>
-                               <th></th>
-                             <% end %>
+                                 <th></th>
+                              <% end %>
                         </thead>
                         <% for person in @staff %>
                              <tr>
@@ -82,7 +84,6 @@
        
 <% end %>
 
-</div>
 
 
 
