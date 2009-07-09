@@ -25,7 +25,7 @@
           <li <% if @selected == "welcome_messages" %> class="on" <% end %>><%= link_to_if( (right = "welcome_messages"), "Welcome Messages", url(:welcome_messages) ) %></li>
           <li <% if @selected == "calendars" %> class="on" <% end %>><%= link_to_if((right = "calendar"), "Calendars", url(:calendars) )  %></li>
           <li <% if @selected == "spotlight" %> class="on" <% end %>><%= link_to_if((right = "spotlight"), "Spotlight", url(:spot_lights) ) %></li>
-          <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_if((right = "homework"), "Homeworks", url(:home_works) )  %></li>
+          <li <% if @selected == "home_work" %> class="on" <% end %>><%= link_to_if((right = "homework"), "Homework", url(:home_works) )  %></li>
           <li  <% if @selected == "grades" %> class="on" <% end %>><%= link_to_if((right = "grades"), "Grades/Reports", url(:reports) ) %></li>
           <li <% if @selected == "e_links" %> class="on" <% end %>><%= link_to_if((right = "external_links"), "External Links", url(:external_links) ) %></li>
           <% unless @sports_class.nil? %>
