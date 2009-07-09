@@ -61,7 +61,7 @@ namespace :vlad do
   
    desc "Full deployment cycle"
    remote_task :deploy, :roles => :app do
-      Rake::Task['vlad:before_update'].invoke
+    #  Rake::Task['vlad:before_update'].invoke
       Rake::Task['vlad:update'].invoke
       Rake::Task['vlad:migrate'].invoke
       Rake::Task['vlad:start_app'].invoke
