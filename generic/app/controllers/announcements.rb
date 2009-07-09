@@ -45,8 +45,8 @@ class Announcements < Application
   def create
     @announcement = session.user.announcements.build(params[:announcement])
     i=0
-    if params[:announcement][:access_name] != ""
-      if @announcement.valid?
+    if @announcement.valid?
+      if params[:announcement][:access_name] != ""
          @announcement.approved = false
          @announcement.approve_announcement = true
          @announcement.label = 'staff'
@@ -63,14 +63,15 @@ class Announcements < Application
              File.makedirs("public/uploads/#{@attachment.id}")
              FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
          end
-        redirect resource(:announcements)
+         redirect resource(:announcements)
+       else
+         flash[:error] = "Please select the option"
+         render :new
+       end
       else
         render :new
       end
-    else
-      flash[:error] = "Please select the option"
-      render :new
-    end
+   
   end
 
   def edit
@@ -157,16 +158,16 @@ class Announcements < Application
   def preview
     @date = Date.today
     if params[:announcement][:access_name] == "Home Page"
-      @select = "home"
-      render :layout => 'home'
+       @select = "home"
+       render :layout => 'home'
     else
-      @selected = "announcements"
-      @select =  "classrooms"
-      @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', params[:announcement][:access_name] ])
-      render :layout => 'class_change', :id => @classroom.id
+       @selected = "announcements"
+       @select =  "classrooms"
+       @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', params[:announcement][:access_name] ])
+       render :layout => 'class_change', :id => @classroom.id
     end
   end
-
+ 
 
   private
 
