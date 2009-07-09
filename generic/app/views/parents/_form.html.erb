@@ -3,7 +3,7 @@
     <li><label>Announcement for:</label><%= select :access_name, :collection => @classrooms %></li>
     <li><%= text_field  :title,  :label => "Title" %></li>
     <li><%= text_area  :content,  :label => "Description", :rows => "10", :cols => "50" %></li>
-    <li><%= text_field  :expiration, :id => "expiration", :label => "Expiration", :class => "date" %></li>
+    <li><%= text_field  :expiration, :id => "expiration", :label => "Expiration", :class => "short date" %></li>
     <li><%= file_field :attachment,  :label => "Attach a File" %></li>
   </ul>
 </fieldset>
@@ -21,12 +21,23 @@
 
 
  function preview()
- {
-   var s = $('announcement').serialize();
-   window.open('/parents/preview/-/?' + s);
+	 {
+	    var name = document.getElementById('announcement_access_name');
+
+	   // var s =    dropdown.options[dropdown.selectedIndex].value;
+
+	     if (name.value == "")
+	       {
+	          alert("Please select the Classroom/Homepage from the dropdown menu");
+	       }
+	    else
+	       {
+	           var s = $('announcement').serialize();
+			   window.open('/parents/preview/-/?' + s);
+	       }
+
+	 }
    
- }
- 
 </script>
  
  

@@ -1,5 +1,13 @@
-<div class='preview-container'>
-  <h4><span>Announcements</span></h4>
-  <h5>Title :<%= @title %><h5>
-  <p>Content :<%= @content %></p>
+
+<div id="fullpage">
+       <div>
+            <h2>Announcements > <%= params[:announcement][:title] %></h2>
+       </div>
+       <div class="ddmmm">
+            <span class="date"><%= @date.strftime("%d") %></span>
+            <span class="month"><%= @date.strftime("%b") %></span>
+        </div>
+        <p class="separator"><%= san_content(params[:announcement][:content]) %></p>
+        
+             
 </div>
