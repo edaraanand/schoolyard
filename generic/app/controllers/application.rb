@@ -3,6 +3,7 @@ class Application < Merb::Controller
   
     before :find_school
    
+   
     def find_school
         @select = "schools"
         if (request.first_subdomain != nil) && (request.first_subdomain == "admin")
