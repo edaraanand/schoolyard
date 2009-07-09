@@ -6,9 +6,10 @@
     
        <fieldset>
               <p><h4>We appreciate your feedback and will try to implement suggestions you give.</h4></p>
-              <ul>
-                  <li><%= text_area  :content, :label => "Feedback",  :rows => "20", :cols => "50" %></li>
-              </ul>
+              <ul>  
+	              <li> Please list any problems or suggestions you have below </li><br/>
+	              <li> <%= text_area  :content, :rows => "20", :cols => "50" %> </li>
+	          </ul>
       </fieldset>
       
       <div class="save-cancel">
