@@ -9,13 +9,15 @@ class SpotLights < Application
      classrooms
      if params[:label] == "classes"
         @classroom = @current_school.classrooms.find_by_id(params[:id])
-        @spot_lights = @current_school.spot_lights.find(:all, :conditions => ['class_name =?', @classroom.class_name], :order => "created_at DESC")
+        @spot_lights = @current_school.spot_lights.paginate(:all, :conditions => ['class_name =?', @classroom.class_name], :order => "created_at DESC", 
+                                                            :per_page => 2, :page => params[:page])
         @test = params[:id]
      elsif params[:label] == "Home Page"
-        @spot_lights = @current_school.spot_lights.find(:all, :conditions => ['class_name =?', "Home Page"], :order => "created_at DESC")
+        @spot_lights = @current_school.spot_lights.paginate(:all, :conditions => ['class_name =?', "Home Page"], :order => "created_at DESC", 
+                                                            :per_page => 2, :page => params[:page])
         @test = "Home Page"
      else
-        @spot_lights = @current_school.spot_lights.find(:all, :order => "created_at DESC")
+        @spot_lights = @current_school.spot_lights.paginate(:all, :order => "created_at DESC", :per_page => 2, :page => params[:page])
         @test = "All Spot Lights"
      end
      render
@@ -34,9 +36,11 @@ class SpotLights < Application
         if params[:spot_light][:image] != ""
           if @content_types.include?(params[:spot_light][:image][:content_type])
             @spot_light.save
+            f = params[:spot_light][:image][:filename]
+            file = File.basename(f.gsub(/\\/, '/'))
             @attachment = Attachment.create( :attachable_id => @spot_light.id,
             :attachable_type => "spot_light",
-            :filename => params[:spot_light][:image][:filename],
+            :filename => file,
             :size => params[:spot_light][:image][:size],
             :content_type => params[:spot_light][:image][:content_type],
             :school_id => @current_school.id
@@ -100,9 +104,11 @@ class SpotLights < Application
             unless @pic.nil?
               @pic.destroy
             end
+            f = params[:spot_light][:image][:filename]
+            file = File.basename(f.gsub(/\\/, '/'))
             @attachment = Attachment.create( :attachable_id => @spot_light.id,
             :attachable_type => "spot_light",
-            :filename => params[:spot_light][:image][:filename],
+            :filename => file,
             :size => params[:spot_light][:image][:size],
             :content_type => params[:spot_light][:image][:content_type],
             :school_id =>  @current_school.id
@@ -159,10 +165,16 @@ class SpotLights < Application
   end
 
   def preview
-    @student_name = params[:spot_light][:student_name]
-    @content = params[:spot_light][:content]
-    @class_name = params[:spot_light][:class_name]
-    render :layout => 'preview'
+    if params[:spot_light][:class_name] == "Home Page"
+       @select = "home"
+       render :layout => 'home'
+    else
+       @selected = "spot_light"
+       @select =  "classrooms"
+       @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', params[:spot_light][:class_name] ])
+       render :layout => 'class_change', :id => @classroom.id
+    end
+   
   end
 
 
