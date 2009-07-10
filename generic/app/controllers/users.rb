@@ -28,9 +28,11 @@ class Users < Application
                unless @pic.nil?
                  @pic.destroy
                end
+                f = params[:person][:image][:filename]
+                file = File.basename(f.gsub(/\\/, '/'))
                @attachment = Attachment.create( :attachable_type => "user_picture",
                                                 :attachable_id => @person.id, 
-                                                :filename => params[:person][:image][:filename],
+                                                :filename => file,
                                                 :content_type => params[:person][:image][:content_type],
                                                 :size => params[:person][:image][:size],
                                                 :school_id => @current_school.id
