@@ -28,9 +28,11 @@ class Users < Application
                unless @pic.nil?
                  @pic.destroy
                end
+                f = params[:person][:image][:filename]
+                file = File.basename(f.gsub(/\\/, '/'))
                @attachment = Attachment.create( :attachable_type => "user_picture",
                                                 :attachable_id => @person.id, 
-                                                :filename => params[:person][:image][:filename],
+                                                :filename => file,
                                                 :content_type => params[:person][:image][:content_type],
                                                 :size => params[:person][:image][:size],
                                                 :school_id => @current_school.id
@@ -462,7 +464,44 @@ class Users < Application
                   
   end
   
- 
+  def phone
+    @selected = "phone"
+    @person = session.user
+    render
+  end
+  
+  def voice_update
+    @person = session.user
+    @selected = "phone"
+    @person.voice_alert = params[:person][:voice_alert]
+    @person.sms_alert = params[:person][:sms_alert]
+    if @person.valid?                                                                        
+       @person.save!
+       redirect url(:phone)
+    else
+       if params[:person][:voice_alert]
+          @voice = params[:person][:voice_alert]
+          @person.voice_alert = ""
+       end
+       if params[:person][:sms_alert]
+          @sms = params[:person][:sms_alert]
+          @person.sms_alert = ""
+       end
+       render :phone
+    end
+  end
+  
+  def subscription
+    @person = @current_school.people.find_by_id(params[:id])
+    if params[:l] == "sms"
+       @person.sms_alert = ""
+    else
+       @person.voice_alert = ""
+    end
+    @person.save!
+    redirect url(:phone)
+  end
+
   private
   
   def staff_selected_link

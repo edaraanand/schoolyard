@@ -2,16 +2,18 @@
 padding: 0px;
 position:absolute;
 background-color:#eeeeee;
-display:none;
+opacity: 1;
+left: 640px;
+top: 577px; 
+display: block;
 text-align:right;
 }
 
 #CP_minutecont {
 background-color:#dddddd;
-padding: 1px;
+padding: 0px;
 position:absolute;
 width:45px;
-display:none;
 }
 
 .floatleft {

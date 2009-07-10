@@ -32,12 +32,14 @@ namespace :vlad do
    
    desc "moving the database to some other place"
    remote_task :before_update, :roles => :app do
-      run "mv #{current_path}/generic/db  /home/forge"
+     run "mv #{current_path}/generic/db  /home/forge"
    end
    
    desc "updates the code and changing symlink files"
    remote_task :update, :roles => :app do
       run "mv #{latest_release}/generic/config/database.yml.production #{current_path}/generic/config/database.yml"
+      # run "rm -fr #{current_path}/generic/db"
+      # run "mkdir -p #{current_path}/generic/db"
       run "mv /home/forge/db  #{current_path}/generic" 
       run "cp #{latest_release}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
    end
@@ -52,8 +54,11 @@ namespace :vlad do
    desc "Running migrations with some rake tasks for production"
    remote_task :migrate, :roles => :app do
       run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
+    # run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
+   #  run "cd #{current_path}/generic && rake bootstrap:alerts"
+   #  run "cd #{current_path}/generic && rake admin:person"
    end
-                         
+  
    desc "Full deployment cycle"
    remote_task :deploy, :roles => :app do
       Rake::Task['vlad:before_update'].invoke

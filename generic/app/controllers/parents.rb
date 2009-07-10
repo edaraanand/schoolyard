@@ -8,7 +8,9 @@ class Parents < Application
 
 
   def index
-    @announcements = session.user.announcements.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :per_page => 1, :page => params[:page] )
+    @announcements = session.user.announcements.paginate(:all, 
+                                                         :conditions => ['school_id = ?', @current_school.id], :per_page => 5, 
+                                                         :page => params[:page] )
     @message1 = "Approved"
     @message2 = "Pending Approval"
     @message3 = "Rejected"
@@ -87,9 +89,16 @@ class Parents < Application
   end
 
   def preview
-    @title = params[:announcement][:title]
-    @content = params[:announcement][:content]
-    render :layout => 'preview'
+    @date = Date.today
+    if params[:announcement][:access_name] == "Home Page"
+       @select = "home"
+       render :layout => 'home'
+    else
+       @selected = "announcements"
+       @select =  "classrooms"
+       @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', params[:announcement][:access_name] ])
+       render :layout => 'class_change', :id => @classroom.id
+    end
   end
 
   private
@@ -97,7 +106,7 @@ class Parents < Application
   def classroom
     @class = @current_school.classrooms.find(:all)
     room = @class.collect{|x| x.class_name }
-    @classrooms = room.insert(0, "HomePage")
+    @classrooms = room.insert(0, "Home Page")
   end
 
   def tab_select

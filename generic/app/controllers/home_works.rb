@@ -2,7 +2,7 @@ class HomeWorks < Application
 
   layout 'default'
   before :find_school
-  before :access_rights, :exclude => [:show]
+  before :access_rights, :exclude => [:class_works, :home_works_pdf]
   before :classrooms, :exclude => [:preview]
   before :rooms, :only => [:index]
 
@@ -45,7 +45,7 @@ class HomeWorks < Application
           File.makedirs("public/uploads/#{@attachment.id}")
           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
         end
-        redirect resource(:home_works)
+        redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
       else
         @class_id =  params[:home_work][:classroom_id]
         render :new
@@ -58,17 +58,17 @@ class HomeWorks < Application
   end
 
   def edit
-    @home_work = HomeWork.find(params[:id])
+    @home_work = @current_school.home_works.find(params[:id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
     @allowed = 1 - @attachments.size
     render
   end
 
   def update
-    @classroom = Classroom.find_by_class_name(params[:home_work][:classroom_id])
+    @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
     @allowed = 1 - @attachments.size
-    @home_work = HomeWork.find(params[:id])
+    @home_work = @current_school.home_works.find(params[:id])
     i=0
     if params[:attachment]
       if params[:home_work][:classroom_id] != ""
@@ -88,7 +88,7 @@ class HomeWorks < Application
           @home_work.person_id = session.user.id
           @home_work.school_id = @current_school.id
           @home_work.save
-          redirect resource(:home_works)
+          redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
         else
           render :edit
         end
@@ -99,11 +99,11 @@ class HomeWorks < Application
     else
       if params[:home_work][:classroom_id] != ""
         if @home_work.update_attributes(params[:home_work])
-          @home_work.classroom_id = @classroom.id
-          @home_work.person_id = session.user.id
-          @home_work.school_id = @current_school.id
-          @home_work.save
-          redirect resource(:home_works)
+           @home_work.classroom_id = @classroom.id
+           @home_work.person_id = session.user.id
+           @home_work.school_id = @current_school.id
+           @home_work.save
+           redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
         else
           render :edit
         end
@@ -117,16 +117,17 @@ class HomeWorks < Application
   def delete
     if params[:label] == "attachment"
       @attachment = @current_school.attachments.find(params[:id])
-      @home_work = HomeWork.find_by_id(@attachment.attachable_id)
+      @home_work = @current_school.home_works.find_by_id(@attachment.attachable_id)
       @attachment.destroy
       @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
       @allowed = 1 - @attachments.size
       render :edit, :id => @home_work.id
     else
-      @home_work = HomeWork.find(params[:id])
+      @home_work = @current_school.home_works.find(params[:id])
+      @classroom = @home_work.classroom
       Attachment.delete_all(['attachable_id = ?', @home_work.id])
       @home_work.destroy
-      redirect resource(:home_works)
+      redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
     end
   end
 
@@ -139,26 +140,27 @@ class HomeWorks < Application
   end
 
   def show
-    if params[:label] == "home_w"
-      @selected = "home_work"
-      @home_work = HomeWork.find(params[:id])
-      render :layout => 'default'
-    else
-      @selected = "homeworks"
-      @select = "classrooms"
-      @home_work = HomeWork.find(params[:id])
-      @classroom = @home_work.classroom
-      render :layout => 'class_change', :id => @classroom.id
-    end
+    @selected = "home_work"
+    @home_work = @current_school.home_works.find(params[:id])
+    render :layout => 'default'
   end
 
+  def class_works
+    @selected = "homeworks"
+    @select = "classrooms"
+    @home_work = @current_school.home_works.find(params[:id])
+    @classroom = @home_work.classroom
+    render :layout => 'class_change', :id => @classroom.id
+  end
+  
+  
   def home_works_pdf
     if params[:label] == "single"
-      @home_work = HomeWork.find(params[:id])
+      @home_work = @current_school.home_works.find(params[:id])
       pdf = pdf_prepare("single", @home_work)
       send_data(pdf.render, :filename => "#{@home_work.title}.pdf", :type => "application/pdf")
     else
-      @classroom = Classroom.find(params[:id])
+      @classroom = @current_school.classrooms.find(params[:id])
       @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id])
       pdf = pdf_prepare("multiple", @home_works)
       send_data(pdf.render, :filename => "Homework for #{@classroom.class_name}.pdf", :type => "application/pdf")

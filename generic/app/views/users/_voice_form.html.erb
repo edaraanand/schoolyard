@@ -1,0 +1,20 @@
+ 
+ 
+     <ul>
+          <% if @voice != nil %>
+                  <li>
+                      <%= text_field :voice_alert,  :label => "For voice Alert", :class => "short text", :value => "#{@voice}" %>
+                      <span class="phone-hint">(e.g. 3210987654)</span>
+                  </li>
+           <% else %>
+                 <li>
+                     <%= text_field :voice_alert,  :label => "For voice Alert", :class => "short text" %>
+                     <span class="phone-hint">(e.g. 3210987654)</span>
+                 </li>
+           <% end %>
+          
+      </ul>
+ 
+ 
+ 
+                           

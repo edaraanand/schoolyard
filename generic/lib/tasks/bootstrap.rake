@@ -36,8 +36,11 @@ namespace :bootstrap do
       :welcome_messages => "Add/Edit Welcome Message",
       :external_links => "Add/Edit External Links",
       :forms => "Add/Edit Forms",
-      :classes => "Classes"
-     }
+      :classes => "Classes",
+      :feedback => "Manage Feedback",
+      :urgent_announcement => "Add/Edit Urgent Announcements",
+      :basic_settings => "Add/Edit School Profile"
+    }
       
       accesses.each_pair do |key, value|
          Access.create({:name => "#{key}", :full_name => "#{value}"})

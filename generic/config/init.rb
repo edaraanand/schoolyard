@@ -12,6 +12,9 @@ require  Merb.root / 'lib' / 'constantz'
 require  Merb.root / 'lib' / 'attachable'
 require "pdf/writer"
 require "pdf/simpletable"
+require 'rubygems'
+require 'httparty'
+require 'clickatell'
 
 
 use_orm :activerecord
@@ -23,7 +26,8 @@ Merb::BootLoader.after_app_loads do
 
   gem 'will_paginate', '~> 3.0.0'
   require 'will_paginate'
-
+  Clickatell::API.debug_mode = true
+ 
   Merb::Mailer.config = {
     :host   => 'smtp.gmail.com',
     :port   => '587',
@@ -42,9 +46,7 @@ Merb::BootLoader.after_app_loads do
   end
 
   Merb::AbstractController.send(:include, WillPaginate::ViewHelpers::Base)
-
-  #Merb::Mailer.config = { :sendmail_path => /usr/sbin/sendmail}
-  #Merb::Mailer.delivery_method = :sendmail
+  
 
 end
 

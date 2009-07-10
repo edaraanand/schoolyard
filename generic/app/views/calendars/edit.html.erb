@@ -73,18 +73,23 @@
 <script type= "text/javascript">
 
    
-  $j("#start").datepicker({minDate:'today'});
-  $j("#end").datepicker({minDate:'today'});
-  
-  $j("#start_time").clockpick({starthour : 0, endhour : 23 }); 
-  $j("#end_time").clockpick({starthour : 0, endhour : 23 }); 
+  $j(document).ready(function()
+{
+
+   	$j("#start").datepicker({minDate:'today'});
+	  $j("#end").datepicker({minDate:'today'});
+
+	  $j("#start_time").clockpick({starthour : 0, endhour : 23 }); 
+	  $j("#end_time").clockpick({starthour : 0, endhour : 23 });   
+  });
+
  
    function preview()
  {
-     name = document.getElementById('calendar_class_name');
+     var name = document.getElementById('calendar_class_name');
     if (name.value == "")
        {
-          alert("Please select the Classroom/Homepage from the dropdown menu");
+          alert("Please select the Classroom from the drop down menu");
        }
    else
        {

@@ -1,5 +1,5 @@
 <h2 class="current-page">Announcements  &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:announcements, :new) %></h2>
-<div class="fullpage announcemt">
+<div class="announcemt">
    
   View :  <select id = 'announcementID'>
          <option value = '/announcements' <% if (@test == "All Announcements") %> selected <% end %> >All Announcements</option>
@@ -29,7 +29,7 @@
                         <h3><%= link_to "#{announcement.title}", url(:announcement, announcement.id) %></h3>
                         <span class="subText">Announcement for: <%= announcement.access_name %></span><br/>
                         <span class="subText">Created by <%= announcement.person.name %>, expires on <%= announcement.expiration.strftime("%d %b %Y") %></span>
-                        <p class="separator"><%= snippet(announcement.content,50) %></p>
+                        <p class="announce-text"><%= snippet(announcement.content,50) %></p>
                       <% if ( (announcement.approved) && (announcement.approve_announcement)) %>
                              <div class="approval-status">
                                 <%= @message1 %>

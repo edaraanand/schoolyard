@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 66) do
+ActiveRecord::Schema.define(:version => 69) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(:version => 66) do
     t.string   "name"
     t.date     "date"
     t.integer  "max_point"
-    t.integer  "score"
+    t.integer  "school_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(:version => 66) do
   create_table "categories", :force => true do |t|
     t.integer  "report_id"
     t.string   "category_name"
+    t.integer  "school_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -164,6 +165,16 @@ ActiveRecord::Schema.define(:version => 66) do
     t.integer  "school_id"
   end
 
+  create_table "grades", :force => true do |t|
+    t.integer  "student_id"
+    t.integer  "assignment_id"
+    t.integer  "score"
+    t.float    "percentage"
+    t.string   "grade"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "guardians", :force => true do |t|
     t.integer  "student_id"
     t.integer  "parent_id"
@@ -202,6 +213,8 @@ ActiveRecord::Schema.define(:version => 66) do
     t.boolean  "admin"
     t.boolean  "principal_email"
     t.boolean  "principal_name"
+    t.string   "voice_alert"
+    t.string   "sms_alert"
   end
 
   create_table "protectors", :force => true do |t|
@@ -211,6 +224,17 @@ ActiveRecord::Schema.define(:version => 66) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "school_id"
+  end
+
+  create_table "ranks", :force => true do |t|
+    t.integer  "student_id"
+    t.integer  "assignment_id"
+    t.string   "name"
+    t.float    "from"
+    t.float    "to"
+    t.integer  "school_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "registrations", :force => true do |t|
@@ -226,6 +250,7 @@ ActiveRecord::Schema.define(:version => 66) do
 
   create_table "reports", :force => true do |t|
     t.string   "subject_name"
+    t.integer  "classroom_id"
     t.integer  "person_id"
     t.integer  "school_id"
     t.datetime "created_at"

@@ -8,14 +8,16 @@
 <%= form_for (@home_work, :action => resource(:home_works), :id => 'home_work', :name => "home_work" ) do %>
    <fieldset>
       <ul>
-          <% if @class_id != "" %>
-              <li><label>Home Work for:</label><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :selected => @class_id, :prompt => "Please Select" %></li>
-          <% else %>
-              <li><label>Home Work for:</label><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :prompt => "Please Select" %></li>
-          <% end %>
+          <li><label>Home Work for:</label>
+            <% if @class_id != nil %>
+                  <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :selected => @class_id, :prompt => "Please Select" %>
+              <% else %>
+                  <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :selected => "#{ params[:l] }", :prompt => "Please Select"  %>
+              <% end %>
+          </li>
           <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
           <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
-          <li><%= text_field  :due_date, :id => "due_date", :label => "Due Date", :class=>"short" %></li>
+          <li><%= text_field  :due_date, :id => "due_date", :label => "Due Date", :class=>"short date" %></li>
           <li><%= file_field :attachment,  :label => "Attach a File" %></li>
       </ul>
       
@@ -42,10 +44,10 @@
 
  function preview()
  {
-       name = document.getElementById('home_work_classroom_id');
+    var name = document.getElementById('home_work_classroom_id');
     if (name.value == "")
        {
-          alert("Please select the Classroom/Homepage from the dropdown menu");
+          alert("Please select the Classroom from the drop down menu");
        }
    else
        {
@@ -54,8 +56,11 @@
        }
   
  }
-  
- $j("#due_date").datepicker({minDate:'today + 1'});
+ 
+ $j(document).ready(function() {
+      $j("input.date").datepicker({minDate:'today + 1'});
+  });
+ 
  
  
 

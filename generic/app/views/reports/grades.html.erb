@@ -1,0 +1,45 @@
+<h2 class="current-page">
+     Grades/Reports > <%= @assignment.name %> 
+</h2>
+
+
+<span class="actions">
+  <%= @assignment.name %> &nbsp; ( <%= @assignment.date.strftime("%B %d %Y") %> ) &nbsp;
+  <%= link_to "Edit", url(:edit_grades,  :id => @assignment.id) %>
+</span> <br/> <br/>
+  
+  
+  
+<table id="mytable">
+    <thead>
+        <th>Your Students</th>
+        <th>Score (Max Points : <%= @assignment.max_point %> )</th>
+        <th>Percentage</th>
+        <th>Grade </th>
+    </thead>
+    <tbody>
+         <%= @report.classroom.class_name %>
+         <% @students.each do |f| %>
+               <tr>
+                   <td><%= f.name %></td>
+                   <% grades = f.grades.find(:all, :conditions => ['assignment_id = ?', @assignment.id] ) %>
+                   <% if grades.empty? %>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                   <% else %>
+                        <% grades.each do |g| %>
+                             <td><%= g.score %></td>
+                             <td><%= g.percentage %></td>
+                             <td><%= g.grade %></td>
+                        <% end %>
+                   <% end %>
+              </tr>
+         <% end %>
+    </tbody>
+</table>
+
+<div class="page-links">
+     <%= link_to "All Subjects", resource(:reports) %> |
+    <%= link_to "All Assignments", url(:assignments,  :id => @report.id) %>   
+</div>

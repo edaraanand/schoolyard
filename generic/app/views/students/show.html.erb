@@ -1,7 +1,12 @@
 <% if params[:label] == "students" %>
 
-      <div id="fullpage">
-           <h2 class="current-page">Current Students > <%= @student.name %></h2>
+      <div>
+           <h2 class="current-page">
+               Current Students > <%= @student.name %>
+               &nbsp;&nbsp;&nbsp;
+               <%= link_to_right((right = "manage_directory"), "Add New", resource(:students, :new)  ) %> |
+               <%= link_to_right((right = "manage_directory"), "Edit", url(@student, :edit)  ) %></td>
+           </h2>
            <%= link_to "&larr; Back to Current Students List", url(:directory) %>
      
            <h3 class="name"><%= @student.name %></h3>
@@ -32,8 +37,12 @@
     
 <% else %>
   
-       <div id="fullpage">
-       <h2 class="current-page">School Staff > <%= @staff.name %></h2>
+       <div>
+       <h2 class="current-page">School Staff > <%= @staff.name %>
+            &nbsp;&nbsp;&nbsp;
+            <%= link_to_right((right = "rights_others"), "Add New", resource(:people, :new)  ) %> |
+            <%= link_to_right((right = "rights_others"), "Edit", url(:edit_person, @staff)  ) %>
+       </h2>
             <%= link_to "&larr; Back to School Staff List", url(:staff) %>
      
             <h3 class="name"><%= @staff.name %></h3>

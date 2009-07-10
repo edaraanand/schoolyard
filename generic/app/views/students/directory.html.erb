@@ -1,4 +1,12 @@
- <h2 class="current-page">Students</h2>
+ <h2 class="current-page">
+      Students &nbsp;&nbsp;&nbsp;
+     <% if params[:label] == "classes" %>
+        <%= link_to_right((right = "manage_directory"), "Add New", resource(:students, :new, :l => "#{@class.class_name.titleize}")  ) %>
+     <% else %>
+        <%= link_to_right((right = "manage_directory"), "Add New", resource(:students, :new)  ) %>
+     <% end %>
+      
+ </h2>
 
         <select id = 'studentID'>
                   <option value = '/directory' <% if (@test == "All Students") %> selected <% end %> >All Students</option>
@@ -19,6 +27,9 @@
                          <th>Last Name</th>
                          <th>First Name</th>
                          <th>Contact Number</th>
+                         <% unless session.user.type == "Parent" %>
+                            <th></th>
+                         <% end %>
                      </thead>
                      <tbody>
                           <% for student in @students %>
@@ -26,7 +37,10 @@
                                    <td>&nbsp;<%= link_to "#{student.last_name}", url(:student, student.id, :label => "students") %></td>
                                    <td>&nbsp;<%= student.first_name %></td>
                                    <td>&nbsp;<%= number_to_phone(student.phone, :area_code => true) %></td>
-                               </tr>
+                                   <% unless session.user.type == "Parent" %>
+                                       <td>&nbsp;<%= link_to_right((right = "manage_directory"), "Edit", resource(student, :edit)  ) %></td>
+                                   <% end %>
+                              </tr>
                            <% end %>
                      </tbody>
                </table>
@@ -35,15 +49,6 @@
 
 </div>
   
-
-<% unless session.user.type == "Parent" %>
-     <div class="right-sidebar">
-          <h3>Manage Students</h3>
-          <ul class="last">
-               <li <% if @selected == "students" %> class="on" <% end %>><%= link_to_right((right = "manage_directory"), "Manage Students", url(:students)  ) %></li>
-          </ul>
-      </div>
-<% end %>
 
 
 

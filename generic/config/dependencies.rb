@@ -10,5 +10,7 @@ dependency "merb-auth-more"
 dependency "merb_has_flash"
 dependency "fastercsv"
 dependency "will_paginate", '3.0.0'
-##dependency "pdf-writer"
+dependency "httparty"
+dependency "merb-exceptions"
+
 

@@ -37,9 +37,9 @@ class Schools < Application
   def update
     @school = School.find(params[:id])
     if @school.update_attributes(params[:school])
-      redirect resource(:schools)
+       redirect url(:help)
     else
-      render :edit
+       render :edit
     end
   end
 

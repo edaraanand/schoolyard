@@ -5,7 +5,7 @@
          <ul>
              <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
              <li><%= text_area  :content,  :label => "Message", :rows => "10", :cols => "50" %></li>
-             <li><%= text_field  :expiration, :id => "expiration",  :label => "Expiration", :class=>"short" %></li>
+             <li><%= text_field  :expiration, :id => "expiration",  :label => "Expiration", :class=>"short date" %></li>
              <li><%= file_field :attachment,  :label => "Attach a File" %></li>
   
         </ul>
@@ -34,8 +34,8 @@
    window.open('/from_principals/preview/-/?' + s);
  }
 
- // $j('#announcement_content').modalpreview({allowHtml:true});
-  
-  $j("#expiration").datepicker({minDate:'today + 1'});
+  $j(document).ready(function() {
+                     $j("input.date").datepicker({minDate:'today + 1'});
+       });
 
 </script>

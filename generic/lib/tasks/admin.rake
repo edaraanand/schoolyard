@@ -4,7 +4,7 @@ namespace:admin do
   desc "creating a school information"
    task :school do
      @school = School.create({
-         :school_name => "Insight Methods",
+         :school_name => "SchoolYard",
          :phone => "1234567890",
          :address1 => "935 East 5th Street",
          :city => "Benecia",

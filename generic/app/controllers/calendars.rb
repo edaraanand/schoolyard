@@ -3,7 +3,7 @@ class Calendars < Application
   layout 'default'
   before :find_school
   before :ensure_authenticated
-  before :access_rights, :exclude => [:events, :show]
+  before :access_rights, :exclude => [:events, :show, :pdf_events]
   before :classrooms, :only => [:events, :show]
 
   def index
@@ -23,7 +23,7 @@ class Calendars < Application
     i=0
     if params[:calendar][:class_name] != ""
       if @calendar.valid?
-        @calendar.save
+         @calendar.save
         unless params[:attachment]['file_'+i.to_s].empty?
           @attachment = Attachment.create( :attachable_type => "Calendar",
           :attachable_id => @calendar.id,
@@ -35,7 +35,8 @@ class Calendars < Application
           File.makedirs("public/uploads/#{@attachment.id}")
           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
         end
-        redirect resource(:calendars)
+        @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
+        redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
       else
         @start_time = params[:calendar][:start_time]
         @end_time = params[:calendar][:end_time]
@@ -48,7 +49,7 @@ class Calendars < Application
   end
 
   def edit
-    @calendar = Calendar.find(params[:id])
+    @calendar = @current_school.calendars.find(params[:id])
     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
     @allowed = 1 - @attachments.size
@@ -58,14 +59,14 @@ class Calendars < Application
   def show
     if params[:l] == "calendar"
       @select = "events"
-      @calendar = Calendar.find(params[:id])
+      @calendar = @current_school.calendars.find(params[:id])
       @selected = @calendar.class_name
       render :layout => 'directory'
     else
       @select = "classrooms"
       @selected = "calendars"
-      @calendar = Calendar.find(params[:id])
-      @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
+      @calendar = @current_school.calendars.find(params[:id])
+      @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
       @event = "All Day Event"
       render :layout => 'class_change', :id => @classroom.id
     end
@@ -92,11 +93,12 @@ class Calendars < Application
             FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
           end
           if @calendar.day_event == true
-            @calendar.start_time = nil
-            @calendar.end_time = nil
+             @calendar.start_time = nil
+             @calendar.end_time = nil
           end
           @calendar.save
-          redirect resource(:calendars)
+          @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
+          redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
         else
           @start_time = params[:calendar][:start_time]
           @end_time = params[:calendar][:end_time]
@@ -114,7 +116,8 @@ class Calendars < Application
             @calendar.end_time = nil
           end
           @calendar.save
-          redirect resource(:calendars)
+          @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
+          redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
         else
           @start_time = params[:calendar][:start_time]
           @end_time = params[:calendar][:end_time]
@@ -138,9 +141,10 @@ class Calendars < Application
       render :edit, :id => @calendar.id
     else
       @calendar = Calendar.find(params[:id])
+      @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
       Attachment.delete_all(['attachable_id = ?', @calendar.id])
       @calendar.destroy
-      redirect resource(:calendars)
+      redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
     end
   end
 
@@ -167,11 +171,11 @@ class Calendars < Application
 
   def pdf_events
     if params[:label] == "single"
-      @calendar = Calendar.find(params[:id])
+      @calendar = @current_school.calendars.find(params[:id])
       pdf = pdf_prepare("single", @calendar)
       send_data(pdf.render, :filename => "#{@calendar.class_name}.pdf", :type => "application/pdf")
     else
-      @classroom = Classroom.find(params[:id])
+      @classroom = @current_school.classrooms.find(params[:id])
       @calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @classroom.class_name ])
       pdf = pdf_prepare("multiple", @calendars)
       send_data(pdf.render, :filename => "#{@classroom.class_name}.pdf", :type => "application/pdf")

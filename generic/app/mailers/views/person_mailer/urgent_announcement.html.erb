@@ -1,0 +1,9 @@
+<% @person = @current_school.people.find_by_id(@announcement.approved_by) %>
+
+<p> Hello  <%= @person.name %>, </p>
+
+   <p><%= @announcement.content %></p><br/>
+   
+
+<p>Thank you<br/>
+<p><%=@current_school.school_name%></p>

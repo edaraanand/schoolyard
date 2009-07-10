@@ -1,0 +1,110 @@
+
+<h2 class="current-page">Grades/Reports &gt; <span class="add-link">Add/Edit Assignments</span></h2>
+<span class="subText">Please specify the subjects for which you wish to add the grades</span><br/>
+
+<div class="container">
+	<h4>There are some errors in the form, please fill the details.</h4>
+	<ol>
+		<li><label for="report_subject_name" class="error">Please enter the Subject Name</label></li> 
+		<li><label for="report_classroom_id" class="error">Please select the Classroom</label></li> 
+		<li><label for="assign" class="error">Please enter the Assignment</label></li> 
+		<li><label for="testing" class="error">Please enter the Max Point correctly</label></li>
+		<li><label for="category[assignment][max_point][]" class="error">Please enter the Max Points with the minimum value of 1</label></li>
+	</ol>
+</div>
+
+
+<%= form_for(@report, :id => "raja", :action => resource(@report), :class => "cmxform", :onsubmit => "cool()" ) do %>
+       
+  <div class="add-subjects new-fieldset">
+	     <p class="main-subject">        
+		       <%= text_field  :subject_name,  :label => "Main Subject", :title => "Subject" %>
+		       <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, 
+		                  :label => "for", :selected => "#{@report.classroom.class_name.titleize}", :prompt => "Please Select" %>
+	     </p>
+             
+         <div class="test">
+	          
+                <% @categories.each do |f| %>
+                    <div id = "<%= f.id %>">
+                         <p class="category">
+                              <label>Category(optional)</label>
+                              <%= text_field :name => "cgories_#{f.id}[category_name][]", :class => "text", :value => "#{f.category_name}" %>
+                         </p>  
+                
+                         <ul id="ament<%= f.id %>">
+                             <% f.assignments.each do |a| %>
+                             
+	                              <li>
+	                                  <%= text_field  :name => "cgories_#{f.id}[assignment][name][]", :class => "short", :value => "#{a.name}" %>
+                                      <%= text_field  :name => "cgories_#{f.id}[assignment][max_point][]", :class => "short apart", 
+                                                      :value => "#{a.max_point}" %>
+                                      <%= link_to "", url(:delete_report, a, :label => "assignment"), :class => "delete-btn" %>
+                                  </li>
+                           
+                             <% end %>
+                         </ul>
+                         <a href="#"  class="add-more"  onClick="assignments(this.parentNode.id); return false;">Add Assignment</a>
+                         <div class="clear" style="padding-bottom:8px">&nbsp;</div>
+                    </div>     
+                <% end %> 
+               
+          </div>
+
+                <div id="test" class="test" style="display:block;">
+		        	 <%= fields_for @category do %>
+		                   <p class="category">					
+			                    <label>Category (Optional)</label>				
+							    <%= text_field :name => "category[category_name][]", :class =>"text"%>
+							</p>
+			         <% end =%>
+				
+					 <%= fields_for @assignment do %> 
+					       <%= partial 'grade' %>
+					       <ul id="assignment"></ul>
+					       <a href="#"  class="add-more"  onClick="testing(this.parentNode.id); return false;">Add Assignment</a>       
+					 <% end =%>
+					 <div class="clear" style="padding-bottom:8px">&nbsp;</div>
+			    </div>
+			
+			 				
+			   
+          <div class="save-cancel">
+	            <a id="plus3" href="">Add Category </a>
+                <%= submit "Save" %> Or  <%= link_to "Cancel", url(:assignments, :id => @report.id), :class => "cancel" %>
+                <a id="minus3" href="" class="cancel">Remove Category </a>
+          </div>
+
+   </div>          
+      <% end =%>                      
+  
+</fieldset> 
+
+ <script type="text/javascript" src='/javascripts/grades.js'></script>
+
+<style type="text/css">
+
+ 	.cmxform fieldset li.error label { color: red; }
+	div.container {
+		background-color: #eee;
+		border: 1px solid red;
+		margin: 5px;
+		padding: 5px;
+	}
+	div.container ol li {
+		list-style-type: disc;
+		margin-left: 20px;
+	}
+	div.container { display: none }
+	.container label.error {
+		display: inline;
+	}
+
+	form.cmxform label.error {
+		display: block;
+		margin-left: 1em;
+		width: auto;
+	}
+
+</style>
+

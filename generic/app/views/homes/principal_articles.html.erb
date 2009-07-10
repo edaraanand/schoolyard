@@ -4,18 +4,26 @@
       <%= partial 'common/principal_image' %>
     </div>
     <div id="content" class="homes-content">
-      <h2>From the Principal</h2>
-      <%= link_to " &larr; Back to Home Page", url(:homes) %> <br/><br/>
+      <h2>From the Principal 
+          &#124; <%= link_to_right((right = "from_principal"), "Add New", resource(:from_principals, :new)) %> 
+      </h2>
+          <%= link_to " &larr; Back to Home Page", url(:homes) %> <br/><br/>
            <% for principal in @from_principals %>
      
                 <div id="sidebar">
                      <div class="data-block long-block">
-                       <div class="ddmmm">
-                         <span class="date"><%=  principal.created_at.strftime("%d")%></span>
-                         <span class="month"><%=  principal.created_at.strftime("%b")%></span>
-                       </div>
+                         <div class="ddmmm">
+                             <span class="date"><%=  principal.created_at.strftime("%d")%></span>
+                             <span class="month"><%=  principal.created_at.strftime("%b")%></span>
+                         </div>
                          <h3><%= link_to "#{principal.title}", url(:home, principal.id, :label => 'principal') %></h3>
                          <p class="separator"><%= snippet(principal.content, 50) %></p>
+                         <% unless session.user.type == "Parent" %>
+                             <div class="admin-links">
+                                 <%= link_to_right((right = "from_principal"), "Edit", url(:edit_from_principal, principal.id)) %> &#124;
+                                 <%= link_to_right((right = "from_principal"), "Delete", url(:delete_from_principal, principal.id)) %>
+                             </div>
+                         <% end %>
                      </div>
                 </div>
                <p class="separator">&nbsp;</p>
@@ -23,23 +31,43 @@
           <%= will_paginate (@from_principals, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
       </div>
  <% else %>
-      <h2>All Announcements</h2>
+      <h2>All Announcements 
+            &#124;
+           <%= link_to_right((right = "announcements"), "Add New", resource(:announcements, :new, :l => "Home Page")) %>
+      </h2>
       <%= link_to " &larr; Back to Home Page", url(:homes) %> <br/>
-            <% for announcement in @announcements %>
-                  <div class="data-block long-block">
+        <% for announcement in @urgent_announcements %>
+                       <div class="data-block long-block">
+                           <div class="ddmmm">
+                                <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
+                                <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
+                           </div>
+                           <p><%= announcement.content %></p>
+                           <p class="separator">&nbsp;</p>
+                       </div>
+         <% end %>
+         <% for announcement in @announcements %>
+               <div class="data-block long-block">
                     <div class="ddmmm">
-                      <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
-                      <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
+                        <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
+                        <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
                     </div>
-                         <h3><%= link_to "#{announcement.title}", url(:home, announcement.id) %></h3>
-                         <p><%= snippet(announcement.content, 50) %></p>
-                         <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
-                              <% unless @attachment.nil? %>
-                               <span class="attachment"><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></span>
-                              <% end %>
-                          <p class="separator">&nbsp;</p>
-                  </div>
-             <% end %>
+                    <h3><%= link_to "#{announcement.title}", url(:home, announcement.id) %></h3>
+                    <p><%= snippet(announcement.content, 50) %></p>
+                    <% unless session.user.type == "Parent" %>
+                        <div class="admin-links">
+                             <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> &#124;
+                             <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
+                        </div>
+                    <% end %>
+                    <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
+                    <% unless @attachment.nil? %>
+                        <span class="attachment"><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></span>
+                    <% end %>
+                    <p class="separator">&nbsp;</p>
+               </div>
+         <% end %>
+       
            <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
-    <% end %>
+ <% end %>
 </div>

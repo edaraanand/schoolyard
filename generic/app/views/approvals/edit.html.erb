@@ -7,7 +7,7 @@
               <li><label>Announcement for:</label><%= select :access_name, :collection => @classrooms %></li>
               <li><%= text_field  :title,  :label => "Title" %></li>
               <li><%= text_area  :content,  :label => "Description", :rows => "10", :cols => "50" %></li>
-              <li><%= text_field  :expiration, :id => "expiration", :label => "Expiration" %></li>
+              <li><%= text_field  :expiration, :id => "expiration", :label => "Expiration", :class => "date" %></li>
           </ul>
 
           <hr class="clear">
@@ -32,7 +32,11 @@ Optional Comments<br/> <%= text_area  :name => "comments", :rows => "10", :cols 
       document.approveform.submit() ;
     }
  
-  $j("#expiration").datepicker({minDate:'today'});
+ $j(document).ready(function() {
+       $j("input.date").datepicker({minDate:'today'});
+  });
+
+  
  
 </script>
  

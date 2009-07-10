@@ -17,22 +17,17 @@
 
 <%= form_for :student, :action => url(:student_update), :id => @student do %>
 
-          
 
            <% for student in @students %>
-           
-	             <li>Name : <%= student.name %></li>
-               <li><label>Current Class:</label> <select name = "classroom_id" id="classroom_person",>
-	                       <% @classrooms.each do |s| %>
-		                        <option value="<%= s.id %>">
-			                         <%= s.class_name %>
-		                        </option>
-			                   <% end %>
-               </li>
+            <ul>
+	           <li>Name : <%= student.name %></li>
+	           <li>
+                   <%= select :name => "classroom_id", :collection => @classrooms.collect{|c| c.class_name.titleize }, 
+                              :label => "Current Class" %>
                <li>Birth date & Year : <%= student.birth_date.strftime("%b, %Y") %></li>
                <li>Contact Number: <%= student.phone %></li>
                <li>Address: <%= student.address %></li>
-               
+            </ul>   
            <% end %>
            
       <p> Other Students </p>    
@@ -40,17 +35,21 @@
       <% if @students.length == 1 %>
                  <% if ((@fname2 != nil || @lname2 != nil ) || (@current_class2 != nil) ) %>  
                        <div id="student2" style="display:block">
+	                      <ul>
                            <li>
                                <%= text_field  :name => 'f_name_student2', :class => "short", :label => "Name", :value => "#{@fname2}" %>
                                <%= text_field  :name => 'l_name_student2', :class => "short apart", :value => "#{@lname2}" %>
                            </li> 
                            <li>
                               <label>Current Class:</label>
-                              <%= select :name => "current_class2", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select", :selected => "#{@current_class2}" %>
+                              <%= select :name => "current_class2", :collection => @classrooms.collect{|x| x.class_name }, 
+                                         :prompt => "Please Select", :selected => "#{@current_class2}" %>
                           </li>   
                           <li>
-                              <%= text_field  :name => "birth_date2", :id => "DOB2", :label => "Date of Birth", :value => "#{@birth_date2}" %>
+                              <%= text_field  :name => "birth_date2", :id => "DOB2", :class => "short", 
+                                              :label => "Date of Birth", :value => "#{@birth_date2}" %>
                           </li>
+                         </ul>
                        </div>  
                        <% if( ( (@fname2 != "") && (@lname2 != "") ) && (@current_class2 != "") )   %>
                               <% if (@birth_date2 != "")  %>
@@ -80,17 +79,21 @@
                        <% end %>
                   <% else %>
                        <div id="student2" style="display:none">
-                            <li>
+                          <ul>
+	                         <li>
                                 <%= text_field  :name => 'f_name_student2', :class => "short", :label => "Name" %>
                                 <%= text_field  :name => 'l_name_student2', :class => "short apart" %>
                             </li> 
                             <li>
                                 <label>Current Class:</label>
-                                <%= select :name => "current_class2", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select", :selected => "#{@current_class2}" %>
+                                <%= select :name => "current_class2", :collection => @classrooms.collect{|x| x.class_name }, 
+                                           :prompt => "Please Select", :selected => "#{@current_class2}" %>
                             </li>   
                             <li>
-                                <%= text_field  :name => "birth_date2", :id => "DOB2", :label => "Date of Birth", :value => "#{@birth_date2}" %>
+                                <%= text_field  :name => "birth_date2", :id => "DOB2", :label => "Date of Birth", :class => "short",
+                                                :value => "#{@birth_date2}" %>
                             </li>
+                         </ul>
                         </div> 
                         <div id="am2" style="display:block">
 	                          <a onclick="add_student2();return false;" href="#">Add More</a>
@@ -109,17 +112,21 @@
 	                 </div>
                  <% if ((@fname3 != nil || @lname3 != nil ) || (@current_class3 != nil) ) %>
                       <div id="student3" style="display:block">
-                          <li>
+                         <ul>
+	                       <li>
                               <%= text_field  :name => 'f_name_student3', :class => "short", :label => "Name", :value => "#{@fname3}" %>
                               <%= text_field  :name => 'l_name_student3', :class => "short apart", :value => "#{@lname3}" %>
                           </li> 
                           <li>
                               <label>Current Class:</label>
-                              <%= select :name => "current_class3", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select", :selected => "#{@current_class3}" %>
+                              <%= select :name => "current_class3", :collection => @classrooms.collect{|x| x.class_name }, 
+                                         :prompt => "Please Select", :selected => "#{@current_class3}" %>
                          </li>  
                          <li>
-                              <%= text_field  :name => "birth_date3", :id => "DOB3", :label => "Date of Birth", :value => "#{@birth_date3}" %>
+                              <%= text_field  :name => "birth_date3", :id => "DOB3", :label => "Date of Birth", :class => "short", 
+                                              :value => "#{@birth_date3}" %>
                          </li>
+                       </ul>
                       </div>
                          <% if( ( (@fname3 != "") && (@lname3 != "") ) && (@current_class3 != "") )   %>
                                  <% if (@birth_date3 != "")  %>
@@ -149,17 +156,20 @@
                         <% end %>
                  <% else %>
                        <div id="student3" style="display:none">
-                          <li>
+                          <ul>
+	                      <li>
                               <%= text_field  :name => 'f_name_student3', :class => "short", :label => "Name" %>
                               <%= text_field  :name => 'l_name_student3', :class => "short apart" %>
                           </li> 
                           <li>
                               <label>Current Class:</label>
-                              <%= select :name => "current_class3", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select", :selected => "#{@current_class3}" %>
+                              <%= select :name => "current_class3", :collection => @classrooms.collect{|x| x.class_name }, 
+                                         :prompt => "Please Select", :selected => "#{@current_class3}" %>
                           </li>  
                           <li>
-                              <%= text_field  :name => "birth_date3", :id => "DOB3", :label => "Date of Birth" %>
+                              <%= text_field  :name => "birth_date3", :id => "DOB3", :class => "short", :label => "Date of Birth" %>
                           </li>
+                         </ul>
                        </div>
                        <div id="am2" style="display:none">
 	                          <a onclick="add_student2();return false;" href="#">Add More</a>
@@ -181,36 +191,45 @@
 	                      </div>
                  <% if ( ( (@fname4 != nil) || (@lname4 != nil) ) || (@current_class4 != nil) ) %>
                         <div id="student4" style="display:block">
-                             <li>
+                           <ul>
+	                          <li>
                                  <%= text_field  :name => "f_name_student4", :class => "short", :label => "Name", :value => "#{@fname4}" %>
                                  <%= text_field  :name => "l_name_student4", :class => "short apart", :value => "#{@lname4}" %>
                              </li>
                              <li>
-                                  <label>Current Class:</label><%= select :name => "current_class4", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select", :selected => "#{@current_class4}" %>
+                                  <label>Current Class:</label>
+                                 <%= select :name => "current_class4", :collection => @classrooms.collect{|x| x.class_name }, 
+                                            :prompt => "Please Select", :selected => "#{@current_class4}" %>
                              </li>
                               <li>
-                                  <%= text_field  :name => "birth_date4", :id => "DOB4", :label => "Date of Birth", :value => "#{@birth_date4}" %>
+                                  <%= text_field  :name => "birth_date4", :id => "DOB4", :class => "short", :label => "Date of Birth",
+                                                  :value => "#{@birth_date4}" %>
                               </li>
+                           </ul>
                         </div>
                <% else %>
                         <div id="student4" style="display:none">
-                             <li>
+                            <ul>
+	                         <li>
                                  <%= text_field  :name => "f_name_student4", :class => "short", :label => "Name" %>
                                  <%= text_field  :name => "l_name_student4", :class => "short apart" %>
                              </li>
                               <li>
-                                <label>Current Class:</label><%= select :name => "current_class4", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select", :selected => "#{@current_class4}" %>
+                                <label>Current Class:</label>
+                                <%= select :name => "current_class4", :collection => @classrooms.collect{|x| x.class_name },
+                                           :prompt => "Please Select", :selected => "#{@current_class4}" %>
                             </li>
                             <li>
-                                <%= text_field  :name => "birth_date4", :id => "DOB4", :label => "Date of Birth" %>
+                                <%= text_field  :name => "birth_date4", :id => "DOB4", :class => "short", :label => "Date of Birth" %>
                             </li>
+                          </ul>
                         </div>
                <% end %>
           
 	    
         <div class="save-cancel">		 
-        <%= submit "    Publish    " %></br> Or <%= link_to "Cancel", url(:student_details), :class => "cancel" %>
-	      </div>
+             <%= submit " Publish " %> Or <%= link_to "Cancel", url(:student_details), :class => "cancel" %>
+	    </div>
 	      
     <% end =%>
     
@@ -220,6 +239,16 @@
 
 
 <script type= "text/javascript">
+
+ $j(document).ready(function()
+{
+   //	$j("input.date").datepicker({ yearRange: '1970:2040'});
+	
+   	 $j("#DOB2").datepicker({ yearRange: '1970:2040'});
+     $j("#DOB3").datepicker({ yearRange: '1970:2040'});
+     $j("#DOB4").datepicker({ yearRange: '1970:2040'});
+	
+});
 
    var student2_obj = document.getElementById('student2');
    var student3_obj = document.getElementById('student3');
@@ -247,10 +276,7 @@
      
     }
     
-     $j("#DOB2").datepicker();
-     $j("#DOB3").datepicker();
-     $j("#DOB4").datepicker();
-      
+  
       
 </script>
 

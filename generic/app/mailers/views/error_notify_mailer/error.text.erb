@@ -1,0 +1,38 @@
+<% @exceptions.each do |e| %>
+EXCEPTION
+----------
+<% if e.respond_to?(:name) %>
+Name: <%= e.name.to_s.split("_").map {|x| x.capitalize}.join(" ") %>
+<% end %>
+<% if e.respond_to?(:status) %>
+Status Code: <%= e.status %>
+<% end %>
+Merb Exception Class: <%= e.class %>
+Message: <%= e.message %>
+
+
+BACKTRACE
+----------
+<%= (e.backtrace || []).join("\n") %>
+
+
+<% end %>
+REQUEST
+--------
+URL: <%= @url %>
+Controller: <%= @data['request_controller'] %>
+Action:  <%= @data['request_action'] %>
+
+
+PARAMETERS
+-----------
+<% @data['request_params'].each do |key,value| %>
+<%= key %>: <%= value %>
+<% end %>
+
+
+ENVIRONMENT
+------------
+<% @environment.each do |key,value| %>
+<%= key %>: <%= value %>
+<% end %>

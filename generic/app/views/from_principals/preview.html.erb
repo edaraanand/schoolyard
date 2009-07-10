@@ -3,12 +3,7 @@
 
 <div id="classContainer">
         <div id="sidebar" class="left-block">
-              <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
-              <% unless @attachment.nil? %>
-                  <img src="/uploads/principal_images/<%= @attachment.filename %>" alt=" ", class = "prinPic"/>
-              <% else %>
-                  <img src="/images/principal.png" alt="From The Principal"/>
-              <% end %>
+             <%= partial 'common/principal_image' %>
         </div>
         <div id="content" class="homes-content">
              <h2>From the Principal > <%= params[:announcement][:title] %></h2>

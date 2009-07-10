@@ -22,7 +22,7 @@
               <div id="reply_link" style="display:none">
                  <a href="javascript:getsupport('reply')">Your Reply </a> |
               </div>
-                <div id="post_span" style="display:none">
+              <div id="post_span" style="display:none">
                  <span class="subText">Post to Collaborative Methods</span> <br/><br/>
               </div>
               <div id="post_link" style="display:block">
@@ -34,10 +34,10 @@
               </ul>
               
               <div id="reply" class="save-cancel" style="display:block">
-                  <%= submit "    Send Reply    " %> 
+                  <%= submit "    Send Reply    " %>  Or  <%= link_to "Cancel", resource(:feedbacks), :class => "cancel" %>
               </div>  
               <div id="post" class="save-cancel" style="display:none">
-                  <%= submit "    Post to Collaborative Methods    " %> 
+                  <%= submit "    Post to Collaborative Methods    " %> Or  <%= link_to "Cancel", resource(:feedbacks), :class => "cancel" %>
               </div>
               
         <% end =%>

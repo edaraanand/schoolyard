@@ -93,23 +93,23 @@ class Approvals < Application
   end
 
   def approval_review
-     if params[:label]
+     @exist = "Student details entered by the parent match the school records"
+     @not_exist = "Student details entered by the parent do not match the school records"
+     @parent = @current_school.parents.find(params[:id])
+     @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+     @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
+     if params[:label] 
+        if params[:label] != ""
+           @room = @current_school.classrooms.find_by_class_name(params[:label])
+           @students = @current_school.students.find(:all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @room.id] )
+        else
+            @students = @current_school.students.find(:all)
+        end
+    else
         @parent = @current_school.parents.find(params[:id])
-        @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-        @room = @current_school.classrooms.find_by_class_name(params[:label])
-        @students = @current_school.students.find(:all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @room.id] )
-        @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
-        @exist = "Student details entered by the parent match the school records"
-        @not_exist = "Student details entered by the parent do not match the school records"
-     else
-        @parent = @current_school.parents.find(params[:id])
-        @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
         @students = @current_school.students.find(:all)
-        @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
-        @exist = "Student details entered by the parent match the school records"
-        @not_exist = "Student details entered by the parent do not match the school records"
-     end
-     render
+    end
+    render
   end
 
   def parent_grant
@@ -187,7 +187,7 @@ class Approvals < Application
   def classrooms
     @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     room = @class.collect{|x| x.class_name.titleize }
-    @classrooms = room.insert(0, "HomePage")
+    @classrooms = room.insert(0, "Home Page")
   end
 
  
