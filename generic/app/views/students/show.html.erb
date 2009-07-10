@@ -1,6 +1,6 @@
 <% if params[:label] == "students" %>
 
-      <div id="fullpage">
+      <div>
            <h2 class="current-page">
                Current Students > <%= @student.name %>
                &nbsp;&nbsp;&nbsp;
@@ -37,7 +37,7 @@
     
 <% else %>
   
-       <div id="fullpage">
+       <div>
        <h2 class="current-page">School Staff > <%= @staff.name %>
             &nbsp;&nbsp;&nbsp;
             <%= link_to_right((right = "rights_others"), "Add New", resource(:people, :new)  ) %> |

@@ -65,7 +65,9 @@
                         </thead>
                         <% for person in @staff %>
                              <tr>
-                                 <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
+                                <td class="click-block">
+                                   <%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %>
+	                            </td>
                                  <td><%= link_to "#{person.first_name}", url(:student, person.id, :label => "staff") %>&nbsp;</td>
                                  <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
                                  <td nowrap><% s.each do |f| %>
