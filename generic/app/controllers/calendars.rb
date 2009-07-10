@@ -49,7 +49,7 @@ class Calendars < Application
   end
 
   def edit
-    @calendar = Calendar.find(params[:id])
+    @calendar = @current_school.calendars.find(params[:id])
     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
     @allowed = 1 - @attachments.size
@@ -59,14 +59,14 @@ class Calendars < Application
   def show
     if params[:l] == "calendar"
       @select = "events"
-      @calendar = Calendar.find(params[:id])
+      @calendar = @current_school.calendars.find(params[:id])
       @selected = @calendar.class_name
       render :layout => 'directory'
     else
       @select = "classrooms"
       @selected = "calendars"
-      @calendar = Calendar.find(params[:id])
-      @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
+      @calendar = @current_school.calendars.find(params[:id])
+      @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
       @event = "All Day Event"
       render :layout => 'class_change', :id => @classroom.id
     end
