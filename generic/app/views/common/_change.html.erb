@@ -4,8 +4,6 @@
 <% @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ? ', "Extra Cirrcular", true], :order => "class_name ASC") %>
 
 <div id="info" style="display:none;">
-  
-
     <h3 style="text-align:center; font-size:100%">Please select the classroom you would like to visit</h3>
     <hr size='1'/><br/>
   <% if @classrooms.empty? %>
