@@ -38,6 +38,7 @@ class Calendars < Application
         @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
         redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
       else
+        puts   @start_time.inspect
         @start_time = params[:calendar][:start_time]
         @end_time = params[:calendar][:end_time]
         render :new
@@ -58,14 +59,15 @@ class Calendars < Application
 
   def show
     if params[:l] == "calendar"
-      @select = "events"
-      @calendar = @current_school.calendars.find(params[:id])
-      @selected = @calendar.class_name
-      render :layout => 'directory'
+       @select = "events"
+       @calendar = @current_school.calendars.find(params[:id])
+       @selected = @calendar.class_name
+       render :layout => 'directory'
     else
       @select = "classrooms"
       @selected = "calendars"
       @calendar = @current_school.calendars.find(params[:id])
+      @class =  @calendar.class_name.titleize
       @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
       @event = "All Day Event"
       render :layout => 'class_change', :id => @classroom.id

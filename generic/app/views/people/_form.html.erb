@@ -16,7 +16,11 @@
     <li><%= text_field  :last_name,   :label => "Last Name", :maxlength => "75" %></li>
     <li><%= text_field  :email,  :label => "Contact Email", :maxlength => "75" %></li>
     <li><%= text_field  :phone,  :label => "Phone Number (optional)" %></li>
-    <li><label>Rights</label>This Person Can: <%= check_box :checked => true, :checked => true, :value => @access_view.id , :disabled => "disabled", :name => "view_all"  %>View all Content</li>
+    <li>
+	  <label>Rights</label>This Person Can: 
+      <%= check_box :checked => true, :checked => true, :value => @access_view.id , :disabled => "disabled", :name => "view_all"  %>
+      View all Content
+    </li>
   </ul>
 
     <dl class="check-box-set">

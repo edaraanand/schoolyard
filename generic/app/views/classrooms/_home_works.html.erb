@@ -1,6 +1,6 @@
 <div id="content"  class="two-col">
         <h2 class="current-page"> 
-            Homeworks &nbsp;&nbsp;&nbsp;
+            Homework &nbsp;&nbsp;&nbsp;
             <%= link_to_right((right = "homework"), "Add New", resource(:home_works, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
         </h2> 
         <% if @home_works.empty? %>
