@@ -60,7 +60,8 @@
                              <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
                         </div>
                     <% end %>
-                    <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
+                    <% @attachment = @current_school.attachments.find(:first, 
+                                      :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
                     <% unless @attachment.nil? %>
                         <span class="attachment"><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></span>
                     <% end %>
