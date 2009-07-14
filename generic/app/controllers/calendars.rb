@@ -76,7 +76,7 @@ class Calendars < Application
 
   def update
     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-    @calendar = Calendar.find(params[:id])
+    @calendar = @current_school.calendars.find(params[:id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
     @allowed = 1 - @attachments.size
     i=0
@@ -135,16 +135,16 @@ class Calendars < Application
   def delete
     if params[:label] == "attachment"
       @attachment = @current_school.attachments.find(params[:id])
-      @calendar = Calendar.find_by_id(@attachment.attachable_id)
+      @calendar = @current_school.calendars.find_by_id(@attachment.attachable_id)
       @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
       @attachment.destroy
       @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
       @allowed = 1 - @attachments.size
       render :edit, :id => @calendar.id
     else
-      @calendar = Calendar.find(params[:id])
+      @calendar = @current_school.calendars.find(params[:id])
       @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
-      Attachment.delete_all(['attachable_id = ?', @calendar.id])
+      @current_school.attachments.delete_all(['attachable_id = ?', @calendar.id])
       @calendar.destroy
       redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
     end
