@@ -12,10 +12,18 @@
           
       <ul id="menu"><!-- Nested Lists -->
         <li <% if @selected == nil %> class="on" <% end %>><%= link_to "Class Home", url(:class_details, :id =>  @classroom.id) %></li>
-        <li <% if @selected == "calendars" %> class="on" <% end %> ><%= link_to "Class Calendar", url(:class_details, :id =>  @classroom.id, :label => "calendars") %></li>
-        <li <% if @selected == "homeworks" %> class="on" <% end %>><%= link_to "Homework Corner", url(:class_details, :id =>  @classroom.id, :label => "homeworks") %></li>
-        <li <% if @selected == "announcements" %> class="on" <% end %>><%= link_to "Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %></li>
-        <li <% if @selected == "spot_light" %> class="on" <% end %>><%= link_to "Spotlight", url(:class_details, :id =>  @classroom.id, :label => "spot_light") %></li>
+        <li <% if @selected == "calendars" %> class="on" <% end %> >
+	          <%= link_to "Class Calendar", url(:class_details, :id =>  @classroom.id, :label => "calendars") %>
+	    </li>
+        <li <% if @selected == "homeworks" %> class="on" <% end %>>
+	         <%= link_to "Homework Corner", url(:class_details, :id =>  @classroom.id, :label => "homeworks") %>
+	    </li>
+        <li <% if @selected == "announcements" %> class="on" <% end %>>
+	        <%= link_to "Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>
+	   </li>
+        <li <% if @selected == "spot_light" %> class="on" <% end %>>
+	          <%= link_to "Spotlight", url(:class_details, :id =>  @classroom.id, :label => "spot_light") %>
+	   </li>
         <li>&nbsp;</li>
         <li class="change"><a rel="facebox" href="#info"> Change Classroom</a></li>
       </ul>
@@ -37,7 +45,8 @@
                           <% end %>
                      <li><b><%= f.person.name %></b>
                             <% unless f.person.person_bio.blank? %>
-                                | <span <% if @selected == "bio_classes" %> class="on" <% end %> > <%= link_to "Bio", url(:bio, :id => @classroom.id, :label => "classes") %> 
+                                | <span <% if @selected == "bio_classes" %> class="on" <% end %> > 
+	                                    <%= link_to "Bio", url(:bio, :id => @classroom.id, :label => "classes") %> 
                                 </span>
                             <% end %>
                      </li>

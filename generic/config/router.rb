@@ -160,6 +160,6 @@ Merb::Router.prepare do
   
   # Change this for your home page to be available at /
  
-    match('/').to(:controller => 'homes')
+    match('/').to(:controller => 'homes', :action => 'index')
 
 end
