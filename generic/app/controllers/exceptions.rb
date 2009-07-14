@@ -25,7 +25,7 @@ class Exceptions < Application
 
      email_headers = {
        :from => 'noreply@schoolyardapp.com',
-       :to => 'it@insightmethods.com',
+       :to => 'it@schoolyardapp.com',
        :subject => "Error occurred in School Yard"
      }
   
