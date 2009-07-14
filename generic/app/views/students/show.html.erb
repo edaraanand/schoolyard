@@ -5,7 +5,7 @@
                Current Students > <%= @student.name %>
                &nbsp;&nbsp;&nbsp;
                <%= link_to_right((right = "manage_directory"), "Add New", resource(:students, :new)  ) %> |
-               <%= link_to_right((right = "manage_directory"), "Edit", url(@student, :edit)  ) %></td>
+               <%= link_to_right((right = "manage_directory"), "Edit", resource(@student, :edit)  ) %></td>
            </h2>
            <%= link_to "&larr; Back to Current Students List", url(:directory) %>
      
