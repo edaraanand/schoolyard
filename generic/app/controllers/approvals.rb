@@ -17,18 +17,18 @@ class Approvals < Application
 
   def show
     @selected = "approve"
-    @announcement = Announcement.find(params[:id])
+    @announcement = @current_school.announcements.find(params[:id])
     render :id => @announcement.id
   end
 
   def edit
     @selected = "approve"
-    @announcement = Announcement.find(params[:id])
+    @announcement = @current_school.announcements.find(params[:id])
     render
   end
 
   def update
-    @announcement = Announcement.find(params[:id])
+    @announcement = @current_school.announcements.find(params[:id])
     if @announcement.update_attributes(params[:announcement])
       @announcement.person_id = session.user.id
       @announcement.approved = false
@@ -43,7 +43,7 @@ class Approvals < Application
   end
 
   def publish
-    @announcement = Announcement.find(params[:id])
+    @announcement = @current_school.announcements.find(params[:id])
     if params[:approvetype] == "Approve & Publish"
       if params[:announcement]
         @announcement.update_attributes(params[:announcement])
@@ -80,8 +80,6 @@ class Approvals < Application
     elsif params[:label] == "rejected"
        @parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 3 ], :order => "created_at DESC", :per_page => 25,  :page => params[:page] )
        @test = "rejected"
-       puts @parents.inspect
-       puts "Eshwar".inspect
     elsif params[:label] == "pending"
        @parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 2], :order => "created_at DESC", :per_page => 25,  :page => params[:page] )
        @test = "pending"

@@ -157,7 +157,7 @@ class SpotLights < Application
   def delete
     @spot_light = @current_school.spot_lights.find(params[:id])
     @page = @spot_light.class_name
-    Attachment.delete_all(['attachable_id = ?', @spot_light.id])
+    @current_school.attachments.delete_all(['attachable_id = ?', @spot_light.id])
     @spot_light.destroy
     if @page == "Home Page"
        redirect url(:homes)
@@ -188,7 +188,7 @@ class SpotLights < Application
     @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     room = @class.collect{|x| x.class_name }
     @classrooms = room.insert(0, "Home Page")
-    @students = Student.find(:all)
+    @students = @current_school.students.find(:all)
   end
   
   def classrooms

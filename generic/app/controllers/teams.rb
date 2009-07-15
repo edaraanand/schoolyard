@@ -20,7 +20,7 @@ class Teams < Application
     id = params[:classroom][:people][:ids]
     role = params[:classroom][:people][:role]
     teachers = params[:classroom][:people][:teacher]
-    classroom = Classroom.find(:first, :conditions => ['class_name=?', params[:team][:classroom_id] ])
+    classroom = @current_school.classrooms.find(:first, :conditions => ['class_name=?', params[:team][:classroom_id] ])
     @class_people = []
     if @team.valid?
       unless id.include?("please")
@@ -64,16 +64,16 @@ class Teams < Application
 
   def edit
     @team = @current_school.teams.find(params[:id])
-    @class = Classroom.find_by_id(@team.classroom_id)
+    @class = @current_school.classrooms.find_by_id(@team.classroom_id)
     @team_peoples = @team.class_peoples
     render
   end
 
   def update
     @team = @current_school.teams.find(params[:id])
-    @class = Classroom.find_by_id(@team.classroom_id)
+    @class = @current_school.classrooms.find_by_id(@team.classroom_id)
     @team_peoples = @team.class_peoples
-    classroom = Classroom.find(:first, :conditions => ['class_name=?', params[:team][:classroom_id] ])
+    classroom = @current_school.classrooms.find(:first, :conditions => ['class_name=?', params[:team][:classroom_id] ])
     ids = params[:classroom][:people][:ids]
     roles = params[:classroom][:people][:roles]
     @coach_id = params[:classroom][:people][:coach]
@@ -121,12 +121,12 @@ class Teams < Application
     if params[:label] == "remove"
       @team_p = ClassPeople.find(params[:id])
       @team = @current_school.teams.find_by_id(@team_p.team_id)
-      @class = Classroom.find_by_id(@team.classroom_id)
+      @class = @current_school.classrooms.find_by_id(@team.classroom_id)
       @team_peoples = @team.class_peoples
       @team_p.destroy
       render :edit, :id => @team.id
     else
-      Team.find(params[:id]).destroy
+      @current_school.teams.find(params[:id]).destroy
       redirect resource(:teams)
     end
   end

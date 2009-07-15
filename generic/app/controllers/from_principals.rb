@@ -42,14 +42,14 @@ class FromPrincipals < Application
   end
 
   def edit
-    @announcement = Announcement.find(params[:id])
+    @announcement = @current_school.announcements.find(params[:id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
     @allowed = 1 - @attachments.size
     render
   end
 
   def update
-    @announcement = Announcement.find(params[:id])
+    @announcement = @current_school.announcements.find(params[:id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
     @allowed = 1 - @attachments.size
     i=0
@@ -84,21 +84,21 @@ class FromPrincipals < Application
   end
 
   def show
-    @announcement = Announcement.find(params[:id])
+    @announcement = @current_school.announcements.find(params[:id])
     render
   end
 
   def delete
     if params[:label] == "attachment"
       @attachment = @current_school.attachments.find(params[:id])
-      @announcement = Announcement.find_by_id(@attachment.attachable_id)
+      @announcement = @current_school.announcements.find_by_id(@attachment.attachable_id)
       @attachment.destroy
       @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
       @allowed = 1 - @attachments.size
       render :edit, :id => @announcement.id
     else
-      @announcement = Announcement.find(params[:id])
-      Attachment.delete_all(['attachable_id = ?', @announcement.id])
+      @announcement = @current_school.announcements.find(params[:id])
+      @current_school.attachments.delete_all(['attachable_id = ?', @announcement.id])
       @announcement.destroy
       redirect url(:homes)
     end

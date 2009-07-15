@@ -54,14 +54,14 @@ class People < Application
   end
 
   def edit
-    @person = Person.find(params[:id])
+    @person = @current_school.people.find(params[:id])
     @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
     @access_people = @person.access_peoples
     render
   end
 
   def update
-    @person = Person.find(params[:id])
+    @person = @current_school.people.find(params[:id])
     @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
     @access_people = @person.access_peoples
     if @person.update_attributes(params[:person])
@@ -108,7 +108,7 @@ class People < Application
 
 
   def disable
-    @person = Person.find(params[:id])
+    @person = @current_school.people.find(params[:id])
     @person.crypted_password = ""
     @person.password_reset_key = ""
     @person.save
@@ -116,7 +116,7 @@ class People < Application
   end
 
   def enable
-    @person = Person.find(params[:id])
+    @person = @current_school.people.find(params[:id])
     @person.send_pass
     redirect url(:edit_person, @person.id)
   end

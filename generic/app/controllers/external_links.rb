@@ -63,7 +63,7 @@ class ExternalLinks < Application
   end
 
   def delete
-    ExternalLink.find(params[:id]).destroy
+    @current_school.external_links.find(params[:id]).destroy
     redirect url(:homes)
   end
 
