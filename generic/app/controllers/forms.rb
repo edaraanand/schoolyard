@@ -44,13 +44,19 @@ class Forms < Application
           redirect url(:form_files, :l => "all_forms", :label => "forms")
         else
           flash[:error] = "please upload a File"
+          @c = params[:form][:class_name]
+          @y = params[:form][:year]
           render :new
         end
       else
         flash[:error] = "Please select classroom and year"
+        @c = params[:form][:class_name]
+        @y = params[:form][:year]
         render :new
       end
     else
+      @c = params[:form][:class_name]
+      @y = params[:form][:year]
       render :new
     end
 

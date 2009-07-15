@@ -45,14 +45,14 @@ class Announcements < Application
   def create
     @announcement = session.user.announcements.build(params[:announcement])
     i=0
-    if @announcement.valid?
-      if params[:announcement][:access_name] != ""
-         @announcement.approved = false
-         @announcement.approve_announcement = true
-         @announcement.label = 'staff'
-         @announcement.school_id = @current_school.id
-         @announcement.save
-         unless params[:attachment]['file_'+i.to_s].empty?
+    if params[:announcement][:access_name] != ""
+       if @announcement.valid?
+          @announcement.approved = false
+          @announcement.approve_announcement = true
+          @announcement.label = 'staff'
+          @announcement.school_id = @current_school.id
+          @announcement.save
+          unless params[:attachment]['file_'+i.to_s].empty?
              @attachment = Attachment.create( :attachable_type => "Announcement",
              :attachable_id => @announcement.id,
              :filename => params[:attachment]['file_'+i.to_s][:filename],
@@ -62,16 +62,18 @@ class Announcements < Application
              )
              File.makedirs("public/uploads/#{@attachment.id}")
              FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
-         end
-         redirect resource(:announcements)
+          end
+          redirect resource(:announcements)
        else
-         flash[:error] = "Please select the option"
-         render :new
+           @c = params[:announcement][:access_name]
+           render :new
        end
-      else
-        render :new
-      end
-   
+    else
+       flash[:error] = "Please select the option"
+       @c = params[:announcement][:access_name]
+       render :new
+    end
+    
   end
 
   def edit

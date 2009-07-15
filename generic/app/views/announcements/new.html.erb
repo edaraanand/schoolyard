@@ -12,7 +12,11 @@
            <ul>
                <li>
                    <label>Announcement for:</label>
-                   <%= select :access_name, :collection => rooms, :prompt => "Please Select", :selected => "#{params[:l]}" %>
+                   <% if params[:l] %>
+                       <%= select :access_name, :collection => rooms, :prompt => "Please Select", :selected => "#{params[:l]}" %>
+                   <% else %>
+                       <%= select :access_name, :collection => rooms, :selected => "#{@c}", :prompt => "Please Select"  %>
+                   <% end %>
                </li>
                <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
                <li><%= text_area  :content,  :label => "Description", :rows => "20", :cols => "50" %></li>
