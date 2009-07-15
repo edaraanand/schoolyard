@@ -38,13 +38,16 @@ class Calendars < Application
         @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
         redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
       else
-        puts   @start_time.inspect
+        @class = params[:calendar][:class_name]
+        @start_date = params[:calendar][:start_date]
+        @end_date = params[:calendar][:end_date]
         @start_time = params[:calendar][:start_time]
         @end_time = params[:calendar][:end_time]
         render :new
       end
     else
-      flash[:error] = "Please select the option"
+      flash[:error] = "Please select the classroom"
+      @class = params[:calendar][:class_name]
       render :new
     end
   end
