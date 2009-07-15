@@ -105,7 +105,7 @@
                        <span class="subText">There are no homework assignments due at this time</span>
                   <% else %>
                       <% for homework in @h_w %>
-                        <li><%= link_to "#{homework.title}", url(:home_work, homework.id) %></li>
+                        <li><%= link_to "#{homework.title}", url(:class_works, :id => homework.id) %></li>
                       <% end %>
                   <% end %>
               </ul>
