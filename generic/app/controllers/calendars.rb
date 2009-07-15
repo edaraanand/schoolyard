@@ -147,7 +147,7 @@ class Calendars < Application
     else
       @calendar = @current_school.calendars.find(params[:id])
       @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
-      @current_school.attachments.delete_all(['attachable_id = ?', @calendar.id])
+      Attachment.delete_all(['attachable_id = ?', @calendar.id])
       @calendar.destroy
       redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
     end

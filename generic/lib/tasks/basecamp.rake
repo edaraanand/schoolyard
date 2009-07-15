@@ -10,7 +10,7 @@ namespace :basecamp do
 
   desc "Send deploymet notification"
   task :notify_new_build do
-    git_log = `git-log --abbrev-commit --pretty=format:"%s%n<a href=https://github.com/eshwardeep/schoolapp/commit/%H target=_blank>%h</a> by (%an: %ar)%n" ee874f7..HEAD --no-merges`
+    git_log = `git-log --abbrev-commit --pretty=format:"%s%n<a href=https://github.comeshwardeep/schoolapp/tree/master/commit/%H target=_blank>%h</a> by (%an: %ar)%n" ee874f7..HEAD --no-merges`
     build_msg = <<-EOF
     <a href=http://sdb.schoolyardapp.com target=_blank>New build ( http://sdb.schoolyardapp.com )</a> is just pushed to server. 
       ...

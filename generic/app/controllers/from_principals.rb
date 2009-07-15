@@ -98,7 +98,7 @@ class FromPrincipals < Application
       render :edit, :id => @announcement.id
     else
       @announcement = @current_school.announcements.find(params[:id])
-      @current_school.attachments.delete_all(['attachable_id = ?', @announcement.id])
+      Attachment.delete_all(['attachable_id = ?', @announcement.id])
       @announcement.destroy
       redirect url(:homes)
     end
@@ -159,6 +159,7 @@ class FromPrincipals < Application
       if @content_types.include?(params[:image][:content_type])
         unless @attachment.nil?
           @attachment.destroy
+          File.delete("public/uploads/principal_images/#{@attachment.filename}")
         end
         f = params[:image][:filename]
         file = File.basename(f.gsub(/\\/, '/'))
@@ -222,8 +223,7 @@ class FromPrincipals < Application
     end
   end
  
-
-
+ 
   private
 
   def access_rights

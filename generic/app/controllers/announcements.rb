@@ -151,7 +151,7 @@ class Announcements < Application
       render :edit, :id => @announcement.id
     else
       @announcement = @current_school.announcements.find(params[:id])
-      @current_school.attachments.delete_all(['attachable_id = ?', @announcement.id])
+      Attachment.delete_all(['attachable_id = ?', @announcement.id])
       @announcement.destroy
       redirect resource(:announcements)
     end

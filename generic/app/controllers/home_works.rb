@@ -125,7 +125,7 @@ class HomeWorks < Application
     else
       @home_work = @current_school.home_works.find(params[:id])
       @classroom = @home_work.classroom
-      @current_school.attachments.delete_all(['attachable_id = ?', @home_work.id])
+      Attachment.delete_all(['attachable_id = ?', @home_work.id])
       @home_work.destroy
       redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
     end

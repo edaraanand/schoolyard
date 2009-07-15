@@ -123,7 +123,7 @@ class Forms < Application
       render :edit, :id => @form.id
     else
       @form = @current_school.forms.find(params[:id])
-      @current_school.attachments.delete_all(['attachable_id = ?', @form.id])
+      Attachment.delete_all(['attachable_id = ?', @form.id])
       @form.destroy
       redirect url(:form_files, :l => "all_forms", :label => "forms")
     end

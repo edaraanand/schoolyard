@@ -157,7 +157,7 @@ class SpotLights < Application
   def delete
     @spot_light = @current_school.spot_lights.find(params[:id])
     @page = @spot_light.class_name
-    @current_school.attachments.delete_all(['attachable_id = ?', @spot_light.id])
+    Attachment.delete_all(['attachable_id = ?', @spot_light.id])
     @spot_light.destroy
     if @page == "Home Page"
        redirect url(:homes)

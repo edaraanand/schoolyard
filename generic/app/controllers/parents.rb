@@ -59,7 +59,7 @@ class Parents < Application
   def update
     @announcement = session.user.announcements.find(params[:id])
     if @announcement.update_attributes(params[:announcement])
-      @current_school.attachments.delete_all(['attachable_id = ?', @announcement.id])
+      Attachment.delete_all(['attachable_id = ?', @announcement.id])
       unless params[:announcement][:attachment].empty?
         @attachment = Attachment.create( :attachable_type => "Announcement",
         :attachable_id => @announcement.id,
@@ -83,7 +83,7 @@ class Parents < Application
 
   def delete
     @announcement = session.user.announcements.find(params[:id])
-    @current_school.attachments.delete_all(['attachable_id = ?', @announcement.id])
+    Attachment.delete_all(['attachable_id = ?', @announcement.id])
     @announcement.destroy
     redirect resource(:parents)
   end
