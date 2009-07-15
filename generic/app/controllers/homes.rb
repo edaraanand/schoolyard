@@ -47,10 +47,10 @@ class Homes < Application
     elsif params[:label] == "sports_announcement"
        @selected = "announcements"
        @select = "sports"
-       @announcement = Announcement.find(params[:id])
+       @announcement = @current_school.announcements.find(params[:id])
        render :layout => 'sports'
     else
-       @announcement = Announcement.find(params[:id])
+       @announcement = @current_school.announcements.find(params[:id])
        render :layout => 'home'
     end
   end
@@ -98,7 +98,7 @@ class Homes < Application
   end
   
   def pdf_download
-     @announcement = Announcement.find(params[:id])
+     @announcement = @current_school.announcements.find(params[:id])
      pdf = prepare_pdf(@announcement)
      send_data(pdf.render, :filename => "#{@announcement.title}.pdf", :type => "application/pdf")
   end
