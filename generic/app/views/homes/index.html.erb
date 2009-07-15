@@ -87,7 +87,7 @@
                             </div>
                             <p><%= link_to "#{announcement.title}", url(:home, announcement.id) %></p>
                             <p><%= snippet(announcement.content, 50) %></p>
-                            <% @attachment = Attachment.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
+                            <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
                             <% unless @attachment.nil? %>
                              <span class="attachment"><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></span>
                             <% end %>

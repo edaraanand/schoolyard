@@ -58,7 +58,7 @@
                          </div>
                       <% end %>
               <% elsif params[:label] == "sports_announcement" %>
-                      <%= link_to " back to All Announcements", url(:sports, :label => "announcements") %>
+                      <%= link_to " &larr; back to All Announcements", url(:sports, :label => "announcements") %>
               <% else %>
                       <%= link_to ' &larr; Previous', url(:home, @announcement.previous_record), 
                             :class => "alignleft" if @announcement.previous_record %> &#124;
