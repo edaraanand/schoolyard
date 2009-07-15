@@ -14,9 +14,9 @@
 	  </div>
     <h3><%= @announcement.title %></h3>
     <p><%= san_content(@announcement.content) %></p>
-    <%= link_to '< Previous |', url(:from_principal, @announcement.previous_id),:class => "alignleft" if @announcement.previous_id %>
-    <%= link_to " All Articles ", url(:from_principals) %>
-    <%= link_to '| Next >',  url(:from_principal, @announcement.next_id),:class => "alignright" if @announcement.next_id %>
+    <%= link_to '&larr; Previous', url(:from_principal, @announcement.previous_id),:class => "alignleft" if @announcement.previous_id %> &#124;
+    <%= link_to "Back to All Principal’s Articles ", url(:from_principals) %> &#124;
+    <%= link_to 'Next &rarr;',  url(:from_principal, @announcement.next_id),:class => "alignright" if @announcement.next_id %>
    <p class="separator">&nbsp;</p>
   </div>
 </div>
