@@ -39,10 +39,12 @@ class WelcomeMessages < Application
             redirect url(:class_details, :id => @classroom.id)
          end
       else
+        @class = params[:welcome_message][:access_name]
         render :new
       end
     else
       flash[:error] = "Please select the option"
+      @class = params[:welcome_message][:access_name]
       render :new
     end
   end

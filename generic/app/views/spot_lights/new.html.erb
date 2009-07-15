@@ -13,9 +13,13 @@
  <%= form_for(@spot_light, :action => resource(:spot_lights), :id => 'spot_light' ) do %>
     <fieldset>
          <ul>
-             <li>
+	         <li>
 	              <label>Spotlight for:</label>
-	              <%= select :class_name, :collection => @classrooms, :prompt => "Please Select", :selected => "#{params[:l]}" %>
+	              <% if params[:l] %>
+	                   <%= select :class_name, :collection => @classrooms, :prompt => "Please Select", :selected => "#{params[:l]}" %>
+	              <% else %>
+	                   <%= select :class_name, :collection => @classrooms, :prompt => "Please Select", :selected => "#{@class}" %>
+	              <% end %>
 	         </li>
             <li>
 	            <label>Student </label>

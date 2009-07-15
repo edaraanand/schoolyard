@@ -55,6 +55,7 @@ class SpotLights < Application
             end
           else
             flash[:error1] = "You can only upload images"
+            @class = params[:spot_light][:class_name]
             render :new
           end
         else
@@ -63,10 +64,12 @@ class SpotLights < Application
           redirect url(:class_details, :id => @classroom.id, :label => "spot_light")
         end
       else
+        @class = params[:spot_light][:class_name]
         render :new
       end
     else
       flash[:error] = "please select the classroom and student"
+      @class = params[:spot_light][:class_name]
       render :new
     end
 
