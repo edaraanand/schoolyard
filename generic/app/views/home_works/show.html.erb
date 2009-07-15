@@ -26,9 +26,9 @@
             </div>
             <hr size="1"/>
         
-         <%= link_to '< Previous', url(:home_work, @home_work.previous_common),:class => "alignleft" if @home_work.previous_common %> &#124;
+         <%= link_to '&larr; Previous', url(:home_work, @home_work.previous_common),:class => "alignleft" if @home_work.previous_common %> &#124;
          <%= link_to " All Homework ", resource(:home_works) %> &#124;
-         <%= link_to 'Next >',  url(:home_work, @home_work.next_common),:class => "alignright" if @home_work.next_common %>
+         <%= link_to 'Next &rarr; ',  url(:home_work, @home_work.next_common),:class => "alignright" if @home_work.next_common %>
          
           
 </div>
