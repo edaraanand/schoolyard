@@ -3,8 +3,8 @@ class Schoolapp
   @@common_config = {
     :auth_mailman      => 'noreply@schoolyardapp.com',
     :mailman_password  => '75F633',
-    :bc_user => "basecamp user", 
-    :bc_password => "basecamp password"
+    :bc_user => "eshwar.gouthama", 
+    :bc_password => "ashwini"
   }
   
   @@development_config = {
