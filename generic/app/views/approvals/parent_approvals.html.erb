@@ -11,7 +11,9 @@ View :  <select id = 'parentID'>
 
         
        <% if  @parents.empty? %>
-             <p class="subText">There are no registrations at this time.</p>
+             <p class="subText">No Registrations were found. If you've filtered the registrations, try changing the filter, 
+	                     otherwise the school might not  have any registrations.
+	         </p>
        <% else %>
               <table id="mytable"  cellspacing="0" cellpadding="0">
                    <thead>
