@@ -36,7 +36,7 @@ class Person < ActiveRecord::Base
   validates_presence_of :email, :if => :email
   validates_uniqueness_of :email, :if => :email, :scope => [:school_id, :type]
   validates_format_of :email, :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i, :if => :email
-  validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}, :scope => :school_id
+  validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}, :scope => [:school_id, :type]
   validates_length_of :password, :within => 8..40, :if => :password
   validates_length_of :phone, :is => 10, :message => 'must be 10 digits, excluding special characters such as spaces and dashes.', :if => Proc.new{|o| !o.phone.blank?}
   validates_length_of :voice_alert, :is => 10, :message => 'must be 10 digits', :if => Proc.new{|o| !o.voice_alert.blank?}    
@@ -84,7 +84,7 @@ class Person < ActiveRecord::Base
   end
 
   def deliver_email(action, params)
-    from = "no-reply@insightmethods.com"
+    from = "noreply@schoolyardapp.com"
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
 
@@ -103,7 +103,7 @@ class Person < ActiveRecord::Base
   end
 
   def d_email(action, params)
-    from = "no-reply@insightmethods.com"
+    from = "noreply@schoolyardapp.com"
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
 
@@ -114,7 +114,7 @@ class Person < ActiveRecord::Base
   end
 
   def mail_deliver(action, params)
-    from = "no-reply@insightmethods.com"
+    from = "noreply@schoolyardapp.com"
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
 

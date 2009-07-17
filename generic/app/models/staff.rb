@@ -23,7 +23,7 @@ class Staff < Person
   end
 
   def deliver_email(action, params)
-    from = "no-reply@insightmethods.com"
+    from = "noreply@schoolyardapp.com"
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
 
