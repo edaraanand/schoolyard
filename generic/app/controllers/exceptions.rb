@@ -30,11 +30,11 @@ class Exceptions < Application
      }
   
      if Merb.env == "production"
-        run_later do
+       # run_later do
            ErrorNotifyMailer.dispatch_and_deliver(:error,
                                                 email_headers,
                                                 details)
-        end
+       # end
        render :internal_server_error, :format => :html, :layout => false
      else
        raise request.exceptions.first
