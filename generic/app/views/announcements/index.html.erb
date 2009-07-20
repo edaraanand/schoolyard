@@ -12,7 +12,11 @@
 	   </select>
 
    <% if @announcements.empty? %>
-        <p>There are no Announcements created yet. <%= link_to "Add New", resource(:announcements, :new) %></p>
+        <p class="subText">
+	          No Announcements were found. If you've filtered the announcements, try changing the filter, 
+                 otherwise the school might not  have any announcements.
+             <%= link_to "Add New", resource(:announcements, :new) %>
+        </p>
    <% else %>
           <% for announcement in @announcements %>
           
