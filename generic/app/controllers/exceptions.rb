@@ -1,9 +1,15 @@
 class Exceptions < Application
   layout 'login'
+  
   # handle NotFound exceptions (404)
   def not_found
     render :layout => "excep"
   end
+  
+  # handle BadRequest exceptions (400)
+   def bad_request
+     render :internal_server_error, :format => :html, :layout => false
+   end
 
   # handle NotAcceptable exceptions (406)
   def not_acceptable
@@ -25,16 +31,16 @@ class Exceptions < Application
 
      email_headers = {
        :from => 'noreply@schoolyardapp.com',
-       :to => 'it@schoolyardapp.com',
+       :to => 'eshwar@schoolyardapp.com',
        :subject => "Error occurred in School Yard"
      }
   
      if Merb.env == "production"
-       # run_later do
+        run_later do
            ErrorNotifyMailer.dispatch_and_deliver(:error,
                                                 email_headers,
                                                 details)
-       # end
+        end
        render :internal_server_error, :format => :html, :layout => false
      else
        raise request.exceptions.first

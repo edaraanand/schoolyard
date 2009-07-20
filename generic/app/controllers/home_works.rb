@@ -15,7 +15,6 @@ class HomeWorks < Application
        @home_works = @current_school.home_works.paginate(:all, :order => "due_date DESC", :per_page => 10, :page => params[:page])
        @test = "All Homeworks"
     end
-    @error = "There are no Homeworks at this time."
     render
   end
 
