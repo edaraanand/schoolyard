@@ -163,7 +163,8 @@
            <h3>External Links </h3>
            <ul class="last"> 
                <% for link in @external_links %>
-                     <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
+                 <% s = "#{link.url}".split("http://") %>
+                 <li><%= link_to ("#{link.title}", "http://#{s}",  {'target' => '_blank'}) %></li>
                <% end %>
            </ul> 
        <% end %>
