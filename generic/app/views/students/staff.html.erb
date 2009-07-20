@@ -15,7 +15,9 @@
 <% if params[:label] == "classes" %>
  
             <% if @class_peoples.empty? %>
-                     <p class="subText">There are no staff members listed yet.</p>
+                  <p class="subText">
+	                No Staff were found. If you've filtered the staff, try changing the filter, otherwise the school might not have any staff.
+	              </p>
             <% else %>
                    <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
                    <table id="mytable" style="margin-top:60px; width:720px" cellspacing="0" cellpadding="0">
@@ -48,7 +50,9 @@
          
 <% else %>
            <% if @staff.empty? %>
-                 <p class="subText">There are no staff members listed yet.</p>
+                 <p class="subText">
+	                No Staff were found. If you've filtered the staff, try changing the filter, otherwise the school might not have any staff.
+	              </p>
            <% else %>
 
                  <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
