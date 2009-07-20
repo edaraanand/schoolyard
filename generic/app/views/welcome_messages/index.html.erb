@@ -14,7 +14,11 @@
 	   </select>
 
        <% if  @welcome_messages.blank?  %>
-             <p>There are not welcome messages created yet. <%= link_to "Add New", url(:new_welcome_message) %>
+             <p class="subText">
+	             No Welcome Messages were found. If you've filtered the welcome messages, try changing the filter, 
+	                     otherwise the school might not  have any welcome messages.
+	             <%= link_to "Add New", url(:new_welcome_message) %> 
+	         </p> 
        <% else %>
                <% for mess in @welcome_messages %>
                      <div class="data-block long-block">
