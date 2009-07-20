@@ -21,7 +21,10 @@
 <% if params[:l] == "all_events" %>
    
             <% if @calendars.empty? %>
-                 <span class="subText">There are no events planned at this time</span>
+                 <p class="subText">
+		                No Events were found. If you've filtered the events, try changing the filter, 
+		               otherwise the school might not have any events.
+		         </p>
             <% else %>
                  <% cdate=""
                       for calendar in @calendars %>
@@ -56,7 +59,10 @@
 <% else %>
 
       <%if @cls.empty?%>
-          <span class="subText">There are no events planned at this time</span>
+         	<p class="subText">
+	                No Events were found. If you've filtered the events, try changing the filter, 
+	               otherwise the school might not have any events.
+	         </p>
       <% else %>
             <% cdate=""
                       for calendar in @cls %>
