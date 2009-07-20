@@ -15,7 +15,11 @@
 	   </select>
  
         <% if @spot_lights.empty? %>
-                 <p>There are no Spot Lights created yet <%= link_to "Add New", url(:new_spot_light) %>
+                 <p class="subText">
+				     No Spotlights were found. If you've filtered the spotlights, try changing the filter, 
+			            otherwise the school might not  have any spotlights.
+			            <%= link_to "Add New", url(:new_spot_light) %>
+			     </p>
         <% else %>
                  <% for spot in @spot_lights %>
                      <div class="data-block short-block">
