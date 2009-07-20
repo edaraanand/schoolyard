@@ -12,7 +12,11 @@
 
  
      <% if @forms.empty? %>
-          <p class="subText">There are no forms uploaded yet. <%= link_to "Add New", resource(:forms, :new) %></p>
+          	<p class="subText">
+			     No Forms were found. If you've filtered the forms, try changing the filter, 
+		            otherwise the school might not  have any forms.
+		         <%= link_to "Add New", resource(:forms, :new) %>
+		     </p>
      <% else %>
           <table id="mytable"  cellspacing="0" cellpadding="0">
                <thead>
