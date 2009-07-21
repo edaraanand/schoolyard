@@ -63,7 +63,8 @@ module Merb
      
      def san_content(content)
          content.gsub("\r\n","<br/>")
-    end
+     end
+     
     def email(address)
        '<a href="mailto:'+address+'">'+address+'</a>'
     end

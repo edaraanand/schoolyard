@@ -1,6 +1,6 @@
 <div class="from-principal">
-    <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
-    <% unless @attachment.nil? %>
+   <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ?', "principal_image"]) %>
+   <% unless @attachment.nil? %>
          <img src="/uploads/principal_images/<%= @attachment.filename %>" alt=" ", class = "prinPic"/>
              <% @principal = Principal.find(:first, :conditions => ['school_id = ?', @current_school.id]) %>
              <div class="caption">
@@ -30,4 +30,4 @@
                    <% end %>
                 </div>
     <% end %>
-    </div>
+</div>
