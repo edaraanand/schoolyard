@@ -1,5 +1,5 @@
 class HomeWorks < Application
-
+  
   layout 'default'
   before :find_school
   before :access_rights, :exclude => [:class_works, :home_works_pdf]
@@ -195,18 +195,26 @@ class HomeWorks < Application
 
   def pdf_prepare(value, homework)
     pdf = PDF::Writer.new
-    pdf.select_font "Helvetica"
+    pdf.select_font "Times-Roman"
     pdf.text "#{@current_school.school_name}", :font_size => 20, :justification => :center
     if value == "multiple"
       @home_works.each do |homework|
+        con = "#{homework.content}"
+        con = con.gsub("”", "") 
+        con = con.gsub("“", "")
+        con = con.gsub("’", "")
         pdf.text "<b>Title</b>" + ":" + "" + "#{homework.title}", :font_size => 10, :justification => :left
-        pdf.text "<b>Description</b>" + ":" + "" + "#{homework.content}", :font_size => 10, :justification => :left
+        pdf.text "<b>Description</b>" + ":" + "" + con, :font_size => 10, :justification => :left
         pdf.text "<b>Due Date</b>" + ":" + "" + "#{homework.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
       end
       pdf
     else
+      con = "#{@home_work.content}"
+      con = con.gsub("”", " ") 
+      con = con.gsub("“", " ")
+      con = con.gsub("’", " ")
       pdf.text "<b>Title</b>" + ":" + "" + "#{@home_work.title}", :font_size => 10, :justification => :left
-      pdf.text "<b>Description</b>" + ":" + "" + "#{@home_work.content}", :font_size => 10, :justification => :left
+      pdf.text "<b>Description</b>" + ":" + "" + con, :font_size => 10, :justification => :left
       pdf.text "<b>Due Date</b>" + ":" + "" + "#{@home_work.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
       pdf
     end

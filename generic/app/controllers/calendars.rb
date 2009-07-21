@@ -216,15 +216,23 @@ class Calendars < Application
     pdf.text "#{@current_school.school_name}", :font_size => 20, :justification => :center
     if value == "multiple"
       @calendars.each do |calendar|
+        con = "#{calendar.description}"
+        con = con.gsub("”", "") 
+        con = con.gsub("“", "")
+        con = con.gsub("’", "")
         pdf.text "<b>Title</b>"  + ":" + "" + "#{calendar.title}", :font_size => 10, :justification => :left
-        pdf.text "<b>Description</b>" + ":" + "" +  "#{calendar.description}", :font_size => 10, :justification => :left
+        pdf.text "<b>Description</b>" + ":" + "" +  con, :font_size => 10, :justification => :left
         pdf.text "<b>Location</b>" + ":" + "" + "#{calendar.location}", :font_size => 10, :justification => :left
         pdf.text "<b>Start Date</b>" + ":" + "" + "#{calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
       end
       pdf
     else
+       con = "#{@calendar.description}"
+        con = con.gsub("”", "") 
+        con = con.gsub("“", "")
+        con = con.gsub("’", "")
       pdf.text "<b>Title</b>"  + ":" + "" + "#{@calendar.title}", :font_size => 10, :justification => :left
-      pdf.text "<b>Description</b>" + ":" + "" +  "#{@calendar.description}", :font_size => 10, :justification => :left
+      pdf.text "<b>Description</b>" + ":" + "" +  con, :font_size => 10, :justification => :left
       pdf.text "<b>Location</b>" + ":" + "" + "#{@calendar.location}", :font_size => 10, :justification => :left
       pdf.text "<b>Start Date</b>" + ":" + "" + "#{@calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
       pdf
