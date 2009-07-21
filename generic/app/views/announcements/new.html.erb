@@ -56,7 +56,8 @@
     else
        {
           var s = $('announcement').serialize();
-          window.open('/announcements/preview/-/?' +  s  );
+         // var t = window.open('/announcements/preview/-/?' + s );
+	      window.open('/announcements/preview/-/?' + s, 'mywin', 'left=20,top=20,width=1000,height=500,toolbar=1,resizable=0');
        }
      
  }
