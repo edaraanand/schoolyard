@@ -149,6 +149,7 @@ Merb::Router.prepare do
        match("/edit_details").to(:controller => 'from_principals', :action => 'edit_details').name(:edit_details)
        match("/update_details").to(:controller => 'from_principals', :action => 'update_details').name(:update_details)
        match(:first_subdomain => 'admin').to(:controller => 'admin', :action => 'index') 
+  
    end
    
      
