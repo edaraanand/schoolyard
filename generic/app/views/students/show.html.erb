@@ -23,15 +23,19 @@
 
                   <% @protectors.each do |r| %>
                     <%= r.name %> (<a href="mailto:<%= r.email %>"><%= r.email %></a>) <br/>
-                     <% end %>
+                  <% end %>
             </td></tr>
-                     
-            <tr><td>Address</td> <td><%= @student.address %></td></tr>
-            <tr><td>Contact Number</td> <td><%=number_to_phone(@student.phone, :area_code => true)%> </td></tr>
-            </tr>
-           
-       
+    
        </table> 
+              	<dl>
+				    <dt>Address</dt>
+				    <dd><%= @student.address1 ? @student.address1 : "<span class='noText'>not specified</span>" %>
+				         <%= "<br/>#{@student.address2}" if @student.address2?  %>
+				         <%= "<br/>#{@student.city }" if @student.city?  %>
+				         <%= ", #{@student.state }" if @student.state? %><%= " #{@student.zip_code }" if @student.zip_code?  %>
+				    </dd>
+	          	   <%= "<dt>Phone </dt><dd>#{number_to_phone(@student.phone, :area_code => true)}</dd>" if @student.phone?  %>
+			  </dl>
        </div>
        <div class="clear"><hr size="1" /></div>
     

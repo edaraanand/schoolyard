@@ -5,7 +5,8 @@
       <th>Last Name</th>
       <th>First Name</th>
       <th>Contact Number</th>
-      <th>Address</th>
+      <th>Address1</th>
+      <th>State</th>
     </thead>
     <tbody>
       <% for student in @students %>
@@ -13,7 +14,8 @@
           <td>&nbsp;<%= link_to "#{student.last_name}", resource(student, :edit) %> </td>
           <td>&nbsp;<%= student.first_name %></td>
           <td>&nbsp;<%= number_to_phone(student.phone, :area_code => true) %></td>
-          <td>&nbsp;<%= student.address %></td>
+          <td>&nbsp;<%= student.address1 %></td>
+          <td>&nbsp;<%= student.state %></td>
         </tr>
       <% end %>
     </tbody>

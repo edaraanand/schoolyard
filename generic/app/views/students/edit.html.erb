@@ -214,10 +214,14 @@
                                </ul>
                               </div>
                        <% end %>
-                       <ul>
+                            <ul>
                                 <li><%= text_field :phone, :label => "Phone" %></li>
-                                <li><%= text_area :address, :label => "Address", :rows => "4", :cols => "50" %></li>
-	                   </ul>
+                               	<li><%= text_field  :address1,  :label => "Address 1", :maxlength => "75" %></li>
+							    <li><%= text_field  :address2,  :label => "Address 2", :maxlength => "75" %></li>
+							    <li><%= text_field  :city,  :label => "City", :maxlength => "75" %></li>
+							    <li><%= text_field  :state,  :label => "State", :maxlength => "75" %></li>
+							    <li><%= text_field  :zip_code,  :label => "Zip Code", :maxlength => "75" %></li>
+                            </ul>
                            <div class="save-cancel">		 
                                <input type = 'button' value = '    Preview    ' onclick="edit_preview();return false;" />
 	                             <%= submit "    Publish    " %>  Or <%= link_to "Cancel", resource(:students), :class => "cancel" %>
