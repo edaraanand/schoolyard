@@ -107,6 +107,14 @@ class Homes < Application
   
   def prepare_pdf(announcement)
       pdf = PDF::Writer.new
+      con = "#{@announcement.content}"
+      con = con.gsub("”", "") 
+      con = con.gsub("“", "")
+      con = con.gsub("’", "")
+      con = con.gsub("‘", "")
+      con = con.gsub("’", "")
+      con = con.gsub("– ", "")
+      con = con.gsub(/[^a-zA-Z0-9-]/, " ")
       pdf.select_font "Helvetica"
       pdf.text "#{@current_school.school_name}", :font_size => 15
       pdf.text " "
@@ -114,7 +122,7 @@ class Homes < Application
       pdf.text "Published #{@announcement.created_at.strftime('%B %d %Y')}", :font_size => 10
       pdf.text " "
             pdf.text " "      
-      pdf.text "#{@announcement.content}" , :font_size => 15
+      pdf.text "#{con}", :font_size => 15
       pdf
   end
   

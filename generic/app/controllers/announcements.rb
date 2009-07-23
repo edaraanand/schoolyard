@@ -75,7 +75,7 @@ class Announcements < Application
     end
     
   end
-
+  
   def edit
     @announcement = @current_school.announcements.find(params[:id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
