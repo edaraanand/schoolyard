@@ -40,6 +40,7 @@ namespace :deploy do
      run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
      run "cd #{current_path}/generic && rake basecamp:notify_new_build"
+     run "cd #{current_path}/generic && rake bootstrap:student"
      #run "cd #{current_path}/generic && rake bootstrap:alerts"
      #run "cd #{current_path}/generic && rake contact:school"
      #run "cd #{current_path}/generic && rake admin:person"
