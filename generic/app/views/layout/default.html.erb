@@ -3,18 +3,15 @@
   <div id="classContainer">
     <div id="sidebar">
       <ul id="menu"><!-- Nested Lists -->
-        <li>Site Settings<ul>
-           <li <% if @selected == "school_profile" %> class="on" <% end %>><%= link_to_if((right = "basic_settings"), "Basic Settings", url(:schools)) %></li>
+        <li>School Setup<ul>
+           <li <% if @selected == "school_profile" %> class="on" <% end %>><%= link_to_if((right = "basic_settings"), "Contact Information ", url(:schools)) %></li>
            <li <% if @selected == "feedback" %> class="on" <% end %>><%= link_to_if((right = "feedback"), "Feedback", url(:feedbacks)) %></li>
            <li <% if @selected == "class_rooms" %> class="on" <% end %>><%= link_to_if((right = "classes"), "Classrooms", url(:classrooms) )  %></li>
-          </ul>
-        </li>
-        <li>Access Rights<ul>
-              <li <% if @selected == "rights" %> class="on" <% end %>><%= link_to_if((right = "rights_others"), "Add/Edit Access Rights", url(:people) ) %></li>
-              <% @parents = @current_school.parents.find(:all, :conditions => ["approved = ?", 2 ]) %>
-              <li <% if @selected == "parent_registration" %> class="on" <% end %> ><%= link_to_if((right = "parent_registration"), "Parent Registrations <span><b>#{@parents.length}</b></span>", url(:parent_approvals) ) %></li>
-          </ul>
-        </li>
+           <li <% if @selected == "rights" %> class="on" <% end %>><%= link_to_if((right = "rights_others"), "School Staff", url(:people) ) %></li>
+           <li <% if @selected == "students" %> class="on" <% end %>><%= link_to_if((right = "manage_directories"), "Students", url(:students)) %></li>
+             <% @parents = @current_school.parents.find(:all, :conditions => ["approved = ?", 2 ]) %>
+           <li <% if @selected == "parent_registration" %> class="on" <% end %> ><%= link_to_if((right = "parent_registration"), "Parent Registrations <span><b>#{@parents.length}</b></span>", url(:parent_approvals) ) %></li>
+              </ul>
         <% @announcements = @current_school.announcements.find(:all, :conditions => ["approve_announcement = ? and approved = ?", true, false ]) %>
         <% @sports_class = @current_school.classrooms.find(:first, :conditions => ['class_name = ? and activate =  ?', "Sports", true] ) %>
         <li>Content<ul>
@@ -35,8 +32,6 @@
           <li><%#= link_to "Advertising" %></li>
           </ul>                                                                                                      
         </li>
-        <li>Directory<ul>
-        <li <% if @selected == "students" %> class="on" <% end %>><%= link_to_if((right = "manage_directories"), "Students", url(:students)) %></li>
           </ul>
         </li>
       </ul>
