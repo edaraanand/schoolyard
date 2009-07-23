@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 69) do
+ActiveRecord::Schema.define(:version => 70) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -215,6 +215,12 @@ ActiveRecord::Schema.define(:version => 69) do
     t.boolean  "principal_name"
     t.string   "voice_alert"
     t.string   "sms_alert"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip_code"
+    t.string   "fax"
   end
 
   create_table "protectors", :force => true do |t|
