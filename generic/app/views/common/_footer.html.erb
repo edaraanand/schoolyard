@@ -1,4 +1,7 @@
 <br class="clear"/>
 <div id="footer">
-  &copy; <%= @current_school.school_name %>. All Rights Reserved.
+  &copy;
+     <% unless @current_school.nil? %>
+         <%= @current_school.school_name %>. All Rights Reserved.
+     <% end %>
 </div>
