@@ -29,13 +29,15 @@ namespace :deploy do
   
    desc "Copying the database to somewhere"
    task :before_update do
-    # run "mv #{current_path}/generic/db /home/eshwar"
+     run "mv #{current_path}/generic/db /home/eshwar"
+     run "mv #{current_path}/generic/public/uploads /home/eshwar"
    end
   
   desc "Change the database configuration file"
   task :after_update do
      run "mv #{current_path}/generic/config/database.yml.production #{current_path}/generic/config/database.yml"
      run "mv /home/eshwar/db #{current_path}/generic"
+     run "mv /home/eshwar/uploads #{current_path}/generic/public"
      #run "rm -fr #{current_path}/generic/db"
 	   #run "mkdir -p #{current_path}/generic/db"
      run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
