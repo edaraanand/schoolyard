@@ -11,7 +11,8 @@
               <li><label>Announcement for:</label><%= select :access_name, :collection => rooms, :prompt => "Please Select" %></li>
               <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
               <li><%= text_area  :content,  :label => "Description", :rows => "10", :cols => "50" %></li>
-              <li><%= text_field  :expiration, :class => "short date", :label => "Expiration" %></li>
+              <li><%= text_field :expiration, :class => "short date", :label => "Expiration", 
+                                 :value => @announcement.expiration.strftime("%m/%d/%Y") %></li>
               <li>
                  <% if @attachments.size >= 1 %>
                         <%= file_field :attachment,  :label => "Attach a File", :disabled => "true" %>

@@ -13,8 +13,7 @@
 
    <% if @announcements.empty? %>
         <p class="subText">
-	          No Announcements were found. If you've filtered the announcements, try changing the filter, 
-                 otherwise the school might not  have any announcements.
+	         No Announcement was found. If you applied a filter try changing it. 
              <%= link_to "Add New", resource(:announcements, :new) %>
         </p>
    <% else %>
@@ -39,19 +38,19 @@
                                 <%= @message1 %>
                                </div>
                              <%= link_to "Edit", resource(announcement, :edit), :class=>"edit-btn" %>
-                             <%= link_to "Delete", resource(announcement, :delete), :class=>"delete-btn"  %>
+                             <%= link_to "Delete", resource(announcement, :delete), :class => "delete delete-btn"  %>
                       <% elsif ((announcement.approve_announcement == true) && (announcement.approved == false )) %>
                             <div class="approval-status">
                                <%= @message2 %>
                               </div>
                             <%= link_to "Edit", resource(announcement, :edit), :class=>"edit-btn" %>
-                            <%= link_to "Delete", resource(announcement, :delete), :class=>"delete-btn"  %>
+                            <%= link_to "Delete", resource(announcement, :delete), :class=>" delete delete-btn"  %>
                       <% elsif ((announcement.approve_announcement == false) && (announcement.approved == false )) %>
                              <div class="approval-status">
                                 <%= @message3 %>
                                </div>
                              <%= link_to "Edit", resource(announcement, :edit), :class=>"edit-btn" %>
-                             <%= link_to "Delete", resource(announcement, :delete), :class=>"delete-btn"  %>
+                             <%= link_to "Delete", resource(announcement, :delete), :class=>"delete delete-btn"  %>
                       <% end %> 
                      <p class="separator">&nbsp;</p>
                  </div>
@@ -62,6 +61,7 @@
 
 </div>
 
+ <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
 
 <script type = 'text/javascript'>
 
