@@ -18,7 +18,7 @@
               <h3><%= link_to "#{announcement.title}", url(:from_principal, announcement.id) %></h3>
               <p class="post-content"><%= snippet(announcement.content, 50) %></p>
                <%= link_to "Edit", url(:edit_from_principal, announcement.id), :class=> "edit-btn"  %>
-               <%= link_to "Delete", url(:delete_from_principal, announcement.id), :class=> "delete-btn"  %>
+               <%= link_to "Delete", url(:delete_from_principal, announcement.id), :class => "delete delete-btn"  %>
                <p class="separator clear">&nbsp;</p>
                <br class="clear"/>
            </div>
@@ -27,8 +27,5 @@
          <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
 
 </div>
-  
-  
-  
-  
 
+ <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
