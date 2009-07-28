@@ -12,7 +12,7 @@ namespace :basecamp do
   task :notify_new_build do
     git_log = `git-log --abbrev-commit --pretty=format:"%s%n<a href=https://github.com/eshwardeep/schoolapp/tree/28870b9a21e841b8999dedde234e3bac2a694687/generic/commit/%H target=_blank>%h</a> by (%an: %ar)%n" ee874f7..HEAD --no-merges`
     build_msg = <<-EOF
-    <a href=http://sdb.schoolyardapp.net target=_blank> New build ( http://sdb.schoolyardapp.net )</a> is just pushed to server. 
+    <a href=http://sdb.schoolyardapp.com target=_blank> New build ( http://sdb.schoolyardapp.com )</a> is just pushed to server. 
     EOF
     build_msg.strip!
     build_msg.gsub!('"', '\"')
