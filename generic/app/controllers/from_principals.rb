@@ -94,6 +94,7 @@ class FromPrincipals < Application
       @attachment = @current_school.attachments.find(params[:id])
       @announcement = @current_school.announcements.find_by_id(@attachment.attachable_id)
       @attachment.destroy
+     # FileUtils.rm_rf "public/uploads/#{@announcement.id}"
       @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
       @allowed = 1 - @attachments.size
       render :edit, :id => @announcement.id
@@ -160,7 +161,7 @@ class FromPrincipals < Application
       if @content_types.include?(params[:image][:content_type])
         unless @attachment.nil?
           @attachment.destroy
-          File.delete("public/uploads/principal_images/#{@attachment.filename}")
+          #File.delete("public/uploads/principal_images/#{@attachment.filename}")
         end
         f = params[:image][:filename]
         file = File.basename(f.gsub(/\\/, '/'))
