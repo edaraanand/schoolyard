@@ -1,4 +1,5 @@
 class FromPrincipals < Application
+
   layout 'default'
   before :find_school
   before :access_rights
@@ -93,6 +94,7 @@ class FromPrincipals < Application
       @attachment = @current_school.attachments.find(params[:id])
       @announcement = @current_school.announcements.find_by_id(@attachment.attachable_id)
       @attachment.destroy
+     # FileUtils.rm_rf "public/uploads/#{@announcement.id}"
       @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
       @allowed = 1 - @attachments.size
       render :edit, :id => @announcement.id
@@ -159,16 +161,16 @@ class FromPrincipals < Application
       if @content_types.include?(params[:image][:content_type])
         unless @attachment.nil?
           @attachment.destroy
-          File.delete("public/uploads/principal_images/#{@attachment.filename}")
+          #File.delete("public/uploads/principal_images/#{@attachment.filename}")
         end
         f = params[:image][:filename]
         file = File.basename(f.gsub(/\\/, '/'))
         @attachment = Attachment.create( :attachable_type => "principal_image",
-        :filename => file,
-        :content_type => params[:image][:content_type],
-        :size => params[:image][:size],
-        :school_id => @current_school.id
-        )
+                                         :filename => file,
+                                         :content_type => params[:image][:content_type],
+                                         :size => params[:image][:size],
+                                         :school_id => @current_school.id
+                                       )
         unless @principal.nil?
           if ((params[:principal_email] == "on") || (params[:principal_name] == "on") )
             if params[:principal_name] == "on"
@@ -231,7 +233,6 @@ class FromPrincipals < Application
     have_access = false
     @view = Access.find_by_name('view_all')
     @ann = Access.find_by_name('from_principal')
-    puts session.user.inspect
     @access_people = session.user.access_peoples.delete_if{|x| x.access_id == @view.id }
     @access_people.each do |f|
       have_access = (f.all == true) || (f.access_id == @ann.id)

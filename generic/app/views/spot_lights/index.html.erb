@@ -16,9 +16,8 @@
  
         <% if @spot_lights.empty? %>
                  <p class="subText">
-				     No Spotlights were found. If you've filtered the spotlights, try changing the filter, 
-			            otherwise the school might not  have any spotlights.
-			            <%= link_to "Add New", url(:new_spot_light) %>
+				     No Spotlight was found. If you used a filter try changing it.
+			         <%= link_to "Add New", url(:new_spot_light) %>
 			     </p>
         <% else %>
                  <% for spot in @spot_lights %>
@@ -36,7 +35,7 @@
                           <p><%= snippet(spot.content, 50) %></p>
                           
                            <%= link_to "Edit", resource(spot, :edit), :class=>"edit-btn" %>
-                           <%= link_to "Delete", resource(spot, :delete), :class=>"delete-btn"  %>
+                           <%= link_to "Delete", resource(spot, :delete), :class => "delete delete-btn" %>
                           <p class="separator">&nbsp;</p>
                       </div>
                  <% end %>
@@ -48,6 +47,7 @@
 </div>
 
 
+ <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
 
 <script type = 'text/javascript'>
 

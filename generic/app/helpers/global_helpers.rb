@@ -37,7 +37,19 @@ module Merb
             link_to(name, url)
          end
      end
-
+     
+      def link_to_delete(right, name, url = "")
+          @acc = Access.find_by_name(right)
+          have_access = false
+          session.user.access_peoples.each do |f|
+            have_access = f.all || (@acc.id == f.access_id)
+            break if have_access
+          end
+          if have_access
+             link_to(name, url, :class => "delete")
+          end
+      end
+  
      def truncate(text, *args)
          options = args.extract_options!
          unless args.empty?

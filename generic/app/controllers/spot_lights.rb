@@ -106,6 +106,7 @@ class SpotLights < Application
             @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
             unless @pic.nil?
               @pic.destroy
+              #File.delete("public/uploads/spotlights/#{@pic.filename}")
             end
             f = params[:spot_light][:image][:filename]
             file = File.basename(f.gsub(/\\/, '/'))
@@ -157,7 +158,9 @@ class SpotLights < Application
   def delete
     @spot_light = @current_school.spot_lights.find(params[:id])
     @page = @spot_light.class_name
+    @att = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
     Attachment.delete_all(['attachable_id = ?', @spot_light.id])
+    #File.delete("public/uploads/spotlights/#{@att.filename}")
     @spot_light.destroy
     if @page == "Home Page"
        redirect url(:homes)
@@ -177,10 +180,8 @@ class SpotLights < Application
        @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', params[:spot_light][:class_name] ])
        render :layout => 'class_change', :id => @classroom.id
     end
-   
   end
-
-
+ 
 
   private
 

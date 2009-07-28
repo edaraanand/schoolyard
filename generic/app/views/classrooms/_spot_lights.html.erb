@@ -20,7 +20,7 @@
                         <% unless session.user.type == "Parent" %>
                             <div class="admin-links">
                                 <%= link_to_right((right = "spotlight"), "Edit", resource(spot, :edit ) ) %> |
-                                <%= link_to_right((right = "spotlight"), "Delete", resource(spot, :delete ) ) %>
+                                <%= link_to_delete((right = "spotlight"), "Delete", resource(spot, :delete ) ) %>
                             </div>
                         <% end %>
                         <p class="post-content"><%= snippet(spot.content, 50) %></p>

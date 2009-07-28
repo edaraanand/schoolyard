@@ -13,8 +13,7 @@
  
      <% if @forms.empty? %>
           	<p class="subText">
-			     No Forms were found. If you've filtered the forms, try changing the filter, 
-		            otherwise the school might not  have any forms.
+			     No Form was found. If you applied a filter try changing it.
 		         <%= link_to "Add New", resource(:forms, :new) %>
 		     </p>
      <% else %>
@@ -31,7 +30,7 @@
                               <td><%= link_to "#{form.title}", resource(form, :edit) %> </td>
                               <td><%= form.class_name %></td>
                               <td><%= form.updated_at.strftime("%b %d %Y") %></td>
-                              <td><%= link_to "Delete", resource(form, :delete), :class =>"delete-btn" %></td>
+                              <td><%= link_to "Delete", resource(form, :delete), :class =>"delete delete-btn" %></td>
                           </tr>
                      <% end %>
                </tbody>
@@ -40,7 +39,7 @@
      <% end %>
  
 
-
+ <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
      
 <script type = 'text/javascript'>
 
