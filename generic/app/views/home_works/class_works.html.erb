@@ -21,7 +21,7 @@
                      <% unless session.user.type == "Parent" %>
                          <div class="admin-links">
                              <%= link_to_right((right = "homework"), "Edit", resource(@home_work, :edit)) %> |
-                             <%= link_to_right((right = "homework"), "Delete", resource(@home_work, :delete)) %>
+                             <%= link_to_delete((right = "homework"), "Delete", resource(@home_work, :delete)) %>
                          </div>
                       <% end %>
                   <p><%= san_content(@home_work.content) %></p>
@@ -41,7 +41,7 @@
           
 </div>
 
-
+<script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
 
 
 

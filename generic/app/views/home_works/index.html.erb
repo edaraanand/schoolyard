@@ -14,8 +14,7 @@
 
           <% if @home_works.empty? %>
                  <p class="subText">
-				     No Home Work were found. If you've filtered the homework, try changing the filter, 
-			            otherwise the school might not  have any homework.
+				    No Homework assignment was found. If you applied a filter try changing it.
 			        <%= link_to "Add New", resource(:home_works, :new) %>
 			     </p>
            <% else %>
@@ -41,7 +40,7 @@
 	                          </p>
                               <p class="post-content"><%= snippet(homework.content, 50) %></p>
                               <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
-                              <%= link_to "Delete", resource(homework, :delete), :class=>"delete-btn"  %>
+                              <%= link_to "Delete", resource(homework, :delete), :class => "delete delete-btn"  %>
                               <p class="separator clear">&nbsp;</p>
                               <br class="clear"/>
                          </div>
@@ -51,7 +50,8 @@
     
 </div>
   
-  
+  <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
+
   <script type = 'text/javascript'>
 
         $( 'workID' ).observe( 'change', function()
