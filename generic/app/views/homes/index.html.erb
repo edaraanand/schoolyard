@@ -52,7 +52,7 @@
                             <span>
 	                             <%= link_to_right( (right = "welcome_messages"), "Edit Welcome Message", resource(message, :edit) ) %>
 	                        </span> &#124;
-                             <%= link_to_right( (right = "welcome_messages"), "Delete Welcome Message", resource(message, :delete) ) %>
+	                             <%= link_to_delete( (right = "welcome_messages"), "Delete Welcome Message", resource(message, :delete) ) %>
                          </div>
                    <% end %>
                 <% end %>
@@ -174,3 +174,4 @@
    
 </div>
 
+<script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>

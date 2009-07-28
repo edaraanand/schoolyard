@@ -21,7 +21,7 @@
                          <% unless session.user.type == "Parent" %>
                              <div class="admin-links">
                                  <%= link_to_right((right = "from_principal"), "Edit", url(:edit_from_principal, principal.id)) %> &#124;
-                                 <%= link_to_right((right = "from_principal"), "Delete", url(:delete_from_principal, principal.id)) %>
+                                 <%= link_to_delete((right = "from_principal"), "Delete", url(:delete_from_principal, principal.id)) %>
                              </div>
                          <% end %>
                      </div>
@@ -57,7 +57,7 @@
                     <% unless session.user.type == "Parent" %>
                         <div class="admin-links">
                              <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> &#124;
-                             <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
+                             <%= link_to_delete((right = "announcements"), "Delete", resource(announcement, :delete)) %>
                         </div>
                     <% end %>
                     <% @attachment = @current_school.attachments.find(:first, 
@@ -72,3 +72,6 @@
            <%= will_paginate (@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
  <% end %>
 </div>
+
+<script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
+

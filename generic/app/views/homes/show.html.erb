@@ -42,7 +42,7 @@
                          <div class="admin-links">
                              <%= link_to_right((right = "from_principal"), "Add New", resource(:from_principals, :new)) %> &#124;
                              <%= link_to_right((right = "from_principal"), "Edit", url(:edit_from_principal, @announcement.id)) %> &#124;
-                             <%= link_to_right((right = "from_principal"), "Delete", url(:delete_from_principal, @announcement.id)) %>
+                             <%= link_to_delete((right = "from_principal"), "Delete", url(:delete_from_principal, @announcement.id)) %>
 						 </div>
                       <% end %>
               <% elsif params[:label] == "class_ann" %>
@@ -54,7 +54,7 @@
                       <% unless session.user.type == "Parent" %>
                          <div class="admin-links">
                              <%= link_to_right((right = "announcements"), "Edit", resource(@announcement, :edit)) %> &#124;
-                             <%= link_to_right((right = "announcements"), "Delete", resource(@announcement, :delete)) %>
+                             <%= link_to_delete((right = "announcements"), "Delete", resource(@announcement, :delete)) %>
                          </div>
                       <% end %>
               <% elsif params[:label] == "sports_announcement" %>
@@ -69,7 +69,7 @@
                              <%= link_to_right((right = "announcements"), "Add New", resource(:announcements, :new, :l => "Home Page")) %> 
                              &#124;
                              <%= link_to_right((right = "announcements"), "Edit", resource(@announcement, :edit)) %> &#124;
-                             <%= link_to_right((right = "announcements"), "Delete", resource(@announcement, :delete)) %> 
+                             <%= link_to_delete((right = "announcements"), "Delete", resource(@announcement, :delete)) %> 
                          </div>
                       <% end %>
               <% end %>
@@ -79,3 +79,4 @@
       
     </div>
 
+   <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
