@@ -1,18 +1,18 @@
-    
+<ul class='error_messages'>
+     <% if flash[:error] %>
+        <li><%= flash[:error] %> </li>
+     <% end %>
+</ul>
     <h2 class="current-page">Pending Approval </h2>
      <%= link_to "Edit", url(:edit_approval, @announcement.id), :class=>"edit-btn" %>
   <div class="fullpage announcemt"> 
 
            <div class="data-block long-block">
-             <% if @announcement.expiration.nil? %>
-                   <div class="ddmmm-x">
-	                 </div>
-              <% else %>
-                   <div class="ddmmm">
+                  <div class="ddmmm">
                       <span class="date"><%= @announcement.expiration.strftime("%d") %></span>
                       <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
-	                 </div>
-              <% end %>
+	              </div>
+             
               <h3><%= @announcement.title %></h3><span class="subText">Announcement for: <%= @announcement.access_name.titleize %></span><br/>
               <span class="subText">Created by <%= @announcement.person.name %>, expires on <%= @announcement.expiration.strftime("%d %b %Y") %></span>
                <p class="post-content"><%= san_content(@announcement.content) %></p>
