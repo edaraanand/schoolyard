@@ -18,7 +18,7 @@
            <% unless session.user.type == "Parent" %>
                <div class="admin-links">
                     <%= link_to_right((right = "calendar"), "Edit", resource(@calendar, :edit) )  %> |
-                    <%= link_to_right((right = "calendar"), "delete", resource(@calendar, :delete) )  %> 
+                    <%= link_to_delete((right = "calendar"), "delete", resource(@calendar, :delete) )  %> 
                </div>
            <% end %>
            <span class="subText"><% unless @calendar.start_time.nil? &&  @calendar.end_time.nil? %>
@@ -48,4 +48,7 @@
  
      
 </div>
+
+<script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
+
 

@@ -25,7 +25,7 @@
                                   <%= link_to calendar.title, resource(calendar, :edit)%> <small>(<%= calendar.class_name %>)</small>
                               </span>
                               <%= link_to "Edit", resource(calendar, :edit), :class=>"edit-btn" %>
-                              <%= link_to "Delete", resource(calendar, :delete), :class=>"delete-btn" %> <br/><br/>
+                              <%= link_to "Delete", resource(calendar, :delete), :class => "delete delete-btn" %> <br/><br/>
                         </li>
                     </ul>
                 </div>   
@@ -35,3 +35,5 @@
   <% end %>
 
 </div>
+
+<script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>

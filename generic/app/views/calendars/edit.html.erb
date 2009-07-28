@@ -22,7 +22,8 @@
     <li><%= text_field  :location,  :label => "Location" %></li>
     <li><label>&nbsp;</label><%= check_box :day_event, :onclick => "dayevent()" %>All Day Event</li>
     <li>
-           <%= text_field :start_date, :id => "start", :label => "Starts:", :class=>"short" %>
+           <%= text_field :start_date, :id => "start", :label => "Starts:", :class=>"short",
+                                 :value => @calendar.start_date.strftime("%m/%d/%Y") %>
 	       <% if @calendar.day_event == true %>
 	          <%= text_field :start_time, :id => "start_time", :disabled => true, :class => "short apart"  %>
 	       <% else %>
@@ -35,7 +36,8 @@
 	       <% end %>
     </li>
 	   <li>
-	       <%= text_field :end_date, :id => "end", :label => "Ends:", :class=>"short" %>
+	       <%= text_field :end_date, :id => "end", :label => "Ends:", :class=>"short",
+	                                 :value => @calendar.end_date.strftime("%m/%d/%Y") %>
 	       <% if @calendar.day_event == true %>
 	            <%= text_field :end_time, :id => "end_time", :disabled => true, :class=>"short apart" %>
 	       <% else %>
