@@ -31,7 +31,7 @@
                        <% unless session.user.type == "Parent" %>
                              <div class="admin-links">
                                <%= link_to_right( (right = "welcome_messages"), "Edit Welcome Message", resource(message, :edit) ) %> &#124;
-                               <%= link_to_right( (right = "welcome_messages"), "Delete Welcome Message", resource(message, :delete) ) %>
+                               <%= link_to_delete( (right = "welcome_messages"), "Delete Welcome Message", resource(message, :delete) ) %>
                              </div>
                        <% end %>
                    <% end %>
@@ -53,7 +53,7 @@
 								<% unless session.user.type == "Parent" %>
                                     <span class="admin-links">
                                          <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> &#124;
-                                         <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
+                                         <%= link_to_delete((right = "announcements"), "Delete", resource(announcement, :delete)) %>
                                     </span>
                                <% end %>								
 								</h3>
@@ -123,7 +123,7 @@
 <% end %>   
 
 
-
+ <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
 
 <script type= "text/javascript">
 

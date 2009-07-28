@@ -16,7 +16,7 @@
                        <% unless session.user.type == "Parent" %>
                            <div class="admin-links">
                               <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> |
-                              <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
+                              <%= link_to_delete((right = "announcements"), "Delete", resource(announcement, :delete)) %>
                            </div>
                        <% end %>
                        <p class="separator"><%= snippet(announcement.content,50) %></p>

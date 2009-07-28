@@ -39,7 +39,7 @@
                            <%= select :class => "apart", :name => "class[people][ids][]", :collection => @current_school.staff, 
                                      :selected => "#{f.person_id.to_s}", :value_method => :id, 
                                      :text_method => :name, :prompt => "Select Faculty" %>
-                           <%= link_to "Remove", url(:delete_classroom, f, :label => "remove"), :class => "remove" %>
+                           <%= link_to "Remove", url(:delete_classroom, f, :label => "remove"), :class => "delete remove" %>
                        </li>
                 <% end %>
            <% end %>
@@ -56,6 +56,7 @@
 </fieldset>
 
 
+ <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
 
 <script type= "text/javascript">
  
