@@ -14,8 +14,7 @@
 <% if params[:l] == "all_forms" %>
      <% if @all_forms.empty? %>
        		<p class="subText">
-			     No Forms were found. If you've filtered the forms, try changing the filter, 
-		            otherwise the school might not  have any forms.
+			      No Form was found. If you applied a filter try changing it.
 		         <%= link_to_right((right = "forms"), "Add New", resource(:forms, :new)  ) %>
 		    </p>
      <% else %>
@@ -39,7 +38,7 @@
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
                             <% unless session.user.type == "Parent" %>
                                <td><%= link_to_right((right = "forms"), "Edit", resource(form, :edit)  ) %></td>
-                               <td><%= link_to_right((right = "forms"), "Delete", resource(form, :delete)  ) %></td>
+                               <td><%= link_to_delete((right = "forms"), "Delete", resource(form, :delete)  ) %></td>
                             <% end %>
                         </tr>
                    <% end %>
@@ -52,8 +51,7 @@
  
       <% if @forms.empty? %>
          	<p class="subText">
-			     No Forms were found. If you've filtered the forms, try changing the filter, 
-		            otherwise the school might not  have any forms for <%= @class.class_name.titleize %>.
+			    No Form was found. If you applied a filter try changing it.
 		    </p>
       <% else %>
             <table id="mytable"  cellspacing="0" cellpadding="0">
@@ -76,7 +74,7 @@
                                  <td><%= form.updated_at.strftime("%b %d %Y") %></td>
                                  <% unless session.user.type == "Parent" %>
                                     <td><%= link_to_right((right = "forms"), "Edit", resource(form, :edit)  ) %></td>
-                                    <td><%= link_to_right((right = "forms"), "Delete", resource(form, :delete)  ) %></td>
+                                    <td><%= link_to_delete((right = "forms"), "Delete", resource(form, :delete)  ) %></td>
                                  <% end %>
                              </tr>
                         <% end %>
@@ -89,4 +87,5 @@
 
 </div>
   
+<script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
   
