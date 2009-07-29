@@ -22,9 +22,8 @@
    
             <% if @calendars.empty? %>
                  <p class="subText">
-		                No Events were found. If you've filtered the events, try changing the filter, 
-		               otherwise the school might not have any events.
-		         </p>
+		    No Events were found. If you applied a filter try changing it.
+		 </p>
             <% else %>
                  <% cdate=""
                       for calendar in @calendars %>
@@ -60,9 +59,8 @@
 
       <%if @cls.empty?%>
          	<p class="subText">
-	                No Events were found. If you've filtered the events, try changing the filter, 
-	               otherwise the school might not have any events.
-	         </p>
+	               No Events were found. If you applied a filter try changing it.
+ 	         </p>
       <% else %>
             <% cdate=""
                       for calendar in @cls %>
