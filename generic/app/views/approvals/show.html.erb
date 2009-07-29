@@ -14,10 +14,15 @@
 	              </div>
              
               <h3><%= @announcement.title %></h3><span class="subText">Announcement for: <%= @announcement.access_name.titleize %></span><br/>
-              <span class="subText">Created by <%= @announcement.person.name %>, expires on <%= @announcement.expiration.strftime("%d %b %Y") %></span>
+              <span class="subText">Created by <%= @announcement.person.name %>, expires on <%= @announcement.expiration.strftime("%d %b %Y") %></span><br/>
+               <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id =? and attachable_type =?", @announcement.id, "Announcement"] ) %>
+                 <% unless @attachment.nil? %>
+                    <span class="attachment"><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></span>
+                <% end %>
                <p class="post-content"><%= san_content(@announcement.content) %></p>
-             
+               
       <%= form_for :announcement, :action => url(:publish, :id => @announcement), :name => "approveform" do %>      
+        
            <hr class="clear">
            <h2 style="border:none;">Your Approval</h2>
 Optional Comments<br/> <%= text_area  :name => "comments", :rows => "10", :cols => "50" %><br/><br/>
@@ -28,7 +33,7 @@ Optional Comments<br/> <%= text_area  :name => "comments", :rows => "10", :cols 
                   <%= link_to "Cancel", url(:approvals), :class => "cancel" %><br/><br/><br/>
              </div>
       <% end =%>        
-              
+             
    </div>     
  
    
