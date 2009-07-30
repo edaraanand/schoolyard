@@ -90,7 +90,9 @@
                     <ul class="last">
                          <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @sp_light.id]) %>
                          <% unless @attachment.nil? %>  
+                            <div class="pic">
                               <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
+                            </div>
                          <% end %>
                          <h6><%= link_to "#{@sp_light.student_name}", url(:spots, :id => @sp_light.id) %></h6>
                          <%= snippet(@sp_light.content, 25) %>

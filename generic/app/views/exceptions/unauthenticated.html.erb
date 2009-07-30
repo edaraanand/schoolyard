@@ -46,7 +46,8 @@
   <% unless (request.first_subdomain == "admin") %>
 <div class="fltlft" style="padding:20px; width:300px; text-align:center">
   <h2>New Users</h2>
-  <p>Registration is only available to parents and students enrolled at <%= @current_school.school_name %>. Registration is subject to validation and school’s approval process. Thank you.</p><br/>
+  <p>Registration is only available to parents and students enrolled at 
+         <% unless @current_school.nil? %> <%= @current_school.school_name %>. <% end %> Registration is subject to validation and school’s approval process. Thank you.</p><br/>
   <span><input type = 'button' value = '    Parent Registration    ' onclick="javascript:window.location.href='/registrations/new'" /></span>
 
 </div>
