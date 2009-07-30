@@ -40,7 +40,7 @@
                  Welcome to <%=@current_school.school_name%>
                  <% unless session.user.type == "Parent" %>
                      <span class="admin-links">
-                      <%= link_to_right( (right = "welcome_messages"), "Add New", url(:new_welcome_message, :l => "Home Page" ) ) %>
+                      <%= link_to_right( (right = "welcome_messages"), "Edit", url(:new_welcome_message, :l => "Home Page" ) ) %>
                      </span>
                  <% end %>
                <% else %>
@@ -116,7 +116,9 @@
             <ul class="last">
                   <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @spot_light.id]) %>
                   <% unless @attachment.nil? %>  
-                       <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
+                      <div class="pic">
+                         <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
+                      </div>
                   <% end %>
                   <h6><%= link_to "#{@spot_light.student_name}", url(:home_spot_light, :l => @spot_light.id) %></h6>
                   <%= snippet(@spot_light.content, 20) %>
