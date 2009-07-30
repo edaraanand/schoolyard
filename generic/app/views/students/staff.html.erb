@@ -32,11 +32,9 @@
                              <% end %>
                        </thead>
                        <% @class_peoples.each do |f| %>
-                            <tr>
-                                <td class="click-block">
-                                    <%= link_to "#{f.person.last_name}", url(:student, f.person.id, :label => "staff") %>
-                                </td>
-                                <td><%= link_to "#{f.person.first_name}", url(:student, f.person.id, :label => "staff") %>&nbsp;</td>
+                           <tr onclick="location.href='<%= url(:student, f.person.id, :label => "staff") %>'" style="cursor:pointer">
+                                <td><%= f.person.last_name %></td>
+                                <td><%= f.person.first_name %>&nbsp;</td>
                  	            <td nowrap><%= f.role.titleize %>-<%= f.classroom.class_name %>&nbsp;</td>
                                 <td><%= email(f.person.email) %>&nbsp;</td>
                                 <td nowrap><%= number_to_phone(f.person.phone, :area_code => true) %>&nbsp;</td>
@@ -68,11 +66,9 @@
                               <% end %>
                         </thead>
                         <% for person in @staff %>
-                             <tr>
-                                <td class="click-block">
-                                   <%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %>
-	                            </td>
-                                 <td><%= link_to "#{person.first_name}", url(:student, person.id, :label => "staff") %>&nbsp;</td>
+                             <tr onclick="location.href='<%= url(:student, person.id, :label => "staff") %>'" style="cursor:pointer">
+                                 <td><%= person.last_name %></td>
+                                 <td><%= person.first_name %>&nbsp;</td>
                                  <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
                                  <td nowrap><% s.each do |f| %>
                                     <%= f.role.titleize %>-<%= f.classroom.class_name %><br/>
