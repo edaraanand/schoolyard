@@ -46,7 +46,9 @@ class Person < ActiveRecord::Base
   def self.authenticate(email, school_id, password)
     u = find_by_email_and_school_id(email, school_id) # need to get the salt
     return nil unless u
-    u && u.authenticated?(password) ? u : nil
+    if u.approved = 1
+       u && u.authenticated?(password) ? u : nil
+    end
   end
 
   def password_validation_required

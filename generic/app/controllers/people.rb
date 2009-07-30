@@ -24,6 +24,7 @@ class People < Application
     @p = @accesses.collect{|x| x.id.to_s}
     if @person.valid?
       @person.type = "Staff"
+      @person.approved = 1
       @person.save
       unless params[:access].nil?
         @access = params[:access][:access_ids]
@@ -53,8 +54,15 @@ class People < Application
     end
   end
 
+  def show
+    @staff = @current_school.staff.find_by_id(params[:id])
+    raise NotFound unless @staff
+    render
+  end
+  
   def edit
-    @person = @current_school.people.find(params[:id])
+    @person = @current_school.people.find_by_id(params[:id])
+    raise NotFound unless @person
     @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
     @access_people = @person.access_peoples
     render
@@ -65,6 +73,8 @@ class People < Application
     @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
     @access_people = @person.access_peoples
     if @person.update_attributes(params[:person])
+       @person.approved = 1
+       @person.save
       @a = Access.find(:all)
       @acc = @a.delete_if{|x| x.name == "view_all"}
       @acc = @a.collect{|x| x.id}
@@ -109,6 +119,7 @@ class People < Application
 
   def disable
     @person = @current_school.people.find(params[:id])
+    @person.approved = 3
     @person.crypted_password = ""
     @person.password_reset_key = ""
     @person.save
@@ -116,7 +127,10 @@ class People < Application
   end
 
   def enable
-    @person = @current_school.people.find(params[:id])
+    @person = @current_school.people.find_by_id(params[:id])
+    raise NotFound unless @person
+    @person.approved = 1
+    @person.save
     @person.send_pass
     redirect url(:edit_person, @person.id)
   end

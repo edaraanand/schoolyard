@@ -309,7 +309,6 @@ class Students < Application
       @student = @current_school.students.find(params[:id])
       @parents = @student.parents
       @protectors = @student.protectors
-      @mess = "Testing"
     elsif params[:label] == "staff"
       @selected = "school_staff"
       @staff = @current_school.staff.find(params[:id])
