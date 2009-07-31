@@ -11,7 +11,12 @@ class Files < Application
   def download
      @attachment = @current_school.attachments.find_by_id(params[:id])
      raise NotFound unless @attachment
-     send_file("#{Merb.root}/public/uploads/#{@current_school.id}/files/#{@attachment.id}") 
+     send_file("#{Merb.root}/public/uploads/#{@current_school.id}/files/#{@attachment.id}", :filename => "#{@attachment.filename}") 
+  end
+  
+  def image
+     @attachment = @current_school.attachments.find_by_id(params[:id])
+     raise NotFound unless @attachment
   end
   
 end
