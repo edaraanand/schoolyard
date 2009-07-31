@@ -60,8 +60,8 @@ class Announcements < Application
              :size => params[:attachment]['file_'+i.to_s][:size],
              :school_id => @current_school.id
              )
-             File.makedirs("public/uploads/#{@attachment.id}")
-             FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+             File.makedirs("public/uploads/#{@current_school.id}/files")
+             FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
           end
           redirect resource(:announcements)
        else
@@ -104,8 +104,8 @@ class Announcements < Application
             :size => params[:attachment]['file_'+i.to_s][:size],
             :school_id => @current_school.id
             )
-            File.makedirs("public/uploads/#{@attachment.id}")
-            FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+            File.makedirs("public/uploads/#{@current_school.id}/files")
+            FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
           end
           @announcement.person_id = session.user.id
           @announcement.approved = false
