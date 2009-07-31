@@ -83,9 +83,7 @@
                                                                              :label => "calendars") %>
                                          <% @attachments = @current_school.attachments.find(:first, 
                                                      :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
-                                         <% unless @attachment.nil? %>
-                                             &nbsp;<%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %>
-                                         <% end %>
+                                         <%= partial 'common/attachment' %>
                                          <% unless calendar.location.blank? %>
                                                (Location: <%= calendar.location %>)
                                          <% end %>

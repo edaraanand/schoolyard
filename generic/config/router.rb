@@ -133,7 +133,7 @@ Merb::Router.prepare do
        match("/bio").to(:controller => 'homes', :action => 'bio').name(:bio)
        match("/disable").to(:controller => 'people', :action => 'disable').name(:disable)
        match("/enable").to(:controller => 'people', :action => 'enable').name(:enable)
-       match("/download").to(:controller => 'homes', :action => 'download').name(:download)
+       match("/download").to(:controller => 'files', :action => 'download').name(:download)
        match("/pdf_download").to(:controller => 'homes', :action => 'pdf_download').name(:pdf_download)
        match("/pdf_events").to(:controller => 'calendars', :action => 'pdf_events').name(:pdf_events)
        match("/generate_csv").to(:controller => 'students', :action => 'generate_csv').name(:generate_csv)

@@ -10,12 +10,9 @@
               <% for spot in @spot_lights %>
                    <div class="data-block short-block">
                         <div class="ddmm">
-                            <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", spot.id]) %>
-                            <% unless @attachment.nil? %>  
-                               <div class="pic">
-                                   <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
-                               </div>
-                            <% end %>
+                            <% @attachment = @current_school.attachments.find(:first, 
+                                     :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", spot.id]) %>
+                            <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) %>
                         </div>
                           <h3><%= link_to "#{spot.student_name}", url(:spots, :id => spot.id) %></h3>
                         <span class="subText"><%= spot.created_at.strftime("%b %d %Y") %></span>

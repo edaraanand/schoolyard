@@ -22,7 +22,7 @@
                 <li><%= file_field :image, :label => "Upload Picture (optional)" %>
                     <% unless @pic.nil? %>                          
                          <span class="picEdit">
-	                          <img src="/uploads/spotlights/<%= @pic.filename %>" alt="<%= @pic.filename %>" class="teacherPic"/>
+	                          <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
 	                     </span>
                     <% end %>
                 </li>

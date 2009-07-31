@@ -45,8 +45,8 @@ class SpotLights < Application
             :content_type => params[:spot_light][:image][:content_type],
             :school_id => @current_school.id
             )
-            File.makedirs("public/uploads/spotlights")
-            FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/spotlights/#{@attachment.filename}")
+            File.makedirs("public/uploads/#{@current_school.id}/pictures")
+            FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/#{@current_school.id}/pictures/#{@attachment.id}")
             if @spot_light.class_name == "Home Page"
                redirect url(:homes)
             else
@@ -106,7 +106,6 @@ class SpotLights < Application
             @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
             unless @pic.nil?
               @pic.destroy
-              #File.delete("public/uploads/spotlights/#{@pic.filename}")
             end
             f = params[:spot_light][:image][:filename]
             file = File.basename(f.gsub(/\\/, '/'))
@@ -117,8 +116,8 @@ class SpotLights < Application
             :content_type => params[:spot_light][:image][:content_type],
             :school_id =>  @current_school.id
             )
-            File.makedirs("public/uploads/spotlights")
-            FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/spotlights/#{@attachment.filename}")
+             File.makedirs("public/uploads/#{@current_school.id}/pictures")
+             FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/#{@current_school.id}/pictures/#{@attachment.id}")
             if @spot_light.class_name == "Home Page"
                redirect url(:homes)
             else
@@ -160,7 +159,6 @@ class SpotLights < Application
     @page = @spot_light.class_name
     @att = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "spot_light", @spot_light.id])
     Attachment.delete_all(['attachable_id = ?', @spot_light.id])
-    #File.delete("public/uploads/spotlights/#{@att.filename}")
     @spot_light.destroy
     if @page == "Home Page"
        redirect url(:homes)
