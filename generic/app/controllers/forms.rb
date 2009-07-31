@@ -39,8 +39,8 @@ class Forms < Application
           :size => params[:attachment]['file_'+i.to_s][:size],
           :school_id =>  @current_school.id
           )
-          File.makedirs("public/uploads/#{@attachment.id}")
-          FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+          File.makedirs("public/uploads/#{@current_school.id}/files")
+          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
           redirect url(:form_files, :l => "all_forms", :label => "forms")
         else
           flash[:error] = "please upload a File"
@@ -85,8 +85,8 @@ class Forms < Application
             :size => params[:attachment]['file_'+i.to_s][:size],
             :school_id =>  @current_school.id
             )
-            File.makedirs("public/uploads/#{@attachment.id}")
-            FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+            File.makedirs("public/uploads/#{@current_school.id}/files")
+            FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
             redirect url(:form_files, :l => "all_forms", :label => "forms")
           else
             flash[:error] = "please upload a File"

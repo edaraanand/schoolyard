@@ -32,8 +32,8 @@ class Calendars < Application
           :size => params[:attachment]['file_'+i.to_s][:size], 
           :school_id => @current_school.id
           )
-          File.makedirs("public/uploads/#{@attachment.id}")
-          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+          File.makedirs("public/uploads/#{@current_school.id}/files")
+          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
         end
         @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
         redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
@@ -94,8 +94,8 @@ class Calendars < Application
             :size => params[:attachment]['file_'+i.to_s][:size],
             :school_id => @current_school.id
             )
-            File.makedirs("public/uploads/#{@attachment.id}")
-            FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+             File.makedirs("public/uploads/#{@current_school.id}/files")
+             FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
           end
           if @calendar.day_event == true
              @calendar.start_time = nil

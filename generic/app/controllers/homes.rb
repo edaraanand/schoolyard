@@ -92,12 +92,6 @@ class Homes < Application
   
   
 
-  def download
-     @attachment = @current_school.attachments.find_by_id(params[:id])
-     raise NotFound unless  @attachment
-     send_file("#{Merb.root}/public/uploads/#{@attachment.id}/#{@attachment.filename}") 
-  end
-  
   def pdf_download
      @announcement = @current_school.announcements.find(params[:id])
      pdf = prepare_pdf(@announcement)
