@@ -37,8 +37,8 @@ class Users < Application
                                                 :size => params[:person][:image][:size],
                                                 :school_id => @current_school.id
                  )
-                File.makedirs("public/uploads/user_pictures")
-                FileUtils.mv(params[:person][:image][:tempfile].path, "public/uploads/user_pictures/#{@attachment.filename}")
+                File.makedirs("public/uploads/#{@current_school.id}/pictures")
+                FileUtils.mv(params[:person][:image][:tempfile].path, "public/uploads/#{@current_school.id}/pictures/#{@attachment.id}")
                 redirect url(:staff_account)
            else
                render :staff_account_edit
