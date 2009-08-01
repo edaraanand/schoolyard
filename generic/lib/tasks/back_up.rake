@@ -23,29 +23,6 @@ namespace :bootstrap do
    def backup_file(path, file)
       File.join(path, "db_#{Time.now.strftime("%Y%m%d%H%M%S")}_#{file}")
    end
-  
-  # desc "downloading a datebase backup file"
-  # task :remote_db_download, :roles => :db, :only => { :primary => true } do  
-   #  execute_on_servers(options) do |servers|
-   #     self.sessions[servers.first].sftp.connect do |tsftp|
-  #         tsftp.get_file "#{deploy_to}/#{current_dir}/db/schoolapp_production", "/users/raja" 
-  #      end
-  #   end
-  # end
- 
-  #  require 'net/ssh' 
-   # require 'net/ssh/sftp/attrs' 
-   # require 'net/ssh/sftp/constants' 
-   # require 'net/ssh/sftp/session' 
-   # require 'net/ssh/transport/buffer' 
-   # require 'net/ssh/sftp/simple'
-
-  # desc "downloading a datebase backup file"
- #  task :remote_db_download do
-   #    Net::SSH.new( "sdb.schoolyardapp.net", "eshwar", "murgi65" ) do |sftp| 
-    #      status, body = sftp.get_file( "#{deploy_to}/#{current_dir}/db/schoolapp_production", "/users/raja" ) 
-  #     end
- #  end
     
 end
 
