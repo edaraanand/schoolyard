@@ -42,16 +42,9 @@ namespace :deploy do
      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
      run "cd #{current_path}/generic && rake bootstrap:backup"
      run "scp #{current_path}/generic/db/schoolapp_production forge@schoolyardapp.com:/home/forge/backupdotnet/db_#{Time.now.strftime("%Y%m%d%H%M%S")}"
-     run "tar zcf uploads.tar  #{current_path}/generic/public/uploads"
-     run "scp -r /home/eshwar/uploads.tar forge@schoolyardapp.com:/home/forge/backupdotnet/uploads_#{Time.now.strftime("%Y%m%d%H%M%S")}/"
+     run "tar zcf uploads_#{Date.today.strftime("%b%d")}.tar  #{current_path}/generic/public/uploads"
+     run "scp -r /home/eshwar/uploads_#{Date.today.strftime("%b %d")}.tar forge@schoolyardapp.com:/home/forge/backupdotnet"
      run "cd #{current_path}/generic && rake basecamp:notify_new_build"
-     # run "scp -r #{current_path}/generic/public/uploads forge@schoolyardapp.com:/home/forge/backupdotnet"
-     # run "tar zcf /home/eshwar/backups/#{stored_file}.tar /home/eshwar/backups/#{stored_file}"
-     #  scp /home/eshwar/schoolapp/current/generic/db/schoolapp_production forge@schoolyardapp.com:/home/forge/backupdotnet/schoolapp_production
-     # run "scp -r #{current_path}/generic/public/uploads forge@schoolyardapp.com:/home/forge/backupfordotnet/files"
-     #  run "cd #{current_path}/generic && rake bootstrap:approved"
-     #  scp -r /home/eshwar/schoolapp/current/generic/public/uploads forge@schoolyardapp.com:/home/forge/backupdotnet/files
-     #  tar zcf uploads.tar /schoolapp/current/generic/public
   end
 
   desc "Start Merb Instances"
