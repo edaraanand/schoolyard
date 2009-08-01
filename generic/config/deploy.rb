@@ -42,10 +42,10 @@ namespace :deploy do
 	   #run "mkdir -p #{current_path}/generic/db"
      run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
-     run "scp -r #{current_path}/generic/db forge@schoolyardapp.com:/home/forge/backupstest"
+     run "scp #{current_path}/generic/db/schoolapp_production forge@schoolyardapp.com:/home/forge/backupfordotnet"
+     run "scp -r #{current_path}/generic/public/uploads forge@schoolyardapp.com:/home/forge/backupfordotnet"
      #run "cd #{current_path}/generic && rake bootstrap:approved"
      run "cd #{current_path}/generic && rake basecamp:notify_new_build"
-     
   end
   
   desc "Start Merb Instances"
