@@ -41,14 +41,15 @@ namespace :deploy do
      run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
      run "cd #{current_path}/generic && rake bootstrap:backup"
-     run "tar zcf /home/eshwar/backups/#{stored_file}.tar /home/eshwar/backups/#{stored_file}"
-     #run "scp -r #{current_path}/generic/db/schoolapp_production forge@schoolyardapp.com:/home/forge/backupfordotnet"
+     run "scp #{current_path}/generic/db/schoolapp_production forge@schoolyardapp.com:/home/forge/backupfordotnet"
+     # run "tar zcf /home/eshwar/backups/#{stored_file}.tar /home/eshwar/backups/#{stored_file}"
+     
    
     # run "scp -r #{current_path}/generic/public/uploads forge@schoolyardapp.com:/home/forge/backupfordotnet/files"
      #run "cd #{current_path}/generic && rake bootstrap:approved"
-     run "cd #{current_path}/generic && rake basecamp:notify_new_build"
+    # run "cd #{current_path}/generic && rake basecamp:notify_new_build"
   end
-  
+  date +%A
   desc "Start Merb Instances"
   task :start do
    run "merb -a #{adapter} -e production -c #{processes} --port #{start_port} -m #{current_path}/generic -L #{log_path}"
