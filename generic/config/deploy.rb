@@ -41,13 +41,12 @@ namespace :deploy do
      run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
      run "cd #{current_path}/generic && rake bootstrap:backup"
-     run "scp -r #{current_path}/generic/db forge@schoolyardapp.com:/home/forge/backupdotnet/db_#{Time.now.strftime("%Y%m%d%H%M%S")}"
+     run "scp #{current_path}/generic/db/schoolapp_production forge@schoolyardapp.com:/home/forge/backupdotnet/db_#{Time.now.strftime("%Y%m%d%H%M%S")}"
      # run "tar zcf /home/eshwar/backups/#{stored_file}.tar /home/eshwar/backups/#{stored_file}"
-     
-   
-    # run "scp -r #{current_path}/generic/public/uploads forge@schoolyardapp.com:/home/forge/backupfordotnet/files"
-     #run "cd #{current_path}/generic && rake bootstrap:approved"
-    # run "cd #{current_path}/generic && rake basecamp:notify_new_build"
+     #  scp /home/eshwar/schoolapp/current/generic/db/schoolapp_production forge@schoolyardapp.com:/home/forge/backupdotnet/schoolapp_production
+     # run "scp -r #{current_path}/generic/public/uploads forge@schoolyardapp.com:/home/forge/backupfordotnet/files"
+     #  run "cd #{current_path}/generic && rake bootstrap:approved"
+     # run "cd #{current_path}/generic && rake basecamp:notify_new_build"
   end
 
   desc "Start Merb Instances"
