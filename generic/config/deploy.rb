@@ -38,12 +38,13 @@ namespace :deploy do
      run "mv #{current_path}/generic/config/database.yml.production #{current_path}/generic/config/database.yml"
      run "mv /home/eshwar/db #{current_path}/generic"
      run "mv /home/eshwar/uploads #{current_path}/generic/public"
-     #run "rm -fr #{current_path}/generic/db"
-	   #run "mkdir -p #{current_path}/generic/db"
      run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
-     run "scp #{current_path}/generic/db/schoolapp_production forge@schoolyardapp.com:/home/forge/backupfordotnet"
-     run "scp -r #{current_path}/generic/public/uploads forge@schoolyardapp.com:/home/forge/backupfordotnet"
+     run "cd #{current_path}/generic && rake bootstrap:backup"
+     
+     #run "scp -r #{current_path}/generic/db/schoolapp_production forge@schoolyardapp.com:/home/forge/backupfordotnet"
+   
+    # run "scp -r #{current_path}/generic/public/uploads forge@schoolyardapp.com:/home/forge/backupfordotnet/files"
      #run "cd #{current_path}/generic && rake bootstrap:approved"
      run "cd #{current_path}/generic && rake basecamp:notify_new_build"
   end

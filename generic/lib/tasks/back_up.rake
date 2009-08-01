@@ -6,11 +6,11 @@ namespace :bootstrap do
    desc "creating a back up file"
    task :backup do 
     
-       backup_path = "/users/raja/backup"
+       backup_path = "/home/eshwar/backups"
        File.makedirs(backup_path)
   
        stored_file = backup_file(backup_path, File.basename('schoolapp_production'))
-       File.copy "#{Merb.root}/db/schoolapp_production", stored_file
+       File.copy "#{current_path}/generic/db/schoolapp_production", stored_file
 
        if stored_file && File.exists?(stored_file)
           puts "Created backup: #{stored_file}"
