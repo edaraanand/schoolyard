@@ -14,7 +14,6 @@ namespace :bootstrap do
 
        if stored_file && File.exists?(stored_file)
           puts "Created backup: #{stored_file}"
-          run "tar zcf /home/eshwar/backups/#{stored_file}.tar /home/eshwar/backups/#{stored_file}"
           puts "Backup Complete"
        else
           puts "Unable to create backup"
