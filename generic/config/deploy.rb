@@ -43,7 +43,7 @@ namespace :deploy do
      run "cd #{current_path}/generic && rake bootstrap:backup"
      run "scp #{current_path}/generic/db/schoolapp_production forge@schoolyardapp.com:/home/forge/backupdotnet/db_#{Time.now.strftime("%Y%m%d%H%M%S")}"
      run "tar zcf uploads_#{Date.today.strftime("%b%d")}.tar  #{current_path}/generic/public/uploads"
-     run "scp -r /home/eshwar/uploads_#{Date.today.strftime("%b %d")}.tar forge@schoolyardapp.com:/home/forge/backupdotnet"
+     run "scp -r /home/eshwar/uploads_#{Date.today.strftime("%b%d")}.tar forge@schoolyardapp.com:/home/forge/backupdotnet"
      run "cd #{current_path}/generic && rake basecamp:notify_new_build"
   end
 
