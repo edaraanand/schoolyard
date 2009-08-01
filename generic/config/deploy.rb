@@ -49,7 +49,7 @@ namespace :deploy do
      #run "cd #{current_path}/generic && rake bootstrap:approved"
     # run "cd #{current_path}/generic && rake basecamp:notify_new_build"
   end
-  date +%A
+
   desc "Start Merb Instances"
   task :start do
    run "merb -a #{adapter} -e production -c #{processes} --port #{start_port} -m #{current_path}/generic -L #{log_path}"
