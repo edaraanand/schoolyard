@@ -6,7 +6,7 @@ namespace :bootstrap do
    desc "creating a back up file"
    task :backup do 
     
-       backup_path = "/home/eshwar/sqlitebackups"
+       backup_path = "/home/eshwar/sqlitebackupsdotnet"
        File.makedirs(backup_path)
   
        stored_file = backup_file(backup_path, File.basename('schoolapp_production'))
