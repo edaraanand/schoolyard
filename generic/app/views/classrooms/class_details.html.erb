@@ -89,7 +89,9 @@
                     <ul class="last">
                          <% @attachment = @current_school.attachments.find(:first, 
                                  :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @sp_light.id]) %>
-                         <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) %>
+                         <div class="pic">
+	                               <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) %>
+	                      </div>
                          <h6><%= link_to "#{@sp_light.student_name}", url(:spots, :id => @sp_light.id) %></h6>
                          <%= snippet(@sp_light.content, 25) %>
                          <li><%= link_to "All spotlights", url(:class_details, :id => @classroom.id, :label => "spot_light") %></li>
