@@ -25,7 +25,9 @@
                           <div class="ddmm">
                                 <% @attachment = @current_school.attachments.find(:first, 
                                    :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", spot.id]) %>
-                                <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) %>
+                                <div class="pic">
+	                               <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) %>
+	                           </div>
                           </div>
                           
                           <h3><%= link_to "#{spot.student_name}", url(:spot_light, spot.id) %></h3>
