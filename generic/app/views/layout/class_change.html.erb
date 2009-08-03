@@ -47,9 +47,9 @@
 	                             </div>
 	                      <% else %>
 	                           <div class="pic">
-	                             <img src = "/uploads/user_pictures/<%= @pic.filename %>"  alt="<%= @pic.filename %>" class ="teacherPic"/>
+	                                <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) %>
 	                           </div>
-                          <% end %>
+	                      <% end %>
                      <li><b><%= f.person.name %></b>
                             <% unless f.person.person_bio.blank? %>
                                 | <span <% if @selected == "bio_classes" %> class="on" <% end %> > 
