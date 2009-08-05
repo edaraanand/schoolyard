@@ -1,0 +1,23 @@
+<h2 class="current-page">Time Capture Forms &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:captures, :new) %></h2>
+
+<% if @captures.empty? %>
+      	<p class="subText">
+		     No Time Capture Form was found. 
+	         <%= link_to "Add New", resource(:captures, :new) %>
+	     </p>
+ <% else %>
+     <table id="mytable" class="grades">
+	     <thead>
+	         <th class="subjects">Subject</th>
+	         <th class="last-upd">Last Updated</th>                                                 
+	     </thead>
+	     <tbody>
+	          <% for capture in @captures %>
+	               <tr>
+	                   <td><%= link_to "#{capture.title}", url(:capture_tasks, :id => capture.id) %> </td>
+	                   <td><%= capture.updated_at.strftime("%B %d %Y") %></td>
+	               </tr>
+	          <% end %>
+	     </tbody>
+	  </table>
+ <% end %>
