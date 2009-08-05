@@ -158,7 +158,7 @@ class Approvals < Application
          @parent.approved = 1
          @parent.send_password_approve
       else
-         @parent.approved = 3
+         @parent.approved = 4
          @parent.crypted_password = ""
          @parent.password_reset_key = ""
       end

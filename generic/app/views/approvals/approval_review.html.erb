@@ -11,6 +11,8 @@
      <span class="reactive">The Parent has been Approved</span><br/><br/>
  <% elsif @parent.approved == 3 %>
      <span class="deactive">The Parent has been Rejected</span><br/><br/>
+ <% elsif @parent.approved == 4 %>
+	 <span class="deactive">The Parent has been Disabled</span><br/><br/>
  <% end %>
   
 <div class="">
@@ -104,7 +106,7 @@
 	      <% if @parent.approved == 1 %>
 	            <a href="javascript:getsupport('Deactivate')" class="deactive">Deactivate </a>
 	            &nbsp;&nbsp;&nbsp;&nbsp;Or&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Cancel", url(:parent_approvals), :class => "cancel" %>
-	      <% elsif @parent.approved == 3 %>
+	      <% elsif @parent.approved == 3 || @parent.approved == 4 %>
 	           	<a href="javascript:getsupport('activate')" class="reactive">Activate </a>
 	            &nbsp;&nbsp;&nbsp;&nbsp;Or&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Cancel", url(:parent_approvals), :class => "cancel" %>
 	      <% else %>
