@@ -1,0 +1,18 @@
+<h2 class="current-page"><%= @capture.title %> &nbsp;&nbsp;&nbsp; </h2>
+
+Following form can be filled in until <%= @capture.expiration.strftime("%B %d %Y") %>
+
+
+<%= form_for(@capture, :action => resource(:tasks) ) do %>
+
+<table id="mytable" class="grades">
+     <thead>
+         <th class="subjects">Tasks</th>
+         <th class="last-upd">Hours</th>    
+         <th class="last-upd">comments</th>                                             
+     </thead>
+</table>
+
+
+
+<% end =%>
