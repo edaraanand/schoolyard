@@ -41,7 +41,7 @@ namespace :deploy do
      run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
      run "cd #{current_path}/generic && rake bootstrap:backup"
-     run "cd #{current_path}/generic && rake bootstrap:capture"
+     # run "cd #{current_path}/generic && rake bootstrap:capture"
      run "scp #{current_path}/generic/db/schoolapp_production forge@schoolyardapp.com:/home/forge/backupdotnet/db_#{Time.now.strftime("%Y%m%d%H%M%S")}"
      run "tar zcf uploads_#{Date.today.strftime("%b%d")}.tar  #{current_path}/generic/public/uploads"
      run "scp -r /home/eshwar/uploads_#{Date.today.strftime("%b%d")}.tar forge@schoolyardapp.com:/home/forge/backupdotnet"
