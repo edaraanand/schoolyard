@@ -12,6 +12,9 @@ class Person < ActiveRecord::Base
 
   has_many :class_peoples
   has_many :classrooms, :through => :class_peoples, :source => :classroom
+  
+  has_many :people_tasks
+  has_many :tasks, :through => :people_tasks, :source => :task
 
   belongs_to :user
   has_many :announcements
