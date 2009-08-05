@@ -11,6 +11,18 @@
           </h2>
       <% end %>
 
+		  
+
+	 <select id = 'formID'>
+                  <option value = '/form_files?label=forms&l=all_forms' <% if (@test == "All Forms") %> selected <% end %> >All Forms</option>
+                  <% @classes.each do |f| %>
+                      <option value='/form_files?label=forms&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+                         <%= f.class_name %> 
+                      </option>
+	              <% end %>
+	 </select>
+
+
 <% if params[:l] == "all_forms" %>
      <% if @all_forms.empty? %>
        		<p class="subText">
@@ -88,4 +100,15 @@
 </div>
   
 <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
+
+<script type = 'text/javascript'>
+
+        $( 'formID' ).observe( 'change', function()
+          {
+            document.location.href = $( 'formID' ).value;
+          
+          });
+       
+</script>
+
   
