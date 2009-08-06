@@ -24,14 +24,16 @@
 	<table id="mytable" class="grades">
 	     <thead>
 	         <th class="subjects">Parent Name</th>
-	         <th class="last-upd">Hours Reported</th>                                                 
+	         <th class="last-upd">Hours Reported</th>   
+	         <th class="last-upd">Comments</th>                                              
 	     </thead>
 	     <tbody>
 		
-	          <% for task in @task.people_tasks %>
+	          <% for task in @task.people_tasks.find(:all, :order => 'created_at DESC') %>
 	               <tr> 
 	                   <td><%= task.person.name %></td>
 	                   <td><%= task.hours %></td>
+	                   <td><%= task.comments %></td>
 	               </tr>
 	          <% end %>
 	
