@@ -32,24 +32,28 @@ class Calendars < Application
           :size => params[:attachment]['file_'+i.to_s][:size], 
           :school_id => @current_school.id
           )
-          File.makedirs("public/uploads/#{@attachment.id}")
-          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+          File.makedirs("public/uploads/#{@current_school.id}/files")
+          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
         end
         @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
         redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
       else
+        @class = params[:calendar][:class_name]
+        @start_date = params[:calendar][:start_date]
+        @end_date = params[:calendar][:end_date]
         @start_time = params[:calendar][:start_time]
         @end_time = params[:calendar][:end_time]
         render :new
       end
     else
-      flash[:error] = "Please select the option"
+      flash[:error] = "Please select the classroom"
+      @class = params[:calendar][:class_name]
       render :new
     end
   end
 
   def edit
-    @calendar = Calendar.find(params[:id])
+    @calendar = @current_school.calendars.find(params[:id])
     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
     @allowed = 1 - @attachments.size
@@ -58,15 +62,16 @@ class Calendars < Application
 
   def show
     if params[:l] == "calendar"
-      @select = "events"
-      @calendar = Calendar.find(params[:id])
-      @selected = @calendar.class_name
-      render :layout => 'directory'
+       @select = "events"
+       @calendar = @current_school.calendars.find(params[:id])
+       @selected = @calendar.class_name
+       render :layout => 'directory'
     else
       @select = "classrooms"
       @selected = "calendars"
-      @calendar = Calendar.find(params[:id])
-      @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
+      @calendar = @current_school.calendars.find(params[:id])
+      @class =  @calendar.class_name.titleize
+      @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
       @event = "All Day Event"
       render :layout => 'class_change', :id => @classroom.id
     end
@@ -74,7 +79,7 @@ class Calendars < Application
 
   def update
     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
-    @calendar = Calendar.find(params[:id])
+    @calendar = @current_school.calendars.find(params[:id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
     @allowed = 1 - @attachments.size
     i=0
@@ -89,8 +94,8 @@ class Calendars < Application
             :size => params[:attachment]['file_'+i.to_s][:size],
             :school_id => @current_school.id
             )
-            File.makedirs("public/uploads/#{@attachment.id}")
-            FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+             File.makedirs("public/uploads/#{@current_school.id}/files")
+             FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
           end
           if @calendar.day_event == true
              @calendar.start_time = nil
@@ -133,14 +138,14 @@ class Calendars < Application
   def delete
     if params[:label] == "attachment"
       @attachment = @current_school.attachments.find(params[:id])
-      @calendar = Calendar.find_by_id(@attachment.attachable_id)
+      @calendar = @current_school.calendars.find_by_id(@attachment.attachable_id)
       @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
       @attachment.destroy
       @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
       @allowed = 1 - @attachments.size
       render :edit, :id => @calendar.id
     else
-      @calendar = Calendar.find(params[:id])
+      @calendar = @current_school.calendars.find(params[:id])
       @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
       Attachment.delete_all(['attachable_id = ?', @calendar.id])
       @calendar.destroy
@@ -211,15 +216,31 @@ class Calendars < Application
     pdf.text "#{@current_school.school_name}", :font_size => 20, :justification => :center
     if value == "multiple"
       @calendars.each do |calendar|
+        con = "#{calendar.description}"
+        con = con.gsub("”", "") 
+        con = con.gsub("“", "")
+        con = con.gsub("’", "")
+        con = con.gsub("‘", "")
+        con = con.gsub("’", "")
+        con = con.gsub("– ", "")
+        con = con.gsub(/[^a-zA-Z0-9-]/, " ")
         pdf.text "<b>Title</b>"  + ":" + "" + "#{calendar.title}", :font_size => 10, :justification => :left
-        pdf.text "<b>Description</b>" + ":" + "" +  "#{calendar.description}", :font_size => 10, :justification => :left
+        pdf.text "<b>Description</b>" + ":" + "" +  con, :font_size => 10, :justification => :left
         pdf.text "<b>Location</b>" + ":" + "" + "#{calendar.location}", :font_size => 10, :justification => :left
         pdf.text "<b>Start Date</b>" + ":" + "" + "#{calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
       end
       pdf
     else
+       con = "#{@calendar.description}"
+       con = con.gsub("”", "") 
+       con = con.gsub("“", "")
+       con = con.gsub("’", "")
+       con = con.gsub("‘", "")
+       con = con.gsub("’", "")
+       con = con.gsub("– ", "")
+       con = con.gsub(/[^a-zA-Z0-9-]/, " ")
       pdf.text "<b>Title</b>"  + ":" + "" + "#{@calendar.title}", :font_size => 10, :justification => :left
-      pdf.text "<b>Description</b>" + ":" + "" +  "#{@calendar.description}", :font_size => 10, :justification => :left
+      pdf.text "<b>Description</b>" + ":" + "" +  con, :font_size => 10, :justification => :left
       pdf.text "<b>Location</b>" + ":" + "" + "#{@calendar.location}", :font_size => 10, :justification => :left
       pdf.text "<b>Start Date</b>" + ":" + "" + "#{@calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
       pdf

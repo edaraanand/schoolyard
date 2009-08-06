@@ -28,15 +28,17 @@ class Users < Application
                unless @pic.nil?
                  @pic.destroy
                end
+                f = params[:person][:image][:filename]
+                file = File.basename(f.gsub(/\\/, '/'))
                @attachment = Attachment.create( :attachable_type => "user_picture",
                                                 :attachable_id => @person.id, 
-                                                :filename => params[:person][:image][:filename],
+                                                :filename => file,
                                                 :content_type => params[:person][:image][:content_type],
                                                 :size => params[:person][:image][:size],
                                                 :school_id => @current_school.id
                  )
-                File.makedirs("public/uploads/user_pictures")
-                FileUtils.mv(params[:person][:image][:tempfile].path, "public/uploads/user_pictures/#{@attachment.filename}")
+                File.makedirs("public/uploads/#{@current_school.id}/pictures")
+                FileUtils.mv(params[:person][:image][:tempfile].path, "public/uploads/#{@current_school.id}/pictures/#{@attachment.id}")
                 redirect url(:staff_account)
            else
                render :staff_account_edit
@@ -61,7 +63,7 @@ class Users < Application
   
   def staff_password_update
      @person = session.user
-     if  Person.authenticate(@person.email, @current_school.id, params[:person][:old_password])
+     if  @current_school.people.authenticate(@person.email, @current_school.id, params[:person][:old_password])
       if (( params[:person][:password] == params[:person][:password_confirmation]) && !params[:person][:password_confirmation].blank?)
         if @person.update_attributes(params[:person])
            redirect url(:staff_account)
@@ -96,7 +98,7 @@ class Users < Application
   
   def parent_password_change
     @parent = session.user
-    if Person.authenticate(@parent.email, @current_school.id, params[:parent][:old_password])
+    if @current_school.people.authenticate(@parent.email, @current_school.id, params[:parent][:old_password])
         if (( params[:parent][:password] == params[:parent][:password_confirmation]) && !params[:parent][:password_confirmation].blank?)
            if @parent.update_attributes(params[:parent])
               redirect url(:parent_account)
@@ -311,7 +313,7 @@ class Users < Application
     @selected = "s_details"
     @parent = session.user
     @students = @parent.students
-    @classrooms = @current_school.classrooms.find(:all)
+    @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     render
   end
   
@@ -319,7 +321,7 @@ class Users < Application
   def student_update
     @parent = session.user
     @students = @parent.students
-    @classrooms = @current_school.classrooms.find(:all)
+    @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     student_id = @students.collect{|x| x.id }
     sp = params[:classroom_id].zip(student_id)
     if @students.length == 1

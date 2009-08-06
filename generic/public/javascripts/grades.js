@@ -35,15 +35,30 @@ var validator = $j("#report").validate({
             pr[r].value = "";
           }
      }
+	
   }
 
+// clearing default values in Edit Mode
+
+function cool()
+{
+	var e = document.getElementById('raja');
+	var es =  e.getElementsByTagName('input');
+	for (var h=0;h<es.length;h++)
+	{
+		if ( es[h].value == es[h].title )
+		{
+			es[h].value = ""
+		}
+	}
+}
 
 // Adding Assignments in Edit Mode
 
      l = 1
     function assignments(counter)
       {  
-	      var r = document.getElementById(counter).id;
+	     var r = document.getElementById(counter).id;
 	      // var k = r.split('');
 	      ul = document.getElementById('ament' + r)
          $j(ul).append("<li id='row" + l + "'><input type='text' class='short text' name='cgories_" + r + "[assignment][name][]' id='txt" + l + "'><input type='text' class='short apart text' name='cgories_" + r + "[assignment][max_point][]' id='txt" + l + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + l + "\"); return false;'></a></li>");

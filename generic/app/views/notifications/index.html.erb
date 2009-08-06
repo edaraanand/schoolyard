@@ -1,4 +1,4 @@
-<div id="fullpage">
+<div>
   <h2 class="current-page">
     Urgent Announcements <span class="actions">
              <%= link_to "Add New", resource(:notifications, :new) %>
@@ -17,7 +17,7 @@
 	                  </div>
 	                  <p class="post-content"><%= announcement.content %></p>
                     <%#= link_to "Edit", url(:edit_notification, announcement.id), :class=> "edit-btn"  %>
-                    <%= link_to "Delete", url(:delete_notification, announcement.id), :class=> "delete-btn"  %>
+                    <%= link_to "Delete", url(:delete_notification, announcement.id), :class=> "delete delete-btn"  %>
                     <p class="separator clear">&nbsp;</p>
                     <br class="clear"/>
                </div>
@@ -29,3 +29,5 @@
     
     
 </div>
+
+ <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>

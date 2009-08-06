@@ -1,10 +1,14 @@
-<div id="fullpage">
+<% if params[:l] %>
+   <div>
+<% else %>
+   <div id="fullpage">
+<% end %>
      
         <h2 class="current-page">
            Class Calendar &nbsp;&nbsp;&nbsp;
            <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@calendar.class_name.titleize}" ) )  %>
         </h2>
-    <%= link_to "Download as PDF", url(:pdf_events, :id => @calendar.id, :label => "single") , :class=> "pdf" %><br/><br/>
+       <%= link_to "Download as PDF", url(:pdf_events, :id => @calendar.id, :label => "single") , :class=> "pdf" %><br/><br/>
  
            <div class="ddmmm">
                 <span class="date"><%=  @calendar.start_date.strftime("%d")%></span>
@@ -14,7 +18,7 @@
            <% unless session.user.type == "Parent" %>
                <div class="admin-links">
                     <%= link_to_right((right = "calendar"), "Edit", resource(@calendar, :edit) )  %> |
-                    <%= link_to_right((right = "calendar"), "delete", resource(@calendar, :delete) )  %> 
+                    <%= link_to_delete((right = "calendar"), "delete", resource(@calendar, :delete) )  %> 
                </div>
            <% end %>
            <span class="subText"><% unless @calendar.start_time.nil? &&  @calendar.end_time.nil? %>
@@ -27,21 +31,22 @@
           <hr size="1"/>
           <p><%= san_content(@calendar.description) %></p>
           <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ?", @calendar.id]) %>
-          <% unless @attachment.nil? %>
-               <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
-          <% end %>
+          <%= partial 'common/attachment' %>
           <p class="separator">&nbsp;</p>
     
       <hr size="1"/>
       <% if params[:l] == "calendar" %>
             <%= link_to "&larr; Back to All Events", url(:events, :l => "all_events", :label =>  "calendars") %>
       <% else %>
-            <%  @classroom = Classroom.find(:first, :conditions => ['class_name = ?', @calendar.class_name]) %>
+            <%  @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name]) %>
             <%= link_to "&larr; Back to All Events", url(:class_details, :id => @classroom.id, :label => "calendars") %> 
       <% end %>
     
-   <p class="separator">&nbsp;</p>
+   <p class="separator">&nbsp;</p> 
  
      
 </div>
+
+<script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
+
 

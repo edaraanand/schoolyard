@@ -23,8 +23,17 @@ class WelcomeMessages < Application
   end
 
   def new
-    @welcome_message = WelcomeMessage.new
-    render
+    if params[:l]
+      if params[:l] == "Home Page"
+         @welcome_message = WelcomeMessage.new(:content => "Welcome to #{@current_school.school_name}" )
+      else
+         @classroom = @current_school.classrooms.find_by_class_name(params[:l])
+         @welcome_message = WelcomeMessage.new(:content => "Welcome to #{@current_school.school_name}'s #{@classroom.class_name.titleize} classroom" )
+      end
+    else
+        @welcome_message = WelcomeMessage.new
+    end
+    render 
   end
 
   def create
@@ -39,10 +48,12 @@ class WelcomeMessages < Application
             redirect url(:class_details, :id => @classroom.id)
          end
       else
+        @class = params[:welcome_message][:access_name]
         render :new
       end
     else
       flash[:error] = "Please select the option"
+      @class = params[:welcome_message][:access_name]
       render :new
     end
   end

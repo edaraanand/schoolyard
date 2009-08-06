@@ -3,9 +3,10 @@
   <%= form_for :announcement, :action => url(:from_principal, @announcement), :id => 'announcement' do %>
        <fieldset>
               <ul>
-                  <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
+                  <li><%= text_field :title,  :label => "Title", :maxlength => "75" %></li>
                   <li><%= text_area  :content,  :label => "Message", :rows => "10", :cols => "50" %></li>
-                  <li><%= text_field  :expiration, :id => "expiration",  :label => "Expiration", :class=>"short date" %></li>
+                  <li><%= text_field :expiration, :id => "expiration",  :label => "Expiration", :class=>"short date",
+                                     :value => @announcement.expiration.strftime("%m/%d/%Y") %></li>
                   <li>
                       <% if @attachments.size >= 1 %>
                             <%= file_field :attachment,  :label => "Attach a File", :disabled => "true" %>
@@ -18,7 +19,7 @@
                     <% if @attachments.size > 0 %>
                            <% @attachments.each do |attachment| %>
                                   <li id="attachment_<%= attachment.id %>"><%= attachment.filename %>
-                                  <%= link_to "Remove", url(:delete_from_principal, attachment.id, :label => "attachment"), :class => "cancel" %>
+                                <%= link_to "Remove", url(:delete_from_principal, attachment.id, :label => "attachment"), :class => "cancel" %>
                                   </li>
                            <% end %>
                     <% end %>
@@ -45,7 +46,7 @@
  
  {
    var s = $('announcement').serialize();
-   window.open('/from_principals/preview/-/?' + s);
+   window.open('/from_principals/preview/-/?' + s, 'mywin', 'left=20,top=20,width=1000,height=500,toolbar=1,resizable=0');
  }
   
   $j(document).ready(function() {

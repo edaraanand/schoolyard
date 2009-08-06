@@ -1,6 +1,18 @@
-<div class='preview-container'>
-  <h4><span>Spotlight</span></h4>
-  <h5>Student Name : <%= @student_name %></h5>
-  <h5>Class Name : <%= @class_name %></h5>
-  <p></p>Content : <%= @content %></p>
+
+
+<div id="fullpage">
+
+  
+<h2 class="current-page">SpotLight for <%= params[:spot_light][:class_name] %> </h2>
+
+    <div class="data-block short-block">
+	     <div class="ddmm">
+		     <img src = "/images/Fotolia_482337_XS.jpg" alt="Fotolia_482337_XS.jpg" class ="teacherPic"/>
+	 	 </div>
+	     <h3><%= params[:spot_light][:student_name] %></h3>
+		 <br class="clear"/>
+         <p class="post-content"><%= params[:spot_light][:content] %></p>
+	</div>
+         <br class="clear"/>
+         <p class="separator">&nbsp;</p>
 </div>

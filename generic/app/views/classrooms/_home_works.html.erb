@@ -1,6 +1,6 @@
 <div id="content"  class="two-col">
         <h2 class="current-page"> 
-            Homeworks &nbsp;&nbsp;&nbsp;
+            Homework &nbsp;&nbsp;&nbsp;
             <%= link_to_right((right = "homework"), "Add New", resource(:home_works, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
         </h2> 
         <% if @home_works.empty? %>
@@ -27,14 +27,12 @@
                          <% unless session.user.type == "Parent" %>
                              <div class="admin-links">
                                  <%= link_to_right((right = "homework"), "Edit", resource(homework, :edit) )  %> |
-                                 <%= link_to_right((right = "homework"), "Delete", resource(homework, :delete) )  %>
+                                 <%= link_to_delete((right = "homework"), "Delete", resource(homework, :delete) )  %>
                              </div>
                          <% end %>
                          <p><%= snippet(homework.content, 50) %></p>
                          <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
-                        <% unless @attachment.nil? %>
-                           <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
-                      <% end %>
+                        <%= partial 'common/attachment' %>
                       <p class="separator">&nbsp;</p>
                 </div>           
             <% end %>    

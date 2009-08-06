@@ -21,7 +21,7 @@
                   Welcome to <%= @current_school.school_name%>'s <%=@classroom.class_name.titleize%> classroom
                   <% unless session.user.type == "Parent" %>
                       <span class="admin-links">
-                        <%= link_to_right( (right = "welcome_messages"), "Add New", url(:new_welcome_message, :l => "#{@classroom.class_name.titleize}" ) ) %>
+                    <%= link_to_right( (right = "welcome_messages"), "Edit", url(:new_welcome_message, :l => "#{@classroom.class_name.titleize}" ) ) %>
                       </span>
                   <% end %>
               <% else %>
@@ -31,7 +31,7 @@
                        <% unless session.user.type == "Parent" %>
                              <div class="admin-links">
                                <%= link_to_right( (right = "welcome_messages"), "Edit Welcome Message", resource(message, :edit) ) %> &#124;
-                               <%= link_to_right( (right = "welcome_messages"), "Delete Welcome Message", resource(message, :delete) ) %>
+                               <%= link_to_delete( (right = "welcome_messages"), "Delete Welcome Message", resource(message, :delete) ) %>
                              </div>
                        <% end %>
                    <% end %>
@@ -48,18 +48,20 @@
                                    <span class="date"><%= announcement.created_at.strftime("%d") %></span>
                                    <span class="month"><%= announcement.created_at.strftime("%b") %></span>
                                </div>
-                               <h3><%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann") %></h3>
-                               <% unless session.user.type == "Parent" %>
-                                    <div class="admin-links">
+                               <h3>
+								<%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann") %>
+								<% unless session.user.type == "Parent" %>
+                                    <span class="admin-links">
                                          <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> &#124;
-                                         <%= link_to_right((right = "announcements"), "Delete", resource(announcement, :delete)) %>
-                                    </div>
-                               <% end %>
+                                         <%= link_to_delete((right = "announcements"), "Delete", resource(announcement, :delete)) %>
+                                    </span>
+                               <% end %>								
+								</h3>
+
                                <p><%= snippet(announcement.content,50) %></p>
-                               <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
-                               <% unless @attachment.nil? %>
-                                <span class="attachment"><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></span>
-                               <% end %>
+                               <% @attachment = @current_school.attachments.find(:first, 
+                                         :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
+                               <%= partial 'common/attachment' %>
                                <p class="separator">&nbsp;</p>
                           </div>
                      <% end %>
@@ -85,10 +87,11 @@
 
                     <h3>Spotlight</h3>
                     <ul class="last">
-                         <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @sp_light.id]) %>
-                         <% unless @attachment.nil? %>  
-                              <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
-                         <% end %>
+                         <% @attachment = @current_school.attachments.find(:first, 
+                                 :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @sp_light.id]) %>
+                         <div class="pic">
+	                               <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) %>
+	                      </div>
                          <h6><%= link_to "#{@sp_light.student_name}", url(:spots, :id => @sp_light.id) %></h6>
                          <%= snippet(@sp_light.content, 25) %>
                          <li><%= link_to "All spotlights", url(:class_details, :id => @classroom.id, :label => "spot_light") %></li>
@@ -102,7 +105,7 @@
                        <span class="subText">There are no homework assignments due at this time</span>
                   <% else %>
                       <% for homework in @h_w %>
-                        <li><%= link_to "#{homework.title}", url(:home_work, homework.id) %></li>
+                        <li><%= link_to "#{homework.title}", url(:class_works, :id => homework.id) %></li>
                       <% end %>
                   <% end %>
               </ul>
@@ -120,7 +123,7 @@
 <% end %>   
 
 
-
+ <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
 
 <script type= "text/javascript">
 

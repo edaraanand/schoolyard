@@ -24,8 +24,10 @@
   </h3>
   <div class="clear"></div>
   <% @categories.each do |f| %>
-    <% unless f.category_name.nil? %>
-      <h4><%= f.category_name %></h4>
+    <% if f.category_name.blank? %>
+        Enter the Category Name from here <span class="cancel"><%= link_to "Edit", url(:edit_report, :id => @report.id) %></span> 
+    <% else %>
+       <h4><%= f.category_name %></h4>
     <% end %>
   <% assignments = f.assignments %>
     <ul class="assign-tasks">

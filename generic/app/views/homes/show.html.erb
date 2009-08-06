@@ -11,7 +11,7 @@
            <div id="content"  class="two-col">
               <h2>
                 Announcements > <%= @announcement.title %>  &nbsp;&nbsp;&nbsp;
-                <%= link_to_right((right = "announcement"), "Add New", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+           <%= link_to_right((right = "announcement"), "Add New", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}")) %>
               </h2>
            
 <% else %>
@@ -19,56 +19,62 @@
              <br/><%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) , :class=> "pdf" %><br/><br/>
 <% end %>
      
-          <div class="ddmmm">
-             <span class="date"><%= @announcement.expiration.strftime("%d") %></span>
-             <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
-          </div>                                                                        
-     
-          <p><%= san_content(@announcement.content) %></p>
-          <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id =? and attachable_type =?", @announcement.id, "Announcement"] ) %>
-               <% unless @attachment.nil? %>
-                <span class="attachment"><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></span>
-               <% end %>
-           <p class="separator">&nbsp;</p>
-           <p>
-              <% if @announcement.label == "from_principal" %>
-                      <%= link_to '&larr; Previous', url(:home, @announcement.previous_id, :label => 'principal'),:class => "alignleft" if @announcement.previous_id %> &#124;
-                      <%= link_to "Back to All Principal’s Articles", url(:principal_articles, :label => 'principal') %> &#124;
-                      <%= link_to 'Next &larr;', url(:home, @announcement.next_id, :label => 'principal'),:class => "alignright" if @announcement.next_id %>
-                      <% unless session.user.type == "Parent" %>
-                         <div class="admin-links">
-                             <%= link_to_right((right = "from_principal"), "Add New", resource(:from_principals, :new)) %> &#124;
-                             <%= link_to_right((right = "from_principal"), "Edit", url(:edit_from_principal, @annoouncement.id)) %> &#124;
-                             <%= link_to_right((right = "from_principal"), "Delete", url(:delete_from_principal, @annoouncement.id)) %>
-                         </div>
-                      <% end %>
-              <% elsif params[:label] == "class_ann" %>
-                      <%= link_to '&lt; Previous', url(:home, @announcement.previous_class_announcement, :label => "class_ann") if @announcement.previous_class_announcement %> &#124;
-                      <%= link_to "Back to All Announcements", url(:class_details, :id => @classroom.id, :label => "announcements") %> &#124;
-                      <%= link_to 'Next &#62;', url(:home, @announcement.next_class_announcement, :label => "class_ann") if @announcement.next_class_announcement %>
-                      <% unless session.user.type == "Parent" %>
-                         <div class="admin-links">
-                             <%= link_to_right((right = "announcements"), "Edit", resource(@announcement, :edit)) %> &#124;
-                             <%= link_to_right((right = "announcements"), "Delete", resource(@announcement, :delete)) %>
-                         </div>
-                      <% end %>
-              <% elsif params[:label] == "sports_announcement" %>
-                      <%= link_to " back to All Announcements", url(:sports, :label => "announcements") %>
-              <% else %>
-                      <%= link_to ' &larr; Previous', url(:home, @announcement.previous_record),:class => "alignleft" if @announcement.previous_record %> &#124;
-                      <%= link_to "Back to All Announcements", url(:principal_articles, :label => 'announcements') %> &#124;
-                      <%= link_to 'Next &rarr;', url(:home, @announcement.next_record),:class => "alignright" if @announcement.next_record %>
-                      <% unless session.user.type == "Parent" %>
-                         <div class="admin-links">
-                             <%= link_to_right((right = "announcements"), "Add New", resource(:announcements, :new, :l => "Home Page")) %> &#124;
-                             <%= link_to_right((right = "announcements"), "Edit", resource(@announcement, :edit)) %> &#124;
-                             <%= link_to_right((right = "announcements"), "Delete", resource(@announcement, :delete)) %> 
-                         </div>
-                      <% end %>
-              <% end %>
-           </p>
-             
-        </div>
-      
-    </div>
+    <div class="ddmmm">
+       <span class="date"><%= @announcement.created_at.strftime("%d") %></span>
+       <span class="month"><%= @announcement.created_at.strftime("%b") %></span>
+    </div>                                                                        
 
+    <p><%= san_content(@announcement.content) %></p>
+           <% @attachment = @current_school.attachments.find(:first, 
+                           :conditions => ["attachable_id =? and attachable_type =?", @announcement.id, "Announcement"] ) %>
+           <%= partial 'common/attachment' %>
+     <p class="separator">&nbsp;</p>
+     <p>
+        <% if @announcement.label == "from_principal" %>
+                <%= link_to '&larr; Previous', url(:home, @announcement.previous_id, :label => 'principal'),
+                                               :class => "alignleft" if @announcement.previous_id %> &#124;
+                <%= link_to "Back to All Principal’s Articles", url(:principal_articles, :label => 'principal') %> &#124;
+                <%= link_to 'Next &rarr;', url(:home, @announcement.next_id, :label => 'principal'),
+                                            :class => "alignright" if @announcement.next_id %>
+                <% unless session.user.type == "Parent" %>
+                   <div class="admin-links">
+                       <%= link_to_right((right = "from_principal"), "Add New", resource(:from_principals, :new)) %> &#124;
+                       <%= link_to_right((right = "from_principal"), "Edit", url(:edit_from_principal, @announcement.id)) %> &#124;
+                       <%= link_to_delete((right = "from_principal"), "Delete", url(:delete_from_principal, @announcement.id)) %>
+ </div>
+                <% end %>
+        <% elsif params[:label] == "class_ann" %>
+                <%= link_to '&larr; Previous', url(:home, @announcement.previous_class_announcement,    
+                                   :label => "class_ann") if @announcement.previous_class_announcement %> &#124;
+                <%= link_to "Back to All Announcements", url(:class_details, :id => @classroom.id, :label => "announcements") %> &#124;
+                <%= link_to 'Next &rarr;', 
+                     url(:home, @announcement.next_class_announcement, :label => "class_ann") if @announcement.next_class_announcement %>
+                <% unless session.user.type == "Parent" %>
+                   <div class="admin-links">
+                       <%= link_to_right((right = "announcements"), "Edit", resource(@announcement, :edit)) %> &#124;
+                       <%= link_to_delete((right = "announcements"), "Delete", resource(@announcement, :delete)) %>
+                   </div>
+                <% end %>
+        <% elsif params[:label] == "sports_announcement" %>
+                <%= link_to " &larr; back to All Announcements", url(:sports, :label => "announcements") %>
+        <% else %>
+                <%= link_to ' &larr; Previous', url(:home, @announcement.previous_record), 
+                      :class => "alignleft" if @announcement.previous_record %> &#124;
+                <%= link_to "Back to All Announcements", url(:principal_articles, :label => 'announcements') %> &#124;
+                <%= link_to 'Next &rarr;', url(:home, @announcement.next_record),:class => "alignright" if @announcement.next_record %>
+                <% unless session.user.type == "Parent" %>
+                   <div class="admin-links">
+                       <%= link_to_right((right = "announcements"), "Add New", resource(:announcements, :new, :l => "Home Page")) %> 
+                       &#124;
+                       <%= link_to_right((right = "announcements"), "Edit", resource(@announcement, :edit)) %> &#124;
+                       <%= link_to_delete((right = "announcements"), "Delete", resource(@announcement, :delete)) %> 
+                   </div>
+                <% end %>
+        <% end %>
+     </p>
+       
+  </div>
+
+</div>
+
+   <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>

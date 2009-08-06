@@ -6,9 +6,13 @@
  
 <fieldset>
   <ul>
-      <li>
+      <li> 
           <label>Welcome Message for:</label>
-          <%= select :access_name, :collection => @eee, :selected => "#{params[:l]}", :prompt => "Please Select"  %>
+          <% if params[:l] %>
+              <%= select :access_name, :collection => @eee, :selected => "#{params[:l]}", :prompt => "Please Select"  %>
+           <% else %>
+              <%= select :access_name, :collection => @eee, :selected => "#{@class}", :prompt => "Please Select"  %>
+          <% end %>
       </li>
       <li><%= text_area :content, :label => "Content", :rows => "10", :cols => "50" %></li>
   </ul>
@@ -26,7 +30,7 @@
  
  function preview()
  {
-   name = document.getElementById('welcome_message_access_name');
+   var name = document.getElementById('welcome_message_access_name');
     if (name.value == "")
        {
           alert("Please select the Classroom/Homepage from the dropdown menu");
@@ -34,13 +38,10 @@
    else
        {
          var s = $('welcome_message').serialize();
-         window.open('/welcome_messages/preview/-/?' + s);
+         window.open('/welcome_messages/preview/-/?' + s, 'mywin', 'left=20,top=20,width=1000,height=500,toolbar=1,resizable=0');
        }
    
  }
-  
- //$j('.rte-zone').rte("css url", "toolbox images url");
-
  
  
 </script>

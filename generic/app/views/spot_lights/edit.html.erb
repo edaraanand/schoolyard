@@ -7,15 +7,23 @@
 
 
 <h2 class="current-page">SpotLight &gt; Edit </h2>
-<%= form_for(@spot_light, :action => resource(@spot_light) ) do %>
+<%= form_for(@spot_light, :action => resource(@spot_light) , :id => 'spot_light') do %>
 
        <fieldset>
             <ul>
-               <li><label>Spotlight for:</label><%= select :class_name, :collection => @classrooms, :prompt => "Please Select" %></li>
-               <li><label>Student </label><%= select :student_name, :collection => @students.collect{|x| x.name }, :prompt => "Please Select" %></li>
+               <li>
+	                <label>Spotlight for:</label>
+	                <%= select :class_name, :collection => @classrooms, :prompt => "Please Select" %>
+	           </li>
+               <li>
+	                <label>Student </label>
+                   <%= select :student_name, :collection => @students.collect{|x| x.name }, :prompt => "Please Select" %>
+               </li>
                 <li><%= file_field :image, :label => "Upload Picture (optional)" %>
                     <% unless @pic.nil? %>                          
-                         <span class="picEdit"><img src="/uploads/spotlights/<%= @pic.filename %>" alt="<%= @pic.filename %>" class="teacherPic"/></span>
+                         <span class="picEdit">
+	                          <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
+	                     </span>
                     <% end %>
                 </li>
                <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
@@ -24,9 +32,33 @@
        </fieldset>
 
        <div class="save-cancel">
+	        <input type = 'button' value = ' Preview ' onclick="preview();return false;" />
             <%= submit "    Publish    " %> Or 
             <%= link_to "Cancel", resource(:spot_lights), :class => "cancel" %>
        </div>
  
 
 <% end =%>
+
+
+<script type= "text/javascript">
+
+ function preview()
+ {
+    var name = document.getElementById('spot_light_class_name');
+
+	if (name.value == "")
+       {
+          alert("Please select the Classroom/Homepage from the drop down menu");
+       }
+    else
+       {
+          var s = $('spot_light').serialize();
+	      window.open('/spot_lights/preview/-/?' + s, 'mywin', 'left=20,top=20,width=1000,height=500,toolbar=1,resizable=0');
+       }
+
+ }
+  
+
+</script>                                                                                                    
+

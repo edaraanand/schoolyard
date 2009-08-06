@@ -11,7 +11,8 @@
               <li><label>Announcement for:</label><%= select :access_name, :collection => rooms, :prompt => "Please Select" %></li>
               <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
               <li><%= text_area  :content,  :label => "Description", :rows => "10", :cols => "50" %></li>
-              <li><%= text_field  :expiration, :class => "short date", :label => "Expiration" %></li>
+              <li><%= text_field :expiration, :class => "short date", :label => "Expiration", 
+                                 :value => @announcement.expiration.strftime("%m/%d/%Y") %></li>
               <li>
                  <% if @attachments.size >= 1 %>
                         <%= file_field :attachment,  :label => "Attach a File", :disabled => "true" %>
@@ -33,12 +34,12 @@
                 <script type="text/javascript">
 	                 	  var multi_selector = new MultiSelector($('pending_files'), <%= @allowed %>);
 		                  multi_selector.addElement($('announcement_attachment'));
-	              </script>
+	            </script>
      </fieldset>
              
            <div class="save-cancel">
 	              <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
-	              <%= submit "    Submit for Approval    " %></br> Or <%= link_to "Cancel", resource(:announcements), :class => "cancel" %>
+	              <%= submit "    Submit for Approval    " %> Or <%= link_to "Cancel", resource(:announcements), :class => "cancel" %>
            </div>
           
 <% end =%>
@@ -50,10 +51,8 @@
      
  function preview()
  {
-    name = document.getElementById('announcement_access_name');
-     title = document.getElementById('announcement_title');
-     content = document.getElementById('announcement_content');
-     
+    var name = document.getElementById('announcement_access_name');
+        
      if (name.value == "")
        {
           alert("Please select the Classroom/Homepage from the dropdown menu");
@@ -61,13 +60,14 @@
     else
        {
           var s = $('announcement').serialize();
-          window.open('/announcements/preview/-/?' + s);
+         // window.open('/announcements/preview/-/?' + s);
+          window.open('/announcements/preview/-/?' + s, 'mywin', 'left=20,top=20,width=1000,height=500,toolbar=1,resizable=0');
        }
    
  }
   
    $j(document).ready(function() {
-            $j("input.date").datepicker({minDate:'today + 1'});
+      $j("input.date").datepicker({minDate:'today + 1'});
   });
   
   

@@ -16,9 +16,9 @@
               <p class="post-content"><%= @announcement.content %></p>
         
               
-             <p class="separator">&nbsp;</p>
-                <%= link_to "All Announcements", resource(:parents) %> 
-              </div>   
+               <p class="separator">&nbsp;</p>
+               
+          </div>   
             
               <%  if (@announcement.approved == false ) && (@announcement.approve_announcement == false) %>
               <% @person = Person.find(:first, :conditions => ['id = ?', @announcement.rejected_by] ) %>
@@ -31,7 +31,10 @@
                     <span class="approved-or-not"> Approved & PublishedBy <%= @person.name %> </span>
                     <p class="approve-comments"> <%= @announcement.approve_comments %></p>
                <% end %>
-               <%= link_to 'Previous', url(:parent, @announcement.previous_parent_announcement),:class => "alignleft" if @announcement.previous_parent_announcement %>
-               <%= link_to 'Next',  url(:parent, @announcement.next_parent_announcement),:class => "alignright" if @announcement.next_parent_announcement %>
+               <%= link_to '&larr; Previous', url(:parent, @announcement.previous_parent_announcement), 
+                                           :class => "alignleft" if @announcement.previous_parent_announcement %> &#124;
+               <%= link_to "All Announcements", resource(:parents) %> 
+               <%= link_to 'Next &rarr;',  url(:parent, @announcement.next_parent_announcement), 
+                           :class => "alignright" if @announcement.next_parent_announcement %>
    </div>     
    

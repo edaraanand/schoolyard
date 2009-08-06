@@ -27,7 +27,7 @@ class Parent < Person
   end
 
   def deliver_email(action, params)
-    from = "no-reply@insightmethods.com"
+    from = "noreply@schoolyardapp.com"
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
 
@@ -48,10 +48,20 @@ class Parent < Person
   end
 
   def signup_email(action, params)
-    from = "no-reply@insightmethods.com"
+    from = "noreply@schoolyardapp.com"
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
 
+  # Changing the password reset key after parent clicks the link
+  def reset
+     pwreset_key_success = false
+     until pwreset_key_success
+       self.password_reset_key = self.class.make_key
+       self.save
+       pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false
+     end
+  end
+  
 
 
 end

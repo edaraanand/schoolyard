@@ -21,17 +21,25 @@
    
       <ul>
           <% if @class_id != nil %>
-              <li><label>Student for:</label><%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name.titleize}, :selected => "#{@class_id}", :prompt => "Please Select" %></li>
+              <li>
+	               <label>Student for:</label>
+	               <%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name.titleize},  
+	                        :selected => "#{@class_id}", :prompt => "Please Select" %>
+	          </li>
           <% else %>
-              <li><label>Student for:</label><%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name.titleize}, :selected => "#{params[:l]}", :prompt => "Please Select" %></li>
+              <li><label>Student for:</label>
+                   <%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name.titleize},
+                              :selected => "#{params[:l]}", :prompt => "Please Select" %>
+              </li>
           <% end %>
-          <li>
-              <%= text_field  :first_name,  :label => "Student Name", :maxlength => "75", :class => "short defaultText defaultTextActive", :title => "First Name" %>
-              <%= text_field  :last_name, :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
+             <li>
+                 <%= text_field  :first_name,  :label => "Student Name", :maxlength => "75", :class => "short defaultText defaultTextActive", 
+                              :title => "First Name" %>
+                <%= text_field  :last_name, :maxlength => "75", :class => "short apart defaultText defaultTextActive", :title => "Last Name" %>
 	        </li>
-          <li>
-            <%= text_field  :birth_date, :id => "birth_date", :label => "Birth Date", :class => "short date" %>
-          </li>
+             <li>
+               <%= text_field  :birth_date, :id => "birth_date", :label => "Birth Date", :class => "short date" %>
+            </li>
          </ul>
          <hr size="1" class="clear"/>
          
@@ -163,10 +171,14 @@
       
 	        <% end =%>   
 	        <hr size="1" class="clear" style="border:none"/>   
-      <ul>
-                <li> <%= text_field  :phone,  :label => "Phone" %>	</li>
-	              <li> <%= text_area  :address,  :label => "Address", :rows => "4", :cols => "10" %> </li>
-       </ul>     
+       <ul>
+            <li><%= text_field  :phone,  :label => "Phone" %> </li>
+		    <li><%= text_field  :address1,  :label => "Address 1", :maxlength => "75" %></li>
+		    <li><%= text_field  :address2,  :label => "Address 2", :maxlength => "75" %></li>
+		    <li><%= text_field  :city,  :label => "City", :maxlength => "75" %></li>
+		    <li><%= text_field  :state,  :label => "State", :maxlength => "75" %></li>
+		    <li><%= text_field  :zip_code,  :label => "Zip Code", :maxlength => "75" %></li>
+	   </ul>     
       
 	           <div class="save-cancel">
                   <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />

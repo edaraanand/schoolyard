@@ -1,0 +1,3 @@
+    <% unless @attachment.nil? %>
+        <span class="attachment"><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></span>
+    <% end %>

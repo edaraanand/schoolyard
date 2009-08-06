@@ -39,32 +39,38 @@ class Forms < Application
           :size => params[:attachment]['file_'+i.to_s][:size],
           :school_id =>  @current_school.id
           )
-          File.makedirs("public/uploads/#{@attachment.id}")
-          FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+          File.makedirs("public/uploads/#{@current_school.id}/files")
+          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
           redirect url(:form_files, :l => "all_forms", :label => "forms")
         else
           flash[:error] = "please upload a File"
+          @c = params[:form][:class_name]
+          @y = params[:form][:year]
           render :new
         end
       else
         flash[:error] = "Please select classroom and year"
+        @c = params[:form][:class_name]
+        @y = params[:form][:year]
         render :new
       end
     else
+      @c = params[:form][:class_name]
+      @y = params[:form][:year]
       render :new
     end
 
   end
 
   def edit
-    @form = Form.find(params[:id])
+    @form = @current_school.forms.find(params[:id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type = ?", @form.id, "Form"])
     @allowed = 1 - @attachments.size
     render
   end
 
   def update
-    @form = Form.find(params[:id])
+    @form = @current_school.forms.find(params[:id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type = ?", @form.id, "Form"])
     @allowed = 1 - @attachments.size
     i=0
@@ -79,8 +85,8 @@ class Forms < Application
             :size => params[:attachment]['file_'+i.to_s][:size],
             :school_id =>  @current_school.id
             )
-            File.makedirs("public/uploads/#{@attachment.id}")
-            FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+            File.makedirs("public/uploads/#{@current_school.id}/files")
+            FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
             redirect url(:form_files, :l => "all_forms", :label => "forms")
           else
             flash[:error] = "please upload a File"
@@ -110,13 +116,13 @@ class Forms < Application
   def delete
     if params[:label] == "attachment"
       @attachment = @current_school.attachments.find(params[:id])
-      @form = Form.find_by_id(@attachment.attachable_id)
+      @form = @current_school.forms.find_by_id(@attachment.attachable_id)
       @attachment.destroy
       @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type = ?", @form.id, "Form"])
       @allowed = 1 - @attachments.size
       render :edit, :id => @form.id
     else
-      @form = Form.find(params[:id])
+      @form = @current_school.forms.find(params[:id])
       Attachment.delete_all(['attachable_id = ?', @form.id])
       @form.destroy
       redirect url(:form_files, :l => "all_forms", :label => "forms")
@@ -125,12 +131,16 @@ class Forms < Application
 
 
   def form_files
+    @classes = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     @select = "forms"
     @selected = "all_forms"
     unless params[:id].nil?
-      @class = @current_school.classrooms.find(params[:id])
+      @class = @current_school.classrooms.find_by_id(params[:id])
+      raise NotFound unless @class
       @forms = @current_school.forms.paginate(:all, :conditions => ["class_name = ?", @class.class_name ], :per_page => 25,  :page => params[:page] )
       @selected = @class.class_name
+      @test = params[:id]
+      @selected = "all_forms"
     end
     if params[:l] == "all_forms"
       @all_forms = @current_school.forms.paginate(:all, :per_page => 25,  :page => params[:page])

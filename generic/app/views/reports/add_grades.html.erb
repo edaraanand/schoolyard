@@ -1,6 +1,16 @@
 <h2 class="current-page">Grades/Reports > <%= @assignment.name %></h2>
-<%= form_for(@assignment, :action => url(:score, :id => @assignment.id), :id => "grade" ) do %>
-<p class="assignment-date"><%= text_field  :date, :class => "short", :id => "assignment_date", :label => "Assignment Date" %></p>
+
+<div class="container">
+	<h4>There are some errors in the form, please fill the details.</h4>
+	<ol>
+		<li><label for="assignment_date" class="error">Please enter the Assignment Date</label></li> 
+	    <li><label for="assignment[score][]" class="error">Please enter number</label></li>
+	</ol>
+</div>
+
+<%= form_for(@assignment, :action => url(:score, :id => @assignment.id), :class => "cmxform", :id => "grade" ) do %>
+
+<p class="assignment-date"><%= text_field  :date, :class => "short required", :id => "assignment_date", :label => "Assignment Date" %></p>
   <div  class="clear"></div>
   <table id="mytable">
     <thead>
@@ -8,7 +18,7 @@
       <th>Student Score <span class="max-points">(Max Points : <%= @assignment.max_point %> )</span></th>
     </thead>
       <% students = Student.find( :all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @classroom.id] ) %>
-        <% students.each do |f| %>
+      <% students.each do |f| %>
           <tr>
             <td><%= f.name %></td>
             <td><%= text_field :name => "assignment[score][]", :class => "short number", :max => "#{@assignment.max_point}" %></td>
@@ -20,6 +30,46 @@
   </div>
 <% end =%>
 <script type= "text/javascript">
+
   $j("#assignment_date").datepicker({minDate:'today + 1'});
-    //  $j("#report").validate();   
+
+  // Validation for Adding Grades
+
+    var container = $j('div.container');
+
+   // validate the form when it is submitted
+    var validator = $j("#grade").validate({
+         	errorContainer: container,
+        	errorLabelContainer: $("ol", container),
+         	wrapper: 'li',
+        	meta: "validate"
+});
+
+
 </script>
+
+<style type="text/css">
+  
+ 	.cmxform fieldset li.error label { color: red; }
+	div.container {
+		background-color: #eee;
+		border: 1px solid red;
+		margin: 5px;
+		padding: 5px;
+	}
+	div.container ol li {
+		list-style-type: disc;
+		margin-left: 20px;
+	}
+	div.container { display: none }
+	.container label.error {
+		display: inline;
+	}
+
+	form.cmxform label.error {
+		display: block;
+		margin-left: 1em;
+		width: auto;
+	}
+ 
+</style>

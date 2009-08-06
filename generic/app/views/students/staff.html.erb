@@ -15,7 +15,9 @@
 <% if params[:label] == "classes" %>
  
             <% if @class_peoples.empty? %>
-                     <p class="subText">There are no staff members listed yet.</p>
+                  <p class="subText">
+	                No Staff record was found. If you applied a filter try changing it.
+	              </p>
             <% else %>
                    <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
                    <table id="mytable" style="margin-top:60px; width:720px" cellspacing="0" cellpadding="0">
@@ -30,10 +32,10 @@
                              <% end %>
                        </thead>
                        <% @class_peoples.each do |f| %>
-                            <tr>
-                                <td class="click-block"><%= link_to "#{f.person.last_name}", url(:student, f.person.id, :label => "staff") %></td>
-                                <td><%= link_to "#{f.person.first_name}", url(:student, f.person.id, :label => "staff") %>&nbsp;</td>
-                 	              <td nowrap><%= f.role.titleize %>-<%= f.classroom.class_name %>&nbsp;</td>
+                           <tr onclick="location.href='<%= url(:student, f.person.id, :label => "staff") %>'" style="cursor:pointer">
+                                <td><%= f.person.last_name %></td>
+                                <td><%= f.person.first_name %>&nbsp;</td>
+                 	            <td nowrap><%= f.role.titleize %>-<%= f.classroom.class_name %>&nbsp;</td>
                                 <td><%= email(f.person.email) %>&nbsp;</td>
                                 <td nowrap><%= number_to_phone(f.person.phone, :area_code => true) %>&nbsp;</td>
                                 <% unless session.user.type == "Parent" %>
@@ -46,7 +48,9 @@
          
 <% else %>
            <% if @staff.empty? %>
-                 <p class="subText">There are no staff members listed yet.</p>
+                 <p class="subText">
+	                No Staff record was found. If you applied a filter try changing it.
+	              </p>
            <% else %>
 
                  <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
@@ -58,13 +62,13 @@
                               <th>Email</th>
                               <th>Contact Number</th>
                               <% unless session.user.type == "Parent" %>
-                               <th></th>
-                             <% end %>
+                                 <th></th>
+                              <% end %>
                         </thead>
                         <% for person in @staff %>
-                             <tr>
-                                 <td class="click-block"><%= link_to "#{person.last_name}", url(:student, person.id, :label => "staff") %></td>
-                                 <td><%= link_to "#{person.first_name}", url(:student, person.id, :label => "staff") %>&nbsp;</td>
+                             <tr onclick="location.href='<%= url(:student, person.id, :label => "staff") %>'" style="cursor:pointer">
+                                 <td><%= person.last_name %></td>
+                                 <td><%= person.first_name %>&nbsp;</td>
                                  <% s = person.class_peoples.delete_if{ |x| x.team_id != nil } %>
                                  <td nowrap><% s.each do |f| %>
                                     <%= f.role.titleize %>-<%= f.classroom.class_name %><br/>
@@ -82,7 +86,6 @@
        
 <% end %>
 
-</div>
 
 
 

@@ -120,7 +120,7 @@ class Students < Application
   end
 
   def edit
-    @student = Student.find(params[:id])
+    @student = @current_school.students.find(params[:id])
     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     @sp = @student.protectors
     @student_class = @student.studies
@@ -128,7 +128,7 @@ class Students < Application
   end
 
   def update
-    @student = Student.find(params[:id])
+    @student = @current_school.students.find(params[:id])
     @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     @sp = @student.protectors
     @student_class = @student.studies
@@ -306,13 +306,12 @@ class Students < Application
   def show
     if params[:label] == "students"
       @selected = "current_students"
-      @student = Student.find(params[:id])
+      @student = @current_school.students.find(params[:id])
       @parents = @student.parents
       @protectors = @student.protectors
-      @mess = "Testing"
     elsif params[:label] == "staff"
       @selected = "school_staff"
-      @staff = Staff.find(params[:id])
+      @staff = @current_school.staff.find(params[:id])
     else
       raise NotFound
     end

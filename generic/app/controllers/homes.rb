@@ -47,10 +47,10 @@ class Homes < Application
     elsif params[:label] == "sports_announcement"
        @selected = "announcements"
        @select = "sports"
-       @announcement = Announcement.find(params[:id])
+       @announcement = @current_school.announcements.find(params[:id])
        render :layout => 'sports'
     else
-       @announcement = Announcement.find(params[:id])
+       @announcement = @current_school.announcements.find(params[:id])
        render :layout => 'home'
     end
   end
@@ -92,13 +92,8 @@ class Homes < Application
   
   
 
-  def download
-     @attachment = @current_school.attachments.find(params[:id])
-     send_file("#{Merb.root}/public/uploads/#{@attachment.id}/#{@attachment.filename}") 
-  end
-  
   def pdf_download
-     @announcement = Announcement.find(params[:id])
+     @announcement = @current_school.announcements.find(params[:id])
      pdf = prepare_pdf(@announcement)
      send_data(pdf.render, :filename => "#{@announcement.title}.pdf", :type => "application/pdf")
   end
@@ -107,6 +102,14 @@ class Homes < Application
   
   def prepare_pdf(announcement)
       pdf = PDF::Writer.new
+      con = "#{@announcement.content}"
+      con = con.gsub("”", "") 
+      con = con.gsub("“", "")
+      con = con.gsub("’", "")
+      con = con.gsub("‘", "")
+      con = con.gsub("’", "")
+      con = con.gsub("– ", "")
+      con = con.gsub(/[^a-zA-Z0-9-]/, " ")
       pdf.select_font "Helvetica"
       pdf.text "#{@current_school.school_name}", :font_size => 15
       pdf.text " "
@@ -114,7 +117,7 @@ class Homes < Application
       pdf.text "Published #{@announcement.created_at.strftime('%B %d %Y')}", :font_size => 10
       pdf.text " "
             pdf.text " "      
-      pdf.text "#{@announcement.content}" , :font_size => 15
+      pdf.text "#{con}", :font_size => 15
       pdf
   end
   

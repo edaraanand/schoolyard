@@ -1,4 +1,5 @@
 class FromPrincipals < Application
+
   layout 'default'
   before :find_school
   before :access_rights
@@ -32,8 +33,8 @@ class FromPrincipals < Application
         :size => params[:attachment]['file_'+i.to_s][:size],
         :school_id =>  @current_school.id
         )
-        File.makedirs("public/uploads/#{@attachment.id}")
-        FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+       File.makedirs("public/uploads/#{@current_school.id}/files")
+       FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
       end
       redirect url(:homes)
     else
@@ -42,14 +43,14 @@ class FromPrincipals < Application
   end
 
   def edit
-    @announcement = Announcement.find(params[:id])
+    @announcement = @current_school.announcements.find(params[:id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
     @allowed = 1 - @attachments.size
     render
   end
 
   def update
-    @announcement = Announcement.find(params[:id])
+    @announcement = @current_school.announcements.find(params[:id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
     @allowed = 1 - @attachments.size
     i=0
@@ -65,8 +66,8 @@ class FromPrincipals < Application
           :size => params[:attachment]['file_'+i.to_s][:size],
           :school_id =>  @current_school.id
           )
-          File.makedirs("public/uploads/#{@attachment.id}")
-          FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+          File.makedirs("public/uploads/#{@current_school.id}/files")
+          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
         end
          redirect url(:homes)
       else
@@ -84,20 +85,20 @@ class FromPrincipals < Application
   end
 
   def show
-    @announcement = Announcement.find(params[:id])
+    @announcement = @current_school.announcements.find(params[:id])
     render
   end
 
   def delete
     if params[:label] == "attachment"
       @attachment = @current_school.attachments.find(params[:id])
-      @announcement = Announcement.find_by_id(@attachment.attachable_id)
+      @announcement = @current_school.announcements.find_by_id(@attachment.attachable_id)
       @attachment.destroy
       @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
       @allowed = 1 - @attachments.size
       render :edit, :id => @announcement.id
     else
-      @announcement = Announcement.find(params[:id])
+      @announcement = @current_school.announcements.find(params[:id])
       Attachment.delete_all(['attachable_id = ?', @announcement.id])
       @announcement.destroy
       redirect url(:homes)
@@ -160,12 +161,14 @@ class FromPrincipals < Application
         unless @attachment.nil?
           @attachment.destroy
         end
+        f = params[:image][:filename]
+        file = File.basename(f.gsub(/\\/, '/'))
         @attachment = Attachment.create( :attachable_type => "principal_image",
-        :filename => params[:image][:filename],
-        :content_type => params[:image][:content_type],
-        :size => params[:image][:size],
-        :school_id => @current_school.id
-        )
+                                         :filename => file,
+                                         :content_type => params[:image][:content_type],
+                                         :size => params[:image][:size],
+                                         :school_id => @current_school.id
+                                       )
         unless @principal.nil?
           if ((params[:principal_email] == "on") || (params[:principal_name] == "on") )
             if params[:principal_name] == "on"
@@ -187,8 +190,8 @@ class FromPrincipals < Application
           end
           @principal.save
         end
-        File.makedirs("public/uploads/principal_images")
-        FileUtils.mv(params[:image][:tempfile].path, "public/uploads/principal_images/#{@attachment.filename}")
+        File.makedirs("public/uploads/#{@current_school.id}/pictures")
+        FileUtils.mv(params[:image][:tempfile].path, "public/uploads/#{@current_school.id}/pictures/#{@attachment.id}")
         redirect url(:homes)
       else
         flash[:error1] = "You can only upload images"
@@ -219,8 +222,8 @@ class FromPrincipals < Application
       redirect url(:homes)
     end
   end
-
-
+ 
+ 
   private
 
   def access_rights

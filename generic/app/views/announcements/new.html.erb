@@ -12,7 +12,11 @@
            <ul>
                <li>
                    <label>Announcement for:</label>
-                   <%= select :access_name, :collection => rooms, :prompt => "Please Select", :selected => "#{params[:l]}" %>
+                   <% if params[:l] %>
+                       <%= select :access_name, :collection => rooms, :prompt => "Please Select", :selected => "#{params[:l]}" %>
+                   <% else %>
+                       <%= select :access_name, :collection => rooms, :selected => "#{@c}", :prompt => "Please Select"  %>
+                   <% end %>
                </li>
                <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
                <li><%= text_area  :content,  :label => "Description", :rows => "20", :cols => "50" %></li>
@@ -28,8 +32,8 @@
      </fieldset>
       
           <div class="save-cancel">
-	            <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
-	            <%= submit "    Submit for Approval    " %></br> Or <%= link_to "Cancel", resource(:announcements), :class => "cancel" %>
+	            <input type = 'button' value = ' Preview ' onclick="preview();return false;" />
+	            <%= submit " Submit for Approval " %> Or <%= link_to "Cancel", resource(:announcements), :class => "cancel" %>
           </div>        
 <% end =%>
 
@@ -37,30 +41,25 @@
 
 <script type= "text/javascript">
 
-  document.announce.announcement_title.focus();
+   document.announce.announcement_title.focus();
   
+  $j(document).ready(function() { $j("input.date").datepicker({minDate:'today + 1'});  });
+
    function preview()
  {
-     name = document.getElementById('announcement_access_name');
-     title = document.getElementById('announcement_title');
-     content = document.getElementById('announcement_content');
-     
-     if (name.value == "")
-       {
-          alert("Please select the Classroom/Homepage from the dropdown menu");
-       }
-    else
-       {
+      var name = document.getElementById('announcement_access_name');
+      if (name.value == "")
+        {
+           alert("Please select the Classroom/Homepage from the dropdown menu");
+         }
+      else
+        {
           var s = $('announcement').serialize();
-          window.open('/announcements/preview/-/?' + s);
+          window.open('/announcements/preview/-/?' + s, 'mywin', 'left=20,top=20,width=1000,height=500,toolbar=1,resizable=yes,location=yes,scrollbars=yes');
        }
      
  }
-  
-  $j(document).ready(function() {
-        $j("input.date").datepicker({minDate:'today + 1'});
-
-  });
-
+ 
+  // var t = window.open('/announcements/preview/-/?' + s );
 
 </script>

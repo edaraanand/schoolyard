@@ -8,7 +8,9 @@ class Parents < Application
 
 
   def index
-    @announcements = session.user.announcements.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :per_page => 1, :page => params[:page] )
+    @announcements = session.user.announcements.paginate(:all, 
+                                                         :conditions => ['school_id = ?', @current_school.id], :per_page => 5, 
+                                                         :page => params[:page] )
     @message1 = "Approved"
     @message2 = "Pending Approval"
     @message3 = "Rejected"
@@ -50,12 +52,12 @@ class Parents < Application
   end
 
   def edit
-    @announcement = Announcement.find(params[:id])
+    @announcement = session.user.announcements.find(params[:id])
     render
   end
 
   def update
-    @announcement = Announcement.find(params[:id])
+    @announcement = session.user.announcements.find(params[:id])
     if @announcement.update_attributes(params[:announcement])
       Attachment.delete_all(['attachable_id = ?', @announcement.id])
       unless params[:announcement][:attachment].empty?
@@ -80,16 +82,23 @@ class Parents < Application
   end
 
   def delete
-    @announcement = Announcement.find(params[:id])
+    @announcement = session.user.announcements.find(params[:id])
     Attachment.delete_all(['attachable_id = ?', @announcement.id])
     @announcement.destroy
     redirect resource(:parents)
   end
 
   def preview
-    @title = params[:announcement][:title]
-    @content = params[:announcement][:content]
-    render :layout => 'preview'
+    @date = Date.today
+    if params[:announcement][:access_name] == "Home Page"
+       @select = "home"
+       render :layout => 'home'
+    else
+       @selected = "announcements"
+       @select =  "classrooms"
+       @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', params[:announcement][:access_name] ])
+       render :layout => 'class_change', :id => @classroom.id
+    end
   end
 
   private

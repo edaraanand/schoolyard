@@ -1,0 +1,7 @@
+<% unless @attachment.nil? %>
+    <% unless @current_school.nil? %>
+       <div class="pic">
+          <img src="/uploads/<%= @current_school.id %>/pictures/<%= @attachment.id %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
+       </div>
+    <% end %>
+<% end %>

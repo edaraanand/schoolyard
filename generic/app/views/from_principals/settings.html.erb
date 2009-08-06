@@ -8,15 +8,14 @@
 </ul>
 
 <h2 class="current-page">From the Principal &gt; Settings  </h2> 
-
+       
 <% unless @attachment.nil? %>
-      <img src="uploads/principal_images/<%= @attachment.filename %>" alt="<%= @attachment.filename %>", class = "prinPic"/>
+      <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) %>
 <% else %>
       <span class="subText">Principal's photograph has not been uploaded yet.</span>
       <br/><br/>
 <% end %>
-
-
+ 
 <%= form_for(@announcement, :action => url(:settings_update)) do %>
        <fieldset>
             <ul>
@@ -27,6 +26,8 @@
                                                    "Upload a different Photograph"
                                                  end
                              %>
+                             <br/>
+                             <span class="subText">(the picture is automatically resized to 220px width)</span>
                 </li>
                 <li><hr size="1"/></li>
                 <% unless @principal.nil? %>

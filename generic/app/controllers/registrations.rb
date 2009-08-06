@@ -145,21 +145,37 @@ class Registrations < Application
   def registration_process
     id = params[:l]
     @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
-    render
+    if @parent
+       render
+    else
+       flash[:success] = "Your Approval has been sent to School"
+       redirect url(:login)
+    end
   end
 
   def registration_last
     id = params[:id]
     @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
-    @parent.approved = 2
-    @parent.save
-    render
+    if @parent
+       @parent.approved = 2
+       @parent.save!
+       @parent.reset
+       render
+    else
+       flash[:success] = "Your Approval has been sent to School"
+       redirect url(:login)
+    end
   end
 
   def new_password
     id = params[:id]
     @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
-    render
+    if @parent
+       render
+    else
+       flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+       redirect url(:login)
+    end
   end
 
   def password_save
@@ -171,7 +187,10 @@ class Registrations < Application
          @parent.password_confirmation = params[:parent][:password_confirmation]
          @parent.school_id = @current_school.id
          if @parent.save
-           redirect url(:login)
+            @parent.reset
+            session.user = @parent
+            flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+            redirect '/'
          else
            flash[:error] = "You should enter Minimum Length of 8 Characters"
            redirect url(:new_password, :id => @parent.password_reset_key)
@@ -218,7 +237,9 @@ class Registrations < Application
     if @person
        render :layout => 'login'
     else
-       raise NotFound
+       flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+       redirect url(:login)
+       #raise NotFound
     end
   end
 
@@ -229,9 +250,11 @@ class Registrations < Application
       if ( params[:person][:password] == params[:person][:password_confirmation] )
         @person.password = params[:person][:password]
         @person.password_confirmation = params[:person][:password_confirmation]
-        if @person.save
+        if @person.save!
            @person.resetting
-           redirect url(:login)
+           session.user = @person
+           flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+           redirect '/'
         else
            flash[:error] = "You should enter Minimum Length of 8 Characters"
            redirect url(:reset_password_edit, :id => @person.password_reset_key)
@@ -252,7 +275,9 @@ class Registrations < Application
     if @person
        render :layout => 'login'
     else
-       raise NotFound
+       flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+       redirect url(:login)
+       #raise NotFound
     end
   end
 
@@ -265,7 +290,9 @@ class Registrations < Application
          @person.password_confirmation = params[:person][:password_confirmation]
          if @person.save
             @person.resetting
-            redirect url(:login)
+            session.user = @person
+            flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+            redirect '/'
          else
             flash[:error] = "You should enter Minimum Length of 8 Characters"
             redirect url(:new_staff_password, :id => @person.password_reset_key)

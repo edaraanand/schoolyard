@@ -11,10 +11,11 @@
         <th>First Name</th>
         <th>Email</th>
         <th>Phone</th>
+        <th></th>
       </tr>
     </thead>
     <% for person in @people %>
-          <tr onclick="location.href='<%= url(:edit_person, person.id) %>'" style="cursor:pointer">
+          <tr onclick="location.href='<%= url(:person, person.id) %>'" style="cursor:pointer">
                <td>
                <% unless person.title.nil? %>
                   <%= person.title %> 
@@ -23,6 +24,7 @@
                 <td><%= person.first_name %>&nbsp;</td>
                 <td><%= email(person.email) %>&nbsp;</td>
                 <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>
+                <td><%= link_to "Edit", url(:edit_person, person.id) %></td>
           </tr>  
     <% end %>
   </table>

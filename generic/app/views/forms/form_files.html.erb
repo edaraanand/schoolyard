@@ -5,15 +5,30 @@
                <%= link_to_right((right = "forms"), "Add New", resource(:forms, :new)  ) %>
            </h2>
       <% else %> 
-           <h2 class="current-page"> 
+          <h2 class="current-page"> 
                Forms for <%= @class.class_name.titleize %> &nbsp;&nbsp;&nbsp;
-               <%= link_to_right((right = "forms"), "Add New", resource(:forms, :new, :l => "#{@class.class_name.titleize}")  ) %>               
-           </h2>
+           <%= link_to_right((right = "forms"), "Add New", resource(:forms, :new, :l => "#{@class.class_name.titleize}")) %>               
+          </h2>
       <% end %>
+
+		  
+
+	 <select id = 'formID'>
+                  <option value = '/form_files?label=forms&l=all_forms' <% if (@test == "All Forms") %> selected <% end %> >All Forms</option>
+                  <% @classes.each do |f| %>
+                      <option value='/form_files?label=forms&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+                         <%= f.class_name %> 
+                      </option>
+	              <% end %>
+	 </select>
+
 
 <% if params[:l] == "all_forms" %>
      <% if @all_forms.empty? %>
-         <p class="subText">There are no forms available.</p>
+       		<p class="subText">
+			      No Form was found. If you applied a filter try changing it.
+		         <%= link_to_right((right = "forms"), "Add New", resource(:forms, :new)  ) %>
+		    </p>
      <% else %>
            <table id="mytable"  cellspacing="0" cellpadding="0">
                  <thead>
@@ -27,14 +42,15 @@
                  </thead>
                 <tbody>
                    <% for form in @all_forms %>
-                        <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
+                             <% @attachment = @current_school.attachments.find(:first,
+                                     :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
                         <tr>
                             <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
                             <td><%= form.class_name %></td>
                             <td><%= form.updated_at.strftime("%b %d %Y") %></td>
                             <% unless session.user.type == "Parent" %>
                                <td><%= link_to_right((right = "forms"), "Edit", resource(form, :edit)  ) %></td>
-                               <td><%= link_to_right((right = "forms"), "Delete", resource(form, :delete)  ) %></td>
+                               <td><%= link_to_delete((right = "forms"), "Delete", resource(form, :delete)  ) %></td>
                             <% end %>
                         </tr>
                    <% end %>
@@ -46,7 +62,9 @@
 <% else %>
  
       <% if @forms.empty? %>
-         <p class="subText">There are no forms available for <%= @class.class_name.titleize %>.</p>
+         	<p class="subText">
+			    No Form was found. If you applied a filter try changing it.
+		    </p>
       <% else %>
             <table id="mytable"  cellspacing="0" cellpadding="0">
                 <thead>
@@ -60,24 +78,37 @@
                 </thead>
                  <tbody>
                        <% for form in @forms %>
-                             <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
+                             <% @attachment = @current_school.attachments.find(:first,
+                                    :conditions => ["attachable_id = ? and attachable_type = ?", form.id, "Form"] ) %>
                              <tr>
                                  <td><%= link_to "#{form.title}", url(:download, :id => @attachment.id) %> </td>
                                  <td><%= form.class_name %></td>
                                  <td><%= form.updated_at.strftime("%b %d %Y") %></td>
                                  <% unless session.user.type == "Parent" %>
                                     <td><%= link_to_right((right = "forms"), "Edit", resource(form, :edit)  ) %></td>
-                                    <td><%= link_to_right((right = "forms"), "Delete", resource(form, :delete)  ) %></td>
+                                    <td><%= link_to_delete((right = "forms"), "Delete", resource(form, :delete)  ) %></td>
                                  <% end %>
                              </tr>
                         <% end %>
                  </tbody>
              </table>
-                <%= will_paginate (@forms, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+           <%= will_paginate (@forms, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
       <% end %>  
 
 <% end %>
 
 </div>
   
+<script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
+
+<script type = 'text/javascript'>
+
+        $( 'formID' ).observe( 'change', function()
+          {
+            document.location.href = $( 'formID' ).value;
+          
+          });
+       
+</script>
+
   

@@ -1,5 +1,5 @@
 <h2 class="current-page">Announcements  &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:announcements, :new) %></h2>
-<div class="fullpage announcemt">
+<div class="announcemt">
    
   View :  <select id = 'announcementID'>
          <option value = '/announcements' <% if (@test == "All Announcements") %> selected <% end %> >All Announcements</option>
@@ -12,7 +12,10 @@
 	   </select>
 
    <% if @announcements.empty? %>
-        <p>There are no Announcements created yet. <%= link_to "Add New", resource(:announcements, :new) %></p>
+        <p class="subText">
+	         No Announcement was found. If you applied a filter try changing it. 
+             <%= link_to "Add New", resource(:announcements, :new) %>
+        </p>
    <% else %>
           <% for announcement in @announcements %>
           
@@ -35,19 +38,19 @@
                                 <%= @message1 %>
                                </div>
                              <%= link_to "Edit", resource(announcement, :edit), :class=>"edit-btn" %>
-                             <%= link_to "Delete", resource(announcement, :delete), :class=>"delete-btn"  %>
+                             <%= link_to "Delete", resource(announcement, :delete), :class => "delete delete-btn"  %>
                       <% elsif ((announcement.approve_announcement == true) && (announcement.approved == false )) %>
                             <div class="approval-status">
                                <%= @message2 %>
                               </div>
                             <%= link_to "Edit", resource(announcement, :edit), :class=>"edit-btn" %>
-                            <%= link_to "Delete", resource(announcement, :delete), :class=>"delete-btn"  %>
+                            <%= link_to "Delete", resource(announcement, :delete), :class=>" delete delete-btn"  %>
                       <% elsif ((announcement.approve_announcement == false) && (announcement.approved == false )) %>
                              <div class="approval-status">
                                 <%= @message3 %>
                                </div>
                              <%= link_to "Edit", resource(announcement, :edit), :class=>"edit-btn" %>
-                             <%= link_to "Delete", resource(announcement, :delete), :class=>"delete-btn"  %>
+                             <%= link_to "Delete", resource(announcement, :delete), :class=>"delete delete-btn"  %>
                       <% end %> 
                      <p class="separator">&nbsp;</p>
                  </div>
@@ -58,6 +61,7 @@
 
 </div>
 
+ <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
 
 <script type = 'text/javascript'>
 

@@ -1,4 +1,4 @@
-<div id="fullpage">
+<div>
   <h2 class="current-page">Announcement &gt; <%= @announcement.title %></h2>
   
         <%= link_to "Edit", resource(@announcement, :edit), :class=>"edit-btn" %>
@@ -19,11 +19,14 @@
     <span class="subText">Announcement for: <%= @announcement.access_name %></span><br/>
     <span class="subText">Created by <%= @announcement.person.name %>, expires on <%= @announcement.expiration.strftime("%d %b %Y") %></span>
     <br class="clear"/>
+    <% @attachment = @current_school.attachments.find(:first, 
+               :conditions => ["attachable_id =? and attachable_type =?", @announcement.id, "Announcement"] ) %>
+        <%= partial 'common/attachment' %>
     <p><%= san_content(@announcement.content) %></p>
       
-      <%= link_to '< Previous |', url(:announcement, @announcement.previous_announcement),:class => "alignleft" if @announcement.previous_announcement %>
-      <%= link_to " Back to List ", resource(:announcements) %>
-      <%= link_to '| Next >',  url(:announcement, @announcement.next_announcement),:class => "alignright" if @announcement.next_announcement %>
+      <%= link_to '&larr; Previous', url(:announcement, @announcement.previous_announcement),:class => "alignleft" if @announcement.previous_announcement %> &#124;
+      <%= link_to " Back to All Announcements", resource(:announcements) %> &#124;
+      <%= link_to 'Next &rarr; ',  url(:announcement, @announcement.next_announcement),:class => "alignright" if @announcement.next_announcement %>
 
    <p class="separator">&nbsp;</p>
     <br/><br/><br/>

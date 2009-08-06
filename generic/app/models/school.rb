@@ -22,6 +22,10 @@ class School < ActiveRecord::Base
   has_many :categories
   has_many :assignments
   
+  has_many :captures
+  has_many :tasks
+
+  
   
   validates_presence_of :school_name, :if  => :school_name
   validates_presence_of :address1, :if  => :address1

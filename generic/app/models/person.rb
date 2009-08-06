@@ -12,6 +12,9 @@ class Person < ActiveRecord::Base
 
   has_many :class_peoples
   has_many :classrooms, :through => :class_peoples, :source => :classroom
+  
+  has_many :people_tasks
+  has_many :tasks, :through => :people_tasks, :source => :task
 
   belongs_to :user
   has_many :announcements
@@ -36,7 +39,7 @@ class Person < ActiveRecord::Base
   validates_presence_of :email, :if => :email
   validates_uniqueness_of :email, :if => :email, :scope => [:school_id, :type]
   validates_format_of :email, :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i, :if => :email
-  validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}, :scope => :school_id
+  validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}, :scope => [:school_id, :type]
   validates_length_of :password, :within => 8..40, :if => :password
   validates_length_of :phone, :is => 10, :message => 'must be 10 digits, excluding special characters such as spaces and dashes.', :if => Proc.new{|o| !o.phone.blank?}
   validates_length_of :voice_alert, :is => 10, :message => 'must be 10 digits', :if => Proc.new{|o| !o.voice_alert.blank?}    
@@ -46,7 +49,9 @@ class Person < ActiveRecord::Base
   def self.authenticate(email, school_id, password)
     u = find_by_email_and_school_id(email, school_id) # need to get the salt
     return nil unless u
-    u && u.authenticated?(password) ? u : nil
+    if u.approved = 1
+       u && u.authenticated?(password) ? u : nil
+    end
   end
 
   def password_validation_required
@@ -84,7 +89,7 @@ class Person < ActiveRecord::Base
   end
 
   def deliver_email(action, params)
-    from = "no-reply@insightmethods.com"
+    from = "noreply@schoolyardapp.com"
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
 
@@ -103,7 +108,7 @@ class Person < ActiveRecord::Base
   end
 
   def d_email(action, params)
-    from = "no-reply@insightmethods.com"
+    from = "noreply@schoolyardapp.com"
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
 
@@ -114,7 +119,7 @@ class Person < ActiveRecord::Base
   end
 
   def mail_deliver(action, params)
-    from = "no-reply@insightmethods.com"
+    from = "noreply@schoolyardapp.com"
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
 

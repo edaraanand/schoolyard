@@ -1,3 +1,10 @@
+
+#facebox {
+  position: absolute;
+  z-index: 999;
+  text-align: left;
+}
+
 #facebox .b {
   background:url(/facebox/b.png);
 }
@@ -18,13 +25,6 @@
   background:url(/facebox/br.png);
 }
 
-#facebox {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  text-align: left;
-}
 
 #facebox .popup {
   position: relative;

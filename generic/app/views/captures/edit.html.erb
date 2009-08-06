@@ -1,0 +1,49 @@
+<%= error_messages_for @capture %>
+   <ul class='error_messages'>
+       <% if flash[:error] %>
+          <li><%= flash[:error] %> </li>
+       <% end %>
+   </ul>
+
+<h2 class="current-page">Time Capture Forms &gt; <span class="add-link">Edit</span></h2>
+
+<%= form_for(@capture, :action => resource(@capture) ) do %>
+	
+	 <fieldset>
+
+		  <ul>
+              <li><%= text_field :title,  :label => "Title", :maxlength => "75" %> </li>
+		      <li>
+			        <label>Tasks <br/>
+				        <span class="subText">	Please add one task per line below: </span>					
+				    </label>
+				    <%= text_area  :content,  :rows => "20", :cols => "50" %>
+			        
+		      </li>
+			  <li>
+			      <%= text_field :expiration, :class => "short date", :label => "Expiration", 
+                                 :value => @capture.expiration.strftime("%m/%d/%Y") %>
+              </li>
+		  </ul>
+			   
+	        <div class="save-cancel">
+	            <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:capture_tasks, :id => @capture.id), :class => "cancel" %>
+	        </div>
+
+	 </fieldset>
+
+
+<% end =%>
+
+
+<script type= "text/javascript">
+
+
+
+  $j(document).ready(function() { $j("input.date").datepicker({minDate:'today + 1'});  });
+
+
+</script>
+
+
+

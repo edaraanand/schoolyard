@@ -1,4 +1,4 @@
-<div id="fullpage">
+<div>
   
       <% if params[:l] == "all_events" %>
            <h2 class="current-page"> 
@@ -21,7 +21,9 @@
 <% if params[:l] == "all_events" %>
    
             <% if @calendars.empty? %>
-                 <span class="subText">There are no events planned at this time</span>
+                 <p class="subText">
+		    No Events were found. If you applied a filter try changing it.
+		 </p>
             <% else %>
                  <% cdate=""
                       for calendar in @calendars %>
@@ -39,12 +41,12 @@
                                               All day event
                                         <% end %>
       
-                                        <%= link_to "#{calendar.title}", url(:calendar, calendar.id, :l => "calendar", :label => "calendars") %>
+                                      <%= link_to "#{calendar.title}", url(:calendar, calendar.id, :l => "calendar", :label => "calendars") %>
                                         <small>(<%= calendar.class_name %>)</small>
                                         <% unless session.user.type == "Parent" %>
                                             <div class="admin-links">
                                                 <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) )  %> &#124;
-                                                <%= link_to_right((right = "calendar"), "Delete", resource(calendar, :delete) )  %>
+                                                <%= link_to_delete((right = "calendar"), "Delete", resource(calendar, :delete) )  %>
                                             </div>
                                         <% end %>
                                     </li>
@@ -56,7 +58,9 @@
 <% else %>
 
       <%if @cls.empty?%>
-          <span class="subText">There are no events planned at this time</span>
+         	<p class="subText">
+	               No Events were found. If you applied a filter try changing it.
+ 	         </p>
       <% else %>
             <% cdate=""
                       for calendar in @cls %>
@@ -75,18 +79,18 @@
                                         <% unless calendar.end_time.nil? %>
                                              to <%= calendar.end_time.strftime("%I:%M %p") %>
                                         <% end %>
-                                        <%= link_to "#{calendar.title}", url(:calendar, calendar.id, :l => "calendar", :label => "calendars") %>
-                                         <% @attachments = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
-                                         <% unless @attachment.nil? %>
-                                             &nbsp;<%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %>
-                                         <% end %>
+                                        <%= link_to "#{calendar.title}", url(:calendar, calendar.id, :l => "calendar", 
+                                                                             :label => "calendars") %>
+                                         <% @attachments = @current_school.attachments.find(:first, 
+                                                     :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
+                                         <%= partial 'common/attachment' %>
                                          <% unless calendar.location.blank? %>
                                                (Location: <%= calendar.location %>)
                                          <% end %>
                                           <% unless session.user.type == "Parent" %>
                                               <div class="admin-links">
                                                   <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) )  %> &#124;
-                                                  <%= link_to_right((right = "calendar"), "Delete", resource(calendar, :delete))  %>
+                                                  <%= link_to_delete((right = "calendar"), "Delete", resource(calendar, :delete))  %>
                                               </div>
                                           <% end %>
                                     </li>
@@ -100,4 +104,5 @@
 
  </div>
  
+<script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
      

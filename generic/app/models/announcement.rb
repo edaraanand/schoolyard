@@ -28,7 +28,7 @@ class Announcement < ActiveRecord::Base
   end
 
   def mail_deliver(action, params)
-    from = "no-reply@insightmethods.com"
+    from = "noreply@schoolyardapp.com"
     to = "alok.saini@schoolyardapp.com"
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => to), self )
   end
@@ -40,14 +40,14 @@ class Announcement < ActiveRecord::Base
   end
 
   def deliver(action, params)
-    from = "no-reply@insightmethods.com"
+    from = "noreply@schoolyardapp.com"
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.person.email), self )
   end
 
   # sending the mail for urgent Announcements
   
   def mail(action, params)
-    from = "no-reply@schoolyardapp.com"
+    from = "noreply@schoolyardapp.com"
     @current_school = self.school
     @people = @current_school.people.find(:all)
     @people.each do |f|

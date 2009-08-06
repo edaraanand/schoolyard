@@ -48,7 +48,9 @@ class Ranks < Application
   end
   
   def delete
-    raise "Eshwar".inspect
+    @rank = @current_school.ranks.find(params[:id])
+    @rank.destroy
+    redirect resource(:reports)
   end
   
   

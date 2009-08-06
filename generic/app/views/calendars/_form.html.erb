@@ -8,29 +8,49 @@
   <ul>
       <li>
 	      <label>Add for:</label>
-          <%= select :class_name, :collection => @class_rooms.collect{|x| x.class_name.titleize},
-                                  :prompt => "Please Select", :selected => "#{params[:l]}" %>
+	      <% if params[:l] %>
+                  <%= select :class_name, :collection => @class_rooms.collect{|x| x.class_name.titleize},
+                              :prompt => "Please Select", :selected => "#{params[:l]}" %>
+          <% else %>
+                  <%= select :class_name, :collection => @class_rooms.collect{|x| x.class_name.titleize},
+                              :prompt => "Please Select", :selected => "#{@class}" %>
+          <% end %>
 	  </li>
-    <li><%= text_field :title,  :label => "Event Title", :maxlength => "75" %></li>
-    <li><%= text_area  :description,  :label => "Event Description",  :rows => "10", :cols => "25" %></li>
-    <li><%= file_field :attachment,  :label => "Attach a File" %></li>
-    <li><%= text_field  :location,  :label => "Location", :maxlength => "75" %></li>
+      <li><%= text_field :title,  :label => "Event Title", :maxlength => "75" %></li>
+      <li><%= text_area  :description,  :label => "Event Description",  :rows => "10", :cols => "25" %></li>
+      <li><%= file_field :attachment,  :label => "Attach a File" %></li>
+      <li><%= text_field  :location,  :label => "Location", :maxlength => "75" %></li>
+      <li>
+	      <label>&nbsp;</label>
+	      <input type="checkbox" id="calendar_day_event" onclick="dayevent()" value="1" name="calendar[day_event]" class="checkbox"/> 
+	      All Day Event
+      </li>
     <li>
-	    <label>&nbsp;</label>
-	   <%= check_box :day_event, :onclick => "dayevent()" %>All Day Event
-	</li>
-    <li><%= text_field :start_date, :id => "start", :label => "Starts:", :class=>"short defaultText", :title => "dd/mm/yy" %>
+	    <% if @start_date == "" %>
+             <%= text_field :start_date, :id => "start", :label => "Starts:", :class=>"short defaultText", :title => "dd/mm/yy" %>
+        <% else %>
+             <%= text_field :start_date, :id => "start", :label => "Starts:", :class=>"short defaultText", :value => "#{@start_date}",
+                            :title => "dd/mm/yy" %>
+        <% end %>
         <% if @start_time == "" %>
             <%= text_field :start_time, :id => "start_time", :class=>"short apart defaultText stime", :title => "hh:mm" %>
         <% else %>
-         <%= text_field :start_time, :id => "start_time", :class=>"short apart defaultText stime", :value => "#{@start_time}", :title => "hh:mm"  %>
+            <%= text_field :start_time, :id => "start_time", :class=>"short apart defaultText stime", :value => "#{@start_time}", 
+                           :title => "hh:mm"  %>
         <% end %>     
     </li>
-          <li><%= text_field :end_date, :id => "end", :label => "Ends:", :class => "short defaultText", :title => "dd/mm/yy"  %>
+    <li>
+	    <% if @end_date == "" %>
+             <%= text_field :end_date, :id => "end", :label => "Ends:", :class => "short defaultText", :title => "dd/mm/yy"  %>
+       <% else %>
+              <%= text_field :end_date, :id => "end", :label => "Ends:", :class => "short defaultText", :value => "#{@end_date}",
+                             :title => "dd/mm/yy"  %>
+       <% end %>
         <% if @end_time == "" %>
             <%= text_field :end_time, :id => "end_time", :class => "short apart defaultText etime", :title => "hh:mm"  %>
         <% else %>
-            <%= text_field :end_time, :id => "end_time", :class=>"short apart defaultText etime", :title => "hh:mm", :value => "#{@end_time}"  %>
+            <%= text_field :end_time, :id => "end_time", :class=>"short apart defaultText etime", :title => "hh:mm", 
+                                      :value => "#{@end_time}"  %>
         <% end %>
     </li>
   </ul>
@@ -89,15 +109,15 @@
   
    function preview()
  {
-      name = document.getElementById('calendar_class_name');
+    var  name = document.getElementById('calendar_class_name');
     if (name.value == "")
        {
-          alert("Please select the Classroom/Homepage from the dropdown menu");
+          alert("Please select the Classroom/Homepage from the drop down menu");
        }
    else
        {
          var s = $('event').serialize();
-         window.open('/calendars/preview/-/?' + s);
+         window.open('/calendars/preview/-/?' + s, 'mywin', 'left=20,top=20,width=1000,height=500,toolbar=1,resizable=0');
        }
    
  }
@@ -107,12 +127,12 @@
      if (document.getElementById('calendar_day_event').checked == true)
       {
          document.getElementById('start_time').disabled = true;
-	       document.getElementById('end_time').disabled = true;
+	     document.getElementById('end_time').disabled = true;
        }
      else if(document.getElementById('calendar_day_event').checked == false)
        {
          document.getElementById('start_time').disabled = false;
-	       document.getElementById('end_time').disabled = false;
+	     document.getElementById('end_time').disabled = false;
        }
   }
   

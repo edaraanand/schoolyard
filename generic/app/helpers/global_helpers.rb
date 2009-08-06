@@ -37,7 +37,19 @@ module Merb
             link_to(name, url)
          end
      end
-
+     
+      def link_to_delete(right, name, url = "")
+          @acc = Access.find_by_name(right)
+          have_access = false
+          session.user.access_peoples.each do |f|
+            have_access = f.all || (@acc.id == f.access_id)
+            break if have_access
+          end
+          if have_access
+             link_to(name, url, :class => "delete")
+          end
+      end
+  
      def truncate(text, *args)
          options = args.extract_options!
          unless args.empty?
@@ -56,14 +68,24 @@ module Merb
          end
      end
        
-
+     def file_image(school_id, attachment_id, type)
+        school_id = school_id
+        attachment_id = attachment_id
+        if type == "principal_image"
+           "<img src='/uploads/#{school_id}/pictures/#{attachment_id}' alt='', class='prinPic' />"
+        else
+           "<img src='/uploads/#{school_id}/pictures/#{attachment_id}' alt='', class='teacherPic' />"
+        end
+     end
+     
      def snippet(thought, wordcount)
          thought.split[0..(wordcount-1)].join(" ") +(thought.split.size > wordcount ? " …" : "") 
      end
      
      def san_content(content)
          content.gsub("\r\n","<br/>")
-    end
+     end
+     
     def email(address)
        '<a href="mailto:'+address+'">'+address+'</a>'
     end

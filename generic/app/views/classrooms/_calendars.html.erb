@@ -30,7 +30,7 @@
                                   <% unless session.user.type == "Parent" %>
                                       <div class="admin-links">
                                            <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) ) %> &#124;
-                                           <%= link_to_right((right = "calendar"), "Delete", resource(calendar, :delete) )  %>
+                                           <%= link_to_delete((right = "calendar"), "Delete", resource(calendar, :delete) )  %>
                                       </div>
                                   <% end %>
                              </li>

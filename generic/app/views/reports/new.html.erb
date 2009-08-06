@@ -40,6 +40,7 @@
            <p class="assignments-header">Assignments (Add each assignment in a  new line):</p>
            <%= fields_for @assignment do %> 
              <%= partial 'grade' %>
+             <ul id="assignment" class="assignment"></ul>
              <a href="#"  class="add-more"  onClick="testing(this.parentNode.id); return false;">Add Assignment</a>       
            <% end =%>
            <div class="clear" style="padding-bottom:8px">&nbsp;</div>

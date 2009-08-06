@@ -19,7 +19,9 @@
   
 
          <% if @students.empty? %>
-              <p class="subText">There are no students listed yet.</p>
+              	<p class="subText">
+				    No Student record was found. If you applied a filter try changing it.
+			    </p>
          <% else %>
                <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> 
                <table id="mytable"  cellspacing="0" cellpadding="0">
@@ -44,7 +46,7 @@
                            <% end %>
                      </tbody>
                </table>
-               <%= will_paginate (@students, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+          <%= will_paginate (@students, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
          <% end %> 
 
 </div>

@@ -1,9 +1,15 @@
 class Exceptions < Application
   layout 'login'
+  
   # handle NotFound exceptions (404)
   def not_found
     render :layout => "excep"
   end
+  
+  # handle BadRequest exceptions (400)
+   def bad_request
+     render :internal_server_error, :format => :html, :layout => false
+   end
 
   # handle NotAcceptable exceptions (406)
   def not_acceptable

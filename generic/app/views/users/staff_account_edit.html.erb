@@ -19,8 +19,14 @@
              <li><label>Email</label>  <%= email(@person.email) %> </li>
              <li><%= text_field :phone,  :label => "Phone Number (optional)" %></li>
              <li><%= file_field :image,  :label => "Upload a Picture" %>
-                     <% unless @pic.nil? %>
-                           <span class="picEdit"><img src="/uploads/user_pictures/<%= @pic.filename %>" alt="<%= @pic.filename %>", class="teacherPic" /></span>
+                     <% if @pic.nil? %>
+                          <span class="picEdit">
+	                         <img src = "/images/Fotolia_5868614_XS.jpg" alt="Fotolia_5868614_XS.jpg" class ="teacherPic"/>
+	                      </span>
+                     <% else %>
+                          <span class="picEdit">
+	                          <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
+	                      </span>
                      <% end %>
               </li>
              <li><%= text_area :person_bio,  :label => "Your Bio" %></li>
