@@ -10,7 +10,7 @@
 
 Following form can be filled in until <%= @capture.expiration.strftime("%B %d %Y") %>
 
- <table id="mytable" class="grades">
+ <table id="mytable" class="capture-time">
 	     <thead>
 	         <th class="subjects">Tasks</th>
 	         <th class="subjects">Hours</th>   
@@ -23,7 +23,7 @@ Following form can be filled in until <%= @capture.expiration.strftime("%B %d %Y
 	                   <% @task_peoples = task.people_tasks.find(:all, :conditions => ['person_id = ?', session.user.id]) %>
 	                   <% @task_peoples.each do |f| %>
 	                      <td><%= f.hours %></td>
-	 					  <td><%= f.comments %></td>
+	 					            <td><%= f.comments %></td>
 				       <% end %>
 	               </tr>
 	          <% end %>

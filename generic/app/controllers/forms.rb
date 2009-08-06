@@ -1,6 +1,6 @@
 class Forms < Application
 
-  layout 'default'
+  layout 'wide'
   before :find_school
   before :classrooms
   before :access_rights, :exclude => [:form_files]
