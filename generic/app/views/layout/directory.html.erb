@@ -18,10 +18,19 @@
 	                       </li>
 	                      <% @captures = @current_school.captures.find(:all) %>
 	                      <% @captures.each do |f| %>
-	                          <li  <% if @selected == "#{f.title}" %> class="on" <% end %>> 
-	                             <%= link_to "#{f.title}", resource(:tasks, :id => "#{f.id}", :label => 'forms') %>
-	                          </li>
-	                      <% end %>
+	                          <li <% if @selected == "#{f.title}" %> class="on" <% end %> > 
+		                         <% @tasks = @current_school.tasks.find(:all, :conditions => ['capture_id = ?', f.id ] ) %>
+		  						 <% @tasks.each do |t| %>
+								 	 <% @people_tasks = t.people_tasks.find(:all, :conditions => ['person_id = ?', session.user.id]) %>
+									 <% if @people_tasks.empty? %>
+								        <%= link_to "#{f.title}", resource(:tasks, :new, :id => "#{f.id}", :label => 'forms') %>
+								     <% else %>
+			                            <%= link_to "#{f.title}", resource(:tasks, :id => "#{f.id}", :label => 'forms') %>
+			                         <% end %>
+			                         <% @tasks.delete_if{|x| x != t } %>
+								 <% end %>
+						      </li>
+						  <% end %>
                       </ul>
              <% elsif params[:label] == "calendars" %>
                       <ul id="menu">

@@ -2,8 +2,8 @@
 
 <% if @captures.empty? %>
       	<p class="subText">
-		     No Time Capture Form was found. 
-	         <%= link_to "Add New", resource(:captures, :new) %>
+		    There are no Time Capture forms deﬁned so far. 
+			Would you like to <%= link_to "Add New", resource(:captures, :new) %>
 	     </p>
  <% else %>
      <table id="mytable" class="grades">

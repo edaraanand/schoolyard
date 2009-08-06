@@ -2,17 +2,91 @@
 
 Following form can be filled in until <%= @capture.expiration.strftime("%B %d %Y") %>
 
-
-<%= form_for(@capture, :action => resource(:tasks) ) do %>
-
-<table id="mytable" class="grades">
-     <thead>
-         <th class="subjects">Tasks</th>
-         <th class="last-upd">Hours</th>    
-         <th class="last-upd">comments</th>                                             
-     </thead>
-</table>
+<div class="container">
+	<h4>There are some errors in the form, please fill the details.</h4>
+	<ol>
+		<li><label for="hours[]" class="error">Please enter Hours and it should be number</label></li> 
+    </ol>
+</div> <br/>
 
 
+<%= form_for(@capture, :id => "task", :action => url(:create_task, :id => @capture.id) ) do %>
+
+		<table id="mytable">
+		     <thead>
+		         <th>Tasks</th>
+		         <th>Hours</th>    
+		         <th>comments</th>                                             
+		     </thead>
+	   		 <% @tasks.each do |f| %>
+	                <tr>
+	                     <td><%= f.name %></td>
+	                     <% @p = f.people_tasks.find(:all, :conditions => ['person_id = ?', session.user.id] ) %>
+	                     <% if @p.empty? %>
+	                          <td>
+	                              <%= text_field :name => "hours[]", :class => "short required number" %>
+	                              <%= text_area  :name => "comments[]", :rows => "2", :cols => "10" %>
+	                          </td>
+	                     <% else %>
+	                          <% @p.each do |g| %>
+	                               <td>
+		                              <%= text_field :name => "hours[]", :class => "short required number", :value => "#{g.hours}" %>
+		                              <%= text_area  :name => "comments[]", :rows => "2", :cols => "20", :value => "#{g.comments}" %>
+		                          </td>
+	                          <% end %>
+	                     <% end %>
+	                </tr>
+             <% end %>
+
+	  </table>
+
+	 <div class="save-cancel">
+          <%= submit "save" %> Or  <%= link_to "Cancel", resource(:tasks, :label => "forms", :id => @capture.id), :class => "cancel" %>
+     </div>
 
 <% end =%>
+
+
+
+<script type= "text/javascript">
+
+ 
+	 // Validation for Adding Grades
+
+	    var container = $j('div.container');
+
+	   // validate the form when it is submitted
+	    var validator = $j("#task").validate({
+	         	errorContainer: container,
+	        	errorLabelContainer: $("ol", container),
+	         	wrapper: 'li',
+	        	meta: "validate"
+	});
+
+</script>
+
+<style type="text/css">
+  
+ 	.cmxform fieldset li.error label { color: red; }
+	div.container {
+		background-color: #eee;
+		border: 1px solid red;
+		margin: 5px;
+		padding: 5px;
+	}
+	div.container ol li {
+		list-style-type: disc;
+		margin-left: 20px;
+	}
+	div.container { display: none }
+	.container label.error {
+		display: inline;
+	}
+
+	form.cmxform label.error {
+		display: block;
+		margin-left: 1em;
+		width: auto;
+	}
+ 
+</style>

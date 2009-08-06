@@ -20,15 +20,27 @@ class Tasks < Application
   end
   
   def create
-    render
+    @capture = @current_school.captures.find_by_id(params[:id])
+    raise NotFound unless @capture
+    @tasks = @capture.tasks
+    @task_ids = @capture.tasks.collect{|x| x.id }
+    s = @task_ids.zip(params[:hours], params[:comments])    
+    s.each do |f|
+       PeopleTask.create({:person_id => session.user.id, :task_id => f[0], :hours => f[1], :comments => f[2] } )
+    end
+    redirect resource(:tasks, :id => @capture.id, :label => "forms")
   end
   
   def edit
     @capture = @current_school.captures.find_by_id(params[:id])
     raise NotFound unless @capture
-    @tasks = @capture.tasks
-    @selected = @capture.title
-    render
+    if Date.today <= @capture.expiration
+      @tasks = @capture.tasks
+      @selected = @capture.title
+      render
+    else
+      raise NotFound
+    end
   end
   
   def update

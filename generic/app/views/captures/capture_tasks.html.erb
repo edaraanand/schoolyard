@@ -5,13 +5,21 @@
 		    <%= link_to "Download" %> 
 		</span>
 </h2>
+<% ls = [] %>
+<% for task in @tasks %>
+   <% @p = task.people_tasks.collect{|x| x.hours } %>
+   <% u = 0 %>
+   <% @p.each {|l| u = u + l.to_f } %>
+   <% ls << u %>
+<% end %>
+  <% t = 0 %>
+  <% ls.each {|l| t = t + l.to_f } %>
 
-  
+Expiration : <%= @capture.expiration.strftime("%B %d %Y") %> <br/><br/>
+Total Hours Reported : <%= t %> hours
 
-Expiration : <%= @capture.expiration.strftime("%B %d %Y") %>
-
-
-    <table id="mytable" class="grades">
+ 
+     <table id="mytable" class="grades">
 	     <thead>
 	         <th class="subjects">Task</th>
 	         <th class="last-upd">Total Hours Reported</th>                                                 
@@ -28,6 +36,9 @@ Expiration : <%= @capture.expiration.strftime("%B %d %Y") %>
 	          <% end %>
 	     </tbody>
     </table>
+
+
+ 
 
 
  <%= link_to "&larr; Back to All Time Capture Forms", resource(:captures) %>
