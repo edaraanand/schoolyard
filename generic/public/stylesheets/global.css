@@ -38,6 +38,7 @@ td{vertical-align="top"}
 html, body{height:100%; position:relative;}
 #page-wrap{min-height:100%; width:998px; }
 body{ font:12px/16px "lucida grande","Lucida Sans Unicode",tahoma,verdana,arial,sans-serif; background:url(/images/header-bg.gif) repeat-x;}
+textarea{font:12px/16px "lucida grande","Lucida Sans Unicode",tahoma,verdana,arial,sans-serif;}
 body.fixed-width{width:100%;}
 /*#page-wrap{width:980px}*/
   /*Wraps Everything*/
