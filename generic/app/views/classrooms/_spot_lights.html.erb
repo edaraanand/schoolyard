@@ -16,7 +16,7 @@
 	                               <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) %>
 	                           </div>
 	                    </div>
-                          <h3><%= link_to "#{spot.student_name}", url(:spots, :id => spot.id) %></h3>
+                          <h3><%= link_to "#{spot.name}", url(:spots, :id => spot.id) %></h3>
                         <span class="subText"><%= spot.created_at.strftime("%b %d %Y") %></span>
                         <% unless session.user.type == "Parent" %>
                             <div class="admin-links">

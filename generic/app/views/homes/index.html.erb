@@ -118,7 +118,7 @@
                   <div class="pic">
 	                     <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) %>
                   </div>
-                  <h6><%= link_to "#{@spot_light.student_name}", url(:home_spot_light, :l => @spot_light.id) %></h6>
+                  <h6><%= link_to "#{@spot_light.name}", url(:home_spot_light, :l => @spot_light.id) %></h6>
                   <%= snippet(@spot_light.content, 20) %>
                   <hr size="1"/>
                   <%= link_to "All Spotlights", url(:lights) %>
