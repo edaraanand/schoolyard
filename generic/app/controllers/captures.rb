@@ -1,6 +1,6 @@
 class Captures < Application
 
-  layout 'default'
+  layout 'wide'
   before :find_school
   before :access_rights
   
