@@ -30,7 +30,7 @@
 	                           </div>
                           </div>
                           
-                          <h3><%= link_to "#{spot.student_name}", url(:spot_light, spot.id) %></h3>
+                          <h3><%= link_to "#{spot.name}", url(:spot_light, spot.id) %></h3>
                           <span class="subText">Spotlight for: <%= spot.class_name %></span><br/>
                           <span  class="subText">Created by <%= spot.created_at.strftime("%b %d %Y") %></span>
                           <p><%= snippet(spot.content, 50) %></p>

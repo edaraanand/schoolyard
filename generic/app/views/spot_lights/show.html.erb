@@ -11,7 +11,7 @@
 	                  <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) %>
 	              </div>
            </div>
-           <h3><%= @spot_light.student_name %></h3>
+           <h3><%= @spot_light.name %></h3>
            <span class="subText"><%= @spot_light.created_at.strftime("%b %d %Y") %></span>
            <br class="clear"/>
            <p class="post-content"><%= san_content(@spot_light.content) %></p>
