@@ -88,6 +88,7 @@ Merb::Router.prepare do
        resources :ranks
        resources :captures
        resources :tasks
+       match("/create_task").to(:controller => 'tasks', :action => 'create').name(:create_task)
        match("/task_parents").to(:controller => 'captures', :action => 'task_parents').name(:task_parents)
        match("/update_task").to(:controller => 'tasks', :action => 'update').name(:update_task)
        match("/capture_tasks").to(:controller => 'captures', :action => 'capture_tasks').name(:capture_tasks)
