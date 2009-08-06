@@ -12,7 +12,7 @@
 
 <%= form_for(@capture, :id => "capture", :action => resource(:captures) ) do %>
 
-     <fieldset>
+     <fieldset  class="capture-edit">
 	
 		     <ul>
 		         <li><%= text_field :title,  :label => "Title", :maxlength => "75", :class => "required"  %></li>
