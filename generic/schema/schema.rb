@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 73) do
+ActiveRecord::Schema.define(:version => 74) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -304,12 +304,11 @@ ActiveRecord::Schema.define(:version => 73) do
     t.string   "class_name"
     t.string   "student_name"
     t.text     "content"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "school_id"
+    t.string   "title"
+    t.string   "last_name"
   end
 
   create_table "studies", :force => true do |t|
