@@ -493,7 +493,7 @@ td.class-name-top, td.class-name-bottom, td.teach-name-top, td.teach-name-bottom
 
 .page-links{text-align:center;padding:10px 0;}
 .page-links a{padding:4px;}
-.teacherPic{width:124px;padding:6px 0;}
+.teacherPic{width:124px;padding:6px 0; margin: 4px 24px;}
 .last.pic{text-align:center;}
 .prinPic{width:220px;}
 
