@@ -602,3 +602,26 @@ div.test ul li{padding:2px 0;}
 .s-title{width:80px;}
 
 table ul li{padding:3px 0;}
+
+
+/* =========== */
+/* = Capture = */
+/* =========== */
+.capture-edit textarea, #capture_title{width:390px;}
+.capture-edit li{width:600px;}
+table.capture-time{width:550px;}
+table.capture-time textarea{width:200px;}
+table.capture-time input.short{width:80px!important;}
+
+
+
+
+
+
+
+
+
+
+
+
+
