@@ -12,7 +12,7 @@ Following form can be filled in until <%= @capture.expiration.strftime("%B %d %Y
 <%= form_for(@capture, :id => "task", :action => url(:update_task, :id => @capture.id) ) do %>
 
 
-		 <table id="mytable">
+		 <table id="mytable" class="capture-time">
 		         <thead>
 	                <th>Tasks</th>
 	                <th>Hours</th>
@@ -27,13 +27,17 @@ Following form can be filled in until <%= @capture.expiration.strftime("%B %d %Y
 		                     <% if @p.empty? %>
 		                          <td>
 		                              <%= text_field :name => "hours[]", :class => "short required number" %>
+		                          </td>
+		                          <td>
 		                              <%= text_area  :name => "comments[]", :rows => "2", :cols => "10" %>
 		                          </td>
 		                     <% else %>
 		                          <% @p.each do |g| %>
-		                               <td>
-			                              <%= text_field :name => "hours[]", :class => "short required number", :value => "#{g.hours}" %>
-			                              <%= text_area  :name => "comments[]", :rows => "2", :cols => "20", :value => "#{g.comments}" %>
+		                            <td>
+			                            <%= text_field :name => "hours[]", :class => "short required number", :value => "#{g.hours}" %>
+			                          </td>
+			                          <td>  
+			                            <%= text_area  :name => "comments[]", :rows => "2", :cols => "20", :value => "#{g.comments}" %>
 			                          </td>
 		                          <% end %>
 		                     <% end %>
@@ -43,7 +47,7 @@ Following form can be filled in until <%= @capture.expiration.strftime("%B %d %Y
            </table>
 
 		 <div class="save-cancel">
-	          <%= submit "save" %> Or  <%= link_to "Cancel", resource(:tasks, :label => "forms", :id => @capture.id), :class => "cancel" %>
+	          <%= submit "&nbsp;&nbsp;&nbsp; Save &nbsp;&nbsp;&nbsp;  " %> Or  <%= link_to "Cancel", resource(:tasks, :label => "forms", :id => @capture.id), :class => "cancel" %>
 	     </div>
 
 <% end =%>
