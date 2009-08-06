@@ -108,5 +108,4 @@ class Captures < Application
   end
   
 
-  
 end
