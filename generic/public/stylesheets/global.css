@@ -210,7 +210,7 @@ fieldset ul{padding-top:8px;}
 #mytable {padding:0; margin:10px 0 20px 0; font-size:12px; border-collapse:collapse; 
   border-top:2px solid #C1DAD7; border-bottom:2px solid #c1dad7;}
 #mytable caption{padding: 0 0 5px 0; font:italic 11px Arial, Helvetica, sans-serif; text-align:right;}
-#mytable th {font-size:11px; color:#32494B; border: 1px solid #c1dad7;  letter-spacing: .01em; text-transform:uppercase; text-align: left; padding:6px; 
+#mytable th {font-size:11px; color:#32494B; border: 1px solid #c1dad7;  letter-spacing: .01em; text-transform:uppercase; text-align: center; padding:6px; 
   background:#cae8ea;}
 #mytable th.thead1, #mytable th.thead2{border-left: 1px solid #c1dad7; border-top: 0; 
   background: #fff; font:normal 10px Arial, Helvetica, sans-serif;}
