@@ -20,7 +20,8 @@
                  </li>
                   <% s = classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
                   <% s.each do |f| %>
-                     <li><%= f.role.titleize %> : <%= f.person.name %></li>
+                     <% unless f.role.nil? %>
+                     <li><%= f.role.titleize %> <% end %> : <% unless f.person.nil? %> <%= f.person.name %><% end %></li>
                   <% end %>
            </ul>
            <p>
@@ -35,14 +36,14 @@
          <div id="<%= classroom.id %>" style="display:none;">
              <% if classroom.activate == true %>
                    <h4> Are you sure you want to De Activate the classroom ?</h4>
-                   <div class="save-cancel">
+                   <div class="save-cancel" align="center">
                        <%= link_to "De-activate", resource(classroom, :delete, :label => "deactivate"),  
                                    :class => "cancel" %> Or 
                        <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
                    </div>
              <% else %>
                   <h4> Are you sure you want to Activate the classroom ?</h4>
-                  <div class="save-cancel">
+                  <div class="save-cancel" align="center">
                       <%= link_to "<span class=approved>Activate</span>", 
                                   resource(classroom, :delete, :label => "activate"),  :class => "cancel" %> Or 
                       <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
