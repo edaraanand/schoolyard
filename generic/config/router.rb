@@ -88,6 +88,7 @@ Merb::Router.prepare do
        resources :ranks
        resources :captures
        resources :tasks
+       match("/activation").to(:controller => 'students', :action => 'activation').name(:activation)
        match("/create_task").to(:controller => 'tasks', :action => 'create').name(:create_task)
        match("/task_parents").to(:controller => 'captures', :action => 'task_parents').name(:task_parents)
        match("/update_task").to(:controller => 'tasks', :action => 'update').name(:update_task)
@@ -156,7 +157,7 @@ Merb::Router.prepare do
        match("/update_details").to(:controller => 'from_principals', :action => 'update_details').name(:update_details)
        match(:first_subdomain => 'admin').to(:controller => 'admin', :action => 'index') 
        #match("/uploads/:school_id/static/:id").to(:controller => 'files', :action => 'image')
-       # match("/uploads/:school_id/pictures/:id").to(:controller => 'files', :action => 'image')
+       #match("/uploads/:school_id/pictures/:id").to(:controller => 'files', :action => 'image')
    end
    
      
