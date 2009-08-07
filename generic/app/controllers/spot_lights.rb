@@ -188,7 +188,7 @@ class SpotLights < Application
     @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
     room = @class.collect{|x| x.class_name }
     @classrooms = room.insert(0, "Home Page")
-    @students = @current_school.students.find(:all)
+    @students = @current_school.students.find(:all, :conditions => ['activate = ?', true])
   end
   
   def classrooms
@@ -196,8 +196,9 @@ class SpotLights < Application
   end
   
   def school_people
-     @first_name = @current_school.people.collect{|x| x.first_name + "  " }.to_s.chop.chop
-     @last_name = @current_school.people.collect{|x| x.last_name + "  " }.to_s.chop.chop
+     @people = @current_school.people.find(:all, :conditions => ['activate = ?', true])
+     @first_name = @people.collect{|x| x.first_name + "  " }.to_s.chop.chop
+     @last_name = @people.collect{|x| x.last_name + "  " }.to_s.chop.chop
   end
 
   def access_rights
