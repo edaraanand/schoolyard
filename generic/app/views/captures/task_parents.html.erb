@@ -20,26 +20,27 @@
 		         <th class="last-upd"><%= sum %></th>                                                 
 		     </thead>
 		</table>
-	
-	<table id="mytable" class="grades">
-	     <thead>
-	         <th class="subjects">Parent Name</th>
-	         <th class="last-upd">Hours Reported</th>   
-	         <th class="last-upd">Comments</th>                                              
-	     </thead>
-	     <tbody>
+   <% @people_task = @task.people_tasks.find(:all, :order => 'created_at DESC') %>
+   <% unless @people_task.empty? %>
+			<table id="mytable" class="grades">
+			     <thead>
+			         <th class="subjects">Parent Name</th>
+			         <th class="last-upd">Hours Reported</th>   
+			         <th class="last-upd">Comments</th>                                              
+			     </thead>
+			     <tbody>
 		
-	          <% for task in @task.people_tasks.find(:all, :order => 'created_at DESC') %>
-	               <tr> 
-	                   <td><%= task.person.name %></td>
-	                   <td><%= task.hours %></td>
-	                   <td><%= task.comments %></td>
-	               </tr>
-	          <% end %>
+			          <% for task in @task.people_tasks.find(:all, :order => 'created_at DESC') %>
+			               <tr> 
+			                   <td><%= task.person.name %></td>
+			                   <td><%= task.hours %></td>
+			                   <td><%= task.comments %></td>
+			               </tr>
+			          <% end %>
 	
-	     </tbody>
-</table>
-
+			     </tbody>
+		     </table>
+    <% end %>
 	  <div class="admin-links">
           <%= link_to "All Time Capture Forms", resource(:captures) %> |
           <%= link_to "All Tasks", url(:capture_tasks, :id => @capture.id) %>
