@@ -7,17 +7,39 @@
       <th>Contact Number</th>
       <th>Address1</th>
       <th>State</th>
+      <th><div style="width:120px;">Actions</div></th>
     </thead>
     <tbody>
       <% for student in @students %>
-        <tr>
-          <td>&nbsp;<%= link_to "#{student.last_name}", resource(student, :edit) %> </td>
-          <td>&nbsp;<%= student.first_name %></td>
-          <td>&nbsp;<%= number_to_phone(student.phone, :area_code => true) %></td>
-          <td>&nbsp;<%= student.address1 %></td>
-          <td>&nbsp;<%= student.state %></td>
-        </tr>
-      <% end %>
+ 	       <tr>
+	          <td>&nbsp;<%= link_to "#{student.last_name}", resource(student, :edit) %> </td>
+	          <td>&nbsp;<%= student.first_name %></td>
+	          <td>&nbsp;<%= number_to_phone(student.phone, :area_code => true) %></td>
+	          <td>&nbsp;<%= student.address1 %></td>
+	          <td>&nbsp;<%= student.state %></td>
+			  <% if student.activate == true %>
+                <td>&nbsp;<a rel="facebox" href="#<%= student.id %>" class="deactive" >De-Activate </a>
+              <% else %>
+                <td>&nbsp;<a rel="facebox" href="#<%= student.id %>" class="reactive" >Re-Activate </a>
+              <% end %>
+	       </tr>
+
+			         <div id="<%= student.id %>" style="display:none;">
+			             <% if student.activate == true %>
+			                   <h4> Are you sure you want to De Activate the Student ?</h4>
+			                   <div class="save-cancel" align="center">
+			                      <%= link_to "DeActivate", url(:activation, :id => student.id, :label => "deactivate"), :class => "cancel" %> Or 
+			                      <%= link_to "Cancel", resource(:students), :class => "cancel" %>
+			                   </div>
+			             <% else %>
+			                   <h4> Are you sure you want to Activate the Student ?</h4>
+			                   <div class="save-cancel" align="center">
+			                      <%= link_to "<span class=approved>Activate</span>", url(:activation, :id => student.id ), :class => "cancel" %> Or 
+			                      <%= link_to "Cancel", resource(:students), :class => "cancel" %>
+			                   </div>
+			             <% end %>
+			       </div>
+	  <% end %>
     </tbody>
   </table>
 

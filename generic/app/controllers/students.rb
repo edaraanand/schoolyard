@@ -303,6 +303,28 @@ class Students < Application
     render :layout => 'directory'
   end
 
+  def activation
+     @student = @current_school.students.find_by_id(params[:id])
+     raise NotFound unless @student
+     @parents = @student.parents
+     if params[:label] == "deactivate"
+        @student.activate = false
+        @parents.each do |f|
+          f.activate = false
+          f.save
+        end
+        @student.save
+     else
+        @student.activate = true
+        @parents.each do |f|
+          f.activate = true
+          f.save
+        end
+        @student.save
+     end
+     redirect resource(:students)
+  end
+  
   def show
     if params[:label] == "students"
       @selected = "current_students"
@@ -347,7 +369,7 @@ class Students < Application
       filename = params[:label] + ".csv"
       send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
     else
-      @students = @current_school.students.find(:all)
+      @students = @current_school.students.find(:all, :conditions => ['activate = ?', true])
       csv_string = FasterCSV.generate do |csv|
         csv << ["First Name", "Last Name", "Address", "Contact-Number"]
         @students.each do |person|
