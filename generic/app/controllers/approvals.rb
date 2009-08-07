@@ -108,11 +108,11 @@ class Approvals < Application
            @room = @current_school.classrooms.find_by_class_name(params[:label])
            @students = @current_school.students.find(:all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @room.id] )
         else
-            @students = @current_school.students.find(:all)
+            @students = @current_school.students.find(:all, :conditions => ['activate = ?', true])
         end
     else
         @parent = @current_school.parents.find(params[:id])
-        @students = @current_school.students.find(:all)
+        @students = @current_school.students.find(:all, :conditions => ['activate = ?', true])
     end
     render
   end
@@ -145,20 +145,24 @@ class Approvals < Application
              end
            end
            @parent.approved = 1
+           @parent.activate = true
            @parent.save
            @parent.send_password_approve
            redirect url(:parent_approvals)
        end
     elsif params[:approvetype] == "Reject"
         @parent.approved = 3
+        @parent.activate = false
         @parent.save!
         redirect url(:parent_approvals)
     else
       if params[:approvetype] == "activate"
          @parent.approved = 1
+         @parent.activate = true
          @parent.send_password_approve
       else
          @parent.approved = 4
+         @parent.activate = false
          @parent.crypted_password = ""
          @parent.password_reset_key = ""
       end
