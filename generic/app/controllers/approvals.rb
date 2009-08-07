@@ -157,16 +157,24 @@ class Approvals < Application
         redirect url(:parent_approvals)
     else
       if params[:approvetype] == "activate"
+         @registrations.each do |f|
+            @stud = @current_school.students.find(:first, :conditions => ["first_name = ? and last_name = ?", "#{f.first_name}", "#{f.last_name}" ])
+            @guardian =  Guardian.find(:first, :conditions => ["student_id = ? and parent_id = ?", @stud.id, @parent.id])
+            if @guardian.nil?
+               Guardian.create({:student_id => @stud.id, :parent_id => @parent.id })
+            end
+         end
          @parent.approved = 1
          @parent.activate = true
          @parent.send_password_approve
+         @parent.save
       else
          @parent.approved = 4
          @parent.activate = false
          @parent.crypted_password = ""
          @parent.password_reset_key = ""
+         @parent.save!
       end
-      @parent.save
       redirect url(:parent_approvals)
     end
 
