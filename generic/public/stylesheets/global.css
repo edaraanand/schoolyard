@@ -614,7 +614,10 @@ table.capture-time{width:550px;}
 table.capture-time textarea{width:200px;}
 table.capture-time input.short{width:80px!important;}
 
-
+body.preview #header{background:#000; padding:12px 20px; color:#888; margin-bottom:10px;}
+body.preview #header .submit-preview{float:right; width:35%; padding:10px 0 ;}
+body.preview #header h1{float:left; width:30%; font-size:14px;}
+body.preview #header h1 strong{color:#fff; font-weight:bold;}
 
 
 
