@@ -40,6 +40,13 @@ class Captures < Application
      @capture = @current_school.captures.find_by_id(params[:id])
      raise NotFound unless @capture
      if @capture.update_attributes(params[:capture])
+        if params[:capture][:school_staff]
+           @capture.school_staff = true
+           @capture.save
+        else
+           @capture.school_staff = false
+           @capture.save
+        end
         @content =  params[:capture][:content].gsub("\r\n", ",").gsub(/[.>-]/, "").split(',')
         @task_names = @capture.tasks.collect{|x| x.name }
         @task_ids = @capture.tasks.collect{|x| x.id }

@@ -22,7 +22,12 @@
 				    </label>
 		            <%= text_area  :content,  :rows => "20", :cols => "50" %>
 		        </li>
-		         <li><%= text_field  :expiration, :class => "required short date", :label => "Expiration", :size => "12" %></li>
+		        <li><%= text_field  :expiration, :class => "required short date", :label => "Expiration", :size => "12" %></li>
+		        <li>
+				      <label>&nbsp;</label>
+				      <input type="checkbox" id="capture_school_staff" value="1" name="capture[school_staff]" class="checkbox"/> 
+				      Only school staff can use this form
+			    </li>
 		     </ul>
                 
 		     <div class="save-cancel">
