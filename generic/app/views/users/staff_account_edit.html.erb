@@ -25,7 +25,7 @@
 	                      </span>
                      <% else %>
                           <span class="picEdit">
-	                         <img src="/uploads/user_pictures/<%= @pic.filename %>" alt="<%= @pic.filename %>", class="teacherPic" />
+	                          <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
 	                      </span>
                      <% end %>
               </li>

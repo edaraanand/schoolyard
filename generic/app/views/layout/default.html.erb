@@ -28,7 +28,8 @@
           <% unless @sports_class.nil? %>
               <li <% if @selected == "teams" %> class="on" <% end %>><%#= link_to_if((right = "teams"), "Sports Teams", url(:teams)) %></li>
           <% end %>
-          <li <% if @selected == "forms" %> class="on" <% end %>><%= link_to_if((right = "forms"), "Forms", url(:forms)  ) %></li>
+          <li <% if @selected == "forms" %> class="on" <% end %>><%= link_to_if((right = "forms"), "Upload Forms", url(:forms)  ) %></li>
+          <li <% if @selected == "capture" %> class="on" <% end %>><%= link_to "Time Capture Forms", resource(:captures) %> </li>
           <li><%#= link_to "Advertising" %></li>
           </ul>                                                                                                      
         </li>

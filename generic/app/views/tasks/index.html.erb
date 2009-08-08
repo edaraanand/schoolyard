@@ -1,0 +1,31 @@
+<h2 class="current-page"><%= @capture.title %> &nbsp;&nbsp;&nbsp; 
+	
+<% if Date.today <= @capture.expiration %>
+   <%= link_to "Edit", url(:edit_task, @capture, :label => "forms" ) %>
+<% end %>
+
+</h2>
+
+   <p> Thank you for sharing this information. We appreciate your help. </p>
+
+Following form can be filled in until <%= @capture.expiration.strftime("%B %d %Y") %>
+
+ <table id="mytable" class="capture-time">
+	     <thead>
+	         <th class="subjects">Tasks</th>
+	         <th class="subjects">Hours</th>   
+	         <th class="subjects">Comments</th>                                               
+	     </thead>
+	     <tbody>
+	          <% for task in @tasks %>
+	               <tr>
+	                   <td><%= task.name %> </td>
+	                   <% @task_peoples = task.people_tasks.find(:all, :conditions => ['person_id = ?', session.user.id]) %>
+	                   <% @task_peoples.each do |f| %>
+	                      <td><%= f.hours %></td>
+	 					            <td><%= f.comments %></td>
+				       <% end %>
+	               </tr>
+	          <% end %>
+	     </tbody>
+ </table>

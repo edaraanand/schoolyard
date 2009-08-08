@@ -86,6 +86,13 @@ Merb::Router.prepare do
        resources :feedbacks
        resources :notifications
        resources :ranks
+       resources :captures
+       resources :tasks
+       match("/activation").to(:controller => 'students', :action => 'activation').name(:activation)
+       match("/create_task").to(:controller => 'tasks', :action => 'create').name(:create_task)
+       match("/task_parents").to(:controller => 'captures', :action => 'task_parents').name(:task_parents)
+       match("/update_task").to(:controller => 'tasks', :action => 'update').name(:update_task)
+       match("/capture_tasks").to(:controller => 'captures', :action => 'capture_tasks').name(:capture_tasks)
        match("/spots").to(:controller => 'spot_lights', :action => 'spots').name(:spots)
        match("/class_works").to(:controller => 'home_works', :action => 'class_works').name(:class_works)
        match("/view_report").to(:controller => 'reports', :action => 'view_report').name(:view_report)
@@ -133,7 +140,7 @@ Merb::Router.prepare do
        match("/bio").to(:controller => 'homes', :action => 'bio').name(:bio)
        match("/disable").to(:controller => 'people', :action => 'disable').name(:disable)
        match("/enable").to(:controller => 'people', :action => 'enable').name(:enable)
-       match("/download").to(:controller => 'homes', :action => 'download').name(:download)
+       match("/download").to(:controller => 'files', :action => 'download').name(:download)
        match("/pdf_download").to(:controller => 'homes', :action => 'pdf_download').name(:pdf_download)
        match("/pdf_events").to(:controller => 'calendars', :action => 'pdf_events').name(:pdf_events)
        match("/generate_csv").to(:controller => 'students', :action => 'generate_csv').name(:generate_csv)
@@ -149,7 +156,8 @@ Merb::Router.prepare do
        match("/edit_details").to(:controller => 'from_principals', :action => 'edit_details').name(:edit_details)
        match("/update_details").to(:controller => 'from_principals', :action => 'update_details').name(:update_details)
        match(:first_subdomain => 'admin').to(:controller => 'admin', :action => 'index') 
-  
+       #match("/uploads/:school_id/static/:id").to(:controller => 'files', :action => 'image')
+       #match("/uploads/:school_id/pictures/:id").to(:controller => 'files', :action => 'image')
    end
    
      

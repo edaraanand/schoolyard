@@ -32,10 +32,12 @@ View :  <select id = 'parentID'>
                                       </ul>
                                     </td>
                                     <td>
-                                                <% if parent.approved==1 %>
+                                                <% if parent.approved == 1 %>
                                                   <span class="approved">Approved</span>
-                                                <% elsif parent.approved==2 %>
+                                                <% elsif parent.approved == 2 %>
                                                   Pending Approval
+                                                <% elsif parent.approved == 4 %>
+                                                    <span class="reject">Disabled</span>
                                                 <% else %>
                                                   <span class="reject">Rejected</span>
                                                 <%end%>

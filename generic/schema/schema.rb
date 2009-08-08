@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 70) do
+ActiveRecord::Schema.define(:version => 75) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -111,6 +111,15 @@ ActiveRecord::Schema.define(:version => 70) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "school_id"
+  end
+
+  create_table "captures", :force => true do |t|
+    t.string   "title"
+    t.date     "expiration"
+    t.boolean  "school_staff"
+    t.integer  "school_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "categories", :force => true do |t|
@@ -221,6 +230,16 @@ ActiveRecord::Schema.define(:version => 70) do
     t.string   "state"
     t.string   "zip_code"
     t.string   "fax"
+    t.boolean  "activate"
+  end
+
+  create_table "people_tasks", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "task_id"
+    t.string   "hours"
+    t.text     "comments"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "protectors", :force => true do |t|
@@ -286,17 +305,24 @@ ActiveRecord::Schema.define(:version => 70) do
     t.string   "class_name"
     t.string   "student_name"
     t.text     "content"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "school_id"
+    t.string   "title"
+    t.string   "last_name"
   end
 
   create_table "studies", :force => true do |t|
     t.integer  "student_id"
     t.integer  "classroom_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tasks", :force => true do |t|
+    t.string   "name"
+    t.integer  "capture_id"
+    t.integer  "school_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

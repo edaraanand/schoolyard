@@ -17,13 +17,15 @@ class Approvals < Application
 
   def show
     @selected = "approve"
-    @announcement = @current_school.announcements.find(params[:id])
+    @announcement = @current_school.announcements.find_by_id(params[:id])
+    raise NotFound unless @announcement
     render :id => @announcement.id
   end
 
   def edit
     @selected = "approve"
-    @announcement = @current_school.announcements.find(params[:id])
+    @announcement = @current_school.announcements.find_by_id(params[:id])
+    raise NotFound unless @announcement
     render
   end
 
@@ -97,7 +99,8 @@ class Approvals < Application
   def approval_review
      @exist = "Student details entered by the parent match the school records"
      @not_exist = "Student details entered by the parent do not match the school records"
-     @parent = @current_school.parents.find(params[:id])
+     @parent = @current_school.parents.find_by_id(params[:id])
+     raise NotFound unless @parent
      @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
      @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
      if params[:label] 
@@ -105,17 +108,18 @@ class Approvals < Application
            @room = @current_school.classrooms.find_by_class_name(params[:label])
            @students = @current_school.students.find(:all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @room.id] )
         else
-            @students = @current_school.students.find(:all)
+            @students = @current_school.students.find(:all, :conditions => ['activate = ?', true])
         end
     else
         @parent = @current_school.parents.find(params[:id])
-        @students = @current_school.students.find(:all)
+        @students = @current_school.students.find(:all, :conditions => ['activate = ?', true])
     end
     render
   end
 
   def parent_grant
-    @parent = @current_school.parents.find(params[:id])
+    @parent = @current_school.parents.find_by_id(params[:id])
+    raise NotFound unless @parent
     @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
     if params[:approvetype] == "Approve & Grant Access"
        if (params[:class_not_found] == [""]) || (params[:student_not_found] == [""])
@@ -123,16 +127,16 @@ class Approvals < Application
           redirect url(:approval_review, :id => @parent)
        else
            unless params[:student_not_found].nil?
-               params[:student_not_found].each do |f|
-                 params[:class_not_found].each do |c|
-                    @st = f.split
-                    @student = @current_school.students.find(:first, :conditions => [" first_name in (?) AND last_name in (?)", @st, @st ] )
-                    @class = @current_school.classrooms.find_by_class_name("#{c}")
-                    @study_id = Study.find(:first, :conditions => ["classroom_id = ?", @class.id] )
-                    Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
-                    Study.update(@study_id.id, {:student_id => @student.id, :classroom_id => @class.id})
-                 end
+             params[:student_not_found].each do |f|
+               params[:class_not_found].each do |c|
+                  @st = f.split
+                  @student = @current_school.students.find(:first, :conditions => [" first_name in (?) AND last_name in (?)", @st, @st ] )
+                  @class = @current_school.classrooms.find_by_class_name("#{c}")
+                  @study_id = Study.find(:first, :conditions => ["classroom_id = ?", @class.id] )
+                  Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
+                  Study.update(@study_id.id, {:student_id => @student.id, :classroom_id => @class.id})
                end
+             end
            end
            unless params[:student_found].nil?
              @registrations.each do |f|
@@ -141,18 +145,40 @@ class Approvals < Application
              end
            end
            @parent.approved = 1
+           @parent.activate = true
            @parent.save
            @parent.send_password_approve
            redirect url(:parent_approvals)
        end
+    elsif params[:approvetype] == "Reject"
+        @parent.approved = 3
+        @parent.activate = false
+        @parent.save!
+        redirect url(:parent_approvals)
     else
-      @parent.approved = 3
-      @parent.save!
+      if params[:approvetype] == "activate"
+         @registrations.each do |f|
+            @stud = @current_school.students.find(:first, :conditions => ["first_name = ? and last_name = ?", "#{f.first_name}", "#{f.last_name}" ])
+            @guardian =  Guardian.find(:first, :conditions => ["student_id = ? and parent_id = ?", @stud.id, @parent.id])
+            if @guardian.nil?
+               Guardian.create({:student_id => @stud.id, :parent_id => @parent.id })
+            end
+         end
+         @parent.approved = 1
+         @parent.activate = true
+         @parent.send_password_approve
+         @parent.save
+      else
+         @parent.approved = 4
+         @parent.activate = false
+         @parent.crypted_password = ""
+         @parent.password_reset_key = ""
+         @parent.save!
+      end
       redirect url(:parent_approvals)
     end
 
   end
-
 
 
   private

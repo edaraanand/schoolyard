@@ -13,24 +13,38 @@
            
              <% if params[:label] == "forms" %>  
                       <ul id="menu">
-                           <li <% if @selected == "all_forms" %> class="on" <% end %> ><%= link_to "All Forms", url(:form_files, :l => "all_forms", :label => "forms") %></li>
-                           <% @classes.each do |f| %>
-                                <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:form_files, :id => "#{f.id}", :label => "forms") %></li>
-                            <% end %>
-                        
-                            <% @extracurricular.each do |f| %>
-                                 <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:form_files, :id => "#{f.id}", :label => "forms") %></li>
-                             <% end %>
-
+                           <li <% if @selected == "all_forms" %> class="on" <% end %> >
+	                           <%= link_to "All Downloadable Forms", url(:form_files, :l => "all_forms", :label => "forms") %>
+	                       </li>
+	                      <% @captures = @current_school.captures.find(:all) %>
+	                      <% @captures.each do |f| %>
+	                          <li <% if @selected == "#{f.title}" %> class="on" <% end %> > 
+		                         <% @tasks = @current_school.tasks.find(:all, :conditions => ['capture_id = ?', f.id ] ) %>
+		  						 <% @tasks.each do |t| %>
+								 	 <% @people_tasks = t.people_tasks.find(:all, :conditions => ['person_id = ?', session.user.id]) %>
+									 <% if @people_tasks.empty? %>
+								        <%= link_to "#{f.title}", resource(:tasks, :new, :id => "#{f.id}", :label => 'forms') %>
+								     <% else %>
+			                            <%= link_to "#{f.title}", resource(:tasks, :id => "#{f.id}", :label => 'forms') %>
+			                         <% end %>
+			                         <% @tasks.delete_if{|x| x != t } %>
+								 <% end %>
+						      </li>
+						  <% end %>
                       </ul>
              <% elsif params[:label] == "calendars" %>
                       <ul id="menu">
-                          <li <% if @selected == "all_events" %> class="on" <% end %> ><%= link_to "All Events", url(:events, :l => "all_events", :label => "calendars") %></li>
+                          <li <% if @selected == "all_events" %> class="on" <% end %> >
+	                            <%= link_to "All Events", url(:events, :l => "all_events", :label => "calendars") %></li>
                           <% @classes.each do |f| %>
-                             <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:events, :id => "#{f.id}", :label => "calendars") %></li>
+                             <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>>
+	                            <%= link_to "#{f.class_name}".titleize, url(:events, :id => "#{f.id}", :label => "calendars") %>
+	                         </li>
                           <% end %>
                           <% @extracurricular.each do |f| %>
-                             <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>><%= link_to "#{f.class_name}".titleize, url(:events, :id => "#{f.id}", :label => "calendars") %></li>
+                             <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>>
+	                            <%= link_to "#{f.class_name}".titleize, url(:events, :id => "#{f.id}", :label => "calendars") %>
+	                         </li>
                           <% end %>
                       </ul>
              <% else %>

@@ -1,0 +1,48 @@
+<h2 class="current-page">
+	  Time Capture Forms &gt; <%= @capture.title %>
+	    <span class="actions">
+		    <%= link_to "Edit", resource(@capture, :edit) %> &nbsp; 
+		    <%= link_to "Download" %> 
+		</span>
+</h2>
+<% ls = [] %>
+<% for task in @tasks %>
+   <% @p = task.people_tasks.collect{|x| x.hours } %>
+   <% u = 0 %>
+   <% @p.each {|l| u = u + l.to_f } %>
+   <% ls << u %>
+<% end %>
+  <% t = 0 %>
+  <% ls.each {|l| t = t + l.to_f } %>
+
+Expiration : <%= @capture.expiration.strftime("%B %d %Y") %> <br/><br/>
+Total Hours Reported : <%= t %> hours
+
+ 
+     <table id="mytable" class="grades">
+	     <thead>
+	         <th class="subjects">Task</th>
+	         <th class="last-upd">Total Hours Reported</th>                                                 
+	     </thead>
+	     <tbody>
+	          <% for task in @tasks %>
+	               <tr> 
+	                   <td><%= link_to "#{task.name}", url(:task_parents, :id => task.id) %></td>
+	                   <% @p_tasks = task.people_tasks.collect{|x| x.hours } %>
+	     		  	   <% sum=0 %>
+					   <% @p_tasks.each {|l| sum = sum + l.to_f } %>
+	                   <td><%= sum %></td>
+	               </tr>
+	          <% end %>
+	     </tbody>
+    </table>
+
+
+ 
+
+
+ <%= link_to "&larr; Back to All Time Capture Forms", resource(:captures) %>
+
+
+
+

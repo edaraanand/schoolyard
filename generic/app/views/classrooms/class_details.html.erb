@@ -21,7 +21,7 @@
                   Welcome to <%= @current_school.school_name%>'s <%=@classroom.class_name.titleize%> classroom
                   <% unless session.user.type == "Parent" %>
                       <span class="admin-links">
-                        <%= link_to_right( (right = "welcome_messages"), "Add New", url(:new_welcome_message, :l => "#{@classroom.class_name.titleize}" ) ) %>
+                    <%= link_to_right( (right = "welcome_messages"), "Edit", url(:new_welcome_message, :l => "#{@classroom.class_name.titleize}" ) ) %>
                       </span>
                   <% end %>
               <% else %>
@@ -59,10 +59,9 @@
 								</h3>
 
                                <p><%= snippet(announcement.content,50) %></p>
-                               <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
-                               <% unless @attachment.nil? %>
-                                <span class="attachment"><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></span>
-                               <% end %>
+                               <% @attachment = @current_school.attachments.find(:first, 
+                                         :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
+                               <%= partial 'common/attachment' %>
                                <p class="separator">&nbsp;</p>
                           </div>
                      <% end %>
@@ -88,11 +87,12 @@
 
                     <h3>Spotlight</h3>
                     <ul class="last">
-                         <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @sp_light.id]) %>
-                         <% unless @attachment.nil? %>  
-                              <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
-                         <% end %>
-                         <h6><%= link_to "#{@sp_light.student_name}", url(:spots, :id => @sp_light.id) %></h6>
+                         <% @attachment = @current_school.attachments.find(:first, 
+                                 :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @sp_light.id]) %>
+                         <div class="pic">
+	                               <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) %>
+	                      </div>
+                         <h6><%= link_to "#{@sp_light.name}", url(:spots, :id => @sp_light.id) %></h6>
                          <%= snippet(@sp_light.content, 25) %>
                          <li><%= link_to "All spotlights", url(:class_details, :id => @classroom.id, :label => "spot_light") %></li>
                     </ul>

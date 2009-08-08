@@ -133,19 +133,19 @@ class Classrooms < Application
       end
       @announcements.each do |f|
         f.access_name = params[:classroom][:class_name]
-        f.save!
+        f.save
       end
       @welcome_messages.each do |f|
         f.access_name = params[:classroom][:class_name]
-        f.save!
+        f.save
       end
       @calendars.each do |f|
         f.class_name = params[:classroom][:class_name]
-        f.save!
+        f.save
       end
       @forms.each do |f|
         f.class_name = params[:classroom][:class_name]
-        f.save!
+        f.save
       end
       if (params[:class][:people][:teacher] == "")
         flash[:error] = "Please select Faculty from the list"

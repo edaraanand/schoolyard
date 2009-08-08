@@ -8,12 +8,13 @@
     <div class="data-block short-block">
            
            <div class="ddmm">
-                 <% @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @spot_light.id]) %>
-                 <% unless @attachment.nil? %>
-                      <img src="/uploads/spotlights/<%= @attachment.filename %>" alt="<%= @attachment.filename %>" class="teacherPic"/>
-                 <% end %>
+                 <% @attachment = @current_school.attachments.find(:first, 
+                        :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @spot_light.id]) %>
+                 <div class="pic">
+	                 <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) %>
+	             </div>
            </div>
-           <h3><%= @spot_light.student_name %></h3>
+           <h3><%= @spot_light.name %></h3>
            <span class="subText"><%= @spot_light.created_at.strftime("%b %d %Y") %></span>
                <% unless session.user.type == "Parent" %>
                      <div class="admin-links">
@@ -29,7 +30,7 @@
        
        <%= link_to '&larr; Previous', url(:spots, :id => @spot_light.previous_class_spot_light), :class => "alignleft" if @spot_light.previous_class_spot_light %> &#124;
        <%= link_to " Back to all Spotlights ", url(:class_details, :id =>  @classroom.id, :label => "spot_light") %> &#124;
-       <%= link_to 'Next &rarr; ', url(:spots, :id => @spot_light.next_class_spot_light), :class => "alignright" if @spot_light.next_class_spot_light %>
+      <%= link_to 'Next &rarr; ', url(:spots, :id => @spot_light.next_class_spot_light), :class => "alignright" if @spot_light.next_class_spot_light %>
        
      
 </div>

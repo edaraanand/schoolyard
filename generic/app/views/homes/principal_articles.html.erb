@@ -16,9 +16,13 @@
                              <span class="date"><%=  principal.created_at.strftime("%d")%></span>
                              <span class="month"><%=  principal.created_at.strftime("%b")%></span>
                          </div>
+            
                          <h3><%= link_to "#{principal.title}", url(:home, principal.id, :label => 'principal') %></h3>
+							<% @attachment = @current_school.attachments.find(:first, 
+			                                  :conditions => ["attachable_id =? and attachable_type =?", principal.id, "Announcement"] ) %>
+			                <%= partial 'common/attachment' %>
                          <p class="separator"><%= snippet(principal.content, 50) %></p>
-                         <% unless session.user.type == "Parent" %>
+						 <% unless session.user.type == "Parent" %>
                              <div class="admin-links">
                                  <%= link_to_right((right = "from_principal"), "Edit", url(:edit_from_principal, principal.id)) %> &#124;
                                  <%= link_to_delete((right = "from_principal"), "Delete", url(:delete_from_principal, principal.id)) %>
@@ -26,7 +30,7 @@
                          <% end %>
                      </div>
                 </div>
-               <p class="separator">&nbsp;</p>
+                <p class="separator">&nbsp;</p>
             <% end %>
           <%= will_paginate (@from_principals, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
       </div>
@@ -62,9 +66,7 @@
                     <% end %>
                     <% @attachment = @current_school.attachments.find(:first, 
                                       :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
-                    <% unless @attachment.nil? %>
-                        <span class="attachment"><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></span>
-                    <% end %>
+                    <%= partial 'common/attachment' %>
                     <p class="separator">&nbsp;</p>
                </div>
          <% end %>

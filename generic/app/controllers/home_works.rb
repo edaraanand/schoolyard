@@ -41,8 +41,8 @@ class HomeWorks < Application
           :size => params[:attachment]['file_'+i.to_s][:size],
           :school_id =>  @current_school.id
           )
-          File.makedirs("public/uploads/#{@attachment.id}")
-          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+          File.makedirs("public/uploads/#{@current_school.id}/files")
+          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
         end
         redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
       else
@@ -80,8 +80,8 @@ class HomeWorks < Application
             :size => params[:attachment]['file_'+i.to_s][:size],
             :school_id =>  @current_school.id
             )
-            File.makedirs("public/uploads/#{@attachment.id}")
-            FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+           File.makedirs("public/uploads/#{@current_school.id}/files")
+           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
           end
           @home_work.classroom_id = @classroom.id
           @home_work.person_id = session.user.id

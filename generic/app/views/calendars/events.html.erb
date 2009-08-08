@@ -22,8 +22,8 @@
    
             <% if @calendars.empty? %>
                  <p class="subText">
-		              No event was found. If you applied a filter try changing it.
-		         </p>
+		    No Events were found. If you applied a filter try changing it.
+		 </p>
             <% else %>
                  <% cdate=""
                       for calendar in @calendars %>
@@ -58,9 +58,9 @@
 <% else %>
 
       <%if @cls.empty?%>
-             <p class="subText">
-	             No event was found. If you applied a filter try changing it.
-	         </p>
+         	<p class="subText">
+	               No Events were found. If you applied a filter try changing it.
+ 	         </p>
       <% else %>
             <% cdate=""
                       for calendar in @cls %>
@@ -83,9 +83,7 @@
                                                                              :label => "calendars") %>
                                          <% @attachments = @current_school.attachments.find(:first, 
                                                      :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
-                                         <% unless @attachment.nil? %>
-                                             &nbsp;<%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %>
-                                         <% end %>
+                                         <%= partial 'common/attachment' %>
                                          <% unless calendar.location.blank? %>
                                                (Location: <%= calendar.location %>)
                                          <% end %>

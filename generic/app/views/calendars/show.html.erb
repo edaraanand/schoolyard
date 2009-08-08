@@ -31,9 +31,7 @@
           <hr size="1"/>
           <p><%= san_content(@calendar.description) %></p>
           <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ?", @calendar.id]) %>
-          <% unless @attachment.nil? %>
-               <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
-          <% end %>
+          <%= partial 'common/attachment' %>
           <p class="separator">&nbsp;</p>
     
       <hr size="1"/>

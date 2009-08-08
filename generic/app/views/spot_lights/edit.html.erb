@@ -11,18 +11,21 @@
 
        <fieldset>
             <ul>
+			     <li><%= text_field :title, :label => "Title", :class => "short" %></li>
+		         <li>
+	                 <%= text_field  :student_name, :id => "first", :label => "First Name", :maxlength => "75" %>
+	 			 </li>
+				 <li>
+	                 <%= text_field  :last_name, :id => "last", :label => "Last Name", :maxlength => "75" %>
+		         </li>
                <li>
 	                <label>Spotlight for:</label>
 	                <%= select :class_name, :collection => @classrooms, :prompt => "Please Select" %>
 	           </li>
-               <li>
-	                <label>Student </label>
-                   <%= select :student_name, :collection => @students.collect{|x| x.name }, :prompt => "Please Select" %>
-               </li>
-                <li><%= file_field :image, :label => "Upload Picture (optional)" %>
+               <li><%= file_field :image, :label => "Upload Picture (optional)" %>
                     <% unless @pic.nil? %>                          
                          <span class="picEdit">
-	                          <img src="/uploads/spotlights/<%= @pic.filename %>" alt="<%= @pic.filename %>" class="teacherPic"/>
+	                          <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
 	                     </span>
                     <% end %>
                 </li>
@@ -42,6 +45,19 @@
 
 
 <script type= "text/javascript">
+
+$j(document).ready(function()
+ {
+     //var data = "Core Selectors Attributes Traversing Manipulation CSS Events Effects Ajax Utilities".split(" ");
+ 
+       var first =  "<%= @first_name %>".split(" ");
+       var last =  "<%= @last_name %>".split(" ");
+
+       $j("#first").autocomplete(first);
+       $j("#last").autocomplete(last);
+     
+  });
+
 
  function preview()
  {

@@ -29,7 +29,7 @@
   <div id="enable" style="display:none;">
       <h3 style="text-align:center; font-size:100%">Enable Access for this user.</h3> 
            <p>Are you sure you want to enable access for this user?</p>
-           <div class="save-cancel">
+           <div class="save-cancel" align="center">
                 <%= link_to "Yes, enable access", url(:enable, :id => @person.id) %>&nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;<%= link_to "Cancel this action", url(:edit_person, @person.id), :class => "cancel" %>
            </div>
    </div> 

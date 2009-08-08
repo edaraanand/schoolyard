@@ -68,7 +68,16 @@ module Merb
          end
      end
        
-
+     def file_image(school_id, attachment_id, type)
+        school_id = school_id
+        attachment_id = attachment_id
+        if type == "principal_image"
+           "<img src='/uploads/#{school_id}/pictures/#{attachment_id}' alt='', class='prinPic' />"
+        else
+           "<img src='/uploads/#{school_id}/pictures/#{attachment_id}' alt='', class='teacherPic' />"
+        end
+     end
+     
      def snippet(thought, wordcount)
          thought.split[0..(wordcount-1)].join(" ") +(thought.split.size > wordcount ? " …" : "") 
      end

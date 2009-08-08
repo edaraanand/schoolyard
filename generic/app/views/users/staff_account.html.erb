@@ -8,7 +8,7 @@
   <% if @pic.nil? %>
         <img src = "/images/Fotolia_5868614_XS.jpg" alt="Fotolia_5868614_XS.jpg" class ="teacherPic"/>
   <% else %>
-        <img src="/uploads/user_pictures/<%= @pic.filename %>" alt="<%= @pic.filename %>" class = "teacherPic"/>
+       <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
   <% end %>
     <p><%= session.user.email.blank? ? "" :  email(session.user.email) %><br/>
 

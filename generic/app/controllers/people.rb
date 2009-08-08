@@ -24,6 +24,7 @@ class People < Application
     @p = @accesses.collect{|x| x.id.to_s}
     if @person.valid?
       @person.type = "Staff"
+      @person.activate = true
       @person.save
       unless params[:access].nil?
         @access = params[:access][:access_ids]
@@ -40,7 +41,7 @@ class People < Application
         end
       end
       run_later do
-         @person.send_pass
+         @person.send_p
       end
       redirect url(:staff)
     else
@@ -53,8 +54,15 @@ class People < Application
     end
   end
 
+  def show
+    @staff = @current_school.staff.find_by_id(params[:id])
+    raise NotFound unless @staff
+    render
+  end
+  
   def edit
-    @person = @current_school.people.find(params[:id])
+    @person = @current_school.people.find_by_id(params[:id])
+    raise NotFound unless @person
     @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
     @access_people = @person.access_peoples
     render
@@ -65,6 +73,8 @@ class People < Application
     @accesses = Access.find(:all).delete_if{|x| x.name == "view_all"}
     @access_people = @person.access_peoples
     if @person.update_attributes(params[:person])
+       @person.activate = true
+       @person.save
       @a = Access.find(:all)
       @acc = @a.delete_if{|x| x.name == "view_all"}
       @acc = @a.collect{|x| x.id}
@@ -108,7 +118,9 @@ class People < Application
 
 
   def disable
-    @person = @current_school.people.find(params[:id])
+    @person = @current_school.people.find_by_id(params[:id])
+    raise NotFound unless @person
+    @person.activate = false
     @person.crypted_password = ""
     @person.password_reset_key = ""
     @person.save
@@ -116,8 +128,13 @@ class People < Application
   end
 
   def enable
-    @person = @current_school.people.find(params[:id])
-    @person.send_pass
+    @person = @current_school.people.find_by_id(params[:id])
+    raise NotFound unless @person
+    @person.activate = true
+    @person.save
+    run_later do 
+      @person.send_p
+    end
     redirect url(:edit_person, @person.id)
   end
 

@@ -2,7 +2,7 @@ class Person < ActiveRecord::Base
 
   attr_accessor :old_password
   attr_accessor :image
-
+   
   # Relationships between the Models
 
   belongs_to :school
@@ -12,6 +12,9 @@ class Person < ActiveRecord::Base
 
   has_many :class_peoples
   has_many :classrooms, :through => :class_peoples, :source => :classroom
+  
+  has_many :people_tasks
+  has_many :tasks, :through => :people_tasks, :source => :task
 
   belongs_to :user
   has_many :announcements
@@ -46,7 +49,9 @@ class Person < ActiveRecord::Base
   def self.authenticate(email, school_id, password)
     u = find_by_email_and_school_id(email, school_id) # need to get the salt
     return nil unless u
-    u && u.authenticated?(password) ? u : nil
+    if u.activate = true
+       u && u.authenticated?(password) ? u : nil
+    end
   end
 
   def password_validation_required
@@ -88,46 +93,51 @@ class Person < ActiveRecord::Base
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
   end
 
-  def send_pass
-    pwreset_key_success = false
-    until pwreset_key_success
-      self.password_reset_key = self.class.make_key
-      self.save
-      pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false
+
+ ## sending the Mail for Staff after creating and after enable process
+
+    def send_p
+      pwreset_key_success = false
+      until pwreset_key_success
+        self.password_reset_key = self.class.make_key
+        self.save
+        pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false
+      end
+      send_pwd
     end
-    send_password
-  end
 
-  def send_password
-    d_email(:new_staff_password, :subject => "Choose your Password to login to " + self.school.school_name )
-  end
+    def send_pwd
+      d_email(:new_staff_password, :subject => "Choose your Password to login to " + self.school.school_name )
+    end
 
-  def d_email(action, params)
-    from = "noreply@schoolyardapp.com"
-    PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
-  end
+    def d_email(action, params)
+      from = "noreply@schoolyardapp.com"
+      PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
+    end
+
 
   ## Notifying the Staff about their Account Details
   
-  def changed_details
-    mail_deliver(:notify_staff_details, :subject => "Your Details has Changed for " + self.school.school_name)
-  end
+    def changed_details
+      mail_deliver(:notify_staff_details, :subject => "Your Details has Changed for " + self.school.school_name)
+    end
 
-  def mail_deliver(action, params)
-    from = "noreply@schoolyardapp.com"
-    PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
-  end
+    def mail_deliver(action, params)
+      from = "noreply@schoolyardapp.com"
+      PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
+    end
+
 
   # Changing the password reset key after the user clicks
   
-  def resetting
-     pwreset_key_success = false
-     until pwreset_key_success
-       self.password_reset_key = self.class.make_key
-       self.save
-       pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false
-     end
-  end
+    def resetting
+       pwreset_key_success = false
+       until pwreset_key_success
+         self.password_reset_key = self.class.make_key
+         self.save
+         pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false
+       end
+    end
   
 
 end

@@ -19,6 +19,9 @@
     <span class="subText">Announcement for: <%= @announcement.access_name %></span><br/>
     <span class="subText">Created by <%= @announcement.person.name %>, expires on <%= @announcement.expiration.strftime("%d %b %Y") %></span>
     <br class="clear"/>
+    <% @attachment = @current_school.attachments.find(:first, 
+               :conditions => ["attachable_id =? and attachable_type =?", @announcement.id, "Announcement"] ) %>
+        <%= partial 'common/attachment' %>
     <p><%= san_content(@announcement.content) %></p>
       
       <%= link_to '&larr; Previous', url(:announcement, @announcement.previous_announcement),:class => "alignleft" if @announcement.previous_announcement %> &#124;

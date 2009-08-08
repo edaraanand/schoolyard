@@ -33,8 +33,8 @@ class FromPrincipals < Application
         :size => params[:attachment]['file_'+i.to_s][:size],
         :school_id =>  @current_school.id
         )
-        File.makedirs("public/uploads/#{@attachment.id}")
-        FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+       File.makedirs("public/uploads/#{@current_school.id}/files")
+       FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
       end
       redirect url(:homes)
     else
@@ -66,8 +66,8 @@ class FromPrincipals < Application
           :size => params[:attachment]['file_'+i.to_s][:size],
           :school_id =>  @current_school.id
           )
-          File.makedirs("public/uploads/#{@attachment.id}")
-          FileUtils.mv(params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@attachment.id}/#{@attachment.filename}")
+          File.makedirs("public/uploads/#{@current_school.id}/files")
+          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
         end
          redirect url(:homes)
       else
@@ -94,7 +94,6 @@ class FromPrincipals < Application
       @attachment = @current_school.attachments.find(params[:id])
       @announcement = @current_school.announcements.find_by_id(@attachment.attachable_id)
       @attachment.destroy
-     # FileUtils.rm_rf "public/uploads/#{@announcement.id}"
       @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
       @allowed = 1 - @attachments.size
       render :edit, :id => @announcement.id
@@ -161,7 +160,6 @@ class FromPrincipals < Application
       if @content_types.include?(params[:image][:content_type])
         unless @attachment.nil?
           @attachment.destroy
-          #File.delete("public/uploads/principal_images/#{@attachment.filename}")
         end
         f = params[:image][:filename]
         file = File.basename(f.gsub(/\\/, '/'))
@@ -192,8 +190,8 @@ class FromPrincipals < Application
           end
           @principal.save
         end
-        File.makedirs("public/uploads/principal_images")
-        FileUtils.mv(params[:image][:tempfile].path, "public/uploads/principal_images/#{@attachment.filename}")
+        File.makedirs("public/uploads/#{@current_school.id}/pictures")
+        FileUtils.mv(params[:image][:tempfile].path, "public/uploads/#{@current_school.id}/pictures/#{@attachment.id}")
         redirect url(:homes)
       else
         flash[:error1] = "You can only upload images"

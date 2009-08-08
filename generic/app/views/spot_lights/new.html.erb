@@ -11,8 +11,16 @@
  <h2 class="current-page">Spotlight &gt; Add New</h2>
  
  <%= form_for(@spot_light, :action => resource(:spot_lights), :id => 'spot_light' ) do %>
+
     <fieldset>
          <ul>
+	         <li><%= text_field :title, :label => "Title", :class => "short" %></li>
+	         <li>
+                 <%= text_field  :student_name, :id => "first", :label => "First Name", :maxlength => "75" %>
+ 			 </li>
+			 <li>
+                 <%= text_field  :last_name, :id => "last", :label => "Last Name", :maxlength => "75" %>
+	         </li>
 	         <li>
 	              <label>Spotlight for:</label>
 	              <% if params[:l] %>
@@ -21,12 +29,8 @@
 	                   <%= select :class_name, :collection => @classrooms, :prompt => "Please Select", :selected => "#{@class}" %>
 	              <% end %>
 	         </li>
-            <li>
-	            <label>Student </label>
-                <%= select :student_name, :collection => @students.collect{|x| x.name }, :prompt => "Please Select" %>
-            </li>
-            <li><%= file_field :image, :label => "Upload Picture (optional)" %></li>
-            <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
+             <li><%= file_field :image, :label => "Upload Picture (optional)" %></li>
+             <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
 
          </ul>
     </fieldset>
@@ -39,7 +43,22 @@
  
 <% end =%>
 
+
 <script type= "text/javascript">
+
+
+ $j(document).ready(function()
+ {
+     //  var data = "Core Selectors Surat Traversing Manipulation CSS Events Effects Ajax Utilities".split(" ");
+ 
+       var first =  "<%= @first_name %>".split(" ");
+       var last =  "<%= @last_name %>".split(" ");
+
+       $j("#first").autocomplete(first);
+       $j("#last").autocomplete(last);
+     
+  });
+ 
 
  function preview()
  {
@@ -57,6 +76,7 @@
        }
 
  }
-  
+
+
 
 </script>                                                                                                    

@@ -32,9 +32,7 @@
                          <% end %>
                          <p><%= snippet(homework.content, 50) %></p>
                          <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", homework.id, "Homework"]) %>
-                        <% unless @attachment.nil? %>
-                           <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>
-                      <% end %>
+                        <%= partial 'common/attachment' %>
                       <p class="separator">&nbsp;</p>
                 </div>           
             <% end %>    
