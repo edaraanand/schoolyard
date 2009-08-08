@@ -54,6 +54,13 @@ namespace :vlad do
    desc "Running migrations with some rake tasks for production"
    remote_task :migrate, :roles => :app do
       run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
+      ######  Back up Code Start from Here  #######
+      run "cd #{current_path}/generic && rake bootstrap:backup"
+      run "scp #{current_path}/generic/db/schoolapp_production eshwar@sdb.schoolyardapp.net:/home/eshwar/backups/demo/db_#{Time.now.strftime("%Y%m%d%H%M%S")}"
+      filename = "uploads_#{Time.now.strftime("%Y%m%d%H%M%S")}.tar"
+      run "tar zcf /home/forge/sqlitebackupsdotcom/#{filename} #{current_path}/generic/public/uploads"
+      run "scp -r /home/forge/sqlitebackupsdotcom/#{filename} eshwar@sdb.schoolyardapp.net:/home/eshwar/backups/demo"
+      #### End of Back up Code ######      
       run "cd #{current_path}/generic && rake basecamp:notify_new_build"
    end
   
