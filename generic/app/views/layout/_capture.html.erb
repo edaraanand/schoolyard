@@ -7,14 +7,26 @@
 				 <% if @people_tasks.empty? %>
 					   <% if f.school_staff == true %>
 					       <% unless session.user.type == "Parent" %>
-					        <li <% if @selected == "#{f.title}" %> class="on" <% end %> > 
-					          <%= link_to "#{f.title}", resource(:tasks, :new, :id => "#{f.id}", :label => 'forms') %>
-					        </li>
+				  	           <% if Date.today <= f.expiration %>
+					              <li <% if @selected == "#{f.title}" %> class="on" <% end %> > 
+					                 <%= link_to "#{f.title}", resource(:tasks, :new, :id => "#{f.id}", :label => 'forms') %>
+					              </li>
+					           <% else %>
+					               <li <% if @selected == "#{f.title}" %> class="on" <% end %> > 
+	                                  <%= link_to "#{f.title}", resource(:tasks, :id => "#{f.id}", :label => 'forms') %>
+	                               </li>
+					           <% end %>
 					       <% end %>
 					   <% else %>
-					        <li <% if @selected == "#{f.title}" %> class="on" <% end %> > 
-					          <%= link_to "#{f.title}", resource(:tasks, :new, :id => "#{f.id}", :label => 'forms') %>
-				            </li>
+					       <% if Date.today <= f.expiration %>
+						        <li <% if @selected == "#{f.title}" %> class="on" <% end %> > 
+						          <%= link_to "#{f.title}", resource(:tasks, :new, :id => "#{f.id}", :label => 'forms') %>
+					            </li>
+					       <% else %>
+					             <li <% if @selected == "#{f.title}" %> class="on" <% end %> > 
+	                                 <%= link_to "#{f.title}", resource(:tasks, :id => "#{f.id}", :label => 'forms') %>
+	                             </li>
+					       <% end %>
 					   <% end %>
 		 	     <% else %>
 		                 <% if f.school_staff == true %>
@@ -27,7 +39,7 @@
 					        <li <% if @selected == "#{f.title}" %> class="on" <% end %> > 
 							  <%= link_to "#{f.title}", resource(:tasks, :id => "#{f.id}", :label => 'forms') %>
 							</li>
-					    <% end %>
+					     <% end %>
 	             <% end %>
                  <% @tasks.delete_if{|x| x != t } %>
 	      <% end %>
