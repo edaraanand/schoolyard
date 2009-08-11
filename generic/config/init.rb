@@ -15,7 +15,8 @@ require "pdf/simpletable"
 require 'rubygems'
 require 'httparty'
 require 'clickatell'
-
+require 'spreadsheet'
+require 'spreadsheet/excel'
 
 use_orm :activerecord
 use_test :rspec
