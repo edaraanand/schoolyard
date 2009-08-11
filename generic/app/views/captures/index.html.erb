@@ -9,13 +9,17 @@
      <table id="mytable" class="grades">
 	     <thead>
 	         <th class="subjects">Subject</th>
-	         <th class="last-upd">Last Updated</th>                                                 
+	         <th class="last-upd">Expiration</th>
+	         <th class="last-upd">Last Updated</th> 
+	         <th class="last-upd">Actions</th> 	       
 	     </thead>
 	     <tbody>
 	          <% for capture in @captures %>
 	               <tr>
 	                   <td><%= link_to "#{capture.title}", url(:capture_tasks, :id => capture.id) %> </td>
+	                   <td><%= capture.expiration.strftime("%B %d %Y") %></td>
 	                   <td><%= capture.updated_at.strftime("%B %d %Y") %></td>
+	                   <td><%= link_to "#{image_tag('/images/iconExcel.png')} Download", url(:xls, :id => capture.id) %></td> 
 	               </tr>
 	          <% end %>
 	     </tbody>
