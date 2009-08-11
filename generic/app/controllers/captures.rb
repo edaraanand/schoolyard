@@ -126,20 +126,21 @@ class Captures < Application
   def  generate_xls(data)
      capture = @current_school.captures.find_by_id(params[:id])
      tasks =  capture.tasks
-     
+   
      filepath="#{Merb.root}/tmp/#{@capture.title}.xls"
      test = Spreadsheet::Workbook.new
      sheet1 = test.create_worksheet
+     style = xls_styles
      
      sheet1.column(0).width = 30
      sheet1.column(1).width = 30
-     sheet1.write(0, 0, "Last Name")
-     sheet1.write(0, 1, "First Name")
+     sheet1.write(0, 0, "Last Name", style[:answer_format] )
+     sheet1.write(0, 1, "First Name", style[:answer_format] )
       j = 1
       tasks.each do |f|
-         sheet1.write(0, j+= 1, "#{f.name}" )
-         sheet1.write(0, j+= 1, "Hours" )
-         sheet1.write(0, j+= 1, "Comments" )
+         sheet1.write(0, j+= 1, "#{f.name}", style[:answer_format] )
+         sheet1.write(0, j+= 1, "Hours", style[:answer_format] )
+         sheet1.write(0, j+= 1, "Comments", style[:answer_format] )
       end
       
      h =3
@@ -147,8 +148,8 @@ class Captures < Application
      tasks.each do |t|
        task_p = t.people_tasks.find(:all, :order => 'created_at DESC')
        task_p.each_with_index do |p, l|
-         sheet1.write(l+1, 0, p.person.last_name)
-         sheet1.write(l+1, 1, p.person.first_name)
+         sheet1.write(l+1, 0, p.person.last_name, style[:parent])
+         sheet1.write(l+1, 1, p.person.first_name, style[:parent])
          sheet1.write(l+1, h, p.hours)
          sheet1.write(l+1, c, p.comments)
        end
@@ -161,5 +162,11 @@ class Captures < Application
      filepath
   end
   
+  def xls_styles
+    styles={}
+    styles[:answer_format] = Spreadsheet::Format.new :horizontal_align=>:CENTER,:color => 'white',:border =>false,:vertical_align=>:TOP,:size =>10,:text_wrap => :true,:vertical_align=>:TOP,:weight => :bold,:pattern => 2 ,:pattern_bg_color=> :blue
+    styles[:parent] = Spreadsheet::Format.new :weight => :bold, :size => 12
+    styles
+  end
 
 end
