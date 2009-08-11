@@ -81,6 +81,15 @@ class Captures < Application
     raise params.inspect
   end
   
+  def xls
+    @capture = @current_school.captures.find_by_id(params[:id])
+    raise NotFound unless @capture
+    xls = generate_xls(@capture)
+    send_file(xls, :type => 'application/xls', 
+                   :filename => "#{@capture.title} #{Time.now.strftime("%b %d")}" + ".xls",
+                   :disposition => 'inline')
+  end
+  
   def capture_tasks
     @capture = @current_school.captures.find_by_id(params[:id])
     raise NotFound unless @capture
@@ -112,6 +121,44 @@ class Captures < Application
      unless have_access
        redirect resource(:homes)
      end
+  end
+  
+  def  generate_xls(data)
+     capture = @current_school.captures.find_by_id(params[:id])
+     tasks =  capture.tasks
+     
+     filepath="#{Merb.root}/tmp/#{@capture.title}.xls"
+     test = Spreadsheet::Workbook.new
+     sheet1 = test.create_worksheet
+     
+     sheet1.column(0).width = 30
+     sheet1.column(1).width = 30
+     sheet1.write(0, 0, "Last Name")
+     sheet1.write(0, 1, "First Name")
+      j = 1
+      tasks.each do |f|
+         sheet1.write(0, j+= 1, "#{f.name}" )
+         sheet1.write(0, j+= 1, "Hours" )
+         sheet1.write(0, j+= 1, "Comments" )
+      end
+      
+     h =3
+     c =4
+     tasks.each do |t|
+       task_p = t.people_tasks.find(:all, :order => 'created_at DESC')
+       task_p.each_with_index do |p, l|
+         sheet1.write(l+1, 0, p.person.last_name)
+         sheet1.write(l+1, 1, p.person.first_name)
+         sheet1.write(l+1, h, p.hours)
+         sheet1.write(l+1, c, p.comments)
+       end
+       h += 3
+       c += 3
+     end   
+         
+     test.write(filepath)
+
+     filepath
   end
   
 
