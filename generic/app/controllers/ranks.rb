@@ -50,7 +50,7 @@ class Ranks < Application
   def delete
     @rank = @current_school.ranks.find(params[:id])
     @rank.destroy
-    redirect resource(:reports)
+    redirect url(:ranks_edit)
   end
   
   
