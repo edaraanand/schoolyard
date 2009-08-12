@@ -5,9 +5,6 @@ $j(document).ready(function()
    
      $j("#test").dynamicForm("#plus3", "#minus3");
 
-     // $j(s).dynamicForm("#plus3", "#minus3");
-
-    
   });
 
 // Validation for Adding Grades
@@ -21,6 +18,19 @@ var validator = $j("#report").validate({
 	wrapper: 'li',
 	meta: "validate"
 });
+
+// Validation for Editing The Grades
+
+var container = $j('div.container');
+
+// validate the form when it is submitted
+var validator = $j("#raja").validate({
+	errorContainer: container,
+	errorLabelContainer: $("ol", container),
+	wrapper: 'li',
+	meta: "validate"
+});
+
 
 // clearing default values in New Mode
  
@@ -58,17 +68,17 @@ function cool()
      l = 1
     function assignments(counter)
       {  
-	     var r = document.getElementById(counter).id;
-	      // var k = r.split('');
-	      ul = document.getElementById('ament' + r)
-         $j(ul).append("<li id='row" + l + "'><input type='text' class='short text' name='cgories_" + r + "[assignment][name][]' id='txt" + l + "'><input type='text' class='short apart text' name='cgories_" + r + "[assignment][max_point][]' id='txt" + l + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + l + "\"); return false;'></a></li>");
+	    var r = document.getElementById(counter).id;
+	    // var k = r.split('');
+	    ul = document.getElementById('ament' + r)
+       $j(ul).append("<li id='row" + l + "'><input type='text' class='short text' name='cgories_" + r + "[assignment][name][]' id='txt" + l + "'><input type='text' class='short apart text number' name='cgories_" + r + "[assignment][max_point][]' id='txt" + l + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + l + "\"); return false;'></a></li>");
       
         l = (l - 1) + 2;
 
       }
 
 
- // Default Text on focus
+ // Default Text on focus for Text Fields
 
   $j(document).ready(function()
       {
@@ -93,40 +103,41 @@ function cool()
           $j(".defaultText").blur();        
       });
 
+
 // Removing Assignments
 
-      function removeFormField(id) 
-      {
-         $j(id).remove();
-       }
+  function removeFormField(id) 
+  {
+     $j(id).remove();
+   }
 
 // Adding Assignments in New and Edit modes
 
-	   id = 1;
-	   function testing(counter)
-	       {  
-	         var div = document.getElementById(counter);
-	         var r = document.getElementById(counter).id;
-	         var k = r.split('');
-	         a = k[4];
-	         if (r == 'test')
-	           {
-	             var ul = document.getElementById('assignment');
-	             $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='category[assignment][name][]' id='txt"+id+"'><input type='text' class='short text apart' name='category[assignment][max_point][]' id='txt"+id+"'><a href='#' class='delete-btn' onClick='removeFormField(\"#row"+id+"\"); return false;'></a></li>");
-	           }
-	         else
-	           {
-	             var li = div.getElementsByTagName("ul");
-	             for (i=0; i<li.length; i++)
-	             {
-	               if (li[i].id == "assignment")
-	               {
-	                 li[i].id = "assignment_" + a;
-	                }
-	             }
-	              var tt = document.getElementById('assignment_' + a);
-	              $j(tt).append("<li id='row" + id + "'><input type='text' class='short text' name='category_" +  a  + "[assignment][name][]' id='txt" + id + "'><input type='text' class='short text apart' name='category_" +  a  + "[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
-	           }
-	         id = (id - 1) + 2;
+id = 1;
+function testing(counter)
+    {  
+      var div = document.getElementById(counter);
+      var r = document.getElementById(counter).id;
+      var k = r.split('');
+      a = k[4];
+      if (r == 'test')
+        {
+          var ul = document.getElementById('assignment');
+          $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='category[assignment][name][]' id='txt"+id+"'><input type='text' class='short text apart' name='category[assignment][max_point][]' id='txt"+id+"'><a href='#' class='delete-btn' onClick='removeFormField(\"#row"+id+"\"); return false;'></a></li>");
+        }
+      else
+        {
+          var li = div.getElementsByTagName("ul");
+          for (i=0; i<li.length; i++)
+          {
+            if (li[i].id == "assignment")
+            {
+              li[i].id = "assignment_" + a;
+             }
+          }
+           var tt = document.getElementById('assignment_' + a);
+           $j(tt).append("<li id='row" + id + "'><input type='text' class='short text' name='category_" +  a  + "[assignment][name][]' id='txt" + id + "'><input type='text' class='short text apart' name='category_" +  a  + "[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
+        }
+      id = (id - 1) + 2;
 
-	       }
+    }
