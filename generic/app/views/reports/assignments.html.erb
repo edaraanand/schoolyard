@@ -1,22 +1,25 @@
 <h2 class="current-page">Grades/Reports > Add Grade</h2>
 <span>For :</span>
+
 <% if params[:label] %>
-  <%= select :name => "class_report",  :collection => @classrooms.collect{|x| x.class_name.titleize }, 
+        <%= select :name => "class_report",  :collection => @classrooms.collect{|x| x.class_name.titleize }, 
              :selected => @classroom.class_name,
              :onchange => "javascript:window.location.href='/assignments?label='+(this.value)+'&id=#{@classroom.id}'" %> &nbsp;
 <% else %>
-  <%= select :name => "class_report", :selected => @report.classroom.class_name, 
+        <%= select :name => "class_report", :selected => @report.classroom.class_name, 
              :collection => @classrooms.collect{|x| x.class_name.titleize }, 
              :onchange => "javascript:window.location.href='/assignments?label='+(this.value)+'&id=#{@report.classroom.id}'" %> &nbsp;
 <% end %>
 
 <% if params[:label] %>
-  <%= select :name => "subject", :collection => @reports.collect{|x| x.subject_name }, 
-             :onchange => "javascript:window.location.href='/assignments?ref='+(this.value)+'&id=#{@classroom.id}'" %> <br/> <br/>
+        <%= select :name => "subject", :collection => @reports.collect{|x| x.subject_name }, 
+               :onchange => "javascript:window.location.href='/assignments?ref='+(this.value)+'&id=#{@classroom.id}'" %> <br/> <br/>
 <% else %>
-  <%= select :name => "subject", :selected => "#{@report.subject_name}", :collection => @reports.collect{|x| x.subject_name }, 
+        <%= select :name => "subject", :selected => "#{@report.subject_name}", :collection => @reports.collect{|x| x.subject_name }, 
              :onchange => "javascript:window.location.href='/assignments?ref='+(this.value)+'&id=#{@classroom.id}'" %> <br/> <br/>
 <% end %>        
+
+
 <div class="assignments grades-contents">
   
   <h3><%= @report.subject_name %>
@@ -26,8 +29,10 @@
   <% @categories.each do |f| %>
     <% if f.category_name.blank? %>
         Enter the Category Name from here <span class="cancel"><%= link_to "Edit", url(:edit_report, :id => @report.id) %></span> 
+    <% elsif f.category_name == "category" %>
+        Enter the Category Name from here <span class="cancel"><%= link_to "Edit", url(:edit_report, :id => @report.id) %></span> 
     <% else %>
-       <h4><%= f.category_name %></h4>
+      <h4><%= f.category_name %></h4>
     <% end %>
   <% assignments = f.assignments %>
     <ul class="assign-tasks">

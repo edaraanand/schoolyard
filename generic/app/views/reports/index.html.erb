@@ -24,23 +24,24 @@
 
 
 <% if @reports.empty? %>
-  <p>There are no subjects defined for this classroom. Please <%= link_to "Set Up Subjects", resource(:reports, :new) %>
-  </p>
+     <p>
+	    There are no subjects defined for this classroom. Please <%= link_to "Set Up Subjects", resource(:reports, :new) %>
+     </p>
 <% else %>
-  <table id="mytable" class="grades">
-     <thead>
-         <th class="subjects">Subject</th>
-         <th class="last-upd">Last Updated</th>                                                 
-     </thead>
-     <tbody>
-          <% for report in @reports %>
-               <tr>
-                   <td><%= link_to "#{report.subject_name}", url(:assignments, :id => report.id) %> </td>
-                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
-               </tr>
-          <% end %>
-     </tbody>
-  </table>
+	  <table id="mytable" class="grades">
+	     <thead>
+	         <th class="subjects">Subject</th>
+	         <th class="last-upd">Last Updated</th>                                                 
+	     </thead>
+	     <tbody>
+	          <% for report in @reports %>
+	               <tr>
+	                   <td><%= link_to "#{report.subject_name}", url(:assignments, :id => report.id) %> </td>
+	                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
+	               </tr>
+	          <% end %>
+	     </tbody>
+	  </table>
 <% end %>
 
 
