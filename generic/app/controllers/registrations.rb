@@ -227,7 +227,7 @@ class Registrations < Application
 
   def password_sent
     id = params[:id]
-    @person = @current_school.people.find(:first, :conditions => ['password_reset_key = ?', id])
+    @person = @current_school.people.find_by_password_reset_key(params[:id])
     render :layout => 'login'
   end
 
@@ -239,13 +239,11 @@ class Registrations < Application
     else
        flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
        redirect url(:login)
-       #raise NotFound
     end
   end
 
   def reset_password_update
-    id = params[:id]
-    @person = @current_school.people.find(:first, :conditions => ['password_reset_key = ?', id])
+    @person = @current_school.people.find_by_password_reset_key(params[:id])
     if ( !params[:person][:password].blank? ) 
       if ( params[:person][:password] == params[:person][:password_confirmation] )
         @person.password = params[:person][:password]
@@ -284,26 +282,30 @@ class Registrations < Application
   def staff_password_save
     id = params[:id]
     @person = @current_school.people.find(:first, :conditions => ['password_reset_key = ?', id])
-    if ( !params[:person][:password].blank? ) 
-      if ( params[:person][:password] == params[:person][:password_confirmation] )
-         @person.password = params[:person][:password]
-         @person.password_confirmation = params[:person][:password_confirmation]
-         if @person.save
-            @person.resetting
-            session.user = @person
-            flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
-            redirect '/'
-         else
-            flash[:error] = "You should enter Minimum Length of 8 Characters"
-            redirect url(:new_staff_password, :id => @person.password_reset_key)
-         end
-      else
-        flash[:error] = "Your Password doesn't match"
-        render :new_staff_password, :id => @person.password_reset_key, :layout => 'login'
-      end
+    if @person
+        if ( !params[:person][:password].blank? ) 
+            if ( params[:person][:password] == params[:person][:password_confirmation] )
+               @person.password = params[:person][:password]
+               @person.password_confirmation = params[:person][:password_confirmation]
+               if @person.save
+                  @person.resetting
+                  session.user = @person
+                  flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+                  redirect '/'
+               else
+                  flash[:error] = "You should enter Minimum Length of 8 Characters"
+                  redirect url(:new_staff_password, :id => @person.password_reset_key)
+               end
+            else
+              flash[:error] = "Your Password doesn't match"
+              render :new_staff_password, :id => @person.password_reset_key, :layout => 'login'
+            end
+        else
+           flash[:error] = "Password cant be blank"
+           render :new_staff_password, :id => @person.password_reset_key, :layout => 'login'
+        end
     else
-       flash[:error] = "Password cant be blank"
-       render :new_staff_password, :id => @person.password_reset_key, :layout => 'login'
+       raise BadRequest
     end
   end
 

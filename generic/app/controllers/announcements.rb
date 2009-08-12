@@ -73,7 +73,6 @@ class Announcements < Application
        @c = params[:announcement][:access_name]
        render :new
     end
-    
   end
   
   def edit

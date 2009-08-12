@@ -2,7 +2,7 @@
 	  Time Capture Forms &gt; <%= @capture.title %>
 	    <span class="actions">
 		    <%= link_to "Edit", resource(@capture, :edit) %> &nbsp; 
-		    <%= link_to "Download" %> 
+	  	    <%= link_to "Download", url(:xls, :id => @capture.id) %> 
 		</span>
 </h2>
 <% ls = [] %>

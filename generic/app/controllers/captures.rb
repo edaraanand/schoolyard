@@ -40,6 +40,13 @@ class Captures < Application
      @capture = @current_school.captures.find_by_id(params[:id])
      raise NotFound unless @capture
      if @capture.update_attributes(params[:capture])
+        if params[:capture][:school_staff]
+           @capture.school_staff = true
+           @capture.save
+        else
+           @capture.school_staff = false
+           @capture.save
+        end
         @content =  params[:capture][:content].gsub("\r\n", ",").gsub(/[.>-]/, "").split(',')
         @task_names = @capture.tasks.collect{|x| x.name }
         @task_ids = @capture.tasks.collect{|x| x.id }
@@ -72,6 +79,15 @@ class Captures < Application
   
   def delete
     raise params.inspect
+  end
+  
+  def xls
+    @capture = @current_school.captures.find_by_id(params[:id])
+    raise NotFound unless @capture
+    xls = generate_xls(@capture)
+    send_file(xls, :type => 'application/xls', 
+                   :filename => "#{@capture.title} #{Time.now.strftime("%b %d")}" + ".xls",
+                   :disposition => 'inline')
   end
   
   def capture_tasks
@@ -107,5 +123,50 @@ class Captures < Application
      end
   end
   
+  def  generate_xls(data)
+     capture = @current_school.captures.find_by_id(params[:id])
+     tasks =  capture.tasks
+   
+     filepath="#{Merb.root}/tmp/#{@capture.title}.xls"
+     test = Spreadsheet::Workbook.new
+     sheet1 = test.create_worksheet
+     style = xls_styles
+     
+     sheet1.column(0).width = 30
+     sheet1.column(1).width = 30
+     sheet1.write(0, 0, "Last Name", style[:answer_format] )
+     sheet1.write(0, 1, "First Name", style[:answer_format] )
+      j = 1
+      tasks.each do |f|
+         sheet1.write(0, j+= 1, "#{f.name}", style[:answer_format] )
+         sheet1.write(0, j+= 1, "Hours", style[:answer_format] )
+         sheet1.write(0, j+= 1, "Comments", style[:answer_format] )
+      end
+      
+     h =3
+     c =4
+     tasks.each do |t|
+       task_p = t.people_tasks.find(:all, :order => 'created_at DESC')
+       task_p.each_with_index do |p, l|
+         sheet1.write(l+1, 0, p.person.last_name, style[:parent])
+         sheet1.write(l+1, 1, p.person.first_name, style[:parent])
+         sheet1.write(l+1, h, p.hours)
+         sheet1.write(l+1, c, p.comments)
+       end
+       h += 3
+       c += 3
+     end   
+         
+     test.write(filepath)
+
+     filepath
+  end
+  
+  def xls_styles
+    styles={}
+    styles[:answer_format] = Spreadsheet::Format.new :horizontal_align=>:CENTER,:color => 'white',:border =>false,:vertical_align=>:TOP,:size =>10,:text_wrap => :true,:vertical_align=>:TOP,:weight => :bold,:pattern => 2 ,:pattern_bg_color=> :blue
+    styles[:parent] = Spreadsheet::Format.new :weight => :bold, :size => 12
+    styles
+  end
 
 end

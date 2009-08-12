@@ -24,11 +24,14 @@ class Admin < Application
        @person.school_id = @school.id
        @person.type = "Staff"
        @person.admin = true
+       @person.activate = true
        @person.save
        @view = Access.find_by_name('view_all')
        AccessPeople.create({:person_id => @person.id, :access_id => @view.id })
        AccessPeople.create({:person_id => @person.id, :all => true })
-       @person.send_pass
+       run_later do
+          @person.send_p
+       end
        redirect resource(:admin)
     else
        @subdomain = params[:school][:subdomain]

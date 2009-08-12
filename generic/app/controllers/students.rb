@@ -293,10 +293,10 @@ class Students < Application
   def directory
     if  params[:label] == "classes"
       @class = @current_school.classrooms.find(params[:id])
-      @students = @current_school.students.paginate(:all, :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id], :per_page => 25,  :page => params[:page] )
+      @students = @current_school.students.paginate(:all, :joins => :studies, :conditions => ["studies.classroom_id = ? and activate = ?", @class.id, true], :per_page => 25,  :page => params[:page] )
       @test = params[:id]
     else
-      @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
+      @students = @current_school.students.paginate(:all, :conditions => ['activate = ?', true], :per_page => 25,  :page => params[:page])
       @test = "All Students"
     end
     @selected = "current_students"
@@ -308,11 +308,15 @@ class Students < Application
      raise NotFound unless @student
      @parents = @student.parents
      if params[:label] == "deactivate"
-        @student.activate = false
-        @parents.each do |f|
-          f.activate = false
-          f.save
+        guardian = Guardian.find_by_student_id(@student.id)
+        g = Guardian.find(:all, :conditions => ["parent_id = ? and student_id != ?", guardian.parent_id, @student.id ])
+        if g.empty?
+           @parents.each do |f|
+              f.activate = false
+              f.save
+           end
         end
+        @student.activate = false
         @student.save
      else
         @student.activate = true

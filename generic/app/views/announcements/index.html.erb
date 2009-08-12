@@ -31,7 +31,9 @@
                         <% end %>
                         <h3><%= link_to "#{announcement.title}", url(:announcement, announcement.id) %></h3>
                         <span class="subText">Announcement for: <%= announcement.access_name %></span><br/>
-                        <span class="subText">Created by <%= announcement.person.name %>, expires on <%= announcement.expiration.strftime("%d %b %Y") %></span>
+                        <span class="subText">
+	                       Created by <%= announcement.person.name %>, expires on <%= announcement.expiration.strftime("%d %b %Y") %>
+	                    </span>
                         <p class="announce-text"><%= snippet(announcement.content,50) %></p>
                       <% if ( (announcement.approved) && (announcement.approve_announcement)) %>
                              <div class="approval-status">

@@ -24,6 +24,15 @@
 			      <%= text_field :expiration, :class => "short date", :label => "Expiration", 
                                  :value => @capture.expiration.strftime("%m/%d/%Y") %>
               </li>
+              <li>
+	    		   <label>&nbsp;</label>
+	               <% if @capture.school_staff == true %>
+				       <input type="checkbox" id="capture_school_staff" checked="checked" value="1" name="capture[school_staff]" class="checkbox"/> 
+				   <% else %>
+			  	       <input type="checkbox" id="capture_school_staff" name="capture[school_staff]" class="checkbox"/> 
+				   <% end %>
+				   Only school staff can use this form
+			  </li>
 		  </ul>
 			   
 	        <div class="save-cancel">
