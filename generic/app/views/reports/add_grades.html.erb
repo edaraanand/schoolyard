@@ -26,7 +26,7 @@
 
 	  <%= form_for(@assignment, :action => url(:score, :id => @assignment.id), :class => "cmxform", :id => "grade" ) do %>
 	        <p class="assignment-date">
-	             <%= text_field  :date, :class => "short required", :id => "assignment_date", :label => "Assignment Date" %>
+	             <%= text_field  :date, :class => "short required date", :label => "Assignment Date" %>
 	        </p>
 	         <div  class="clear"></div>
 	 		 <table id="mytable">
@@ -54,7 +54,8 @@
 
 <script type= "text/javascript">
 
-  $j("#assignment_date").datepicker({minDate:'today + 1'});
+ $j(document).ready(function() { $j("input.date").datepicker({minDate:'today + 1'});  });
+
 
   // Validation for Adding Grades
 

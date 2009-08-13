@@ -7,18 +7,21 @@
 	<h4>There are some errors in the form, please fill the details.</h4>
 	<ol>
 		<li><label for="assignment_date" class="error">Please enter the Assignment Date</label></li> 
-	    <li><label for="assignment[score][]" class="error">Please enter number and it should be less than Max Point</label></li>
+	    <li>
+		   <label for="assignment[score][]" class="error">
+		   Please enter number and it should be less than or equal to <%= @assignment.max_point %>
+		   </label>
+		</li>
 	</ol>
 </div> <br/>
 
 <%= form_for(@assignment, :action => url(:update_grades, :id => @assignment.id), :class => "cmxform", :id => 'grade' ) do %>
    
-       <ul>
-           <li><%= text_field  :date, :class => "short required", :id => "assignment_date", 
-                               :value => "#{@assignment.date.strftime("%m/%d/%y")}", :label => "Assignment Date" %>
-          </li>
-       </ul> <br/>
- 
+        <p class="assignment-date">
+            <%= text_field  :date, :class => "short required date", :label => "Assignment Date",
+                            :value => "#{@assignment.date.strftime("%m/%d/%y")}"   %>
+       </p>
+       
        <table id="mytable">
              <thead>
                     <th>Your Students</th>
@@ -32,13 +35,13 @@
                      <% grades = f.grades.find(:all, :conditions => ['assignment_id = ?', @assignment.id] ) %>
                      <% if grades.empty? %>
                           <td>
-                              <%= text_field :name => "assignment[score][]", :class => "short required number",
+                              <%= text_field :name => "assignment[score][]", :class => "short number",
                                              :max => "#{@assignment.max_point}" %>
                           </td>
                      <% else %>
                           <% grades.each do |g| %>
                                <td>
-                                   <%= text_field :name => "assignment[score][]", :class => "short required number", 
+                                   <%= text_field :name => "assignment[score][]", :class => "short number", 
                                                   :max => "#{@assignment.max_point}",  :value => "#{g.score}" %>
                                </td>
                           <% end %>
@@ -73,7 +76,7 @@
 	});
 
 
-    $j("#assignment_date").datepicker({minDate:'today + 1'});
+   $j(document).ready(function() { $j("input.date").datepicker({minDate:'today + 1'});  });
     
    
    

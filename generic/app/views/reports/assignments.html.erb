@@ -27,29 +27,29 @@
   </h3>
   <div class="clear"></div>
   <% @categories.each do |f| %>
-    <% if f.category_name.blank? %>
-        Enter the Category Name from here <span class="cancel"><%= link_to "Edit", url(:edit_report, :id => @report.id) %></span> 
-    <% elsif f.category_name == "category" %>
-        Enter the Category Name from here <span class="cancel"><%= link_to "Edit", url(:edit_report, :id => @report.id) %></span> 
-    <% else %>
-      <h4><%= f.category_name %></h4>
-    <% end %>
+	    <% if f.category_name.blank? %>
+	        Enter the Category Name from here <span class="cancel"><%= link_to "Edit", url(:edit_report, :id => @report.id) %></span> 
+	    <% elsif f.category_name == "category" %>
+	        Enter the Category Name from here <span class="cancel"><%= link_to "Edit", url(:edit_report, :id => @report.id) %></span> 
+	    <% else %>
+	        <h4><%= f.category_name %></h4>
+	    <% end %> 
   <% assignments = f.assignments %>
-    <ul class="assign-tasks">
-      <% assignments.each do |a| %>
-        <% @grades = Grade.find(:all, :conditions => ['assignment_id = ?', a.id] ) %>
-        <% unless @grades.empty? %>
-          <li> 
-          <%= link_to "#{a.name}", url(:grades, :id => a.id) %> &nbsp;
-          <span class="subText"> updated: <%= a.updated_at.strftime("%B %d %Y") %></span>
-          </li>
-        <% else %>
-          <li> 
-          <%= link_to "#{a.name}", url(:add_grades, :id => a.id) %> 
-          </li>
-        <% end %>
-      <% end %>
-    </ul>
+   	   <ul class="assign-tasks">
+	      <% assignments.each do |a| %>
+	        <% @grades = Grade.find(:all, :conditions => ['assignment_id = ?', a.id] ) %>
+	        <% unless @grades.empty? %>
+	          <li> 
+		          <%= link_to "#{a.name}", url(:grades, :id => a.id) %> &nbsp;
+		          <span class="subText"> updated: <%= a.updated_at.strftime("%B %d %Y") %></span>
+	          </li><br/>
+	        <% else %>
+	          <li> 
+	             <%= link_to "#{a.name}", url(:add_grades, :id => a.id) %> 
+	          </li><br/>
+	        <% end %>
+	      <% end %>
+	  </ul>
   <% end %>
   <div class="page-links">
     <%= link_to "All Subjects", resource(:reports) %>
