@@ -2,7 +2,7 @@ set :application, "schoolapp"
 set :scm, "git"
 set :repository, "git@github.com:eshwardeep/schoolapp.git"
 #set :revision, "HEAD"
-set :branch, 'release1c'
+set :branch, 'release1b'
 set :use_sudo, false
 set :scm_passphrase, 'eshwar'
  
