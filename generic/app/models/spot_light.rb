@@ -4,7 +4,7 @@ class SpotLight < ActiveRecord::Base
 
   belongs_to :school
 
-  validates_presence_of :student_name, :last_name, :title, :content
+  validates_presence_of :student_name, :last_name, :content
 
   def name
     student_name + ' ' + last_name
