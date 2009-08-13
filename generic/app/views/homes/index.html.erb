@@ -101,7 +101,7 @@
                <div class="admin-links">
                     <span>
                       <% if @selected == "announcements" %> class="on" <% end %>
-                      <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "Home Page")) %>
+                   <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "Home Page")) %>
                       &#124;
                       <%= link_to_right((right = "urgent_announcement"), "Add New Urgent Announcement", resource(:notifications, :new) ) %>
                     </span>
@@ -116,7 +116,7 @@
                   <% @attachment = @current_school.attachments.find(:first, 
                              :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @spot_light.id]) %>
                   <div class="pic">
-	                     <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) %>
+	                  <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) unless @attachment == nil %>
                   </div>
                   <h6><%= link_to "#{@spot_light.name}", url(:home_spot_light, :l => @spot_light.id) %></h6>
                   <%= snippet(@spot_light.content, 20) %>
