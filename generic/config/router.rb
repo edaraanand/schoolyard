@@ -88,6 +88,8 @@ Merb::Router.prepare do
        resources :ranks
        resources :captures
        resources :tasks
+       match("/progress_card").to(:controller => 'reports', :action => 'progress_card').name(:progress_card)
+       match("/report_card").to(:controller => 'reports', :action => 'report_card').name(:report_card)
        match("/xls").to(:controller => 'captures', :action => 'xls').name(:xls)
        match("/activation").to(:controller => 'students', :action => 'activation').name(:activation)
        match("/create_task").to(:controller => 'tasks', :action => 'create').name(:create_task)
