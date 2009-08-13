@@ -1,0 +1,47 @@
+<div id="content"  class="two-col">
+        <h2 class="current-page"> 
+             Grades/Reports &nbsp;&nbsp;&nbsp;
+            <%= link_to_right((right = "grades"), "Set Up Subjects", resource(:reports, :new) )  %>
+        </h2>
+
+
+<% if @reports.empty? %>
+     <p>
+	    There are no subjects defined for this classroom. Please <br/>
+	    <%= link_to_right((right = "grades"), "Set Up Subjects", resource(:reports, :new) )  %>
+     </p>
+<% else %>
+       <% if session.user.type == "Parent" %>
+  		     <table id="mytable" class="grades">
+			     <thead>
+			         <th class="subjects">Subject</th>
+			         <th class="last-upd">Grade</th>                                                 
+			     </thead>
+			     <tbody>
+  	          	 	 	 <% for report in @reports %>
+				               <tr>
+				                   <td><%= report.subject_name %> </td>
+				                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
+				               </tr>
+				          <% end %>
+				
+				</tbody>
+	        </table>
+	   <% else %>
+	         <table id="mytable" class="grades">
+			     <thead>
+			         <th class="subjects">Subject</th>
+			         <th class="last-upd">Grade</th>                                                 
+			     </thead>
+			     <tbody>
+				   	 <% for report in @reports %>
+			               <tr>
+			                   <td><%= report.subject_name %> </td>
+			                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
+			               </tr>
+			          <% end %>
+				 </tbody>
+			 </table>
+       <% end %>
+	 
+<% end %>
