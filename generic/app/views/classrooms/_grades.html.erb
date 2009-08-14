@@ -14,50 +14,59 @@
 
 <% if @reports.empty? %>
      <p>
-	    There are no subjects defined for this classroom. Please <br/>
-	    <%= link_to_right((right = "grades"), "Set Up Subjects", resource(:reports, :new) )  %>
+	    There are no subjects defined for this classroom. Please <br/> <%= link_to_right((right = "grades"), "Set Up Subjects", resource(:reports, :new) )  %>
      </p>
 <% else %>
-       <% if session.user.type == "Parent" %>
-             <% @parent = session.user %>
-             <% @students = @parent.students %>
-  		     <table id="mytable" class="grades">
-			     <thead>
-			         <th class="subjects">Subject</th>
-			         <th class="last-upd">Last Updated</th>                                                 
-			     </thead>
-			     <tbody>
-			    <% @students.each do |f| %>
- 			         <% for report in @reports %>
-			            <tr onclick="location.href='<%= url(:progress_card, :ref => f.id, :id => report.id, :c => @classroom.id) %>'" style="cursor:pointer">
-		                   <td>
-		                     <%= link_to "#{report.subject_name}", url(:progress_card, :ref => f.id, :id => report.id, :c => @classroom.id) %>
-		                   </td>
-		                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
-					    </tr>
-					   <%# @reports.delete_if{|x| x.id == report.id }%>
-					 <% end %>
-			    <% end %>
-				
-				</tbody>
-	        </table>
-	   <% else %>
-	         <table id="mytable" class="grades">
-			     <thead>
-			         <th class="subjects">Subject</th>
-			         <th class="last-upd">Grade</th>   
-			         <th></th>                       
-			     </thead>
-			     <tbody>
-				   	 <% for report in @reports %>
-			               <tr>
-			                   <td><%= report.subject_name %> </td>
-			                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
-		                       <td><%= link_to_right((right = "grades"), "Edit", url(:edit_report, :id => report.id) )  %></td>
-			               </tr>
-			          <% end %>
-				 </tbody>
-			 </table>
-       <% end %>
+    <% if session.user.type == "Parent" %>
+
+       <% @parent = session.user %>
+       <% @students = @parent.students %>
+       <% @students.each do |f| %>
+		    <% studies = Study.find_by_student_id(f.id) %>
+			<% if studies.classroom_id == @classroom.id %>
+				   <table id="mytable" class="grades">
+					    <thead>
+				            <th class="subjects">Subject</th>
+				            <th class="last-upd">Last Updated</th>                                                 
+				        </thead>
+				         <tbody>
+			 			       <% for report in @reports %>
+		       	                   <tr onclick="location.href='<%= url(:progress_card, :ref => f.id, :id => report.id, :c => @classroom.id) %>'" style="cursor:pointer">
+					                 <td>
+					                     <%= link_to "#{report.subject_name}", url(:progress_card, :ref => f.id, :id => report.id, :c => @classroom.id) %>
+					                 </td>
+					                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
+								    </tr>
+								        <% @reports.delete_if{|x| x.id == report.id } %>
+								 <% end %>
+					  	 </tbody>
+					</table>
+			<% else %>
+				   	<p>
+				         There are no Students for you in  this classroom. 
+			       </p>
+	        <% end %>
+	
+	 <% end %>
+	
+	
+ <% else %>
+       <table id="mytable" class="grades">
+     <thead>
+         <th class="subjects">Subject</th>
+         <th class="last-upd">Grade</th>   
+         <th></th>                       
+     </thead>
+     <tbody>
+	   	 <% for report in @reports %>
+               <tr>
+                   <td><%= report.subject_name %> </td>
+                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
+                      <td><%= link_to_right((right = "grades"), "Edit", url(:edit_report, :id => report.id) )  %></td>
+               </tr>
+          <% end %>
+	 </tbody>
+ </table>
+    <% end %>
 	 
 <% end %>

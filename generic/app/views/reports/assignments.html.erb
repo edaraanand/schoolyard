@@ -26,6 +26,7 @@
     (<%= link_to "Edit", url(:edit_report, :id => @report.id) %> | <%= link_to "View Report",  url(:view_report, :id => @report.id) %>) 
   </h3>
   <div class="clear"></div>
+
   <% @categories.each do |f| %>
 	    <% if f.category_name.blank? %>
 	        Enter the Category Name from here <span class="cancel"><%= link_to "Edit", url(:edit_report, :id => @report.id) %></span> 
