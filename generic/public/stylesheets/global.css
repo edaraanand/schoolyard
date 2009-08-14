@@ -554,7 +554,8 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 #content-wrap .new-fieldset input{display:inline; float:none; width:140px;}
 .new-fieldset label{display:inline; float:none; padding:0 10px 0 0;}
 
-.add-subjects .category{float:left;}
+#content .add-subjects .category{float:left; margin:0; padding:0;}
+.category-text{position:relative; top:24px;}
 .add-subjects .category input{margin-top:8px;}
 
 table.grades th.subjects{width:200px;}
@@ -579,11 +580,12 @@ span.max-points{text-transform:capitalize;}
 
 table.reports#mytable th.student{padding-right:30px;}
 
-div.test {position:relative; padding:0 6px; border-top:1px dashed #eee;}
+div.test {position:relative; margin:16px 6px;}
 div.test .test{padding:0;}
 div.test .test ul{margin:20px 0 0 12px;}
 div.test ul{margin:30px 0 0 12px; float:left; display:inline;}
-div.test ul.assignment, div.test ul#assignment{margin:0 0 0 158px; float:left; clear:both;}
+div.test ul.assignment, div.test ul#assignment{margin:0 0 0 0; float:left; clear:both;}
+div.test ul.assignment li, div.test ul#assignment li{margin-left:158px;}
 div.test ul.assignment input, div.test ul#assignment input{margin-right:4px;}
 
 .assignment .delete-btn{margin-left:6px;}
@@ -592,7 +594,7 @@ div.test ul li{padding:2px 0;}
 .main-subject select{width:200px;}
 .add-subjects .add-more{clear:both; float:left; padding:2px 0 0 0; position:relative; left:160px;}
 
-.assignments-header{position: absolute; left: 164px;}
+#content p.assignments-header{position: absolute; left: 164px; top:0; margin:0; padding:0;}
 
 .data-block.urgent-display{background:#fcedcb; border-top:2px solid #ccc; margin-bottom:4px;}
 .data-block.urgent-display .separator{height:0;}
