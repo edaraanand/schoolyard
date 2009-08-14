@@ -294,14 +294,16 @@ class Reports < Application
     def progress_card
       @selected = "grades"
       @select = "classrooms"
-      @report = @current_school.reports.find_by_id(params[:id])
-      @classroom = @current_school.classrooms.find_by_id(params[:cls])
-      @student = @current_school.students.find_by_id(params[:ref])
-      raise NotFound unless @report 
-      raise NotFound unless @classroom
-      raise NotFound unless @student
-      @categories = @report.categories
-      render :layout => 'class_change', :id => @classroom.id
+        @report = @current_school.reports.find_by_id(params[:id])
+        @classroom = @current_school.classrooms.find_by_id(params[:c])
+        @student = @current_school.students.find_by_id(params[:ref])
+        raise NotFound unless @report 
+        raise NotFound unless @classroom
+        raise NotFound unless @student
+        @categories = @report.categories
+        @all_reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', @classroom.id])
+        @test = params[:id]
+        render :layout => 'class_change', :id => @classroom.id
     end
    
    

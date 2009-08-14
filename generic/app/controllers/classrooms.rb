@@ -246,6 +246,7 @@ class Classrooms < Application
          @ann = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name.titleize, true, true], :limit => 3)
          @sp_light = @current_school.spot_lights.find(:first, :conditions => ['class_name = ?', @classroom.class_name], :order => "created_at DESC" )
          @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', @classroom.id])
+         @ranks = @current_school.ranks.find(:all)
          render :layout => 'class_change', :id => @classroom.id
       else
          raise NotFound

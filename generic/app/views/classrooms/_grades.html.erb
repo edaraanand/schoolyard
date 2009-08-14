@@ -1,9 +1,16 @@
 <div id="content"  class="two-col">
         <h2 class="current-page"> 
+	         <span class="actions">
              Grades/Reports &nbsp;&nbsp;&nbsp;
-            <%= link_to_right((right = "grades"), "Set Up Subjects", resource(:reports, :new) )  %>
-        </h2>
 
+             <%= link_to_right((right = "grades"), "Set Up Subjects", resource(:reports, :new) )  %> &nbsp;&nbsp;&nbsp;
+
+       		 <% if @ranks.empty? %>
+			     <%= link_to_right((right = "grades"), "Add Grades Definition", resource(:ranks, :new) )  %>
+	         <% else %>
+	             <%= link_to_right((right = "grades"), "Edit Grades Definition", url(:ranks_edit) )  %>
+	         <% end %>
+      </h2>
 
 <% if @reports.empty? %>
      <p>
@@ -12,18 +19,24 @@
      </p>
 <% else %>
        <% if session.user.type == "Parent" %>
+             <% @parent = session.user %>
+             <% @students = @parent.students %>
   		     <table id="mytable" class="grades">
 			     <thead>
 			         <th class="subjects">Subject</th>
-			         <th class="last-upd">Grade</th>                                                 
+			         <th class="last-upd">Last Updated</th>                                                 
 			     </thead>
 			     <tbody>
-  	          	 	 	 <% for report in @reports %>
-				               <tr>
-				                   <td><%= report.subject_name %> </td>
-				                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
-				               </tr>
-				          <% end %>
+			    <% @students.each do |f| %>
+ 			         <% for report in @reports %>
+			            <tr onclick="location.href='<%= url(:progress_card, :ref => f.id, :id => report.id, :c => @classroom.id) %>'" style="cursor:pointer">
+		                   <td>
+		                     <%= link_to "#{report.subject_name}", url(:progress_card, :ref => f.id, :id => report.id, :c => @classroom.id) %>
+		                   </td>
+		                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
+					    </tr>
+					 <% end %>
+			    <% end %>
 				
 				</tbody>
 	        </table>
@@ -31,13 +44,15 @@
 	         <table id="mytable" class="grades">
 			     <thead>
 			         <th class="subjects">Subject</th>
-			         <th class="last-upd">Grade</th>                                                 
+			         <th class="last-upd">Grade</th>   
+			         <th></th>                       
 			     </thead>
 			     <tbody>
 				   	 <% for report in @reports %>
 			               <tr>
 			                   <td><%= report.subject_name %> </td>
 			                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
+		                       <td><%= link_to_right((right = "grades"), "Edit", url(:edit_report, :id => report.id) )  %></td>
 			               </tr>
 			          <% end %>
 				 </tbody>
