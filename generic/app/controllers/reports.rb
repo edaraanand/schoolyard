@@ -325,7 +325,7 @@ class Reports < Application
    end  
    
    def classrooms
-      @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+      @classrooms = @current_school.classrooms.find(:all, :conditions => ["activate = ? and class_type = ?",  true, "Classes" ])
    end
    
    def calculate(id, max)

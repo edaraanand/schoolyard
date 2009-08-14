@@ -35,6 +35,7 @@
 		                   </td>
 		                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
 					    </tr>
+					   <%# @reports.delete_if{|x| x.id == report.id }%>
 					 <% end %>
 			    <% end %>
 				
