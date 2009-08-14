@@ -1,52 +1,10 @@
 <h2 class="current-page">
-     Grades/Reports > <%= @student.name %>
+     Grades/Reports > <%= @report.subject_name %> 
 </h2> <br/>
 
+<h3><%= @student.name %></h3>
 
-<h3><%= @report.subject_name %></h3>
-
-<table id="mytable" class="reports">
-        <thead>
-               <th class="student">Category</th>
-               <th class="student">Assignment</th>
-               <th class="student">Score / Grade / Percentage</th>
-               <th class="student">Date</th>
-        </thead>
-       <tbody>
-         
-			<% @categories.each do |c| %>
-				<tr>
-	                  <td><%= c.category_name %></td>
-					  <td nowrap>
-						  <% c.assignments.each do |a| %>
-						      <%= a.name %> <br/>
-						  <% end %> 
-					  </td>
-				  	  <td nowrap>
-						 <% c.assignments.each do |a| %>
-						      <% grades = @student.grades.find(:all, :conditions => ['assignment_id = ?', a.id]) %>
-								<% if grades.empty? %>
-								   - <br/>
-								<% else %>
-				    	            <% grades.each do |g| %>
-					                   <%= g.score %> &nbsp; / &nbsp; <%= g.grade %>  &nbsp; / &nbsp; <%= g.percentage.to_i %>%<br/>
-					                <% end %>
-								<% end %>
-						 <% end %>
-					  </td>
-					<td>
-						  <% c.assignments.each do |a| %>
-						      <% unless a.date.nil? %>
-						         <%= a.date.strftime("%m/%d/%Y") %> <br/>
-						      <% end %>
-						  <% end %>
-				   </td>
-				 </tr>
-	        <% end %>
-	         
-	   </tbody>
-	
-</table>
+  <%= partial 'common/student_grade' %>
 	
 	<div class="page-links">
 	     <%= link_to "All Subjects", resource(:reports) %> |
