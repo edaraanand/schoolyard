@@ -11,6 +11,10 @@
       </span>
 </h2>
 
+<% if flash[:confirmation] %>
+    <%= flash[:confirmation] %>
+<% end %>
+
 <p>For: &nbsp;&nbsp; 
   <select id = 'reportID'>
     <option value = '/reports' <% if (@test == "All Subjects") %> selected <% end %> >All Classes</option>
