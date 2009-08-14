@@ -2,7 +2,7 @@
 <% @classrooms = @current_school.classrooms.find(:all, :conditions => ['class_name != ? and activate = ?', "Sports", true]) %>
 <% @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and  activate = ?' , "Classes", true], 
                                                :order => "class_name ASC") %>
-<% @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ? ', "Extra Cirrcular", true], 
+<% @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ? ', "Subject", true], 
                                           :order => "class_name ASC") %>
 
 <div id="info" style="display:none;">
