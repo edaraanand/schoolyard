@@ -17,9 +17,9 @@
       <tr>
         <% unless @classes.empty? %>
         <td>
-          <p><b>Classes:</b></p>
+           <p><b>Classes:</b></p>
         </td>  
-        <td nowrap>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td nowrap>&nbsp;&nbsp;&nbsp;&nbsp;</td>
         <td>
            <% @classes.each do |f| %>
             <p class="separator"><%= link_to "#{f.class_name.titleize}", url(:class_details, :id => "#{f.id}" ) %></p>

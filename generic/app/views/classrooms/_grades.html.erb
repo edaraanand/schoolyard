@@ -14,7 +14,7 @@
 
 <% if @reports.empty? %>
      <p>
-	    There are no subjects defined for this classroom. Please <br/> <%= link_to_right((right = "grades"), "Set Up Subjects", resource(:reports, :new) )  %>
+	    There are no subjects defined for this classroom. <br/> <%= link_to_right((right = "grades"), "Set Up Subjects", resource(:reports, :new) )  %>
      </p>
 <% else %>
     <% if session.user.type == "Parent" %>
@@ -43,10 +43,10 @@
 					</table>
 			<% else %>
 				   	<p>
-				         There are no Students for you in  this classroom. 
+				       There are no Students for you in  this classroom. 
 			       </p>
 	        <% end %>
-	
+	        <% @students.delete_if{|x| x.id == f.id } %>
 	 <% end %>
 	
 	
