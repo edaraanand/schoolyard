@@ -8,10 +8,10 @@ class Reports < Application
    def index
      @ranks = @current_school.ranks.find(:all)
      if params[:label] == "classes"
-        @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', params[:id] ])
+        @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', params[:id] ], :order => "created_at DESC" )
         @test = params[:id].to_s
      else
-        @reports = @current_school.reports.find(:all)
+        @reports = @current_school.reports.find(:all, :order => "created_at DESC")
         @test == "All Subjects"
      end
      render
@@ -32,6 +32,7 @@ class Reports < Application
             @report.classroom_id = @classroom.id
             @report.save
             cat_assignments
+            flash[:confirmation] = "The Subject #{@report.subject_name} has been Added."
             redirect resource(:reports)
          else
             flash[:error] = "please select the classroom"
