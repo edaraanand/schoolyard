@@ -10,7 +10,12 @@
                 <% @categories.each do |c| %>
                    <% @assignments = c.assignments %>
                    <% @assignments.each do |a| %>
-                       <th><%= a.name %></th>
+                       <th>
+                           <%= a.name %>
+                           <% unless a.date.nil? %><br/>
+						       <%= a.date.strftime("%m/%d/%Y") %> 
+						   <% end %>
+	                   </th>
                    <% end %>
                 <% end %>
          </thead>
