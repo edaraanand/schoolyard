@@ -47,30 +47,34 @@ class Approvals < Application
   def publish
     @announcement = @current_school.announcements.find(params[:id])
     if params[:approvetype] == "Approve & Publish"
-      if params[:announcement]
-         @announcement.update_attributes(params[:announcement])
-      end
-      @announcement.approve_comments = params[:comments]
-      @announcement.approved = @announcement.approve_announcement = true
-      @announcement.approved_by = session.user.id
-      @announcement.school_id = @current_school.id
-      if @announcement.save
-         redirect resource(:approvals)
-      else
-         flash[:error] = "please check the Announcement details and its Expiration date"
-         redirect url(:approval, @announcement.id)
-      end
+        if params[:announcement]
+           @announcement.update_attributes(params[:announcement])
+        end
+        @announcement.approve_comments = params[:comments]
+        @announcement.approved = @announcement.approve_announcement = true
+        @announcement.approved_by = session.user.id
+        @announcement.school_id = @current_school.id
+        if @announcement.save
+           redirect resource(:approvals)
+        else
+           flash[:error] = "please check the Announcement details and its Expiration date"
+           redirect url(:approval, @announcement.id)
+        end
     else
-      if params[:announcement]
-        @announcement.update_attributes(params[:announcement])
-      end
-      @announcement.reject_comments = params[:comments]
-      @announcement.approved = @announcement.approve_announcement = false
-      @announcement.rejected_by = session.user.id
-      @announcement.school_id = @current_school.id
-      @announcement.save
-      redirect resource(:approvals)
-    end
+        if params[:announcement]
+          @announcement.update_attributes(params[:announcement])
+        end
+        @announcement.reject_comments = params[:comments]
+        @announcement.approved = @announcement.approve_announcement = false
+        @announcement.rejected_by = session.user.id
+        @announcement.school_id = @current_school.id
+        if @announcement.save
+           redirect resource(:approvals)
+        else
+           flash[:error] = "please check the Announcement details and its Expiration date"
+           redirect url(:approval, @announcement.id)
+        end
+     end
   end
 
   def preview

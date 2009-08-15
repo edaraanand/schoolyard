@@ -1,17 +1,17 @@
 class Reports < Application
 
    layout 'wide'
-   before :access_rights
+   before :access_rights, :exclude => [:progress_card]
    before :find_school
    before :classrooms
    
    def index
      @ranks = @current_school.ranks.find(:all)
      if params[:label] == "classes"
-        @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', params[:id] ])
+        @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', params[:id] ], :order => "created_at DESC" )
         @test = params[:id].to_s
      else
-        @reports = @current_school.reports.find(:all)
+        @reports = @current_school.reports.find(:all, :order => "created_at DESC")
         @test == "All Subjects"
      end
      render
@@ -32,6 +32,7 @@ class Reports < Application
             @report.classroom_id = @classroom.id
             @report.save
             cat_assignments
+            flash[:confirmation] = "The Subject #{@report.subject_name} has been Added."
             redirect resource(:reports)
          else
             flash[:error] = "please select the classroom"
@@ -47,21 +48,24 @@ class Reports < Application
         @classroom = @current_school.classrooms.find_by_class_name(params[:label])
         @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', @classroom.id ])
         @report = @current_school.reports.find_by_classroom_id(@classroom.id)
-        if @report.nil?
-           raise NotFound
+        if @report.nil? 
+           redirect url(:reports, :label => "classes", :id => @classroom.id)
+           # raise NotFound
         else
            @categories = @report.categories
+           render
         end
      elsif params[:ref]
         @report = @current_school.reports.find_by_subject_name(params[:ref])
         @categories = @report.categories
         @reports = @current_school.reports.find(:all)
+        render
      else
         @report = @current_school.reports.find(params[:id])
         @categories = @report.categories
         @reports = @current_school.reports.find(:all)
+        render
      end
-     render
    end
    
    
@@ -99,11 +103,17 @@ class Reports < Application
      s = students_id.zip(scores, @grades)
      s.each do |l|
         if l[2].nil?
-           calculate(l[1], @assignment.max_point)
-           Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+           unless l[1] == ""
+             calculate(l[1], @assignment.max_point)
+             Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+           end
         else
-           calculate(l[1], @assignment.max_point)
-           Grade.update(l[2], {:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+           unless l[1] == ""
+             calculate(l[1], @assignment.max_point)
+             Grade.update(l[2], {:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+           else
+             Grade.update(l[2], {:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => nil, :grade => nil})
+           end
         end
      end
      redirect url(:assignments, :id => @report.id) 
@@ -154,6 +164,10 @@ class Reports < Application
       @categories = @report.categories
       @category_array = (0..150).to_a
       if @report.valid?
+         @classroom = @current_school.classrooms.find_by_class_name(params[:report][:classroom_id])
+         @report.update_attributes(params[:report])
+         @report.classroom_id = @classroom.id
+         @report.save
          @category_array.each do |f|
            if params["cgories_#{f}".intern]
               names = params["cgories_#{f}".intern][:assignment][:name]
@@ -270,6 +284,29 @@ class Reports < Application
      render
    end
    
+   def report_card
+      @report = @current_school.reports.find_by_id(params[:id])
+      raise NotFound unless @report
+      @categories = @report.categories
+      @student = @current_school.students.find_by_id(params[:ref])
+      render
+   end
+   
+    def progress_card
+      @selected = "grades"
+      @select = "classrooms"
+        @report = @current_school.reports.find_by_id(params[:id])
+        @classroom = @current_school.classrooms.find_by_id(params[:c])
+        @student = @current_school.students.find_by_id(params[:ref])
+        raise NotFound unless @report 
+        raise NotFound unless @classroom
+        raise NotFound unless @student
+        @categories = @report.categories
+        @all_reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', @classroom.id])
+        @test = params[:id]
+        render :layout => 'class_change', :id => @classroom.id
+    end
+   
    
    private
    
@@ -289,7 +326,7 @@ class Reports < Application
    end  
    
    def classrooms
-      @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+      @classrooms = @current_school.classrooms.find(:all, :conditions => ["activate = ? and class_type = ?",  true, "Classes" ])
    end
    
    def calculate(id, max)

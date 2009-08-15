@@ -1,0 +1,35 @@
+
+<h2 class="current-page">
+     Grades/Reports > <%= @report.subject_name %> 
+</h2> <br/>
+
+View :  <select id = 'reportID'>
+             <% @all_reports.each do |f| %>
+                  <option value='/progress_card?label=class&id=<%= f.id %>&c=<%= @classroom.id %>&ref=<%= @student.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+                     <%= f.subject_name %> 
+                  </option>
+             <% end %>
+        </select>
+
+<h3><%= @student.name %></h3>
+
+<%= partial 'common/student_grade' %>
+
+
+
+
+<div class="page-links">
+     <%= link_to "All Subjects", url(:class_details, :id => @classroom.id, :label => "grades")%> 
+</div>
+
+
+
+<script type = 'text/javascript'>
+
+        $( 'reportID' ).observe( 'change', function()
+          {
+            document.location.href = $( 'reportID' ).value;
+          
+          });
+       
+</script>

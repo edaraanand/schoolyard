@@ -2,7 +2,7 @@ set :application, "schoolapp"
 set :scm, "git"
 set :repository, "git@github.com:eshwardeep/schoolapp.git"
 #set :revision, "HEAD"
-set :branch, 'release1c'
+set :branch, 'release1b'
 set :use_sudo, false
 set :scm_passphrase, 'eshwar'
  
@@ -48,7 +48,7 @@ namespace :deploy do
      filename = "uploads_#{Time.now.strftime("%Y%m%d%H%M%S")}.tar"
      run "tar zcf #{filename} #{current_path}/generic/public/uploads"
      run "scp -r /home/eshwar/#{filename} forge@schoolyardapp.com:/home/forge/backupdotnet"
-     run "cd #{current_path}/generic && rake basecamp:notify_new_build"
+   #  run "cd #{current_path}/generic && rake basecamp:notify_new_build"
   end
 
   desc "Start Merb Instances"

@@ -1,7 +1,8 @@
 <h2 class="current-page">
      Grades/Reports > <%= @report.subject_name %> 
-</h2>
+</h2> <br/>
 
+<h3> Report for <%= @report.subject_name %> </h3>
 
    <table id="mytable" class="reports">
          <thead>
@@ -9,33 +10,34 @@
                 <% @categories.each do |c| %>
                    <% @assignments = c.assignments %>
                    <% @assignments.each do |a| %>
-                       <th><%= a.name %></th>
+                       <th>
+                           <%= a.name %>
+                           <% unless a.date.nil? %><br/>
+						       <%= a.date.strftime("%m/%d/%Y") %> 
+						   <% end %>
+	                   </th>
                    <% end %>
                 <% end %>
          </thead>
          <tbody>    
-             
-        <% @students.each do |st| %>
-         
-              <tr>
-                   <td><%= st.name %></td>
-                   <% @categories.each do |f| %>
-                       <% assignments = f.assignments  %>
-                       <% assignments.each do |a| %>
-                           <% grades = a.grades %>
-                           <% if grades.empty? %>
-                               <td></td>
-                           <% else %>
-                               <% grades.each do |g| %>
-                                   <td><%= g.grade %></td>
-                                   <% grades.delete_if {|x| x == g } %>
-                               <% end %>
-                           <% end %>
-                       <% end %>
-                   <% end %>           
-              </tr> 
-      
-        <% end %>
+    
+	        <% @students.each do |st| %>
+	             <tr onclick="location.href='<%= url(:report_card, :ref => st.id, :id => @report.id) %>'" style="cursor:pointer">
+	                 <td><%= st.name %></td>
+					 <% @categories.each do |c| %>
+		                  <% c.assignments.each do |a| %>
+						  	    <% grades = st.grades.find(:all, :conditions => ['assignment_id = ?', a.id]) %>
+								<% if grades.empty? %>
+								    <td></td>
+								<% else %>
+				    	             <% grades.each do |g| %>
+					                   <td> <%= g.grade %></td>
+									 <% end %>
+								<% end %>
+		                  <% end %>
+		             <% end %>
+			    </tr> 
+	        <% end %>
                              
                  
         </tbody>

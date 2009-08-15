@@ -15,11 +15,12 @@
 <%= form_for(@report, :id => "raja", :action => resource(@report), :class => "cmxform", :onsubmit => "cool()" ) do %>
        
   <div class="add-subjects new-fieldset">
+	
 	     <p class="main-subject">        
 		       <%= text_field  :subject_name,  :label => "Main Subject", :title => "Subject", :class => "required" %>
 		       <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, 
 		                  :label => "for", :selected => "#{@report.classroom.class_name.titleize}", 
-		                  :prompt => "Please Select", :class => "required"  %>
+		                  :prompt => "Please Select Classroom", :class => "required"  %>
 	     </p>
              
          <div class="test">
@@ -33,31 +34,32 @@
 								<%= text_field :name => "cgories_#{f.id}[category_name][]", :class => "text", :value => "#{f.category_name}" %>
                              <% end %>
                          </p>  
-                
+                	    <% q = 1 %>
                          <ul id="ament<%= f.id %>">
-							<% q = 1 %>
+						
 	  						<% f.assignments.each do |a| %>
 	                             <li>
 	                                  <%= text_field  :name => "cgories_#{f.id}[assignment][name][]", :class => "short",
 	                                                  :value => "#{a.name}" %>
-                                      <%= text_field  :name => "cgories_#{f.id}[assignment][max_point][]", :class => "short apart number", 
-                                                      :value => "#{a.max_point}" %>
+	                                     <%= text_field  :name => "cgories_#{f.id}[assignment][max_point][]", :class => "short apart number", 
+	                                                     :value => "#{a.max_point}" %>
 										<% if f.assignments.length > 1 %>	
-										   <% if q != 1 %>
-										   	  <%= link_to "", url(:delete_report, a, :label => "assignment"), :class => "delete-btn" %>
-										   <% end %>
+											   <% if q != 1 %>
+											   	  <%= link_to "", url(:delete_report, a, :label => "assignment"), :class => "delete-btn" %>
+											   <% end %>
 										<% end %>
-                                  </li>
-                                <% q+= q %>
-                             <% end %>
-                         </ul>
+	                                 </li>
+	                               <% q+= q %>
+	                            <% end %>
+                          </ul>
                          <a href="#"  class="add-more"  onClick="assignments(this.parentNode.id); return false;">Add Assignment</a>
                          <div class="clear" style="padding-bottom:8px">&nbsp;</div>
                     </div>     
               <% end %> 
          </div>
 
-                <div id="test" class="test" style="display:block;">
+                <div id="test" class="test" style="display:block;"> 
+	
 		        	 <%= fields_for @category do %>
 		                   <p class="category">					
 			                    <label>Category (Optional)</label>				
@@ -67,9 +69,10 @@
 				
 					 <%= fields_for @assignment do %> 
 					       <%= partial 'grade_edit' %>
-					       <ul id="assignment"></ul>
+					       <ul id="assignment" class="assignment"></ul>
 					       <a href="#"  class="add-more"  onClick="testing(this.parentNode.id); return false;">Add Assignment</a>       
 					 <% end =%>
+					
 					 <div class="clear" style="padding-bottom:8px">&nbsp;</div>
 			    </div>
 			
