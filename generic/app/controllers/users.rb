@@ -313,7 +313,7 @@ class Users < Application
     @selected = "s_details"
     @parent = session.user
     @students = @parent.students
-    @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @classrooms = @current_school.active_classrooms
     render
   end
   
@@ -321,7 +321,7 @@ class Users < Application
   def student_update
     @parent = session.user
     @students = @parent.students
-    @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @classrooms = @current_school.active_classrooms
     student_id = @students.collect{|x| x.id }
     sp = params[:classroom_id].zip(student_id)
     if @students.length == 1

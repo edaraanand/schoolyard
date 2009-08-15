@@ -148,7 +148,7 @@ class Teams < Application
 
   def team_values
     @teachers = @current_school.staff.find(:all)
-    @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @classrooms = @current_school.active_classrooms
     @years = (2009..2025).to_a
   end
 

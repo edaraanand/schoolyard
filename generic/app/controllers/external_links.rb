@@ -77,7 +77,7 @@ class ExternalLinks < Application
   private
 
   def classrooms
-    @classrooms = @current_school.classrooms.find(:all)
+    @classrooms = @current_school.classrooms
   end
 
   def access_rights

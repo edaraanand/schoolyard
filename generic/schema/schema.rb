@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 75) do
+ActiveRecord::Schema.define(:version => 76) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(:version => 75) do
     t.integer  "person_id"
     t.integer  "school_id"
     t.boolean  "activate"
+    t.integer  "position",   :default => 0
   end
 
   create_table "classtypes", :force => true do |t|

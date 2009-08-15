@@ -170,7 +170,7 @@ class HomeWorks < Application
   private
 
   def classrooms
-    @classrooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @classrooms = @current_school.active_classrooms
   end
 
 

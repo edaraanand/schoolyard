@@ -6,7 +6,7 @@ class Classrooms < Application
   before :class_types, :exclude => [:class_details]
 
   def index
-    @classrooms = @current_school.classrooms.find(:all)
+    @classrooms = @current_school.classrooms
     render
   end
 

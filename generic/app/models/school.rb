@@ -5,7 +5,9 @@ class School < ActiveRecord::Base
   has_many :staff
   has_many :welcome_messages
   has_many :forms
-  has_many :classrooms
+  has_many :classrooms, :order => :position
+  has_many :active_classrooms, :order => :position, :conditions => ['activate = ?', true], :class_name => "Classroom", :foreign_key => :school_id
+  has_many :core_classrooms, :order => :position, :conditions => ['class_name != ? and activate = ?', "Sports", true], :class_name => "Classroom", :foreign_key => :school_id
   has_many :teams
   has_many :external_links
   has_many :protectors
