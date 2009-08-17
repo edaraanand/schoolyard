@@ -11,7 +11,7 @@ class Approvals < Application
   def index
     @selected = "approve"
     @announcements = @current_school.announcements.paginate(:all, :conditions => ["approve_announcement = ? and approved = ? and label != ?", true, false, "feedback" ], :per_page => 10,
-    :page => params[:page])
+    :page => params[:page], :order => "created_at DESC")
     render
   end
 

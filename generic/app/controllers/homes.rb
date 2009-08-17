@@ -7,7 +7,7 @@ class Homes < Application
     
   def index
     @date = Date.today
-    @all_announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true])
+    @all_announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], :order => "created_at DESC")
     @announcements = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ? and expiration >= ?", 'Home Page', true, true, @date], :order => "created_at DESC", :limit => 4 )
     @all_from_principals = @current_school.announcements.find(:all, :conditions => ["label = ?", 'from_principal'])
     @urgent_announcements = @current_school.announcements.find(:all, :conditions => ["label = ? and expiration >= ?", 'urgent', @date], :order => "created_at DESC", :limit => 2)
