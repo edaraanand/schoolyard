@@ -26,6 +26,7 @@ class Students < Application
     if ( ( (params[:f_name_parent2] == "") && (params[:l_name_parent2] == "") ) && (params[:email_parent2] == "") )
       if params[:classroom_id] !=  ""
         if (@student.valid?) && (@protector.valid?)
+          @student.activate = true
           @student.save
           @protector.save
           Ancestor.create({:student_id => @student.id, :protector_id => @protector.id })
@@ -137,6 +138,8 @@ class Students < Application
     protector_id = @sp.collect{|x| x.id }
     sp = params[:parent][:first_name].zip(params[:parent][:last_name], params[:parent][:email], protector_id)
     if @student.update_attributes(params[:student])
+      @student.activate = true
+      @student.save
       Study.update(@study_id.id, {:student_id => @student.id, :classroom_id => @class.id })
       if @sp.length == 1
         if ( ( (params[:f_name_parent2] != "") || (params[:l_name_parent2] != "") ) || (params[:email_parent2] != "") )
