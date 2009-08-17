@@ -1,13 +1,13 @@
 <ul id="ranking">
     <% @r = (1..5).to_a %>
-  
-  <% @r.each do %>
+       
+ <% @r.each do %>
          <li>
               <%= text_field  :name => "rank[name][]", :class => "short defaultText defaultTextActive", :title => "Grades" %> 
               <%= text_field  :name => "rank[from][]", :class => "short apart defaultText defaultTextActive number", 
-                              :title => "Min %" %> 
+                              :min => "0", :title => "Min %" %> 
               <%= text_field  :name => "rank[to][]", :class => "short apart defaultText defaultTextActive number", 
-                              :title => "Max %" %>
+                              :max => "100", :title => "Max %" %>
               <a href='#' class="delete-btn" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"></a>
          </li>
        

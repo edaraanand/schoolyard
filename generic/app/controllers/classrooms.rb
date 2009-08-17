@@ -21,7 +21,6 @@ class Classrooms < Application
     @teachers = @current_school.staff.find(:all)
     class_teacher = params[:class][:people][:class_teacher]
     @class_peoples = []
-   
     if @classroom.valid?
       unless class_teacher == ""
         unless params[:class][:people][:roles]
@@ -49,7 +48,7 @@ class Classrooms < Application
            id = params[:class][:people][:ids]
            role = params[:class][:people][:roles]
            
-         unless id.include?("please")
+         unless id.include?("")
             unless role.include?("")
               if @classroom.class_type == "Sports"
                  @classroom.class_name = "Sports"
@@ -159,7 +158,7 @@ class Classrooms < Application
           redirect resource(:classrooms)
         end
       else
-        unless ( ids.include?("please") )|| ( ids.include?("") )
+        unless ( ids.include?("") )|| ( ids.include?("") )
           unless roles.include?("")
             if @classroom.class_type == "Sports"
               ClassPeople.update(@a_d.id, { :person_id => "#{cls_id}", :classroom_id => @classroom.id, :role => "Athletic Director" })
