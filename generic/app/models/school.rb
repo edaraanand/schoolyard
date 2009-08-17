@@ -10,6 +10,7 @@ class School < ActiveRecord::Base
   has_many :active_classrooms, :order => :position, :conditions => ['activate = ?', true], :class_name => "Classroom", :foreign_key => :school_id
   has_many :core_classrooms, :order => :position, :conditions => ['class_name != ? and activate = ?', "Sports", true], :class_name => "Classroom", :foreign_key => :school_id
   has_many :classes, :order => :position, :conditions => ["activate = ? and class_type = ?",  true, "Classes" ], :class_name => "Classroom", :foreign_key => :school_id
+  has_many :extra_curricular, :order => :position, :conditions => ["activate = ? and class_type = ?",  true, "Subject" ], :class_name => "Classroom", :foreign_key => :school_id
 
   has_many :teams
   has_many :external_links
