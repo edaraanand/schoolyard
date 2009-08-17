@@ -1,8 +1,9 @@
    <%= partial 'layout/main' %>
    
-        <% #@classes =  @current_school.classrooms.find(:all, :conditions => ['activate = ?', true]) %>
+        <% #@classes =  @current_school.active_classrooms %>
         <% @classrooms = @current_school.core_classrooms %>
-        <% @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and  activate = ?' , "Classes", true], :order => "class_name ASC") %>
+        <%# @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and  activate = ?' , "Classes", true], :order => "class_name ASC") %>
+        <% @classes = @current_school.classes %>
         <% @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ? ', "Extra Cirrcular", true], :order => "class_name ASC") %>
 
 

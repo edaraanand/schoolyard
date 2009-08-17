@@ -181,11 +181,11 @@ class Announcements < Application
 
 
   def classrooms
-    @classes = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @classes = @current_school.classes
   end
 
   def rooms
-    @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @class = @current_school.classes
     room = @class.collect{|x| x.class_name.titleize }
     @classrooms = room.insert(0, "Home Page")
   end

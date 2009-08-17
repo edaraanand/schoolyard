@@ -131,7 +131,7 @@ class Forms < Application
 
 
   def form_files
-    @classes = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @classes = @current_school.active_classrooms
     @select = "forms"
     @selected = "all_forms"
     unless params[:id].nil?
@@ -152,11 +152,11 @@ class Forms < Application
   private
 
   def forms
-    @classes = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @classes = @current_school.active_classrooms
   end
 
   def classrooms
-    classes = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    classes = @current_school.active_classrooms
     room = classes.collect{|x| x.class_name.titleize }
     @classrooms = room.insert(0, "All Classes")
     @years = (2009..2025).to_a

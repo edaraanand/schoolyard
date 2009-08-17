@@ -13,12 +13,12 @@ class Calendars < Application
 
   def new
     @calendar = Calendar.new
-    @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @class_rooms = @current_school.classes
     render
   end
 
   def create
-    @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @class_rooms = @current_school.classes
     @calendar = @current_school.calendars.new(params[:calendar])
     i=0
     if params[:calendar][:class_name] != ""
@@ -54,7 +54,7 @@ class Calendars < Application
 
   def edit
     @calendar = @current_school.calendars.find(params[:id])
-    @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @class_rooms = @current_school.classes
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
     @allowed = 1 - @attachments.size
     render
@@ -78,7 +78,7 @@ class Calendars < Application
   end
 
   def update
-    @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @class_rooms = @current_school.classes
     @calendar = @current_school.calendars.find(params[:id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
     @allowed = 1 - @attachments.size
@@ -139,7 +139,7 @@ class Calendars < Application
     if params[:label] == "attachment"
       @attachment = @current_school.attachments.find(params[:id])
       @calendar = @current_school.calendars.find_by_id(@attachment.attachable_id)
-      @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+      @class_rooms = @current_school.classes
       @attachment.destroy
       @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
       @allowed = 1 - @attachments.size
@@ -190,7 +190,7 @@ class Calendars < Application
   private
 
   def classrooms
-    @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @class = @current_school.classes
     room = @class.collect{|x| x.class_name.titleize }
     @classrooms = room.insert(0, "All Events")
   end

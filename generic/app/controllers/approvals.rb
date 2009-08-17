@@ -105,7 +105,7 @@ class Approvals < Application
      @not_exist = "Student details entered by the parent do not match the school records"
      @parent = @current_school.parents.find_by_id(params[:id])
      raise NotFound unless @parent
-     @classrooms = @current_school.active_classrooms
+     @classrooms = @current_school.classes
      @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
      if params[:label] 
         if params[:label] != ""
@@ -217,7 +217,7 @@ class Approvals < Application
   end
 
   def classrooms
-    @class = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @class = @current_school.classes
     room = @class.collect{|x| x.class_name.titleize }
     @classrooms = room.insert(0, "Home Page")
   end

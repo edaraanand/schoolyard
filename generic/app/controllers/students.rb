@@ -13,13 +13,13 @@ class Students < Application
 
   def new
     @student = Student.new
-    @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @class_rooms = @current_school.classes
     @protector = Protector.new
     render
   end
 
   def create
-    @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @class_rooms = @current_school.classes
     @student = @current_school.students.new(params[:student])
     @protector = @current_school.protectors.new(params[:protector])
     @class = @current_school.classrooms.find_by_class_name(params[:classroom_id])
@@ -122,7 +122,7 @@ class Students < Application
 
   def edit
     @student = @current_school.students.find(params[:id])
-    @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @class_rooms = @current_school.classes
     @sp = @student.protectors
     @student_class = @student.studies
     render
@@ -130,7 +130,7 @@ class Students < Application
 
   def update
     @student = @current_school.students.find(params[:id])
-    @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @class_rooms = @current_school.classes
     @sp = @student.protectors
     @student_class = @student.studies
     @study_id = Study.find_by_student_id(@student.id)
@@ -392,7 +392,7 @@ class Students < Application
   private
 
   def classrooms
-    @class_rooms = @current_school.classrooms.find(:all, :conditions => ['activate = ?', true])
+    @class_rooms = @current_school.classes
   end
 
   def access_rights

@@ -15,8 +15,8 @@ class Homes < Application
     @external_links = @current_school.external_links.find(:all, :conditions => ['label = ?', "Home Page"])
     @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ["access_name = ?", "Home Page"])
     @classrooms = @current_school.active_classrooms
-    @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ?', "Classes", true], :order => "class_name ASC")
-    @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ?', "Extra Cirrcular", true ], :order => "class_name ASC")
+    @classes = @current_school.classes
+    @extracurricular = @current_school.extra_curricular
     @spot_light = @current_school.spot_lights.find(:first, :conditions => ['class_name = ?', "Home Page"], :order => 'created_at DESC')
     
     render

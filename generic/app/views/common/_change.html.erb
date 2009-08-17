@@ -1,9 +1,7 @@
 
 <% @classrooms = @current_school.core_classrooms %>
-<% @classes = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and  activate = ?' , "Classes", true], 
-                                               :order => "class_name ASC") %>
-<% @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ? ', "Subject", true], 
-                                          :order => "class_name ASC") %>
+<% @classes = @current_school.classes %>
+<%  @extracurricular = @current_school.extra_curricular %>
 
 <div id="info" style="display:none;">
     <h3 style="text-align:center; font-size:100%">Please select the classroom you would like to visit</h3>
