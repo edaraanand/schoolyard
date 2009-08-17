@@ -545,7 +545,7 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 #content-wrap.wide{width:700px;}
 #content-wrap.wide #content{width:100%;}
 .wide h2 {position:relative;}
-.wide h2 .actions{ text-align:right; position:absolute; right:0; bottom:4px;} 
+.wide h2 .actions{ text-align:right; position:absolute; right:0; top:4px;} 
 .wide #reportID{min-width:220px;}
 .add-subjects {padding:0; background:#f7f7f7; margin:10px 0;}
 .add-subjects .save-cancel{background:#fff;}
