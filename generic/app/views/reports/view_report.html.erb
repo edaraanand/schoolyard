@@ -1,5 +1,9 @@
 <h2 class="current-page">
      Grades/Reports > <%= @report.subject_name %> 
+	 <span class="actions">
+		  <%= link_to "All Subjects", resource(:reports) %> &nbsp; &nbsp;
+	      <%= link_to "All Assignments", url(:assignments,  :id => @report.id) %>  
+     </span>
 </h2> <br/>
 
 <h3> Report for <%= @report.subject_name %> </h3>
@@ -20,8 +24,7 @@
                 <% end %>
          </thead>
          <tbody>    
-    
-	        <% @students.each do |st| %>
+   	        <% @students.each do |st| %>
 	             <tr onclick="location.href='<%= url(:report_card, :ref => st.id, :id => @report.id) %>'" style="cursor:pointer">
 	                 <td><%= st.name %></td>
 					 <% @categories.each do |c| %>
@@ -38,13 +41,7 @@
 		             <% end %>
 			    </tr> 
 	        <% end %>
-                             
-                 
+    
         </tbody>
    </table>
-   
-   
-    <div class="page-links">
-        <%= link_to "All Subjects", resource(:reports) %> |
-        <%= link_to "All Assignments", url(:assignments,  :id => @report.id) %>      
-    </div>
+  

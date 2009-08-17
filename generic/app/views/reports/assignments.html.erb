@@ -1,4 +1,11 @@
-<h2 class="current-page">Grades/Reports > Add Grade</h2>
+<h2 class="current-page">
+	Grades/Reports > Add Grade
+	<span class="actions">
+		 <%= link_to "All Subjects", resource(:reports) %>
+    </span>
+	
+</h2>
+
 <span>For :</span>
 
 <% if params[:label] %>
@@ -52,7 +59,5 @@
 	      <% end %>
 	  </ul>
   <% end %>
-  <div class="page-links">
-    <%= link_to "All Subjects", resource(:reports) %>
-  </div>
+ 
 </div>

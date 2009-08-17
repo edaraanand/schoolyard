@@ -1,13 +1,14 @@
 <h2 class="current-page">
      Grades/Reports > <%= @report.subject_name %> 
+    <span class="actions">
+	   	 <%= link_to "All Subjects", resource(:reports) %> &nbsp; &nbsp;
+	     <%= link_to "All Assignments", url(:assignments,  :id => @report.id) %> &nbsp; &nbsp;  
+	     <%= link_to "View Report", url(:view_report,  :id => @report.id) %>
+	</span>
+	
 </h2> <br/>
 
 <h3><%= @student.name %></h3>
 
   <%= partial 'common/student_grade' %>
 	
-	<div class="page-links">
-	     <%= link_to "All Subjects", resource(:reports) %> |
-	     <%= link_to "All Assignments", url(:assignments,  :id => @report.id) %> |  
-	     <%= link_to "View Report", url(:view_report,  :id => @report.id) %>
-	</div>
