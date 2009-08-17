@@ -24,7 +24,9 @@
 								   - <br/>
 								<% else %>
 				    	            <% grades.each do |g| %>
-					                   <%= g.score %> / <%= a.max_point %> <br/> 
+				 					    <% unless g.score.nil? %>		
+					                       <%= g.score %> / <%= a.max_point %> <br/> 
+									    <% end %>
 					                <% end %>
 								<% end %>
 						 <% end %>
@@ -36,7 +38,9 @@
 									   - <br/>
 									<% else %>
 					    	            <% grades.each do |g| %>
-						                   <%= g.grade %><br/>
+					                       <% unless g.grade.nil? %>
+						                       <%= g.grade %><br/>
+ 											<% end %>
 						                <% end %>
 									<% end %>
 							 <% end %>
@@ -48,7 +52,9 @@
 									   - <br/>
 									<% else %>
 					    	            <% grades.each do |g| %>
-						                   <%= g.percentage.to_i %>%<br/>
+					                         <% unless g.percentage.nil? %>
+						                         <%= g.percentage.to_i %>%<br/>
+											 <% end %>
 						                <% end %>
 									<% end %>
 							 <% end %>
