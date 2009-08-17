@@ -8,11 +8,24 @@
           <li><%= flash[:error2] %> </li>
        <% end %>
  </ul>
+  <% s = (0..150).to_a %>
 
+	<div class="container">
+		<ol>
+			<li><label for="cls" class="error">Please enter the Class Name</label></li> 
+			<li><label for="class[people][class_teacher]" class="error">Please select the Faculty</label></li> 
+			<% s.each do |f| %>
+			  	<li><label for="txt<%= f %>" class="error">Please enter the Role</label></li> 
+			    <li><label for="faculty<%= f %>" class="error">Please select the Faculty</label></li>
+			<% end %>
+			 
+	    </ol>
+	</div>
+	
 <fieldset>
       <h2 class="current-page"> Classrooms &gt; Add New </h2>
 
-      <%= form_for(@classroom, :action => resource(:classrooms) ) do %>
+      <%= form_for(@classroom, :id => "class", :action => resource(:classrooms), :class => "cmxform" ) do %>
      
           <ul id="class_room">
                    <li>
@@ -24,7 +37,7 @@
                      
                        <li>
 	                        <div id="class_name" style="display:block">
-                                <%= text_field :class_name, :id => "cls", :label => "Class Name", :maxlength => "75" %>
+                                <%= text_field :class_name, :id => "cls", :label => "Class Name", :class => "required", :maxlength => "75" %>
                             </div>
                        </li>
                      
@@ -32,7 +45,7 @@
                      
                           <li>
 	                           <div id="class_name" style="display:none">
-	                               <%= text_field :class_name, :id => "cls", :label => "Class Name", :maxlength => "75" %>
+	                               <%= text_field :class_name, :id => "cls", :label => "Class Name", :class => "required", :maxlength => "75" %>
 	                           </div>
 	                      </li>
                      
@@ -40,7 +53,7 @@
                      
                           <li>
 	                           <div id="class_name" style="display:block">
-	                                 <%= text_field :class_name, :id => "cls", :label => "Class Name", :maxlength => "75" %>
+	                                 <%= text_field :class_name, :id => "cls", :label => "Class Name", :class => "required", :maxlength => "75" %>
 	                           </div>
 	                      </li>
                      
@@ -61,7 +74,7 @@
                         <div id="sport" style="display:block">
                            <label>Athletic Director</label>
                         </div>
-                   <% else %>
+                  <% else %>
                          <div id="teacher" style="display:block">
                              <label>Class Teacher</label>
                          </div>
@@ -70,7 +83,7 @@
                          </div>
                    <% end %>
                                  
-                 	<%= select :class => "apart", :name => "class[people][class_teacher]", :collection => @current_school.staff, 
+                 	<%= select :class => "apart required", :name => "class[people][class_teacher]", :collection => @current_school.staff, 
 	                           :value_method => :id, :text_method => :name, :prompt => "Select Faculty" %>
 	          </li>
               
@@ -86,14 +99,15 @@
 </fieldset>
 
 <script type= "text/javascript">
-  
- $(cls).focus();
+
+
+ $j('#cls').focus();
 
 function addFormField()
   {
 
     var id = document.getElementById('id').value;
-    $j('#roles').append("<li id='row" + id + "'><input type='text' class='short text' name='class[people][roles][]' id='txt" + id + "'><select class='apart' name='class[people][ids][]'><option value='please'>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' class='remove' onclick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a></li>");
+    $j('#roles').append("<li id='row" + id + "'><input type='text' class='short text required' name='class[people][roles][]' id='txt" + id + "'><select class='apart required' id='faculty"+id+"' name='class[people][ids][]'><option value=''>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' class='remove' onclick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a></li>");
     $('txt'+id).focus();
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
@@ -116,7 +130,6 @@ function addFormField()
            class_name.style.display      =  "none";
            teacher.style.display      =  "none";
            sport.style.display      =  "block";
-           
         }
         else
            {
@@ -126,6 +139,45 @@ function addFormField()
          }
      }
        
-     
+
+     // Validation for Adding Classrooms
+
+	var container = $j('div.container');
+
+	// validate the form when it is submitted
+	var validator = $j("#class").validate({
+		errorContainer: container,
+		errorLabelContainer: $("ol", container),
+		wrapper: 'li',
+		meta: "validate"
+	});
+	
+
 </script>
 
+
+<style type="text/css">
+
+ 	.cmxform fieldset li.error label { color: red; }
+	div.container {
+		background-color: #eee;
+		border: 1px solid red;
+		margin: 5px;
+		padding: 5px;
+	}
+	div.container ol li {
+		list-style-type: disc;
+		margin-left: 20px;
+	}
+	div.container { display: none }
+	.container label.error {
+		display: inline;
+	}
+
+	form.cmxform label.error {
+		display: block;
+		margin-left: 1em;
+		width: auto;
+	}
+
+</style>
