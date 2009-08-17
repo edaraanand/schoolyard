@@ -577,9 +577,10 @@ span.max-points{text-transform:capitalize;}
 
 table.reports#mytable th.student{padding-right:30px;}
 
-div.test {position:relative; margin:16px 6px;}
+div.test {position:relative; margin:16px 6px 0px; border-bottom:1px solid #eee;}
 div.test .test{padding:0;}
-div.test ul.assignment li .delete-btn, div.test ul#assignment li .delete-btn{position:absolute; right:-85px; top:0;}
+
+/*div.test ul.assignment li .delete-btn, div.test ul#assignment li .delete-btn{position:absolute; right:24px; top:0;}*/
 
 
 
@@ -589,8 +590,8 @@ div.test ul.assignment input, div.test ul#assignment input{margin-right:4px;}
 div.test ul li{padding:2px 0;}
 #content .main-subject{background:#f0f0f0; padding:12px 4px 12px 4px; border-bottom:1px dashed #ddd; margin-bottom:0;}
 .main-subject select{width:200px;}
-.add-subjects .add-more{clear:both; float:right}
-.assignment#assignment{clear:both;}
+.add-subjects .add-more{clear:both; float:right; margin-right:250px; display:inline;}
+.assignment{clear:both; width:50%; float:right;}
 
 #content p.assignments-header{position: absolute; left: 164px; top:0; margin:0; padding:0;}
 
