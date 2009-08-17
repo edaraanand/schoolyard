@@ -25,33 +25,33 @@
              
          <div class="test">
 	          <% @categories.each do |f| %>
-                    <div id = "<%= f.id %>">
+                    <div id = "<%= f.id %>" >
                          <p class="category">
                             <label>Category(optional)</label>
- 							<% if f.category_name == "category" %>
+ 							              <% if f.category_name == "category" %>
                                 <%= text_field :name => "cgories_#{f.id}[category_name][]", :class => "text", :value => "" %>
                             <% else %>
-								<%= text_field :name => "cgories_#{f.id}[category_name][]", :class => "text", :value => "#{f.category_name}" %>
+								                 <%= text_field :name => "cgories_#{f.id}[category_name][]", :class => "text", :value => "#{f.category_name}" %>
                              <% end %>
                          </p>  
-                	    <% q = 1 %>
-                         <ul id="ament<%= f.id %>">
-						
-	  						<% f.assignments.each do |a| %>
+                	       <% q = 1 %>
+                         <ul id="ament<%= f.id %>" class="assignment">
+                         <p style="margin-left:10px; margin-bottom:0; padding:0;">Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Max Points</p>
+						 	           <% f.assignments.each do |a| %>
 	                             <li>
 	                                  <%= text_field  :name => "cgories_#{f.id}[assignment][name][]", :class => "short",
 	                                                  :value => "#{a.name}" %>
-	                                     <%= text_field  :name => "cgories_#{f.id}[assignment][max_point][]", :class => "short apart number", 
-	                                                     :value => "#{a.max_point}" %>
-										<% if f.assignments.length > 1 %>	
-											   <% if q != 1 %>
-											   	  <%= link_to "", url(:delete_report, a, :label => "assignment"), :class => "delete-btn" %>
-											   <% end %>
-										<% end %>
-	                                 </li>
-	                               <% q+= q %>
-	                            <% end %>
-                          </ul>
+	                                  <%= text_field  :name => "cgories_#{f.id}[assignment][max_point][]", :class => "short apart number", 
+	                                                  :value => "#{a.max_point}" %>
+                										<% if f.assignments.length > 1 %>	
+                											   <% if q != 1 %>
+                											   	  <%= link_to "", url(:delete_report, a, :label => "assignment"), :class => "delete-btn" %>
+                											   <% end %>
+                										<% end %>
+	                             </li>
+	                                 <% q+= q %>
+	                        <% end %>
+                         </ul>
                          <a href="#"  class="add-more"  onClick="assignments(this.parentNode.id); return false;">Add Assignment</a>
                          <div class="clear" style="padding-bottom:8px">&nbsp;</div>
                     </div>     
@@ -63,27 +63,25 @@
 		        	 <%= fields_for @category do %>
 		                   <p class="category">					
 			                    <label>Category (Optional)</label>				
-							    <%= text_field :name => "category[category_name][]", :class =>"text" %>
-							</p>
+							            <%= text_field :name => "category[category_name][]", :class =>"text" %>
+						        	</p>
 			         <% end =%>
 				
 					 <%= fields_for @assignment do %> 
+					 <p style="margin-left:350px; margin-bottom:0; padding:0;">Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Max Points</p>
+           
 					       <%= partial 'grade_edit' %>
 					       <ul id="assignment" class="assignment"></ul>
 					       <a href="#"  class="add-more"  onClick="testing(this.parentNode.id); return false;">Add Assignment</a>       
 					 <% end =%>
 					
-					 <div class="clear" style="padding-bottom:8px">&nbsp;</div>
+					  <div class="clear" style="padding-bottom:8px">&nbsp;</div>
 			    </div>
-			
-			 				
-			   
-          <div class="save-cancel">
-	            <a id="plus3" href="">Add Category </a>
-                <%= submit "Save" %> Or  <%= link_to "Cancel", url(:assignments, :id => @report.id), :class => "cancel" %>
-                <a id="minus3" href="" class="cancel">Remove Category </a>
+          <div class="save-cancel" style="margin-top:0px;">
+            <a id="plus3" href="">Add Another Category</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <%= submit "Save" %> Or  <%= link_to "Cancel", url(:assignments, :id => @report.id), :class => "cancel" %>
+            <a id="minus3" href="" class="cancel">Remove Category </a>
           </div>
-
    </div>          
       <% end =%>                      
   
