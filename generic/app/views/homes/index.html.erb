@@ -1,6 +1,7 @@
 <div id="classContainer">
      <div id="sidebar" class="left-block">
         <%= partial 'common/principal_image' %>
+        <div class="clear"></div>
         <% if @from_principals.blank? %>
           <p class="subText">There are no articles at this time</p>
         <% else %>
@@ -10,8 +11,9 @@
                               <span class="date"><%=  principal.created_at.strftime("%d")%></span>
                               <span class="month"><%=  principal.created_at.strftime("%b")%></span>
                          </div>
-                          <span><br/><%= link_to "#{principal.title}", url(:home, principal.id, :label => 'principal') %></span>
-                         <p class="separator"><%= snippet(principal.content, 50) %></p>
+                          <h4 style="padding:10px 0 0 0"><%= link_to "#{principal.title}", url(:home, principal.id, :label => 'principal') %></h4>
+                         <p><%= snippet(principal.content, 50) %></p>
+                         <div  class="separator"></div>
                    </div>
                 <% end %>
          <% end %>
