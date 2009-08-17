@@ -35,13 +35,14 @@
           <%= will_paginate (@from_principals, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
       </div>
  <% else %>
+ <br />
       <h2>All Announcements 
             &#124;
            <%= link_to_right((right = "announcements"), "Add New", resource(:announcements, :new, :l => "Home Page")) %>
-      </h2>
-      <%= link_to " &larr; Back to Home Page", url(:homes) %> <br/>
+      </h2><br />
+      <%= link_to " &larr; Back to Home Page", url(:homes) %> <br/><br />
         <% for announcement in @urgent_announcements %>
-                       <div class="data-block long-block">
+                       <div class="data-block long-block urgent-display">
                            <div class="ddmmm">
                                 <span class="date"><%=  announcement.created_at.strftime("%d")%></span>
                                 <span class="month"><%=  announcement.created_at.strftime("%b")%></span>
