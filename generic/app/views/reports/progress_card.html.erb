@@ -1,6 +1,10 @@
 
 <h2 class="current-page">
      Grades/Reports > <%= @report.subject_name %> 
+  <span class="actions">
+	  <%= link_to "All Subjects", url(:class_details, :id => @classroom.id, :label => "grades")%> 
+  </span>
+
 </h2> <br/>
 
 View :  <select id = 'reportID'>
@@ -14,13 +18,6 @@ View :  <select id = 'reportID'>
 <h3><%= @student.name %></h3>
 
 <%= partial 'common/student_grade' %>
-
-
-
-
-<div class="page-links">
-     <%= link_to "All Subjects", url(:class_details, :id => @classroom.id, :label => "grades")%> 
-</div>
 
 
 

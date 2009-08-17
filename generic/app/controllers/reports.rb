@@ -50,7 +50,6 @@ class Reports < Application
         @report = @current_school.reports.find_by_classroom_id(@classroom.id)
         if @report.nil? 
            redirect url(:reports, :label => "classes", :id => @classroom.id)
-           # raise NotFound
         else
            @categories = @report.categories
            render
@@ -139,7 +138,7 @@ class Reports < Application
         end
      end
      redirect url(:assignments, :id => @report.id)
-   end
+  end
    
    def grades
      @assignment = @current_school.assignments.find_by_id(params[:id])

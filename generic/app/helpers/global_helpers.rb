@@ -78,6 +78,20 @@ module Merb
         end
      end
      
+     def average_grade(percentage)
+          percentage = percentage
+          @ranks = Rank.find(:all)
+          @ranks.each do |f|
+             range = Range.new(Integer(f.from), Integer(f.to))
+             array = range.to_a
+             if array.include?(percentage)
+                 @grade = "#{f.name}"
+             end
+          end
+         @grade
+     end
+     
+     
      def snippet(thought, wordcount)
          thought.split[0..(wordcount-1)].join(" ") +(thought.split.size > wordcount ? " …" : "") 
      end
