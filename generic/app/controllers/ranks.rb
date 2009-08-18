@@ -40,10 +40,12 @@ class Ranks < Application
     to = params[:rank][:to]
     s = names.zip(from, to, @rank_id)
     s.each do |l|
-       if l[3].nil?
-          Rank.create({:name => "#{l[0]}", :from => "#{l[1]}", :to => "#{l[2]}", :school_id => @current_school.id })
-       else
-          Rank.update(l[3], {:name => "#{l[0]}", :from => "#{l[1]}", :to => "#{l[2]}", :school_id => @current_school.id })
+      if ( ( ( l[0] != "") && (l[1] != "") ) && (l[2] != "") )
+         if l[3].nil?
+             Rank.create({:name => "#{l[0]}", :from => "#{l[1]}", :to => "#{l[2]}", :school_id => @current_school.id })
+         else
+             Rank.update(l[3], {:name => "#{l[0]}", :from => "#{l[1]}", :to => "#{l[2]}", :school_id => @current_school.id })
+         end
        end
     end
     redirect resource(:reports)
