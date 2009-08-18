@@ -1,75 +1,34 @@
 <table id="mytable" class="reports">
-        <thead>
-               <th class="student">Category</th>
-               <th class="student">Assignments</th>
-               <th class="student">Score / Max Points</th>
-			   <th class="student">Grade</th>
-			   <th class="student">Percentage</th>
-               <th class="student">Date</th>
-        </thead>
-       <tbody>
-
-        	  <% @categories.each do |c| %>
-			            <tr>
-			                <td><%= c.category_name %></td>
-                      <td nowrap>
-                          <% c.assignments.each do |a| %>
-                             <%= a.name %> <br/>
-                          <% end %> 
-                      </td>
-                      <td nowrap>
-                          <% c.assignments.each do |a| %>
-                              <% grades = @student.grades.find(:all, :conditions => ['assignment_id = ?', a.id]) %>
-                              <% if grades.empty? %>
-                                 - <br/>
-                              <% else %>
-                                  <% grades.each do |g| %>
-                                    <% unless g.score.nil? %>		
-                                         <%= g.score %> / <%= a.max_point %> <br/> 
-                                    <% end %>
-                                  <% end %>
-                              <% end %>
-                          <% end %>
-                      </td>
-                      <td nowrap>
-                          <% c.assignments.each do |a| %>
-                              <% grades = @student.grades.find(:all, :conditions => ['assignment_id = ?', a.id]) %>
-                              <% if grades.empty? %>
-                              - <br/>
-                              <% else %>
-                                  <% grades.each do |g| %>
-                                      <% unless g.grade.nil? %>
-                                         <%= g.grade %><br/>
-                                      <% end %>
-                                  <% end %>
-                              <% end %>
-                          <% end %>
-                      </td>
-                      <td nowrap>
-                          <% c.assignments.each do |a| %>
-                              <% grades = @student.grades.find(:all, :conditions => ['assignment_id = ?', a.id]) %>
-                              <% if grades.empty? %>
-                              - <br/>
-                              <% else %>
-                                  <% grades.each do |g| %>
-                                      <% unless g.percentage.nil? %>
-                                          <%= g.percentage.to_i %>%<br/>
-                                      <% end %>
-                                  <% end %>
-                              <% end %>
-                          <% end %>
-                      </td>
-                      <td nowrap>
-                          <% c.assignments.each do |a| %>
-                              <% unless a.date.nil? %>
-                                 <%= a.date.strftime("%m/%d/%Y") %> <br/>
-                              <% end %>
-                          <% end %> 
-                      </td>
-                  </tr>
-    		            
-	           <% end %>
-	         
-	   </tbody>
-	
+  <thead>
+    <th class="student">Category</th>
+    <th class="student">Assignments</th>
+    <th class="student">Score / Max Points</th>
+    <th class="student">Grade</th>
+    <th class="student">Percentage</th>
+    <th class="student">Date</th>
+  </thead>
+  <tbody>
+    <% @categories.each do |c| %>
+        <tr>
+        <td rowspan="<%= c.assignments.length %>"><%= c.category_name %></td>
+        <% c.assignments.each do |a| %>
+          <td><%= a.name %></td>
+          <% grades = @student.grades.find(:all, :conditions => ['assignment_id = ?', a.id]) %>
+          <% if grades.empty? %>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+          <% else %>
+            <% grades.each do |g| %>
+              <td><%= g.score %> / <%= a.max_point %> </td>
+              <td><%= g.grade %></td>
+              <td><%= g.percentage.to_i %>%</td>
+              <td><%= a.date.strftime("%m/%d/%Y") %></td>
+            <% end %>
+          <% end %>
+        </tr>
+        <% end %>
+    <% end %>
+  </tbody>
 </table>
