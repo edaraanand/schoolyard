@@ -105,104 +105,53 @@ class Classrooms < Application
   end
 
   def edit
-    @classroom = @current_school.classrooms.find(params[:id])
+    @classroom = @current_school.classrooms.find_by_id(params[:id])
+    raise NotFound unless @classroom
     @teachers = @current_school.staff.find(:all)
     @class_peoples = @classroom.class_peoples
     render
   end
 
   def update
-    @classroom = @current_school.classrooms.find(params[:id])
-    @class = @current_school.classrooms.find(params[:id])
-    @announcements = @current_school.announcements.find(:all, :conditions => ['access_name = ?', @class.class_name] )
-    @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @class.class_name])
-    @forms = @current_school.forms.find(:all, :conditions => ['class_name = ?', @class.class_name])
-    @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', @class.class_name])
-    @teachers = @current_school.staff.find(:all)
-    @class_peoples = @classroom.class_peoples
-    ids = params[:class][:people][:ids]
-    roles = params[:class][:people][:roles]
-    @cla = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
-    @a_d = @classroom.class_peoples.find(:first, :conditions => ['role=?', "Athletic Director"] )
-    cls_id = params[:class][:people][:teacher]
-    if @classroom.update_attributes(params[:classroom])
-      if @classroom.class_type == "Classes"
+     @classroom = @current_school.classrooms.find_by_id(params[:id])
+     raise NotFound unless @classroom
+     @teachers = @current_school.staff.find(:all)
+     @class_peoples = @classroom.class_peoples
+     if @classroom.update_attributes(params[:classroom])
         @classroom.class_name = params[:classroom][:class_name].titleize
         @classroom.save
-      end
-      @announcements.each do |f|
-        f.access_name = params[:classroom][:class_name]
-        f.save
-      end
-      @welcome_messages.each do |f|
-        f.access_name = params[:classroom][:class_name]
-        f.save
-      end
-      @calendars.each do |f|
-        f.class_name = params[:classroom][:class_name]
-        f.save
-      end
-      @forms.each do |f|
-        f.class_name = params[:classroom][:class_name]
-        f.save
-      end
-      if (params[:class][:people][:teacher] == "")
-        flash[:error] = "Please select Faculty from the list"
-        render :edit
-      elsif roles.nil?
+        update_content(@classroom)
+        teacher = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
+        athletic_director = @classroom.class_peoples.find(:first, :conditions => ['role=?', "Athletic Director"] )
         if @classroom.class_type == "Sports"
-          ClassPeople.update(@a_d.id, {:person_id => "#{cls_id}", :classroom_id => @classroom.id, :role => "Athletic Director" } )
-          redirect resource(:classrooms)
+           ClassPeople.update(athletic_director.id,{:person_id => "#{params[:class][:teacher]}", :classroom_id => @classroom.id, :role => "Athletic Director" })
         else
-          ClassPeople.update(@cla.id, {:person_id => "#{cls_id}", :classroom_id => @classroom.id, :role => "class_teacher" } )
-          redirect resource(:classrooms)
+           ClassPeople.update(teacher.id, {:person_id => "#{params[:class][:teacher]}", :classroom_id => @classroom.id, :role => "class_teacher" } )
         end
-      else
-        unless ( ids.include?("") )|| ( ids.include?("") )
-          unless roles.include?("")
-            if @classroom.class_type == "Sports"
-              ClassPeople.update(@a_d.id, { :person_id => "#{cls_id}", :classroom_id => @classroom.id, :role => "Athletic Director" })
-              @class = @class_peoples.delete_if{|x| x.team_id != nil}
-              @class_sp = @class.delete_if{|x| x.role == "Athletic Director"}
-              @class_people_ids = @class_sp.collect{|x| x.id}
-              s = ids.zip(roles,@class_people_ids)
-              s.each do |f|
-                if f[2].nil?
-                  @classroom.class_peoples << ClassPeople.create({:person_id => f[0], :classroom_id => @classroom.id, :role => f[1] })
-                else
-                  @classroom.class_peoples << ClassPeople.update(f[2], { :person_id => f[0], :classroom_id => @classroom.id, :role => f[1] })
-                end
+        if params[:class][:p]
+           t = params[:class][:p][:roles].zip(params[:class][:p][:ids])
+           t.each do |f|
+              if (f[0] != "" && f[1] != "")
+                 @classroom.class_peoples << ClassPeople.create({:person_id => f[1], :classroom_id => @classroom.id, :role => f[0] })
               end
-              redirect resource(:classrooms)
-            else
-              ClassPeople.update(@cla.id, { :person_id => "#{cls_id}", :classroom_id => @classroom.id, :role => "class_teacher" })
-              @class = @class_peoples.delete_if{|x| x.team_id != nil}
-              @class_p = @class.delete_if{|x| x.role == "class_teacher"}
-              @class_people_ids = @class_p.collect{|x| x.id}
-              s = ids.zip(roles,@class_people_ids)
-              s.each do |f|
-                if f[2].nil?
-                  @classroom.class_peoples << ClassPeople.create({:person_id => f[0], :classroom_id => @classroom.id, :role => f[1] })
-                else
-                  @classroom.class_peoples << ClassPeople.update(f[2], { :person_id => f[0], :classroom_id => @classroom.id, :role => f[1] })
-                end
-              end
-              redirect resource(:classrooms)
-            end
-          else
-            flash[:error] = "Please enter the Role"
-            render :edit
-          end
-        else
-          flash[:error] = "Please select Faculty from the list"
-          render :edit
+           end
         end
-      end
-    else
-      render :edit
-    end
+        if params[:class][:people]
+           class_people = @class_peoples.delete_if{|x| x.team_id != nil}
+           class_id = class_people.delete_if{|x| x.role == "class_teacher"}.collect{|x| x.id }
+           s = params[:class][:people][:r].zip(params[:class][:people][:faculty], class_id )
+           s.each do |f|
+             if (f[0] != "" && f[1] != "")
+               @classroom.class_peoples << ClassPeople.update(f[2], {:person_id => f[1], :classroom_id => @classroom.id, :role => f[0] })
+             end
+           end
+        end
+        redirect resource(:classrooms)
+     else
+       render :edit
+     end
   end
-
+  
   def delete
     if params[:label] == "remove"
       @class = ClassPeople.find(params[:id])
@@ -212,19 +161,15 @@ class Classrooms < Application
       @class.destroy
       render :edit, :id => @classroom.id
     else
-      if params[:label] == "deactivate"
         @classroom = @current_school.classrooms.find(params[:id])
         @classroom.class_name = @classroom.class_name.titleize
-        @classroom.activate = false
-        @classroom.save
-        redirect resource(:classrooms)
-      else
-        @classroom = @current_school.classrooms.find(params[:id])
-        @classroom.class_name = @classroom.class_name.titleize
-        @classroom.activate = true
-        @classroom.save
-        redirect resource(:classrooms)
-      end
+        if params[:label] == "deactivate"
+           @classroom.activate = false
+        else
+           @classroom.activate = true
+        end
+         @classroom.save
+         redirect resource(:classrooms)
     end
   end
 
@@ -255,6 +200,41 @@ class Classrooms < Application
     end
   end
 
+  def update_content(room)
+      @classroom = room
+      @announcements = @current_school.announcements.find(:all, :conditions => ['access_name = ?', @classroom.class_name] )
+      @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
+      @forms = @current_school.forms.find(:all, :conditions => ['class_name = ?', @classroom.class_name])
+      @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', @classroom.class_name])
+      @spot_lights = @current_school.spot_lights.find(:all, :conditions => ['class_name =?', @classroom.class_name] )
+      @registrations = @current_school.registrations.find(:all, :conditions => ['current_class = ?', @classroom.class_name ])
+      @announcements.each do |f|
+        f.access_name = @classroom.class_name
+        f.save
+      end
+      @welcome_messages.each do |f|
+        f.access_name = @classroom.class_name
+        f.save
+      end
+      @calendars.each do |f|
+        f.class_name = @classroom.class_name
+        f.save
+      end
+      @forms.each do |f|
+        f.class_name = @classroom.class_name
+        f.save
+      end
+      @spot_lights.each do |f|
+        f.class_name = @classroom.class_name
+        f.save
+      end
+      @registrations.each do |f|
+        f.current_class = @classroom.class_name
+        f.save
+      end
+   end
+  
+  
   private
 
   def access_rights
