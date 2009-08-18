@@ -2,6 +2,13 @@
      Grades/Reports > Edit Grade's Definition 
 </h2>
 
+<div class="container">
+	<h4>There are some errors in the form, please fill the details.</h4>
+	<ol>
+		  <li><label for="rank[from][]" class="error">Please enter the number and it should be minimum value of 0</label></li> 
+	    <li><label for="rank[to][]" class="error">Please enter the number and it should be maximum value of 100</label></li>
+	</ol>
+</div>
 
 <span class="subText">
       These changes affect only the future reports
@@ -9,15 +16,15 @@
 
 <fieldset>
 
-     <%= form_for(@report, :action => url(:ranks_update) ) do %>
+     <%= form_for(@report, :id => "rank", :action => url(:ranks_update), :class => "cmxform" ) do %>
      
      <ul id="ranking">
           <% @ranks.each do |f| %>
                          
                  <li>
                       <%= text_field  :name => "rank[name][]", :class => "short", :value => "#{f.name}" %>
-                      <%= text_field  :name => "rank[from][]", :class => "short apart", :value => "#{f.from}" %> 
-                      <%= text_field  :name => "rank[to][]", :class => "short apart", :value => "#{f.to}" %>
+                      <%= text_field  :name => "rank[from][]", :class => "short apart number",   :min => "0", :value => "#{f.from}" %> 
+                      <%= text_field  :name => "rank[to][]", :class => "short apart number",  :max => "100", :value => "#{f.to}" %>
                       <%= link_to "", url(:delete_rank, f.id), :class => "delete-btn" %>
                  </li>
                  
@@ -40,7 +47,7 @@
    function testing()
    {
         var ul = document.getElementById('ranking')
-        $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='rank[name][]' id='txt" + id + "'><input type='text' class='short apart text' name='rank[from][]' id='txt" + id + "'><input type='text' class='short apart text' name='rank[to][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
+        $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='rank[name][]' id='txt" + id + "'><input type='text' class='short apart text number' min='0' name='rank[from][]' id='txt" + id + "'><input type='text' class='short apart text number' max='100' name='rank[to][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
         id = (id - 1) + 2;
    } 
     
@@ -49,5 +56,46 @@
      $j(id).remove();
    }
    
+   
+   // Validation for Editing Grades Definitions
+
+   var container = $j('div.container');
+
+   // validate the form when it is submitted
+   var validator = $j("#rank").validate({
+   	errorContainer: container,
+   	errorLabelContainer: $("ol", container),
+   	wrapper: 'li',
+   	meta: "validate"
+   });
+   
        
 </script>
+
+
+<style type="text/css">
+  
+ 	.cmxform fieldset li.error label { color: red; }
+	div.container {
+		background-color: #eee;
+		border: 1px solid red;
+		margin: 5px;
+		padding: 5px;
+	}
+	div.container ol li {
+		list-style-type: disc;
+		margin-left: 20px;
+	}
+	div.container { display: none }
+	.container label.error {
+		display: inline;
+	}
+
+	form.cmxform label.error {
+		display: block;
+		margin-left: 1em;
+		width: auto;
+	}
+ 
+</style>
+
