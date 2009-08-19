@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 78) do
+ActiveRecord::Schema.define(:version => 79) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -233,7 +233,7 @@ ActiveRecord::Schema.define(:version => 78) do
     t.string   "state"
     t.string   "zip_code"
     t.string   "fax"
-    t.boolean  "activate"
+    t.boolean  "activate",           :default => true
   end
 
   create_table "people_tasks", :force => true do |t|
