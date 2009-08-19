@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 77) do
+ActiveRecord::Schema.define(:version => 78) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -180,7 +180,7 @@ ActiveRecord::Schema.define(:version => 77) do
   create_table "grades", :force => true do |t|
     t.integer  "student_id"
     t.integer  "assignment_id"
-    t.integer  "score"
+    t.float    "score"
     t.float    "percentage"
     t.string   "grade"
     t.datetime "created_at"

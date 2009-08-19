@@ -82,7 +82,7 @@ module Merb
           percentage = percentage
           @ranks = Rank.find(:all)
           @ranks.each do |f|
-             range = Range.new(Integer(f.from), Integer(f.to))
+             range = Range.new(Float(f.from), Float(f.to))
              array = range.to_a
              if array.include?(percentage)
                  @grade = "#{f.name}"

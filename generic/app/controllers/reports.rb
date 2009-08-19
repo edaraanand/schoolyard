@@ -104,12 +104,12 @@ class Reports < Application
         if l[2].nil?
            unless l[1] == ""
              calculate(l[1], @assignment.max_point)
-             Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+             Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Float("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
            end
         else
            unless l[1] == ""
              calculate(l[1], @assignment.max_point)
-             Grade.update(l[2], {:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+             Grade.update(l[2], {:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Float("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
            else
              Grade.update(l[2], {:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => nil, :grade => nil})
            end
@@ -134,7 +134,7 @@ class Reports < Application
      s.each do |l|
         if l[1] != ""
            calculate(l[1], @assignment.max_point)
-           Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Integer("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+           Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Float("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
         end
      end
      redirect url(:assignments, :id => @report.id)
