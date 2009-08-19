@@ -1,31 +1,17 @@
-<h2 class="current-page">Alerts &nbsp;&nbsp;&nbsp;<%= link_to "change settings", url(:alert_edit), :class=> "edit-btn" %> </h2>   
-<% if @alerts.empty? %>
-  <p class="subText">You are currently not receiving any email alerts. (<%= link_to "change settings", url(:alert_edit) %>)</p>
+<h2 class="current-page">
+    Alerts &nbsp;&nbsp;&nbsp;
+    <%= link_to "change settings", url(:alert_edit), :class=> "edit-btn" %> 
+</h2>   
+
+<% unless @alert_people.blank? %>
+    <% @alerts.each do |f| %>
+          <% if @alert_people.include? (f.id.to_i) %>
+              <ul class="email-alerts">
+                <li>&rarr; &nbsp; <%= f.full_name %> </li>
+              </ul>
+          <% end %>
+    <% end %>
 <% else %>
-<p>You are currently being notified on email when: </p>
-  <% @alerts.each do |f| %>
-    <ul class="email-alerts">
-      <li><%= f.full_name %> </li>
-    </ul>
-  <% end %>
+    <p class="subtext">You have not set any email alerts yet. (<%= link_to "change settings", url(:alert_edit) %>)</p>
 <% end %>
 
-<!-- Place holder HTML for Eshwar's use-->
-<hr size="1"/>
-<div id="alerts">
-  <p>You are currently being notified on email when following are posted: </p>
-  <ul>
-    <li>From the Principal</li>
-  </ul>
-  <p><b>and when new</b></p>
-  <ul>
-    <li>Announcements</li>
-    <li>Homework</li>
-  </ul>
-  <p><b>are added to</b></p>
-  <ul>
-    <li>Kindergarten</li>
-    <li>1st Grade</li>
-  </ul>
-  <hr size="1"/>
-</div>
