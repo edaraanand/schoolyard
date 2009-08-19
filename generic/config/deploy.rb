@@ -1,6 +1,5 @@
-set :application, "schoolapp"
 set :domain, "forge@schoolyardapp.com"
-set :deploy_to, "/home/forge/staging/#{application}"
+set :deploy_to, "/home/forge/staging/schoolapp"
 set :repository,  "git@github.com:eshwardeep/schoolapp.git"
 set :revision, "HEAD"
 set :branch, "release1b"
