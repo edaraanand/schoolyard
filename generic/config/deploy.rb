@@ -33,15 +33,15 @@ namespace :vlad do
    
    desc "moving the database to some other place"
    remote_task :before_update, :roles => :app do
-     run "mv #{current_path}/generic/db  /home/forge/info"
-     run "mv #{current_path}/generic/public/uploads /home/forge/info"
+     #  run "mv #{current_path}/generic/db  /home/forge/info"
+     #  run "mv #{current_path}/generic/public/uploads /home/forge/info"
    end
    
    desc "updates the code and changing symlink files"
    remote_task :update, :roles => :app do
       run "mv #{latest_release}/generic/config/database.yml.production #{current_path}/generic/config/database.yml"
-      run "mv /home/forge/info/db  #{current_path}/generic" 
-      run "mv /home/forge/info/uploads #{current_path}/generic/public"
+      # run "mv /home/forge/info/db  #{current_path}/generic" 
+      # run "mv /home/forge/info/uploads #{current_path}/generic/public"
       run "cp #{latest_release}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
    end
    
