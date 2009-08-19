@@ -49,7 +49,7 @@ namespace :bootstrap do
   end
   
   desc "Creating a default person"
-    task :person => :access do
+  task :person => :access do
        @staff = Staff.create({
            :title => "Mr.",
            :first_name => "John",
@@ -65,22 +65,9 @@ namespace :bootstrap do
        @view = Access.find_by_name('view_all')
        AccessPeople.create({:person_id => @staff.id, :access_id => @view.id })
        AccessPeople.create({:person_id => @staff.id, :all => true })
-  end
+    end
   
  
- 
   
-  desc "creating alerts for both parents and staff"
-  task :alerts => :person do
-        alerts = ["1st Grade", "2nd Grade","3rd Grade", "4th Grade","5th Grade", "6th Grade", "7th Grade",
-             "8th Grade", "Announcement is Posted", "Home Work Assignment", "From the Principal",
-             "Sports"]
-  
-        alerts.each do |x|
-            Alert.create({:name => "#{x}", :full_name => "#{x}"})
-        end
-   end
- 
-   
    
 end
