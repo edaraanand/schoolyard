@@ -7,7 +7,7 @@ class SpotLight < ActiveRecord::Base
   validates_presence_of :student_name, :last_name, :content
 
   def name
-    student_name + ' ' + last_name
+    (student_name and last_name) ? student_name + ' ' + last_name : ''
   end
 
 
