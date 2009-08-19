@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 76) do
+ActiveRecord::Schema.define(:version => 77) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 76) do
     t.boolean  "all"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "classroom_id"
   end
 
   create_table "alerts", :force => true do |t|
@@ -42,6 +43,7 @@ ActiveRecord::Schema.define(:version => 76) do
     t.string   "full_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type"
   end
 
   create_table "ancestors", :force => true do |t|

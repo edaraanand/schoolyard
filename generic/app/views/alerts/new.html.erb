@@ -1,11 +1,9 @@
-
-
 <%= form_for :alert, :action => url(:alerts), :id => 'alert', :name => 'alert_form' do %>
     <fieldset>
     <h2 class="current-page">Alerts &gt; Add New </h2>
     <p>Please select when you would like to be notified on email:</p>
    <dl class="check-box-set">
-   <%= flash[:error] %>
+      <%= flash[:error] %>
       <% @alerts.each do |f| %>
            <dt>                       
              <input type="checkbox" class="check" name="alert[alert_ids][]" value="<%= f.id %>" />
