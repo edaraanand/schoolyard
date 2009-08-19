@@ -32,13 +32,11 @@
 							      <th class="last-upd">Average Grade</th>
 				         </thead>
 				         <tbody>
-    						    <% all_grades =  []  %>
-    		 			      <% for report in @reports %>
-    		 			            <% @categories = report.categories %>
-          								<% @categories.each do |c| %>
-          								     <% @assignments = c.assignments %>
-          							  	   <% @len = c.assignments.length %>
-          								     <% @assignments.each do |a| %>
+    						    
+    		 			      <% @reports.each do |report| %>
+    		 			            <% all_grades = Array.new %>
+    		 			            <% report.categories.each do |c| %>
+          								    <% c.assignments.each do |a| %>
             									      <% grades = f.grades.find(:all, :conditions => ['assignment_id = ?', a.id]) %>
             									      <% grades.each do |g| %>
               											   <% unless g.percentage.nil? %>
@@ -47,20 +45,20 @@
             									      <% end %>
             									 <% end %>
             							<% end %>
-							  	        <tr>
+   						  	        <tr>
 						                 <td>
 						                     <%= link_to "#{report.subject_name}", url(:progress_card, :ref => f.id, :id => report.id, :c => @classroom.id) %>
 						                 </td>
 						                 <td><%= report.updated_at.strftime("%B %d %Y") %></td>
 						                 <% unless all_grades.empty? %>
 						                     <% s =  all_grades.inject(0) { |s,v| s += v } %>
-						                     <% r = s/all_grades.length %>
-						                     <td><%=  average_grade(r) %></td>
+						                     <% r = s/all_grades.length.to_i %>
+						                     <td><%= average_grade(r.to_i) %></td>
 										         <% else %>
 									   	           <td></td>
 						                 <% end %>               
 									        </tr>
-						        <% end %>
+								    <% end %>
    				  	  </tbody>
 					  </table>
 			<% else %>
