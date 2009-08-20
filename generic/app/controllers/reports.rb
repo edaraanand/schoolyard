@@ -333,7 +333,7 @@ class Reports < Application
       @ranks.each do |f|
          range = Range.new(Integer(f.from), Integer(f.to))
          array = range.to_a
-         x = Integer(id)*100/max
+         x = Float(id)*100/max
          if array.include?(x)
             @gr = "#{f.name}"
          end
