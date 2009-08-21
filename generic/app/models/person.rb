@@ -119,7 +119,7 @@ class Person < ActiveRecord::Base
   ## Notifying the Staff about their Account Details
   
     def changed_details
-      mail_deliver(:notify_staff_details, :subject => "Your Details has Changed for " + self.school.school_name)
+      mail_deliver(:notify_staff_details, :subject => "Your details have changed for " + self.school.school_name)
     end
 
     def mail_deliver(action, params)
