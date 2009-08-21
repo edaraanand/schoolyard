@@ -1,6 +1,6 @@
 class Report < ActiveRecord::Base
   
-    has_many :categories
+    has_many :categories, :dependent => :destroy 
     belongs_to :person
     belongs_to :school
     belongs_to :classroom

@@ -60,7 +60,8 @@ class Reports < Application
         @reports = @current_school.reports.find(:all)
         render
      else
-        @report = @current_school.reports.find(params[:id])
+        @report = @current_school.reports.find_by_id(params[:id])
+        raise NotFound unless @report
         @categories = @report.categories
         @reports = @current_school.reports.find(:all)
         render
@@ -238,11 +239,24 @@ class Reports < Application
    
    
    def delete
-     @assignment = @current_school.assignments.find(params[:id])
-     @category = @assignment.category
-     @report = @category.report
-     @assignment.destroy
-     redirect url(:edit_report, :id => @report.id)
+     if params[:ref] == "subject"
+        @report = @current_school.reports.find_by_id(params[:id])
+        raise NotFound unless @report
+        @report.destroy
+        redirect resource(:reports)
+     elsif params[:ref] == "category"
+        @report = @current_school.reports.find_by_id(params[:sub])
+        @category = @report.categories.find_by_id(params[:id])
+        @category.destroy
+        redirect url(:edit_report, :id => @report.id)
+     else
+       @assignment = @current_school.assignments.find_by_id(params[:id])
+       raise NotFound unless @assignment
+       @category = @assignment.category
+       @report = @category.report
+       @assignment.destroy
+       redirect url(:edit_report, :id => @report.id)
+     end
    end
   
    def cat_assignments
