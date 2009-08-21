@@ -20,10 +20,7 @@
                               :selected => "#{@c}", :prompt => "Please Select" %>
              <% end %>
          </li>
-         <li>
-             <%= select :year, :collection => @years.map {|y| y.to_s}, :label => "Year", :selected => "#{@y}",
-                        :prompt => "Please Select" %>
-         </li>
+         <li><%= text_area  :description, :label => "Description", :rows => "2", :cols => "40" %></li>
          <li><%= file_field :attachment,  :label => "Upload Form" %></li>
      </ul>
              <ul id="pending_files"></ul>
