@@ -185,14 +185,14 @@ class SpotLights < Application
   private
 
   def class_students
-    @class = @current_school.classes
+    @class = @current_school.active_classrooms
     room = @class.collect{|x| x.class_name }
     @classrooms = room.insert(0, "Home Page")
     @students = @current_school.students.find(:all, :conditions => ['activate = ?', true])
   end
   
   def classrooms
-    @classes = @current_school.classes
+    @classes = @current_school.active_classrooms
   end
   
   def school_people

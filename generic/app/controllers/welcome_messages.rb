@@ -60,7 +60,7 @@ class WelcomeMessages < Application
 
   def edit
     @welcome_message = @current_school.welcome_messages.find(params[:id])
-    ss = @current_school.classes
+    ss = @current_school.active_classrooms
     om = ss.collect{|x| x.class_name.titleize }
     @test = om.insert(0, "Home Page")
     render
@@ -113,11 +113,11 @@ class WelcomeMessages < Application
   private
 
   def classrooms
-    @classes = @current_school.classes
+    @classes = @current_school.active_classrooms
   end
 
   def rooms
-    @class = @current_school.classes
+    @class = @current_school.active_classrooms
     room = @class.collect{|x| x.class_name }
     @classrooms = room.insert(0, "Home Page")
     @messages = @current_school.welcome_messages.find(:all)
