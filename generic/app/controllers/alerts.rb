@@ -5,30 +5,11 @@ class Alerts < Application
   before :selected_link
   
   def index
-    @alerts = @person.alerts
-    @alert_people = AlertPeople.find(:all,:conditions=>['person_id=?', session.user.id]).map{|x| x.alert_id }	
+    @alerts = @person.alerts.uniq
+    @alert_people = AlertPeople.find(:all,:conditions=>['person_id=?', session.user.id]).map{|x| x.alert_id }
     render
   end
-  
-  def new
-    @alerts = Alert.find(:all)
-    @alert_people = AlertPeople.new
-    render
-  end
-  
-  def create
-    if params[:alert].nil?
-        flash[:error]  = "You should check one of the checkboxes"
-        render :new
-    else
-      @alerts = params[:alert][:alert_ids]
-      @alerts.each do |f|
-         AlertPeople.create({:alert_id => f, :person_id => @person.id })
-      end
-      redirect resource(:alerts)
-    end  
-  end
-  
+   
   def edit
     render
   end
@@ -43,35 +24,42 @@ class Alerts < Application
   			people_alert_to_save.save
   		end
     end
-    # if params[:class_alerts]
-    #   # raise params.inspect
-    # end
-    redirect resource(:alerts)
+    if session.user.type == "Parent"
+       if params[:class_alerts] || params[:parent_alerts]
+          if params[:parent_alerts].nil? &&  params[:class_alerts] != nil
+             flash[:error] = "you should check the Announcement/Homework"
+             render :edit
+          elsif params[:class_alerts].nil? && params[:parent_alerts] != nil
+             flash[:error] = "you should check the Classroom"
+             render :edit
+          else
+             params[:class_alerts].each do |k, d|
+               params[:parent_alerts].each do |key, data|
+                 people_alert_to_save = AlertPeople.new
+                 people_alert_to_save.person_id = session.user.id
+                 people_alert_to_save.alert_id = key
+                 people_alert_to_save.classroom_id = k
+                 people_alert_to_save.save
+               end
+             end
+             redirect resource(:alerts)
+           end
+        else
+          redirect resource(:alerts)
+        end
+     else
+       @alert = Alert.find_by_name("announcement")
+       params[:class_alerts].each do |k, d|
+          people_alert_to_save = AlertPeople.new
+          people_alert_to_save.person_id = session.user.id
+          people_alert_to_save.alert_id = @alert.id
+          people_alert_to_save.classroom_id = k
+          people_alert_to_save.save
+       end
+       redirect resource(:alerts)
+     end
   end  
     
-      
-    # if params[:alert].nil?
-    #      flash[:error] = "You should check one of the checkboxes"
-    #      render :edit
-    #    else
-    #      @alert = params[:alert][:alert_ids]
-    #      alert_people = @person.alert_peoples
-    #      alert_ids = alert_people.collect{|x| x.id } 
-    #      alert = alert_people.collect{|x| x.alert_id }
-    #      s = @alert.zip(alert_ids, alert)
-    #      AlertPeople.destroy(alert_ids)
-    #      s.each do |f|
-    #         if f[1].nil?
-    #            AlertPeople.create({:alert_id => f[0], :person_id => @person.id })
-    #         elsif ((f[2].nil?) && f[1].nil?)
-    #             AlertPeople.create({:alert_id => f[0], :person_id => @person.id })
-    #         else
-    #             AlertPeople.create({:alert_id => f[0], :person_id => @person.id })
-    #         end
-    #      end
-    #      redirect resource(:alerts)
-    #    end
-   
   
   private
   
