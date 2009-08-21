@@ -45,9 +45,9 @@
                      <tr>
                         <td  rowspan="<%= f.assignments.length %>">
                           <% if f.category_name.blank? %>
-                            No Category <span class="cancel"><%= link_to "Edit", url(:edit_report, :id => @report.id) %></span>
+                            No Category
                           <% elsif f.category_name == "category" %>
-                            No Category <span class="cancel"><%= link_to "Edit", url(:edit_report, :id => @report.id) %></span> 
+                            No Category 
                           <% else %>   
                             <%= f.category_name %>
                           <% end %>
