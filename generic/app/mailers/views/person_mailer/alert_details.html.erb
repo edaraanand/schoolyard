@@ -1,0 +1,14 @@
+Hello,
+
+    <% if @object.class == Announcement %>
+      <p>This is a notice that a new Announcement has been added.  Please log into SchoolYard to see the Announcement.</p>
+      <p><%= @object.content %></p>
+    <% end %>
+
+   <% if  @object.class == HomeWork  %>
+       This is a notice that a new homework assignment has been added.  Please log into SchoolYard to see the assignment.
+       <p> <%= @object.content %> </p>
+   <% end %>
+ 
+<p>Thank you<br/>
+<p><%=@current_school.school_name%></p>

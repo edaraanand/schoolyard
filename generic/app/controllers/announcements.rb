@@ -62,6 +62,12 @@ class Announcements < Application
              )
              File.makedirs("public/uploads/#{@current_school.id}/files")
              FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
+          end 
+          unless @announcement.access_name == "Home Page"
+            @class = @current_school.classrooms.find_by_class_name(@announcement.access_name)
+            run_later do
+              email_alerts(@class.id, self.class, @announcement, @current_school)
+            end
           end
           redirect resource(:announcements)
        else
@@ -181,11 +187,11 @@ class Announcements < Application
 
 
   def classrooms
-    @classes = @current_school.classes
+    @classes = @current_school.active_classrooms
   end
 
   def rooms
-    @class = @current_school.classes
+    @class = @current_school.active_classrooms
     room = @class.collect{|x| x.class_name.titleize }
     @classrooms = room.insert(0, "Home Page")
   end

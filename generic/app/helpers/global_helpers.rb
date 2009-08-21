@@ -83,7 +83,7 @@ module Merb
           @ranks = Rank.find(:all)
           @ranks.each do |f|
              range = Range.new(Float(f.from), Float(f.to))
-             array = range.to_a
+             array = range #range.to_a 
              if array.include?(percentage)
                  @grade = "#{f.name}"
              end
@@ -102,6 +102,36 @@ module Merb
      
     def email(address)
        '<a href="mailto:'+address+'">'+address+'</a>'
+    end
+    
+    def email_alerts(class_id, cls, s, school)
+       @current_school = school
+       @people = @current_school.people.find(:all)
+       if cls == HomeWorks
+          @alert = Alert.find(:first, :conditions => ['name = ?', "home_work_message"])
+          @people.each do |person|
+              alerts = AlertPeople.find(:all, :conditions=>["person_id=? and classroom_id=? and alert_id = ?", person.id, class_id, @alert.id])
+              unless alerts.empty?
+                 s.mail(person.id)
+              end
+          end
+       elsif cls == Announcements
+          @alert = Alert.find(:first, :conditions => ['name = ?', "announcement"])
+          @people.each do |person|
+              alerts = AlertPeople.find(:all, :conditions=>["person_id=? and classroom_id=? and alert_id = ?", person.id, class_id, @alert.id] )
+              unless alerts.empty?
+                s.alert_mail(person.id)
+              end
+          end
+       elsif cls == FromPrincipals
+          @alert = Alert.find(:first, :conditions => ['name = ?', "principal_message"] )
+          @people.each do |person|
+            alerts = AlertPeople.find(:all, :conditions=>["person_id=? and alert_id = ?", person.id, @alert.id])
+            unless alerts.empty?
+               s.alert_mail(person.id)
+            end
+          end
+       end
     end
      
      

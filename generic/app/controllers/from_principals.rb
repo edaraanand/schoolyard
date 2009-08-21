@@ -36,6 +36,7 @@ class FromPrincipals < Application
        File.makedirs("public/uploads/#{@current_school.id}/files")
        FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
       end
+      email_alerts(@announcement.id, self.class, @announcement, @current_school)
       redirect url(:homes)
     else
       render :new

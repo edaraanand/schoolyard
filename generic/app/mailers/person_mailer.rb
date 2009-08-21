@@ -55,4 +55,10 @@ class PersonMailer < Merb::MailController
     render_mail :html => :urgent_announcement, :layout => nil
   end
   
+  def alert_details
+    @object = params
+    @current_school = @object.school
+    render_mail :html => :alert_details, :layout => nil
+  end
+  
 end

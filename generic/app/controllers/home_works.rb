@@ -44,6 +44,9 @@ class HomeWorks < Application
           File.makedirs("public/uploads/#{@current_school.id}/files")
           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
         end
+        run_later do
+          email_alerts(@home_work.classroom_id, self.class, @home_work, @current_school)
+        end
         redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
       else
         @class_id =  params[:home_work][:classroom_id]
@@ -152,6 +155,17 @@ class HomeWorks < Application
     render :layout => 'class_change', :id => @classroom.id
   end
   
+  def send_alerts(home_work)
+    @home_work = home_work
+    @alert = Alert.find(:first, :conditions => ['name = ?', "home_work_message"])
+    @people = @current_school.people.find(:all)
+    @people.each do |p|
+      alerts = AlertPeople.find(:all, :conditions=>["person_id=? and classroom_id=? and alert_id = ?", p.id, @home_work.classroom_id, @alert.id])
+      unless alerts.empty?
+        raise p.inspect
+      end
+    end
+  end
   
   def home_works_pdf
     if params[:label] == "single"
