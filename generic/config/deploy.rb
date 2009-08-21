@@ -16,7 +16,7 @@ set :domain, "sdb.schoolyardapp.net"
 set :user, "eshwar"
 set :deploy_to, "/home/eshwar/schoolapp"
 set :adapter, 'mongrel' # or 'thin'
-set :start_port, 7001
+set :start_port, 5001
 set :processes, 1
 set :log_path, "#{shared_path}/log/production.log"
  
