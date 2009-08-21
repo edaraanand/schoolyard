@@ -4,8 +4,6 @@ class Form < ActiveRecord::Base
 
   belongs_to :school
 
-  validates_presence_of :title
-
-
+  validates_presence_of :title, :description
 
 end
