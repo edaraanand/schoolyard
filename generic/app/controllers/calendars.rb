@@ -7,7 +7,18 @@ class Calendars < Application
   before :classrooms, :only => [:events, :show]
 
   def index
-    @calendars = @current_school.calendars.paginate(:all, :per_page => 10,  :page => params[:page], :order => 'start_date')
+    if params[:label] == "classes"
+      @classroom = @current_school.classrooms.find_by_id(params[:id])
+      raise NotFound unless @classroom
+      @calendars = @current_school.calendars.paginate(:all, :conditions => ["class_name = ?", @classroom.class_name ],
+                                                      :per_page => 10,  
+                                                      :page => params[:page], 
+                                                      :order => 'start_date')
+      @test = params[:id]
+    else
+      @calendars = @current_school.calendars.paginate(:all, :per_page => 10,  :page => params[:page], :order => 'start_date')
+      @test = "All Classrooms"
+    end
     render
   end
 
