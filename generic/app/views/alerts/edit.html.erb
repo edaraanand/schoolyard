@@ -1,4 +1,9 @@
 <h2 class="current-page">Alerts &gt; change settings</h2> <br/>
+<ul class='error_messages'>
+  <% if  flash[:error]  %>
+    <li><%= flash[:error] %></li>
+  <% end %>
+</ul>
 
 <%= form_for :alert, :action => url(:alert_update) , :id => 'alert' do %>
    
@@ -14,53 +19,55 @@
          <% end %>
            <%= alert.full_name %>  <br/> <br/>
      <% end %>
+     
      <div class="clear dashed separate"></div>
-     <% @few_alerts.each do |alert| %>
-          <% unless @alert_people.blank? %>
-              <% if @alert_people.include?(alert.id.to_i) %>
-                 <%= check_box :name => 'selected_alerts[' + alert.id.to_s + ']', :checked => 'checked' %>
+     
+     <% if session.user.type == "Parent" %>
+         <% @few_alerts.each do |alert| %>
+              <% unless @alert_people.blank? %>
+                  <% if @alert_people.include?(alert.id.to_i) %>
+                     <%= check_box :name => 'parent_alerts[' + alert.id.to_s + ']', :checked => 'checked' %>
+                  <% else %>
+                     <%= check_box :name => 'parent_alerts[' + alert.id.to_s + ']' %>
+                  <% end %>
               <% else %>
-                 <%= check_box :name => 'selected_alerts[' + alert.id.to_s + ']' %>
+                     <%= check_box :name => 'parent_alerts[' + alert.id.to_s + ']' %>
               <% end %>
-          <% else %>
-                 <%= check_box :name => 'selected_alerts[' + alert.id.to_s + ']' %>
+                <%= alert.full_name %>  <br/>  <br/>
           <% end %>
-            <%= alert.full_name %>  <br/>  <br/>
-      <% end %>
-      
-     <!-- <span class="subText">is Posted to</span><br/><br/>
-         <% @current_school.classes.each do |f| %>
-               <%= check_box :name => 'class_alerts[' + f.id.to_s + ']' %>
-               <%= f.class_name %><br/> <br/>
-         <% end %> -->
-
-    
-    <!-- <fieldset>
-           <ul>
-             <li>
-               <input type="checkbox" class="check"  name="alert[alert_ids][]"/>
-                New "From the Principal" Message is added
-             </li>
-             <li>
-               <input type="checkbox" class="check"  name="alert[alert_ids][]"/>
-                New "Announcement" is added
-             </li>
-             <li>
-               <input type="checkbox" class="check"  name="alert[alert_ids][]"/>
-                New "Home work Assignment"
-             </li>
-           </ul>
-           <dl class="check-box-set origin">  
-               <% @current_school.classes.each do |f| %>
-                   <dt><input type="checkbox" class="check"  name="alert[alert_ids][]" value="<%= f.id %>" /></dt> 
-                   <dd><%= f.class_name %></dd>
-               <% end %>
-           </dl> -->
-            
-        <div class="save-cancel">
-            <%= submit " Save " %> Or 
-            <%= link_to "Cancel", url(:alerts), :class => "cancel" %>
-        </div>
+            <span class="subText">is Posted to</span><br/><br/>
+      <% else %>
+           New Announcement is Posted to<br/><br/>
+     <% end %>
+        
+          <% unless params[:class_alerts] %>         
+             <% @current_school.classes.each do |f| %>
+                   <% alert_p = AlertPeople.find(:all,:conditions=>["person_id=? and classroom_id=?", session.user.id, f.id]).map{|x| x.classroom_id } %>
+                   <% if alert_p.include?(f.id) %>
+                       <%= check_box :name => 'class_alerts[' + f.id.to_s + ']', :checked => 'checked' %>
+                       <%= f.class_name %><br/> <br/>
+                   <% else %>
+                       <%= check_box :name => 'class_alerts[' + f.id.to_s + ']' %>
+                       <%= f.class_name %><br/> <br/>
+                   <% end %>
+             <% end %>
+          <% end %>
+          
+          <% if params[:class_alerts] %>
+                <% @current_school.classes.each do |f| %>
+                     <% if params[:class_alerts].has_key?(f.id.to_s) %>
+                         <%= check_box :name => 'class_alerts[' + f.id.to_s + ']', :checked => 'checked' %>
+                         <%= f.class_name %><br/> <br/>
+                     <% else %>
+                         <%= check_box :name => 'class_alerts[' + f.id.to_s + ']' %>
+                         <%= f.class_name %><br/> <br/>
+                     <% end %>
+                 <% end %>
+          <% end %>
+          <div class="save-cancel">
+              <%= submit " Save " %> Or 
+              <%= link_to "Cancel", url(:alerts), :class => "cancel" %>
+          </div>
     </fieldset>
 <% end =%>
 

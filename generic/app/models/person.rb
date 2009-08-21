@@ -127,7 +127,6 @@ class Person < ActiveRecord::Base
       PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), self )
     end
 
-
   # Changing the password reset key after the user clicks
   
     def resetting
