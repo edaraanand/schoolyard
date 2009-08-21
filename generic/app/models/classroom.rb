@@ -16,6 +16,8 @@ class Classroom < ActiveRecord::Base
   
   has_many :reports
   
+  has_many :alert_peoples
+  
   
  	validates_presence_of :class_name, :if => Proc.new{|c| c.class_type != "Sports" }
   validates_uniqueness_of :class_name, :scope => :school_id
