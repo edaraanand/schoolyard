@@ -35,13 +35,8 @@
                          <%= text_field  :last_name, :maxlength => "75", :class=>"short apart"  %>
 	                   </li>
                      <li>
-                        <% if @student.birth_date.nil? %>
-                            <%= text_field  :birth_date, :id => "birth_date", :label => "Birth Date", :class => "short date" %>
-                        <% else %>
-                            <%= text_field  :birth_date, :id => "birth_date", :label => "Birth Date", :class => "short date",
-                                            :value => @student.birth_date.strftime("%m/%d/%Y") %>
-                        <% end %>
-                       
+                       <%= text_field  :birth_date, :id => "birth_date", :label => "Birth Date", :class => "short date",
+                                       :value => @student.birth_date.strftime("%m/%d/%Y") %>
                      </li>
                    </ul>
                   <% for parent in @student.protectors %>
