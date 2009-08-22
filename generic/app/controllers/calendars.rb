@@ -47,8 +47,12 @@ class Calendars < Application
           File.makedirs("public/uploads/#{@current_school.id}/files")
           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
         end
-        @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
-        redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
+        if @calendar.class_name == "All Classrooms"
+           redirect resource(:calendars)
+        else
+           @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
+           redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
+        end
       else
         @class = params[:calendar][:class_name]
         @start_date = params[:calendar][:start_date]
