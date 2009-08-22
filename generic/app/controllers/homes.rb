@@ -41,16 +41,19 @@ class Homes < Application
     if params[:label] == "class_ann"
        @select = "classrooms" 
        @selected = "announcements"
-       @announcement = @current_school.announcements.find(params[:id])
+       @announcement = @current_school.announcements.find_by_id(params[:id])
+       raise NotFound unless @announcement
        @classroom = @current_school.classrooms.find_by_class_name(@announcement.access_name)
        render :layout => 'class_change', :id => @classroom.id
     elsif params[:label] == "sports_announcement"
        @selected = "announcements"
        @select = "sports"
-       @announcement = @current_school.announcements.find(params[:id])
+       @announcement = @current_school.announcements.find_by_id(params[:id])
+       raise NotFound unless @announcement
        render :layout => 'sports'
     else
-       @announcement = @current_school.announcements.find(params[:id])
+       @announcement = @current_school.announcements.find_by_id(params[:id])
+       raise NotFound unless @announcement
        render :layout => 'home'
     end
   end
