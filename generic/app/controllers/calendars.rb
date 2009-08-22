@@ -5,31 +5,32 @@ class Calendars < Application
   before :ensure_authenticated
   before :access_rights, :exclude => [:events, :show, :pdf_events]
   before :classrooms, :only => [:events, :show]
+  before :classes
 
   def index
     if params[:label] == "classes"
       @classroom = @current_school.classrooms.find_by_id(params[:id])
       raise NotFound unless @classroom
-      @calendars = @current_school.calendars.paginate(:all, :conditions => ["class_name = ?", @classroom.class_name ],
+      @calendars = @current_school.calendars.paginate(:all, :conditions => ["class_name = ? ", @classroom.class_name ],
                                                       :per_page => 10,  
                                                       :page => params[:page], 
-                                                      :order => 'start_date')
+                                                      :order => 'start_date')   
+      @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "All Classrooms" ], :order => 'start_date')                                                                                                     
       @test = params[:id]
     else
       @calendars = @current_school.calendars.paginate(:all, :per_page => 10,  :page => params[:page], :order => 'start_date')
       @test = "All Classrooms"
     end
+    
     render
   end
 
   def new
     @calendar = Calendar.new
-    @class_rooms = @current_school.active_classrooms
     render
   end
 
   def create
-    @class_rooms = @current_school.active_classrooms
     @calendar = @current_school.calendars.new(params[:calendar])
     i=0
     if params[:calendar][:class_name] != ""
@@ -65,7 +66,6 @@ class Calendars < Application
 
   def edit
     @calendar = @current_school.calendars.find(params[:id])
-    @class_rooms = @current_school.active_classrooms
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
     @allowed = 1 - @attachments.size
     render
@@ -89,7 +89,6 @@ class Calendars < Application
   end
 
   def update
-    @class_rooms = @current_school.active_classrooms
     @calendar = @current_school.calendars.find(params[:id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
     @allowed = 1 - @attachments.size
@@ -167,6 +166,7 @@ class Calendars < Application
   def events
     @select = "events"
     @selected = "all_events"
+    @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "All Classrooms" ], :order => 'start_date') 
     unless params[:id].nil?
       @class = @current_school.classrooms.find(params[:id])
       @cls = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @class.class_name ], :order => 'start_date')
@@ -204,6 +204,12 @@ class Calendars < Application
     @class = @current_school.active_classrooms
     room = @class.collect{|x| x.class_name.titleize }
     @classrooms = room.insert(0, "All Events")
+  end
+  
+  def classes
+     classes = @current_school.active_classrooms
+     room = classes.collect{|x| x.class_name.titleize }
+     @class_rooms = room.insert(0, "All Classrooms")
   end
 
   def access_rights
