@@ -1,12 +1,12 @@
-Hello <%= @announcement.person.name %>
+Hello <%= @announcement.person.name %>,
 
-   <p><%= @announcement.approve_comments %></p><br/>
+      <p>Thanks For your Feedback</p> 
+      <p><h4> Original feedback : </h4></p>
+      <p> <%= @announcement.content %> </p>
+         
+       <p><h4>SchoolYard response:</h4></p>
+       <p><%= @announcement.approve_comments %></p><br/>
 
-  <p> 
-      <h3> Original Feedback from you.</h3> 
-       <%= @announcement.content %>  
-  </p>
-   
+<p>Thank you,<br/>
+<p><%= @current_school.school_name %></p>
 
-Thanks
-<%= @current_school.school_name %>

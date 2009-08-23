@@ -7,7 +7,10 @@
 	<ol>
 		<li><label for="report_subject_name" class="error">Please enter the Subject Name</label></li> 
 		<li><label for="report_classroom_id" class="error">Please select the Classroom</label></li> 
-		<li><label for="category[assignment][max_point][]" class="error">Please Enter the Number</label></li> 
+		<li><label for="assign" class="error">Please enter the Assignment</label></li> 
+  	<li><label for="testing" class="error">Please enter the Max Point correctly</label></li>
+    <li><label for="category[assignment][max_point][]" class="error">
+  			 Please enter the Max Points with the minimum value of 0</label></li>
    </ol>
 </div>
 
@@ -51,10 +54,11 @@
 	                             </li>
 	                                 <% q+= q %>
 	                        <% end %>
-                         </ul>
-                         <a href="#"  class="add-more"  onClick="assignments(this.parentNode.id); return false;">Add Assignment</a>
+	                        </ul>
+                         <a href="#"  class="add-more"  onClick="assignments(this.parentNode.id); return false;">Add Assignment</a> 
                          <div class="clear" style="padding-bottom:8px">&nbsp;</div>
-                    </div>     
+                    </div> 
+                    <p align="right"><%= link_to "Remove Category", url(:delete_report, :sub => @report.id, :id => f.id, :ref => "category"), :class => "cancel" %></p> 
               <% end %> 
          </div>
 
@@ -69,8 +73,11 @@
 				
 					 <%= fields_for @assignment do %> 
 					 <p style="margin-left:350px; margin-bottom:0; padding:0;">Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Max Points</p>
-           
-					       <%= partial 'grade_edit' %>
+                <% if @report.categories.empty? %>
+                   <%= partial 'grade' %>
+                <% else %>
+					         <%= partial 'grade_edit' %>
+					      <% end %>
 					       <ul id="assignment" class="assignment"></ul>
 					       <a href="#"  class="add-more"  onClick="testing(this.parentNode.id); return false;">Add Assignment</a>       
 					 <% end =%>

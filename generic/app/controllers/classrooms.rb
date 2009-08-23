@@ -191,6 +191,7 @@ class Classrooms < Application
          @sp_light = @current_school.spot_lights.find(:first, :conditions => ['class_name = ?', @classroom.class_name], :order => "created_at DESC" )
          @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', @classroom.id])
          @ranks = @current_school.ranks.find(:all)
+         @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "All Classrooms" ], :order => 'start_date') 
          render :layout => 'class_change', :id => @classroom.id
       else
          raise NotFound

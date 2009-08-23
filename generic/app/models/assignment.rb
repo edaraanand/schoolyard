@@ -4,11 +4,11 @@ class Assignment < ActiveRecord::Base
     belongs_to :school
     belongs_to :student
     
-    has_many :grades
+    has_many :grades, :dependent => :destroy 
     
     has_many :ranks
     
-    has_many :grades
+    has_many :grades, :dependent => :destroy
     has_many :students, :through => :grades, :source => :student
     
     #has_many :student_assignments

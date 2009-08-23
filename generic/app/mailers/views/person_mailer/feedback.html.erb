@@ -1,10 +1,11 @@
 Hello,
 
-     Comments:
-     
-              <p><%= @announcement.approve_comments %></p> <br/>
-      
-              <p><%= @announcement.content %></p>
-      
-Thanks
-<%= @announcement.school.school_name %>
+       <p><h4> Original feedback : </h4></p>
+       <p> <%= @announcement.content %> </p><br/>
+       
+       <p><h4>SchoolYard response:</h4></p>
+       <p><%= @announcement.approve_comments %></p> 
+            
+<p>Thank you,<br/>
+<p><%= @announcement.school.school_name %></p>    
+

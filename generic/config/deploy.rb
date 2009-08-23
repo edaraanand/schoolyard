@@ -40,7 +40,7 @@ namespace :deploy do
      run "mv /home/eshwar/uploads #{current_path}/generic/public"
      run "cp #{current_path}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
      run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
-     run "cd #{current_path}/generic && rake bootstrap:alert"
+    # run "cd #{current_path}/generic && rake bootstrap:alert"
      run "cd #{current_path}/generic && rake bootstrap:backup"
      # run "cd #{current_path}/generic && rake bootstrap:student_activate"
      # run "cd #{current_path}/generic && rake bootstrap:spot_light"
