@@ -28,8 +28,11 @@
   <%= form_for(@classroom, :id => "testing", :action => resource(@classroom), :class => "cmxform" ) do %>
 
     <ul id="class_room">
-             <li>Class Type : <%= @classroom.class_type %></li>
-             <% if @classroom.class_type == "Classes" %>
+             <!-- <li>Class Type : <%= @classroom.class_type %></li> -->
+              <li>
+                   <%= select :class_type, :label => "Class Type", :collection => @class_types  %>
+              </li>
+             <% if @classroom.class_type == "Classes" || @classroom.class_type == "Subject"  %>
                    <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75", :class => "required" %></li>
              <% end %>
                   <% @class = @class_peoples.delete_if{|x| x.team_id != nil} %> <% q = 1 %>
