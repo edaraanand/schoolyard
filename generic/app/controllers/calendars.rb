@@ -67,9 +67,10 @@ class Calendars < Application
       render :new
     end
   end
-
+  
   def edit
-    @calendar = @current_school.calendars.find(params[:id])
+    @calendar = @current_school.calendars.find_by_id(params[:id])
+    raise NotFound unless @calendar
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
     @allowed = 1 - @attachments.size
     render
@@ -78,13 +79,15 @@ class Calendars < Application
   def show
     if params[:l] == "calendar"
        @select = "events"
-       @calendar = @current_school.calendars.find(params[:id])
+      @calendar = @current_school.calendars.find_by_id(params[:id])
+      raise NotFound unless @calendar
        @selected = @calendar.class_name
        render :layout => 'directory'
     else
       @select = "classrooms"
       @selected = "calendars"
-      @calendar = @current_school.calendars.find(params[:id])
+     @calendar = @current_school.calendars.find_by_id(params[:id])
+     raise NotFound unless @calendar
       @class =  @calendar.class_name.titleize
       @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
       @event = "All Day Event"
@@ -93,7 +96,8 @@ class Calendars < Application
   end
 
   def update
-    @calendar = @current_school.calendars.find(params[:id])
+   @calendar = @current_school.calendars.find_by_id(params[:id])
+   raise NotFound unless @calendar
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
     @allowed = 1 - @attachments.size
     i=0
@@ -159,7 +163,8 @@ class Calendars < Application
       @allowed = 1 - @attachments.size
       render :edit, :id => @calendar.id
     else
-      @calendar = @current_school.calendars.find(params[:id])
+     @calendar = @current_school.calendars.find_by_id(params[:id])
+     raise NotFound unless @calendar
       @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
       Attachment.delete_all(['attachable_id = ?', @calendar.id])
       @calendar.destroy
@@ -191,7 +196,8 @@ class Calendars < Application
 
   def pdf_events
     if params[:label] == "single"
-      @calendar = @current_school.calendars.find(params[:id])
+     @calendar = @current_school.calendars.find_by_id(params[:id])
+     raise NotFound unless @calendar
       pdf = pdf_prepare("single", @calendar)
       send_data(pdf.render, :filename => "#{@calendar.class_name}.pdf", :type => "application/pdf")
     else
