@@ -620,8 +620,10 @@ body.preview #header .submit-preview{float:right; width:35%; padding:10px 0 ;}
 body.preview #header h1{float:left; width:30%; font-size:14px;}
 body.preview #header h1 strong{color:#fff; font-weight:bold;}
 
-
-
+/*Top Pagination*/
+.top-pagination {border:1px solid #cce; padding:3px; background:#ffe; margin:0 0 10px 0;}
+.top-pagination .current {background:#ace; margin:0; padding:3px;}
+.top-pagination a{ margin:1px; padding:2px; float:left;}
 
 
 
