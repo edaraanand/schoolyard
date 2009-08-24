@@ -88,6 +88,10 @@ Merb::Router.prepare do
        resources :ranks
        resources :captures
        resources :tasks
+       resources :directories
+       match("/staff").to(:controller => 'directories', :action => 'staff').name(:staff)
+       match("/letters").to(:controller => 'directories', :action => 'letters').name(:letters)
+       match("/generate_csv").to(:controller => 'directories', :action => 'generate_csv').name(:generate_csv)
        match("/progress_card").to(:controller => 'reports', :action => 'progress_card').name(:progress_card)
        match("/report_card").to(:controller => 'reports', :action => 'report_card').name(:report_card)
        match("/xls").to(:controller => 'captures', :action => 'xls').name(:xls)
@@ -136,8 +140,6 @@ Merb::Router.prepare do
        match("/student_details").to(:controller => 'users', :action => 'student_details').name(:student_details)
        match("/student_edit").to(:controller => 'users', :action => 'student_edit').name(:student_edit)
        match("/student_update").to(:controller => 'users', :action => 'student_update').name(:student_update)
-       match("/directory").to(:controller => 'students', :action => 'directory').name(:directory)
-       match("/staff").to(:controller => 'students', :action => 'staff').name(:staff)
        match("/events").to(:controller => 'calendars', :action => 'events').name(:events)
        match("/help").to(:controller => 'homes', :action => 'help').name(:help)
        match("/bio").to(:controller => 'homes', :action => 'bio').name(:bio)
@@ -146,7 +148,6 @@ Merb::Router.prepare do
        match("/download").to(:controller => 'files', :action => 'download').name(:download)
        match("/pdf_download").to(:controller => 'homes', :action => 'pdf_download').name(:pdf_download)
        match("/pdf_events").to(:controller => 'calendars', :action => 'pdf_events').name(:pdf_events)
-       match("/generate_csv").to(:controller => 'students', :action => 'generate_csv').name(:generate_csv)
        match("/home_works_pdf").to(:controller => 'home_works', :action => 'home_works_pdf').name(:home_works_pdf)
        match("/settings").to(:controller => 'from_principals', :action => 'settings').name(:settings)
        match("/settings_update").to(:controller => 'from_principals', :action => 'settings_update').name(:settings_update)

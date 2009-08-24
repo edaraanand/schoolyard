@@ -1,0 +1,44 @@
+<% if params[:label] == "students" %>
+
+      <div>
+           <h2 class="current-page">
+               Current Students > <%= @student.name %>
+               &nbsp;&nbsp;&nbsp;
+               <%= link_to_right((right = "manage_directory"), "Add New", resource(:students, :new)  ) %> |
+               <%= link_to_right((right = "manage_directory"), "Edit", resource(@student, :edit)  ) %></td>
+           </h2>
+           <%= link_to "&larr; Back to Current Students List", resource(:directories) %>
+     
+           <h3 class="name"><%= @student.name %></h3>
+           <table cellpadding="8" cellspacing="0" border="0">
+              <tr><td class="separator">Parents/Guardians</td><td class="separator">
+           <% @parents.each do |f| %>
+                <% if f.approved == 1 %>
+                         <%= f.name %> (<a href="mailto:<%= f.email %>"><%= f.email %></a>) <br/>
+                <% end %>
+           <% end %>
+
+                  <% @protectors.each do |r| %>
+                      <%= r.name %> (<a href="mailto:<%= r.email %>"><%= r.email %></a>) <br/>
+                  <% end %>
+            </td></tr>
+    
+       </table> 
+              	<dl>
+				    <dt>Address</dt>
+				    <dd><%= @student.address1 ? @student.address1 : "<span class='noText'>not specified</span>" %>
+				         <%= "<br/>#{@student.address2}" if @student.address2?  %>
+				         <%= "<br/>#{@student.city }" if @student.city?  %>
+				         <%= ", #{@student.state }" if @student.state? %><%= " #{@student.zip_code }" if @student.zip_code?  %>
+				    </dd>
+	          	   <%= "<dt>Phone </dt><dd>#{number_to_phone(@student.phone, :area_code => true)}</dd>" if @student.phone?  %>
+			  </dl>
+       </div>
+       <div class="clear"><hr size="1" /></div>
+    
+<% else %>
+  
+      <%= partial 'people/staff' %>
+            
+<% end %>
+
