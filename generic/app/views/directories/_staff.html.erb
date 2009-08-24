@@ -14,7 +14,12 @@
 	        <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %><br/><br/>
   
        <% array = ('A'..'Z').to_a %>
+         <% cls = "" %>
+         <% if @s == "all" %>
+            <% cls = "current" %>
+         <% end %>
        <div class="top-pagination">
+            <%= link_to "All", url(:letters, :type => "all", :ref => "staff"), :class => cls %>
             <% array.each do |f| %>
                  <% test = "" %>
                 <% if @s == "#{f}" %>

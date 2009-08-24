@@ -20,14 +20,22 @@ class Directories < Application
   
   def letters
     if params[:ref] == "students"
-      @students = @current_school.students.paginate(:all, :conditions => ['last_name LIKE ?',"#{params[:type]}%" ], :per_page => 25,  :page => params[:page] )
-      @selected = "current_students"
+       if params[:type] == "all"
+          @students = @current_school.students.paginate(:all, :conditions => ['activate = ?', true], :per_page => 25,  :page => params[:page])
+       else
+          @students = @current_school.students.paginate(:all, :conditions => ['last_name LIKE ? and activate = ?',"#{params[:type]}%", true ], :per_page => 25,  :page => params[:page] )
+       end
+       @selected = "current_students"
     else  
-      @staff = @current_school.staff.paginate(:all, :conditions => ['last_name LIKE ?',"#{params[:type]}%" ], :per_page => 25,  :page => params[:page] )
-      @selected = "school_staff"
+       if params[:type] == "all"
+         @staff = @current_school.staff.paginate(:all, :per_page => 25,  :page => params[:page])
+       else
+         @staff = @current_school.staff.paginate(:all, :conditions => ['last_name LIKE ?',"#{params[:type]}%" ], :per_page => 25,  :page => params[:page] )
+       end
+       @selected = "school_staff"
     end
      @s = params[:type].to_s
-    render
+     render
   end
   
   def staff

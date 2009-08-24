@@ -15,16 +15,21 @@
                        </option>
  	                <% end %>
  	       </select>
- 	           <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> <br/><br/>
- 	       
- 	        <% array = ('A'..'Z').to_a %>
+ 	         <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> <br/><br/>
+ 	  
+ 	         <% array = ('A'..'Z').to_a %>
+ 	          <% cls = "" %>
+ 	          <% if @s == "all" %>
+               <% cls = "current" %>
+            <% end %>
            <div class="top-pagination">
+                <%= link_to "All", url(:letters, :type => "all", :ref => "students"), :class => cls %>
                 <% array.each do |f| %>
                      <% test = "" %>
                     <% if @s == "#{f}" %>
                       <%  test = "current"  %>
                     <% end %>
-                        <%= link_to "#{f}", url(:letters, :type => "#{f}", :ref => "students" ), :class => test %>
+                    <%= link_to "#{f}", url(:letters, :type => "#{f}", :ref => "students" ), :class => test %>
                 <% end %>
                 <div class="clear"></div>
            </div> 
