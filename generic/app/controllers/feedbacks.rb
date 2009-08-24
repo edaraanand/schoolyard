@@ -28,12 +28,14 @@ class Feedbacks < Application
   end
   
   def show
-    @announcement = @current_school.announcements.find(params[:id])
+     @announcement = @current_school.announcements.find_by_id(params[:id])
+    raise NotFound unless @announcement
     render 
   end
   
   def feedback_reply
-    @announcement = @current_school.announcements.find(params[:id])
+     @announcement = @current_school.announcements.find_by_id(params[:id])
+    raise NotFound unless @announcement
     if params[:approvetype] == "reply"
        @announcement.approve_comments = params[:announcement][:approve_comments]
        @announcement.approved_by = session.user.id  # this is for storing who replied the feedback

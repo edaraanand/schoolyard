@@ -3,17 +3,22 @@
         <%= partial 'calendars' %>
         
 <% elsif params[:label] == "homeworks" %>
-      
-        <%= partial 'home_works' %>        
+      <% unless @classroom.class_type == "Subject" %>
+          <%= partial 'home_works' %>     
+      <% else %>   
+         <p class="subText">There are no Homeworks for Subject</p>
+      <% end %>
         
 <% elsif params[:label] == "announcements" %>
      
        <%= partial 'announcements' %>
 
 <% elsif params[:label] == "grades" %>
- 
-       <%= partial "grades" %>
-       
+       <% unless @classroom.class_type == "Subject" %>
+          <%= partial "grades" %>   
+       <% else %>   
+          <p class="subText">There are no Grades/Reports for Subject</p>
+       <% end %>
 <% elsif params[:label] == "spot_light" %>
      
         <%= partial 'spot_lights' %>      

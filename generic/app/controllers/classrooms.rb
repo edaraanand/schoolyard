@@ -181,7 +181,6 @@ class Classrooms < Application
     if @classroom
       if @classroom.activate == true
          @calendars = @current_school.calendars.paginate(:all, :conditions => ['class_name = ?', @classroom.class_name.titleize], :per_page => 10, :page => params[:page], :order => 'start_date')
-         @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 10, :page => params[:page])
          @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name.titleize, true, true], :per_page => 10,
                                                               :page => params[:page], :order => "created_at DESC")
          @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name.titleize])
@@ -189,8 +188,11 @@ class Classrooms < Application
          @spot_lights = @current_school.spot_lights.paginate(:all, :conditions => ['class_name = ?', @classroom.class_name], :per_page => 2, :page => params[:page], :order => 'created_at DESC')
          @ann = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name.titleize, true, true], :limit => 3, :order => "created_at DESC")
          @sp_light = @current_school.spot_lights.find(:first, :conditions => ['class_name = ?', @classroom.class_name], :order => "created_at DESC" )
-         @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', @classroom.id])
-         @ranks = @current_school.ranks.find(:all)
+         unless @classroom.class_type == "Subject"
+           @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 10, :page => params[:page])
+           @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', @classroom.id])
+           @ranks = @current_school.ranks.find(:all)
+         end
          @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "All Classrooms" ], :order => 'start_date') 
          render :layout => 'class_change', :id => @classroom.id
       else
