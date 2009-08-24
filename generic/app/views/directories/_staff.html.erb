@@ -3,6 +3,16 @@
       <%= link_to_right((right = "rights_others"), "Add New", resource(:people, :new)  ) %>
   </h2> 
   
+         <select id = 'staffID'>
+                  <option value = '/staff' <% if (@test == "All Staff") %> selected <% end %> >All Staff</option>
+                  <% @class_rooms.each do |f| %>
+                      <option value='/staff?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+                         <%= f.class_name %> 
+                      </option>
+	                <% end %>
+	       </select>
+	        <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %><br/><br/>
+  
        <% array = ('A'..'Z').to_a %>
        <div class="top-pagination">
             <% array.each do |f| %>
@@ -15,15 +25,7 @@
             <div class="clear"></div>
        </div>
        
-         <select id = 'staffID'>
-                  <option value = '/staff' <% if (@test == "All Staff") %> selected <% end %> >All Staff</option>
-                  <% @class_rooms.each do |f| %>
-                      <option value='/staff?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
-                         <%= f.class_name %> 
-                      </option>
-	                <% end %>
-	       </select>
-         
+ 
 <% if params[:label] == "classes" %>
  
             <% if @class_peoples.empty? %>
@@ -31,7 +33,7 @@
 	                No Staff record was found. If you applied a filter try changing it.
 	              </p>
             <% else %>
-                   <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
+                   <%#= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
                    <table id="mytable" style="margin-top:60px; width:720px" cellspacing="0" cellpadding="0">
                        <thead> 
                              <th>Last Name</th>
@@ -65,7 +67,7 @@
 	              </p>
            <% else %>
 
-                 <%= link_to "Download as CSV", url(:generate_csv, :label => "staff") %>
+                
                  <table id="mytable"  style="margin-top:60px; width:720px"  cellspacing="0" cellpadding="0">
                         <thead> 
                               <th>Last Name</th>

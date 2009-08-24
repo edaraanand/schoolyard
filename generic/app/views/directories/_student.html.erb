@@ -7,18 +7,7 @@
       <% end %>
 
   </h2>
-       <% array = ('A'..'Z').to_a %>
-      <div class="top-pagination">
-           <% array.each do |f| %>
-                <% test = "" %>
-               <% if @s == "#{f}" %>
-                 <%  test = "current"  %>
-               <% end %>
-                   <%= link_to "#{f}", url(:letters, :type => "#{f}", :ref => "students" ), :class => test %>
-           <% end %>
-           <div class="clear"></div>
-      </div> 
-         <select id = 'studentID'>
+        <select id = 'studentID'>
                    <option value = '/directories' <% if (@test == "All Students") %> selected <% end %> >All Students</option>
                    <% @class_rooms.each do |f| %>
                        <option value='/directories?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
@@ -26,13 +15,27 @@
                        </option>
  	                <% end %>
  	       </select>
+ 	           <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> <br/><br/>
+ 	       
+ 	        <% array = ('A'..'Z').to_a %>
+           <div class="top-pagination">
+                <% array.each do |f| %>
+                     <% test = "" %>
+                    <% if @s == "#{f}" %>
+                      <%  test = "current"  %>
+                    <% end %>
+                        <%= link_to "#{f}", url(:letters, :type => "#{f}", :ref => "students" ), :class => test %>
+                <% end %>
+                <div class="clear"></div>
+           </div> 
+         
 
           <% if @students.empty? %>
                  	<p class="subText">
          	    No Student record was found. If you applied a filter try changing it.
              </p>
             <% else %>
-                  <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> 
+              
                   <table id="mytable"  cellspacing="0" cellpadding="0">
                         <thead>
                             <th>Last Name</th>
