@@ -44,14 +44,16 @@ class FromPrincipals < Application
   end
 
   def edit
-    @announcement = @current_school.announcements.find(params[:id])
+    @announcement = @current_school.announcements.find_by_id(params[:id])
+    raise NotFound unless @announcement
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
     @allowed = 1 - @attachments.size
     render
   end
 
   def update
-    @announcement = @current_school.announcements.find(params[:id])
+    @announcement = @current_school.announcements.find_by_id(params[:id])
+    raise NotFound unless @announcement
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
     @allowed = 1 - @attachments.size
     i=0
@@ -86,7 +88,8 @@ class FromPrincipals < Application
   end
 
   def show
-    @announcement = @current_school.announcements.find(params[:id])
+    @announcement = @current_school.announcements.find_by_id(params[:id])
+    raise NotFound unless @announcement
     render
   end
 
@@ -99,7 +102,8 @@ class FromPrincipals < Application
       @allowed = 1 - @attachments.size
       render :edit, :id => @announcement.id
     else
-      @announcement = @current_school.announcements.find(params[:id])
+       @announcement = @current_school.announcements.find_by_id(params[:id])
+    raise NotFound unless @announcement
       Attachment.delete_all(['attachable_id = ?', @announcement.id])
       @announcement.destroy
       redirect url(:homes)

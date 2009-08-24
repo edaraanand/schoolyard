@@ -96,7 +96,8 @@ class Homes < Application
   
 
   def pdf_download
-     @announcement = @current_school.announcements.find(params[:id])
+      @announcement = @current_school.announcements.find_by_id(params[:id])
+    raise NotFound unless @announcement
      pdf = prepare_pdf(@announcement)
      send_data(pdf.render, :filename => "#{@announcement.title}.pdf", :type => "application/pdf")
   end

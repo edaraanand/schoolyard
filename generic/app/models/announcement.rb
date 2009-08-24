@@ -20,7 +20,7 @@ class Announcement < ActiveRecord::Base
         self.errors.add(:expiration, "must be greater than today") if self.expiration <= Date.today 
      end
   end
-                                                                          
+            
   # sending email to Collaborative Methods on Feedback
     
   def feedback_email

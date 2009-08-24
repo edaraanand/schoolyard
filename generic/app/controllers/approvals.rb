@@ -30,7 +30,8 @@ class Approvals < Application
   end
 
   def update
-    @announcement = @current_school.announcements.find(params[:id])
+    @announcement = @current_school.announcements.find_by_id(params[:id])
+    raise NotFound unless @announcement
     if @announcement.update_attributes(params[:announcement])
       @announcement.person_id = session.user.id
       @announcement.approved = false
@@ -45,7 +46,8 @@ class Approvals < Application
   end
 
   def publish
-    @announcement = @current_school.announcements.find(params[:id])
+    @announcement = @current_school.announcements.find_by_id(params[:id])
+    raise NotFound unless @announcement
     if params[:approvetype] == "Approve & Publish"
         if params[:announcement]
            @announcement.update_attributes(params[:announcement])

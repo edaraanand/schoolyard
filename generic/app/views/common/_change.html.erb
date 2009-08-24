@@ -29,7 +29,7 @@
         <td>
           <p><b>Subjects:</b></p>
         </td>  
-       <td nowrap>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      
         <td>
            <% @extracurricular.each do |f| %>
             <p class="separator"><%= link_to "#{f.class_name.titleize}", url(:class_details, :id => "#{f.id}" ) %></p>

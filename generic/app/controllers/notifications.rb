@@ -88,7 +88,8 @@ class Notifications < Application
   end
   
   def delete
-     @announcement = @current_school.announcements.find(params[:id])
+      @announcement = @current_school.announcements.find_by_id(params[:id])
+    raise NotFound unless @announcement
      @announcement.destroy
      redirect url(:homes)
   end
