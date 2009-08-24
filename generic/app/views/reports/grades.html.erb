@@ -34,7 +34,7 @@
                    <% else %>
                         <% grades.each do |g| %>
                              <td><%= g.score %></td>
-                             <td><%= g.percentage %></td>
+                             <td><%= sprintf("%.1f", g.percentage)  %></td>
                              <td><%= g.grade %></td>
                         <% end %>
                    <% end %>

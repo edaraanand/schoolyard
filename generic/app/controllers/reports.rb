@@ -348,7 +348,7 @@ class Reports < Application
          range = Range.new(Integer(f.from), Integer(f.to))
          array = range.to_a
          x = Float(id)*100/max
-         if array.include?(x)
+         if array.include?(x.to_i)
             @gr = "#{f.name}"
          end
       end
