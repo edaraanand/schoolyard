@@ -111,7 +111,8 @@ fieldset td label{display:block; width:120px;}
 
 /*User Control Panel Section*/
 #user-cp{position:absolute; top:6px; right:6px;background:url(/images/usercp-bg.gif) no-repeat top center; font-size:11px; padding:10px; width:402px; height:40px;}
-#user-cp .welcome{position:relative; margin:0; position:absolute; top:12px; left:20px; color:#949490;}
+#user-cp .welcome{position:relative; margin:0; position:absolute; top:12px; left:20px; color:#aaa;}
+#user-cp .welcome em{color:#666;}
 #user-cp ul{position:absolute; top:12px; right:20px; display:inline;}
 #user-cp ul li{display:inline;}
 #user-cp em{font-style:normal;}
@@ -317,6 +318,8 @@ span.cancel a:hover{text-decoration:underline;}
 .deactive{background:url("/images/ico_deactivate.gif") no-repeat 0 50%; color:red;}
 .reactive{background:url("/images/ico_activate.gif") no-repeat 0 50%; color:#169609;}
 
+
+.back-home{padding:4px 0; display:block; text-align:right;}
 
 .add-more{padding:8px 0 0 0;}
 
@@ -534,7 +537,7 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 
 /*Admin- Links*/
 .block{display:block;}
-.admin-links{background:#f5fbed; padding:3px 8px; text-align:center; font-size:11px;}
+.admin-links{background:#f5fbed; padding:3px 8px; text-align:center; font-size:11px; margin:4px 0;}
 * html h3 .admin-links{padding:0px 8px;}
 
 
