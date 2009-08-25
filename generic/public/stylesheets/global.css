@@ -27,7 +27,6 @@ table{border-collapse:separate; border-spacing:0;}
 caption, th, td{text-align:left; font-weight:normal; vertical-align:top;}
 blockquote:before, blockquote:after,q:before, q:after{content:"";}
 blockquote, q{quotes:"" "";}
-td{vertical-align="top"}
 
   /*End Reset*/
 
@@ -111,7 +110,8 @@ fieldset td label{display:block; width:120px;}
 
 /*User Control Panel Section*/
 #user-cp{position:absolute; top:6px; right:6px;background:url(/images/usercp-bg.gif) no-repeat top center; font-size:11px; padding:10px; width:402px; height:40px;}
-#user-cp .welcome{position:relative; margin:0; position:absolute; top:12px; left:20px; color:#949490;}
+#user-cp .welcome{position:relative; margin:0; position:absolute; top:12px; left:20px; color:#aaa;}
+#user-cp .welcome em{color:#666;}
 #user-cp ul{position:absolute; top:12px; right:20px; display:inline;}
 #user-cp ul li{display:inline;}
 #user-cp em{font-style:normal;}
@@ -279,7 +279,7 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 .right-sidebar ol li{padding:0 0 6px 0;}
 .right-sidebar li.noBullet{list-style:none; padding: 8px 0 0 10px; color:#666; background:none;}
 
-.email-alerts li{margin:10px 0 0 30px; padding:3px 0 3px 20px; background:url"(/images/bullet-dash.gif") no-repeat left center; border-bottom:1px dotted #eee;}
+.email-alerts li{margin:10px 0 0 30px; padding:3px 0 3px 20px; background:url("/images/bullet-dash.gif") no-repeat left center; border-bottom:1px dotted #eee;}
 
 
 #footer{clear:both; padding:10px 0px 30px; text-align:center; border-top:1px solid #ccc; margin:150px 0 40px 0;
@@ -317,6 +317,8 @@ span.cancel a:hover{text-decoration:underline;}
 .deactive{background:url("/images/ico_deactivate.gif") no-repeat 0 50%; color:red;}
 .reactive{background:url("/images/ico_activate.gif") no-repeat 0 50%; color:#169609;}
 
+
+.back-home{padding:4px 0; display:block; text-align:right;}
 
 .add-more{padding:8px 0 0 0;}
 
@@ -377,7 +379,7 @@ ul.calendar-items small{color:#666;}
 
 .defaultText { width: 300px; }
 .defaultTextActive {color:#a1a1a1; font-style: italic!important; }
-#.esh {color:black!important;}
+/*.esh {color:black!important;}*/
 .phone-hint{color:#a1a1a1; padding:0 6px;}
 .css_class{border-bottom: solid 2px #000;}
 .on a{ color:black!important; background:url("/images/arrow-right.gif") right no-repeat; font-weight:bold; padding:0 10px 0 0;}
@@ -492,8 +494,9 @@ td.class-name-top, td.class-name-bottom, td.teach-name-top, td.teach-name-bottom
 .classroom-listing .edit-btn, .classroom-listing .deactive, .classroom-listing .reactive{padding:4px 0 4px 20px; display:block;}
 .classroom-listing .deactive, .classroom-listing .reactive{width:85px;}
 
-.page-links{text-align:center;padding:10px 0;}
+.page-links{text-align:center; padding:6px 0; background:#f7f7f7; margin:8px 0 0 0; clear:both;}
 .page-links a{padding:4px;}
+
 .teacherPic{width:124px;padding:6px 0; margin: 4px 24px;}
 .last.pic{text-align:center;}
 .prinPic{width:220px;}
@@ -534,7 +537,7 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 
 /*Admin- Links*/
 .block{display:block;}
-.admin-links{background:#f5fbed; padding:3px 8px; text-align:center; font-size:11px;}
+.admin-links{background:#f5fbed; padding:3px 8px; text-align:center; font-size:11px; margin:4px 0;}
 * html h3 .admin-links{padding:0px 8px;}
 
 
@@ -570,7 +573,7 @@ span.max-points{text-transform:capitalize;}
 .assign-tasks{margin:8px 0 0 0;}
 .assign-tasks li{padding:0 0 0 32px;}
 
-.page-links{background:#f7f7f7; margin:16px 0 0 0; clear:both;}
+
 
 
 #content .assignments h3 a{margin:0;}
@@ -593,12 +596,15 @@ div.test ul li{padding:2px 0;}
 .add-subjects .add-more{clear:both; float:right; margin-right:250px; display:inline;}
 .assignment{clear:both; width:50%; float:right;}
 
+
+
 #content p.assignments-header{position: absolute; left: 164px; top:0; margin:0; padding:0;}
 
 .data-block.urgent-display{background:#fcedcb; border-top:2px solid #ccc; margin-bottom:4px;}
 .data-block.urgent-display .separator{height:0;}
 
-
+#content p.category{width:50%; float:left; margin:0px 0 4px 0; padding:0;}
+#content p.assignments-maxpoints{margin-left:350px; margin-bottom:0; padding:0px 0 0 0;}
 
 /* selecting title width */
 .s-title{width:80px;}

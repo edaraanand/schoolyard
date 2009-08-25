@@ -7,7 +7,7 @@
       <h2>From the Principal 
           &#124; <%= link_to_right((right = "from_principal"), "Add New", resource(:from_principals, :new)) %> 
       </h2>
-          <%= link_to " &larr; Back to Home Page", url(:homes) %> <br/><br/>
+          <span class="back-home"><%= link_to " &larr; Back to Home Page", url(:homes) %></span><br/>
            <% for principal in @from_principals %>
      
                 <div id="sidebar">
@@ -21,7 +21,7 @@
 							<% @attachment = @current_school.attachments.find(:first, 
 			                                  :conditions => ["attachable_id =? and attachable_type =?", principal.id, "Announcement"] ) %>
 			                <%= partial 'common/attachment' %>
-                         <p class="separator"><%= snippet(principal.content, 50) %></p>
+                         <p><%= snippet(principal.content, 50) %></p>
 						 <% unless session.user.type == "Parent" %>
                              <div class="admin-links">
                                  <%= link_to_right((right = "from_principal"), "Edit", url(:edit_from_principal, principal.id)) %> &#124;
@@ -30,7 +30,7 @@
                          <% end %>
                      </div>
                 </div>
-                <p class="separator">&nbsp;</p>
+                <p class="clear"></p>
             <% end %>
           <%= will_paginate (@from_principals, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
       </div>
