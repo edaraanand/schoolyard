@@ -8,7 +8,7 @@
            Class Calendar &nbsp;&nbsp;&nbsp;
            <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@calendar.class_name.titleize}" ) )  %>
         </h2>
-       <%= link_to "Download as PDF", url(:pdf_events, :id => @calendar.id, :label => "single") , :class=> "pdf" %><br/><br/>
+        <%= link_to "Download as PDF", url(:pdf_events, :id => @calendar.id, :label => "single") , :class=> "pdf" %><br/><br/>
  
            <div class="ddmmm">
                 <span class="date"><%=  @calendar.start_date.strftime("%d")%></span>
@@ -38,8 +38,12 @@
       <% if params[:l] == "calendar" %>
             <%= link_to "&larr; Back to All Events", url(:events, :l => "all_events", :label =>  "calendars") %>
       <% else %>
-            <%  @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name]) %>
-            <%= link_to "&larr; Back to All Events", url(:class_details, :id => @classroom.id, :label => "calendars") %> 
+          <% if @calendar.class_name == "School Wide" %>
+              <% @classroom = @current_school.classrooms.find_by_id(params[:class]) %>
+          <% else %>
+              <% @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name]) %>
+          <% end %>
+          <%= link_to "&larr; Back to All Events", url(:class_details, :id => @classroom.id, :label => "calendars") %>
       <% end %>
     
    <p class="separator">&nbsp;</p> 

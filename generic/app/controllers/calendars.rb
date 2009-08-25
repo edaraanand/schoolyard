@@ -15,7 +15,7 @@ class Calendars < Application
                                                       :per_page => 10,  
                                                       :page => params[:page], 
                                                       :order => 'start_date')   
-      @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "All Classrooms" ], :order => 'start_date')                                                                                                     
+      @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "School Wide" ], :order => 'start_date')                                                                                                     
       @test = params[:id]
     else
       @calendars = @current_school.calendars.paginate(:all, :per_page => 10,  :page => params[:page], :order => 'start_date')
@@ -47,7 +47,7 @@ class Calendars < Application
           File.makedirs("public/uploads/#{@current_school.id}/files")
           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
         end
-        if @calendar.class_name == "All Classrooms"
+        if @calendar.class_name == "School Wide"
            redirect resource(:calendars)
         else
            @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
@@ -79,19 +79,24 @@ class Calendars < Application
   def show
     if params[:l] == "calendar"
        @select = "events"
-      @calendar = @current_school.calendars.find_by_id(params[:id])
-      raise NotFound unless @calendar
+       @calendar = @current_school.calendars.find_by_id(params[:id])
+       raise NotFound unless @calendar
        @selected = @calendar.class_name
        render :layout => 'directory'
     else
-      @select = "classrooms"
-      @selected = "calendars"
-     @calendar = @current_school.calendars.find_by_id(params[:id])
-     raise NotFound unless @calendar
-      @class =  @calendar.class_name.titleize
-      @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
-      @event = "All Day Event"
-      render :layout => 'class_change', :id => @classroom.id
+        @select = "classrooms"
+        @selected = "calendars"
+        @calendar = @current_school.calendars.find_by_id(params[:id])
+        raise NotFound unless @calendar
+        if @calendar.class_name == "School Wide"
+          @classroom = @current_school.classrooms.find_by_id(params[:class])
+          raise NotFound unless @classroom
+        else
+          @class =  @calendar.class_name.titleize
+          @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
+        end
+        @event = "All Day Event"
+        render :layout => 'class_change', :id => @classroom.id
     end
   end
 
@@ -175,7 +180,7 @@ class Calendars < Application
   def events
     @select = "events"
     @selected = "all_events"
-    @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "All Classrooms" ], :order => 'start_date') 
+    @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "School Wide" ], :order => 'start_date') 
     unless params[:id].nil?
       @class = @current_school.classrooms.find(params[:id])
       @cls = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @class.class_name ], :order => 'start_date')
@@ -219,7 +224,7 @@ class Calendars < Application
   def classes
      classes = @current_school.active_classrooms
      room = classes.collect{|x| x.class_name.titleize }
-     @class_rooms = room.insert(0, "All Classrooms")
+     @class_rooms = room.insert(0, "School Wide")
   end
 
   def access_rights

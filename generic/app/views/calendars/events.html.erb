@@ -81,7 +81,7 @@
                                 <% end %>
                                 <%= link_to "#{calendar.title}", url(:calendar, calendar.id, :l => "calendar", 
                                                                      :label => "calendars") %>
-                                 <% @attachments = @current_school.attachments.find(:first, 
+                                <% @attachments = @current_school.attachments.find(:first, 
                                              :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
                                  <%= partial 'common/attachment' %>
                                  <% unless calendar.location.blank? %>
