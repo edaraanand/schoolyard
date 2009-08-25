@@ -27,7 +27,6 @@ table{border-collapse:separate; border-spacing:0;}
 caption, th, td{text-align:left; font-weight:normal; vertical-align:top;}
 blockquote:before, blockquote:after,q:before, q:after{content:"";}
 blockquote, q{quotes:"" "";}
-td{vertical-align="top"}
 
   /*End Reset*/
 
@@ -280,7 +279,7 @@ fieldset label.check-label{display:inline; float:none;}/*Overriding the Generic 
 .right-sidebar ol li{padding:0 0 6px 0;}
 .right-sidebar li.noBullet{list-style:none; padding: 8px 0 0 10px; color:#666; background:none;}
 
-.email-alerts li{margin:10px 0 0 30px; padding:3px 0 3px 20px; background:url"(/images/bullet-dash.gif") no-repeat left center; border-bottom:1px dotted #eee;}
+.email-alerts li{margin:10px 0 0 30px; padding:3px 0 3px 20px; background:url("/images/bullet-dash.gif") no-repeat left center; border-bottom:1px dotted #eee;}
 
 
 #footer{clear:both; padding:10px 0px 30px; text-align:center; border-top:1px solid #ccc; margin:150px 0 40px 0;
@@ -380,7 +379,7 @@ ul.calendar-items small{color:#666;}
 
 .defaultText { width: 300px; }
 .defaultTextActive {color:#a1a1a1; font-style: italic!important; }
-#.esh {color:black!important;}
+/*.esh {color:black!important;}*/
 .phone-hint{color:#a1a1a1; padding:0 6px;}
 .css_class{border-bottom: solid 2px #000;}
 .on a{ color:black!important; background:url("/images/arrow-right.gif") right no-repeat; font-weight:bold; padding:0 10px 0 0;}
@@ -495,8 +494,9 @@ td.class-name-top, td.class-name-bottom, td.teach-name-top, td.teach-name-bottom
 .classroom-listing .edit-btn, .classroom-listing .deactive, .classroom-listing .reactive{padding:4px 0 4px 20px; display:block;}
 .classroom-listing .deactive, .classroom-listing .reactive{width:85px;}
 
-.page-links{text-align:center;padding:10px 0;}
+.page-links{text-align:center; padding:6px 0; background:#f7f7f7; margin:8px 0 0 0; clear:both;}
 .page-links a{padding:4px;}
+
 .teacherPic{width:124px;padding:6px 0; margin: 4px 24px;}
 .last.pic{text-align:center;}
 .prinPic{width:220px;}
@@ -573,7 +573,7 @@ span.max-points{text-transform:capitalize;}
 .assign-tasks{margin:8px 0 0 0;}
 .assign-tasks li{padding:0 0 0 32px;}
 
-.page-links{background:#f7f7f7; margin:16px 0 0 0; clear:both;}
+
 
 
 #content .assignments h3 a{margin:0;}
