@@ -23,23 +23,40 @@
      <div class="clear dashed separate"></div>
      
      <% if session.user.type == "Parent" %>
-         <% @few_alerts.each do |alert| %>
-              <% unless @alert_people.blank? %>
-                  <% if @alert_people.include?(alert.id.to_i) %>
-                     <%= check_box :name => 'parent_alerts[' + alert.id.to_s + ']', :checked => 'checked' %>
+     
+         <% if params[:parent_alerts] %>
+            <% @few_alerts.each do |alert| %>
+                <% if params[:parent_alerts].has_key?(alert.id.to_s) %>
+                    <%= check_box :name => 'parent_alerts[' + alert.id.to_s + ']', :checked => 'checked' %>
+                    <%= alert.full_name %>  <br/>  <br/>
+                <% else %>
+                    <%= check_box :name => 'parent_alerts[' + alert.id.to_s + ']' %>
+                    <%= alert.full_name %>  <br/>  <br/>
+                <% end %>
+            <% end %>
+            <span class="subText">is Posted to</span><br/><br/> 
+         <% end %>
+         
+         <% unless params[:parent_alerts] %>   
+            <% @few_alerts.each do |alert| %>
+                  <% unless @alert_people.blank? %>
+                      <% if @alert_people.include?(alert.id.to_i) %>
+                         <%= check_box :name => 'parent_alerts[' + alert.id.to_s + ']', :checked => 'checked' %>
+                      <% else %>
+                         <%= check_box :name => 'parent_alerts[' + alert.id.to_s + ']' %>
+                      <% end %>
                   <% else %>
-                     <%= check_box :name => 'parent_alerts[' + alert.id.to_s + ']' %>
+                         <%= check_box :name => 'parent_alerts[' + alert.id.to_s + ']' %>
                   <% end %>
-              <% else %>
-                     <%= check_box :name => 'parent_alerts[' + alert.id.to_s + ']' %>
+                    <%= alert.full_name %>  <br/>  <br/>
               <% end %>
-                <%= alert.full_name %>  <br/>  <br/>
-          <% end %>
-            <span class="subText">is Posted to</span><br/><br/>
-      <% else %>
+              <span class="subText">is Posted to</span><br/><br/> 
+         <% end %>
+         
+    <% else %>
            New Announcement is Posted to<br/><br/>
      <% end %>
-        
+      
           <% unless params[:class_alerts] %>         
              <% @current_school.classes.each do |f| %>
                    <% alert_p = AlertPeople.find(:all,:conditions=>["person_id=? and classroom_id=?", session.user.id, f.id]).map{|x| x.classroom_id } %>

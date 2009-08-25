@@ -27,10 +27,10 @@ class Alerts < Application
     if session.user.type == "Parent"
        if params[:class_alerts] || params[:parent_alerts]
           if params[:parent_alerts].nil? &&  params[:class_alerts] != nil
-             flash[:error] = "you should check the Announcement/Homework"
+             flash[:error] = "please check the Announcement Or Homework"
              render :edit
           elsif params[:class_alerts].nil? && params[:parent_alerts] != nil
-             flash[:error] = "you should check the Classroom"
+             flash[:error] = "please check the Classroom"
              render :edit
           else
              params[:class_alerts].each do |k, d|
@@ -49,12 +49,14 @@ class Alerts < Application
         end
      else
        @alert = Alert.find_by_name("announcement")
-       params[:class_alerts].each do |k, d|
-          people_alert_to_save = AlertPeople.new
-          people_alert_to_save.person_id = session.user.id
-          people_alert_to_save.alert_id = @alert.id
-          people_alert_to_save.classroom_id = k
-          people_alert_to_save.save
+       if params[:class_alerts]
+         params[:class_alerts].each do |k, d|
+            people_alert_to_save = AlertPeople.new
+            people_alert_to_save.person_id = session.user.id
+            people_alert_to_save.alert_id = @alert.id
+            people_alert_to_save.classroom_id = k
+            people_alert_to_save.save
+         end
        end
        redirect resource(:alerts)
      end
