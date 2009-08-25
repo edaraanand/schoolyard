@@ -17,7 +17,6 @@ require 'httparty'
 require 'clickatell'
 require 'spreadsheet'
 require 'spreadsheet/excel'
-require 'orderedhash'
 
 use_orm :activerecord
 use_test :rspec
