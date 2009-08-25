@@ -1,0 +1,53 @@
+   <ul id="class_room">
+       <li>
+           <%= select :class_type, :label => "Class Type", :collection => @class_types, 
+                      :onchange => "class_type();return false;" %>
+       </li>
+       <% if (@id == ["please"]) && (@class_type == "Classes") %>
+           <li>
+              <span id="class_name" style="display:block">
+                    <%= text_field :class_name, :label => "Class Name", :class => "required", :maxlength => "75" %>
+              </span>
+           </li>
+       <% elsif (@id == ["please"]) || (@class_type == "Sports") %>
+            <li>
+                 <span  id="class_name" style="display:none">
+                     <%= text_field :class_name, :label => "Class Name", :class => "required", :maxlength => "75" %>
+                 </span >
+            </li>
+       <% else %>
+            <li>
+                 <span id="class_name" style="display:block">
+                       <%= text_field :class_name, :label => "Class Name", :class => "required", :maxlength => "75" %>
+                 </span>
+            </li>
+       <% end %>
+       <li>
+          <% if (@id == ["please"]) && (@class_type == "Classes") %>
+                <span id="teacher" style="display:block">
+                     <label>Class Teacher</label>
+                </span>
+                <span id="sport" style="display:none">
+                   <label>Athletic Director</label>
+                </span>
+          <% elsif (@id == ["please"]) || (@class_type == "Sports") %>
+                <span id="teacher" style="display:none">
+                     <label>Class Teacher</label>
+                </span>
+                <span id="sport" style="display:block">
+                   <label>Athletic Director</label>
+                </span>
+          <% else %>
+                 <span id="teacher" style="display:block">
+                     <label>Class Teacher</label>
+                 </span>
+                 <span id="sport" style="display:none">
+                     <label>Athletic Director</label>
+                 </span>
+           <% end %>
+                         
+         	<%= select :class => "apart required", :name => "class_teacher", :collection => @current_school.staff, 
+                     :value_method => :id, :text_method => :name, :prompt => "Select Faculty" %>
+       </li>
+      
+</ul>

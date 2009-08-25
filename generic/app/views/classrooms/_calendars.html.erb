@@ -7,7 +7,7 @@
             <% if @all_class_calendars.empty? %>
                 <span class="subText">There are no events planned at this time</span>
             <% else %>    
-                <%= partial 'common/all_class_calendars' %>
+                <%= partial 'common/class_calendar' %>
             <% end %>
         <% else %>
              <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id)  , :class=> "pdf"%>
@@ -41,7 +41,7 @@
                         </ul>
                     </div>
                 <% end %>
-                <%= partial 'common/all_class_calendars' %>
+                <%= partial 'common/class_calendar' %>
                 <%= will_paginate (@calendars, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
                  </div>
         <% end %>

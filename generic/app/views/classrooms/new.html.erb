@@ -1,5 +1,5 @@
-
- <%= error_messages_for @classroom %>
+<h2 class="current-page"> Classrooms &gt; Add New </h2>
+<%= error_messages_for @classroom %>
  <ul class='error_messages'>
        <% if flash[:error] %>
           <li><%= flash[:error] %> </li>
@@ -7,120 +7,58 @@
        <% if flash[:error2] %>
           <li><%= flash[:error2] %> </li>
        <% end %>
- </ul>
-  <% s = (0..15).to_a %>
-
-	<div class="container">
+ </ul> <% s = (0..13).to_a %>
+ 	<div class="container">
 		<ol>
-			<li><label for="cls" class="error">Please enter the Class Name</label></li> 
-			<li><label for="class[people][class_teacher]" class="error">Please select the Faculty</label></li> 
-			<% s.each do |f| %>
-			  	<li><label for="txt<%= f %>" class="error">Please enter the Role</label></li> 
-			    <li><label for="faculty<%= f %>" class="error">Please select the Faculty</label></li>
-			<% end %>
-			 
-	    </ol>
+        <li><label for="classroom_class_name" class="error">Please enter the Class Name</label></li> 
+        <li><label for="class_teacher" class="error">Please select the Faculty</label></li> 
+        <% s.each do |f| %>
+  			  	<li><label for="txt<%= f %>" class="error">Please enter the Role</label></li> 
+  			    <li><label for="faculty<%= f %>" class="error">Please select the Faculty</label></li>
+        <% end %>
+    </ol>
 	</div>
 	
-<fieldset>
-      <h2 class="current-page"> Classrooms &gt; Add New </h2>
+<%= form_for(@classroom, :id => "class", :action => resource(:classrooms), :class => "cmxform" ) do %>
 
-      <%= form_for(@classroom, :id => "class", :action => resource(:classrooms), :class => "cmxform" ) do %>
+      <fieldset>
+            <%= partial 'form' %>
      
-          <ul id="class_room">
-                   <li>
-                       <%= select :class_type, :label => "Class Type", :collection => @class_types, 
-                                  :onchange => "class_type();return false;" %>
-                   </li>
-                   
-                <% if (@id == ["please"]) && (@class_type == "Classes") %>
-                     
-                       <li>
-	                        <div id="class_name" style="display:block">
-                                <%= text_field :class_name, :id => "cls", :label => "Class Name", :class => "required", :maxlength => "75" %>
-                            </div>
-                       </li>
-                     
-                <% elsif (@id == ["please"]) || (@class_type == "Sports") %>
-                     
-                          <li>
-	                           <div id="class_name" style="display:none">
-	                               <%= text_field :class_name, :id => "cls", :label => "Class Name", :class => "required", :maxlength => "75" %>
-	                           </div>
-	                      </li>
-                     
-                <% else %>
-                     
-                          <li>
-	                           <div id="class_name" style="display:block">
-	                                 <%= text_field :class_name, :id => "cls", :label => "Class Name", :class => "required", :maxlength => "75" %>
-	                           </div>
-	                      </li>
-                     
-                <% end %>
-                     
-              <li>
-                  <% if (@id == ["please"]) && (@class_type == "Classes") %>
-                        <div id="teacher" style="display:block">
-                             <label>Class Teacher</label>
-                        </div>
-                        <div id="sport" style="display:none">
-                           <label>Athletic Director</label>
-                        </div>
-                  <% elsif (@id == ["please"]) || (@class_type == "Sports") %>
-                        <div id="teacher" style="display:none">
-                             <label>Class Teacher</label>
-                        </div>
-                        <div id="sport" style="display:block">
-                           <label>Athletic Director</label>
-                        </div>
-                  <% else %>
-                         <div id="teacher" style="display:block">
-                             <label>Class Teacher</label>
-                         </div>
-                         <div id="sport" style="display:none">
-                             <label>Athletic Director</label>
-                         </div>
-                   <% end %>
-                                 
-                 	<%= select :class => "apart required", :name => "class[people][class_teacher]", :collection => @current_school.staff, 
-	                           :value_method => :id, :text_method => :name, :prompt => "Select Faculty" %>
-	          </li>
-              
-        </ul>
             <ul id="roles"></ul>
             <input type="hidden" id="id" value="1">
             <a href="" class="add-more" onClick="addFormField(); return false;">Add More</a>
             
-        <div class="save-cancel">
-	        <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
-        </div>
-  <% end =%>
-</fieldset>
+            <div class="save-cancel">
+    	        <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
+            </div>
+      </fieldset>
+      
+<% end =%>
+  
 
+ 
 <script type= "text/javascript">
-
-
+ 
+ 
  $j('#cls').focus();
-
+ 
 function addFormField()
   {
-
     var id = document.getElementById('id').value;
-    $j('#roles').append("<li id='row" + id + "'><input type='text' class='short text required' name='class[people][roles][]' id='txt" + id + "'><select class='apart required' id='faculty"+id+"' name='class[people][ids][]'><option value=''>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' class='remove' onclick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a></li>");
+    $j('#roles').append("<li id='row" + id + "'><input type='text' class='short text required' name='class[role][role_"+id+"]' id='txt" + id + "'><select class='apart required' id='faculty"+id+"' name='class[faculty][faculty_"+id+"]'><option value=''>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' class='remove' onclick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a></li>");
     $('txt'+id).focus();
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
-}
-
+ }
+ 
  function removeFormField(id) 
    {
          $j(id).remove();
-    }
-    
+         
+   }
    
  function class_type()
-
+ 
     {
         var class_name = document.getElementById('class_name')
         var teacher = document.getElementById('teacher')
@@ -139,11 +77,11 @@ function addFormField()
          }
      }
        
-
-     // Validation for Adding Classrooms
-
+ 
+  // Validation for Adding Classrooms
+ 
 	var container = $j('div.container');
-
+ 
 	// validate the form when it is submitted
 	var validator = $j("#class").validate({
 		errorContainer: container,
@@ -152,12 +90,11 @@ function addFormField()
 		meta: "validate"
 	});
 	
-
 </script>
-
-
+ 
+ 
 <style type="text/css">
-
+ 
  	.cmxform fieldset li.error label { color: red; }
 	div.container {
 		background-color: #eee;
@@ -173,11 +110,11 @@ function addFormField()
 	.container label.error {
 		display: inline;
 	}
-
+ 
 	form.cmxform label.error {
 		display: block;
 		margin-left: 1em;
 		width: auto;
 	}
-
+ 
 </style>

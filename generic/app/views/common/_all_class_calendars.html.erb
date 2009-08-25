@@ -1,60 +1,60 @@
-<% if params[:label] == "calendars" %>
-               <% cdate=""
-            for calendar in @all_class_calendars %>
-               <div class="calendar-block" style="width:480px;">
-                     <% if(cdate!=calendar.start_date.strftime("%b %d"))
-                           cdate=calendar.start_date.strftime("%b %d") %>
-                           <br/><h3<% unless (Time.now.strftime("%b %d")!=cdate) %>
-                             class="today"
-                           <%end%>
-                           >
-                           <%= cdate %> </h3> 
-                     <% end %> 
-                     <ul class="calendar-items">
-                        <li>
-                           <% unless calendar.start_time.nil? %>
-                               <%= calendar.start_time.strftime("%I:%M %p") %> 
-                           <% else %>
-                                All day event
-                           <% end %>
-                           <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
-                           <% unless session.user.type == "Parent" %>
-                               <div class="admin-links">
-                                    <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) ) %> &#124;
-                                    <%= link_to_delete((right = "calendar"), "Delete", resource(calendar, :delete) )  %>
-                               </div>
-                           <% end %>
-                        </li>
-                     </ul>
-                 </div>
-             <% end %>
+<% if params[:ref] == "class" %>
+         <% cdate=""
+      for calendar in @all_class_calendars %>
+         <div class="calendar-block" style="width:480px;">
+               <% if(cdate!=calendar.start_date.strftime("%b %d"))
+                     cdate=calendar.start_date.strftime("%b %d") %>
+                     <br/><h3<% unless (Time.now.strftime("%b %d")!=cdate) %>
+                       class="today"
+                     <%end%>
+                     >
+                     <%= cdate %> </h3> 
+               <% end %> 
+               <ul class="calendar-items">
+                  <li>
+                     <% unless calendar.start_time.nil? %>
+                         <%= calendar.start_time.strftime("%I:%M %p") %> 
+                     <% else %>
+                          All day event
+                     <% end %>
+                     <%= link_to "#{calendar.title}", url(:calendar, calendar.id, :l => "calendar", :label => "calendars") %>
+                     <% unless session.user.type == "Parent" %>
+                         <div class="admin-links">
+                              <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) ) %> &#124;
+                              <%= link_to_delete((right = "calendar"), "Delete", resource(calendar, :delete) )  %>
+                         </div>
+                     <% end %>
+                  </li>
+               </ul>
+           </div>
+       <% end %>
 
-<% else %>   
-           <% cdate=""
-                for calendar in @all_class_calendars %>
-                    <div class="calendar-block" style="width:480px;">
-                        <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
-                             cdate=calendar.start_date.strftime("%B %d %Y") %>
-                             <h3><%= cdate %></h3>
-                        <% end %> 
-                        <ul class="calendar-items">
-                             <li>
-                                <span class="cal-time">
-                                     <% unless calendar.start_time.nil? %>
-                                          <%= calendar.start_time.strftime("%I:%M %p") %> 
-                                     <%else%>
-                                           All day event
-                                     <% end %>
-                                </span>
-                                <span class="cal-title">
-                                    <%= link_to calendar.title, resource(calendar, :edit)%> <small>(<%= calendar.class_name %>)</small>
-                                </span>
-                                <%= link_to "Edit", resource(calendar, :edit), :class=>"edit-btn" %>
-                                <%= link_to "Delete", resource(calendar, :delete), :class => "delete delete-btn" %> <br/><br/>
-                            </li>
-                        </ul>
-                    </div>   
-            <% end %>
+<% else %>  
+     <% cdate=""
+          for calendar in @all_class_calendars %>
+              <div class="calendar-block" style="width:480px;">
+                  <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
+                       cdate=calendar.start_date.strftime("%B %d %Y") %>
+                       <h3><%= cdate %></h3>
+                  <% end %> 
+                  <ul class="calendar-items">
+                       <li>
+                          <span class="cal-time">
+                               <% unless calendar.start_time.nil? %>
+                                    <%= calendar.start_time.strftime("%I:%M %p") %> 
+                               <%else%>
+                                     All day event
+                               <% end %>
+                          </span>
+                          <span class="cal-title">
+                             <%= link_to "#{calendar.title}", resource(calendar, :edit)%> <small>(<%= calendar.class_name %>)</small>
+                          </span>
+                          <%= link_to "Edit", resource(calendar, :edit), :class=>"edit-btn" %>
+                          <%= link_to "Delete", resource(calendar, :delete), :class => "delete delete-btn" %> <br/><br/>
+                      </li>
+                  </ul>
+              </div>   
+      <% end %>
   
 <% end %>
  

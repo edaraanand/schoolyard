@@ -1,3 +1,4 @@
+<h2 class="current-page"> Classrooms &gt; Edit </h2>
 <%= error_messages_for @classroom %>
 <ul class='error_messages'>
        <% if flash[:error] %>
@@ -7,73 +8,66 @@
           <li><%= flash[:error2] %> </li>
        <% end %>
 </ul>
-<% s = (0..150).to_a %>
-
+<% s = (0..13).to_a %>
 	<div class="container">
 		 <ol>
+	    	<li><label for="classroom_class_name" class="error">Please enter the Class Name</label></li> 
+  			<li><label for="class_teacher" class="error">Please select the Faculty</label></li>
 			  <% s.each do |f| %>
 			      <li><label for="txt<%= f %>" class="error">Please enter the Role</label></li> 
 			      <li><label for="faculty<%= f %>" class="error">Please select the Faculty</label></li>
-			      <li><label for="class_class_people<%=f%>" class="error">Please enter the Role</label></li>
-        		<li><label for="class[people][faculty][]<%=f%>" class="error">Please select the Faculty</label></li>
+			      <li><label for="class_role_<%=f%>" class="error">Please enter the Role</label></li>
+        		<li><label for="class_faculty_<%=f%>" class="error">Please select the Faculty</label></li>
 			  <% end %>
-      			<li><label for="classroom_class_name" class="error">Please enter the Class Name</label></li> 
-      			<li><label for="class[teacher]" class="error">Please select the Faculty</label></li>
      </ol>
 	</div>
-	
-<fieldset>
-  <h2 class="current-page"> Classrooms &gt; Edit </h2>
-
-  <%= form_for(@classroom, :id => "testing", :action => resource(@classroom), :class => "cmxform" ) do %>
-
-    <ul id="class_room">
-             <!-- <li>Class Type : <%= @classroom.class_type %></li> -->
-              <li>
-                   <%= select :class_type, :label => "Class Type", :collection => @class_types  %>
-              </li>
-             <% if @classroom.class_type == "Classes" || @classroom.class_type == "Subject"  %>
-                   <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75", :class => "required" %></li>
-             <% end %>
-                  <% @class = @class_peoples.delete_if{|x| x.team_id != nil} %> <% q = 1 %>
-           <% @class.each do |f| %>
-                <% if f.role == "class_teacher" %>
-                      <li>
-                          <label><%= f.role.titleize %></label>
-                          <%= select :name => "class[teacher]", :collection => @current_school.staff, 
-                                     :selected => "#{f.person_id.to_s}", :value_method => :id, 
-                                     :text_method => :name, :prompt => "Select Faculty", :class => "required" %>
-                      </li>
-                <% elsif f.role == "Athletic Director" %>
-                       <li>
-                           <label><%= f.role.titleize %></label>
-                           <%= select :name => "class[teacher]", :class => "required",
-                                      :collection => @current_school.staff, :selected => "#{f.person_id.to_s}", 
-                                      :value_method => :id, :text_method => :name, :prompt => "Select Faculty" %>
-                       </li>
-                <% else %>
-                       <li>
-                           <%= text_field :name => 'class[people][r][]', :id => "class_class_people#{q}", 
-                                         :value => "#{f.role}", :class => "short text required" %>
-                           <%= select :class => "apart required", :name => "class[people][faculty][]", :collection => @current_school.staff, 
-                                      :selected => "#{f.person_id.to_s}", :value_method => :id, :id => "class[people][faculty][]#{q}",
-                                      :text_method => :name, :prompt => "Select Faculty" %>
-                           <%= link_to "Remove", url(:delete_classroom, f, :label => "remove"), :class => "delete remove" %>
-                       </li>
-                <% end %> <% q += 1 %>
-            <% end %>
-           <li><%= text_field :position, :label => 'Position in sequence', :maxlength => '3' %></li>
-     </ul>
+<%= form_for(@classroom, :id => "testing", :action => resource(@classroom), :class => "cmxform" ) do %>
+    <fieldset>
+          <ul id="class_room">
+                <li><%= select :class_type, :label => "Class Type", :collection => @class_types  %></li>
+                 <% if @classroom.class_type == "Classes" || @classroom.class_type == "Subject"  %>
+                    <li><%= text_field :class_name,  :label => "Class Name", :maxlength => "75", :class => "required" %></li>
+                 <% end %>
+                 <% @class = @class_peoples.delete_if{|x| x.team_id != nil} %> <% q = 1 %>
+                 <% @class.each do |f| %>
+                      <% if f.role == "class_teacher" %>
+                            <li>
+                                <label><%= f.role.titleize %></label>
+                                <%= select :name => "class_teacher", :collection => @current_school.staff, 
+                                           :selected => "#{f.person_id.to_s}", :value_method => :id, 
+                                           :text_method => :name, :prompt => "Select Faculty", :class => "required" %>
+                            </li>
+                      <% elsif f.role == "Athletic Director" %>
+                             <li>
+                                 <label><%= f.role.titleize %></label>
+                                 <%= select :name => "class_teacher", :class => "required",
+                                            :collection => @current_school.staff, :selected => "#{f.person_id.to_s}", 
+                                            :value_method => :id, :text_method => :name, :prompt => "Select Faculty" %>
+                             </li>
+                      <% else %>
+                             <li>
+                                 <%= text_field :name => "class_room[role][role_#{q}]", :id => "class_role_#{q}", 
+                                                :value => "#{f.role}", :class => "short text required" %>
+                                 <%= select :class => "apart required", :name => "class_room[faculty][faculty_#{q}]", :collection => @current_school.staff, 
+                                            :selected => "#{f.person_id.to_s}", :value_method => :id, :id => "class_faculty_#{q}",
+                                            :text_method => :name, :prompt => "Select Faculty" %>
+                                 <%= link_to "Remove", url(:delete_classroom, f, :label => "remove"), :class => "delete remove" %>
+                             </li>
+                      <% end %> <% q += 1 %>
+                  <% end %>
+                  <li><%= text_field :position, :label => 'Position in sequence', :maxlength => '3' %></li>
+            </ul>
             <ul id="roles"></ul>
             <input type="hidden" id="id" value="1">
             <a href="#" class="add-more" onclick="addFormField(); return false;">Add More</a>
      
-        <div class="save-cancel">
-             <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:classrooms), :class => "cancel" %>
-        </div>
- <% end =%>
+            <div class="save-cancel">
+                 <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:classrooms), :class => "cancel" %>
+            </div>
+    </fieldset>
+<% end =%>
  
-</fieldset>
+
 
 
  <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
@@ -83,7 +77,7 @@
  function addFormField()
   {
     var id = document.getElementById('id').value;
-    $j('#roles').append("<li id='row" + id + "'><input type='text' class='short text required' name='class[p][roles][]' id='txt" + id + "'><select class='apart required' id='faculty"+id+"' name='class[p][ids][]'><option value=''>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' class='remove' onclick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a></li>");
+    $j('#roles').append("<li id='row" + id + "'><input type='text' class='short text required' name='class[role][role_"+id+"]' id='txt" + id + "'><select class='apart required' id='faculty"+id+"' name='class[faculty][faculty_"+id+"]'><option value=''>Select Faculty</option><% @teachers.each do |teacher| %><option value='<%= teacher.id %>'><%= teacher.name %></option><% end %></select><a href='#' class='remove' onclick='removeFormField(\"#row" + id + "\"); return false;'>Remove</a></li>");
     $('txt'+id).focus();
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
