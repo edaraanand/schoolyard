@@ -29,7 +29,7 @@
          <div class="test">
 	          <% @categories.each do |f| %>
                     <div id = "<%= f.id %>" >
-                         <p class="category">
+                         <p class="category" style="width:50%; float:left;">
                             <label>Category(optional)</label>
  							              <% if f.category_name == "category" %>
                                 <%= text_field :name => "cgories_#{f.id}[category_name][]", :class => "text", :value => "" %>
@@ -39,13 +39,10 @@
                          </p>  
                 	       <% q = 1 %>
                          <ul id="ament<%= f.id %>" class="assignment">
-                         <p style="margin-left:10px; margin-bottom:0; padding:0;">Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Max Points</p>
+                         <p class="assignments-maxpoints">Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Max Points</p>
 						 	           <% f.assignments.each do |a| %>
 	                             <li>
-	                                  <%= text_field  :name => "cgories_#{f.id}[assignment][name][]", :class => "short",
-	                                                  :value => "#{a.name}" %>
-	                                  <%= text_field  :name => "cgories_#{f.id}[assignment][max_point][]", :class => "short apart number", 
-	                                                  :value => "#{a.max_point}" %>
+	                                  <%= text_field  :name => "cgories_#{f.id}[assignment][name][]", :class => "short", :value => "#{a.name}" %><%= text_field  :name => "cgories_#{f.id}[assignment][max_point][]", :class => "short number", :value => "#{a.max_point}" %>
                 										<% if f.assignments.length > 1 %>	
                 											   <% if q != 1 %>
                 											   	  <%= link_to "", url(:delete_report, a, :label => "assignment"), :class => "delete-btn" %>
@@ -65,14 +62,14 @@
                 <div id="test" class="test" style="display:block;"> 
 	
 		        	 <%= fields_for @category do %>
-		                   <p class="category">					
+		                   <p class="category" style="width:50%; float:left;">					
 			                    <label>Category (Optional)</label>				
 							            <%= text_field :name => "category[category_name][]", :class =>"text" %>
 						        	</p>
 			         <% end =%>
 				
-					 <%= fields_for @assignment do %> 
-					 <p style="margin-left:350px; margin-bottom:0; padding:0;">Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Max Points</p>
+					 <%= fields_for @assignment do %>
+					 <p class="assignments-maxpoints">Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Max Points</p>
                 <% if @report.categories.empty? %>
                    <%= partial 'grade' %>
                 <% else %>
