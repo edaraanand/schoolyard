@@ -89,6 +89,7 @@ Merb::Router.prepare do
        resources :captures
        resources :tasks
        resources :directories
+       match("/twilio_log").to(:controller => 'notifications', :action => 'twilio_log').name(:twilio_log)
        match("/staff").to(:controller => 'directories', :action => 'staff').name(:staff)
        match("/letters").to(:controller => 'directories', :action => 'letters').name(:letters)
        match("/generate_csv").to(:controller => 'directories', :action => 'generate_csv').name(:generate_csv)

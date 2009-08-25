@@ -143,6 +143,13 @@ class Notifications < Application
     the_str
   end
   
+  def twilio_log
+     account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
+     resp =  account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls.csv", "GET" )
+     filename = "twilio.csv"
+     send_data(resp.body, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
+  end
+ 
   private
 
   def access_rights

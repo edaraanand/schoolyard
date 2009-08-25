@@ -1,8 +1,10 @@
 <div>
   <h2 class="current-page">
-    Urgent Announcements <span class="actions">
-             <%= link_to "Add New", resource(:notifications, :new) %>
+       Urgent Announcements 
+      <span class="actions">
+             <%= link_to "Add New", resource(:notifications, :new) %> |
              <%#= link_to "Call Details", url(:records) %>
+             <%= link_to "Log Details", url(:twilio_log) %>
       </span>
   </h2>
   
