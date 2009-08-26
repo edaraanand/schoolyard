@@ -23,9 +23,18 @@
          <% end %>
     </li> 
     <li><%= text_field  :location,  :label => "Location" %></li>
-    <li><label>&nbsp;</label><%= check_box :day_event, :onclick => "dayevent()" %>All Day Event</li>
     <li>
-           <%= text_field :start_date, :id => "start", :label => "Starts:", :class=>"short",
+       <label>&nbsp;</label>
+       <%#= check_box :day_event, :onclick => "dayevent()" %>
+       <% if @calendar.day_event == true %>
+          <input type="checkbox" id="calendar_day_event" onclick="dayevent()" value="1" name="calendar[day_event]" class="checkbox" checked="checked"/> 
+       <% else %>
+          <input type="checkbox" id="calendar_day_event" onclick="dayevent()" value="1" name="calendar[day_event]" class="checkbox"/> 
+       <% end %>
+       All Day Event
+    </li>
+    <li>
+         <%= text_field :start_date, :id => "start", :label => "Starts:", :class=>"short",
                                  :value => @calendar.start_date.strftime("%m/%d/%Y") %>
 	       <% if @calendar.day_event == true %>
 	          <%= text_field :start_time, :id => "start_time", :disabled => true, :class => "short apart"  %>
@@ -38,7 +47,7 @@
             <% end %>
 	       <% end %>
     </li>
-	   <li>
+	  <li>
 	       <%= text_field :end_date, :id => "end", :label => "Ends:", :class=>"short",
 	                                 :value => @calendar.end_date.strftime("%m/%d/%Y") %>
 	       <% if @calendar.day_event == true %>
@@ -52,25 +61,27 @@
          <% end %>
 	   </li>
    </ul>
-           <ul id="pending_files">
-                    <% if @attachments.size > 0 %>
-                           <% @attachments.each do |attachment| %>
-                                  <li id="attachment_<%= attachment.id %>"><%= attachment.filename %>
-                                  <%= link_to "Remove", url(:delete_calendar, attachment.id, :label => "attachment"), :class => "cancel" %>
-                                  </li>
-                           <% end %>
-                    <% end %>
+          <ul id="pending_files">
+              <% if @attachments.size > 0 %>
+                     <% @attachments.each do |attachment| %>
+                            <li id="attachment_<%= attachment.id %>"><%= attachment.filename %>
+                            <%= link_to "Remove", url(:delete_calendar, attachment.id, :label => "attachment"), :class => "cancel" %>
+                            </li>
+                     <% end %>
+              <% end %>
 	        </ul>
           
-                <script type="text/javascript">
-	                 	  var multi_selector = new MultiSelector($('pending_files'), <%= @allowed %>);
-		                  multi_selector.addElement($('calendar_attachment'));
-	              </script>
-     
+          <script type="text/javascript">
+             	  var multi_selector = new MultiSelector($('pending_files'), <%= @allowed %>);
+                multi_selector.addElement($('calendar_attachment'));
+          </script>
+  </fieldset> 
+  
        <div class="save-cancel">
              <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
              <%= submit "    Publish    " %> Or <%= link_to "Cancel", resource(:calendars), :class=>"cancel" %>
        </div>
+       
  <% end =%>
 	   
     
