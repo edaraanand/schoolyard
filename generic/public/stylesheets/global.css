@@ -78,6 +78,10 @@ h2.current-page .edit-btn{float:none; margin:0 0 10px 16px;}
 h2 span.actions {padding-left:12px; font-weight:normal;}
 h2 span.actions a{font-weight:normal;}
 
+/*PDF Links in Classroom Page by Eshwar*/
+h2 span.act {padding-left:125px; font-weight:normal;}
+h2 span.act a{font-weight:normal;}
+
 dl{width:480px; float:left; padding:4px 0; margin:4px 0; }
 dt{width:120px; padding:4px 0; margin:0 3px 0 3px; float:left; }
 dd{width:300px; padding:4px 0; float:left; }
