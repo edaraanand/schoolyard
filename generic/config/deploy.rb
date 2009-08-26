@@ -5,7 +5,7 @@ set :repository,  "git@github.com:eshwardeep/schoolapp.git"
 set :revision, "origin/release1b"
 #set :branch, "release1b"
 set :adapter, "mongrel"
-set :port, 7001
+set :port, 5001
 set :processes, 1
 set :log_path, "#{shared_path}/log/production.log"
 
