@@ -1,12 +1,15 @@
-<div id="content"  class="two-col">
+<div id="content" class="two-col">
         <h2 class="current-page"> 
             Homework &nbsp;&nbsp;&nbsp;
-            <%= link_to_right((right = "homework"), "Add New", resource(:home_works, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+            <%= link_to_right((right = "homework"), "Add New", resource(:home_works, :new, :l => "#{@classroom.class_name.titleize}")) %>
+            <span class="act">  
+               <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id), :class=> "pdf" %>
+            </span>
         </h2> 
         <% if @home_works.empty? %>
            <span class="subText">There are no Homework assignments at this time</span>
         <% else %>
-             <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id)  , :class=> "pdf"%>
+             
              <% for homework in @home_works %>
                  <div class="data-block short-block">
                       <span class="hidden">

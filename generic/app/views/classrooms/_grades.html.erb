@@ -1,16 +1,16 @@
 <div id="content"  class="two-col">
         <h2 class="current-page"> 
 	         <span class="actions">
-             Grades/Reports &nbsp;&nbsp;&nbsp;
-
-             <%= link_to_right((right = "grades"), "Set Up Subjects", resource(:reports, :new) )  %> &nbsp;&nbsp;&nbsp;
-
-       		 <% if @ranks.empty? %>
-			     <%= link_to_right((right = "grades"), "Add Grades Definition", resource(:ranks, :new) )  %>
-	         <% else %>
-	             <%= link_to_right((right = "grades"), "Edit Grades Definition", url(:ranks_edit) )  %>
-	         <% end %>
-      </h2>
+             Grades/Reports 
+             <span class="actions">
+                <%= link_to_right((right = "grades"), "Set Up Subjects", resource(:reports, :new) )  %> &nbsp;&nbsp;&nbsp;
+            		 <% if @ranks.empty? %>
+       			         <%= link_to_right((right = "grades"), "Add Grades Definition", resource(:ranks, :new) )  %>
+       	         <% else %>
+       	             <%= link_to_right((right = "grades"), "Edit Grades Definition", url(:ranks_edit) )  %>
+       	         <% end %>
+             </span>
+        </h2>
 
 <% if @reports.empty? %>
      <p>
