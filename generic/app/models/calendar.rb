@@ -2,12 +2,12 @@ class Calendar < ActiveRecord::Base
 
   belongs_to :school
 
-  validates_presence_of :title
+  validates_presence_of :title, :description
   validates_presence_of :start_date
   validates_presence_of :end_date
   validates_presence_of :start_time, :if =>  Proc.new{|c| c.day_event != true}
   validates_presence_of :end_time, :if => Proc.new{|c| c.day_event != true }
-
+   
   attr_accessor :attachment
 
   def validate
@@ -16,6 +16,9 @@ class Calendar < ActiveRecord::Base
     end
     if ((self.day_event != true) && ((self.end_time != nil) && (self.start_time != nil)) )
        self.errors.add(:end_time, "must be greater than start time") if self.end_time <= self.start_time
+    end
+    if self.class_name == ""
+       self.errors.add(:class_name, "must be selected")
     end
   end
   

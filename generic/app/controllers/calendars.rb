@@ -33,40 +33,34 @@ class Calendars < Application
   def create
     @calendar = @current_school.calendars.new(params[:calendar])
     i=0
-    if params[:calendar][:class_name] != ""
-      if @calendar.valid?
-         @calendar.save
-        unless params[:attachment]['file_'+i.to_s].empty?
-          @attachment = Attachment.create( :attachable_type => "Calendar",
-          :attachable_id => @calendar.id,
-          :filename => params[:attachment]['file_'+i.to_s][:filename],
-          :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-          :size => params[:attachment]['file_'+i.to_s][:size], 
-          :school_id => @current_school.id
-          )
-          File.makedirs("public/uploads/#{@current_school.id}/files")
-          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
-        end
-        if @calendar.class_name == "School Wide"
-           redirect resource(:calendars)
-        else
-           @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
-           redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
-        end
+    if @calendar.valid? 
+       @calendar.save!
+       unless params[:attachment]['file_'+i.to_s].empty?
+           @attachment = Attachment.create( :attachable_type => "Calendar",
+           :attachable_id => @calendar.id,
+           :filename => params[:attachment]['file_'+i.to_s][:filename],
+           :content_type => params[:attachment]['file_'+i.to_s][:content_type],
+           :size => params[:attachment]['file_'+i.to_s][:size], 
+           :school_id => @current_school.id
+           )
+           File.makedirs("public/uploads/#{@current_school.id}/files")
+           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
+       end
+      if @calendar.class_name == "School Wide"
+        redirect resource(:calendars)
       else
-        @class = params[:calendar][:class_name]
-        @start_date = params[:calendar][:start_date]
-        @end_date = params[:calendar][:end_date]
-        @start_time = params[:calendar][:start_time]
-        @end_time = params[:calendar][:end_time]
-        render :new
+        @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
+        redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
       end
     else
-      flash[:error] = "Please select the classroom"
+      @start_date = params[:calendar][:start_date]
+      @end_date = params[:calendar][:end_date]
+      @start_time = params[:calendar][:start_time]
+      @end_time = params[:calendar][:end_time]
       @class = params[:calendar][:class_name]
       render :new
     end
-  end
+  end  
   
   def edit
     @calendar = @current_school.calendars.find_by_id(params[:id])
@@ -74,6 +68,44 @@ class Calendars < Application
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
     @allowed = 1 - @attachments.size
     render
+  end
+  
+  def update
+    @calendar = @current_school.calendars.find_by_id(params[:id])
+    raise NotFound unless @calendar
+    @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
+    @allowed = 1 - @attachments.size
+    i=0
+    if @calendar.update_attributes(params[:calendar])
+        if @calendar.day_event == true
+           @calendar.start_time = nil
+           @calendar.end_time = nil
+        end
+        @calendar.save
+        if params[:attachment]
+           unless params[:attachment]['file_'+i.to_s].empty?
+              @attachment = Attachment.create( :attachable_type => "Calendar",
+               :attachable_id => @calendar.id,
+               :filename => params[:attachment]['file_'+i.to_s][:filename],
+               :content_type => params[:attachment]['file_'+i.to_s][:content_type],
+               :size => params[:attachment]['file_'+i.to_s][:size],
+               :school_id => @current_school.id
+               )
+              File.makedirs("public/uploads/#{@current_school.id}/files")
+              FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
+           end
+        end
+        if @calendar.class_name == "School Wide"
+          redirect resource(:calendars)
+        else
+          @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
+          redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
+        end
+    else
+        @start_time = params[:calendar][:start_time]
+        @end_time = params[:calendar][:end_time]
+        render :edit
+    end
   end
 
   def show
@@ -97,64 +129,6 @@ class Calendars < Application
         end
         @event = "All Day Event"
         render :layout => 'class_change', :id => @classroom.id
-    end
-  end
-
-  def update
-   @calendar = @current_school.calendars.find_by_id(params[:id])
-   raise NotFound unless @calendar
-    @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
-    @allowed = 1 - @attachments.size
-    i=0
-    if params[:attachment]
-      if params[:calendar][:class_name] != ""
-        if @calendar.update_attributes(params[:calendar])
-          unless params[:attachment]['file_'+i.to_s].empty?
-            @attachment = Attachment.create( :attachable_type => "Calendar",
-            :attachable_id => @calendar.id,
-            :filename => params[:attachment]['file_'+i.to_s][:filename],
-            :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-            :size => params[:attachment]['file_'+i.to_s][:size],
-            :school_id => @current_school.id
-            )
-             File.makedirs("public/uploads/#{@current_school.id}/files")
-             FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
-          end
-          if @calendar.day_event == true
-             @calendar.start_time = nil
-             @calendar.end_time = nil
-          end
-          @calendar.save
-          @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
-          redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
-        else
-          @start_time = params[:calendar][:start_time]
-          @end_time = params[:calendar][:end_time]
-          render :edit
-        end
-      else
-        flash[:error] = "Please select the option"
-        render :edit
-      end
-    else
-      if params[:calendar][:class_name] != ""
-        if @calendar.update_attributes(params[:calendar])
-          if @calendar.day_event == true
-            @calendar.start_time = nil
-            @calendar.end_time = nil
-          end
-          @calendar.save
-          @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
-          redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
-        else
-          @start_time = params[:calendar][:start_time]
-          @end_time = params[:calendar][:end_time]
-          render :edit
-        end
-      else
-        flash[:error] = "Please select the option"
-        render :edit
-      end
     end
   end
 

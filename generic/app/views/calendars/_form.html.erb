@@ -9,11 +9,11 @@
       <li>
 	        <label>Add for:</label>
 	        <% if params[:l] %>
-                  <%= select :class_name, :collection => @class_rooms.collect{|x| x.class_name.titleize},
-                              :prompt => "Please Select", :selected => "#{params[:l]}" %>
+              <%= select :class_name, :collection => @class_rooms,
+                          :prompt => "Please Select", :selected => "#{params[:l]}" %>
           <% else %>
-                  <%= select :class_name, :collection => @class_rooms,
-                              :prompt => "Please Select", :selected => "#{@class}" %>
+              <%= select :class_name, :collection => @class_rooms,
+                          :prompt => "Please Select", :selected => "#{@class}" %>
           <% end %>
 	    </li>
       <li><%= text_field :title,  :label => "Event Title", :maxlength => "75" %></li>
@@ -26,7 +26,7 @@
 	      All Day Event
       </li>
       <li>
-  	    <% if @start_date == "" %>
+  	      <% if @start_date == "" %>
                <%= text_field :start_date, :id => "start", :label => "Starts:", :class=>"short defaultText", :title => "dd/mm/yy" %>
           <% else %>
                <%= text_field :start_date, :id => "start", :label => "Starts:", :class=>"short defaultText", :value => "#{@start_date}",
@@ -40,18 +40,18 @@
           <% end %>     
       </li>
       <li>
-  	    <% if @end_date == "" %>
-               <%= text_field :end_date, :id => "end", :label => "Ends:", :class => "short defaultText", :title => "dd/mm/yy"  %>
+  	     <% if @end_date == "" %>
+             <%= text_field :end_date, :id => "end", :label => "Ends:", :class => "short defaultText", :title => "dd/mm/yy"  %>
          <% else %>
-                <%= text_field :end_date, :id => "end", :label => "Ends:", :class => "short defaultText", :value => "#{@end_date}",
+             <%= text_field :end_date, :id => "end", :label => "Ends:", :class => "short defaultText", :value => "#{@end_date}",
                                :title => "dd/mm/yy"  %>
          <% end %>
-          <% if @end_time == "" %>
-              <%= text_field :end_time, :id => "end_time", :class => "short apart defaultText etime", :title => "hh:mm"  %>
-          <% else %>
-              <%= text_field :end_time, :id => "end_time", :class=>"short apart defaultText etime", :title => "hh:mm", 
-                                        :value => "#{@end_time}"  %>
-          <% end %>
+         <% if @end_time == "" %>
+             <%= text_field :end_time, :id => "end_time", :class => "short apart defaultText etime", :title => "hh:mm"  %>
+         <% else %>
+             <%= text_field :end_time, :id => "end_time", :class=>"short apart defaultText etime", :title => "hh:mm", 
+                                      :value => "#{@end_time}"  %>
+         <% end %>
       </li>
   </ul>
            <ul id="pending_files"></ul>
