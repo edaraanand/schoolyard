@@ -119,7 +119,8 @@ class Reports < Application
      redirect url(:assignments, :id => @report.id) 
    end
    
-   def score
+  def score
+     raise params.inspect
      @assignment = @current_school.assignments.find_by_id(params[:id])
      raise NotFound unless @assignment
      @assignment.date = params[:assignment][:date]
@@ -164,79 +165,91 @@ class Reports < Application
       @categories = @report.categories
       @category_array = (0..150).to_a
       if @report.valid?
-         @classroom = @current_school.classrooms.find_by_class_name(params[:report][:classroom_id])
-         @report.update_attributes(params[:report])
-         @report.classroom_id = @classroom.id
-         @report.save
-         @category_array.each do |f|
-           if params["cgories_#{f}".intern]
-              names = params["cgories_#{f}".intern][:assignment][:name]
-              max_points = params["cgories_#{f}".intern][:assignment][:max_point]
-              category_n = params["cgories_#{f}".intern][:category_name]
-              @category = @current_school.categories.find_by_id("#{f}")
-              @c = @report.categories.update(@category.id, {:category_name => "#{category_n}", :school_id => @current_school.id })
-              assignments_id =  @category.assignments.collect{|x| x.id}
-              s = names.zip(max_points, assignments_id)
-              s.each do |l|
-                  if l[2].nil?
-                      if ( (l[0] != "") && (l[1] != "")  )
-                          @assignment = Assignment.create({  :name => l[0], :max_point => l[1], :category_id => @category.id, 
-                                                         :school_id => @current_school.id })
-                      end
-                  else
-                      if ( (l[0] != "") && (l[1] != "")  )
-                          @assignment_e = @category.assignments.update(l[2], {:name => l[0], :max_point => l[1], 
-                                                                              :school_id => @current_school.id })
-                      end
+        @classroom = @current_school.classrooms.find_by_class_name(params[:report][:classroom_id])
+        @report.update_attributes(params[:report])
+        @report.classroom_id = @classroom.id
+        @report.save
+        @category_array.each do |f|
+          if params["cgories_#{f}".intern]
+            names = params["cgories_#{f}".intern][:assignment][:name]
+            max_points = params["cgories_#{f}".intern][:assignment][:max_point]
+            category_n = params["cgories_#{f}".intern][:category_name]
+            @category = @current_school.categories.find_by_id("#{f}")
+            @c = @report.categories.update(@category.id, {:category_name => "#{category_n}", :school_id => @current_school.id })
+            assignments_id =  @category.assignments.collect{|x| x.id}
+            s = names.zip(max_points, assignments_id)
+            s.each do |l|
+              if l[2].nil?
+                  if ( (l[0] != "") && (l[1] != "")  )
+                      @assignment = Assignment.create({  :name => l[0], :max_point => l[1], :category_id => @category.id, 
+                                              :school_id => @current_school.id })
+                  end
+              else
+                  if ( (l[0] != "") && (l[1] != "")  )
+                      @assignment_e = @category.assignments.update(l[2], {:name => l[0], :max_point => l[1], 
+                                                                  :school_id => @current_school.id })
                   end
               end
-           end
-         end
-         testing
-         redirect url(:assignments, :id => @report.id)
+            end
+          end
+        end
+        add_categories
+        redirect url(:assignments, :id => @report.id)
       else
         render :edit
       end
    end
    
-   def testing
+  def add_categories
      if params[:category]
         name = params[:category][:assignment][:name]
         max_p = params[:category][:assignment][:max_point]
-        category_name = params[:category][:category_name]
-         s = name.zip(max_p)
-         s.each do |l|
-           if ( (l[0] != "") && (l[1] != "")  )
-              if "#{category_name}" != ""
-                 @category = @report.categories.create({:category_name => "#{category_name}", :school_id => @current_school.id })
-              else
-                 @category = @report.categories.create({:category_name => "category", :school_id => @current_school.id })
+        c_name = params[:category][:category_name]
+        s = name.zip(max_p)
+        q = 1
+        s.each do |l|
+          if q == 1
+            if ( (l[0] != "") && (l[1] != "")  )
+              if "#{c_name}" != ""
+                  @category = @report.categories.create({:category_name => "#{c_name}", :school_id => @current_school.id }) 
+              else 
+                  @category = @report.categories.create({:category_name => "category", :school_id => @current_school.id }) 
               end
-              @assignment = @category.assignments.create({  :name => l[0], :max_point => l[1], :school_id => @current_school.id })
-           end
-         end
+            end
+          end
+          if ( (l[0] != "") && (l[1] != "")  )
+            @assignment = @category.assignments.create({  :name => l[0], :max_point => l[1], :school_id => @current_school.id })
+          end
+          q += 1
+        end
      end
-     @category_array = (0..50).to_a
-     @category_array.each do |f|
+      @category_array = (0..50).to_a
+      @category_array.each do |f|
         if params["category_#{f}".intern]
            names = params["category_#{f}".intern][:assignment][:name]
            max_points = params["category_#{f}".intern][:assignment][:max_point]
-           category_n = params["category_#{f}".intern][:category_name]
+           cat_name = params["category_#{f}".intern][:category_name]
             s = names.zip(max_points)
+            r = 1
             s.each do |l|
+              if r == 1
+                if ( (l[0] != "") && (l[1] != "")  )
+                   if "#{cat_name}" != ""
+                      @category_e = @report.categories.create({:category_name => "#{category_n}", :school_id => @current_school.id })
+                   else
+                      @category_e = @report.categories.create({:category_name => "category", :school_id => @current_school.id })
+                   end
+                end
+              end 
               if ( (l[0] != "") && (l[1] != "")  )
-                 if "#{category_n}" != ""
-                    @category_e = @report.categories.create({:category_name => "#{category_n}", :school_id => @current_school.id })
-                 else
-                     @category_e = @report.categories.create({:category_name => "category", :school_id => @current_school.id })
-                 end
-                 @assignment_e = @category_e.assignments.create({ :name => l[0], :max_point => l[1], :school_id => @current_school.id })
+                  @assignment_e = @category_e.assignments.create({ :name => l[0], :max_point => l[1], :school_id => @current_school.id })
               end
-           end
+              r += 1
+            end
         end
-     end
-   end
-   
+      end
+  end
+    
    
    def delete
      if params[:ref] == "subject"
@@ -287,7 +300,7 @@ class Reports < Application
             end
          end
       end
-    end
+   end
     
    def view_report
      @report = @current_school.reports.find_by_id(params[:id])
