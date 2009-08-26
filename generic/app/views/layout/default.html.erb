@@ -59,7 +59,7 @@
 	                   <%= link_to_if((right = "homework"), "Homework", url(:home_works) )  %>
 	               </li>
                    <li  <% if @selected == "grades" %> class="on" <% end %>>
-	                   <%= link_to_if((right = "grades"), "Grades/Reports", url(:reports) ) %>
+	                   <%#= link_to_if((right = "grades"), "Grades/Reports", url(:reports) ) %>
 	               </li>
                    <li <% if @selected == "e_links" %> class="on" <% end %>>
 	                   <%= link_to_if((right = "external_links"), "External Links", url(:external_links) ) %>

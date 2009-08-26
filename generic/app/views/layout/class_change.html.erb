@@ -17,7 +17,7 @@
 	      </li>
 	    <% unless @classroom.class_type == "Subject" %>
        	  <li <% if @selected == "grades" %> class="on" <% end %>>
-    	         <%= link_to "Grades/Reports", url(:class_details, :id =>  @classroom.id, :label => "grades") %>
+    	         <%#= link_to "Grades/Reports", url(:class_details, :id =>  @classroom.id, :label => "grades") %>
     	    </li>
 	    <% end %>
 	    <% unless @classroom.class_type == "Subject" %>
