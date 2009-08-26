@@ -39,7 +39,9 @@ namespace :bootstrap do
       :classes => "Classes",
       :feedback => "Manage Feedback",
       :urgent_announcement => "Add/Edit Urgent Announcements",
-      :basic_settings => "Add/Edit School Profile"
+      :basic_settings => "Add/Edit School Profile",
+      :time_capture => "Add/Edit Time Capture Forms",
+      :feedback => "Manage Feedback"
     }
       
       accesses.each_pair do |key, value|
@@ -65,7 +67,7 @@ namespace :bootstrap do
        @view = Access.find_by_name('view_all')
        AccessPeople.create({:person_id => @staff.id, :access_id => @view.id })
        AccessPeople.create({:person_id => @staff.id, :all => true })
-    end
+  end
   
  
   
