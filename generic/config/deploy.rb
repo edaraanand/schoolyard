@@ -1,8 +1,9 @@
 set :domain, "schoolyard@dev-schoolyardapp.info"
 set :deploy_to, "/home/schoolyard/schoolapp"
 set :repository,  "git@github.com:eshwardeep/schoolapp.git"
-set :revision, "HEAD"
-set :branch, "release1b"
+#set :revision, "HEAD"
+set :revision, "origin/release1b"
+#set :branch, "release1b"
 set :adapter, "mongrel"
 set :port, 7001
 set :processes, 1
@@ -31,14 +32,14 @@ namespace :vlad do
    
    desc "moving the database to some other place"
    remote_task :before_update, :roles => :app do
-     #  run "mv #{current_path}/generic/db  /home/forge/info"
+       run "mv #{current_path}/generic/db  /home/schoolyard"
      #  run "mv #{current_path}/generic/public/uploads /home/forge/info"
    end
    
    desc "updates the code and changing symlink files"
    remote_task :update, :roles => :app do
       run "mv #{latest_release}/generic/config/database.yml.production #{current_path}/generic/config/database.yml"
-      # run "mv /home/forge/info/db  #{current_path}/generic" 
+      run "mv /home/schoolyard/db  #{current_path}/generic" 
       # run "mv /home/forge/info/uploads #{current_path}/generic/public"
       run "cp #{latest_release}/generic/lib/constantz.rb.sample #{current_path}/generic/lib/constantz.rb"
    end
@@ -52,12 +53,12 @@ namespace :vlad do
    
    desc "Running migrations with some rake tasks for production"
    remote_task :migrate, :roles => :app do
-      run "mkdir -p #{current_path}/generic/db"
-      run "mkdir -p #{current_path}/generic/tmp"
+      # run "mkdir -p #{current_path}/generic/db"
+      # run "mkdir -p #{current_path}/generic/tmp"
       run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
-      run "cd #{current_path}/generic && rake bootstrap:person"
-      run "cd #{current_path}/generic && rake admin:person"
-      run "cd #{current_path}/generic && rake bootstrap:student_activate"
+      # run "cd #{current_path}/generic && rake bootstrap:person"
+      # run "cd #{current_path}/generic && rake admin:person"
+      # run "cd #{current_path}/generic && rake bootstrap:student_activate"
       run "cd #{current_path}/generic && rake basecamp:notify_new_build"
    end
   
