@@ -6,7 +6,7 @@ namespace :bootstrap do
     @people = Person.find(:all)
     @people.each do |person|
       person.activate = true
-      person.save!
+      person.save
     end
   end
   
