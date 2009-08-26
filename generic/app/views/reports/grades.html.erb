@@ -3,7 +3,7 @@
 	 <span class="actions">
 		 <%= link_to "All Subjects", resource(:reports) %>&nbsp; &nbsp;
 		 <%= link_to "All Assignments", url(:assignments,  :id => @report.id) %>   
-     </span>
+   </span>
 </h2>
 
 
@@ -34,7 +34,7 @@
                    <% else %>
                         <% grades.each do |g| %>
                              <td><%= g.score %></td>
-                             <td><%= sprintf("%.1f", g.percentage)  %></td>
+                             <td><%= sprintf("%.1f", g.percentage)  unless g.percentage.nil? %></td>
                              <td><%= g.grade %></td>
                         <% end %>
                    <% end %>

@@ -105,12 +105,14 @@ class Reports < Application
         if l[2].nil?
            unless l[1] == ""
              calculate(l[1], @assignment.max_point)
-             Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Float("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+             p = Float("#{l[1]}")*100/@assignment.max_point
+             Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => "#{p.round}" , :grade => @gr})
            end
         else
            unless l[1] == ""
              calculate(l[1], @assignment.max_point)
-             Grade.update(l[2], {:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Float("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+             x = Float("#{l[1]}")*100/@assignment.max_point
+             Grade.update(l[2], {:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => "#{x.round}" , :grade => @gr})
            else
              Grade.update(l[2], {:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => nil, :grade => nil})
            end
@@ -120,7 +122,6 @@ class Reports < Application
    end
    
   def score
-     raise params.inspect
      @assignment = @current_school.assignments.find_by_id(params[:id])
      raise NotFound unless @assignment
      @assignment.date = params[:assignment][:date]
@@ -136,7 +137,8 @@ class Reports < Application
      s.each do |l|
         if l[1] != ""
            calculate(l[1], @assignment.max_point)
-           Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => Float("#{l[1]}")*100/@assignment.max_point, :grade => @gr})
+           p = Float("#{l[1]}")*100/@assignment.max_point
+           Grade.create({:student_id => "#{l[0]}", :assignment_id => "#{@assignment.id}", :score => "#{l[1]}", :percentage => "#{p.round}", :grade => @gr})
         end
      end
      redirect url(:assignments, :id => @report.id)
@@ -356,12 +358,12 @@ class Reports < Application
    end
    
    def calculate(id, max)
-      @ranks = Rank.find(:all)
+      @ranks = @current_school.ranks.find(:all)
       @ranks.each do |f|
          range = Range.new(Integer(f.from), Integer(f.to))
          array = range.to_a
          x = Float(id)*100/max
-         if array.include?(x.to_i)
+         if array.include?(x.round)
             @gr = "#{f.name}"
          end
       end

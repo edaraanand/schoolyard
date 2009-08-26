@@ -1,4 +1,10 @@
-<h2 class="current-page">Grades/Reports > <%= @assignment.name %></h2>
+<h2 class="current-page">
+    Grades/Reports > <%= @assignment.name %>
+     <span class="actions">
+  		 <%= link_to "All Subjects", resource(:reports) %>&nbsp; &nbsp;
+  		 <%= link_to "All Assignments", url(:assignments,  :id => @report.id) %>   
+     </span>
+</h2>
 
 <ul class='error_messages'>
      <% if flash[:error] %>
@@ -20,9 +26,9 @@
 <% if @students.empty? %>
 
         <p class="subText">
-	         No Students were found for <%= @classroom.class_name.titleize %>. 
+	           No Students were found for <%= @classroom.class_name.titleize %>. 
              You can not add the Grades for this assignment.
- 			<div class="page-links">
+ 			      <div class="page-links">
                <%= link_to "All Assignments", url(:assignments,  :id => @report.id) %> |
                <%= link_to "All Subjects", resource(:reports) %>
             </div>
@@ -36,10 +42,10 @@
 	        </p>
 	         <div  class="clear"></div>
 	 		 <table id="mytable">
-			    <thead>
-			       <th>Your Students&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-			       <th>Student Score <span class="max-points">(Max Points : <%= @assignment.max_point %> )</span></th>
-			    </thead>
+			     <thead>
+			         <th>Your Students&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+			         <th>Student Score <span class="max-points">(Max Points : <%= @assignment.max_point %> )</span></th>
+			     </thead>
 		  
 		        <% @students.each do |f| %>
 		           <tr>
@@ -60,7 +66,7 @@
 
 <script type= "text/javascript">
 
- $j(document).ready(function() { $j("input.date").datepicker();  });
+ $j(document).ready(function() { $j("input.date").datepicker(); });
 
 
   // Validation for Adding Grades
