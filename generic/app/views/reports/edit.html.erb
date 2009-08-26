@@ -39,16 +39,14 @@
                          </p>  
                 	       <% q = 1 %>
                          <ul id="ament<%= f.id %>" class="assignment">
-                         <p class="assignments-maxpoints">Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Max Points</p>
+                         <p style="margin-left:12px; margin-bottom:0; padding:0;">Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Max Points</p>
 						 	           <% f.assignments.each do |a| %>
-	                             <li>
-	                                  <%= text_field  :name => "cgories_#{f.id}[assignment][name][]", :class => "short", :value => "#{a.name}" %><%= text_field  :name => "cgories_#{f.id}[assignment][max_point][]", :class => "short number", :value => "#{a.max_point}" %>
+	                             <li><%= text_field  :name => "cgories_#{f.id}[assignment][name][]", :class => "short", :value => "#{a.name}" %><%= text_field  :name => "cgories_#{f.id}[assignment][max_point][]", :class => "short number", :value => "#{a.max_point}" %>
                 										<% if f.assignments.length > 1 %>	
                 											   <% if q != 1 %>
                 											   	  <%= link_to "", url(:delete_report, a, :label => "assignment"), :class => "delete-btn" %>
                 											   <% end %>
-                										<% end %>
-	                             </li>
+                										<% end %></li>
 	                                 <% q+= q %>
 	                        <% end %>
 	                        </ul>

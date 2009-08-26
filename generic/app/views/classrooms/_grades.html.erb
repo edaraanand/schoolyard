@@ -18,75 +18,72 @@
      </p>
 <% else %>
     <% if session.user.type == "Parent" %>
+         <% @parent = session.user %>
+         <% @students = @parent.students %>
+         <% @students.each do |f| %>
+  		       <% studies = Study.find_by_student_id(f.id) %>
+			       <% if studies.classroom_id == @classroom.id %>
+      			      <h3><%= f.name %></h3>
+      				    <table id="mytable" class="grades">
+    					       <thead>
+    				            <th class="subjects">Subject</th>
+    				            <th class="last-upd">Last Updated</th>                                                 
+    							      <th class="last-upd">Average Grade</th>
+    				         </thead>
+    				         <tbody>
+        						    <% @reports.each do |report| %>
+        		 			           <% all_grades = Array.new %>
+        		 			           <% report.categories.each do |c| %>
+              								    <% c.assignments.each do |a| %>
+                									      <% grades = f.grades.find(:all, :conditions => ['assignment_id = ?', a.id]) %>
+                									      <% grades.each do |g| %>
+                  											   <% unless g.percentage.nil? %>
+                  											      <% all_grades << g.percentage %>
+                  											   <% end %>
+                									      <% end %>
+                									 <% end %>
+                							<% end %>
+       						  	        <tr>
+    						                 <td>
+    						                     <%= link_to "#{report.subject_name}", url(:progress_card, :ref => f.id, :id => report.id, :c => @classroom.id) %>
+    						                 </td>
+    						                 <td><%= report.updated_at.strftime("%B %d %Y") %></td>
+    						                 <% unless all_grades.empty? %>
+    						                     <% s =  all_grades.inject(0) { |s,v| s += v } %>
+    						                     <% r = s/all_grades.length.to_i %>
+    						                     <td><%= average_grade(r.to_i) %></td>
+    										         <% else %>
+    									   	           <td></td>
+    						                 <% end %>               
+    									        </tr>
+    								     <% end %>
+       				  	    </tbody>
+      					   </table>
+        			<% else %>
+                    <p>
+                       There are no Students for you in  this classroom. 
+                    </p>
+          	  <% end %>
+  	          <% @students.delete_if{|x| x.id == f.id } %>
+	      <% end %>
 
-       <% @parent = session.user %>
-       <% @students = @parent.students %>
-       <% @students.each do |f| %>
-		   <% studies = Study.find_by_student_id(f.id) %>
-			 <% if studies.classroom_id == @classroom.id %>
-			      <h3><%= f.name %></h3>
-				    <table id="mytable" class="grades">
-					       <thead>
-				            <th class="subjects">Subject</th>
-				            <th class="last-upd">Last Updated</th>                                                 
-							      <th class="last-upd">Average Grade</th>
-				         </thead>
-				         <tbody>
-    						    
-    		 			      <% @reports.each do |report| %>
-    		 			            <% all_grades = Array.new %>
-    		 			            <% report.categories.each do |c| %>
-          								    <% c.assignments.each do |a| %>
-            									      <% grades = f.grades.find(:all, :conditions => ['assignment_id = ?', a.id]) %>
-            									      <% grades.each do |g| %>
-              											   <% unless g.percentage.nil? %>
-              											      <% all_grades << g.percentage %>
-              											   <% end %>
-            									      <% end %>
-            									 <% end %>
-            							<% end %>
-   						  	        <tr>
-						                 <td>
-						                     <%= link_to "#{report.subject_name}", url(:progress_card, :ref => f.id, :id => report.id, :c => @classroom.id) %>
-						                 </td>
-						                 <td><%= report.updated_at.strftime("%B %d %Y") %></td>
-						                 <% unless all_grades.empty? %>
-						                     <% s =  all_grades.inject(0) { |s,v| s += v } %>
-						                     <% r = s/all_grades.length.to_i %>
-						                     <td><%= average_grade(r.to_i) %></td>
-										         <% else %>
-									   	           <td></td>
-						                 <% end %>               
-									        </tr>
-								    <% end %>
-   				  	  </tbody>
-					  </table>
-			<% else %>
-            <p>
-               There are no Students for you in  this classroom. 
-            </p>
-  	        <% end %>
-  	        <% @students.delete_if{|x| x.id == f.id } %>
-	    <% end %>
-	
-	
- <% else %>
-       <table id="mytable" class="grades">
-     <thead>
-         <th class="subjects">Subject</th>
-         <th class="last-upd">Last Updated</th>   
-         <th></th>                       
-     </thead>
-     <tbody>
-	   	 <% for report in @reports %>
-			   <tr>
-                   <td><%= report.subject_name %> </td>
-                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
-                   <td><%= link_to_right((right = "grades"), "Edit", url(:edit_report, :id => report.id) )  %></td>
-	           </tr>
-          <% end %>
-	 </tbody>
- </table>
+    <% else %>
+         <table id="mytable" class="grades">
+             <thead>
+                 <th class="subjects">Subject</th>
+                 <th class="last-upd">Last Updated</th>   
+                 <th></th>                       
+             </thead>
+             <tbody>
+        	   	 <% for report in @reports %>
+        			    <tr>
+                     <td><%= report.subject_name %> </td>
+                     <td><%= report.updated_at.strftime("%B %d %Y") %></td>
+                     <td><%= link_to_right((right = "grades"), "Edit", url(:edit_report, :id => report.id) )  %></td>
+        	        </tr>
+               <% end %>
+        	   </tbody>
+          </table>
     <% end %>
 	 
 <% end %>

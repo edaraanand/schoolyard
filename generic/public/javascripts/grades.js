@@ -71,7 +71,7 @@ function cool()
 	    var r = document.getElementById(counter).id;
 	    // var k = r.split('');
 	    ul = document.getElementById('ament' + r);
-       $j(ul).append("<li id='row" + l + "'><input type='text' class='short text' name='cgories_" + r + "[assignment][name][]' id='txt" + l + "'><input type='text' class='short apart text number' name='cgories_" + r + "[assignment][max_point][]' id='txt" + l + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + l + "\"); return false;'></a></li>");
+       $j(ul).append("<li id='row" + l + "'><input type='text' class='short text' name='cgories_" + r + "[assignment][name][]' id='txt" + l + "'><input type='text' class='short text number' name='cgories_" + r + "[assignment][max_point][]' id='txt" + l + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + l + "\"); return false;'></a></li>");
       
         l = (l - 1) + 2;
 
@@ -123,7 +123,7 @@ function testing(counter)
       if (r == 'test')
         {
           var ul = document.getElementById('assignment');
-          $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='category[assignment][name][]' id='txt"+id+"'><input type='text' class='short text apart' name='category[assignment][max_point][]' id='txt"+id+"'><a href='#' class='delete-btn' onClick='removeFormField(\"#row"+id+"\"); return false;'></a></li>");
+          $j(ul).append("<li id='row" + id + "'><input type='text' class='short text' name='category[assignment][name][]' id='txt"+id+"'><input type='text' class='short apart text' name='category[assignment][max_point][]' id='txt"+id+"'><a href='#' class='delete-btn' onClick='removeFormField(\"#row"+id+"\"); return false;'></a></li>");
         }
       else
         {
@@ -136,7 +136,7 @@ function testing(counter)
              }
           }
            var tt = document.getElementById('assignment_' + a);
-           $j(tt).append("<li id='row" + id + "'><input type='text' class='short text' name='category_" +  a  + "[assignment][name][]' id='txt" + id + "'><input type='text' class='short text apart' name='category_" +  a  + "[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
+           $j(tt).append("<li id='row" + id + "'><input type='text' class='short text' name='category_" +  a  + "[assignment][name][]' id='txt" + id + "'><input type='text' class='short apart text' name='category_" +  a  + "[assignment][max_point][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
         }
       id = (id - 1) + 2;
 
