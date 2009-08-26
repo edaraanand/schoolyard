@@ -55,8 +55,8 @@ namespace :vlad do
       run "mkdir -p #{current_path}/generic/db"
       run "mkdir -p #{current_path}/generic/tmp"
       run "cd #{current_path}/generic && rake db:migrate MERB_ENV=production"
-      run "cd #{current_path}/generic && rake bootstrap:app"
-      run "cd #{current_path}/generic && rake admin:school"
+      run "cd #{current_path}/generic && rake bootstrap:person"
+      run "cd #{current_path}/generic && rake admin:person"
       run "cd #{current_path}/generic && rake bootstrap:student_activate"
       run "cd #{current_path}/generic && rake basecamp:notify_new_build"
    end
