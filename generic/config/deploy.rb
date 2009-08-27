@@ -20,7 +20,7 @@ namespace :vlad do
    
    desc "Restart the app servers"
    remote_task :start_app, :roles => :app do
-      run "merb -a #{adapter} -e production -c #{processes} -m #{current_path}/generic -L #{log_path}"
+      run "merb -a #{adapter} -e production -p #{port} -c #{processes} -m #{current_path}/generic -L #{log_path}"
    end
    
    remote_task :start_app => :stop_app
