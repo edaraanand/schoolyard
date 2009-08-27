@@ -15,13 +15,12 @@ class Calendars < Application
                                                       :per_page => 10,  
                                                       :page => params[:page], 
                                                       :order => 'start_date')   
-      @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "School Wide" ], :order => 'start_date')                                                                                                     
       @test = params[:id]
     else
       @calendars = @current_school.calendars.paginate(:all, :per_page => 10,  :page => params[:page], :order => 'start_date')
       @test = "All Classrooms"
     end
-    
+     @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "School Wide" ], :order => 'start_date')
     render
   end
 
