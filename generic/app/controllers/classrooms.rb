@@ -21,6 +21,7 @@ class Classrooms < Application
    @classroom = @current_school.classrooms.new(params[:classroom])
    @teachers = @current_school.staff.find(:all)
    if @classroom.valid?
+      @classroom.activate = true
       @classroom.save!
       ClassPeople.create({:classroom_id => @classroom.id, :person_id => params[:class_teacher], :role => "class_teacher"})
       @class_peoples = []
@@ -57,6 +58,7 @@ class Classrooms < Application
     @class_peoples = @classroom.class_peoples
     if @classroom.update_attributes(params[:classroom])
        @classroom.class_name = params[:classroom][:class_name].titleize
+       @classroom.activate = true
        @classroom.save!
        update_content(@classroom)
        teacher = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
@@ -100,15 +102,15 @@ class Classrooms < Application
       @class.destroy
       render :edit, :id => @classroom.id
     else
-        @classroom = @current_school.classrooms.find(params[:id])
-        @classroom.class_name = @classroom.class_name.titleize
-        if params[:label] == "deactivate"
-           @classroom.activate = false
-        else
-           @classroom.activate = true
-        end
-         @classroom.save
-         redirect resource(:classrooms)
+      @classroom = @current_school.classrooms.find(params[:id])
+      @classroom.class_name = @classroom.class_name.titleize
+      if params[:label] == "deactivate"
+         @classroom.activate = false
+      else
+         @classroom.activate = true
+      end
+      @classroom.save
+      redirect resource(:classrooms)
     end
   end
 
