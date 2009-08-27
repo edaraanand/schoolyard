@@ -5,8 +5,12 @@
               <ul>
                   <li><%= text_field :title,  :label => "Title", :maxlength => "75" %></li>
                   <li><%= text_area  :content,  :label => "Message", :rows => "10", :cols => "50" %></li>
-                  <li><%= text_field :expiration, :id => "expiration",  :label => "Expiration", :class=>"short date",
-                                     :value => @announcement.expiration.strftime("%m/%d/%Y") %></li>
+                   <% if @announcement.expiration.nil? %>
+                       <li><%= text_field :expiration, :class => "short date", :label => "Expiration" %></li>
+                   <% else %>
+                       <li><%= text_field :expiration, :class => "short date", :label => "Expiration", 
+                                      :value => @announcement.expiration.strftime("%m/%d/%Y") %></li>
+                   <% end %>
                   <li>
                       <% if @attachments.size >= 1 %>
                             <%= file_field :attachment,  :label => "Attach a File", :disabled => "true" %>

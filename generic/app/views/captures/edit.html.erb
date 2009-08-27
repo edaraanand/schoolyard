@@ -20,9 +20,14 @@
 				    <%= text_area  :content,  :rows => "20", :cols => "50" %>
 			        
 		      </li>
-			  <li>
-			      <%= text_field :expiration, :class => "short date", :label => "Expiration", 
-                                 :value => @capture.expiration.strftime("%m/%d/%Y") %>
+			     <li>
+			        <% if @capture.expiration.nil? %>
+                 <%= text_field :expiration, :class => "short date", :label => "Expiration" %>
+              <% else %>
+                 <%= text_field :expiration, :class => "short date", :label => "Expiration", 
+                                       :value => @capture.expiration.strftime("%m/%d/%Y") %>
+              <% end %>
+			     
               </li>
               <li>
 	    		   <label>&nbsp;</label>

@@ -6,8 +6,13 @@
        <li><label>Home Work for:</label><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :selected => "#{@home_work.classroom.class_name.titleize}", :prompt => "Please Select" %></li>
            <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
            <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
-           <li><%= text_field  :due_date, :id => "due_date", :label => "Due Date", :class=>"short date",
-                                          :value => @home_work.due_date.strftime("%m/%d/%Y") %></li>
+           <% if @home_work.due_date.nil? %>
+                <li><%= text_field  :due_date, :id => "due_date", :label => "Due Date", :class=>"short date" %></li>
+           <% else %>
+                <li><%= text_field  :due_date, :id => "due_date", :label => "Due Date", :class=>"short date",
+                                               :value => @home_work.due_date.strftime("%m/%d/%Y") %></li>
+           <% end %>
+          
            <li>
                <% if @attachments.size >= 1 %>
                    <%= file_field :attachment,  :label => "Attach a File", :disabled => "true" %>
