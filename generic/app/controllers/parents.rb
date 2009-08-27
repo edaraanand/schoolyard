@@ -9,7 +9,7 @@ class Parents < Application
 
   def index
     @announcements = session.user.announcements.paginate(:all, 
-                                                         :conditions => ['school_id = ?', @current_school.id], :per_page => 5, 
+                                                         :conditions => ["school_id = ? and label != ?", @current_school.id, "feedback"], :per_page => 5, 
                                                          :page => params[:page] )
     @message1 = "Approved"
     @message2 = "Pending Approval"
