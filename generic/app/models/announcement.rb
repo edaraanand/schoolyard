@@ -44,7 +44,7 @@ class Announcement < ActiveRecord::Base
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.person.email), self )
   end
 
-  ## Sending mail for Home Work Alert
+  ## Sending mail for Announcement Alert
 
     def alert_mail(id)
       @current_school = self.school
