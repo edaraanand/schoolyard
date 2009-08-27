@@ -22,33 +22,33 @@ module ActiveRecord #:nodoc:
     
     def next_class_announcement
         @announcement = Announcement.find_by_id(id)
-        @next ||= self.class.find(:first, :select => ['id'],:conditions => ["id > ? and access_name=? and school_id = ?", id, @announcement.access_name, self.school_id ], :order => 'id')
+        @next ||= self.class.find(:first, :select => ['id'],:conditions => ["id > ? and access_name=? and school_id = ? and approved = ?", id, @announcement.access_name, self.school_id, true ], :order => 'id')
         @next ? @next.id : nil
     end
 
     def previous_class_announcement
        @announcement = Announcement.find_by_id(id)
-       @previous ||= self.class.find(:first, :select => ['id'], :conditions => ["id < ? and access_name=? and school_id = ?", id, @announcement.access_name, self.school_id], :order => "id desc")
+       @previous ||= self.class.find(:first, :select => ['id'], :conditions => ["id < ? and access_name=? and school_id = ? and approved = ?", id, @announcement.access_name, self.school_id, true], :order => "id desc")
        @previous ? @previous.id : nil
     end
     
     def next_announcement
-       @next ||= self.class.find(:first, :select => ['id'],:conditions => ["id > ? and label=?  and school_id = ?", id, "staff", self.school_id ], :order => 'id')
+       @next ||= self.class.find(:first, :select => ['id'],:conditions => ["id > ? and label=?  and school_id = ? and approved = ?", id, "staff", self.school_id, true ], :order => 'id')
        @next ? @next.id : nil
     end
 
     def previous_announcement
-       @previous ||= self.class.find(:first, :select => ['id'], :conditions => ["id < ? and label=? and school_id = ?", id, "staff", self.school_id], :order => "id desc")
+       @previous ||= self.class.find(:first, :select => ['id'], :conditions => ["id < ? and label=? and school_id = ? and approved = ?", id, "staff", self.school_id, true], :order => "id desc")
        @previous ? @previous.id : nil
     end
     
     def next_parent_announcement
-       @next ||= self.class.find(:first, :select => ['id'],:conditions => ["id > ? and label=? and person_id=? and school_id = ?", id, "parent", self.person.id, self.school_id ], :order => 'id')
+       @next ||= self.class.find(:first, :select => ['id'],:conditions => ["id > ? and label=? and person_id=? and school_id = ? and approved = ?", id, "parent", self.person.id, self.school_id, true ], :order => 'id')
        @next ? @next.id : nil
     end
 
     def previous_parent_announcement
-       @previous ||= self.class.find(:first, :select => ['id'], :conditions => ["id < ? and label=? and person_id=? and school_id = ?", id, "parent", self.person.id, self.school_id], :order => "id desc")
+       @previous ||= self.class.find(:first, :select => ['id'], :conditions => ["id < ? and label=? and person_id=? and school_id = ? and approved = ?", id, "parent", self.person.id, self.school_id, true], :order => "id desc")
        @previous ? @previous.id : nil
     end
     
