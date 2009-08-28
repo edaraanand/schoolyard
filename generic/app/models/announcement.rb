@@ -20,7 +20,40 @@ class Announcement < ActiveRecord::Base
         self.errors.add(:expiration, "must be greater than today") if self.expiration <= Date.today 
      end
   end
-            
+  
+  
+    #      
+    # def self.home_page(params)
+    #    self.paginate(:all, :conditions => ["access_name = ? and label = ?", "Home Page", 'staff' ],
+    #                       :order => "created_at DESC",
+    #                       :per_page => 10,
+    #                       :page => params[:page])
+    # end 
+    # 
+    # def self.staff(params)
+    #   self.paginate(:all, :conditions => ['label = ?', 'staff'],
+    #                       :order => "created_at DESC",
+    #                       :per_page => 10,
+    #                       :page => params[:page])
+    # end
+    # 
+    # def self.class_announcement(params)
+    #   @current_school = School.find_by_id(params[:school_id])
+    #   @classroom = @current_school.classrooms.find_by_id(params[:id])
+    #   self.paginate(:all, :conditions => ["access_name = ? and label = ?", @classroom.class_name, 'staff' ],
+    #                       :order => "created_at DESC",
+    #                       :per_page => 10,
+    #                       :page => params[:page])
+    # end
+    # 
+    # def self.class_approved(params)
+    #   @current_school = School.find_by_id(params[:school_id])
+    #   @classroom = @current_school.classrooms.find_by_id(params[:id])
+    #   self.paginate(:all, 
+    #                 :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name.titleize, true, true],
+    #                 :per_page => 10, :page => params[:page], :order => "created_at DESC")
+    # end
+    
   # sending email to Collaborative Methods on Feedback
     
   def feedback_email
