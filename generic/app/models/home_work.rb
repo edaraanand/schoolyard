@@ -14,7 +14,14 @@ class HomeWork < ActiveRecord::Base
       self.errors.add(:due_date, "must be greater than today") if self.due_date <= Date.today 
     end
   end
-
+  
+  validates_each :classroom_id do | record, attrib, value | 
+      begin
+         attrib.to_s.titleize.camelize.gsub(' ', '').constantize.find(value)
+      rescue ActiveRecord::ActiveRecordError
+         record.errors.add attrib, 'must be selected'
+      end
+  end
 ## Sending mail for Home Work Alert
 
   def mail(id)

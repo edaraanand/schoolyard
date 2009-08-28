@@ -24,17 +24,16 @@ class HomeWorks < Application
   end
 
   def create
-    @person = session.user
-    @home_work = @person.home_works.new(params[:home_work])
-    i=0
-    if params[:home_work][:classroom_id] != ""
-      if @home_work.valid?
-        @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
-        @home_work.classroom_id = @classroom.id
-        @home_work.school_id = @current_school.id
-        @home_work.save
-        unless params[:attachment]['file_'+i.to_s].empty?
-          @attachment = Attachment.create( :attachable_type => "Homework",
+     @person = session.user
+     @home_work = @person.home_works.new(params[:home_work])
+     i=0
+     if  @home_work.valid?
+       @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
+       @home_work.classroom_id = @classroom.id
+       @home_work.school_id = @current_school.id
+       @home_work.save
+       unless params[:attachment]['file_'+i.to_s].empty?
+         @attachment = Attachment.create( :attachable_type => "Homework",
           :attachable_id => @home_work.id,
           :filename => params[:attachment]['file_'+i.to_s][:filename],
           :content_type => params[:attachment]['file_'+i.to_s][:content_type],
@@ -43,22 +42,18 @@ class HomeWorks < Application
           )
           File.makedirs("public/uploads/#{@current_school.id}/files")
           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
-        end
-        run_later do
-          email_alerts(@home_work.classroom_id, self.class, @home_work, @current_school)
-        end
-        redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
-      else
-        @class_id =  params[:home_work][:classroom_id]
-        render :new
-      end
-    else
-      flash[:error] = "Please select the option"
-      @class_id = params[:home_work][:classroom_id]
-      render :new
-    end
+       end
+       run_later do
+         email_alerts(@home_work.classroom_id, self.class, @home_work, @current_school)
+       end
+       redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
+     else
+       @date = params[:home_work][:due_date]
+       @class_id =  params[:home_work][:classroom_id]
+       render :new
+     end
   end
-
+  
   def edit
     @home_work = @current_school.home_works.find(params[:id])
     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
@@ -67,55 +62,36 @@ class HomeWorks < Application
   end
 
   def update
-    @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
-    @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
-    @allowed = 1 - @attachments.size
-    @home_work = @current_school.home_works.find(params[:id])
-    i=0
-    if params[:attachment]
-      if params[:home_work][:classroom_id] != ""
-        if @home_work.update_attributes(params[:home_work])
-          unless params[:attachment]['file_'+i.to_s].empty?
-            @attachment = Attachment.create( :attachable_type => "Homework",
-            :attachable_id => @home_work.id,
-            :filename => params[:attachment]['file_'+i.to_s][:filename],
-            :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-            :size => params[:attachment]['file_'+i.to_s][:size],
-            :school_id =>  @current_school.id
-            )
-           File.makedirs("public/uploads/#{@current_school.id}/files")
-           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
-          end
-          @home_work.classroom_id = @classroom.id
-          @home_work.person_id = session.user.id
-          @home_work.school_id = @current_school.id
-          @home_work.save
-          redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
-        else
-          render :edit
+     @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
+     @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"])
+     @allowed = 1 - @attachments.size
+     @home_work = @current_school.home_works.find(params[:id])
+     i=0
+     if @home_work.update_attributes(params[:home_work])
+        @home_work.classroom_id = @classroom.id
+        @home_work.person_id = session.user.id
+        @home_work.school_id = @current_school.id
+        @home_work.save
+        if params[:attachment]
+           unless params[:attachment]['file_'+i.to_s].empty?
+              @attachment = Attachment.create( :attachable_type => "Homework",
+              :attachable_id => @home_work.id,
+              :filename => params[:attachment]['file_'+i.to_s][:filename],
+              :content_type => params[:attachment]['file_'+i.to_s][:content_type],
+              :size => params[:attachment]['file_'+i.to_s][:size],
+              :school_id =>  @current_school.id
+              )
+             File.makedirs("public/uploads/#{@current_school.id}/files")
+             FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
+           end
         end
-      else
-        flash[:error] = "Please select the option"
-        render :edit
-      end
-    else
-      if params[:home_work][:classroom_id] != ""
-        if @home_work.update_attributes(params[:home_work])
-           @home_work.classroom_id = @classroom.id
-           @home_work.person_id = session.user.id
-           @home_work.school_id = @current_school.id
-           @home_work.save
-           redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
-        else
-          render :edit
-        end
-      else
-        flash[:error] = "Please select the option"
-        render :edit
-      end
-    end
+        redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
+     else
+         @class_id =  params[:home_work][:classroom_id]
+         render :edit
+     end
   end
-
+   
   def delete
     if params[:label] == "attachment"
       @attachment = @current_school.attachments.find(params[:id])

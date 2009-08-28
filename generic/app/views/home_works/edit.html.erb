@@ -3,7 +3,15 @@
 <%= form_for(@home_work, :action => resource(@home_work), :id => 'home_work') do %>
     <fieldset>
        <ul>
-       <li><label>Home Work for:</label><%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :selected => "#{@home_work.classroom.class_name.titleize}", :prompt => "Please Select" %></li>
+           <li>
+              <label>Home Work for:</label>
+              <% if @class_id != "" %>
+                  <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, 
+                         :selected => "#{@home_work.classroom.class_name.titleize}", :prompt => "Please Select" %>
+              <% else %>
+                  <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :prompt => "Please Select" %>
+              <% end %>
+           </li>
            <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
            <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
            <% if @home_work.due_date.nil? %>
