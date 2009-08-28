@@ -12,7 +12,7 @@ class School < ActiveRecord::Base
   has_many :classes, :order => :position, :conditions => ["activate = ? and class_type = ?",  true, "Classes" ], :class_name => "Classroom", :foreign_key => :school_id
   has_many :extra_curricular, :order => :position, :conditions => ["activate = ? and class_type = ?",  true, "Subject" ], :class_name => "Classroom", :foreign_key => :school_id
   
- # has_many :announcements
+  has_many :announcements
  ## has_many :approve_homepage, :order => "created_at DESC", :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true]
 
   has_many :teams
