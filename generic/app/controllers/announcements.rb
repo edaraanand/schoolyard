@@ -63,7 +63,11 @@ class Announcements < Application
              File.makedirs("public/uploads/#{@current_school.id}/files")
              FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
           end 
-          unless @announcement.access_name == "Home Page"
+          if @announcement.access_name == "Home Page"
+             run_later do
+                email_alerts(0, self.class, @announcement, @current_school)
+             end
+          else
             @class = @current_school.classrooms.find_by_class_name(@announcement.access_name)
             run_later do
               email_alerts(@class.id, self.class, @announcement, @current_school)

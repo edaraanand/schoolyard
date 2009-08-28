@@ -53,11 +53,24 @@
               <span class="subText">is Posted to</span><br/><br/> 
          <% end %>
          
-    <% else %>
+     <% else %>
            New Announcement is Posted to<br/><br/>
      <% end %>
+     
+           <% if params[:home_page_announcement] %>
+               <%= check_box :name => 'home_page_announcement', :checked => 'checked' %>
+                Home Page <br/><br/>
+           <% else %>
+                <% if @alert_home.empty? %>
+                    <%= check_box :name => 'home_page_announcement' %>
+                <% else %>
+                    <%= check_box :name => 'home_page_announcement', :checked => 'checked' %>
+                <% end %>
+                Home Page <br/><br/>
+           <% end %>
+           
       
-          <% unless params[:class_alerts] %>         
+          <% unless params[:class_alerts] %>   
              <% @current_school.classes.each do |f| %>
                    <% alert_p = AlertPeople.find(:all,:conditions=>["person_id=? and classroom_id=?", session.user.id, f.id]).map{|x| x.classroom_id } %>
                    <% if alert_p.include?(f.id) %>
@@ -70,8 +83,8 @@
              <% end %>
           <% end %>
           
-          <% if params[:class_alerts] %>
-                <% @current_school.classes.each do |f| %>
+         <% if params[:class_alerts] %>
+                 <% @current_school.classes.each do |f| %>
                      <% if params[:class_alerts].has_key?(f.id.to_s) %>
                          <%= check_box :name => 'class_alerts[' + f.id.to_s + ']', :checked => 'checked' %>
                          <%= f.class_name %><br/> <br/>
