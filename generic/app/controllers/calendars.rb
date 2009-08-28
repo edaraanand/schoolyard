@@ -20,7 +20,7 @@ class Calendars < Application
       @calendars = @current_school.calendars.paginate(:all, :per_page => 10,  :page => params[:page], :order => 'start_date')
       @test = "All Classrooms"
     end
-     @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "School Wide" ], :order => 'start_date')
+     @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "Schoolwide" ], :order => 'start_date')
     render
   end
 
@@ -45,7 +45,7 @@ class Calendars < Application
            File.makedirs("public/uploads/#{@current_school.id}/files")
            FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
        end
-      if @calendar.class_name == "School Wide"
+      if @calendar.class_name == "Schoolwide"
         redirect resource(:calendars)
       else
         @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
@@ -94,7 +94,7 @@ class Calendars < Application
               FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
            end
         end
-        if @calendar.class_name == "School Wide"
+        if @calendar.class_name == "Schoolwide"
           redirect resource(:calendars)
         else
           @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
@@ -119,7 +119,7 @@ class Calendars < Application
         @selected = "calendars"
         @calendar = @current_school.calendars.find_by_id(params[:id])
         raise NotFound unless @calendar
-        if @calendar.class_name == "School Wide"
+        if @calendar.class_name == "Schoolwide"
           @classroom = @current_school.classrooms.find_by_id(params[:class])
           raise NotFound unless @classroom
         else
@@ -141,19 +141,27 @@ class Calendars < Application
       @allowed = 1 - @attachments.size
       render :edit, :id => @calendar.id
     else
-     @calendar = @current_school.calendars.find_by_id(params[:id])
-     raise NotFound unless @calendar
-      @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
-      Attachment.delete_all(['attachable_id = ?', @calendar.id])
-      @calendar.destroy
-      redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
+      @calendar = @current_school.calendars.find_by_id(params[:id])
+      raise NotFound unless @calendar
+      if @calendar.class_name = "Schoolwide"
+         @calendar.destroy
+         redirect resource(:calendars)
+      elsif @calendar.class_name = "School Wide"
+         @calendar.destroy
+         redirect resource(:calendars)
+      else
+         @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
+         Attachment.delete_all(['attachable_id = ?', @calendar.id])
+         @calendar.destroy
+         redirect  url(:class_details, :id => @classroom.id, :label => "calendars")
+      end
     end
   end
 
   def events
     @select = "events"
     @selected = "all_events"
-    @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "School Wide" ], :order => 'start_date') 
+    @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "Schoolwide" ], :order => 'start_date') 
     unless params[:id].nil?
       @class = @current_school.classrooms.find(params[:id])
       @cls = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @class.class_name ], :order => 'start_date')
@@ -197,7 +205,7 @@ class Calendars < Application
   def classes
      classes = @current_school.active_classrooms
      room = classes.collect{|x| x.class_name.titleize }
-     @class_rooms = room.insert(0, "School Wide")
+     @class_rooms = room.insert(0, "Schoolwide")
   end
 
   def access_rights
