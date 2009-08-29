@@ -20,8 +20,8 @@ require 'spreadsheet/excel'
 
 use_orm :activerecord
 use_test :rspec
-#use_template_engine :erb
-#use_template_engine :haml
+use_template_engine :erb
+use_template_engine :haml
 
 Merb::BootLoader.after_app_loads do
 
