@@ -21,12 +21,11 @@
        <% else %>
                <% for mess in @welcome_messages %>
                      <div class="data-block long-block">
-                             <div class="ddmmm">
-	                              <span class="date"><%= mess.created_at.strftime("%d") %></span>
-	                              <span class="month"><%= mess.created_at.strftime("%b") %></span>
-	                          </div>
-	                       
-	                       <p> Welcome Message for: <b><%= mess.access_name %></b></p
+                           <div class="ddmmm">
+	                             <span class="date"><%= mess.created_at.strftime("%d") %></span>
+	                             <span class="month"><%= mess.created_at.strftime("%b") %></span>
+	                         </div>
+	                         <p> Welcome Message for: <b><%= mess.access_name %></b></p>
                            <p class="post-content"><%= san_content(mess.content) %></p>
                            <%= link_to "Edit", resource(mess, :edit), :class=>"edit-btn" %>
                            <%= link_to "Delete", resource(mess, :delete), :class =>"delete delete-btn" %>
@@ -50,5 +49,3 @@
           });
        
 </script>
-
-	 

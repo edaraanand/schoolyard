@@ -37,10 +37,10 @@ class WelcomeMessages < Application
   end
 
   def create
-    @welcome_message = @current_school.welcome_messages.new(params[:welcome_message])
-    if params[:welcome_message][:access_name] != ""
-       @welcome_message.person_id = @current_user.id
-      if @welcome_message.save
+      @welcome_message = @current_school.welcome_messages.new(params[:welcome_message])
+      if @welcome_message.valid?
+         @welcome_message.person_id = @current_user.id
+         @welcome_message.save!
          if @welcome_message.access_name == "Home Page"
             redirect url(:homes)
          else
@@ -51,13 +51,8 @@ class WelcomeMessages < Application
         @class = params[:welcome_message][:access_name]
         render :new
       end
-    else
-      flash[:error] = "Please select the option"
-      @class = params[:welcome_message][:access_name]
-      render :new
-    end
   end
-
+  
   def edit
     @welcome_message = @current_school.welcome_messages.find(params[:id])
     ss = @current_school.active_classrooms
@@ -67,21 +62,20 @@ class WelcomeMessages < Application
   end
 
   def update
+    ss = @current_school.active_classrooms
+    om = ss.collect{|x| x.class_name.titleize }
+    @test = om.insert(0, "Home Page")
     @welcome_message = @current_school.welcome_messages.find(params[:id])
-    if params[:welcome_message][:access_name] != ""
-      if @welcome_message.update_attributes(params[:welcome_message])
-         @welcome_message.person_id = @current_user.id
-         if @welcome_message.access_name == "Home Page"
-            redirect resource(:homes)
-         else
-           @classroom = @current_school.classrooms.find_by_class_name(@welcome_message.access_name)
-           redirect url(:class_details, :id => @classroom.id )
-         end
+    if @welcome_message.update_attributes(params[:welcome_message])
+       @welcome_message.person_id = @current_user.id
+       @welcome_message.save!
+      if @welcome_message.access_name == "Home Page"
+         redirect resource(:homes)
       else
-        render :edit
+        @classroom = @current_school.classrooms.find_by_class_name(@welcome_message.access_name)
+        redirect url(:class_details, :id => @classroom.id )
       end
     else
-      flash[:error] = "Please select the option"
       render :edit
     end
   end
