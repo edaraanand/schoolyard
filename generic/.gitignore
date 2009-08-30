@@ -1,5 +1,0 @@
-lib/constantz.rb
-log/*
-db/*
-config/database.yml
-/public/uploads/*

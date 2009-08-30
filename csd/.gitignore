@@ -1,5 +1,0 @@
-db/*
-config/database.yml
-log/*.log
-log/*.pid
-lib/constantz.rb
