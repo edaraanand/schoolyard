@@ -5,7 +5,7 @@ set :domain,        "schoolyard@dev-schoolyardapp.info"
 set :deploy_to,     "/home/schoolyard/dev-schoolyardapp.info"
 set :port,          5001
 set :processes,     1
-set :merb_env,      "testing"
+set :merb_env,      "internal_testing"
 
 
 desc "this is for staging"
@@ -34,7 +34,7 @@ Rake.clear_tasks('vlad:stop', 'vlad:start', 'vlad:migrate')
 namespace :vlad do
 
   def stop
-    run "cd #{current_path} && merb -e #{merb_env} -K all"
+    run "cd #{current_path} && merb -e #{merb_env} -K #{port} all"
   end
 
   def start
@@ -46,6 +46,12 @@ namespace :vlad do
     stop
     start
   end
+
+  desc 'stop designer'
+  remote_task :stop, :roles => :app do
+    stop
+  end
+  
 
   desc 'Copy production files'
   remote_task :backup, :roles => :app do

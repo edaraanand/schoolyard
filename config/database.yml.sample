@@ -2,6 +2,10 @@
   :adapter: sqlite3
   :database: db/development.sqlite3
 
+:internal_testing:
+  :adapter: sqlite3
+  :database: db/production.sqlite3
+
 :staging:
   :adapter: sqlite3
   :database: db/production.sqlite3

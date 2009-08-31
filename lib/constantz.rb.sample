@@ -19,8 +19,16 @@ class Schoolapp
     :app_domain => 'schoolyard.in:4000'
   }
   
+  @@internal_testing_config = {
+    :app_domain  => 'dev-schoolyardapp.info'
+  }
+  
+  @@staging_config = {
+    :app_domain  => 'test-schoolyardapp.info'
+  }
+  
   @@production_config = {
-    :app_domain   => 'dev-schoolyardapp.info'
+    :app_domain   => 'schoolyardapp.com'
   }
   
   def self.config(of)
