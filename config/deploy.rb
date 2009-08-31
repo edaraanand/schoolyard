@@ -34,7 +34,7 @@ Rake.clear_tasks('vlad:stop', 'vlad:start', 'vlad:migrate')
 namespace :vlad do
 
   def stop
-    run "cd #{current_path} && merb -e #{merb_env} -K all"
+    run "cd #{current_path} && merb -e #{merb_env} -K #{port} all"
   end
 
   def start
