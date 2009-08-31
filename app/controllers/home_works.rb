@@ -27,26 +27,19 @@ class HomeWorks < Application
      @person = session.user
      @home_work = @person.home_works.new(params[:home_work])
      i=0
-     if  @home_work.valid?
-       @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
-       @home_work.classroom_id = @classroom.id
-       @home_work.school_id = @current_school.id
-       @home_work.save
-       unless params[:attachment]['file_'+i.to_s].empty?
-         @attachment = Attachment.create( :attachable_type => "Homework",
-          :attachable_id => @home_work.id,
-          :filename => params[:attachment]['file_'+i.to_s][:filename],
-          :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-          :size => params[:attachment]['file_'+i.to_s][:size],
-          :school_id =>  @current_school.id
-          )
-          File.makedirs("public/uploads/#{@current_school.id}/files")
-          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
-       end
-       run_later do
-         email_alerts(@home_work.classroom_id, self.class, @home_work, @current_school)
-       end
-       redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
+     if @home_work.valid?
+        @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
+        @home_work.classroom_id = @classroom.id
+        @home_work.school_id = @current_school.id
+        @home_work.save
+        unless params[:attachment]['file_'+i.to_s].empty?
+          type = "Homework"
+          Attachment.file(params.merge(:school_id => @current_school.id), type, @home_work.id)
+        end
+        run_later do
+           email_alerts(@home_work.classroom_id, self.class, @home_work, @current_school)
+        end
+        redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
      else
        @date = params[:home_work][:due_date]
        @class_id =  params[:home_work][:classroom_id]
@@ -74,21 +67,14 @@ class HomeWorks < Application
         @home_work.save
         if params[:attachment]
            unless params[:attachment]['file_'+i.to_s].empty?
-              @attachment = Attachment.create( :attachable_type => "Homework",
-              :attachable_id => @home_work.id,
-              :filename => params[:attachment]['file_'+i.to_s][:filename],
-              :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-              :size => params[:attachment]['file_'+i.to_s][:size],
-              :school_id =>  @current_school.id
-              )
-             File.makedirs("public/uploads/#{@current_school.id}/files")
-             FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
+              type = "Homework"
+              Attachment.file(params.merge(:school_id => @current_school.id), type, @home_work.id)
            end
         end
         redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
      else
-         @class_id =  params[:home_work][:classroom_id]
-         render :edit
+        @class_id =  params[:home_work][:classroom_id]
+        render :edit
      end
   end
    
