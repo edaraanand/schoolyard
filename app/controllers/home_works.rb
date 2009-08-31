@@ -9,10 +9,10 @@ class HomeWorks < Application
   def index
     if params[:label] == "classes"
        @classroom = @current_school.classrooms.find_by_id(params[:id], :conditions => ['activate = ?', true])
-       @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 10, :page => params[:page])
+       @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date ASC", :per_page => 10, :page => params[:page])
        @test = params[:id]
     else
-       @home_works = @current_school.home_works.paginate(:all, :order => "due_date DESC", :per_page => 10, :page => params[:page])
+       @home_works = @current_school.home_works.paginate(:all, :order => "due_date ASC", :per_page => 10, :page => params[:page])
        @test = "All Homeworks"
     end
     render
@@ -150,7 +150,7 @@ class HomeWorks < Application
       send_data(pdf.render, :filename => "#{@home_work.title}.pdf", :type => "application/pdf")
     else
       @classroom = @current_school.classrooms.find(params[:id])
-      @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id])
+      @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date ASC")
       pdf = pdf_prepare("multiple", @home_works)
       send_data(pdf.render, :filename => "Homework for #{@classroom.class_name}.pdf", :type => "application/pdf")
     end

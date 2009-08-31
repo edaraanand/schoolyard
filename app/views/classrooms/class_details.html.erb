@@ -109,7 +109,7 @@
               <% unless @classroom.class_type == "Subject" %>
                   <h3>Current Homework</h3>
                   <ul class="last">
-                    <% @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ? and due_date >= ?', @current_school.id, @date] ) %>
+                    <% @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ? and due_date >= ?', @current_school.id, @date], :order => "due_date ASC" ) %>
                       <% if @h_w.blank? %>
                            <span class="subText">There are no homework assignments due at this time</span>
                       <% else %>
