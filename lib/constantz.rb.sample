@@ -19,6 +19,14 @@ class Schoolapp
     :app_domain => 'schoolyard.in:4000'
   }
   
+  @@testing_config = {
+    :app_domain  => 'dev-schoolyardapp.info'
+  }
+  
+  @@staging_config = {
+    :app_domain  => 'test-schoolyardapp.info'
+  }
+  
   @@production_config = {
     :app_domain   => 'dev-schoolyardapp.info'
   }
