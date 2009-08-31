@@ -1,30 +1,30 @@
 set :repository,    "git@github.com:bjbolz/schoolyard.git"
 set :revision,      "origin/master"
 
-#set :domain,        "springboard@springboard.jmapro.com"
 set :domain,        "schoolyard@dev-schoolyardapp.info"
-#set :deploy_to,     "/home/springboard/compass.jmapro.com"
 set :deploy_to,     "/home/schoolyard/dev-schoolyardapp.info"
 set :port,          5001
 set :processes,     1
-set :merb_env,      "staging"
+set :merb_env,      "testing"
 
 
 desc "this is for staging"
 task :staging do
- set :domain,        "forge@test-schoolyardapp.info"
- set :deploy_to,     "/home/forge/test-schoolyardapp.info"
- set :port,          5000
- set :merb_env,      "staging"
+  set :repository,    "git@github.com:bjbolz/schoolyard.git"
+  set :domain,        "forge@test-schoolyardapp.info"
+  set :deploy_to,     "/home/forge/test-schoolyardapp.info"
+  set :port,          5000
+  set :merb_env,      "staging"
 end
 
 desc "this is for production"
 task :production do
- set :domain,        "forge@schoolyardapp.com"
- set :deploy_to,     "/home/forge/schoolyardapp.com"
- set :port,          4000
- set :merb_env,      "production"
- set :revision,      "origin/production"
+  set :repository,    "git@github.com:bjbolz/schoolyard.git"
+  set :domain,        "forge@schoolyardapp.com"
+  set :deploy_to,     "/home/forge/schoolyardapp.com"
+  set :port,          4000
+  set :merb_env,      "production"
+  set :revision,      "origin/production"
 end
 
 
@@ -49,7 +49,7 @@ namespace :vlad do
 
   desc 'Copy production files'
   remote_task :backup, :roles => :app do
-    run "tar zcf backup_before_update_#{merb_env}_#{Date.today.year}#{Date.today.month}#{Date.today.day}.tar #{deploy_to}"
+    run "tar zcf backup_before_update_#{merb_env}_#{Date.today.year}#{Date.today.month}#{Date.today.day}#{Time.now.hour}.tar #{deploy_to}"
   end
 
 
