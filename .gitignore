@@ -2,6 +2,7 @@
 .DS_Store
 config/database.yml
 config/database.yml.production
+config/database.yml.internal_testing
 config/database.yml.staging
 .loadpath
 .project
@@ -11,6 +12,7 @@ db/*.sqlite3
 .todo
 lib/constantz.rb
 lib/constantz.rb.production
+lib/constantz.rb.internal_testing
 lib/constantz.rb.staging
 gems/gems
 gems/docs
