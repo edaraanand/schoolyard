@@ -48,13 +48,14 @@ namespace :vlad do
   end
 
   desc 'Copy production files'
-  remote_task :before_update, :roles => :app do
+  remote_task :backup, :roles => :app do
     run "tar zcf backup_before_update_#{merb_env}_#{Date.today.year}#{Date.today.month}#{Date.today.day}.tar #{deploy_to}"
   end
 
 
   desc 'update application rsync important files'
   remote_task :deploy, :roles => :app do
+    Rake::Task["vlad:backup"].invoke
     Rake::Task["vlad:update"].invoke
     Rake::Task['vlad:copy_production_files'].invoke
     Rake::Task['vlad:copy_data_files'].invoke
