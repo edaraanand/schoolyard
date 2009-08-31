@@ -197,7 +197,7 @@ class HomeWorks < Application
         con = con.gsub("’", "")
         con = con.gsub("– ", "")
         con = con.gsub(/[^a-zA-Z0-9-]/, " ")
-        pdf.text "<b>Due Date</b>" + ":" + "" + "#{homework.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
+        pdf.text "<b>Due Date</b>" + ":" + "" + "#{homework.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left, :spacing => 2
         pdf.text "<b>Title</b>" + ":" + "" + "#{homework.title}", :font_size => 10, :justification => :left
         pdf.text "<b>Description</b>" + ":" + "" + con, :font_size => 10, :justification => :left
       end
