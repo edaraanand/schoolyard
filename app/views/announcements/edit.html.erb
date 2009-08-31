@@ -26,7 +26,7 @@
                   <% end %>
                </li> 
           </ul>
-             <ul id="pending_files">
+                <ul id="pending_files">
                     <% if @attachments.size > 0 %>
                            <% @attachments.each do |attachment| %>
                                   <li id="attachment_<%= attachment.id %>"><%= attachment.filename %>

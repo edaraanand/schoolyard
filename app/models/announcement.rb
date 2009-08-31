@@ -2,25 +2,28 @@ class Announcement < ActiveRecord::Base
 
   require 'base_ext'
 
+  attr_accessor :attachment
+  attr_accessor :image
+  
   belongs_to :person
   belongs_to :school
 
   validates_presence_of :title, :if => :title, :scope => :school_id
   validates_presence_of :content, :if => :content, :scope => :school_id
   validates_presence_of :expiration
-  validates_presence_of :access_name, :message => "Please select the access from the drop down", :if => :access_name, :scope => :school_id
- # validates_format_of :content, :with => %r{(/[^a-zA-Z0-9-]/)}i #:if => Proc.new{|o| o.include?.blank?} #:with => /[^a-zA-Z0-9-]/
-   # :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i, 
+  #validates_presence_of :access_name, :message => "Please select the access from the drop down", :if => :access_name, :scope => :school_id
    
-  attr_accessor :attachment
-  attr_accessor :image
-  
   def validate
      if self.expiration != nil
         self.errors.add(:expiration, "must be greater than today") if self.expiration <= Date.today 
      end
   end
   
+  def validate
+     if self.access_name == ""
+        self.errors.add("please", "select the option")
+     end
+  end  
   
     #      
     # def self.home_page(params)
@@ -53,6 +56,8 @@ class Announcement < ActiveRecord::Base
     #                 :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name.titleize, true, true],
     #                 :per_page => 10, :page => params[:page], :order => "created_at DESC")
     # end
+    
+  
     
   # sending email to Collaborative Methods on Feedback
     
