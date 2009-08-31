@@ -25,19 +25,12 @@ class FromPrincipals < Application
     if @announcement.valid?
        @announcement.label = "from_principal"
        @announcement.save
-      unless params[:attachment]['file_'+i.to_s].empty?
-        @attachment = Attachment.create( :attachable_type => "Announcement",
-        :attachable_id => @announcement.id,
-        :filename => params[:attachment]['file_'+i.to_s][:filename],
-        :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-        :size => params[:attachment]['file_'+i.to_s][:size],
-        :school_id =>  @current_school.id
-        )
-       File.makedirs("public/uploads/#{@current_school.id}/files")
-       FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
-      end
-      email_alerts(@announcement.id, self.class, @announcement, @current_school)
-      redirect url(:homes)
+       unless params[:attachment]['file_'+i.to_s].empty?
+         type = "Announcement"
+         @attachment = Attachment.file(params.merge(:school_id => @current_school.id), type, @announcement.id)
+       end
+       email_alerts(@announcement.id, self.class, @announcement, @current_school)
+       redirect url(:homes)
     else
       render :new
     end
@@ -46,7 +39,7 @@ class FromPrincipals < Application
   def edit
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
-    @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
+    @attachments = Attachment.announcements(@announcement.id, @current_school.id)
     @allowed = 1 - @attachments.size
     render
   end
@@ -54,39 +47,24 @@ class FromPrincipals < Application
   def update
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
-    @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
+    @attachments = Attachment.announcements(@announcement.id, @current_school.id)
     @allowed = 1 - @attachments.size
     i=0
-    if params[:attachment]
-      if @announcement.update_attributes(params[:announcement])
-        @announcement.label = "from_principal"
-        @announcement.save
-        unless params[:attachment]['file_'+i.to_s].empty?
-          @attachment = Attachment.create( :attachable_type => "Announcement",
-          :attachable_id => @announcement.id,
-          :filename => params[:attachment]['file_'+i.to_s][:filename],
-          :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-          :size => params[:attachment]['file_'+i.to_s][:size],
-          :school_id =>  @current_school.id
-          )
-          File.makedirs("public/uploads/#{@current_school.id}/files")
-          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
-        end
-         redirect url(:homes)
-      else
-        render :edit
-      end
+    if @announcement.update_attributes(params[:announcement])
+       @announcement.label = "from_principal"
+       @announcement.save
+       if params[:attachment]
+          unless params[:attachment]['file_'+i.to_s].empty?
+            type = "Announcement"
+            @attachment = Attachment.file(params.merge(:school_id => @current_school.id), type, @announcement.id)
+          end
+       end
+       redirect resource(:homes)
     else
-      if @announcement.update_attributes(params[:announcement])
-         @announcement.label = "from_principal"
-         @announcement.save
-         redirect url(:homes)
-      else
-        render :edit
-      end
+      render :edit
     end
   end
-
+  
   def show
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
@@ -98,12 +76,12 @@ class FromPrincipals < Application
       @attachment = @current_school.attachments.find(params[:id])
       @announcement = @current_school.announcements.find_by_id(@attachment.attachable_id)
       @attachment.destroy
-      @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
+      @attachments = Attachment.announcements(@announcement.id, @current_school.id)
       @allowed = 1 - @attachments.size
       render :edit, :id => @announcement.id
     else
-       @announcement = @current_school.announcements.find_by_id(params[:id])
-    raise NotFound unless @announcement
+      @announcement = @current_school.announcements.find_by_id(params[:id])
+      raise NotFound unless @announcement
       Attachment.delete_all(['attachable_id = ?', @announcement.id])
       @announcement.destroy
       redirect url(:homes)
