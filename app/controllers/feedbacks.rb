@@ -34,19 +34,23 @@ class Feedbacks < Application
   end
   
   def feedback_reply
-     @announcement = @current_school.announcements.find_by_id(params[:id])
+    @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
     if params[:approvetype] == "reply"
        @announcement.approve_comments = params[:announcement][:approve_comments]
        @announcement.approved_by = session.user.id  # this is for storing who replied the feedback
        @announcement.approved = @announcement.approve_announcement = false
        @announcement.save
-       @announcement.reply_person
+       run_later do
+         @announcement.reply_person
+       end
     else
        @announcement.approve_comments = params[:announcement][:approve_comments]
        @announcement.approved = @announcement.approve_announcement = true
        @announcement.save
-       @announcement.feedback_email
+       run_later do
+         @announcement.feedback_email
+       end
     end
     redirect url(:feedbacks)
   end
