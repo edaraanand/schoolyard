@@ -47,6 +47,12 @@ namespace :vlad do
     start
   end
 
+  desc 'stop designer'
+  remote_task :stop, :roles => :app do
+    stop
+  end
+  
+
   desc 'Copy production files'
   remote_task :backup, :roles => :app do
     run "tar zcf backup_before_update_#{merb_env}_#{Date.today.year}#{Date.today.month}#{Date.today.day}#{Time.now.hour}.tar #{deploy_to}"
