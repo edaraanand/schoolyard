@@ -1,16 +1,3 @@
-set :domain, "schoolyard@dev-schoolyardapp.info"
-set :deploy_to, "/home/schoolyard/schoolapp"
-set :repository,  "git@github.com:eshwardeep/schoolapp.git"
-#set :revision, "HEAD"
-set :revision, "origin/release1b"
-#set :branch, "release1b"
-set :adapter, "mongrel"
-set :port, 5001
-set :processes, 1
-set :log_path, "#{shared_path}/log/production.log"
-
-
-
 set :repository,    "git@github.com:bjbolz/schoolyard.git"
 set :revision,      "origin/master"
 
@@ -20,6 +7,27 @@ set :domain,        "schoolyard@dev-schoolyardapp.info"
 set :deploy_to,     "/home/schoolyard/dev-schoolyardapp.info"
 set :port,          5001
 set :processes,     1
+set :merb_env,      "staging"
+
+
+desc "this is for staging"
+task :staging do
+ set :domain,        "forge@test-schoolyardapp.info"
+ set :deploy_to,     "/home/forge/test-schoolyardapp.info"
+ set :port,          5000
+ set :merb_env,      "staging"
+end
+
+desc "this is for production"
+task :production do
+ set :domain,        "forge@schoolyardapp.com"
+ set :deploy_to,     "/home/forge/schoolyardapp.com"
+ set :port,          4000
+ set :merb_env,      "production"
+ set :revision,      "origin/production"
+end
+
+
 
 Rake.clear_tasks('vlad:stop', 'vlad:start', 'vlad:migrate')
  
@@ -62,7 +70,7 @@ namespace :vlad do
 
     desc 'Copy production files'
     remote_task :copy_production_files, :roles => :app do
-      #rsync "#{Merb.root}/lib/constantz.rb.#{merb_env}", "#{current_path}/lib/constantz.rb"
+      rsync "#{Merb.root}/lib/constantz.rb.#{merb_env}", "#{current_path}/lib/constantz.rb"
       rsync "#{Merb.root}/config/database.yml.#{merb_env}", "#{current_path}/config/database.yml"
     end
 
@@ -70,5 +78,5 @@ namespace :vlad do
     remote_task :migrate, :roles => :app do
       run "cd #{current_path} && rake db:migrate MERB_ENV=#{merb_env}"
     end
-  end  
+
 end
