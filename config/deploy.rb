@@ -5,7 +5,7 @@ set :domain,        "schoolyard@dev-schoolyardapp.info"
 set :deploy_to,     "/home/schoolyard/dev-schoolyardapp.info"
 set :port,          5001
 set :processes,     1
-set :merb_env,      "testing"
+set :merb_env,      "internal_testing"
 
 
 desc "this is for staging"
