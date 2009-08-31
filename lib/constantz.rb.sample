@@ -2,9 +2,9 @@ class Schoolapp
   
   @@common_config = {
     :auth_mailman      => 'noreply@schoolyardapp.com',
-    :mailman_password  => '75F633',
-    :bc_user => "eshwar.gouthama", 
-    :bc_password => "ashwini"
+    :mailman_password  => 'password',
+    :bc_user => "user", 
+    :bc_password => "password"
   }
   
   @@development_config = {
@@ -19,8 +19,16 @@ class Schoolapp
     :app_domain => 'schoolyard.in:4000'
   }
   
+  @@internal_testing_config = {
+    :app_domain  => 'dev-schoolyardapp.info'
+  }
+  
+  @@staging_config = {
+    :app_domain  => 'test-schoolyardapp.info'
+  }
+  
   @@production_config = {
-    :app_domain   => 'dev-schoolyardapp.info'
+    :app_domain   => 'schoolyardapp.com'
   }
   
   def self.config(of)
