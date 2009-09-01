@@ -17,14 +17,11 @@ class Announcement < ActiveRecord::Base
      if self.expiration != nil
         self.errors.add(:expiration, "must be greater than today") if self.expiration <= Date.today 
      end
-  end
-  
-  def validate
      if self.access_name == ""
-        self.errors.add("please", "select the option")
+         self.errors.add("please", "select the option")
      end
-  end  
-  
+  end
+
     #      
     # def self.home_page(params)
     #    self.paginate(:all, :conditions => ["access_name = ? and label = ?", "Home Page", 'staff' ],
