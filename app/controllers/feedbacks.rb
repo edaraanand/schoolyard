@@ -20,6 +20,7 @@ class Feedbacks < Application
       if @announcement.valid?
          @announcement.person_id = session.user.id
          @announcement.label = "feedback"
+         @announcement.access_name = "unread"
          @announcement.save
          redirect url(:homes)
       else
@@ -28,8 +29,10 @@ class Feedbacks < Application
   end
   
   def show
-     @announcement = @current_school.announcements.find_by_id(params[:id])
+    @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
+    @announcement.access_name = "read"
+    @announcement.save
     render 
   end
   
