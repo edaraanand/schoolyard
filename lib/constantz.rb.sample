@@ -2,7 +2,7 @@ class Schoolapp
   
   @@common_config = {
     :auth_mailman      => 'noreply@schoolyardapp.com',
-    :mailman_password  => 'password',
+    :mailman_password  => '2LCJmpsHqFe9DUyefFRBL',
     :bc_user => "user", 
     :bc_password => "password"
   }
