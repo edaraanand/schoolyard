@@ -134,7 +134,7 @@ class Classrooms < Application
            @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', @classroom.id])
            @ranks = @current_school.ranks.find(:all)
          end
-         @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "School Wide" ], :order => 'start_date') 
+         @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "Schoolwide" ], :order => 'start_date') 
          render :layout => 'class_change', :id => @classroom.id
       else
          raise NotFound
