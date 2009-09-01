@@ -3,7 +3,7 @@
 	         <span class="actions">
              Grades/Reports 
              <span class="actions">
-                <%= link_to_right((right = "grades"), "Set Up Subjects", resource(:reports, :new) )  %> &nbsp;&nbsp;&nbsp;
+                <%= link_to_right((right = "grades"), "Set Up Assignments ", resource(:reports, :new) )  %> &nbsp;&nbsp;&nbsp;
             		 <% if @ranks.empty? %>
        			         <%= link_to_right((right = "grades"), "Add Grades Definition", resource(:ranks, :new) )  %>
        	         <% else %>
@@ -14,7 +14,7 @@
 
 <% if @reports.empty? %>
      <p>
-	    There are no subjects defined for this classroom. <br/> <%= link_to_right((right = "grades"), "Set Up Subjects", resource(:reports, :new) )  %>
+	    There are no subjects defined for this classroom. <br/> <%= link_to_right((right = "grades"), "Set Up Assignments ", resource(:reports, :new) )  %>
      </p>
 <% else %>
     <% if session.user.type == "Parent" %>
