@@ -18,7 +18,7 @@ class Admin < Application
     @person = Person.new(params[:person])
     if @school.valid? && @person.valid?
        @subdomain = params[:school][:subdomain]
-       @school.domain = "http://" + "#{@subdomain}" + ".dev-schoolyardapp.info"
+       @school.domain = "http://" + "#{@subdomain}" + ".schoolyardapp.com"
        @school.folder = "schoolyardappcom"
        @school.save
        @person.school_id = @school.id
