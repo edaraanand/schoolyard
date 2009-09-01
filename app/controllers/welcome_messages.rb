@@ -5,7 +5,6 @@ class WelcomeMessages < Application
   before :rooms, :only => [:new, :create, :edit, :update]
   before :access_rights
 
-
   def index
     classrooms
     if params[:label] == "classes"
