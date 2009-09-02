@@ -2,6 +2,7 @@ class ExternalLinks < Application
   layout 'default'
   before :find_school
   before :access_rights
+  before :classrooms
 
   def index
     @class_links = @current_school.external_links.find(:all, :conditions => ['label=?', "Classrooms"])
@@ -17,54 +18,88 @@ class ExternalLinks < Application
   end
 
   def create
-    params[:external_link][:title].each_with_index do |l, i|
-      @external_link = @current_school.external_links.create({:title => l, :url => params[:external_link][:url][i], :label => params[:label]})
-    end
-    if @external_link.valid?
-       redirect url(:homes)
+    if params[:label] == "Classrooms"
+        @classroom = @current_school.classrooms.find_by_class_name(params[:external_link][:classroom_id])
+        @external_link = @current_school.external_links.create({:title => params[:external_link][:title], :label => params[:label],
+                                          :url => params[:external_link][:url], :classroom_id => @classroom.id})
+       links
+       redirect url(:class_details, :id => @classroom.id)
     else
-      render :new
+        @external_link = @current_school.external_links.create({:title => params[:external_link][:title], :label => params[:label],
+                                     :url => params[:external_link][:url] })
+        links
+        redirect resource(:homes)
     end
+    
   end
 
   def edit
-    @external_links = @current_school.external_links.find(:all, :conditions => ['label=?', params[:label] ])
+    if params[:label] == "Classrooms"
+       if params[:id]
+          @classroom = @current_school.classrooms.find_by_id(params[:id])
+          raise NotFound unless @classroom
+          @external_links = @current_school.external_links.find(:all, :conditions => ["label = ? and classroom_id = ?", "Classrooms", @classroom.id])
+          @test = params[:id]
+       end
+    else
+       @external_links = @current_school.external_links.find(:all, :conditions => ['label=?', params[:label] ])
+    end
     render
   end
 
   def update
-    @external_links = @current_school.external_links.find(:all, :conditions => ['label=?', params[:label] ])
-    @external_ids = @external_links.collect{|x| x.id}
-    title = params[:external_link][:title]
-    url = params[:external_link][:url]
-    if params[:link]
-      s = title.zip(url, @external_ids)
-      links = []
-      s.each do |l|
-        links << @current_school.external_links.update(l[2], {:title => l[0], :url => l[1], :label => params[:label]})
-      end
-      params[:link][:title].each_with_index do |e, m|
-        @external_link = @current_school.external_links.create({:title => e, :url => params[:link][:url][m], :label => params[:label]})
-      end
-      if @external_link.valid?
-        redirect url(:homes)
-      else
-        flash[:error] = "please enter Title or Url"
-        render :edit
-      end
+    @links = []
+    if params[:label] == "Classrooms"
+       if params[:id]
+          @classroom = @current_school.classrooms.find_by_id(params[:id])
+          raise NotFound unless @classroom
+          class_links = @current_school.external_links.find(:all, :conditions => ["label = ? and classroom_id = ?", "Classrooms", @classroom.id])
+          class_link_ids = class_links.collect{|x| x.id}
+          if params[:external_link]
+             old_title = params[:external_link][:title]
+             old_url = params[:external_link][:url]
+             old_s = old_title.zip(old_url, class_link_ids)
+             old_s.each do |f|
+                a = f.flatten
+                @links << @current_school.external_links.update(a[4], {:title => a[1], :url => a[3], 
+                                          :classroom_id => params[:id], :label => params[:label] })
+             end
+          end
+          if params[:links]
+            links
+          end
+       end
+       redirect url(:class_details, :id => @classroom.id)
     else
-      s = title.zip(url, @external_ids)
-      links = []
-      s.each do |l|
-        links << @current_school.external_links.update(l[2], {:title => l[0], :url => l[1], :label => params[:label]})
-      end
-      redirect url(:homes)
+       @external_links = @current_school.external_links.find(:all, :conditions => ['label=?', params[:label] ])
+       @external_ids = @external_links.collect{|x| x.id}
+       if params[:external_link]
+          old_title = params[:external_link][:title]
+          old_url = params[:external_link][:url]
+          old_s = old_title.zip(old_url, @external_ids)
+          old_s.each do |f|
+            a = f.flatten
+            @links << @current_school.external_links.update(a[4], {:title => a[1], :url => a[3], :label => params[:label] })
+          end
+       end
+       links
+       @external_links = @current_school.external_links.find(:all, :conditions => ['label=?', params[:label] ])
+       redirect resource(:homes)
     end
+ 
   end
 
   def delete
-    @current_school.external_links.find(params[:id]).destroy
-    redirect url(:homes)
+    @external_link = @current_school.external_links.find_by_id(params[:id])
+    raise NotFound unless @external_link
+    label = @external_link.label
+    if @external_link.label == "Classrooms"
+       @external_link.destroy
+       redirect url(:external_links_edit, :label => "Classrooms")
+    else
+      @external_link.destroy
+      redirect url(:external_links_edit, :label => label)
+    end
   end
 
   def preview
@@ -73,6 +108,31 @@ class ExternalLinks < Application
     render :layout => 'preview'
   end
 
+  # Adding External Links for new and edit modes
+  def links
+    if params[:links]
+      titles = params[:links][:title]
+      url = params[:links][:url]
+      s = titles.zip(url)
+      @external_links = []
+      if params[:label] == "Classrooms"
+          s.each do |f|
+            a = f.flatten
+            if ( a[1] != "")  && (a[3] != "")
+               @external_links << @current_school.external_links.create({:classroom_id => @classroom.id, :label => params[:label],
+                                  :title => a[1], :url => a[3] })
+            end
+          end
+      else
+         s.each do |f|
+            a = f.flatten
+            if ( a[1] != "")  && (a[3] != "")
+               @external_links << @current_school.external_links.create({:title => a[1], :label => params[:label], :url => a[3] })
+            end
+         end
+      end
+    end
+  end
 
   private
 

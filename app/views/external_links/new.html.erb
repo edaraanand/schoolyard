@@ -1,85 +1,99 @@
-  <h2 class="current-page"><%= params[:label] %> &gt; New</h2>
+<h2 class="current-page"><%= params[:label] %> &gt; New</h2>
   
 <div class=" data-block short-block">
   <% unless @external_link.errors.blank? %>
     <div id="errors">
-        <ul>
-          <li><%= @external_link.errors.full_messages.join('</li><li>') %></li>
-        </ul>
+        <ul><li><%= @external_link.errors.full_messages.join('</li><li>') %></li></ul>
     </div>
-  <% end %>
-   <p class="subText">url should be like apple.com (not) http://www.apple.com </p>
-  <%= form_for(@external_link, :action => resource(:external_links), :id => 'links', :name => "external_link", :onsubmit => "ClearAll()" ) do %>
-    <ul class="edit-ext-links"  id="link">
-      <li>
-        <%= text_field :title, :name => 'external_link[title][]', :maxlength => "75", :class=>"short text defaultText defaultTextActive", :title => "title" %><%= text_field :url, :name => 'external_link[url][]', :maxlength => "75", :class=>"long text apart defaultText defaultTextActive", :title => "url" %>
-        
-      </li>
-    </ul>
-    
-         <%= hidden_field :name => "label", :value => params[:label] %>
-          <input type="hidden" id="id" value="1">
-          
-            <div id="divTxt"></div>
-            <span class="add-link"> <%= link_to_function 'Add More',"add();"%></span> 
-          
-             
-          
-            
-    <div class="save-cancel">
-          
-          <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
-          <%= submit "    Publish    " %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
-    </div>
+  <% end %> <% s = (0..13).to_a %>
+   	<div class="container">
+  		<ol>
+          <li><label for="external_link_title" class="error">please enter the Title</label></li> 
+          <li><label for="external_link_url" class="error">please enter the Url</label></li> 
+          <li><label for="external_link_classroom_id" class="error">please select the Classroom</label></li>
+          <% s.each do |f| %>
+    			  	<li><label for="title<%= f %>" class="error">please enter the Title</label></li> 
+    			    <li><label for="url<%= f %>" class="error">please enter the Url</label></li>
+          <% end %>
+      </ol>
+  	</div>
   
+   <p class="subText">
+      url should be like apple.com (not) http://www.apple.com 
+   </p>
+  <%= form_for(@external_link, :action => resource(:external_links),  :class => "cmxform", :id => 'links', :name => "external_link", :onsubmit => "ClearAll()" ) do %>
+     <fieldset>
+          
+             <% if params[:label] == "Classrooms" %>
+					 			<ul>
+					         <li>
+					             <%= select :classroom_id, :collection =>  @classrooms.collect{|x| x.class_name}, 
+                               :prompt => "Please Select", :label => "Classroom :", :class => "required"  %>
+									 </li>
+						    </ul>
+             <% end %>
+          
+     			   <ul class="edit-ext-links">                                                         
+			       	  <li>                                                                                           
+				             <%= text_field :title, :maxlength => "75", :title => "title",
+			                             	:class=>"short text defaultText defaultTextActive required"   %>    
+				             <%= text_field :url, :maxlength => "75", :title => "url",                
+				                            :class=>"long text apart defaultText defaultTextActive required" %> 
+                                                                                                      
+				         </li>
+			        </ul>  
+			         <ul class="edit-ext-links" id="link"></ul>                                                                                          
+			         <%= hidden_field :name => "label", :value => params[:label] %>
+        
+			         <input type="hidden" id="id" value="1">
+			         <a href="" class="add-more-links" onClick="addFormField(); return false;">Add More</a>
+          
+			         <div class="save-cancel">
+			            <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
+			            <%= submit "    Publish    " %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
+			         </div>
+
+      </fieldset>
   <% end =%>
-  </div>
+</div>
+
 </div>
  
 <script type= "text/javascript">
  
- // $j("#external_link_title").hint();
-   // $j("#external_link_url").hint();
- 
- function add()
-   {
-      var links = document.getElementById('link');
-      var li = document.createElement('li');
-      li.innerHTML = "<input type='text' name='external_link[title][]' class='short text ext-link-name' value='title' onfocus='cl(this);' /><input type='text' name='external_link[url][]' class='long apart text ext-link-url' value='url' onfocus='cl(this);' />";
-      links.appendChild(li);
-   }
- 
-   function addFormField()
+   function addFormField() 
   {
     var id = document.getElementById('id').value;
-    $j('#divTxt').append("<p id='row" + id + "'><input type='text' class='short text ext-link-name' name='external_link[title][]' id='txt" + id + "' value='title' onfocus='cl(this);'><input type='text' id='txt" + id + "' name='external_link[url][]' class='long apart text ext-link-url' value='url' onfocus='cl(this);' /><a href='#' class='delete-btn' onclick='removeFormField(\"#row" + id + "\"); return false;'></a><p>");
-    //$('txt'+id).focus();
+    $j('#link').append("<li id='row" + id + "'><input type='text' class='short text ext-link-name required' name='links[title][title_"+id+"]' id='title"+id+"'><input type='text' id='url"+id+"' name='links[url][url_"+id+"]' class='long apart text ext-link-url required'/><a href='#' class='delete-btn' onclick='removeFormField(\"#row"+id+"\");return false;'>Remove</a></li>");
+    // $('txt'+id).focus();
     id = (id - 1) + 2;
     document.getElementById('id').value = id;
   }
 
    function removeFormField(id) 
    {
-         $j(id).remove();
-    }
-    
-    
-    function cl(t)
-    {
-      if (t.defaultValue == t.value)
-        {
-          t.value = '';
-         }
-     }
-  
- function preview()
- {
-   var s = $('links').serialize();
-   window.open('/external_links/preview/-/?' + s);
+     $j(id).remove();
+   }
    
- }
- 
- 
+    // Validation for Adding External Links
+
+  	var container = $j('div.container');
+
+  	// validate the form when it is submitted
+  	var validator = $j("#links").validate({
+  		errorContainer: container,
+  		errorLabelContainer: $("ol", container),
+  		wrapper: 'li',
+  		meta: "validate"
+  	});
+   
+     function preview()
+     {
+       var s = $('links').serialize();
+       window.open('/external_links/preview/-/?' + s);
+   
+     }
+
   $j(document).ready(function()
 {
     $j(".defaultText").focus(function(srcc)
@@ -103,34 +117,44 @@
     $j(".defaultText").blur();
 });
  
-  function ClearAll()
- {
-    var link_title = document.getElementById('external_link_title');
-    var url = document.getElementById('external_link_url');
-     
-     if (link_title.value == link_title.title)
-       {
-          link_title.value = "";
-        }
-     if (url.value == url.title)
-       {
-          url.value = "";
-       }
-       
-     var l = document.getElementById('link_title');
-     var u = document.getElementById('link_url');
-     
-      if (l.value == 'title')
-       {
-          l.value = "";
-        }
-     if (u.value == 'url')
-       {
-          u.value = "";
-       }
-     
-  }
- 
- 
+   function ClearAll()
+   { 
+      var r = document.getElementById('links');
+      var pr =  r.getElementsByTagName('input');
+      for (var r=0;r<pr.length;r++)
+      {
+          if (pr[r].value == pr[r].title)
+           {
+             pr[r].value = "";
+           }
+      }
+
+   }
  
 </script>
+
+<style type="text/css">
+ 
+ 	.cmxform fieldset li.error label { color: red; }
+	div.container {
+		background-color: #eee;
+		border: 1px solid red;
+		margin: 5px;
+		padding: 5px;
+	}
+	div.container ol li {
+		list-style-type: disc;
+		margin-left: 20px;
+	}
+	div.container { display: none }
+	.container label.error {
+		display: inline;
+	}
+ 
+	form.cmxform label.error {
+		display: block;
+		margin-left: 1em;
+		width: auto;
+	}
+ 
+</style>
