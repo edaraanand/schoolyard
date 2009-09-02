@@ -57,7 +57,7 @@ class Classrooms < Application
     @teachers = @current_school.staff.find(:all)
     @class_peoples = @classroom.class_peoples
     if @classroom.update_attributes(params[:classroom])
-       @classroom.class_name = params[:classroom][:class_name].titleize
+       @classroom.class_name = params[:classroom][:class_name]
        @classroom.activate = true
        @classroom.save!
        update_content(@classroom)
