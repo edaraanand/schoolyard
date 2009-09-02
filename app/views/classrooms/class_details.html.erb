@@ -27,10 +27,10 @@
       <div id="content">
         <p class="post-content">
               <% if @welcome_messages.empty? %>
-                  Welcome to <%= @current_school.school_name%>'s <%=@classroom.class_name.titleize%> classroom
+                  Welcome to <%= @current_school.school_name%>'s <%=@classroom.class_name%> classroom
                   <% unless session.user.type == "Parent" %>
                       <span class="admin-links">
-                    <%= link_to_right( (right = "welcome_messages"), "Edit", url(:new_welcome_message, :l => "#{@classroom.class_name.titleize}" ) ) %>
+                    <%= link_to_right( (right = "welcome_messages"), "Edit", url(:new_welcome_message, :l => "#{@classroom.class_name}" ) ) %>
                       </span>
                   <% end %>
               <% else %>
@@ -80,7 +80,7 @@
                           <ul>
                               <li <% if @selected == "announcements" %> class="on" <% end %>>
                                   <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %> &#124;    
-                                  <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}")) %>
+                                  <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "#{@classroom.class_name}")) %>
                                   <% if session.user.type == "Parent" %>
                                        &#124; <%= link_to "Submit an announcement", resource(:parents, :new) %>
                                   <% end %>

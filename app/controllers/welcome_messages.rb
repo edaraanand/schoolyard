@@ -27,7 +27,7 @@ class WelcomeMessages < Application
          @welcome_message = WelcomeMessage.new(:content => "Welcome to #{@current_school.school_name}" )
       else
          @classroom = @current_school.classrooms.find_by_class_name(params[:l])
-         @welcome_message = WelcomeMessage.new(:content => "Welcome to #{@current_school.school_name}'s #{@classroom.class_name.titleize} classroom" )
+         @welcome_message = WelcomeMessage.new(:content => "Welcome to #{@current_school.school_name}'s #{@classroom.class_name} classroom" )
       end
     else
         @welcome_message = WelcomeMessage.new
@@ -55,14 +55,14 @@ class WelcomeMessages < Application
   def edit
     @welcome_message = @current_school.welcome_messages.find(params[:id])
     ss = @current_school.active_classrooms
-    om = ss.collect{|x| x.class_name.titleize }
+    om = ss.collect{|x| x.class_name }
     @test = om.insert(0, "Home Page")
     render
   end
 
   def update
     ss = @current_school.active_classrooms
-    om = ss.collect{|x| x.class_name.titleize }
+    om = ss.collect{|x| x.class_name }
     @test = om.insert(0, "Home Page")
     @welcome_message = @current_school.welcome_messages.find(params[:id])
     if @welcome_message.update_attributes(params[:welcome_message])

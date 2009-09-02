@@ -13,7 +13,7 @@
                       <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
 	              </div>
              
-              <h3><%= @announcement.title %></h3><span class="subText">Announcement for: <%= @announcement.access_name.titleize %></span><br/>
+              <h3><%= @announcement.title %></h3><span class="subText">Announcement for: <%= @announcement.access_name %></span><br/>
               <span class="subText">Created by <%= @announcement.person.name %>, expires on <%= @announcement.expiration.strftime("%d %b %Y") %></span><br/>
                <% @attachment = @current_school.attachments.find(:first, 
                        :conditions => ["attachable_id =? and attachable_type =?", @announcement.id, "Announcement"] ) %>

@@ -109,7 +109,7 @@ class Calendars < Application
           @classroom = @current_school.classrooms.find_by_id(params[:class])
           raise NotFound unless @classroom
         else
-          @class =  @calendar.class_name.titleize
+          @class =  @calendar.class_name
           @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
         end
         @event = "All Day Event"
@@ -184,13 +184,13 @@ class Calendars < Application
 
   def classrooms
     @class = @current_school.active_classrooms
-    room = @class.collect{|x| x.class_name.titleize }
+    room = @class.collect{|x| x.class_name }
     @classrooms = room.insert(0, "All Events")
   end
   
   def classes
      classes = @current_school.active_classrooms
-     room = classes.collect{|x| x.class_name.titleize }
+     room = classes.collect{|x| x.class_name }
      @class_rooms = room.insert(0, "Schoolwide")
   end
 

@@ -20,7 +20,7 @@
           <td nowrap>&nbsp;&nbsp;&nbsp;&nbsp;</td>
         <td>
            <% @classes.each do |f| %>
-            <p class="separator"><%= link_to "#{f.class_name.titleize}", url(:class_details, :id => "#{f.id}" ) %></p>
+            <p class="separator"><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></p>
            <% end %>
         </td>
         <td nowrap>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -32,7 +32,7 @@
       
         <td>
            <% @extracurricular.each do |f| %>
-            <p class="separator"><%= link_to "#{f.class_name.titleize}", url(:class_details, :id => "#{f.id}" ) %></p>
+            <p class="separator"><%= link_to "#{f.class_name}", url(:class_details, :id => "#{f.id}" ) %></p>
            <% end %>
         </td>
         <%end%>

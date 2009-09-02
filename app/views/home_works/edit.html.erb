@@ -6,10 +6,10 @@
            <li>
               <label>Home Work for:</label>
               <% if @class_id != "" %>
-                  <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, 
-                         :selected => "#{@home_work.classroom.class_name.titleize}", :prompt => "Please Select" %>
+                  <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name }, 
+                         :selected => "#{@home_work.classroom.class_name}", :prompt => "Please Select" %>
               <% else %>
-                  <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, :prompt => "Please Select" %>
+                  <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select" %>
               <% end %>
            </li>
            <li><%= text_field  :title,  :label => "Title", :maxlength => "75" %></li>
