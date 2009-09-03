@@ -25,7 +25,7 @@
                        <%= link_to_delete((right = "homework"), "Delete", resource(@home_work, :delete)) %>
                    </div>
                 <% end %>
-            <p><%= snippet(@home_work.content, 50) %></p>
+            <p><%= san_content(@home_work.content) %></p>
             <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"]) %>
            <%= partial 'common/attachment' %>
             <p class="separator">&nbsp;</p>
