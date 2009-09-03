@@ -107,17 +107,19 @@
                     </ul>
               <% end %>
               <% unless @classroom.class_type == "Subject" %>
-                  <h3>Current Homework</h3>
-                  <ul class="last">
-                    <% @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ? and due_date >= ?', @current_school.id, @date], :order => "due_date ASC" ) %>
-                      <% if @h_w.blank? %>
-                           <span class="subText">There are no homework assignments due at this time</span>
-                      <% else %>
-                          <% for homework in @h_w %>
-                            <li><%= link_to "#{homework.title}", url(:class_works, :id => homework.id) %></li>
+                 <% unless @home_works.empty? %>
+                      <h3>Current Homework</h3>
+                      <ul class="last">
+                        <% @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ? and due_date >= ?', @current_school.id, @date], :order => "due_date ASC" ) %>
+                          <% if @h_w.blank? %>
+                               <span class="subText">There are no homework assignments due at this time</span>
+                          <% else %>
+                              <% for homework in @h_w %>
+                                <li><%= link_to "#{homework.title}", url(:class_works, :id => homework.id) %></li>
+                              <% end %>
                           <% end %>
-                      <% end %>
-                  </ul>
+                      </ul>
+                  <% end %>
               <% end %>
               <% unless @external_links.blank? %>
                    <h3>External Links </h3>
