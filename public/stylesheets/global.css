@@ -601,6 +601,16 @@ body.preview #header h1 strong{color:#fff; font-weight:bold;}
 .top-pagination a{ margin:1px; padding:2px; float:left;}
 
 
+/* ============== */
+/* = Validation = */
+/* ============== */
+.cmxform fieldset li.error label{color:red;}
+div.container{background-color:#eee;border:1px solid red;margin:5px;padding:5px;}
+div.container ol li{list-style-type:disc;margin-left:20px;}
+div.container{display:none}
+.container label.error{display:inline;}
+form.cmxform label.error{display:block;margin-left:1em;width:auto;}
+
 
 
 
