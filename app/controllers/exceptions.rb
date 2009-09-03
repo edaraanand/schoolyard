@@ -35,7 +35,7 @@ class Exceptions < Application
        :subject => "Error occurred in School Yard"
      }
   
-     if Merb.env == "production"
+     if Merb.env == "internal_testing"
         run_later do
            ErrorNotifyMailer.dispatch_and_deliver(:error,
                                                 email_headers,

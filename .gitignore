@@ -20,3 +20,6 @@ gems/specifications
 sunspot-solr.pid
 solr-index/
 tmp/*
+public/uploads/*
+log/*
+db/*

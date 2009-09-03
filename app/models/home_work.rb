@@ -22,6 +22,7 @@ class HomeWork < ActiveRecord::Base
          record.errors.add attrib, 'must be selected'
       end
   end
+  
 ## Sending mail for Home Work Alert
 
   def mail(id)

@@ -6,7 +6,7 @@
      <% end %>
 </ul>
 
-<h2 class="current-page">Grades/Reports &gt; <span class="add-link">Setup Subjects</span></h2>
+<h2 class="current-page">Grades/Reports &gt; <span class="add-link">Set Up Assignments </span></h2>
 <span class="subText">Please specify the subjects for which you wish to add the grades</span><br/>
 
 <div class="container">
@@ -27,7 +27,7 @@
 		  <p class="main-subject">
 		         <%= text_field  :subject_name,  :class => "required defaultText defaultTextActive", 
 		                         :label => "Main Subject", :title => "Subject" %>
-		         <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, 
+		         <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name }, 
 		                   :label => "for", :prompt => "Please Select Classroom", :class => "required" %>
 		  </p>
 		

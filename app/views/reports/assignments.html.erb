@@ -9,12 +9,12 @@
 <span>For :</span>
 
 <% if params[:label] %>
-        <%= select :name => "class_report",  :collection => @classrooms.collect{|x| x.class_name.titleize }, 
+        <%= select :name => "class_report",  :collection => @classrooms.collect{|x| x.class_name }, 
              :selected => @classroom.class_name,
              :onchange => "javascript:window.location.href='/assignments?label='+(this.value)+'&id=#{@classroom.id}'" %> &nbsp;
 <% else %>
         <%= select :name => "class_report", :selected => @report.classroom.class_name, 
-             :collection => @classrooms.collect{|x| x.class_name.titleize }, 
+             :collection => @classrooms.collect{|x| x.class_name }, 
              :onchange => "javascript:window.location.href='/assignments?label='+(this.value)+'&id=#{@report.classroom.id}'" %> &nbsp;
 <% end %>
 

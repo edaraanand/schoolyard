@@ -157,7 +157,7 @@ class Forms < Application
 
   def classrooms
     classes = @current_school.active_classrooms
-    room = classes.collect{|x| x.class_name.titleize }
+    room = classes.collect{|x| x.class_name }
     @classrooms = room.insert(0, "All Classes")
     @years = (2009..2025).to_a
   end

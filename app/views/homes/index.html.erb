@@ -134,9 +134,9 @@
                          <ul>
                               <% @classes.each do |f| %>
                                     <% if f.class_name == "Sports" %>
-                                          <li><%= link_to "#{f.class_name}".titleize, url(:sports) %></li>
+                                          <li><%= link_to "#{f.class_name}", url(:sports) %></li>
                                     <% else %>
-                                          <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => f.id) %></li>
+                                          <li><%= link_to "#{f.class_name}", url(:class_details, :id => f.id) %></li>
                                     <% end %>
                               <% end %>
                           </li>
@@ -150,9 +150,9 @@
                          <ul>
                         <% @extracurricular.each do |f| %>
                               <% if f.class_name == "Sports" %>
-                                    <li><%= link_to "#{f.class_name}".titleize, url(:sports) %></li>
+                                    <li><%= link_to "#{f.class_name}", url(:sports) %></li>
                               <% else %>
-                                    <li><%= link_to "#{f.class_name}".titleize, url(:class_details, :id => f.id) %></li>
+                                    <li><%= link_to "#{f.class_name}", url(:class_details, :id => f.id) %></li>
                               <% end %>
                         <% end %>
                         </li>

@@ -9,10 +9,10 @@ class HomeWorks < Application
   def index
     if params[:label] == "classes"
        @classroom = @current_school.classrooms.find_by_id(params[:id], :conditions => ['activate = ?', true])
-       @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 10, :page => params[:page])
+       @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date ASC", :per_page => 10, :page => params[:page])
        @test = params[:id]
     else
-       @home_works = @current_school.home_works.paginate(:all, :order => "due_date DESC", :per_page => 10, :page => params[:page])
+       @home_works = @current_school.home_works.paginate(:all, :order => "due_date ASC", :per_page => 10, :page => params[:page])
        @test = "All Homeworks"
     end
     render
@@ -27,26 +27,19 @@ class HomeWorks < Application
      @person = session.user
      @home_work = @person.home_works.new(params[:home_work])
      i=0
-     if  @home_work.valid?
-       @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
-       @home_work.classroom_id = @classroom.id
-       @home_work.school_id = @current_school.id
-       @home_work.save
-       unless params[:attachment]['file_'+i.to_s].empty?
-         @attachment = Attachment.create( :attachable_type => "Homework",
-          :attachable_id => @home_work.id,
-          :filename => params[:attachment]['file_'+i.to_s][:filename],
-          :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-          :size => params[:attachment]['file_'+i.to_s][:size],
-          :school_id =>  @current_school.id
-          )
-          File.makedirs("public/uploads/#{@current_school.id}/files")
-          FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
-       end
-       run_later do
-         email_alerts(@home_work.classroom_id, self.class, @home_work, @current_school)
-       end
-       redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
+     if @home_work.valid?
+        @classroom = @current_school.classrooms.find_by_class_name(params[:home_work][:classroom_id])
+        @home_work.classroom_id = @classroom.id
+        @home_work.school_id = @current_school.id
+        @home_work.save
+        unless params[:attachment]['file_'+i.to_s].empty?
+          type = "Homework"
+          Attachment.file(params.merge(:school_id => @current_school.id), type, @home_work.id)
+        end
+        run_later do
+           email_alerts(@home_work.classroom_id, self.class, @home_work, @current_school)
+        end
+        redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
      else
        @date = params[:home_work][:due_date]
        @class_id =  params[:home_work][:classroom_id]
@@ -74,21 +67,14 @@ class HomeWorks < Application
         @home_work.save
         if params[:attachment]
            unless params[:attachment]['file_'+i.to_s].empty?
-              @attachment = Attachment.create( :attachable_type => "Homework",
-              :attachable_id => @home_work.id,
-              :filename => params[:attachment]['file_'+i.to_s][:filename],
-              :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-              :size => params[:attachment]['file_'+i.to_s][:size],
-              :school_id =>  @current_school.id
-              )
-             File.makedirs("public/uploads/#{@current_school.id}/files")
-             FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
+              type = "Homework"
+              Attachment.file(params.merge(:school_id => @current_school.id), type, @home_work.id)
            end
         end
         redirect  url(:class_details, :id => @classroom.id, :label => "homeworks")
      else
-         @class_id =  params[:home_work][:classroom_id]
-         render :edit
+        @class_id =  params[:home_work][:classroom_id]
+        render :edit
      end
   end
    
@@ -150,7 +136,7 @@ class HomeWorks < Application
       send_data(pdf.render, :filename => "#{@home_work.title}.pdf", :type => "application/pdf")
     else
       @classroom = @current_school.classrooms.find(params[:id])
-      @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id])
+      @home_works = @classroom.home_works.find(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date ASC")
       pdf = pdf_prepare("multiple", @home_works)
       send_data(pdf.render, :filename => "Homework for #{@classroom.class_name}.pdf", :type => "application/pdf")
     end
@@ -182,6 +168,12 @@ class HomeWorks < Application
       redirect resource(:homes)
     end
   end
+  
+  def format(str)
+    the_str = str.to_s
+    the_str = the_str.gsub(/[^a-zA-Z0-9-]/, " ")
+    the_str
+  end
 
   def pdf_prepare(value, homework)
     pdf = PDF::Writer.new
@@ -189,7 +181,7 @@ class HomeWorks < Application
     pdf.text "#{@current_school.school_name}", :font_size => 20, :justification => :center
     if value == "multiple"
       @home_works.each do |homework|
-        con = "#{homework.content}"
+        con = san_content(homework.content)
         con = con.gsub("”", "") 
         con = con.gsub("“", "")
         con = con.gsub("’", "")
@@ -197,13 +189,16 @@ class HomeWorks < Application
         con = con.gsub("’", "")
         con = con.gsub("– ", "")
         con = con.gsub(/[^a-zA-Z0-9-]/, " ")
-        pdf.text "<b>Due Date</b>" + ":" + "" + "#{homework.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
+        pdf.text "<b>Due Date</b>" + ":" + "" + "#{homework.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left, :spacing => 2
         pdf.text "<b>Title</b>" + ":" + "" + "#{homework.title}", :font_size => 10, :justification => :left
-        pdf.text "<b>Description</b>" + ":" + "" + con, :font_size => 10, :justification => :left
+        pdf.text "<b>Description</b>" + ":" + "" 
+        con.split('br').map do |c| 
+          pdf.text c, :font_size => 10, :justification => :left
+        end
       end
       pdf
     else
-      con = "#{@home_work.content}"
+      con = san_content(@home_work.content)
       con = con.gsub("”", "") 
       con = con.gsub("“", "")
       con = con.gsub("’", "")
@@ -213,7 +208,10 @@ class HomeWorks < Application
       con = con.gsub(/[^a-zA-Z0-9-]/, " ")
       pdf.text "<b>Due Date</b>" + ":" + "" + "#{@home_work.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
       pdf.text "<b>Title</b>" + ":" + "" + "#{@home_work.title}", :font_size => 10, :justification => :left
-      pdf.text "<b>Description</b>" + ":" + "" + con, :font_size => 10, :justification => :left
+      pdf.text "<b>Description</b>" + ":" + "" 
+      con.split('br').map do |c| 
+        pdf.text c, :font_size => 10, :justification => :left
+      end
       pdf
     end
   end

@@ -147,7 +147,30 @@ class Notifications < Application
      account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
      resp =  account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls.csv", "GET" )
      filename = "twilio.csv"
-     send_data(resp.body, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
+     q = 1
+     csv_string = FasterCSV.generate do |csv|
+        csv << ["Date", "Caller", "Called", "Status"]
+        resp.body.each do |row|
+           unless q == 1
+             l = row.gsub("\r\n", " ").split(',')
+             if l[10] == "1"
+                status = "In progress"
+             elsif l[10] == "2"
+                status = "completed"
+             elsif l[10] == "3"
+                status = "Failed - Busy"
+             elsif l[10] == "4"
+                status = "Failed - Application Error"
+             elsif l[10] == "5"
+                status = "Failed - No Answer"
+             end
+             date = l[1] + l[2]
+             csv << [date, l[8], l[7], status]
+           end
+           q += 1
+        end
+     end
+     send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
   end
  
   private

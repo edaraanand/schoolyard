@@ -54,13 +54,14 @@ class Classrooms < Application
   def update
     @classroom = @current_school.classrooms.find_by_id(params[:id])
     raise NotFound unless @classroom
+    @c = @classroom.class_name
     @teachers = @current_school.staff.find(:all)
     @class_peoples = @classroom.class_peoples
     if @classroom.update_attributes(params[:classroom])
-       @classroom.class_name = params[:classroom][:class_name].titleize
+       @classroom.class_name = params[:classroom][:class_name]
        @classroom.activate = true
-       @classroom.save!
-       update_content(@classroom)
+       @classroom.save
+       update_content(@c)
        teacher = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
        ClassPeople.update(teacher.id, {:person_id => "#{params[:class_teacher]}", :classroom_id => @classroom.id, :role => "class_teacher" } )
        if params[:class_room]
@@ -103,7 +104,7 @@ class Classrooms < Application
       render :edit, :id => @classroom.id
     else
       @classroom = @current_school.classrooms.find(params[:id])
-      @classroom.class_name = @classroom.class_name.titleize
+      @classroom.class_name = @classroom.class_name
       if params[:label] == "deactivate"
          @classroom.activate = false
       else
@@ -121,20 +122,21 @@ class Classrooms < Application
     @classroom = @current_school.classrooms.find_by_id(params[:id])
     if @classroom
       if @classroom.activate == true
-         @calendars = @current_school.calendars.paginate(:all, :conditions => ['class_name = ?', @classroom.class_name.titleize], :per_page => 10, :page => params[:page], :order => 'start_date')
-         @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name.titleize, true, true], :per_page => 10,
+         @calendars = @current_school.calendars.paginate(:all, :conditions => ['class_name = ?', @classroom.class_name], :per_page => 10, :page => params[:page], :order => 'start_date')
+         @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true], :per_page => 10,
                                                               :page => params[:page], :order => "created_at DESC")
-         @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name.titleize])
-         @external_links = @current_school.external_links.find(:all, :conditions => ['label = ?', "Classrooms"])
+         @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
+         @external_links = @current_school.external_links.find(:all, :conditions => ["label = ? and classroom_id = ?", "Classrooms", @classroom.id])
+         @subject_links = @current_school.external_links.find(:all, :conditions => ["label = ? and classroom_id = ?", "Subjects", @classroom.id])
          @spot_lights = @current_school.spot_lights.paginate(:all, :conditions => ['class_name = ?', @classroom.class_name], :per_page => 2, :page => params[:page], :order => 'created_at DESC')
-         @ann = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name.titleize, true, true], :limit => 3, :order => "created_at DESC")
+         @ann = @current_school.announcements.find(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true], :limit => 3, :order => "created_at DESC")
          @sp_light = @current_school.spot_lights.find(:first, :conditions => ['class_name = ?', @classroom.class_name], :order => "created_at DESC" )
          unless @classroom.class_type == "Subject"
-           @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date DESC", :per_page => 10, :page => params[:page])
+           @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date ASC", :per_page => 10, :page => params[:page])
            @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', @classroom.id])
            @ranks = @current_school.ranks.find(:all)
          end
-         @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "School Wide" ], :order => 'start_date') 
+         @all_class_calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", "Schoolwide" ], :order => 'start_date') 
          render :layout => 'class_change', :id => @classroom.id
       else
          raise NotFound
@@ -144,14 +146,13 @@ class Classrooms < Application
     end
   end
 
-  def update_content(room)
-      @classroom = room
-      @announcements = @current_school.announcements.find(:all, :conditions => ['access_name = ?', @classroom.class_name] )
-      @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
-      @forms = @current_school.forms.find(:all, :conditions => ['class_name = ?', @classroom.class_name])
-      @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', @classroom.class_name])
-      @spot_lights = @current_school.spot_lights.find(:all, :conditions => ['class_name =?', @classroom.class_name] )
-      @registrations = @current_school.registrations.find(:all, :conditions => ['current_class = ?', @classroom.class_name ])
+  def update_content(class_name)
+      @announcements = @current_school.announcements.find(:all, :conditions => ['access_name = ?', class_name] )
+      @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', class_name])
+      @forms = @current_school.forms.find(:all, :conditions => ['class_name = ?', class_name])
+      @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', class_name])
+      @spot_lights = @current_school.spot_lights.find(:all, :conditions => ['class_name =?', class_name] )
+      @registrations = @current_school.registrations.find(:all, :conditions => ['current_class = ?', class_name ])
       @announcements.each do |f|
         f.access_name = @classroom.class_name
         f.save

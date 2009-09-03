@@ -35,7 +35,7 @@
       </li>
       <li>
         <label>Current Class:</label>
-        <%= select :current_class, :collection => @classrooms.collect{|x| x.class_name.titleize }, :prompt => "Please Select" %>
+        <%= select :current_class, :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select" %>
       </li>
       <li>
         <%= text_field  :birth_date, :id => "DOB1", :class => "short" , :label => "Date of Birth" %>
@@ -57,7 +57,7 @@
       <li>
         <label>Current Class:</label>
         <%= select  :name => "current_class2",
-                    :collection => @classrooms.collect{|x| x.class_name.titleize }, 
+                    :collection => @classrooms.collect{|x| x.class_name }, 
                     :prompt => "Please Select", 
                     :selected => "#{@current_class2}" %>
       </li>   
@@ -105,7 +105,7 @@
                           </li>
                           <li>
                               <label>Current Class:</label>
-                                 <%= select :name => "current_class2", :collection => @classrooms.collect{|x| x.class_name.titleize }, :prompt => "Please Select" %>
+                                 <%= select :name => "current_class2", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select" %>
                            </li>    
                            <li>
                                <%= text_field  :name => "birth_date2", :id => "DOB2", :class => "short", :label => "Date of Birth" %>
@@ -129,7 +129,7 @@
                               </li>
                               <li>
                                   <label>Current Class:</label>
-                                    <%= select :name => "current_class3", :collection => @classrooms.collect{|x| x.class_name.titleize }, :prompt => "Please Select", :selected => "#{@current_class3}" %>
+                                    <%= select :name => "current_class3", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select", :selected => "#{@current_class3}" %>
                               </li>  
                               <li>
                                   <%= text_field  :name => "birth_date3", :id => "DOB3", :class => "short",  :label => "Date of Birth" %>
@@ -170,7 +170,7 @@
                             </li>
                             <li>
                                 <label>Current Class:</label>
-                                   <%= select :name => "current_class3", :collection => @classrooms.collect{|x| x.class_name.titleize }, :prompt => "Please Select" %>
+                                   <%= select :name => "current_class3", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select" %>
                             </li>
                              <li>
                                  <%= text_field  :name => "birth_date3", :id => "DOB3", :class => "short",  :label => "Date of Birth" %>
@@ -188,7 +188,7 @@
                                 <%= text_field  :name => "l_name_student4", :class => "semi-short apart", :value => "#{@lname4}" %>
                             </li>
                             <li>
-                            <label>Current Class:</label><%= select :name => "current_class4", :collection => @classrooms.collect{|x| x.class_name.titleize }, :prompt => "Please Select", :selected => "#{@current_class4}" %>
+                            <label>Current Class:</label><%= select :name => "current_class4", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select", :selected => "#{@current_class4}" %>
                             </li>
                             <li>
                                 <%= text_field  :name => "birth_date4", :id => "DOB4", :class => "short",  :label => "Date of Birth" %>
@@ -202,7 +202,7 @@
                             </li>
                             <li>
                                 <label>Current Class:</label>
-                                   <%= select :name => "current_class4", :collection => @classrooms.collect{|x| x.class_name.titleize }, :prompt => "Please Select" %>
+                                   <%= select :name => "current_class4", :collection => @classrooms.collect{|x| x.class_name }, :prompt => "Please Select" %>
                             </li>
                             <li>
                                  <%= text_field  :name => "birth_date4", :id => "DOB4", :class => "short",  :label => "Date of Birth" %>

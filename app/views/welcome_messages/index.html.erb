@@ -13,7 +13,7 @@
 	                <% end %>
 	   </select>
 
-       <% if  @welcome_messages.blank?  %>
+       <% if @welcome_messages.blank? %>
              <p class="subText">
 	             No Welcome Message was found. If you applied a filter try changing it.
 	             <%= link_to "Add New", url(:new_welcome_message) %> 

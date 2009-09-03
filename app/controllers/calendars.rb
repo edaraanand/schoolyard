@@ -35,15 +35,8 @@ class Calendars < Application
     if @calendar.valid? 
        @calendar.save!
        unless params[:attachment]['file_'+i.to_s].empty?
-           @attachment = Attachment.create( :attachable_type => "Calendar",
-           :attachable_id => @calendar.id,
-           :filename => params[:attachment]['file_'+i.to_s][:filename],
-           :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-           :size => params[:attachment]['file_'+i.to_s][:size], 
-           :school_id => @current_school.id
-           )
-           File.makedirs("public/uploads/#{@current_school.id}/files")
-           FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
+           type = "Calendar"
+           Attachment.file(params.merge(:school_id => @current_school.id), type, @calendar.id)
        end
       if @calendar.class_name == "Schoolwide"
         redirect resource(:calendars)
@@ -64,7 +57,7 @@ class Calendars < Application
   def edit
     @calendar = @current_school.calendars.find_by_id(params[:id])
     raise NotFound unless @calendar
-    @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
+    @attachments = Attachment.calendars(@calendar.id, @current_school.id)
     @allowed = 1 - @attachments.size
     render
   end
@@ -72,7 +65,7 @@ class Calendars < Application
   def update
     @calendar = @current_school.calendars.find_by_id(params[:id])
     raise NotFound unless @calendar
-    @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
+    @attachments = Attachment.calendars(@calendar.id, @current_school.id)
     @allowed = 1 - @attachments.size
     i=0
     if @calendar.update_attributes(params[:calendar])
@@ -83,15 +76,8 @@ class Calendars < Application
         @calendar.save
         if params[:attachment]
            unless params[:attachment]['file_'+i.to_s].empty?
-              @attachment = Attachment.create( :attachable_type => "Calendar",
-               :attachable_id => @calendar.id,
-               :filename => params[:attachment]['file_'+i.to_s][:filename],
-               :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-               :size => params[:attachment]['file_'+i.to_s][:size],
-               :school_id => @current_school.id
-               )
-              File.makedirs("public/uploads/#{@current_school.id}/files")
-              FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
+             type = "Calendar"
+             Attachment.file(params.merge(:school_id => @current_school.id), type, @calendar.id)
            end
         end
         if @calendar.class_name == "Schoolwide"
@@ -120,11 +106,11 @@ class Calendars < Application
         @calendar = @current_school.calendars.find_by_id(params[:id])
         raise NotFound unless @calendar
         if @calendar.class_name == "Schoolwide"
-          @classroom = @current_school.classrooms.find_by_id(params[:class])
-          raise NotFound unless @classroom
+           @classroom = @current_school.classrooms.find_by_id(params[:class])
+           raise NotFound unless @classroom
         else
-          @class =  @calendar.class_name.titleize
-          @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
+           @class =  @calendar.class_name
+           @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
         end
         @event = "All Day Event"
         render :layout => 'class_change', :id => @classroom.id
@@ -137,7 +123,7 @@ class Calendars < Application
       @calendar = @current_school.calendars.find_by_id(@attachment.attachable_id)
       @class_rooms = @current_school.active_classrooms
       @attachment.destroy
-      @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @calendar.id, "Calendar"])
+      @attachments = Attachment.calendars(@calendar.id, @current_school.id)
       @allowed = 1 - @attachments.size
       render :edit, :id => @calendar.id
     else
@@ -198,13 +184,13 @@ class Calendars < Application
 
   def classrooms
     @class = @current_school.active_classrooms
-    room = @class.collect{|x| x.class_name.titleize }
+    room = @class.collect{|x| x.class_name }
     @classrooms = room.insert(0, "All Events")
   end
   
   def classes
      classes = @current_school.active_classrooms
-     room = classes.collect{|x| x.class_name.titleize }
+     room = classes.collect{|x| x.class_name }
      @class_rooms = room.insert(0, "Schoolwide")
   end
 

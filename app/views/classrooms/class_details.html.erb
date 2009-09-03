@@ -27,10 +27,10 @@
       <div id="content">
         <p class="post-content">
               <% if @welcome_messages.empty? %>
-                  Welcome to <%= @current_school.school_name%>'s <%=@classroom.class_name.titleize%> classroom
+                  Welcome to <%= @current_school.school_name%>'s <%=@classroom.class_name%> classroom
                   <% unless session.user.type == "Parent" %>
                       <span class="admin-links">
-                    <%= link_to_right( (right = "welcome_messages"), "Edit", url(:new_welcome_message, :l => "#{@classroom.class_name.titleize}" ) ) %>
+                    <%= link_to_right( (right = "welcome_messages"), "Edit", url(:new_welcome_message, :l => "#{@classroom.class_name}" ) ) %>
                       </span>
                   <% end %>
               <% else %>
@@ -80,7 +80,7 @@
                           <ul>
                               <li <% if @selected == "announcements" %> class="on" <% end %>>
                                   <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %> &#124;    
-                                  <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}")) %>
+                                  <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "#{@classroom.class_name}")) %>
                                   <% if session.user.type == "Parent" %>
                                        &#124; <%= link_to "Submit an announcement", resource(:parents, :new) %>
                                   <% end %>
@@ -107,17 +107,19 @@
                     </ul>
               <% end %>
               <% unless @classroom.class_type == "Subject" %>
-                  <h3>Current Homework</h3>
-                  <ul class="last">
-                    <% @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ? and due_date >= ?', @current_school.id, @date] ) %>
-                      <% if @h_w.blank? %>
-                           <span class="subText">There are no homework assignments due at this time</span>
-                      <% else %>
-                          <% for homework in @h_w %>
-                            <li><%= link_to "#{homework.title}", url(:class_works, :id => homework.id) %></li>
+                 <% unless @home_works.empty? %>
+                      <h3>Current Homework</h3>
+                      <ul class="last">
+                        <% @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ? and due_date >= ?', @current_school.id, @date], :order => "due_date ASC" ) %>
+                          <% if @h_w.blank? %>
+                               <span class="subText">There are no homework assignments due at this time</span>
+                          <% else %>
+                              <% for homework in @h_w %>
+                                <li><%= link_to "#{homework.title}", url(:class_works, :id => homework.id) %></li>
+                              <% end %>
                           <% end %>
-                      <% end %>
-                  </ul>
+                      </ul>
+                  <% end %>
               <% end %>
               <% unless @external_links.blank? %>
                    <h3>External Links </h3>
@@ -126,6 +128,14 @@
                        <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
                      <% end %>
                    </ul>
+              <% end %>
+              <% unless @subject_links.blank? %>
+                    <h3>External Links </h3>
+                    <ul class="last">
+                      <% for link in @subject_links %>
+                        <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
+                      <% end %>
+                    </ul>
               <% end %>
                           
          </div>
