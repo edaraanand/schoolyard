@@ -41,7 +41,7 @@
       <% if params[:l] == "calendar" %>
             <%= link_to "&larr; Back to All Events", url(:events, :l => "all_events", :label =>  "calendars") %>
       <% else %>
-          <% if @calendar.class_name == "School Wide" %>
+          <% if @calendar.class_name == "Schoolwide" %>
               <% @classroom = @current_school.classrooms.find_by_id(params[:class]) %>
           <% else %>
               <% @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name]) %>

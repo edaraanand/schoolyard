@@ -106,11 +106,11 @@ class Calendars < Application
         @calendar = @current_school.calendars.find_by_id(params[:id])
         raise NotFound unless @calendar
         if @calendar.class_name == "Schoolwide"
-          @classroom = @current_school.classrooms.find_by_id(params[:class])
-          raise NotFound unless @classroom
+           @classroom = @current_school.classrooms.find_by_id(params[:class])
+           raise NotFound unless @classroom
         else
-          @class =  @calendar.class_name
-          @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
+           @class =  @calendar.class_name
+           @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
         end
         @event = "All Day Event"
         render :layout => 'class_change', :id => @classroom.id
