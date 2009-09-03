@@ -129,6 +129,14 @@
                      <% end %>
                    </ul>
               <% end %>
+              <% unless @subject_links.blank? %>
+                    <h3>External Links </h3>
+                    <ul class="last">
+                      <% for link in @subject_links %>
+                        <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
+                      <% end %>
+                    </ul>
+              <% end %>
                           
          </div>
 </div>                                                                                                                                         
