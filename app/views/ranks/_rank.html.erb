@@ -1,16 +1,77 @@
 <ul id="ranking">
     <% @r = (1..5).to_a %>
-       
+       <% q = 1 %>
  <% @r.each do %>
+       <%  disabled = false 
+           value = ""
+           if q == 1
+             disabled = true 
+             value = 100
+           end 
+        %>
          <li>
-              <%= text_field  :name => "rank[name][]", :class => "short defaultText defaultTextActive", :title => "Grades" %> 
-              <%= text_field  :name => "rank[from][]", :class => "short apart defaultText defaultTextActive number", 
-                              :min => "0", :title => "Min %" %> 
-              <%= text_field  :name => "rank[to][]", :class => "short apart defaultText defaultTextActive number", 
-                              :max => "100", :title => "Max %" %>
+              <%= text_field  :name => "rank_name_#{q}", :class => "short defaultText defaultTextActive", :title => "Grades" %> 
+              <%= text_field  :name => "rank_from_#{q}", :class => "short apart defaultText defaultTextActive number", 
+                              :min => "0", :title => "Min %", :onblur => "test();" %> 
+              <%= text_field  :name => "rank_to_#{q}", :class => "short apart defaultText defaultTextActive number", 
+                              :max => "100", :title => "Max %", :value => value, :disabled => disabled %>
               <a href='#' class="delete-btn" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"></a>
          </li>
-       
+       <% q += 1 %>
   <% end %>
 
 </ul>
+
+
+<script type= "text/javascript">
+
+    f = 1
+    t = 2
+   function test()
+   {
+     for(i=1;i<5; i++) 
+     {
+        var from = document.getElementById('rank_from_'+i);
+        e = from.value;   
+        t = i + 1
+        if (isFloat(e) == true)
+            {
+              to = e - 0.1;
+              document.getElementById('rank_to_'+t).value = to;
+              document.getElementById('rank_to_'+t).disabled = true
+              f = (f - 1) + 2;
+              t = (t - 1) + 2;
+            }
+          else if(isInteger(e) == true)
+           {
+             to = e - 1;
+             document.getElementById('rank_to_'+t).value = to;
+             document.getElementById('rank_to_'+t).disabled = true
+             f = (f - 1) + 2;
+             t = (t - 1) + 2;
+           }
+         
+      }
+        
+   }
+   
+     function isFloat(e)
+      {
+        var n = trim(e)
+        return n.length>0 && !(/[^0-9.]/).test(n) && (/\.\d/).test(n);
+      }
+  
+     function trim(s)
+     {
+       return s.replace(/^\s+|\s+$/g, "");
+     }
+     
+    function isInteger(s)
+     {
+     var n = trim(s);
+     return n.length > 0 && !(/[^0-9]/).test(n);
+
+     }
+     
+     
+</script>
