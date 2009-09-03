@@ -14,7 +14,7 @@ class SpotLight < ActiveRecord::Base
      if self.class_name == ""
         self.errors.add("please", "select the option")
      end
-     if self.image != ""
+     unless self.image == ""
        @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
        unless @content_types.include?(self.image[:content_type])
          self.errors.add("please", "upload a image")
