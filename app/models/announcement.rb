@@ -50,7 +50,7 @@ class Announcement < ActiveRecord::Base
     #   @current_school = School.find_by_id(params[:school_id])
     #   @classroom = @current_school.classrooms.find_by_id(params[:id])
     #   self.paginate(:all, 
-    #                 :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name.titleize, true, true],
+    #                 :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true],
     #                 :per_page => 10, :page => params[:page], :order => "created_at DESC")
     # end
     

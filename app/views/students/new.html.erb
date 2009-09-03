@@ -23,12 +23,12 @@
           <% if @class_id != nil %>
               <li>
 	               <label>Student for:</label>
-	               <%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name.titleize},  
+	               <%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name},  
 	                        :selected => "#{@class_id}", :prompt => "Please Select" %>
 	          </li>
           <% else %>
               <li><label>Student for:</label>
-                   <%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name.titleize},
+                   <%= select :name => "classroom_id",  :id => "classroom_person", :collection => @class_rooms.collect{|x| x.class_name},
                               :selected => "#{params[:l]}", :prompt => "Please Select" %>
               </li>
           <% end %>

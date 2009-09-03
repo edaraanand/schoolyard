@@ -11,7 +11,7 @@
            <div id="content"  class="two-col">
               <h2>
                 Announcements > <%= @announcement.title %>  &nbsp;&nbsp;&nbsp;
-           <%= link_to_right((right = "announcement"), "Add New", resource(:announcements, :new, :l => "#{@classroom.class_name.titleize}")) %>
+           <%= link_to_right((right = "announcement"), "Add New", resource(:announcements, :new, :l => "#{@classroom.class_name}")) %>
               </h2>
            
 <% else %>

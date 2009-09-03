@@ -26,7 +26,7 @@
 <% if @students.empty? %>
 
         <p class="subText">
-	           No Students were found for <%= @classroom.class_name.titleize %>. 
+	           No Students were found for <%= @classroom.class_name %>. 
              You can not add the Grades for this assignment.
  			      <div class="page-links">
                <%= link_to "All Assignments", url(:assignments,  :id => @report.id) %> |

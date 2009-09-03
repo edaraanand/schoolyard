@@ -12,8 +12,8 @@
            </h2>
       <% else %> 
            <h2 class="current-page"> 
-               Events for <%= @class.class_name.titleize %> &nbsp;&nbsp;&nbsp;
-               <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@class.class_name.titleize}" ) )  %>
+               Events for <%= @class.class_name %> &nbsp;&nbsp;&nbsp;
+               <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@class.class_name}" ) )  %>
            </h2>
       <% end %>
       

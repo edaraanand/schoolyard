@@ -220,7 +220,7 @@ class Approvals < Application
 
   def classrooms
     @class = @current_school.active_classrooms
-    room = @class.collect{|x| x.class_name.titleize }
+    room = @class.collect{|x| x.class_name }
     @classrooms = room.insert(0, "Home Page")
   end
 

@@ -21,8 +21,8 @@
 	
 	     <p class="main-subject">        
 		       <%= text_field  :subject_name,  :label => "Main Subject", :title => "Subject", :class => "required" %>
-		       <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, 
-		                  :label => "for", :selected => "#{@report.classroom.class_name.titleize}", 
+		       <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name }, 
+		                  :label => "for", :selected => "#{@report.classroom.class_name}", 
 		                  :prompt => "Please Select Classroom", :class => "required"  %>
 	     </p>
              

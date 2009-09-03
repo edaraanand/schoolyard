@@ -2,7 +2,7 @@
   
   <h2 class="current-page"> 
         Homework &nbsp;&nbsp;&nbsp;
-        <%= link_to_right((right = "homework"), "Add New", resource(:home_works, :new, :l => "#{@classroom.class_name.titleize}" ) )  %>
+        <%= link_to_right((right = "homework"), "Add New", resource(:home_works, :new, :l => "#{@classroom.class_name}" ) )  %>
         <span class="act">     
            <%= link_to "Download as PDF", url(:home_works_pdf, :id => @home_work.id, :label => "single") , :class=> "pdf" %>
         </span>

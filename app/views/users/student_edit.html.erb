@@ -22,7 +22,7 @@
             <ul>
 	           <li>Name : <%= student.name %></li>
 	           <li>
-                   <%= select :name => "classroom_id", :collection => @classrooms.collect{|c| c.class_name.titleize }, 
+                   <%= select :name => "classroom_id", :collection => @classrooms.collect{|c| c.class_name }, 
                               :label => "Current Class" %>
                <li>Birth date & Year : <%= student.birth_date.strftime("%b, %Y") %></li>
                <li>Contact Number: <%= student.phone %></li>
