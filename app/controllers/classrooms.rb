@@ -54,13 +54,14 @@ class Classrooms < Application
   def update
     @classroom = @current_school.classrooms.find_by_id(params[:id])
     raise NotFound unless @classroom
+    @c = @classroom.class_name
     @teachers = @current_school.staff.find(:all)
     @class_peoples = @classroom.class_peoples
     if @classroom.update_attributes(params[:classroom])
        @classroom.class_name = params[:classroom][:class_name]
        @classroom.activate = true
        @classroom.save
-       update_content(@classroom)
+       update_content(@c)
        teacher = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
        ClassPeople.update(teacher.id, {:person_id => "#{params[:class_teacher]}", :classroom_id => @classroom.id, :role => "class_teacher" } )
        if params[:class_room]
@@ -145,14 +146,13 @@ class Classrooms < Application
     end
   end
 
-  def update_content(room)
-      @classroom = room
-      @announcements = @current_school.announcements.find(:all, :conditions => ['access_name = ?', @classroom.class_name] )
-      @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
-      @forms = @current_school.forms.find(:all, :conditions => ['class_name = ?', @classroom.class_name])
-      @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', @classroom.class_name])
-      @spot_lights = @current_school.spot_lights.find(:all, :conditions => ['class_name =?', @classroom.class_name] )
-      @registrations = @current_school.registrations.find(:all, :conditions => ['current_class = ?', @classroom.class_name ])
+  def update_content(class_name)
+      @announcements = @current_school.announcements.find(:all, :conditions => ['access_name = ?', class_name] )
+      @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', class_name])
+      @forms = @current_school.forms.find(:all, :conditions => ['class_name = ?', class_name])
+      @calendars = @current_school.calendars.find(:all, :conditions => ['class_name = ?', class_name])
+      @spot_lights = @current_school.spot_lights.find(:all, :conditions => ['class_name =?', class_name] )
+      @registrations = @current_school.registrations.find(:all, :conditions => ['current_class = ?', class_name ])
       @announcements.each do |f|
         f.access_name = @classroom.class_name
         f.save
