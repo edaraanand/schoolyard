@@ -57,7 +57,17 @@ class Approvals < Application
         @announcement.approved_by = session.user.id
         @announcement.school_id = @current_school.id
         if @announcement.save
-           redirect resource(:approvals)
+           if @announcement.access_name == "Home Page"
+              run_later do
+                email_alerts(0, self.class, @announcement, @current_school)
+              end
+           else
+              @class = @current_school.classrooms.find_by_class_name(@announcement.access_name)
+              run_later do
+                email_alerts(@class.id, self.class, @announcement, @current_school)
+              end
+           end
+          redirect resource(:approvals)
         else
            flash[:error] = "please check the Announcement details and its Expiration date"
            redirect url(:approval, @announcement.id)

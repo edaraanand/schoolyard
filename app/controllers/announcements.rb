@@ -55,16 +55,6 @@ class Announcements < Application
           type = "Announcement"
           Attachment.file(params.merge(:school_id => @current_school.id), type, @announcement.id)
        end 
-       if @announcement.access_name == "Home Page"
-          run_later do
-             email_alerts(0, self.class, @announcement, @current_school)
-          end
-       else
-         @class = @current_school.classrooms.find_by_class_name(@announcement.access_name)
-         run_later do
-           email_alerts(@class.id, self.class, @announcement, @current_school)
-         end
-       end
        redirect resource(:announcements)
     else
         @c = params[:announcement][:access_name]
