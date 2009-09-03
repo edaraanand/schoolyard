@@ -59,7 +59,7 @@ class Classrooms < Application
     if @classroom.update_attributes(params[:classroom])
        @classroom.class_name = params[:classroom][:class_name]
        @classroom.activate = true
-       @classroom.save!
+       @classroom.save
        update_content(@classroom)
        teacher = @classroom.class_peoples.find(:first, :conditions => ['role=?', "class_teacher"] )
        ClassPeople.update(teacher.id, {:person_id => "#{params[:class_teacher]}", :classroom_id => @classroom.id, :role => "class_teacher" } )
