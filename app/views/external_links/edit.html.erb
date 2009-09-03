@@ -15,47 +15,10 @@
 
 <%= form_for(@external_link, :action => url(:external_links_update, :id => @test), :id => 'links', :class => "cmxform") do %>
 
-        <% if params[:label] == "Classrooms" %>
-
-               Edit By : <select id = 'classID'>
-                        <option value = '/externallinks/edit?label=Classrooms' <% if (@test == "please") %> selected <% end %> >Please Select</option>
-                        <% @classrooms.each do |f| %>
-                            <option value='/externallinks/edit?label=Classrooms&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
-                               <%= f.class_name %> 
-                            </option>
-                        <% end %>
-               </select> <br/> 
-               
-                              
-               <% if params[:id] %>
-                   <% if @external_links.empty? %>
-                      <p class="subText"> 
-                          There are no External Links for <%= @classroom.class_name %> 
-                      </p>
-                   <% end %>
-               <% else %>
-                   <p class="subText"> 
-                       please select the Classroom to edit the External Links 
-                   </p>
-               <% end %>
-  
+       
                <%= partial "class_links" %>
-                               	  
-              <script type= "text/javascript">
-                 // Filtering By the Classroom
-                 $( 'classID' ).observe( 'change', function()
-                  {
-                    document.location.href = $( 'classID' ).value;
-                  });
-                  
-              </script>
-            
-        <% else %>
-
-                <%= partial "class_links" %>               
-
-        <% end %>
-
+ 
+    
 <% end =%>
 
 

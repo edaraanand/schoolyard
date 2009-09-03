@@ -19,7 +19,8 @@ class ExternalLinks < Application
 
   def create
     if params[:label] == "Classrooms"
-        @classroom = @current_school.classrooms.find_by_class_name(params[:external_link][:classroom_id])
+        @classroom = @current_school.classrooms.find_by_id(params[:id])
+        raise NotFound unless @classroom
         @external_link = @current_school.external_links.create({:title => params[:external_link][:title], :label => params[:label],
                                           :url => params[:external_link][:url], :classroom_id => @classroom.id})
        links

@@ -17,22 +17,14 @@
           <% end %>
       </ol>
   	</div>
-  
    <p class="subText">
       url should be like apple.com (not) http://www.apple.com 
    </p>
-  <%= form_for(@external_link, :action => resource(:external_links),  :class => "cmxform", :id => 'links', :name => "external_link", :onsubmit => "ClearAll()" ) do %>
+   
+  <%= form_for(@external_link, :action => resource(:external_links, :id => params[:id]),  :class => "cmxform", 
+                               :id => 'links', :name => "external_link", :onsubmit => "ClearAll()" ) do %>
      <fieldset>
-          
-             <% if params[:label] == "Classrooms" %>
-					 			<ul>
-					         <li>
-					             <%= select :classroom_id, :collection =>  @classrooms.collect{|x| x.class_name}, 
-                               :prompt => "Please Select", :label => "Classroom :", :class => "required"  %>
-									 </li>
-						    </ul>
-             <% end %>
-          
+                
      			   <ul class="edit-ext-links">                                                         
 			       	  <li>                                                                                           
 				             <%= text_field :title, :maxlength => "75", :title => "title",
@@ -54,6 +46,7 @@
 			         </div>
 
       </fieldset>
+      
   <% end =%>
 </div>
 
