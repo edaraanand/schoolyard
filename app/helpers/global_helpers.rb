@@ -91,9 +91,9 @@ module Merb
          @grade
      end
      
-     
+    
      def snippet(thought, wordcount)
-         thought.split[0..(wordcount-1)].join(" ") +(thought.split.size > wordcount ? " …" : "") 
+        thought.split[0..(wordcount-1)].join(" ") +(thought.split.size > wordcount ? " …" : "") 
      end
      
      def san_content(content)
