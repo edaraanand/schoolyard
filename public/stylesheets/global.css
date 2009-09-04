@@ -278,7 +278,7 @@ span.cancel a:hover{text-decoration:underline;}
 
 
 .data{width:300px;}
-.ddmmm{width:36px; height:48px; border:1px solid #C1DAD7; margin:6px 10px 10px 0; float:left;}
+.ddmmm{width:36px; height:48px; border:1px solid #C1DAD7; margin:6px 10px 7px 0; float:left;}
 .ddmmm .date{display:block; text-align:center; padding:5px 0 6px 0; font-size:14px; font-weight:bold; color:#333; background:#fff;}
 .ddmmm .month{display:block; text-align:center; background:#f5fafa; padding:2px 0;font-size:12px; border-top:1px solid #C1DAD7;}
 .ddmmm-x{width:36px; height:42px;margin:0px 10px 10px 0; float:left; visibility:hidden;}
@@ -297,6 +297,8 @@ span.cancel a:hover{text-decoration:underline;}
 .delete-btn{background:url('/images/delete-btn-bg.gif') no-repeat 0 50%;}
 .data-block .data{float:left;}
 .data-block h3{font-weight:bold; margin:0px;}
+.data-block h4{padding: 10px 0pt 0pt;}
+
 .data-block h3 a { margin:6px 0 12px 0!important;}
 #content h3 a{margin:0 0 0 10px;}
 .data-block li{padding:0 0 4px 0;}
