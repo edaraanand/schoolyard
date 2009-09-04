@@ -1,4 +1,8 @@
-<h2 class="current-page"><%= params[:label] %> &gt; New</h2>
+<% if params[:id] %>
+<% @classroom = @current_school.classrooms.find_by_id(params[:id]) %>
+<% end %>
+<h2 class="current-page">External Links  &gt; <%= params[:label] %>  <% if params[:id] %> &gt; <%= @classroom.class_name %> <% end %> </h2>
+
   
 <div class=" data-block short-block">
   <% unless @external_link.errors.blank? %>
