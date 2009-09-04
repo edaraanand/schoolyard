@@ -2,23 +2,21 @@
 
     <% if @object.class == Announcement %>
     
-       <p>You have a new announcement titled (<%= @object.title %>) posted to <%= @object.access_name %>. </p>
-       <p><b>Announcement Title:</b> <%= @object.title %></p>
+       <p>You have a new announcement titled <b><%= @object.title %></b> posted to <%= @object.access_name %>. </p>
         <% @attachment = @current_school.attachments.find(:first, 
                           :conditions => ["attachable_id =? and attachable_type =?", @object.id, "Announcement"] ) %>
        <% unless @attachment.nil? %>
             <p>This announcement has additional files attached to it.</p>
        <% end %>
        <p>
-           To view this announcement online please click on the link below:
+           To view this announcement online please click on the link below:<br/>
            <a href="http://<%= @current_school.subdomain %>.<%= Schoolapp.config(:app_domain) %>">http://<%= @current_school.subdomain %>.<%= Schoolapp.config(:app_domain) %></a>
        </p>
        
     <% end %>
 
     <% if  @object.class == HomeWork  %>
-          <p>You have a new homework titled (<%= @object.title %>) posted to <%= @object.classroom.class_name %>.</p>
-          <p><b>Homework Title:</b> <%= @object.title %></p>
+          <p>You have a new homework titled <b><%= @object.title %></b> posted to <%= @object.classroom.class_name %>.</p>
           <p><b>Homework Due Date:</b> <%= @object.due_date.strftime("%m/%d/%Y") %></p>
            <% @attachment = @current_school.attachments.find(:first,
                              :conditions => ["attachable_id = ? and attachable_type =?", @object.id, "Homework"]) %>
@@ -26,13 +24,13 @@
               <p>This Homework has additional files attached to it.</p>
            <% end %>
           <p>
-              To view this announcement/ homework online please click on the link below:
+              To view this announcement/ homework online please click on the link below:<br/>
               <a href="http://<%= @current_school.subdomain %>.<%= Schoolapp.config(:app_domain) %>">http://<%= @current_school.subdomain %>.<%= Schoolapp.config(:app_domain) %></a>
           </p>
     <% end %>
    
  
-<p>Thanks.<br/>
+<p>Thanks.</p>
 <p><%= @current_school.school_name %></p>
 
 <p>
