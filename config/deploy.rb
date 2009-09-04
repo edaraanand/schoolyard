@@ -1,4 +1,4 @@
-set :repository,    "git@github.com:bjbolz/schoolyard.git"
+set :repository,    "git@github.com:insightmethods/schoolyard.git"
 set :revision,      "origin/master"
 
 set :domain,        "schoolyard@dev-schoolyardapp.info"
@@ -10,7 +10,6 @@ set :merb_env,      "internal_testing"
 
 desc "this is for staging"
 task :staging do
-  set :repository,    "git@github.com:bjbolz/schoolyard.git"
   set :domain,        "forge@test-schoolyardapp.info"
   set :deploy_to,     "/home/forge/test-schoolyardapp.info"
   set :port,          5000
@@ -19,7 +18,6 @@ end
 
 desc "this is for production"
 task :production do
-  set :repository,    "git@github.com:bjbolz/schoolyard.git"
   set :domain,        "forge@schoolyardapp.com"
   set :deploy_to,     "/home/forge/schoolyardapp.com"
   set :port,          4000
