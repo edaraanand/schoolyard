@@ -6,17 +6,28 @@
 <% unless @alert_people.blank? %>
     <% @alerts.each do |f| %>
           <% if @alert_people.include? (f.id) %>
-              <ul class="email-alerts">
-                 <li>&rarr; &nbsp; <%= f.full_name %>  </li>
-              </ul>
+                <% unless  f.full_name == "New Announcement" %>
+                    <ul class="email-alerts">
+                        <li>&nbsp;  <%= f.full_name %>  </li>
+                    </ul>
+                <% end %>
           <% end %>
-    <% end %> <br/>
-    <span class="subText">You will Receive Email Alerts for the classrooms</span>
+    <% end %> 
+    <% alert_home = AlertPeople.find(:all,:conditions => ["person_id=? and classroom_id=?", session.user.id, 0]) %>
+       <% unless alert_home.empty?  %>
+          <ul class="email-alerts">
+             <li>&nbsp; Home Page Announcement</li>
+          </ul>
+       <% end %> <br/>
+    <span class="subText">
+       You will Receive Email Alerts for the classrooms <br/>
+    </span>
+   
     <% @current_school.classes.each do |f| %>
           <% alert_p = AlertPeople.find(:all,:conditions=>["person_id=? and classroom_id=?", session.user.id, f.id]).map{|x| x.classroom_id } %>
           <% if alert_p.include?(f.id) %>
                <ul class="email-alerts">
-                    <li>&rarr; &nbsp; <%= f.class_name %></li>
+                   <li>&nbsp; <%= f.class_name %></li>
                </ul>
           <% end %>
     <% end %>

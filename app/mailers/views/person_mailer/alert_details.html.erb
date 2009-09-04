@@ -1,14 +1,23 @@
 <p>Hello,</p>
 
     <% if @object.class == Announcement %>
-      <p>This is a notice that a new Announcement has been added.  Please log into SchoolYard to see the Announcement.</p>
-      <p><%= @object.content %></p>
+       <p>This is a notice that a new Announcement has been added for <%= @object.access_name %></p>
+       <p><b>Announcement Title:</b> <%= @object.title %></p>
+       <p>
+           Please log into SchoolYard to see the Announcement.
+          <a href="http://<%= @current_school.subdomain %>.<%= Schoolapp.config(:app_domain) %>">http://<%= @current_school.subdomain %>.<%= Schoolapp.config(:app_domain) %></a>
+        </p>
     <% end %>
 
    <% if  @object.class == HomeWork  %>
-       This is a notice that a new homework assignment has been added.  Please log into SchoolYard to see the assignment.
-       <p> <%= @object.content %> </p>
+         <p>This is a notice that a new homework assignment has been added for <%= @object.classroom.class_name %>.</p>
+         <p><b>Homework Title:</b> <%= @object.title %></p>
+         <p>
+             Please log into SchoolYard to see the Announcement.
+             <a href="http://<%= @current_school.subdomain %>.<%= Schoolapp.config(:app_domain) %>">http://<%= @current_school.subdomain %>.<%= Schoolapp.config(:app_domain) %></a>
+         </p>
    <% end %>
+   
  
-<p>Thank you<br/>
+<p>Thank you,<br/>
 <p><%=@current_school.school_name%></p>
