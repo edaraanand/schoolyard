@@ -5,7 +5,7 @@ class Calendar < ActiveRecord::Base
   validates_presence_of :title, :description
   validates_presence_of :start_date
   validates_presence_of :end_date
-  validates_presence_of :start_time, :if =>  Proc.new{|c| c.day_event != true}
+  validates_presence_of :start_time, :if => Proc.new{|c| c.day_event != true}
   validates_presence_of :end_time, :if => Proc.new{|c| c.day_event != true }
    
   attr_accessor :attachment
@@ -23,6 +23,10 @@ class Calendar < ActiveRecord::Base
   end
   
   
+  def self.all_calendars(id)
+    self.find(:all, :conditions => ["class_name = ? and school_id = ?", "Schoolwide", id ], :order => "start_date")
+  end
+
  
 end
 
