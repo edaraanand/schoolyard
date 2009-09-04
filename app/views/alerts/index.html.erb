@@ -9,7 +9,7 @@
           <% if @alert_people.include? (f.id) %>
                 <% unless  f.full_name == "New Announcement" %>
                     <ul class="email-alerts">
-                        <li>&nbsp;  <%= f.full_name %>  </li>
+                        <li>&nbsp;  <%= f.full_name %> </li>
                     </ul>
                 <% end %>
           <% end %>
@@ -17,7 +17,7 @@
     
     <% unless @alert_home.empty?  %>
        <ul class="email-alerts">
-          <li>&nbsp; Home Page Announcement</li>
+          <li>&nbsp; New Announcement is posted to Home Page </li>
        </ul>
     <% end %> <br/>
     
