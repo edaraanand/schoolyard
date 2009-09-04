@@ -145,7 +145,7 @@ class Notifications < Application
   
   def twilio_log
      account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
-     resp =  account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls.csv", "GET" )
+     resp =  account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls?num=500&page=5.csv", "GET" )
      filename = "twilio.csv"
      q = 1
      csv_string = FasterCSV.generate do |csv|
