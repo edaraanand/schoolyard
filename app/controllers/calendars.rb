@@ -187,13 +187,15 @@ class Calendars < Application
 
   def pdf_events
     if params[:label] == "single"
-     @calendar = @current_school.calendars.find_by_id(params[:id])
-     raise NotFound unless @calendar
+      @calendar = @current_school.calendars.find_by_id(params[:id])
+      raise NotFound unless @calendar
       pdf = pdf_prepare("single", @calendar)
       send_data(pdf.render, :filename => "#{@calendar.class_name}.pdf", :type => "application/pdf")
     else
-      @classroom = @current_school.classrooms.find(params[:id])
+      @classroom = @current_school.classrooms.find_by_id(params[:id])
+      raise NotFound unless @classroom
       @calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @classroom.class_name ])
+      @all_class_calendars = Calendar.all_calendars(@current_school.id)
       pdf = pdf_prepare("multiple", @calendars)
       send_data(pdf.render, :filename => "#{@classroom.class_name}.pdf", :type => "application/pdf")
     end
@@ -234,7 +236,7 @@ class Calendars < Application
     pdf.text "#{@current_school.school_name}", :font_size => 20, :justification => :center
     if value == "multiple"
       @calendars.each do |calendar|
-        con = "#{calendar.description}"
+        con = calendar.description
         con = con.gsub("”", "") 
         con = con.gsub("“", "")
         con = con.gsub("’", "")
@@ -242,14 +244,28 @@ class Calendars < Application
         con = con.gsub("’", "")
         con = con.gsub("– ", "")
         con = con.gsub(/[^a-zA-Z0-9-]/, " ")
-        pdf.text "<b>Title</b>"  + ":" + "" + "#{calendar.title}", :font_size => 10, :justification => :left
+        pdf.text "<b>Title</b>"  + ":" + "" + "#{calendar.title}", :font_size => 10, :justification => :left, :spacing => 2
         pdf.text "<b>Description</b>" + ":" + "" +  con, :font_size => 10, :justification => :left
         pdf.text "<b>Location</b>" + ":" + "" + "#{calendar.location}", :font_size => 10, :justification => :left
         pdf.text "<b>Start Date</b>" + ":" + "" + "#{calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
       end
+       @all_class_calendars.each do |calendar|
+          con = calendar.description
+          con = con.gsub("”", "") 
+          con = con.gsub("“", "")
+          con = con.gsub("’", "")
+          con = con.gsub("‘", "")
+          con = con.gsub("’", "")
+          con = con.gsub("– ", "")
+          con = con.gsub(/[^a-zA-Z0-9-]/, " ")
+          pdf.text "<b>Title</b>"  + ":" + "" + "#{calendar.title}", :font_size => 10, :justification => :left, :spacing => 2
+          pdf.text "<b>Description</b>" + ":" + "" +  con, :font_size => 10, :justification => :left
+          pdf.text "<b>Location</b>" + ":" + "" + "#{calendar.location}", :font_size => 10, :justification => :left
+          pdf.text "<b>Start Date</b>" + ":" + "" + "#{calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
+        end
       pdf
     else
-       con = "#{@calendar.description}"
+       con = @calendar.description
        con = con.gsub("”", "") 
        con = con.gsub("“", "")
        con = con.gsub("’", "")
