@@ -168,6 +168,12 @@ class HomeWorks < Application
       redirect resource(:homes)
     end
   end
+  
+  def format(str)
+    the_str = str.to_s
+    the_str = the_str.gsub(/[^a-zA-Z0-9-]/, " ")
+    the_str
+  end
 
   def pdf_prepare(value, homework)
     pdf = PDF::Writer.new
@@ -175,7 +181,7 @@ class HomeWorks < Application
     pdf.text "#{@current_school.school_name}", :font_size => 20, :justification => :center
     if value == "multiple"
       @home_works.each do |homework|
-        con = "#{homework.content}"
+        con = san_content(homework.content)
         con = con.gsub("”", "") 
         con = con.gsub("“", "")
         con = con.gsub("’", "")
@@ -185,11 +191,14 @@ class HomeWorks < Application
         con = con.gsub(/[^a-zA-Z0-9-]/, " ")
         pdf.text "<b>Due Date</b>" + ":" + "" + "#{homework.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left, :spacing => 2
         pdf.text "<b>Title</b>" + ":" + "" + "#{homework.title}", :font_size => 10, :justification => :left
-        pdf.text "<b>Description</b>" + ":" + "" + con, :font_size => 10, :justification => :left
+        pdf.text "<b>Description</b>" + ":" + "" 
+        con.split('br').map do |c| 
+          pdf.text c, :font_size => 10, :justification => :left
+        end
       end
       pdf
     else
-      con = "#{@home_work.content}"
+      con = san_content(@home_work.content)
       con = con.gsub("”", "") 
       con = con.gsub("“", "")
       con = con.gsub("’", "")
@@ -199,7 +208,10 @@ class HomeWorks < Application
       con = con.gsub(/[^a-zA-Z0-9-]/, " ")
       pdf.text "<b>Due Date</b>" + ":" + "" + "#{@home_work.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
       pdf.text "<b>Title</b>" + ":" + "" + "#{@home_work.title}", :font_size => 10, :justification => :left
-      pdf.text "<b>Description</b>" + ":" + "" + con, :font_size => 10, :justification => :left
+      pdf.text "<b>Description</b>" + ":" + "" 
+      con.split('br').map do |c| 
+        pdf.text c, :font_size => 10, :justification => :left
+      end
       pdf
     end
   end

@@ -7,6 +7,8 @@ class Alerts < Application
   def index
     @alerts = @person.alerts.uniq
     @alert_people = AlertPeople.find(:all,:conditions=>['person_id=?', session.user.id]).map{|x| x.alert_id }
+    @alert_home = AlertPeople.find(:all,:conditions => ["person_id=? and classroom_id=?", session.user.id, 0])
+    @alert_classes = AlertPeople.find(:all,:conditions =>["person_id=? and classroom_id != ?", session.user.id, 0])
     render
   end
    

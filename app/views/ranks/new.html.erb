@@ -1,12 +1,14 @@
 <h2 class="current-page">
      Grades/Reports > Add Grade's Definition 
 </h2>
-
+<% s = (0..5).to_a %>
 <div class="container">
 	<h4>There are some errors in the form, please fill the details.</h4>
 	<ol>
-		  <li><label for="rank[from][]" class="error">Please enter the number and it should be minimum value of 0</label></li> 
-	    <li><label for="rank[to][]" class="error">Please enter the number and it should be maximum value of 100</label></li>
+	   <% s.each do |f| %>
+			  	<li><label for="rank_from_<%= f %>" class="error">please enter the number</label></li> 
+			    <li><label for="rank_to_<%= f %>" class="error">please enter the number</label></li>
+      <% end %>
 	</ol>
 </div>
 
@@ -34,12 +36,12 @@
 
 <script type= "text/javascript">
 
-  id = 1
+   id = 1
    function testing()
    {
-        var ul = document.getElementById('ranking')
-        $j(ul).append("<li id='row" + id + "'><input type='text' class='short text number' name='rank[name][]' id='txt" + id + "'><input type='text' class='short apart text' min='0' name='rank[from][]' id='txt" + id + "'><input type='text' class='short apart text' max='100' name='rank[to][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
-        id = (id - 1) + 2;
+     var ul = document.getElementById('ranking')
+     $j(ul).append("<li id='row" + id + "'><input type='text' class='short text number' name='rank[name][]' id='txt" + id + "'><input type='text' class='short apart text' min='0' name='rank[from][]' id='txt" + id + "'><input type='text' class='short apart text' max='100' name='rank[to][]' id='txt" + id + "'><a href='#' class='delete-btn' onClick='removeFormField(\"#row" + id + "\"); return false;'></a></li>");
+     id = (id - 1) + 2;
    } 
     
   function removeFormField(id) 
