@@ -572,7 +572,7 @@ div.test ul li{padding:2px 0;}
 .data-block.urgent-display{background:#fcedcb; border-top:2px solid #ccc; margin-bottom:4px;}
 .data-block.urgent-display .separator{height:0;}
 
-#content p.category{width:50%; float:left; margin:0px 0 4px 0; padding:0;}
+#content .category, .category{width:40%; float:left; margin:0px 0 4px 0!important; padding:0!important;}
 #content p.assignments-maxpoints{margin-left:350px; margin-bottom:0; padding:0px 0 0 0;}
 
 /* selecting title width */
@@ -610,6 +610,7 @@ div.container ol li{list-style-type:disc;margin-left:20px;}
 div.container{display:none}
 .container label.error{display:inline;}
 form.cmxform label.error{display:block;margin-left:1em;width:auto;}
+
 
 
 
