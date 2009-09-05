@@ -11,25 +11,20 @@
 
        <fieldset>
             <ul>
-			     <li>
-	                 <%= text_field  :student_name, :id => "first", :label => "First Name", :maxlength => "75" %>
-	 			 </li>
-				 <li>
-	                 <%= text_field  :last_name, :id => "last", :label => "Last Name", :maxlength => "75" %>
-		         </li>
+               <li><%= text_field  :student_name, :id => "first", :label => "First Name", :maxlength => "75" %></li>
+				       <li><%= text_field  :last_name, :id => "last", :label => "Last Name", :maxlength => "75" %></li>
                <li>
 	                <label>Spotlight for:</label>
 	                <%= select :class_name, :collection => @classrooms, :prompt => "Please Select" %>
-	           </li>
+	             </li>
                <li><%= file_field :image, :label => "Upload Picture (optional)" %>
-                    <% unless @pic.nil? %>                          
+                   <% unless @pic.nil? %>                          
                          <span class="picEdit">
 	                          <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
 	                     </span>
                     <% end %>
                 </li>
                <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
-              
             </ul>
        </fieldset>
 

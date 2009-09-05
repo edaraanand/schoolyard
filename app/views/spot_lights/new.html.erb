@@ -14,27 +14,20 @@
 
     <fieldset>
          <ul>
-	         <li>
-                 <%= text_field  :student_name, :id => "first", :label => "First Name", :maxlength => "75" %>
- 			 </li>
-			 <li>
-                 <%= text_field  :last_name, :id => "last", :label => "Last Name", :maxlength => "75" %>
-	         </li>
-	         <li>
-	              <label>Spotlight for:</label>
-	              <% if params[:l] %>
-	                   <%= select :class_name, :collection => @classrooms, :prompt => "Please Select", :selected => "#{params[:l]}" %>
-	              <% else %>
-	                   <%= select :class_name, :collection => @classrooms, :prompt => "Please Select", :selected => "#{@class}" %>
-	              <% end %>
-	         </li>
+	           <li><%= text_field  :student_name, :id => "first", :label => "First Name", :maxlength => "75" %></li>
+			       <li><%= text_field  :last_name, :id => "last", :label => "Last Name", :maxlength => "75" %></li>
+	           <li><label>Spotlight for:</label>
+	                <% if params[:l] %>
+  	                   <%= select :class_name, :collection => @classrooms, :prompt => "Please Select", :selected => "#{params[:l]}" %>
+  	              <% else %>
+  	                   <%= select :class_name, :collection => @classrooms, :prompt => "Please Select", :selected => "#{@class}" %>
+  	              <% end %>
+	           </li>
              <li><%= file_field :image, :label => "Upload Picture (optional)" %></li>
              <li><%= text_area  :content,  :label => "Content", :rows => "10", :cols => "50" %></li>
-
          </ul>
     </fieldset>
- 
-            <div class="save-cancel">
+           <div class="save-cancel">
                <input type = 'button' value = ' Preview ' onclick="preview();return false;" />
                <%= submit "    Publish    " %> Or 
                <%= link_to "Cancel", resource(:spot_lights), :class => "cancel" %>
