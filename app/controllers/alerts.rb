@@ -51,7 +51,7 @@ class Alerts < Application
                   people_alert_to_save = AlertPeople.new
                   people_alert_to_save.person_id = session.user.id
                   people_alert_to_save.alert_id = key
-                  people_alert_to_save.classroom_id = k
+                  people_alert_to_save.classroom_id = k 
                   people_alert_to_save.save
                 end
               end
