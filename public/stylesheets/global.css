@@ -278,7 +278,7 @@ span.cancel a:hover{text-decoration:underline;}
 
 
 .data{width:300px;}
-.ddmmm{width:36px; height:48px; border:1px solid #C1DAD7; margin:6px 10px 10px 0; float:left;}
+.ddmmm{width:36px; height:48px; border:1px solid #C1DAD7; margin:6px 10px 7px 0; float:left;}
 .ddmmm .date{display:block; text-align:center; padding:5px 0 6px 0; font-size:14px; font-weight:bold; color:#333; background:#fff;}
 .ddmmm .month{display:block; text-align:center; background:#f5fafa; padding:2px 0;font-size:12px; border-top:1px solid #C1DAD7;}
 .ddmmm-x{width:36px; height:42px;margin:0px 10px 10px 0; float:left; visibility:hidden;}
@@ -297,6 +297,8 @@ span.cancel a:hover{text-decoration:underline;}
 .delete-btn{background:url('/images/delete-btn-bg.gif') no-repeat 0 50%;}
 .data-block .data{float:left;}
 .data-block h3{font-weight:bold; margin:0px;}
+.data-block h4{padding: 10px 0pt 0pt;}
+
 .data-block h3 a { margin:6px 0 12px 0!important;}
 #content h3 a{margin:0 0 0 10px;}
 .data-block li{padding:0 0 4px 0;}
@@ -466,9 +468,6 @@ td.class-name-top, td.class-name-bottom, td.teach-name-top, td.teach-name-bottom
 .page-links{text-align:center; padding:6px 0; background:#f7f7f7; margin:8px 0 0 0; clear:both;}
 .page-links a{padding:4px;}
 
-.teacherPic{width:124px;padding:6px 0; margin: 4px 24px;}
-.last.pic{text-align:center;}
-.prinPic{width:220px;}
 
 /* Registration*/
 .register-steps {float:left; margin:-72px 0 0 15em;}
@@ -485,15 +484,19 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 
 .picEdit{padding:0 0 0 200px;}
 #parent3, #parent4, #parent2{padding:5px 0 0 0;}
-.from-principal{position:relative; float:left;}
-.caption{line-height:1em; background:#000;color:#fff; position:absolute; bottom:2px;
-        left:0;text-align:left;width:207px;padding: 0 0 5px 10px;opacity:.75;
+.from-principal{width:232px;}
+.caption{line-height:1em; background:#555;color:#fff;
+        text-align:left; padding: 0 0 5px 10px;opacity:.75;
         filter:alpha(opacity=85);}
         
 .caption a{color:#fff; line-height:1.5em;}
 .caption h2{border:none;}
-.nopic{line-height:1em; background:#000;color:#fff; position:relative;text-align:left;width:207px;padding: 0 0 5px 10px;opacity:.75;
+.nopic{line-height:1em; background:#555;color:#fff; text-align:left; padding: 0 0 5px 10px;opacity:.75;
         filter:alpha(opacity=85);}
+.teacherPic{width:124px;padding:6px 0; margin: 4px auto;}
+.last.pic{text-align:center;}
+.prinPic{width:232px; margin:0 auto;}
+
 .urgent-announce #announcement_content{height:5em;}
 #content .urgent-title{color:#f63; font-size:14px;}
 .phone-alert-settings #sms li span{font-size:18px; padding:0 8px 0 0;}
