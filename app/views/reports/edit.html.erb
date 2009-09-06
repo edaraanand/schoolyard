@@ -1,7 +1,5 @@
-
 <h2 class="current-page">Grades/Reports &gt; <span class="add-link">Add/Edit Assignments</span></h2>
 <span class="subText">Please specify the subjects for which you wish to add the grades</span><br/>
-
 <div class="container">
 	<h4>There are some errors in the form, please fill the details.</h4>
 	<ol>
@@ -9,24 +7,18 @@
 		<li><label for="report_classroom_id" class="error">Please select the Classroom</label></li> 
 		<li><label for="assign" class="error">Please enter the Assignment</label></li> 
   	<li><label for="testing" class="error">Please enter the Max Point correctly</label></li>
-    <li><label for="category[assignment][max_point][]" class="error">
-  			 Please enter the Max Points with the minimum value of 0</label></li>
+    <li><label for="category[assignment][max_point][]" class="error">Please enter the Max Points with the minimum value of 0</label></li>
    </ol>
 </div>
-
-
 <%= form_for(@report, :id => "raja", :action => resource(@report), :class => "cmxform", :onsubmit => "cool()" ) do %>
-       
   <div class="add-subjects new-fieldset">
-	
-	     <p class="main-subject">        
-		       <%= text_field  :subject_name,  :label => "Main Subject", :title => "Subject", :class => "required" %>
-		       <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name }, 
-		                  :label => "for", :selected => "#{@report.classroom.class_name}", 
-		                  :prompt => "Please Select Classroom", :class => "required"  %>
-	     </p>
-             
-         <div class="test">
+    <p class="main-subject">        
+      <%= text_field  :subject_name,  :label => "Main Subject", :title => "Subject", :class => "required" %>
+      <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name },
+                 :label => "for", :selected => "#{@report.classroom.class_name}",
+                 :prompt => "Please Select Classroom", :class => "required"  %>
+    </p>
+    <div class="test">&nbsp;
 	          <% @categories.each do |f| %>
                     <div id = "<%= f.id %>" >
                          <p class="category" style="width:50%; float:left;">
@@ -38,8 +30,8 @@
                              <% end %>
                          </p>  
                 	       <% q = 1 %>
-                         <ul id="ament<%= f.id %>" class="assignment">
-                         <p style="margin-left:12px; margin-bottom:0; padding:0;">Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Max Points</p>
+                         <ul id="assignment<%= f.id %>" class="assignment">
+                         <li><p style="margin-left:12px; margin-bottom:0; padding:0;">Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Max Points</p></li>
 						 	           <% f.assignments.each do |a| %>
 	                             <li><%= text_field  :name => "cgories_#{f.id}[assignment][name][]", :class => "short", :value => "#{a.name}" %><%= text_field  :name => "cgories_#{f.id}[assignment][max_point][]", :class => "short number", :value => "#{a.max_point}" %>
                 										<% if f.assignments.length > 1 %>	
@@ -89,31 +81,4 @@
   
 </fieldset> 
 
- <script type="text/javascript" src='/javascripts/grades.js'></script>
-
-<style type="text/css">
-
- 	.cmxform fieldset li.error label { color: red; }
-	div.container {
-		background-color: #eee;
-		border: 1px solid red;
-		margin: 5px;
-		padding: 5px;
-	}
-	div.container ol li {
-		list-style-type: disc;
-		margin-left: 20px;
-	}
-	div.container { display: none }
-	.container label.error {
-		display: inline;
-	}
-
-	form.cmxform label.error {
-		display: block;
-		margin-left: 1em;
-		width: auto;
-	}
-
-</style>
-
+<script type="text/javascript" src='/javascripts/grades.js'></script>

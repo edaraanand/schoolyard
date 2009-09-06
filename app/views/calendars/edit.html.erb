@@ -24,14 +24,13 @@
     </li> 
     <li><%= text_field  :location,  :label => "Location" %></li>
     <li>
-       <label>&nbsp;</label>
-       <%#= check_box :day_event, :onclick => "dayevent()" %>
-       <% if @calendar.day_event == true %>
-          <input type="checkbox" id="calendar_day_event" onclick="dayevent()" value="1" name="calendar[day_event]" class="checkbox" checked="checked"/> 
-       <% else %>
-          <input type="checkbox" id="calendar_day_event" onclick="dayevent()" value="1" name="calendar[day_event]" class="checkbox"/> 
-       <% end %>
-       All Day Event
+         <label>&nbsp;</label>
+         <% if @calendar.day_event == true %>
+            <input type="checkbox" id="calendar_day_event" onclick="dayevent()" value="1" name="calendar[day_event]" class="checkbox" checked="checked"/> 
+         <% else %>
+            <input type="checkbox" id="calendar_day_event" onclick="dayevent()" value="1" name="calendar[day_event]" class="checkbox"/> 
+         <% end %>
+         All Day Event
     </li>
     <li>
         <% if @calendar.start_date.nil? %>

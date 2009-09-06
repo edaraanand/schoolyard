@@ -1,4 +1,7 @@
-<h2 class="current-page"> <%= params[:label] %> &gt; Edit </h2>
+<% if params[:id] %>
+<% @classroom = @current_school.classrooms.find_by_id(params[:id]) %>
+<% end %>
+<h2 class="current-page">External Links  &gt; <%= params[:label] %>  <% if params[:id] %> &gt; <%= @classroom.class_name %> <% end %> </h2>
 
   <% s = (0..13).to_a %>
  	<div class="container">
@@ -61,33 +64,3 @@
  	
 
 </script>
-
-
-<style type="text/css">
- 
- 	.cmxform fieldset li.error label { color: red; }
-	div.container {
-		background-color: #eee;
-		border: 1px solid red;
-		margin: 5px;
-		padding: 5px;
-	}
-	div.container ol li {
-		list-style-type: disc;
-		margin-left: 20px;
-	}
-	div.container { display: none }
-	.container label.error {
-		display: inline;
-	}
- 
-	form.cmxform label.error {
-		display: block;
-		margin-left: 1em;
-		width: auto;
-	}
- 
-</style>
-
-
-

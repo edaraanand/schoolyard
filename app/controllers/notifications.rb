@@ -59,7 +59,7 @@ class Notifications < Application
   
   def create
      @announcement = @current_school.announcements.new(params[:announcement])    
-     if @announcement.valid?                                                                                                                                                                                                                                                                
+     if @announcement.valid?   
         @announcement.access_name = "Home Page"
         @announcement.label = "urgent"
         content = format(params[:announcement][:content])
@@ -104,7 +104,7 @@ class Notifications < Application
                  resp =  account.request( "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls.csv", 'POST',
                                                d = { 'Caller' => CALLER_ID,
                                                      'Called' => "#{f.voice_alert}",
-                                                     'Url' => "http://#{@current_school.subdomain}.dev-schoolyardapp.info" + "/reminder?id=#{@announcement.id}" }  )
+                                                     'Url' => "http://#{@current_school.subdomain}.#{Schoolapp.config(:app_domain)}" + "/reminder?id=#{@announcement.id}" }  )
                  resp.error! unless resp.kind_of? Net::HTTPSuccess  
              rescue StandardError => bang
                  return  
@@ -117,7 +117,7 @@ class Notifications < Application
   def reminder  
      only_provides :xml
      @announcement = @current_school.announcements.find_by_id(params[:id])
-     @postto = "http://#{@current_school.subdomain}.dev-schoolyardapp.info" + "/directions?id=#{@announcement.id}"  
+     @postto = "http://#{@current_school.subdomain}.#{Schoolapp.config(:app_domain)}" + "/directions?id=#{@announcement.id}"  
      display @postto, :layout => false
   end  
   
@@ -145,7 +145,7 @@ class Notifications < Application
   
   def twilio_log
      account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
-     resp =  account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls.csv", "GET" )
+     resp =  account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls?num=500&page=5.csv", "GET" )
      filename = "twilio.csv"
      q = 1
      csv_string = FasterCSV.generate do |csv|

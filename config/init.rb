@@ -7,7 +7,6 @@ gem "pdf-writer"
 
 require 'ftools'
 require 'config/dependencies.rb'
-require  Merb.root / 'lib' / 'smtp_tls'
 require  Merb.root / 'lib' / 'constantz'
 require  Merb.root / 'lib' / 'attachable'
 require "pdf/writer"
@@ -17,6 +16,8 @@ require 'httparty'
 require 'clickatell'
 require 'spreadsheet'
 require 'spreadsheet/excel'
+require 'tlsmail'
+
 
 use_orm :activerecord
 use_test :rspec
@@ -28,7 +29,9 @@ Merb::BootLoader.after_app_loads do
   gem 'will_paginate', '~> 3.0.0'
   require 'will_paginate'
   Clickatell::API.debug_mode = true
- 
+  
+  Net::SMTP.enable_tls(OpenSSL::SSL::VERIFY_NONE)
+  
   Merb::Mailer.config = {
     :host   => 'smtp.gmail.com',
     :port   => '587',
@@ -37,7 +40,7 @@ Merb::BootLoader.after_app_loads do
     :auth   => :plain
   }
 
-  WillPaginate::ViewHelpers::LinkRenderer.class_eval do
+   WillPaginate::ViewHelpers::LinkRenderer.class_eval do
     protected
 
     def url(page)
