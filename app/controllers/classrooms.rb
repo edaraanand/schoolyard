@@ -133,6 +133,7 @@ class Classrooms < Application
          @sp_light = @current_school.spot_lights.find(:first, :conditions => ['class_name = ?', @classroom.class_name], :order => "created_at DESC" )
          unless @classroom.class_type == "Subject"
            @home_works = @classroom.home_works.paginate(:all, :conditions => ['school_id = ?', @current_school.id], :order => "due_date ASC", :per_page => 10, :page => params[:page])
+           @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ? and due_date >= ?', @current_school.id, @date], :order => "due_date ASC" )
            @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', @classroom.id])
            @ranks = @current_school.ranks.find(:all)
          end
