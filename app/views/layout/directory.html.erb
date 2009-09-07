@@ -25,12 +25,12 @@
 	                            <%= link_to "All Events", url(:events, :l => "all_events", :label => "calendars") %></li>
                           <% @classes.each do |f| %>
                              <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>>
-	                              <%= link_to "#{f.class_name}".titleize, url(:events, :id => "#{f.id}", :ref => "class", :label => "calendars") %>
+	                              <%= link_to "#{f.class_name}", url(:events, :id => "#{f.id}", :ref => "class", :label => "calendars") %>
 	                           </li>
                           <% end %>
                           <% @extracurricular.each do |f| %>
                              <li <% if @selected == "#{f.class_name}" %> class="on" <% end %>>
-	                            <%= link_to "#{f.class_name}".titleize, url(:events, :id => "#{f.id}", :label => "calendars") %>
+	                            <%= link_to "#{f.class_name}", url(:events, :id => "#{f.id}", :label => "calendars") %>
 	                         </li>
                           <% end %>
                       </ul>

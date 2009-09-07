@@ -1,47 +1,48 @@
-<ul class='error_messages'>
-       <% if flash[:error] %>
-          <li><%= flash[:error] %> </li>
-       <% end %>
-</ul>
-<div class=" data-block short-block">
-  
-  <h2 class="current-page"> <%= params[:label] %> &gt; Edit </h2>
-  <%= form_for(@external_link, :action => url(:external_links_update), :id => 'links', :onsubmit => "ClearAll()") do %>
-    <ul id="link" class="edit-ext-links">
-     
-      <% @external_links.each do |f| %>
-        <li>
-            <%= text_field :id => 'external_link_title', :name => 'external_link[title][]', :maxlength => "75", 
-                           :value => "#{f.title}", :class=>"short text defaultText ext-link-name", :title => "title" %> 
-            <%= text_field :id => 'external_link_url', :name => 'external_link[url][]', :maxlength => "75", 
-                           :value => "#{f.url}", :class=>"long text apart defaultText ext-link-url", :title => "url" %>
-            <%= link_to "Delete", url(:delete_external_link, f.id), :class=>"delete delete-btn" %>
-        </li>
-      <% end %>
-    </ul>
-    <%= hidden_field :name => "label", :value => params[:label] %>
-    <%= flash[:error] %>
-    <div class="save-cancel">
-         <%= link_to_function 'Add More',"add();"%>
-         <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
-         <%= submit "    Publish    " %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
-    </div>
-  <% end =%>
-</div>
+<% if params[:id] %>
+<% @classroom = @current_school.classrooms.find_by_id(params[:id]) %>
+<% end %>
+<h2 class="current-page">External Links  &gt; <%= params[:label] %>  <% if params[:id] %> &gt; <%= @classroom.class_name %> <% end %> </h2>
+
+  <% s = (0..13).to_a %>
+ 	<div class="container">
+		<ol>
+        <% s.each do |f| %>
+  			  	<li><label for="title<%= f %>" class="error">please enter the Title</label></li> 
+  			    <li><label for="url<%= f %>" class="error">please enter the Url</label></li>
+  			    <li><label for="external_link_title_<%=f%>" class="error">please enter the Title</label></li>
+        		<li><label for="external_link_url_<%=f%>" class="error">please enter the Url</label></li>
+        <% end %>
+    </ol>
+	</div>
+
+
+<%= form_for(@external_link, :action => url(:external_links_update, :id => @test), :id => 'links', :class => "cmxform") do %>
+
+       
+     <%= partial "class_links" %>
+ 
+    
+<% end =%>
+
+
 
  <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
 
 <script type= "text/javascript">
- 
-  function add()
-   {
-      var links = document.getElementById('link');
-    	var li = document.createElement('li');
-      li.innerHTML = "<input type='text' id='external_link_title' name='link[title][]' class='short text defaultText ext-link-name' title='title' />"  + "<input type='text' name='link[url][]' class='ext-link-url apart long text defaultText' title='url'/>";
-	    links.appendChild(li);
-	
-    }
- 
+
+  function addFormField() 
+ {
+   var id = document.getElementById('id').value;
+   $j('#link').append("<li id='row" + id + "'><input type='text' class='short text ext-link-name required' name='links[title][title_"+id+"]' id='title"+id+"'><input type='text' id='url"+id+"' name='links[url][url_"+id+"]' class='long apart text ext-link-url required'/><a href='#' class='delete-btn' onclick='removeFormField(\"#row"+id+"\");return false;'>Remove</a></li>");
+   // $('txt'+id).focus();
+   id = (id - 1) + 2;
+   document.getElementById('id').value = id;
+ }
+
+  function removeFormField(id) 
+  {
+    $j(id).remove();
+  }
  
   function preview()
  {
@@ -49,46 +50,17 @@
    window.open('/external_links/preview/-/?' + s);
    
  }
+  // Validation for Adding External Links
 
-  $j(document).ready(function()
-{
-    $j(".defaultText").focus(function(srcc)
-    {
-        if ($j(this).val() == $j(this)[0].title)
-        {
-            $j(this).removeClass("defaultTextActive");
-            $j(this).val("");
-        }
-    });
-    
-    $j(".defaultText").blur(function()
-    {
-        if ($j(this).val() == "")
-        {
-            $j(this).addClass("defaultTextActive");
-            $j(this).val($j(this)[0].title);
-        }
-    });
-    
-    $j(".defaultText").blur();        
-});
- 
- function ClearAll()
-{
-    var link_title = document.getElementById('external_link_title');
-    var url = document.getElementById('external_link_url');
-   
-    if (link_title.value == link_title.title) 
-   {
-       link_title.value = ""
-    }
-    
-     if (url.value == url.title) 
-   {
-       url.value = ""
-    }
-    
- }
+ 	var container = $j('div.container');
+
+ 	// validate the form when it is submitted
+ 	var validator = $j("#links").validate({
+ 		errorContainer: container,
+ 		errorLabelContainer: $("ol", container),
+ 		wrapper: 'li',
+ 		meta: "validate"
+ 	});
+ 	
 
 </script>
-

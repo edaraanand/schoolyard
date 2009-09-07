@@ -75,14 +75,12 @@
    $j(document).ready(function()
 {
 	
-   	  $j("#start").datepicker({minDate:'today'});
+   	$j("#start").datepicker({minDate:'today'});
 	  $j("#end").datepicker({minDate:'today'});
 
 	  $j("input.stime").clockpick({starthour : 0, endhour : 23 }); 
 	  $j("input.etime").clockpick({starthour : 0, endhour : 23 });   
-	
-	
-	
+		
     $j(".defaultText").focus(function(srcc)
     {
         if ($j(this).val() == $j(this)[0].title)
@@ -91,7 +89,6 @@
             $j(this).val("");
         }
     });
-    
     $j(".defaultText").blur(function()
     {
         if ($j(this).val() == "")
@@ -124,48 +121,30 @@
   {
      if (document.getElementById('calendar_day_event').checked == true)
       {
-         document.getElementById('start_time').disabled = true;
-	     document.getElementById('end_time').disabled = true;
+        document.getElementById('start_time').disabled = true;
+	      document.getElementById('end_time').disabled = true;
        }
      else if(document.getElementById('calendar_day_event').checked == false)
        {
-         document.getElementById('start_time').disabled = false;
-	     document.getElementById('end_time').disabled = false;
+        document.getElementById('start_time').disabled = false;
+	      document.getElementById('end_time').disabled = false;
        }
   }
+
+  function ClearAll()
+  { 
+     var r = document.getElementById('event');
+     var pr =  r.getElementsByTagName('input');
+     for (var r=0;r<pr.length;r++)
+     {
+         if (pr[r].value == pr[r].title)
+          {
+            pr[r].value = "";
+          }
+     }
+	
+  }
   
-  
-  
-  
- 
-   function ClearAll()
-{
-    var start = document.getElementById('start');
-    var end = document.getElementById('end');
-    
-    var start_time = document.getElementById('start_time');
-    var end_time = document.getElementById('end_time');
-   
-   if (start.value == start.title) 
-   {
-       start.value = ""
-    }
-    
-    if (end.value == end.title) 
-   {
-      end.value = ""
-    }
- 
-    if (start_time.value == start_time.title) 
-   {
-      start_time.value = ""
-    }
-    
-    if (end_time.value == end_time.title) 
-   {
-      end_time.value = ""
-    }
- }
  
 </script>
 

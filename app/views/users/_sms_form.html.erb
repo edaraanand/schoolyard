@@ -4,12 +4,12 @@
           <% if @sms != nil %>
                 <li>
                     <%= text_field :sms_alert,  :label => "For Text message/sms", :class => "short text", :value => "#{@sms}" %>
-                    <span class="phone-hint">No Skype Numbers (e.g. 3210987654)</span>
+                    <span class="phone-hint">(e.g. 3210987654)</span>
                 </li>
            <% else %>
                 <li>
                     <%= text_field :sms_alert,  :label => "For Text message/sms", :class => "short text" %>
-                    <span class="phone-hint">No Skype Numbers (e.g. 3210987654)</span>
+                    <span class="phone-hint">(e.g. 3210987654)</span>
                 </li>
            <% end %>
          

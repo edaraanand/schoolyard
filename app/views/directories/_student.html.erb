@@ -1,7 +1,7 @@
   <h2 class="current-page">
        Students &nbsp;&nbsp;&nbsp;
       <% if params[:label] == "classes" %>
-         <%= link_to_right((right = "manage_directory"), "Add New", resource(:students, :new, :l => "#{@class.class_name.titleize}")  ) %>
+         <%= link_to_right((right = "manage_directory"), "Add New", resource(:students, :new, :l => "#{@class.class_name}")  ) %>
       <% else %>
          <%= link_to_right((right = "manage_directory"), "Add New", resource(:students, :new)  ) %>
       <% end %>

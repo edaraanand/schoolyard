@@ -45,52 +45,54 @@ class Announcements < Application
   def create
     @announcement = session.user.announcements.build(params[:announcement])
     i=0
-    if params[:announcement][:access_name] != ""
-       if @announcement.valid?
-          @announcement.approved = false
-          @announcement.approve_announcement = true
-          @announcement.label = 'staff'
-          @announcement.school_id = @current_school.id
-          @announcement.save
-          unless params[:attachment]['file_'+i.to_s].empty?
-             @attachment = Attachment.create( :attachable_type => "Announcement",
-             :attachable_id => @announcement.id,
-             :filename => params[:attachment]['file_'+i.to_s][:filename],
-             :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-             :size => params[:attachment]['file_'+i.to_s][:size],
-             :school_id => @current_school.id
-             )
-             File.makedirs("public/uploads/#{@current_school.id}/files")
-             FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
-          end 
-          if @announcement.access_name == "Home Page"
-             run_later do
-                email_alerts(0, self.class, @announcement, @current_school)
-             end
-          else
-            @class = @current_school.classrooms.find_by_class_name(@announcement.access_name)
-            run_later do
-              email_alerts(@class.id, self.class, @announcement, @current_school)
-            end
-          end
-          redirect resource(:announcements)
-       else
-           @c = params[:announcement][:access_name]
-           render :new
-       end
+    if @announcement.valid?
+       @announcement.approved = false
+       @announcement.approve_announcement = true
+       @announcement.label = 'staff'
+       @announcement.school_id = @current_school.id
+       @announcement.save
+       unless params[:attachment]['file_'+i.to_s].empty?
+          type = "Announcement"
+          Attachment.file(params.merge(:school_id => @current_school.id), type, @announcement.id)
+       end 
+       redirect resource(:announcements)
     else
-       flash[:error] = "Please select the option"
-       @c = params[:announcement][:access_name]
-       render :new
+        @c = params[:announcement][:access_name]
+        render :new
     end
   end
    
   def edit
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
-    @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
+    @attachments = Attachment.announcements(@announcement.id, @current_school.id)
     @allowed = 1 - @attachments.size
     render
+  end
+  
+  def update
+     @announcement = @current_school.announcements.find_by_id(params[:id])
+     raise NotFound unless @announcement
+     @attachments = Attachment.announcements(@announcement.id, @current_school.id)
+     @allowed = 1 - @attachments.size
+     i=0
+     if @announcement.update_attributes(params[:announcement])
+        @announcement.person_id = session.user.id
+        @announcement.approved = false
+        @announcement.approve_announcement = true
+        @announcement.label = 'staff'
+        @announcement.school_id = @current_school.id
+        @announcement.save
+        if params[:attachment]
+          unless params[:attachment]['file_'+i.to_s].empty?
+             type = "Announcement"
+             Attachment.file(params.merge(:school_id => @current_school.id), type, @announcement.id)
+          end
+        end
+        redirect resource(:announcements)
+     else
+       render :edit
+     end
   end
 
   def show
@@ -99,66 +101,12 @@ class Announcements < Application
     render
   end
 
-  def update
-    @announcement = @current_school.announcements.find_by_id(params[:id])
-    raise NotFound unless @announcement
-    @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
-    @allowed = 1 - @attachments.size
-    i=0
-    if params[:attachment]
-      if params[:announcement][:access_name] != ""
-        if @announcement.update_attributes(params[:announcement])
-          unless params[:attachment]['file_'+i.to_s].empty?
-            @attachment = Attachment.create( :attachable_type => "Announcement",
-            :attachable_id => @announcement.id,
-            :filename => params[:attachment]['file_'+i.to_s][:filename],
-            :content_type => params[:attachment]['file_'+i.to_s][:content_type],
-            :size => params[:attachment]['file_'+i.to_s][:size],
-            :school_id => @current_school.id
-            )
-            File.makedirs("public/uploads/#{@current_school.id}/files")
-            FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
-          end
-          @announcement.person_id = session.user.id
-          @announcement.approved = false
-          @announcement.approve_announcement = true
-          @announcement.label = 'staff'
-          @announcement.school_id = @current_school.id
-          @announcement.save
-          redirect resource(:announcements)
-        else
-          render :edit
-        end
-      else
-        flash[:error] = "Please select the option"
-        render :edit
-      end
-    else
-      if params[:announcement][:access_name] != ""
-        if @announcement.update_attributes(params[:announcement])
-          @announcement.person_id = session.user.id
-          @announcement.approved = false
-          @announcement.approve_announcement = true
-          @announcement.label = 'staff'
-          @announcement.school_id = @current_school.id
-          @announcement.save
-          redirect resource(:announcements)
-        else
-          render :edit
-        end
-      else
-        flash[:error] = "Please select the option"
-        render :edit
-      end
-    end
-  end
-
   def delete
     if params[:label] == "attachment"
       @attachment = @current_school.attachments.find(params[:id])
       @announcement = @current_school.announcements.find_by_id(@attachment.attachable_id)
       @attachment.destroy
-      @attachments = @current_school.attachments.find(:all, :conditions => ["attachable_id = ? and attachable_type =?", @announcement.id, "Announcement"])
+      @attachments = Attachment.announcements(@announcement.id, @current_school.id)
       @allowed = 1 - @attachments.size
       render :edit, :id => @announcement.id
     else
@@ -200,7 +148,7 @@ class Announcements < Application
 
   def rooms
     @class = @current_school.active_classrooms
-    room = @class.collect{|x| x.class_name.titleize }
+    room = @class.collect{|x| x.class_name }
     @classrooms = room.insert(0, "Home Page")
   end
 

@@ -38,7 +38,8 @@
                               <p class="subText">
 	                             Assigned on <%= homework.created_at.strftime("%b %d, %Y") %> by <%= homework.person.name %>
 	                          </p>
-                              <p class="post-content"><%= snippet(homework.content, 50) %></p>
+	                           
+                              <p class="post-content"><%= san_content(homework.content) %></p>
                               <%= link_to "Edit", resource(homework, :edit), :class=>"edit-btn" %>
                               <%= link_to "Delete", resource(homework, :delete), :class => "delete delete-btn"  %>
                               <p class="separator clear">&nbsp;</p>

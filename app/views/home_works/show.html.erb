@@ -17,7 +17,7 @@
                   </div>
                   <h3> <%= @home_work.title %> </h3> 
                   <p class="subText">Assigned on <%= @home_work.created_at.strftime("%b %d, %Y") %>  by <%= @home_work.person.name %></p>
-                  <p><%= snippet(@home_work.content, 50) %></p>
+                  <p><%= san_content(@home_work.content) %></p>
                   <% @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id = ? and attachable_type =?", @home_work.id, "Homework"]) %>
                   <% unless @attachment.nil? %>
                        <p><%= link_to "#{@attachment.filename}", url(:download, :id => @attachment.id) %></p>

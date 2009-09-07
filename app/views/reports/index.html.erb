@@ -20,7 +20,7 @@
     <option value = '/reports' <% if (@test == "All Subjects") %> selected <% end %> >All Classes</option>
     <% @classrooms.each do |f| %>
     <option value='/reports?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
-        <%= f.class_name.titleize %> 
+        <%= f.class_name %> 
     </option>
     <% end %>
   </select>
@@ -29,7 +29,7 @@
 
 <% if @reports.empty? %>
      <p>
-	    There are no subjects defined for this classroom. Please <%= link_to "Set Up Subjects", resource(:reports, :new) %>
+	    There are no subjects defined for this classroom. Please <%= link_to "Set Up Assignments ", resource(:reports, :new) %>
      </p>
 <% else %>
 	  <table id="mytable" class="grades">
@@ -45,7 +45,7 @@
 	               <tr>
 	                   <td><%= link_to "#{report.subject_name}", url(:assignments, :id => report.id) %> </td>
 	                   <td><%= report.updated_at.strftime("%B %d %Y") %></td>
-	                   <td><%= report.classroom.class_name.titleize %></td>
+	                   <td><%= report.classroom.class_name %></td>
 	                   <td><%= link_to "Edit", url(:edit_report, :id => report.id), :class=>"edit-btn" %></td>
 	                   <td><%= link_to "Delete", resource(report, :delete, :ref => "subject"), :class =>"delete delete-btn" %></td>
 	               </tr>

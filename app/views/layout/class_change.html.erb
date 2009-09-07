@@ -5,7 +5,7 @@
            
           <table cellpadding="0" cellspacing="0" order="0" class="class-name">
                 <tr><td class="class-name-top"><img src="/images/class-name-top.gif"/></td></tr>
-                <tr><td class="class-name-backgr"><p><%= @classroom.class_name.titleize %></p></td></tr>
+                <tr><td class="class-name-backgr"><p><%= @classroom.class_name %></p></td></tr>
                 <tr><td  class="class-name-bottom"><img src="/images/class-name-bottom.gif"/></td></tr>
           </table>
           
@@ -15,11 +15,13 @@
         <li <% if @selected == "calendars" %> class="on" <% end %> >
 	          <%= link_to "Class Calendar", url(:class_details, :id =>  @classroom.id, :label => "calendars") %>
 	      </li>
-	     <!-- <% unless @classroom.class_type == "Subject" %>
-	                   <li <% if @selected == "grades" %> class="on" <% end %>>
-	                      <%= link_to "Grades/Reports", url(:class_details, :id =>  @classroom.id, :label => "grades") %>
-	                 </li>
-	          <% end %> -->
+        <% unless Merb.env == "production" %> 
+	          <% unless @classroom.class_type == "Subject" %>
+      	             <li <% if @selected == "grades" %> class="on" <% end %>>
+      	                <%= link_to "Grades/Reports", url(:class_details, :id =>  @classroom.id, :label => "grades") %>
+      	           </li>
+      	    <% end %>
+      	<% end %>
 	    <% unless @classroom.class_type == "Subject" %>
     	    <li <% if @selected == "homeworks" %> class="on" <% end %>>
     	         <%= link_to "Homework Corner", url(:class_details, :id =>  @classroom.id, :label => "homeworks") %>

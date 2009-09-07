@@ -1,7 +1,7 @@
  <div id="content"  class="two-col">
         <h2 class="current-page"> 
             Spotlight &nbsp;&nbsp;&nbsp;
-            <%= link_to_right((right = "spotlight"), "Add New", resource(:spot_lights, :new, :l => "#{@classroom.class_name.titleize}" ) ) %>
+            <%= link_to_right((right = "spotlight"), "Add New", resource(:spot_lights, :new, :l => "#{@classroom.class_name}" ) ) %>
         </h2>
         <% if @spot_lights.blank? %>
             <span class="subText">There are no Spotlights at this time</span>

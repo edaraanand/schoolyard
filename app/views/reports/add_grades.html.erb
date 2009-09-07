@@ -26,7 +26,7 @@
 <% if @students.empty? %>
 
         <p class="subText">
-	           No Students were found for <%= @classroom.class_name.titleize %>. 
+	           No Students were found for <%= @classroom.class_name %>. 
              You can not add the Grades for this assignment.
  			      <div class="page-links">
                <%= link_to "All Assignments", url(:assignments,  :id => @report.id) %> |
@@ -83,29 +83,3 @@
 
 
 </script>
-
-<style type="text/css">
-  
- 	.cmxform fieldset li.error label { color: red; }
-	div.container {
-		background-color: #eee;
-		border: 1px solid red;
-		margin: 5px;
-		padding: 5px;
-	}
-	div.container ol li {
-		list-style-type: disc;
-		margin-left: 20px;
-	}
-	div.container { display: none }
-	.container label.error {
-		display: inline;
-	}
-
-	form.cmxform label.error {
-		display: block;
-		margin-left: 1em;
-		width: auto;
-	}
- 
-</style>

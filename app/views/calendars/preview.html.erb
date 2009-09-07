@@ -1,15 +1,23 @@
 <div id="fullpage">
   
-     <h2 class="current-page"> Calendar for <%= params[:calendar][:class_name].titleize %></h2>
+     <h2 class="current-page"> Calendar for <%= params[:calendar][:class_name] %></h2>
    
      <div class="ddmmm">
-          <span class="date"><%=  @date.strftime("%d")%></span>
-          <span class="month"><%=  @date.strftime("%b")%></span>
+          <span class="date"><%= Time.parse(params[:calendar][:start_date]).strftime("%d") %></span>
+          <span class="month"><%= Time.parse(params[:calendar][:start_date]).strftime("%b")  %></span>
      </div><br/>
-      <h3> <%= params[:calendar][:title] %> </h3> 
+      <h3><%= params[:calendar][:title] %></h3> 
+   
           <p class="subText">
-              (<%= @date.strftime("%H:%M") %> -- <%= @date.strftime("%H:%M") %> )
-               Location : <%= params[:calendar][:location] %></p><br/>
+             <% unless params[:calendar][:start_time].nil? &&  params[:calendar][:end_time].nil? %>
+                <% if ((params[:calendar][:start_time] != "hh:mm") && (params[:calendar][:end_time] != "hh:mm")) %>
+                   <%= Time.parse(params[:calendar][:start_time]).strftime("%I:%M %p") %> -- <%= Time.parse(params[:calendar][:end_time]).strftime("%I:%M %p") %>, 
+                <% end %>
+             <% else %>
+                (All Day Event)
+             <% end %>
+              Location : <%= params[:calendar][:location] %>
+          </p><br/>
           <p><%= san_content(params[:calendar][:description]) %></p>
     <p class="separator">&nbsp;</p>
 </div>

@@ -12,14 +12,13 @@
       %li
         = text_area :content, :label => "Content", :rows => "10", :cols => "50"
     .save-cancel
-      %input{:type => "button", :value => "preview", :onclick => "preview();return false;"}
+      %input{:type => "button", :value => "Preview", :onclick => "preview();return false;"}
       = submit " Publish "
       Or
       = link_to "Cancel", resource(:welcome_messages), :class => "cancel"
       
 
 :javascript
-  document.message.welcome_message_content.focus();
   function preview()
   {
   var name = document.getElementById('welcome_message_access_name');

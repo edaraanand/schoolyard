@@ -5,15 +5,16 @@
       <ul id="menu"><!-- Nested Lists -->
            <li>School Setup
 			    <ul>
-		           <li <% if @selected == "school_profile" %> class="on" <% end %>>
+		          <li <% if @selected == "school_profile" %> class="on" <% end %>>
 			           <%= link_to_if((right = "basic_settings"), "Contact Information ", url(:schools)) %>
-			       </li>
-		           <li <% if @selected == "feedback" %> class="on" <% end %>>
-			           <%= link_to_if((right = "feedback"), "Feedback", url(:feedbacks)) %>
-			       </li>
-		           <li <% if @selected == "class_rooms" %> class="on" <% end %>>
+			        </li> 
+			        <% @feedbacks = @current_school.announcements.find(:all, :conditions => ["label = ? and access_name != ?", "feedback", "read"] ) %>
+		          <li <% if @selected == "feedback" %> class="on" <% end %>>
+			           <%= link_to_if((right = "feedback"), "Feedback <span><b>#{@feedbacks.length}</b></span>", url(:feedbacks)) %>
+			        </li>
+		          <li <% if @selected == "class_rooms" %> class="on" <% end %>>
 			           <%= link_to_if((right = "classes"), "Classrooms", url(:classrooms) )  %>
-			       </li>
+			        </li>
 		           <li <% if @selected == "rights" %> class="on" <% end %>>
 			          <%= link_to_if((right = "rights_others"), "School Staff", url(:people) ) %>
 			       </li>
@@ -58,10 +59,12 @@
                    <li <% if @selected == "home_work" %> class="on" <% end %>>
 	                   <%= link_to_if((right = "homework"), "Homework", url(:home_works) )  %>
 	               </li>
-                 <!-- <li <% if @selected == "grades" %> class="on" <% end %>>
-                                     <%= link_to_if((right = "grades"), "Grades/Reports", url(:reports) ) %>
-                                 </li> -->
-                   <li <% if @selected == "e_links" %> class="on" <% end %>>
+	               <% unless Merb.env == "production" %> 
+                     <li <% if @selected == "grades" %> class="on" <% end %>>
+    	                   <%= link_to_if((right = "grades"), "Grades/Reports", url(:reports) ) %>
+    	               </li>
+  	              <% end %>
+                 <li <% if @selected == "e_links" %> class="on" <% end %>>
 	                   <%= link_to_if((right = "external_links"), "External Links", url(:external_links) ) %>
 	               </li>
                       <% unless @sports_class.nil? %>

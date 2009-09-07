@@ -6,7 +6,7 @@
      
         <h2 class="current-page">
            Class Calendar &nbsp;&nbsp;&nbsp;
-           <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@calendar.class_name.titleize}" ) )  %>
+           <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@calendar.class_name}" ) )  %>
            <span class="act">
               <%= link_to "Download as PDF", url(:pdf_events, :id => @calendar.id, :label => "single") , :class=> "pdf" %><br/><br/>
            </span>
@@ -41,7 +41,7 @@
       <% if params[:l] == "calendar" %>
             <%= link_to "&larr; Back to All Events", url(:events, :l => "all_events", :label =>  "calendars") %>
       <% else %>
-          <% if @calendar.class_name == "School Wide" %>
+          <% if @calendar.class_name == "Schoolwide" %>
               <% @classroom = @current_school.classrooms.find_by_id(params[:class]) %>
           <% else %>
               <% @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name]) %>

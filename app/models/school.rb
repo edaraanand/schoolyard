@@ -1,6 +1,7 @@
 class School < ActiveRecord::Base
 
   has_many :people
+  
   has_many :calendars
   has_many :staff
   has_many :welcome_messages
@@ -13,8 +14,6 @@ class School < ActiveRecord::Base
   has_many :extra_curricular, :order => :position, :conditions => ["activate = ? and class_type = ?",  true, "Subject" ], :class_name => "Classroom", :foreign_key => :school_id
   
   has_many :announcements
- ## has_many :approve_homepage, :order => "created_at DESC", :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true]
-
   has_many :teams
   has_many :external_links
   has_many :protectors

@@ -26,7 +26,7 @@
      
             <ul id="roles"></ul>
             <input type="hidden" id="id" value="1">
-            <a href="" class="add-more" onClick="addFormField(); return false;">Add More</a>
+            <a href="" class="add-more" onClick="addFormField(); return false;">Add Additional Staff</a>
             
             <div class="save-cancel">
     	        <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:classrooms), :class => "cancel" %>
@@ -60,10 +60,10 @@ function addFormField()
  function class_type()
  
     {
-        var class_name = document.getElementById('class_name')
-        var teacher = document.getElementById('teacher')
-        var sport = document.getElementById('sport')
-        if (document.getElementById('classroom_class_type').value == "Sports" )
+        var class_name = document.getElementById('class_name');
+        var teacher = document.getElementById('teacher');
+        var sport = document.getElementById('sport');
+        if (document.getElementById('classroom_class_type').value == "Sports")
         {
            class_name.style.display      =  "none";
            teacher.style.display      =  "none";
@@ -91,30 +91,3 @@ function addFormField()
 	});
 	
 </script>
- 
- 
-<style type="text/css">
- 
- 	.cmxform fieldset li.error label { color: red; }
-	div.container {
-		background-color: #eee;
-		border: 1px solid red;
-		margin: 5px;
-		padding: 5px;
-	}
-	div.container ol li {
-		list-style-type: disc;
-		margin-left: 20px;
-	}
-	div.container { display: none }
-	.container label.error {
-		display: inline;
-	}
- 
-	form.cmxform label.error {
-		display: block;
-		margin-left: 1em;
-		width: auto;
-	}
- 
-</style>

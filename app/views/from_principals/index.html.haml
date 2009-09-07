@@ -1,0 +1,31 @@
+%div
+  %h2{:class => "current-page"}
+    From the Principal
+    %span{:class => "actions"}
+      = link_to "Add New", resource(:from_principals, :new)
+      |
+      = link_to "Settings", url(:settings)
+  - for announcement in @announcements
+    %div{:class => "data-block long-block" }
+      %div{:class => "ddmmm"}
+        %span{:class => "date"}
+          = announcement.expiration.strftime("%d")
+        %span{:class => "month"}
+          = announcement.expiration.strftime("%b")
+      %h3
+        = link_to "#{announcement.title}", url(:from_principal, announcement.id)
+      %p{:class => "post-content"}  
+        = snippet(announcement.content, 50)
+        &nbsp; &nbsp;
+        - @attachment = @current_school.attachments.find(:first, :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] )  
+        = partial 'common/attachment'
+      = link_to "Edit", url(:edit_from_principal, announcement.id), :class=> "edit-btn"
+      = link_to "Delete", url(:delete_from_principal, announcement.id), :class => "delete delete-btn"
+      %p{:class => "separator clear" }  
+        &nbsp;
+      %br{:class => "clear"}
+      
+  = will_paginate(@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => '|')    
+      
+
+%script{:type => "text/javascript", :src => "/javascripts/delete_confirmation.js"} 

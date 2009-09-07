@@ -59,7 +59,7 @@ class Notifications < Application
   
   def create
      @announcement = @current_school.announcements.new(params[:announcement])    
-     if @announcement.valid?                                                                                                                                                                                                                                                                
+     if @announcement.valid?   
         @announcement.access_name = "Home Page"
         @announcement.label = "urgent"
         content = format(params[:announcement][:content])
@@ -104,7 +104,7 @@ class Notifications < Application
                  resp =  account.request( "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls.csv", 'POST',
                                                d = { 'Caller' => CALLER_ID,
                                                      'Called' => "#{f.voice_alert}",
-                                                     'Url' => "http://#{@current_school.subdomain}.schoolyardapp.com" + "/reminder?id=#{@announcement.id}" }  )
+                                                     'Url' => "http://#{@current_school.subdomain}.#{Schoolapp.config(:app_domain)}" + "/reminder?id=#{@announcement.id}" }  )
                  resp.error! unless resp.kind_of? Net::HTTPSuccess  
              rescue StandardError => bang
                  return  
@@ -117,7 +117,7 @@ class Notifications < Application
   def reminder  
      only_provides :xml
      @announcement = @current_school.announcements.find_by_id(params[:id])
-     @postto = "http://#{@current_school.subdomain}.schoolyardapp.com" + "/directions?id=#{@announcement.id}"  
+     @postto = "http://#{@current_school.subdomain}.#{Schoolapp.config(:app_domain)}" + "/directions?id=#{@announcement.id}"  
      display @postto, :layout => false
   end  
   
@@ -145,9 +145,32 @@ class Notifications < Application
   
   def twilio_log
      account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
-     resp =  account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls.csv", "GET" )
+     resp =  account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls?num=500&page=5.csv", "GET" )
      filename = "twilio.csv"
-     send_data(resp.body, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
+     q = 1
+     csv_string = FasterCSV.generate do |csv|
+        csv << ["Date", "Caller", "Called", "Status"]
+        resp.body.each do |row|
+           unless q == 1
+             l = row.gsub("\r\n", " ").split(',')
+             if l[10] == "1"
+                status = "In progress"
+             elsif l[10] == "2"
+                status = "completed"
+             elsif l[10] == "3"
+                status = "Failed - Busy"
+             elsif l[10] == "4"
+                status = "Failed - Application Error"
+             elsif l[10] == "5"
+                status = "Failed - No Answer"
+             end
+             date = l[1] + l[2]
+             csv << [date, l[8], l[7], status]
+           end
+           q += 1
+        end
+     end
+     send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
   end
  
   private

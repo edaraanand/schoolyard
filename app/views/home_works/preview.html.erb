@@ -1,5 +1,5 @@
 <div id="fullpage">
-     <h2 class="current-page"> Homework for <%= @classroom.class_name.titleize %></h2>
+     <h2 class="current-page"> Homework for <%= @classroom.class_name %></h2>
      <div class="data-block long-block">
           <div class="ddmmm">
                 <span class="date"><%= @date.strftime("%d") %></span>
@@ -7,5 +7,7 @@
           </div>
           <h3> <%= params[:home_work][:title] %> </h3> 
           <p class="subText">Assigned on <%= @date.strftime("%b %d, %Y") %>  by <%= session.user.name %></p>
-          <p class="post-content"><%= san_content(params[:home_work][:content]) %></p>   
+          <p class="post-content">
+             <%=  san_content(params[:home_work][:content]) %>
+          </p>   
 </div>
