@@ -3,8 +3,12 @@ class Schoolapp
   @@common_config = {
     :auth_mailman      => 'noreply@schoolyardapp.com',
     :mailman_password  => '2LCJmpsHqFe9DUyefFRBL',
-    :bc_user => "user", 
-    :bc_password => "password"
+    :bc_user => "eshwar.gouthama", 
+    :bc_password => "ashwini",
+    :twilio_account_id => "ACaccbef6e62668da72003aea3ec585f89",
+    :twilio_account_token => "169a19fa5941cd4d002231beaa870b0b",
+    :twilio_api_version => "2008-08-01",
+    :caller_id => "530 554 1373"
   }
   
   @@development_config = {
