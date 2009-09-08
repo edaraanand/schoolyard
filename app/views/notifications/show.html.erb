@@ -2,8 +2,8 @@
     <h2 class="current-page">Urgent Announcements</h2>
     <div class="data-block long-block">
          <div class="ddmmm">
-             <span class="date"><%= @announcement.created_at.strftime("%d") %></span>
-	           <span class="month"><%= @announcement.created_at.strftime("%b") %></span>
+             <span class="date"><%= @announcement.expiration.strftime("%d") %></span>
+	           <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
 	       </div>
          <p class="post-content"><%= @announcement.content %></p>
          <p class="separator">&nbsp;</p>

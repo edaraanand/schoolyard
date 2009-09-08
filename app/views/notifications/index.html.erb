@@ -20,8 +20,10 @@
 	                <p class="post-content">
 	                   <%= link_to "#{announcement.content}", url(:notification, announcement.id) %>
 	                </p>
-                  <%= link_to "Delete", url(:delete_notification, announcement.id), :class=> "delete delete-btn"  %>
-                  <p><%= @completed.size %> of <%= @logs.size %> calls were not completed</p>
+                     <%= link_to "Delete", url(:delete_notification, announcement.id), :class=> "delete delete-btn"  %>
+                  <p>
+                    <%= link_to "#{@completed.size} of #{@logs.size} calls were not completed", url(:notification, announcement.id) %>  
+                  </p>
                   <p class="separator clear">&nbsp;</p>
                   <br class="clear"/>
               </div>

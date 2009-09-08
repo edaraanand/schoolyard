@@ -2,7 +2,7 @@ class Notifications < Application
    layout 'default'
    before :access_rights, :exclude => [:reminder, :directions, :goodbye] 
    before :find_school
-   before :get_logs, :only => [:index]
+   before :get_logs, :only => [:index, :twilio_log]
    provides :html, :xml
       
   def index
@@ -111,31 +111,24 @@ class Notifications < Application
   end
   
   def twilio_log
-     account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
-     resp =  account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls?num=500&page=5.csv", "GET" )
      filename = "announcement.csv"
-     q = 1
-     csv_string = FasterCSV.generate do |csv|
-        csv << ["Date", "Caller", "Called", "Status"]
-        resp.body.each do |row|
-           unless q == 1
-             l = row.gsub("\r\n", " ").split(',')
-             if l[10] == "1"
-                status = "In progress"
-             elsif l[10] == "2"
-                status = "completed"
-             elsif l[10] == "3"
-                status = "Failed - Busy"
-             elsif l[10] == "4"
-                status = "Failed - Application Error"
-             elsif l[10] == "5"
-                status = "Failed - No Answer"
-             end
-             date = l[1] + l[2]
-             csv << [date, l[8], l[7], status]
+     p = []
+     s = []
+     @logs = @current_school.logs.find(:all)
+     @logs.each do |f|
+       @@log_twilio.each do |t|
+           if t[0] == f.twilio_call_id
+              p << t[1]
+              s << t[2]
            end
-           q += 1
-        end
+       end                                                          
+     end
+     ss = p.zip(s, @@dates)
+     csv_string = FasterCSV.generate do |csv|
+         csv << ["Date", "Called", "Status"]
+         ss.each do |u|
+            csv << [u[2], u[0], u[1]]
+         end   
      end
      send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
   end
@@ -186,17 +179,19 @@ class Notifications < Application
   
   def get_logs
      account = TwilioRest::Account.new(Schoolapp.config(:twilio_account_id), Schoolapp.config(:twilio_account_token))
-     resp =  account.request("/#{Schoolapp.config(:twilio_api_version)}/Accounts/#{Schoolapp.config(:twilio_account_id)}/Calls?num=500&page=5.csv", "GET" )
+     @@resp =  account.request("/#{Schoolapp.config(:twilio_api_version)}/Accounts/#{Schoolapp.config(:twilio_account_id)}/Calls?num=500&page=5.csv", "GET" )
      @twilio_ids = []
      twilio_phones = []
      twilio_status = []
+     @@dates = []
      q = 1
-     resp.body.each do |row|
+     @@resp.body.each do |row|
         unless q == 1
           l = row.gsub("\r\n", " ").split(',')
           @twilio_ids << l[0]
           twilio_phones << l[7]
           twilio_status << l[10]
+          @@dates << l[1] + l[2]
         end
         q += 1
      end
