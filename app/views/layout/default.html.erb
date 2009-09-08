@@ -75,9 +75,11 @@
                    <li <% if @selected == "forms" %> class="on" <% end %>>
 	                   <%= link_to_if((right = "forms"), "Upload Forms", url(:forms)  ) %>
 	               </li>
+	               <% unless Merb.env == "production" %> 
                    <li <% if @selected == "capture" %> class="on" <% end %>>
 	                   <%= link_to "Time Capture Forms", resource(:captures) %>
-	               </li>
+	                 </li>
+	               <% end %>
                    <li><%#= link_to "Advertising" %></li>
                 </ul>                                                                                                      
              </li>

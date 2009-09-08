@@ -17,7 +17,9 @@
                            <li <% if @selected == "all_forms" %> class="on" <% end %> >
 	                           <%= link_to "All Downloadable Forms", url(:form_files, :l => "all_forms", :label => "forms") %>
 	                       </li>
+	                    <% unless Merb.env == "production" %> 
 	                       <%= partial 'layout/capture' %>
+	                    <% end %>
                       </ul>
              <% elsif params[:label] == "calendars" %>
                       <ul id="menu">
