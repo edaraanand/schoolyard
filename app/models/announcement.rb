@@ -22,7 +22,7 @@ class Announcement < ActiveRecord::Base
          self.errors.add("please", "select the option")
      end
   end
-
+  
     #      
     # def self.home_page(params)
     #    self.paginate(:all, :conditions => ["access_name = ? and label = ?", "Home Page", 'staff' ],
