@@ -105,7 +105,8 @@ class Notifications < Application
                                                d = { 'Caller' => CALLER_ID,
                                                      'Called' => "#{f.voice_alert}",
                                                      'Url' => "http://#{@current_school.subdomain}.#{Schoolapp.config(:app_domain)}" + "/reminder?id=#{@announcement.id}" }  )
-                 Merb.logger.info "Checking the Log For #{@resp.body}"                                    
+                 puts resp.body.inspect
+                 puts "Testing".inspect                                    
                  resp.error! unless resp.kind_of? Net::HTTPSuccess  
              rescue StandardError => bang
                  return  
