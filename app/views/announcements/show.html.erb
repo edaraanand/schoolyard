@@ -6,15 +6,10 @@
    
   <hr size="1">
   <div class="data-block long-block">
-     <% if @announcement.expiration.nil? %>
-             <div class="ddmmm-x">
-	           </div>
-     <% else %>
-          <div class="ddmmm">
-              <span class="date"><%= @announcement.created_at.strftime("%d") %></span>
-	            <span class="month"><%= @announcement.created_at.strftime("%b") %></span>
-	        </div>
-     <% end %>
+      <div class="ddmmm">
+          <span class="date"><%= @announcement.created_at.strftime("%d") %></span>
+	        <span class="month"><%= @announcement.created_at.strftime("%b") %></span>
+	    </div>
     <h3><%= @announcement.title %></h3>
     <span class="subText">Announcement for: <%= @announcement.access_name %></span><br/>
     <span class="subText">Created by <%= @announcement.person.name %>, expires on <%= @announcement.expiration.strftime("%d %b %Y") %></span>
