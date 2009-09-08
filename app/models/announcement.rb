@@ -7,6 +7,7 @@ class Announcement < ActiveRecord::Base
   
   belongs_to :person
   belongs_to :school
+  has_many :logs, :class_name => "LoggerMachine"
 
   validates_presence_of :title, :if => :title, :scope => :school_id
   validates_presence_of :content, :if => :content, :scope => :school_id

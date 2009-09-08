@@ -32,6 +32,8 @@ class School < ActiveRecord::Base
   
   has_many :captures
   has_many :tasks
+  
+  has_many :logs, :class_name => "LoggerMachine"
 
   
   
