@@ -8,6 +8,7 @@ class Calendars < Application
   before :classes
 
   def index
+     @all_class_calendars = Calendar.all_calendars(@current_school.id)
     if params[:label] == "classes"
       @classroom = @current_school.classrooms.find_by_id(params[:id])
       raise NotFound unless @classroom
@@ -15,12 +16,16 @@ class Calendars < Application
                                                       :per_page => 10,  
                                                       :page => params[:page], 
                                                       :order => 'start_date')   
+       # @calendars = @current_school.calendars.paginate(:all, :conditions => ["class_name = ? ", @classroom.class_name ],
+       #                                                       :per_page => 10,  
+       #                                                       :page => params[:page], 
+       #                                                       :order => 'start_date')
       @test = params[:id]
-    else
-      @calendars = @current_school.calendars.paginate(:all, :per_page => 10,  :page => params[:page], :order => 'start_date')
+   else
+      @c = @current_school.calendars.find(:all)
+      @calendars = @c.merge(@all_class_calendars.collect{|x| x.to_a}.flatten)
       @test = "All Classrooms"
     end
-    @all_class_calendars = Calendar.all_calendars(@current_school.id)
     render
   end
 
