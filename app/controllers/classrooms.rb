@@ -122,8 +122,11 @@ class Classrooms < Application
     @classroom = @current_school.classrooms.find_by_id(params[:id])
     if @classroom
       if @classroom.activate == true
-         @calendars = @current_school.calendars.paginate(:all, :conditions => ['class_name = ?', @classroom.class_name], 
-                                                         :per_page => 10, :page => params[:page], :order => 'start_date DESC')
+         #@calendars = @current_school.calendars.paginate(:all, :conditions => ['class_name = ?', @classroom.class_name], 
+                                                       #  :per_page => 10, :page => params[:page], :order => 'start_date DESC')
+         @all_class_calendars = Calendar.all_calendars(@current_school.id)
+         @cals = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @classroom.class_name])
+         @calendars = @cals.concat(@all_class_calendars).sort_by{|my_item| my_item[:start_date]}.uniq
          @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true], :per_page => 10,
                                                               :page => params[:page], :order => "created_at DESC")
          @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
@@ -138,7 +141,6 @@ class Classrooms < Application
            @reports = @current_school.reports.find(:all, :conditions => ['classroom_id = ?', @classroom.id])
            @ranks = @current_school.ranks.find(:all)
          end
-         @all_class_calendars = Calendar.all_calendars(@current_school.id)
          render :layout => 'class_change', :id => @classroom.id
       else
          raise NotFound
