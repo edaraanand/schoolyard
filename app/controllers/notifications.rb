@@ -2,7 +2,8 @@ class Notifications < Application
    layout 'default'
    before :access_rights, :exclude => [:reminder, :directions, :goodbye] 
    before :find_school
-   before :get_logs, :only => [:index, :twilio_log]
+   before :get_logs, :only => [:index]
+   before :status_messages
    provides :html, :xml
       
   def index
@@ -125,9 +126,15 @@ class Notifications < Application
      end
      ss = p.zip(s, @@dates)
      csv_string = FasterCSV.generate do |csv|
-         csv << ["Date", "Called", "Status"]
+         csv << ["Date", "Caller", "Called", "Status"]
          ss.each do |u|
-            csv << [u[2], u[0], u[1]]
+            if @@message_report.has_value?(u[1])
+              u[1] = @@message_report.index(u[1])
+            end
+            if @@status_reports.has_key?(u[1])
+              status = @@status_reports[u[1]] 
+            end
+            csv << [u[2], "5305541373", u[0], status]
          end   
      end
      send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
@@ -180,22 +187,32 @@ class Notifications < Application
   def get_logs
      account = TwilioRest::Account.new(Schoolapp.config(:twilio_account_id), Schoolapp.config(:twilio_account_token))
      @@resp =  account.request("/#{Schoolapp.config(:twilio_api_version)}/Accounts/#{Schoolapp.config(:twilio_account_id)}/Calls?num=500&page=5.csv", "GET" )
-     @twilio_ids = []
-     twilio_phones = []
-     twilio_status = []
+     @@twilio_ids = []
+     @@twilio_phones = []
+     @@twilio_status = []
      @@dates = []
      q = 1
      @@resp.body.each do |row|
         unless q == 1
           l = row.gsub("\r\n", " ").split(',')
-          @twilio_ids << l[0]
-          twilio_phones << l[7]
-          twilio_status << l[10]
+          @@twilio_ids << l[0]
+          @@twilio_phones << l[7]
+          @@twilio_status << l[10]
           @@dates << l[1] + l[2]
         end
         q += 1
      end
-     @@log_twilio = @twilio_ids.zip(twilio_phones, twilio_status)
+     @@log_twilio = @@twilio_ids.zip(@@twilio_phones, @@twilio_status)
+  end
+  
+  def status_messages
+     @@status_reports  =  { :a => "Not Yet Dialed", :b => "In Progress",
+                            :c => "Complete", :d => "Failed - Busy", 
+                            :e => "Failed - Application Error", :f => "Failed - No Answer" } 
+   
+     @@message_report  =  { :a => "0", :b => "1",
+                            :c => "2", :d => "3", 
+                            :e => "4", :f => "5" }
   end
  
 end                                                                         
