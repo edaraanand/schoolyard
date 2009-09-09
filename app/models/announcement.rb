@@ -7,6 +7,7 @@ class Announcement < ActiveRecord::Base
   
   belongs_to :person
   belongs_to :school
+  has_many :logs, :class_name => "LoggerMachine"
 
   validates_presence_of :title, :if => :title, :scope => :school_id
   validates_presence_of :content, :if => :content, :scope => :school_id
@@ -21,7 +22,7 @@ class Announcement < ActiveRecord::Base
          self.errors.add("please", "select the option")
      end
   end
-
+  
     #      
     # def self.home_page(params)
     #    self.paginate(:all, :conditions => ["access_name = ? and label = ?", "Home Page", 'staff' ],

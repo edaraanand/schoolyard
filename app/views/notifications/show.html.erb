@@ -1,0 +1,36 @@
+<div>
+    <h2 class="current-page">Urgent Announcements</h2>
+    <div class="data-block long-block">
+         <div class="ddmmm">
+             <span class="date"><%= @announcement.expiration.strftime("%d") %></span>
+	           <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
+	       </div>
+         <p class="post-content"><%= @announcement.content %></p>
+         <p class="separator">&nbsp;</p>
+         <p class="subText">
+            Following people did not receive Voice Alerts
+         </p>
+         <table id="mytable" class="grades">
+       	    <thead>
+       	        <th class="subjects">Last Name</th>
+       	        <th class="last-upd">First Name</th>  
+       	        <th class="last-upd">Contact Number</th>
+       	    </thead>
+       	    <tbody>
+       	       <% @p.each do |f| %>
+       	           <% unless f[1] == "2" %>
+          	          <% @person = @current_school.people.find_by_voice_alert(f[0]) %>
+        	            <tr>
+          	              <td><%= @person.last_name %> </td>
+          	              <td><%= @person.first_name %> </td>
+          	              <td><%= @person.voice_alert %> </td>
+          	          </tr>
+          	       <% end %>
+          	   <% end %>
+       	    </tbody>
+       	 </table>
+        <br/><br/><br/>
+    </div>
+    &larr; <%= link_to "Back to the listing page", resource(:notifications) %>
+</div>
+

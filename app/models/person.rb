@@ -30,6 +30,7 @@ class Person < ActiveRecord::Base
 
   has_many :reports
   
+  has_many :logs, :class_name => "LoggerMachine"
 
 
 

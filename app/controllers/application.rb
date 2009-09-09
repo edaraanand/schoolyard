@@ -2,10 +2,9 @@ class Application < Merb::Controller
 
    require Merb.root / 'app' / 'helpers' / 'global_helpers'
    include Merb::GlobalHelpers
-  
+   
     before :find_school
-   
-   
+      
     def find_school
         @select = "schools"
         if (request.first_subdomain != nil) && (request.first_subdomain == "admin")
@@ -16,6 +15,5 @@ class Application < Merb::Controller
             @current_school = School.find(:first, :conditions => ['domain = ?', request.domain ] )
         end
     end
-  
-   
+    
 end
