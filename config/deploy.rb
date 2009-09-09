@@ -65,6 +65,7 @@ namespace :vlad do
     Rake::Task['vlad:copy_data_files'].invoke
     #Rake::Task['vlad:native_gems'].invoke
     Rake::Task["vlad:start"].invoke
+    Rake::Task["vlad:notify"].invoke
   end
 
   desc 'Copy production files'
@@ -83,4 +84,29 @@ namespace :vlad do
   remote_task :migrate, :roles => :app do
     run "cd #{current_path} && rake db:migrate MERB_ENV=#{merb_env}"
   end
+
+
+  desc "retrieve the version from the git log"
+  task :update_revision do
+    `git log -1 --pretty=format:'%H' > #{merb_env.upcase}_DEPLOY_REVISION`
+  end
+  
+  desc "Send deploymet notification"
+  task :notify do
+    deploy_revision = `cat #{Merb.root}/#{merb_env.upcase}_DEPLOY_REVISION`
+    git_log = `git log --abbrev-commit --pretty=format:"%s%n<a href=https://github.com/insightmethods/schoolyard/commit/%H target=_blank>%h</a> by (%an: %ar)%n" #{deploy_revision}..HEAD --no-merges`
+    build_msg = <<-EOF
+      Schoolyard has been pushed to #{merb_env} 
+      ...
+      <b>Change Log:</b>
+      #{git_log}
+    EOF
+    build_msg.strip!
+    build_msg.gsub!('"', '\"')
+    build_msg.gsub!(/\n/, '<br />')
+    `#{Merb.root}/bin/rake basecamp:notify BUILD_MSG="#{build_msg}"`
+    
+    Rake::Task["vlad:update_revision"].invoke
+  end
+
 end
