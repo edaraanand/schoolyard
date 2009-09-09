@@ -1,5 +1,7 @@
 class Students < Application
 
+  require 'CSV'
+  
   layout 'default'
   before :find_school
   before :access_rights, :exclude => [:generate_csv]
@@ -318,6 +320,70 @@ class Students < Application
      redirect resource(:students)
   end
  
+  def import
+    @class_rooms = @current_school.active_classrooms
+    render
+  end
+  
+  def import_csv
+      q = 1
+      filename =  params[:csv_file][:filename]
+      File.makedirs("public/uploads/#{@current_school.id}/CSV_FOLDER")
+      FileUtils.mv( params[:csv_file][:tempfile].path, "public/uploads/#{@current_school.id}/CSV_FOLDER/#{0}")
+      path = "#{Merb.root}/public/uploads/#{@current_school.id}/CSV_FOLDER/0"
+      @classes = []
+      begin
+         FasterCSV.foreach(path) do |row|
+            unless q == 1
+               if row.include?(nil)
+                 @classes << nil
+               else
+                 @classroom = @current_school.classrooms.find_by_class_name(row[10])
+                 @classes << @classroom
+               end
+               @student = Student.new({:last_name => row[0], :first_name => row[1], :address1 => row[5], 
+                                           :city => row[6], :state => row[7], :zip_code => row[8], :birth_date => row[9],
+                                           :school_id => @current_school.id })
+               @p1 = Protector.new({:last_name => row[2], :first_name => row[3], :email => row[4], :school_id => @current_school.id })
+               unless @student.valid?
+                 @classes << nil
+               end
+               unless @p1.valid?
+                 @classes << nil
+               end
+            end
+            q += 1
+         end 
+         if @classes.include?(nil)
+            flash[:error] = "please check the classroom and other details in the CSV file"
+            redirect url(:import)
+         else
+            FasterCSV.foreach(path) do |row|
+               @classroom = @current_school.classrooms.find_by_class_name(row[10])
+               @student = Student.new({:last_name => row[0], :first_name => row[1], :address1 => row[5], 
+                                        :city => row[6], :state => row[7], :zip_code => row[8], :birth_date => row[9],
+                                        :school_id => @current_school.id })
+               @student.save
+               @p1 = Protector.create({:last_name => row[2], :first_name => row[3], :email => row[4], :school_id => @current_school.id })
+               Ancestor.create({:student_id => @student.id, :protector_id => @p1.id })
+               Study.create(:student_id => @student.id, :classroom_id => @classroom.id)
+               redirect resource(:students)
+            end
+            redirect resource(:students)
+         end
+      rescue 
+        flash[:error] = "There was an error parsing your CSV file, please check the format"
+        redirect url(:import)
+      end
+  end
+  
+  def template_download
+     csv_string = FasterCSV.generate do |csv|
+        csv << ["Student Last Name", "Student First Name", "Parent Last Name", "Parent First Name", "Parent Email" "Address", "City", "State", "Zip Code", "Student Birth Date","Current Class Name"]
+     end
+     filename = "template.csv"
+     send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
+  end
 
   private
 
