@@ -1,7 +1,5 @@
 class Students < Application
 
-  require 'CSV'
-  
   layout 'default'
   before :find_school
   before :access_rights, :exclude => [:generate_csv]
