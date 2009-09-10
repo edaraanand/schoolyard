@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 =end
 
 module TwilioRest
+    require 'rubygems'
     require 'net/http'
     require 'net/https'
     require 'uri'
