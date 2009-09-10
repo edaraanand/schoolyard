@@ -7,11 +7,11 @@
        </span>
     </h2>
     <% if @calendars.empty? %>
-        <% if @all_class_calendars.empty? %>
+        <%# if @all_class_calendars.empty? %>
             <span class="subText">There are no events planned at this time</span>
-        <% else %>    
-            <%= partial 'common/class_calendar' %>
-        <% end %>
+        <%# else %>    
+            <%#= partial 'common/class_calendar' %>
+        <%# end %>
     <% else %>
         
          <br/><br/>
@@ -33,7 +33,11 @@
                           <% else %>
                                All day event
                           <% end %>
-                          <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
+                          <% if calendar.class_name == "Schoolwide" %>
+                             <%= link_to "#{calendar.title}", url(:calendar, calendar.id, :class => @classroom.id) %>
+                          <% else %>
+                             <%= link_to "#{calendar.title}", url(:calendar, calendar.id) %>
+                          <% end %>
                           <% unless session.user.type == "Parent" %>
                               <div class="admin-links">
                                    <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) ) %> &#124;
@@ -44,7 +48,7 @@
                     </ul>
                 </div>
             <% end %>
-            <%= partial 'common/class_calendar' %>
-            <%= will_paginate (@calendars, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+            <%#= partial 'common/class_calendar' %>
+            <%#= will_paginate (@calendars, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
              </div>
     <% end %>

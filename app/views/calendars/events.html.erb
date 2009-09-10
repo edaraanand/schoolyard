@@ -51,16 +51,16 @@
                                </ul>
                           </div>
                      <% end %>
-                     <%= will_paginate (@calendars, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+                     <%#= will_paginate (@calendars, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
              <% end %>
 <% else %>
 
       <% if @cls.empty? %>
-         	  <% if @all_class_calendars.empty? %>
+         	  <%# if @all_class_calendars.empty? %>
                 <p class="subText"> No Events were found. If you applied a filter try changing it.</p>
-            <% else %>    
-                <%= partial 'common/all_class_calendars' %>
-            <% end %>
+            <%# else %>    
+                <%#= partial 'common/all_class_calendars' %>
+            <%# end %>
       <% else %>
                <% cdate=""
                   for calendar in @cls %>
@@ -97,7 +97,7 @@
                          </ul>
                       </div>
              <% end %>
-             <%= partial 'common/all_class_calendars' %>
+             <%#= partial 'common/all_class_calendars' %>
      <% end %>
  <% end %>
    

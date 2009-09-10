@@ -11,13 +11,13 @@ View :  <select id = 'calendarID'>
      </select> <br/>
   
   <% if @calendars.blank? %>
-       <% if @all_class_calendars.empty? %>
+       <%# if @all_class_calendars.empty? %>
            <p class="subText"> No Events were found. If you applied a filter try changing it.</p>
-       <% else %>    
-            <% if params[:id] %>
-                  <%= partial 'common/all_class_calendars' %>
-             <% end %>
-       <% end %>
+       <%# else %>    
+            <%# if params[:id] %>
+                  <%#= partial 'common/all_class_calendars' %>
+             <%# end %>
+       <%# end %>
   <% else %>
        <br/>
         <% cdate=""
@@ -45,10 +45,10 @@ View :  <select id = 'calendarID'>
                     </ul>
                 </div>   
         <% end %>
-        <% if params[:id] %>
-            <%= partial 'common/all_class_calendars' %>
-        <% end %>
-        <%= will_paginate (@calendars, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+        <%# if params[:id] %>
+            <%#= partial 'common/all_class_calendars' %>
+        <%# end %>
+        <%#= will_paginate (@calendars, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
   <% end %>
 
 </div>
