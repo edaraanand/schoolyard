@@ -3,14 +3,14 @@
 <div class="register-steps"><img src="/images/register-step1.gif" alt="Step 1 of 3"/></div>
 <%= error_messages_for @parent %>
 <%= error_messages_for @registration %>
-
+ 
 <ul class='error_messages'>
   <% if flash[:error3] %><li><%= flash[:error3] %></li><% end %>
   <% if flash[:error] %><li><%= flash[:error] %> </li><% end %>
   <% if flash[:error4] %><li><%= flash[:error4] %> </li><% end %>
   <% if flash[:error2] %><li><%= flash[:error2] %> </li><% end %>
 </ul>
-
+ 
 <%= form_for(@parent, :action => resource(:registrations), :name => "registration", :onsubmit => "ClearAll()" ) do %>
   <fieldset>
     <ul>
@@ -218,7 +218,7 @@
              </div>
          
  <% end =%>
-
+ 
       
  
 <script type="text/javascript" src='/javascripts/registration.js'></script>

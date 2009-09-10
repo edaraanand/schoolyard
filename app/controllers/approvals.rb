@@ -1,5 +1,5 @@
 class Approvals < Application
-
+ 
   layout 'default'
   before :find_school
   before :classrooms, :only => [:edit, :update]
@@ -7,28 +7,28 @@ class Approvals < Application
   before :access_rights
   before :parent_registration, :only => [:parent_approvals, :approval_review, :parent_grant, :parent_reject]
  
-
+ 
   def index
     @selected = "approve"
     @announcements = @current_school.announcements.paginate(:all, :conditions => ["approve_announcement = ? and approved = ? and label != ?", true, false, "feedback" ], :per_page => 10,
     :page => params[:page], :order => "created_at DESC")
     render
   end
-
+ 
   def show
     @selected = "approve"
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
     render :id => @announcement.id
   end
-
+ 
   def edit
     @selected = "approve"
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
     render
   end
-
+ 
   def update
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
@@ -44,7 +44,7 @@ class Approvals < Application
       render :edit
     end
   end
-
+ 
   def publish
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
@@ -88,13 +88,13 @@ class Approvals < Application
         end
      end
   end
-
+ 
   def preview
     @title = params[:announcement][:title]
     @content = params[:announcement][:content]
     render :layout => 'preview'
   end
-
+ 
   def parent_approvals
     if params[:label] == "approved"
        @parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 1], :order => "created_at DESC", :per_page => 25,  :page => params[:page] )
@@ -111,7 +111,7 @@ class Approvals < Application
     end
     render
   end
-
+ 
   def approval_review
      @exist = "Student details entered by the parent match the school records"
      @not_exist = "Student details entered by the parent do not match the school records"
@@ -132,7 +132,7 @@ class Approvals < Application
     end
     render
   end
-
+ 
   def parent_grant
     @parent = @current_school.parents.find_by_id(params[:id])
     raise NotFound unless @parent
@@ -193,12 +193,12 @@ class Approvals < Application
       end
       redirect url(:parent_approvals)
     end
-
+ 
   end
-
-
+ 
+ 
   private
-
+ 
   def access_rights
     have_access = false
     @view = Access.find_by_name('view_all')
@@ -212,7 +212,7 @@ class Approvals < Application
       redirect resource(:homes)
     end
   end
-
+ 
   def parent_registration
     @selected = "parent_registration"
     have_access = false
@@ -227,12 +227,12 @@ class Approvals < Application
       redirect resource(:homes)
     end
   end
-
+ 
   def classrooms
     @class = @current_school.active_classrooms
     room = @class.collect{|x| x.class_name }
     @classrooms = room.insert(0, "Home Page")
   end
-
+ 
  
 end

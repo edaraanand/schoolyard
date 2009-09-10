@@ -6,7 +6,7 @@
 </ul>
  </div>
 <h2 class="current-page">Parent Registrations </h2>
-
+ 
  <% if @parent.approved == 1  %> 
      <span class="reactive">The Parent has been Approved</span><br/><br/>
  <% elsif @parent.approved == 3 %>
@@ -30,7 +30,7 @@
             
       
   <%= form_for :parent, :action => url(:parent_grant, :id => @parent), :name => "approveform" do %> 
-
+ 
       <% @registrations.each do |f| %>
              
             <% @class = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', f.current_class ] ) %> 
@@ -91,7 +91,7 @@
     				               <dt>Date of Birth</dt>
     				               <dd><%= f.birth_date.strftime("%B %d %Y") %> </dd>
     				            </dl> 
-				  
+ 
         <% end %>
               <hr size="1"  class="clear"/>
               <br/><br/>
@@ -116,11 +116,11 @@
    
   
 <script language="JavaScript" type="text/javascript">
-
+ 
    function getsupport ( selectedtype )
    {
       document.approveform.approvetype.value = selectedtype ;
       document.approveform.submit() ;
     }
-
-</script> 
+ 
+</script>

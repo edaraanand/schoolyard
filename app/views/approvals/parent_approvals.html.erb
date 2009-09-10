@@ -5,7 +5,7 @@ View :  <select id = 'parentID'>
              <option value = '/parent_approvals?label=rejected' <% if (@test == "rejected") %> selected <% end %> >Rejected</option>
              <option value = '/parent_approvals?label=pending' <% if (@test == "pending") %> selected <% end %> >Pending Approvals</option>
         </select>
-
+ 
         
        <% if  @parents.empty? %>
              <p class="subText">
@@ -48,13 +48,13 @@ View :  <select id = 'parentID'>
              </table>
             <%= will_paginate (@parents, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
         <% end %> 
-
+ 
         
         
         
         
 <script type = 'text/javascript'>
-
+ 
         $( 'parentID' ).observe( 'change', function()
           {
             document.location.href = $( 'parentID' ).value;
