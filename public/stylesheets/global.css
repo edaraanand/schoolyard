@@ -497,6 +497,9 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 .last.pic, div.pic{text-align:center;}
 .prinPic{width:232px; margin:0 auto;}
 
+/* Spot Light Pic */
+div.spot-pic{text-align:left;}
+
 .urgent-announce #announcement_content{height:5em;}
 #content .urgent-title{color:#f63; font-size:14px;}
 .phone-alert-settings #sms li span{font-size:18px; padding:0 8px 0 0;}
