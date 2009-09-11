@@ -114,11 +114,10 @@ class Announcements < Application
       raise NotFound unless @announcement
       @page = @announcement.access_name
       Attachment.delete_all(['attachable_id = ?', @announcement.id])
+      @announcement.destroy
       if @page == "Home Page"
-         @announcement.destroy
          redirect resource(:homes)
       else
-        @announcement.destroy
         @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @page ])
         redirect url(:class_details, :id => @classroom.id)
       end

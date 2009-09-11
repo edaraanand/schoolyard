@@ -15,7 +15,7 @@ class Registrations < Application
   end
  
   def create
-    @parent = @current_school.parents.new(params[:parent])
+    @parent = @current_school.parents.new(params[:parent].merge(:activate => false))
     @registration = @current_school.registrations.new(params[:registration])
     if ( ( (params[:f_name_student2] == "") && (params[:l_name_student2] == "") ) &&  ( (params[:current_class2] == "") &&  (params[:birth_date2] == "") ) )
       if (@parent.valid?) && (@registration.valid?)
@@ -158,8 +158,8 @@ class Registrations < Application
     @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
     if @parent
        @parent.approved = 2
+       @parent.password_reset_key = nil
        @parent.save!
-       @parent.reset
        render
     else
        flash[:success] = "Your Approval has been sent to School"

@@ -89,7 +89,9 @@ Merb::Router.prepare do
        resources :captures
        resources :tasks
        resources :directories
-        match("/template_download").to(:controller => 'students', :action => 'template_download').name(:template_download)
+       match("/edit_approve").to(:controller => 'approvals', :action => 'edit_approve').name(:edit_approve)
+       match("/approved").to(:controller => 'approvals', :action => 'approved').name(:approved)
+       match("/template_download").to(:controller => 'students', :action => 'template_download').name(:template_download)
        match("/import").to(:controller => 'students', :action => 'import').name(:import)
        match("/import_csv").to(:controller => 'students', :action => 'import_csv').name(:import_csv)
        match("/twilio_log").to(:controller => 'notifications', :action => 'twilio_log').name(:twilio_log)
