@@ -3,8 +3,11 @@
             Homework &nbsp;&nbsp;&nbsp;
             <%= link_to_right((right = "homework"), "Add New", resource(:home_works, :new, :l => "#{@classroom.class_name}")) %>
             <span class="act">  
-               <%= link_to "Download as PDF (requires Acrobat reader)", url(:home_works_pdf, :id => @classroom.id), :class=> "pdf" %>
+               <%= link_to "Download as PDF", url(:home_works_pdf, :id => @classroom.id), :class=> "pdf" %>
+               (<%= link_to "Requires acrobat reader", "http://get.adobe.com/reader/", {'target' => '_blank'} %>)
             </span>
+              
+              
         </h2> 
         <% if @home_works.empty? %>
            <span class="subText">There are no Homework assignments at this time</span>

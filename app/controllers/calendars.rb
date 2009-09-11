@@ -49,6 +49,7 @@ class Calendars < Application
       @start_time = params[:calendar][:start_time]
       @end_time = params[:calendar][:end_time]
       @class = params[:calendar][:class_name]
+      @check = params[:calendar][:day_event]
       render :new
     end
   end  
@@ -126,7 +127,6 @@ class Calendars < Application
           @class =  @calendar.class_name
           @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
        end
-       @event = "All Day Event"
        render :layout => 'class_change', :id => @classroom.id
     end
   end
@@ -169,7 +169,6 @@ class Calendars < Application
     if params[:l] == "all_events"
        @c = @current_school.calendars.find(:all)
        @calendars = @c.concat(@all_class_calendars).sort_by{|my_item| my_item[:start_date]}.uniq
-      # @calendars = @current_school.calendars.paginate(:all, :per_page => 10,  :page => params[:page], :order => 'start_date')
     end
     render :layout => 'directory'
   end
