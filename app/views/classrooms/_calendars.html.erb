@@ -1,9 +1,10 @@
  <div id="content" class="two-col">
     <h2 class="current-page">
-       Class Calendar &nbsp;&nbsp;&nbsp;
+        Calendar &nbsp;&nbsp;&nbsp;
        <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@classroom.class_name}" )) %>
        <span class="act">  
           <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id), :class=> "pdf" %>
+          (<%= link_to "Requires acrobat reader", "http://get.adobe.com/reader/", {'target' => '_blank'} %>)
        </span>
     </h2>
     <% if @calendars.empty? %>

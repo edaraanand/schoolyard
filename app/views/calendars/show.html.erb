@@ -8,7 +8,8 @@
            Class Calendar &nbsp;&nbsp;&nbsp;
            <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@calendar.class_name}" ) )  %>
            <span class="act">
-              <%= link_to "Download as PDF", url(:pdf_events, :id => @calendar.id, :label => "single") , :class=> "pdf" %><br/><br/>
+              <%= link_to "Download as PDF", url(:pdf_events, :id => @calendar.id, :label => "single") , :class=> "pdf" %>
+              (<%= link_to "Requires acrobat reader", "http://get.adobe.com/reader/", {'target' => '_blank'} %>)
            </span>
         </h2>
        
