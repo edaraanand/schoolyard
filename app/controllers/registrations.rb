@@ -1,19 +1,19 @@
 class Registrations < Application
-
+ 
   before :month_year
   before :find_school
-
-
+ 
+ 
   def index
     render
   end
-
+ 
   def new
     @parent = Parent.new
     @registration = Registration.new
     render :layout => 'application'
   end
-
+ 
   def create
     @parent = @current_school.parents.new(params[:parent])
     @registration = @current_school.registrations.new(params[:registration])
@@ -138,10 +138,10 @@ class Registrations < Application
         render :new
       end
     end
-
+ 
   end
-
-
+ 
+ 
   def registration_process
     id = params[:l]
     @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
@@ -152,7 +152,7 @@ class Registrations < Application
        redirect url(:login)
     end
   end
-
+ 
   def registration_last
     id = params[:id]
     @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
@@ -166,7 +166,7 @@ class Registrations < Application
        redirect url(:login)
     end
   end
-
+ 
   def new_password
     id = params[:id]
     @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
@@ -177,7 +177,7 @@ class Registrations < Application
        redirect url(:login)
     end
   end
-
+ 
   def password_save
     id = params[:id]
     @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
@@ -204,11 +204,11 @@ class Registrations < Application
       redirect url(:new_password, :id => @parent.password_reset_key)
     end
   end
-
+ 
   def forgot_password
     render :layout => 'login'
   end
-
+ 
   def get_password
     if params[:email] == ""
       flash[:error] = "Please Enter your Email"
@@ -224,13 +224,13 @@ class Registrations < Application
       end
     end
   end
-
+ 
   def password_sent
     id = params[:id]
     @person = @current_school.people.find_by_password_reset_key(params[:id])
     render :layout => 'login'
   end
-
+ 
   def reset_password_edit
     id = params[:id]
     @person = @current_school.people.find(:first, :conditions => ['password_reset_key = ?', id])
@@ -241,7 +241,7 @@ class Registrations < Application
        redirect url(:login)
     end
   end
-
+ 
   def reset_password_update
     @person = @current_school.people.find_by_password_reset_key(params[:id])
     if ( !params[:person][:password].blank? ) 
@@ -266,7 +266,7 @@ class Registrations < Application
       redirect url(:reset_password_edit, :id => @person.password_reset_key )
     end
   end
-
+ 
   def new_staff_password
     id = params[:id]
     @person = @current_school.people.find(:first, :conditions => ['password_reset_key = ?', id])
@@ -278,7 +278,7 @@ class Registrations < Application
        #raise NotFound
     end
   end
-
+ 
   def staff_password_save
     id = params[:id]
     @person = @current_school.people.find_by_password_reset_key(params[:id])
@@ -308,15 +308,15 @@ class Registrations < Application
        raise BadRequest
     end
   end
-
+ 
   private
-
+ 
   def month_year
     @classrooms = @current_school.active_classrooms
     @years = (1999..2020).to_a
     @months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   end
-
-
-
+ 
+ 
+ 
 end
