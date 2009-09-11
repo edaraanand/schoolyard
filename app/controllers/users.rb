@@ -305,6 +305,7 @@ class Users < Application
   def student_details
      @selected = "s_details"
      @parent = session.user
+     @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
      @students = @parent.students
      render
   end

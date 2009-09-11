@@ -1,0 +1,17 @@
+<dl>
+   <dt>Name</dt>
+   <dd> <%= @parent.name %></dd>
+</dl>
+<dl>
+   <dt class="separator">Email:</dt>
+   <dd class="separator"> <%= @parent.email %></dd>
+</dl>
+<br class="clear"/>
+<h3> Student Details :</h3>  
+
+<ul> 
+    <% @registrations.each do |f| %>
+        <li><%= f.name %> ( <%= f.current_class %> ), born <%= f.birth_date.strftime("%B %d %Y") %></li>
+        <br/>
+    <% end %>
+</ul>

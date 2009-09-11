@@ -7,10 +7,10 @@ View :  <select id = 'parentID'>
         </select>
  
         
-       <% if  @parents.empty? %>
+       <% if @parents.empty? %>
              <p class="subText">
-	            No record for Parent Registration was found. If you applied a filter try changing it.
-	         </p>
+	               No record for Parent Registration was found. If you applied a filter try changing it.
+	           </p>
        <% else %>
               <table id="mytable"  cellspacing="0" cellpadding="0">
                    <thead>
@@ -22,27 +22,30 @@ View :  <select id = 'parentID'>
                          <% for parent in @parents %>
                          <% @students = Registration.find(:all, :conditions => ['parent_id = ?', parent.id]) %>
                                 <tr>
-                                    <td><%= link_to "#{parent.name}", url(:approval_review, :id => parent) %> </td>
-                                        
+                                    <td>
+                                        <% if (parent.approved == 1 || parent.approved == 3 ) %>
+                                            <%= link_to "#{parent.name}", url(:edit_approve, :id => parent) %> 
+                                        <% else %>
+                                            <%= link_to "#{parent.name}", url(:approval_review, :id => parent) %> 
+                                        <% end %>
+                                    </td>
                                     <td nowrap>
-                                      <ul>
-                                        <% @students.each do |f| %>
-                                            <li><%= f.name %> (<%= f.birth_date.strftime("%b %d, %Y") %>)</li>
-                                        <%end%>
-                                      </ul>
+                                        <ul>
+                                           <% @students.each do |f| %>
+                                              <li><%= f.name %> (<%= f.birth_date.strftime("%b %d, %Y") %>)</li>
+                                           <% end %>
+                                        </ul>
                                     </td>
                                     <td>
-                                                <% if parent.approved == 1 %>
-                                                  <span class="approved">Approved</span>
-                                                <% elsif parent.approved == 2 %>
-                                                  Pending Approval
-                                                <% elsif parent.approved == 4 %>
-                                                    <span class="reject">Disabled</span>
-                                                <% else %>
-                                                  <span class="reject">Rejected</span>
-                                                <%end%>
+                                         <% if parent.approved == 1 %>
+                                           <span class="approved">Approved</span>
+                                         <% elsif parent.approved == 2 %>
+                                            Pending Approval
+                                         <% else %>  
+                                            <span class="reject">Rejected</span>
+                                         <% end %>
                                     </td>
-                               </tr>
+                                </tr>
                          <% end %>
                   </tbody>
              </table>
