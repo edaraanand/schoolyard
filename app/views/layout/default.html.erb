@@ -19,7 +19,7 @@
 			          <%= link_to_if((right = "rights_others"), "School Staff", url(:people) ) %>
 			       </li>
 		           <li <% if @selected == "students" %> class="on" <% end %>>
-			          <%= link_to_if((right = "manage_directories"), "Students", url(:students)) %>
+			          <%= link_to_right((right = "manage_directory"), "Students", url(:students)) %>
 			       </li>
 	
 		             <% @parents = @current_school.parents.find(:all, :conditions => ["approved = ?", 2 ]) %>
