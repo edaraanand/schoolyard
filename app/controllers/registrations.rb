@@ -169,7 +169,7 @@ class Registrations < Application
  
   def new_password
     id = params[:id]
-    @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
+    @parent = @current_school.parents.find_by_password_reset_key(id)
     if @parent
        render
     else
@@ -180,7 +180,7 @@ class Registrations < Application
  
   def password_save
     id = params[:id]
-    @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
+    @parent = @current_school.parents.find_by_password_reset_key(id)
     if ( !params[:parent][:password].blank? ) && (!params[:parent][:password_confirmation].blank? )
       if ( params[:parent][:password] == params[:parent][:password_confirmation] )
          @parent.password = params[:parent][:password]
@@ -233,7 +233,7 @@ class Registrations < Application
  
   def reset_password_edit
     id = params[:id]
-    @person = @current_school.people.find(:first, :conditions => ['password_reset_key = ?', id])
+    @person = @current_school.people.find_by_password_reset_key(id)
     if @person
        render :layout => 'login'
     else
@@ -269,7 +269,7 @@ class Registrations < Application
  
   def new_staff_password
     id = params[:id]
-    @person = @current_school.people.find(:first, :conditions => ['password_reset_key = ?', id])
+    @person = @current_school.people.find_by_password_reset_key(params[:id])
     if @person
        render :layout => 'login'
     else

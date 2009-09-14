@@ -151,7 +151,8 @@ class Approvals < Application
                 student_id = params[:student_name][:name]["name_#{f}".intern]
                 class_id = params[:class_room][:room]["room_#{f}".intern] 
                 @study = Study.find_by_classroom_id_and_student_id(class_id, student_id)
-                Guardian.create({:student_id => student_id, :parent_id => @parent.id })
+                @guardian = Guardian.find_by_student_id_and_parent_id(student_id, @parent.id)
+                Guardian.create({:student_id => student_id, :parent_id => @parent.id }) unless @guardian.nil?
                 Study.update(@study.id, {:student_id => student_id, :classroom_id => class_id})
              end
            end
@@ -162,11 +163,11 @@ class Approvals < Application
          unless (params[:classes][:room]["room_#{f}".intern].nil? && params[:studs][:name]["name_#{f}".intern].nil? )
            if (params[:classes][:room]["room_#{f}".intern] != "" && params[:studs][:name]["name_#{f}".intern] != "")
               student_id = params[:studs][:name]["name_#{f}".intern]
-              class_id = params[:classes][:room]["room_#{f}".intern]
+              @classroom = @current_school.classrooms.find_by_class_name(params[:classes][:room]["room_#{f}".intern])
               @guardian = Guardian.find_by_student_id_and_parent_id(student_id, @parent.id)
-              @study = Study.find_by_classroom_id_and_student_id(class_id, student_id)
-              Guardian.update(@guardian.id, {:student_id => student_id, :classroom_id => class_id})
-              Study.update(@study.id, {:student_id => student_id, :classroom_id => class_id})
+              @study = Study.find_by_student_id(student_id)
+              Guardian.update(@guardian.id, {:student_id => student_id, :parent_id => @parent.id})
+              Study.update(@study.id, {:student_id => student_id, :classroom_id => @classroom.id})
            end
          end
        end
