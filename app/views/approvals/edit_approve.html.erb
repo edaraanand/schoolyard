@@ -3,7 +3,7 @@
      
      <% if (@parent.activate == true && @parent.approved == 1)  %> 
           <span class="reactive">The Parent has been Approved</span> | 
-          <%= link_to "Cancel", url(:approved, :id => @parent.id, :ref => "cancel" ), :class => "cancel" %>
+          <%= link_to "Deactivate", url(:approved, :id => @parent.id, :ref => "cancel" ), :class => "cancel" %>
      <% elsif (@parent.activate == false && @parent.approved == 3) %>
           <span class="deactive">The Parent has been Rejected</span> |
           <%= link_to "Approve", url(:approved, :id => @parent.id, :approve => "approve" ), :class => "reactive" %>
