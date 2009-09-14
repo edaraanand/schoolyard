@@ -1,22 +1,33 @@
 <fieldset>
   
-  <h2 class="current-page">Student Details 
+  <h2 class="current-page">Student Details </h2>
  
-     <%#= link_to "Edit", url(:student_edit), :class=> "edit-btn" %>  </h2>
-  
-    <% @registrations.each do |f| %>
+ <% if @registrations.empty? %>
     
-         <ul>
-             <li>Name: <%= f.name %></li>
-             <%# f.classrooms.each do |r| %>
+    <% @students.each do |f| %>
+
+           <ul>
+               <li>Name: <%= f.name %></li>
+                <% @study = f.studies.find_by_student_id(f.id) %>
+               <li>Current Class: <%= @study.classroom.class_name %></li>
+               <li>Birth month & Year: <%= f.birth_date.strftime("%b, %Y") %></li>
+           </ul>
+             <br class="clear"/>
+      <% end %>
+      
+ <% else %>
+  
+       <% @registrations.each do |f| %>
+       
+            <ul>
+                <li>Name: <%= f.name %></li>
                 <li>Current Class: <%= f.current_class %></li>
-             <%# end %>
-             <li>Birth month & Year: <%= f.birth_date.strftime("%b, %Y") %></li>
-             <!-- <li>Contact Number: <%#= f.phone %></li>
-                      <li>Address: <%#= f.address %></li> -->
-         </ul>
-           <br class="clear"/>
-    <% end %>
+                <li>Birth month & Year: <%= f.birth_date.strftime("%b, %Y") %></li>
+            </ul>
+              <br class="clear"/>
+       <% end %>
+       
+ <% end %>
     
     
 </fieldset>
