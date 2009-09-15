@@ -138,7 +138,7 @@ class Users < Application
             f.send_password_approve
           end
         end
-        redirect url(:parent_account, :label => "other")
+        redirect resource(:users, :selected => "parent_profile", :label => "other")
      else
         if @parent.update_attributes(params[:parent])
            redirect resource(:users, :selected => "parent_profile")
