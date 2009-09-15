@@ -1,43 +1,49 @@
-
 <ul class='error_messages'>
-     <% if flash[:error1] %> 
-		    <li><%= flash[:error1] %></li>
+     <% if flash[:error] %> 
+		    <li><%= flash[:error] %></li>
      <% end %>
 </ul>	 
 
 <h2 class="current-page"> My Profile > Edit </h2>
 
-<fieldset>                  
-
 <%= form_for :person, :action => url(:staff_account_update), :id => @person  do  %>
-    
+
+    <fieldset>     
         <ul>
              <li>
                 <%= text_field  :first_name,  :label => "Name", :class => "short " %>
                 <%= text_field  :last_name, :class => "short apart" %>
 	           </li>
              <li><label>Email</label>  <%= email(@person.email) %> </li>
+             <li>
+                  <% if (@person.principal_email == true) %>
+                      <input type="checkbox" name="principal_email" checked="true" />Display Email Address
+                  <% else %>
+                      <input type="checkbox" name="principal_email"  />Display Email Address
+                  <% end %>
+             </li>
              <li><%= text_field :phone,  :label => "Phone Number (optional)" %></li>
              <li><%= file_field :image,  :label => "Upload a Picture" %>
                      <% if @pic.nil? %>
                           <span class="picEdit">
-	                         <img src = "/images/Fotolia_5868614_XS.jpg" alt="Fotolia_5868614_XS.jpg" class ="teacherPic"/>
-	                      </span>
+	                           <img src = "/images/Fotolia_5868614_XS.jpg" alt="Fotolia_5868614_XS.jpg" class ="teacherPic"/>
+	                        </span>
                      <% else %>
                           <span class="picEdit">
-	                          <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
-	                      </span>
+	                           <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
+	                        </span>
                      <% end %>
               </li>
-             <li><%= text_area :person_bio,  :label => "Your Bio" %></li>
+              <li><%= text_area :person_bio,  :label => "Your Bio" %></li>
         </ul>
             <div class="save-cancel">
                 <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:staff_account), :class => "cancel" %>
             </div>
-
-     <% end =%>
+    </fieldset>
+     
+<% end =%>
    
-</fieldset>   
+   
    
    
 

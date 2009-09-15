@@ -54,8 +54,10 @@
                            <tr onclick="location.href='<%= url(:directory, f.person.id, :label => "staff") %>'" style="cursor:pointer">
                                 <td><%= f.person.last_name %></td>
                                 <td><%= f.person.first_name %>&nbsp;</td>
-                 	            <td nowrap><%= f.role.titleize %>-<%= f.classroom.class_name %>&nbsp;</td>
-                                <td><%= email(f.person.email) %>&nbsp;</td>
+                 	              <td nowrap><%= f.role.titleize %>-<%= f.classroom.class_name %>&nbsp;</td>
+                 	              <% if f.person.principal_email == true %>
+                                  <td><%= email(f.person.email) %>&nbsp;</td>
+                                <% end %>
                                 <td nowrap><%= number_to_phone(f.person.phone, :area_code => true) %>&nbsp;</td>
                                 <% unless session.user.type == "Parent" %>
                                    <td><%= link_to_right((right = "rights_others"), "Edit", url(:edit_person, f.person.id)  ) %></td>
@@ -92,8 +94,10 @@
                                  <td nowrap><% s.each do |f| %>
                                     <%= f.role.titleize %>-<%= f.classroom.class_name %><br/>
                                  <% end %>&nbsp;</td> 
-                                 <td><%= email(person.email) %>&nbsp;</td>
-      	                         <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>
+                                 <% if person.principal_email == true %>
+                                    <td><%= email(f.person.email) %>&nbsp;</td>
+                                 <% end %>
+                                 <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>
                                  <% unless session.user.type == "Parent" %>
                                     <td><%= link_to_right((right = "rights_others"), "Edit", url(:edit_person, person.id)  ) %></td>
                                  <% end %>

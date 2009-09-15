@@ -15,9 +15,10 @@
        <table cellpadding="8" cellspacing="0" border="0">
            <tr><td>Email
            </td><td>
-             <%= email(@staff.email) %>
+              <% if @staff.principal_email == true %>
+                 <%= email(@staff.email) %>
+              <% end %>
            </td></tr>
-            
            <tr><td class="separator">Contact Number
            </td><td class="separator">
               <%= @staff.phone ? number_to_phone(@staff.phone, :area_code => true)  : "<span class='noText'>not specified</span>"%>

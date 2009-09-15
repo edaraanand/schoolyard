@@ -8,52 +8,34 @@ class Users < Application
    
   def staff_account
     @person = session.user
-    @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
+    @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @person.id)
     render 
   end
   
   def staff_account_edit
     @person = session.user
-    @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
+    @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @person.id)
     render
   end
   
   def staff_account_update
      @person = session.user
-     @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
-     if params[:person][:image] != ""
-        if @content_types.include?(params[:person][:image][:content_type])
-            if @person.update_attributes(params[:person])
-               @pic = @current_school.attachments.find(:first, :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", @person.id])
-               unless @pic.nil?
-                 @pic.destroy
-               end
-                f = params[:person][:image][:filename]
-                file = File.basename(f.gsub(/\\/, '/'))
-               @attachment = Attachment.create( :attachable_type => "user_picture",
-                                                :attachable_id => @person.id, 
-                                                :filename => file,
-                                                :content_type => params[:person][:image][:content_type],
-                                                :size => params[:person][:image][:size],
-                                                :school_id => @current_school.id
-                 )
-                File.makedirs("public/uploads/#{@current_school.id}/pictures")
-                FileUtils.mv(params[:person][:image][:tempfile].path, "public/uploads/#{@current_school.id}/pictures/#{@attachment.id}")
-                redirect url(:staff_account)
-           else
-               render :staff_account_edit
-           end
-        else
-           flash[:error1] = "You can only upload images"
-           render :staff_account_edit
+     if @person.update_attributes(params[:person])
+        if params[:person][:image] != ""
+           @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @person.id)
+           @pic.destroy if @pic
+           Attachment.picture(params.merge(:school_id => @current_school.id), "user_picture", @person.id)
         end
-    else
-         if @person.update_attributes(params[:person])
-            redirect url(:staff_account)
-         else
-            render :staff_account_edit
-         end
-    end
+        if params[:principal_email] == "on"
+           @person.principal_email = true
+        else
+           @person.principal_email = false
+        end
+        @person.save
+        redirect url(:staff_account)
+     else
+        render :staff_account_edit
+     end
   end
   
   def staff_password

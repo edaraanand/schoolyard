@@ -23,19 +23,31 @@ class Attachment < ActiveRecord::Base
      FileUtils.mv( params[:attachment]['file_'+i.to_s][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
   end
   
+   # Creating Pictures for users and spot lights
+   
   def self.picture(params, type, id)
-      f = params[:spot_light][:image][:filename]
+      if type == "spot_light"
+        f = params[:spot_light][:image][:filename]
+        size = params[:spot_light][:image][:size]
+        content_type = params[:spot_light][:image][:content_type]
+        temp = params[:spot_light][:image][:tempfile]
+      else
+        f = params[:person][:image][:filename]
+        size = params[:person][:image][:size]
+        content_type = params[:person][:image][:content_type]
+        temp = params[:person][:image][:tempfile]
+      end
       file = File.basename(f.gsub(/\\/, '/'))
       @current_school = School.find_by_id(params[:school_id])
       @attachment = Attachment.create( :attachable_id => id,
                                        :attachable_type => type,
                                        :filename => file,
-                                       :size => params[:spot_light][:image][:size],
-                                       :content_type => params[:spot_light][:image][:content_type],
+                                       :size => size,
+                                       :content_type => content_type,
                                        :school_id => @current_school.id
                                      )
       File.makedirs("public/uploads/#{@current_school.id}/pictures")
-      FileUtils.mv(params[:spot_light][:image][:tempfile].path, "public/uploads/#{@current_school.id}/pictures/#{@attachment.id}")
+      FileUtils.mv(temp.path, "public/uploads/#{@current_school.id}/pictures/#{@attachment.id}")
   end
   
   def self.announcements(id, school_id)
