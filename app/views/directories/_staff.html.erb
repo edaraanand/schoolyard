@@ -95,7 +95,7 @@
                                     <%= f.role.titleize %>-<%= f.classroom.class_name %><br/>
                                  <% end %>&nbsp;</td> 
                                  <% if person.principal_email == true %>
-                                    <td><%= email(f.person.email) %>&nbsp;</td>
+                                    <td><%= email(person.email) %>&nbsp;</td>
                                  <% end %>
                                  <td nowrap><%= number_to_phone(person.phone, :area_code => true) %>&nbsp;</td>
                                  <% unless session.user.type == "Parent" %>
