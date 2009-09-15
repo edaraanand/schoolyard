@@ -20,7 +20,7 @@
        <% @selected = "parent_profile" %>
        <h2 class="current-page"> My Profile 
            <%= link_to "Edit", url(:parent_account_edit), :id => @parent, :class=> "edit-btn" %>
-           <%= link_to "Change Password", url(:parent_password), :class => "edit-btn" %> 
+           <%= link_to "Change Password", url(:password, :selected => "parent_profile"), :class => "edit-btn" %> 
        </h2>
        <ul>
            <li>Name : <%= @parent.name %></li>

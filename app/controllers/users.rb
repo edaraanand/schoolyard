@@ -3,7 +3,7 @@ class Users < Application
    before :ensure_authenticated
    layout 'account'
    before :find_school
-   before :staff_selected_link, :only => [:staff_account, :staff_account_edit, :staff_password, :staff_account_update]
+   before :staff_selected_link, :only => [:staff_account, :staff_account_edit, :staff_account_update]
    
    
   def staff_account
@@ -38,65 +38,42 @@ class Users < Application
      end
   end
   
-  def staff_password
+  def password
+    @selected = params[:selected]
     @person = session.user
     render
-  end 
-  
-  def staff_password_update
-     @person = session.user
-     if  @current_school.people.authenticate(@person.email, @current_school.id, params[:person][:old_password])
-      if (( params[:person][:password] == params[:person][:password_confirmation]) && !params[:person][:password_confirmation].blank?)
-        if @person.update_attributes(params[:person])
-           redirect url(:staff_account)
-        else
-          flash[:error1] = "You should enter Minimum Length of 8 Characters"
-           render :staff_password
-        end
-      else
-        flash[:error2] = "Your Password doesn't match"
-        render :staff_password
-      end
-
-    else
-      flash[:error3] = "Your current password doesn't match existing password"
-      render :staff_password
-    end
-   
   end
   
+  def change_password
+    @person = session.user
+    @selected = params[:selected]
+    if @current_school.people.authenticate(@person.email, @current_school.id, params[:person][:old_password])
+       if ((params[:person][:password] == params[:person][:password_confirmation]) && 
+           !params[:person][:password_confirmation].blank?)
+           if @person.update_attributes(params[:person])
+              if @person.type == "Staff"
+                 redirect url(:staff_account)
+              else
+                 redirect url(:parent_account)
+              end
+           else
+              flash[:error] = "You should enter Minimum Length of 8 Characters"
+              render :password
+           end
+       else
+          flash[:error] = "Your current password doesn't match existing password"
+          render :password
+       end
+    else
+       flash[:error] = "Your current password doesn't match existing password"
+       render :password
+    end
+  end
   
   def parent_account
      @parent = session.user
      @students = @parent.students
      render
-  end
-  
-  def parent_password
-     @selected = "parent_profile"
-     @parent = session.user
-     render
-  end
-  
-  def parent_password_change
-    @parent = session.user
-    if @current_school.people.authenticate(@parent.email, @current_school.id, params[:parent][:old_password])
-        if (( params[:parent][:password] == params[:parent][:password_confirmation]) && !params[:parent][:password_confirmation].blank?)
-           if @parent.update_attributes(params[:parent])
-              redirect url(:parent_account)
-           else
-             flash[:error1] = "You should enter Minimum Length of 8 Characters"
-              render :parent_password
-           end
-        else
-           flash[:error2] = "Your Password doesn't match"
-           render :parent_password
-        end
-     else
-        flash[:error3] = "Your current password doesn't match existing password"
-        render :parent_password
-     end
-    
   end
   
   def parent_account_edit
