@@ -90,6 +90,7 @@ Merb::Router.prepare do
        resources :tasks
        resources :directories
        match("/edit_approve").to(:controller => 'approvals', :action => 'edit_approve').name(:edit_approve)
+       match("/sms_log_details").to(:controller => 'notifications', :action => 'sms_log_details').name(:sms_log_details)
        match("/approved").to(:controller => 'approvals', :action => 'approved').name(:approved)
        match("/template_download").to(:controller => 'students', :action => 'template_download').name(:template_download)
        match("/import").to(:controller => 'students', :action => 'import').name(:import)

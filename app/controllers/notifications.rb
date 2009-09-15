@@ -4,6 +4,7 @@ class Notifications < Application
    before :find_school
    before :get_logs, :only => [:index]
    before :status_messages
+   before :sms_status_codes, :only => [:sms_log_details]
    provides :html, :xml
       
   def index
@@ -35,7 +36,9 @@ class Notifications < Application
         @num = number.join(',')
         unless @num.empty?
            api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
-           api.send_message("#{@num}", "#{@announcement.content}")
+           msg_code = api.send_message("#{@num}", "#{@announcement.content}")
+           @person = @current_school.people.find_by_sms_alert("#{num}")
+           LoggerMachine.create({:person_id => @person.id, :school_id => @current_school.id, :announcement_id => @announcement.id, :sms_code => "#{msg_code}"})                                     
         end 
         run_later do
           @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
@@ -47,9 +50,44 @@ class Notifications < Application
   end
   
   def show
-    @announcement = @current_school.announcements.find_by_id(params[:id])
-    raise NotFound unless @announcement
+    @announcement = @current_school.announcements.find_by_id(params[:id]) rescue NotFound     
     log_details(@announcement.id)
+    render
+  end
+  
+  def sms_log_details
+    @announcement = @current_school.announcements.find_by_id(params[:id]) rescue NotFound 
+    status_codes = []
+    sms_people = []
+    report = []
+    people = []
+    @sms_codes = @current_school.logs.find(:all, :select => 'sms_code, person_id', :conditions => ["announcement_id = ?", @announcement.id ])
+    @sms_codes.each do |f|
+      unless f.sms_code.nil?
+        api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
+        status_codes <<  api.message_status("#{f.sms_code}")
+        sms_people << f.person_id
+      end
+    end
+    details = status_codes.zip(sms_people)
+    details.each do |f|
+       #raise f[0].inspect
+       if @@reports.has_value?(f[0])
+          f[0] = @@reports.index(f[0])
+          puts f[0].inspect
+          puts "cool".inspect
+       end
+       if @@sms.has_key?(f[0])
+         status = @@sms[f[0]] 
+         puts "indu".inspect
+         puts f[0].inspect
+       end
+       puts status.inspect
+       puts "naidu".inspect
+       report << status
+       people << @current_school.people.find_by_id(f[1])
+    end
+    @sms_details =  report.zip(people)
     render
   end
   
@@ -154,7 +192,7 @@ class Notifications < Application
   def log_details(id)
     phones = []
     status = []
-    @logs = @current_school.logs.find(:all, :conditions => ['announcement_id = ?', id])  
+    @logs = @current_school.logs.find(:all, :conditions => ["announcement_id = ?", id])  
     @logs.each do |f| 
       @@log_twilio.each do |t|
         if t[0] == f.twilio_call_id
@@ -213,6 +251,18 @@ class Notifications < Application
      @@message_report  =  { :a => "0", :b => "1",
                             :c => "2", :d => "3", 
                             :e => "4", :f => "5" }
+  end
+  
+  def sms_status_codes
+    @@sms = { :a => "Message unknown", :b => "Message queued", :c => "Delivered to gateway", :d => "Received by recipient", 
+              :e => "Error with message", :f => "User cancelled message delivery", :g => "Error delivering message",
+              :h => "OK", :i => "Routing error", :j => "Message queued for later delivery",
+              :k => "Out of credit"  }
+              
+    @@reports =  { :a => "001", :b => "002", :c => "003", :d => "004", 
+                   :e => "005", :f => "006", :g => "007", :h => "008",
+                   :i => "009", :j => "010", :k => "011" }
+    
   end
  
 end                                                                         
