@@ -20,6 +20,7 @@ class Notifications < Application
   def create
      @announcement = @current_school.announcements.new(params[:announcement])    
      if @announcement.valid?   
+        sms_numbers = []
         @announcement.access_name = "Home Page"
         @announcement.label = "urgent"
         content = format(params[:announcement][:content])
@@ -28,18 +29,24 @@ class Notifications < Application
         makecall(@announcement.id)
         twitter = Twitter.new(@current_school.username, @current_school.password)
         twitter.post(params[:announcement][:content])
-        @people = @current_school.people.find(:all)
-        numbers = @people.collect{ |x| x.sms_alert }
-        eee = numbers.compact
-        num = eee.delete_if{|x| x == ""}
-        number = num.collect{|x| "1" + x }
-        @num = number.join(',')
-        unless @num.empty?
-           api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
-           msg_code = api.send_message("#{@num}", "#{@announcement.content}")
-           @person = @current_school.people.find_by_sms_alert("#{num}")
-           LoggerMachine.create({:person_id => @person.id, :school_id => @current_school.id, :announcement_id => @announcement.id, :sms_code => "#{msg_code}"})                                     
-        end 
+        numbers = @current_school.people.find(:all).collect{ |x| x.sms_alert }.compact.delete_if{|x| x == ""}.collect{|x| "1" + x }
+        api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
+        unless numbers.empty?
+          numbers.each do |f|
+             msg_code = api.send_message("#{f}", "#{@announcement.content}")
+             n = f.split(',').flatten
+             i = n[0].split('')
+             l = i.shift
+             sms_numbers << "#{i.join()}"
+             @person = @current_school.people.find_by_sms_alert("#{i.join()}")
+             puts @person.inspect
+             puts msg_code.inspect
+             puts "hurry".inspect
+             LoggerMachine.create({:person_id => @person.id, :school_id => @current_school.id, :announcement_id => @announcement.id, :sms_code => "#{msg_code}"})  
+          end
+        end  
+        puts sms_numbers.inspect
+        puts "hip hip".inspect
         run_later do
           @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
         end
@@ -59,35 +66,36 @@ class Notifications < Application
     @announcement = @current_school.announcements.find_by_id(params[:id]) rescue NotFound 
     status_codes = []
     sms_people = []
-    report = []
+    sms_report = []
     people = []
     @sms_codes = @current_school.logs.find(:all, :select => 'sms_code, person_id', :conditions => ["announcement_id = ?", @announcement.id ])
+    api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
     @sms_codes.each do |f|
       unless f.sms_code.nil?
-        api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
         status_codes <<  api.message_status("#{f.sms_code}")
+        puts status_codes.inspect
+        puts "ind".inspect
         sms_people << f.person_id
       end
     end
     details = status_codes.zip(sms_people)
     details.each do |f|
-       #raise f[0].inspect
-       if @@reports.has_value?(f[0])
-          f[0] = @@reports.index(f[0])
-          puts f[0].inspect
-          puts "cool".inspect
+       if @@reports.has_value?("#{f[0]}")
+          l = @@reports.index("#{f[0]}")
        end
-       if @@sms.has_key?(f[0])
-         status = @@sms[f[0]] 
-         puts "indu".inspect
-         puts f[0].inspect
+       if @@msgs.has_value?("#{f[0]}")
+          t = @@msgs.index("#{f[0]}")
        end
-       puts status.inspect
-       puts "naidu".inspect
-       report << status
-       people << @current_school.people.find_by_id(f[1])
+       if @@sms.has_key?(t)
+          status = @@sms[t] 
+       end
+       if @@sms.has_key?(l)
+          status = @@sms[l] 
+       end
+       sms_report << status
+       people << "#{f[1]}"
     end
-    @sms_details =  report.zip(people)
+    @sms_details = sms_report.zip(people)
     render
   end
   
@@ -259,9 +267,13 @@ class Notifications < Application
               :h => "OK", :i => "Routing error", :j => "Message queued for later delivery",
               :k => "Out of credit"  }
               
-    @@reports =  { :a => "001", :b => "002", :c => "003", :d => "004", 
-                   :e => "005", :f => "006", :g => "007", :h => "008",
-                   :i => "009", :j => "010", :k => "011" }
+    @@msgs =  { :a => "001", :b => "002", :c => "003", :d => "004", 
+                :e => "005", :f => "006", :g => "007", :h => "008",
+                :i => "009", :j => "010", :k => "011" }
+                   
+    @@reports =  { :a => "1", :b => "2", :c => "3", :d => "4", 
+                    :e => "5", :f => "006", :g => "7", :h => "8",
+                    :i => "9", :j => "10", :k => "11" }
     
   end
  

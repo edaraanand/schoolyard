@@ -19,10 +19,11 @@
        	    </thead>
        	    <tbody>
        	       <% @sms_details.each do |f| %>
+       	             <% @person = @current_school.people.find_by_id(f[1]) %>
                     <tr>
-          	            <td><%= f[1].last_name %> </td>
-          	            <td><%= f[1].first_name %></td>
-          	            <td><%= f[1].sms_alert %> </td>
+          	            <td><%= @person.last_name %> </td>
+          	            <td><%= @person.first_name %></td>
+          	            <td><%= @person.sms_alert %> </td>
           	            <td><%= f[0] %> </td>
           	        </tr>
           	   <% end %>
