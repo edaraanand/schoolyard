@@ -65,6 +65,7 @@ Merb::Router.prepare do
  
   authenticate do
        resources :parents
+       resources :users
        resources :approvals
        resources :schools
        resources :people
@@ -150,10 +151,9 @@ Merb::Router.prepare do
        match("/edit_details").to(:controller => 'from_principals', :action => 'edit_details').name(:edit_details)
        match("/update_details").to(:controller => 'from_principals', :action => 'update_details').name(:update_details)
        match(:first_subdomain => 'admin').to(:controller => 'admin', :action => 'index') 
-       match("/parent_account").to(:controller => 'users', :action => 'parent_account').name(:parent_account)
+     
        match("/parent_account_edit").to(:controller => 'users', :action => 'parent_account_edit').name(:parent_account_edit)
        match("/parent_update").to(:controller => 'users', :action => 'parent_update').name(:parent_update)
-       match("/staff_account").to(:controller => 'users', :action => 'staff_account').name(:staff_account)
        match("/staff_account_edit").to(:controller => 'users', :action => 'staff_account_edit').name(:staff_account_edit)
        match("/staff_account_update").to(:controller => 'users', :action => 'staff_account_update').name(:staff_account_update)
        match("/student_details").to(:controller => 'users', :action => 'student_details').name(:student_details)

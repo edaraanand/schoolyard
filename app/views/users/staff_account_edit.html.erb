@@ -37,7 +37,7 @@
               <li><%= text_area :person_bio,  :label => "Your Bio" %></li>
         </ul>
             <div class="save-cancel">
-                <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:staff_account), :class => "cancel" %>
+                <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:users, :selected => "staff_profile"), :class => "cancel" %>
             </div>
     </fieldset>
      

@@ -62,9 +62,9 @@
        <p class="welcome">Welcome <em><%= session.user.name %></em></p>
         <ul>  <% @access_rights = session.user.access_peoples  %>
          <% if @access_rights.length == 0 %>
-             <li class="first"><%= link_to "My Account", url(:parent_account) %></li>
+             <li class="first"><%= link_to "My Account", resource(:users, :selected => "parent_profile") %></li>
          <% else %>
-             <li class="first"><%= link_to "My Account", url(:staff_account) %>&nbsp;</li>
+             <li class="first"><%= link_to "My Account", resource(:users, :selected => "staff_profile") %>&nbsp;</li>
          <% end %>
             <li>&nbsp;<%= link_to "Feedback", url(:feedback, :new)  %></li>
             <li>&nbsp;<%= link_to "Logout", url(:logout) %></li>

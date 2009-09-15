@@ -41,7 +41,7 @@
           </fieldset>
           
           <div class="save-cancel">
-              <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:parent_account, :label => "other"), :class => "cancel" %>
+              <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:users, :selected => "parent_profile", :label => "other"), :class => "cancel" %>
           </div>
            
        <% end =%>
@@ -66,7 +66,7 @@
              </ul>
          </fieldset>
          <div class="save-cancel">
-             <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:parent_account), :class => "cancel" %>
+             <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:users, :selected => "parent_profile"), :class => "cancel" %>
          </div>
                
      <% end =%>

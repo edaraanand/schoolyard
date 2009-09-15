@@ -3,14 +3,20 @@ class Users < Application
    before :ensure_authenticated
    layout 'account'
    before :find_school
-   before :staff_selected_link, :only => [:staff_account, :staff_account_edit, :staff_account_update]
+   before :staff_selected_link, :only => [:staff_account_edit, :staff_account_update]
    
-   
-  def staff_account
+  def index
     @person = session.user
-    @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @person.id)
-    render 
-  end
+    @selected = params[:selected]
+    if @person.type == "Staff"
+       @person = session.user
+       @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @person.id)
+    else
+       @parent = session.user
+       @students = @parent.students
+    end
+    render
+  end 
   
   def staff_account_edit
     @person = session.user
@@ -32,7 +38,7 @@ class Users < Application
            @person.principal_email = false
         end
         @person.save
-        redirect url(:staff_account)
+        redirect resource(:users, :selected => "staff_profile")
      else
         render :staff_account_edit
      end
@@ -52,9 +58,9 @@ class Users < Application
            !params[:person][:password_confirmation].blank?)
            if @person.update_attributes(params[:person])
               if @person.type == "Staff"
-                 redirect url(:staff_account)
+                 redirect resource(:users, :selected => "staff_profile")
               else
-                 redirect url(:parent_account)
+                 redirect resource(:users, :selected => "parent_profile")
               end
            else
               flash[:error] = "You should enter Minimum Length of 8 Characters"
@@ -68,12 +74,6 @@ class Users < Application
        flash[:error] = "Your current password doesn't match existing password"
        render :password
     end
-  end
-  
-  def parent_account
-     @parent = session.user
-     @students = @parent.students
-     render
   end
   
   def parent_account_edit
@@ -141,7 +141,7 @@ class Users < Application
         redirect url(:parent_account, :label => "other")
      else
         if @parent.update_attributes(params[:parent])
-           redirect url(:parent_account)
+           redirect resource(:users, :selected => "parent_profile")
         else
            render :parent_account_edit
         end
@@ -170,7 +170,7 @@ class Users < Application
   #    @students = @parent.students
   #    @classrooms = @current_school.active_classrooms
   #    student_id = @students.collect{|x| x.id }
-  #    redirect url(:parent_account)
+  #    redirect resource(:users, :selected => "parent_profile")
   #  end
   
   def phone
