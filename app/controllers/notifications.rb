@@ -39,14 +39,9 @@ class Notifications < Application
              l = i.shift
              sms_numbers << "#{i.join()}"
              @person = @current_school.people.find_by_sms_alert("#{i.join()}")
-             puts @person.inspect
-             puts msg_code.inspect
-             puts "hurry".inspect
              LoggerMachine.create({:person_id => @person.id, :school_id => @current_school.id, :announcement_id => @announcement.id, :sms_code => "#{msg_code}"})  
           end
         end  
-        puts sms_numbers.inspect
-        puts "hip hip".inspect
         run_later do
           @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
         end
@@ -73,8 +68,6 @@ class Notifications < Application
     @sms_codes.each do |f|
       unless f.sms_code.nil?
         status_codes <<  api.message_status("#{f.sms_code}")
-        puts status_codes.inspect
-        puts "ind".inspect
         sms_people << f.person_id
       end
     end
