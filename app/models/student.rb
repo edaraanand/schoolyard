@@ -1,6 +1,6 @@
 class Student < Person
 	    
-	   attr_accessor :csv_file
+	   attr_accessor :file_c
 	   
      belongs_to :school
      has_many :guardians

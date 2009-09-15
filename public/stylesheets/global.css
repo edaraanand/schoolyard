@@ -494,8 +494,11 @@ h3.name {font-size:140%;border-bottom:1px dashed #e8e8e8; padding:40px 0 10px 0;
 .nopic{line-height:1em; background:#555;color:#fff; text-align:left; padding: 0 0 5px 10px;opacity:.75;
         filter:alpha(opacity=85);}
 .teacherPic{width:124px;padding:6px 0; margin: 4px auto;}
-.last.pic{text-align:center;}
+.last.pic, div.pic{text-align:center;}
 .prinPic{width:232px; margin:0 auto;}
+
+/* Spot Light Pic */
+div.spot-pic{text-align:left;}
 
 .urgent-announce #announcement_content{height:5em;}
 #content .urgent-title{color:#f63; font-size:14px;}

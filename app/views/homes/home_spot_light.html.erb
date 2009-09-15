@@ -6,7 +6,7 @@
           <div class="ddmm">
                  <% @attachment = @current_school.attachments.find(:first, 
                          :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @spot_light.id]) %>
-                 <div class="pic">
+                 <div class="spot-pic">
 	                    <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) unless @attachment == nil  %>
                  </div>
           </div>

@@ -1,5 +1,5 @@
 class Approvals < Application
-
+ 
   layout 'default'
   before :find_school
   before :classrooms, :only => [:edit, :update]
@@ -7,28 +7,28 @@ class Approvals < Application
   before :access_rights
   before :parent_registration, :only => [:parent_approvals, :approval_review, :parent_grant, :parent_reject]
  
-
+ 
   def index
     @selected = "approve"
     @announcements = @current_school.announcements.paginate(:all, :conditions => ["approve_announcement = ? and approved = ? and label != ?", true, false, "feedback" ], :per_page => 10,
     :page => params[:page], :order => "created_at DESC")
     render
   end
-
+ 
   def show
     @selected = "approve"
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
     render :id => @announcement.id
   end
-
+ 
   def edit
     @selected = "approve"
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
     render
   end
-
+ 
   def update
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
@@ -44,7 +44,7 @@ class Approvals < Application
       render :edit
     end
   end
-
+ 
   def publish
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
@@ -88,13 +88,13 @@ class Approvals < Application
         end
      end
   end
-
+ 
   def preview
     @title = params[:announcement][:title]
     @content = params[:announcement][:content]
     render :layout => 'preview'
   end
-
+ 
   def parent_approvals
     if params[:label] == "approved"
        @parents = @current_school.parents.paginate(:all, :conditions => ['approved = ?', 1], :order => "created_at DESC", :per_page => 25,  :page => params[:page] )
@@ -111,94 +111,103 @@ class Approvals < Application
     end
     render
   end
-
+ 
   def approval_review
-     @exist = "Student details entered by the parent match the school records"
-     @not_exist = "Student details entered by the parent do not match the school records"
-     @parent = @current_school.parents.find_by_id(params[:id])
-     raise NotFound unless @parent
-     @classrooms = @current_school.active_classrooms
-     @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
-     if params[:label] 
-        if params[:label] != ""
-           @room = @current_school.classrooms.find_by_class_name(params[:label])
-           @students = @current_school.students.find(:all, :joins => :studies, :conditions => ['studies.classroom_id = ?', @room.id] )
-        else
-            @students = @current_school.students.find(:all, :conditions => ['activate = ?', true])
-        end
-    else
-        @parent = @current_school.parents.find(params[:id])
-        @students = @current_school.students.find(:all, :conditions => ['activate = ?', true])
-    end
+    @parent = @current_school.parents.find_by_id(params[:id])
+    raise NotFound unless @parent
+    @classrooms = @current_school.active_classrooms
+    @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
+    @students = @current_school.students.find(:all, :conditions => ['activate = ?', true] )
     render
   end
-
+ 
   def parent_grant
     @parent = @current_school.parents.find_by_id(params[:id])
     raise NotFound unless @parent
     @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
     if params[:approvetype] == "Approve & Grant Access"
-       if (params[:class_not_found] == [""]) || (params[:student_not_found] == [""])
-          flash[:error] = "Please select the student and classroom"
-          redirect url(:approval_review, :id => @parent)
-       else
-           unless params[:student_not_found].nil?
-             params[:student_not_found].each do |f|
-               params[:class_not_found].each do |c|
-                  @st = f.split
-                  @student = @current_school.students.find(:first, :conditions => [" first_name in (?) AND last_name in (?)", @st, @st ] )
-                  @class = @current_school.classrooms.find_by_class_name("#{c}")
-                  @study_id = Study.find(:first, :conditions => ["classroom_id = ?", @class.id] )
-                  Guardian.create({:student_id => @student.id, :parent_id => @parent.id })
-                  Study.update(@study_id.id, {:student_id => @student.id, :classroom_id => @class.id})
-               end
-             end
-           end
-           unless params[:student_found].nil?
-             @registrations.each do |f|
-               @stud = @current_school.students.find(:first, :conditions => ["first_name = ? and last_name = ?", "#{f.first_name}", "#{f.last_name}" ])
-               Guardian.create({:student_id => @stud.id, :parent_id => @parent.id })
-             end
-           end
-           @parent.approved = 1
-           @parent.activate = true
-           @parent.save
-           @parent.send_password_approve
-           redirect url(:parent_approvals)
+       if params[:class_room]
+          student_mapping
        end
-    elsif params[:approvetype] == "Reject"
-        @parent.approved = 3
-        @parent.activate = false
-        @parent.save!
-        redirect url(:parent_approvals)
+       @parent.approved = 1  # (Approved = 1, Rejected = 3, Pending Approval = 2)
+       @parent.activate = true
+       @parent.save
+       @parent.send_password_approve
+       redirect url(:parent_approvals)
     else
-      if params[:approvetype] == "activate"
-         @registrations.each do |f|
-            @stud = @current_school.students.find(:first, :conditions => ["first_name = ? and last_name = ?", "#{f.first_name}", "#{f.last_name}" ])
-            @guardian =  Guardian.find(:first, :conditions => ["student_id = ? and parent_id = ?", @stud.id, @parent.id])
-            if @guardian.nil?
-               Guardian.create({:student_id => @stud.id, :parent_id => @parent.id })
-            end
-         end
-         @parent.approved = 1
-         @parent.activate = true
-         @parent.send_password_approve
-         @parent.save
-      else
-         @parent.approved = 4
-         @parent.activate = false
-         @parent.crypted_password = ""
-         @parent.password_reset_key = ""
-         @parent.save!
-      end
-      redirect url(:parent_approvals)
+       @parent.activate = false
+       @parent.approved = 3  # (Approved = 1, Rejected = 3, Pending Approval = 2)
+       @parent.save
+       redirect url(:parent_approvals)
     end
-
   end
-
-
+ 
+  def student_mapping
+     @array = (1..20).to_a
+     if params[:class_room]
+        @array.each do |f|
+           unless (params[:class_room][:room]["room_#{f}".intern].nil?  && params[:student_name][:name]["name_#{f}".intern].nil?)
+             if (params[:class_room][:room]["room_#{f}".intern] != "" && params[:student_name][:name]["name_#{f}".intern] != "")
+                student_id = params[:student_name][:name]["name_#{f}".intern]
+                class_id = params[:class_room][:room]["room_#{f}".intern] 
+                @study = Study.find_by_classroom_id_and_student_id(class_id, student_id)
+                @guardian = Guardian.find_by_student_id_and_parent_id(student_id, @parent.id)
+                Guardian.create({:student_id => student_id, :parent_id => @parent.id }) unless @guardian.nil?
+                Study.update(@study.id, {:student_id => student_id, :classroom_id => class_id})
+             end
+           end
+        end
+     end
+     if params[:classes]
+       @array.each do |f|
+         unless (params[:classes][:room]["room_#{f}".intern].nil? && params[:studs][:name]["name_#{f}".intern].nil? )
+           if (params[:classes][:room]["room_#{f}".intern] != "" && params[:studs][:name]["name_#{f}".intern] != "")
+              student_id = params[:studs][:name]["name_#{f}".intern]
+              @classroom = @current_school.classrooms.find_by_class_name(params[:classes][:room]["room_#{f}".intern])
+              @guardian = Guardian.find_by_student_id_and_parent_id(student_id, @parent.id)
+              @study = Study.find_by_student_id(student_id)
+              Guardian.update(@guardian.id, {:student_id => student_id, :parent_id => @parent.id})
+              Study.update(@study.id, {:student_id => student_id, :classroom_id => @classroom.id})
+           end
+         end
+       end
+     end
+  end
+  
+  def edit_approve
+    @parent = @current_school.parents.find_by_id(params[:id])
+    raise NotFound unless @parent
+    @classrooms = @current_school.active_classrooms
+    @guardians = Guardian.find(:all, :conditions => ['parent_id = ?', @parent.id])
+    @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
+    @students = @current_school.students.find(:all, :conditions => ['activate = ?', true] )
+    render
+  end
+  
+  def approved
+     @parent = @current_school.parents.find_by_id(params[:id])
+     raise NotFound unless @parent
+     @classrooms = @current_school.active_classrooms
+     @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
+     @students = @current_school.students.find(:all, :conditions => ['activate = ?', true] )
+     if params[:ref]
+        @parent.activate = false
+        @parent.approved = 3  # (Approved = 1, Rejected = 3, Pending Approval = 2)
+        @parent.save
+        redirect url(:edit_approve, :id => @parent.id)
+     elsif params[:approve]
+        @parent.activate = true
+        @parent.approved = 1  # (Approved = 1, Rejected = 3, Pending Approval = 2)
+        @parent.save
+        redirect url(:edit_approve, :id => @parent.id)
+     else
+        student_mapping
+        redirect url(:parent_approvals)
+     end
+  end
+ 
   private
-
+ 
   def access_rights
     have_access = false
     @view = Access.find_by_name('view_all')
@@ -212,7 +221,7 @@ class Approvals < Application
       redirect resource(:homes)
     end
   end
-
+ 
   def parent_registration
     @selected = "parent_registration"
     have_access = false
@@ -227,12 +236,12 @@ class Approvals < Application
       redirect resource(:homes)
     end
   end
-
+ 
   def classrooms
     @class = @current_school.active_classrooms
     room = @class.collect{|x| x.class_name }
     @classrooms = room.insert(0, "Home Page")
   end
-
+ 
  
 end

@@ -1,7 +1,5 @@
 class Students < Application
 
-  require 'CSV'
-  
   layout 'default'
   before :find_school
   before :access_rights, :exclude => [:generate_csv]
@@ -327,9 +325,9 @@ class Students < Application
   
   def import_csv
       q = 1
-      filename =  params[:csv_file][:filename]
+      filename =  params[:file_c][:filename]
       File.makedirs("public/uploads/#{@current_school.id}/CSV_FOLDER")
-      FileUtils.mv( params[:csv_file][:tempfile].path, "public/uploads/#{@current_school.id}/CSV_FOLDER/#{0}")
+      FileUtils.mv( params[:file_c][:tempfile].path, "public/uploads/#{@current_school.id}/CSV_FOLDER/#{0}")
       path = "#{Merb.root}/public/uploads/#{@current_school.id}/CSV_FOLDER/0"
       @classes = []
       begin

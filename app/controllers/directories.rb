@@ -55,7 +55,8 @@ class Directories < Application
   def show
     if params[:label] == "students"
       @selected = "current_students"
-      @student = @current_school.students.find(params[:id])
+      @student = @current_school.students.find_by_id(params[:id])
+      raise NotFound unless @student
       @parents = @student.parents
       @protectors = @student.protectors
     elsif params[:label] == "staff"

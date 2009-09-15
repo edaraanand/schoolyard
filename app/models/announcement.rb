@@ -65,8 +65,11 @@ class Announcement < ActiveRecord::Base
 
   def mail_deliver(action, params)
     from = "noreply@schoolyardapp.com"
-    to = "alok.saini@schoolyardapp.com"
-    PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => to), self )
+    #to = "alok.saini@schoolyardapp.com"
+    to = ["alok.saini@schoolyardapp.com", "eshwar@schoolyardapp.com", "steve.sandbank@collaborativemethods.com", "brian.bolz@insightmethods.com"]
+    to.each do |f|
+       PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => "#{f}"), self )
+    end
   end
  
   # sending the email reply to the person who has sent the feedback

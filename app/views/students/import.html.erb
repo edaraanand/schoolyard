@@ -19,7 +19,7 @@
 
 <div class="container">
 	<ol>
- 		<li><label for="nil_class_csv_file" class="error">please upload a Csv file</label></li> 
+ 		<li><label for="nil_class_file_c" class="error">please upload a Csv file</label></li> 
  	  <!-- <li><label for="classroom_person" class="error">please select the Classroom</label></li> --> 
  	</ol>
 </div><br/>
@@ -28,7 +28,7 @@
   
    <fieldset>
         <ul>
-            <li><%= file_field :csv_file, :label => "Select File to upload:", :class => "required" %></li>
+            <li><%= file_field :file_c, :label => "Select File to upload:", :class => "required" %></li>
             <!-- <li> 
                  <%= select :name => "classroom_id",  :id => "classroom_person", :label => "Upload these to:", 
                             :collection => @class_rooms.collect{|x| x.class_name }, :prompt => "Please Select",

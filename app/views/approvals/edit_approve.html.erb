@@ -1,44 +1,59 @@
 <div>
      <h2 class="current-page">Parent Registrations </h2>
-     <%= partial 'student_data' %>
-     <%= form_for :parent, :action => url(:parent_grant, :id => @parent), :name => "approveform" do %> 
      
-          <a href="" class="add-more" onClick="addFormField(); return false;">Associate students to this parent</a><br/>
-          <span class="subText">
-             (this is optional and can be done later)<br/>
-          </span><br/>
-          <span class="subText" id ="note" style="display:none">
-             If the name that you wish to associate to this parent does not appear in the list,
-             please add that student by going to the ‘Student Directory’.<br/>
-             You may than come back and map this parent to the student.
-          </span><br/><br/>
-          
-          <ul id="students"></ul><br/><br/>
-          <span id="more" style="display:none">
-              <a href="" class="add-more" onClick="add(); return false;">Add More</a><br/>
-          </span>
-                  
-          <hr size="1"  class="clear"/>
+     <% if (@parent.activate == true && @parent.approved == 1)  %> 
+          <span class="reactive">The Parent has been Approved</span> | 
+          <%= link_to "Deactivate", url(:approved, :id => @parent.id, :ref => "cancel" ), :class => "cancel" %>
+     <% elsif (@parent.activate == false && @parent.approved == 3) %>
+          <span class="deactive">The Parent has been Rejected</span> |
+          <%= link_to "Approve", url(:approved, :id => @parent.id, :approve => "approve" ), :class => "reactive" %>
           <br/><br/>
-          <input type="hidden" name="approvetype" />
-         	
-          <a href="javascript:getsupport('Approve &amp; Grant Access')" class="reactive">Approve </a>
-          <a href="javascript:getsupport('Reject')" class="deactive">Reject</a>
-          &nbsp;&nbsp;&nbsp;&nbsp;Or&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Decide Later", url(:parent_approvals) %>
-          
-     <% end =%>   
-    
-       
-</div>
-   
+     <% end %>
+     
+     <%= partial 'student_data' %><br/>
+     
+     <%= form_for :parent, :action => url(:approved, :id => @parent), :name => "approveform" do %> 
+
+            <% unless @guardians.empty? %>
+                  <% q = 1 %>
+                  <% @guardians.each do |f| %>
+                  
+                       <% @study = Study.find_by_student_id(f.student_id) %>
+                       <% @class = @current_school.classrooms.find_by_id(@study.classroom_id) %>
+                       <%= select :name => "classes[room][room_#{q}]", :collection => @classrooms.collect{|x| x.class_name}, 
+                                  :value_method => :id, :selected => @class.class_name, :id => "class_name_#{q}", 
+                                  :text_method => :name, :prompt => "Select Class" %>
+                       <%= select :class => "apart", :name => "studs[name][name_#{q}]", :collection => @students, 
+                                  :value_method => :id, :selected => "#{f.student_id}".to_s, :id => "student_name_#{q}",
+                                  :text_method => :name, :prompt => "Select Student" %>
+                       <% q += 1 %>
+                  <% end %>
+            <% end %><br/><br/>
+            
+             <a href="" class="add-more" onClick="addFormField(); return false;">Associate students to this parent</a><br/>
+              <span class="subText">
+                 (this is optional and can be done later)<br/>
+              </span><br/>
+              <span class="subText" id ="note" style="display:none">
+                 If the name that you wish to associate to this parent does not appear in the list,
+                 please add that student by going to the ‘Student Directory’.<br/>
+                 You may than come back and map this parent to the student.
+              </span>
+              <br/><br/>
+              
+              <ul id="students"></ul><br/><br/>
+              <span id="more" style="display:none">
+                  <a href="" class="add-more" onClick="add(); return false;">Add More</a><br/>
+              </span>
+           
+               <br/>
+            <div class="save-cancel">
+                 <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:parent_approvals), :class => "cancel" %>
+            </div>
+      
+     <% end =%> 
+      
 <script type="text/javascript">       
-
- function getsupport ( selectedtype )
-{
-   document.approveform.approvetype.value = selectedtype ;
-   document.approveform.submit() ;
- }
-
 
 id = 1;
 function addFormField()
@@ -66,4 +81,4 @@ function add()
   l = (l - 1) + 2;
 }
 
-</script>
+</script>     

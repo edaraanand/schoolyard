@@ -13,9 +13,9 @@
            <table cellpadding="8" cellspacing="0" border="0">
               <tr><td class="separator">Parents/Guardians</td><td class="separator">
            <% @parents.each do |f| %>
-                <% if f.approved == 1 %>
-                         <%= f.name %> (<a href="mailto:<%= f.email %>"><%= f.email %></a>) <br/>
-                <% end %>
+                <%# if f.approved == 1 %>
+                      <%= f.name %> (<a href="mailto:<%= f.email %>"><%= f.email %></a>) <br/>
+                <%# end %>
            <% end %>
 
                   <% @protectors.each do |r| %>

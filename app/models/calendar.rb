@@ -20,6 +20,9 @@ class Calendar < ActiveRecord::Base
     if self.class_name == ""
        self.errors.add(:class_name, "must be selected")
     end
+    if self.start_date != nil
+       self.errors.add(:start_date, "must be greater than today") if self.start_date <= Date.today 
+    end
   end
   
   

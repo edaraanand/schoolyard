@@ -3,13 +3,19 @@
       <ul id="menu"><!-- Nested Lists -->
             <% @access_rights = session.user.access_peoples  %>
          <% if @access_rights.length == 0 %>
-             <li <% if @selected == "parent_profile" %> class="on" <% end %>><%= link_to "My Profile", url(:parent_account) %></li>
+             <li <% if @selected == "parent_profile" %> class="on" <% end %>>
+                 <%= link_to "My Profile", resource(:users, :selected => "parent_profile") %>
+             </li>
              <li <% if @selected == "s_details" %> class="on" <% end %>><%= link_to "Student Details", url(:student_details) %></li>
-             <li <% if @selected == "other_family" %> class="on" <% end %>><%= link_to "Other Family Members", url(:parent_account, :label => "other") %></li>
+             <li <% if @selected == "other_family" %> class="on" <% end %>>
+                <%= link_to "Other Family Members", resource(:users, :selected => "parent_profile", :label => "other") %>
+             </li>
              <li <% if @selected == "phone" %> class="on" <% end %>><%= link_to "Phone Alert Settings", url(:phone) %></li>
              <li <% if @selected == "alerts" %> class="on" <% end %>><%= link_to "Alert Settings", url(:alerts) %></li>
          <% else %>
-              <li <% if @selected == "staff_profile" %> class="on" <% end %>><%= link_to "My Profile", url(:staff_account) %></li>
+              <li <% if @selected == "staff_profile" %> class="on" <% end %>>
+                  <%= link_to "My Profile", resource(:users, :selected => "staff_profile") %>
+              </li>
               <li <% if @selected == "alerts" %> class="on" <% end %>><%= link_to "Alert Settings", url(:alerts) %></li>
               <li <% if @selected == "phone" %> class="on" <% end %>><%= link_to "Phone Alert Settings", url(:phone) %></li>
          <% end %>

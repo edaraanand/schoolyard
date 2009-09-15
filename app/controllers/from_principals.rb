@@ -101,7 +101,7 @@ class FromPrincipals < Application
   end
 
   def new_settings
-    @pr = Principal.find(:first, :conditions => ['school_id = ?', @current_school.id])
+    @pr = Principal.find_by_school_id(@current_school.id)
     if @pr.nil?
        @principal = Principal.new
        render
@@ -111,10 +111,8 @@ class FromPrincipals < Application
   end
 
   def create_settings
-    @principal = Principal.new(params[:principal])
-    if @principal.valid?
-       @principal.school_id = @current_school.id
-       @principal.save!
+    @principal = Principal.new(params[:principal].merge(:school_id => @current_school.id ))
+    if @principal.valid? && @principal.save!
        redirect url(:settings)
     else
       render :new_settings
@@ -122,12 +120,12 @@ class FromPrincipals < Application
   end
 
   def edit_details
-    @principal = Principal.find(:first, :conditions => ['school_id = ?', @current_school.id])
+    @principal = Principal.find_by_school_id(@current_school.id)
     render
   end
 
   def update_details
-    @principal = Principal.find(:first, :conditions => ['school_id = ?', @current_school.id])
+    @principal = Principal.find_by_school_id(@current_school.id)
     if @principal.update_attributes(params[:principal])
        redirect url(:settings)
     else
