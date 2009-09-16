@@ -1,6 +1,36 @@
 class Exceptions < Application
   layout 'login'
   
+  skip_before :login_required
+  after :send_exception, :only => [:standard_error, :runtime_error]
+  
+  def send_exception
+    details = {}
+    details['exceptions'] = request.exceptions
+    details['data'] = {
+      'request_controller' => params[:controller],
+      'request_action' => params[:action],
+      'request_params' => params,
+      'app_name' => "SchoolYard"
+    }
+    details['environment'] = request.env.merge( 'process' => $$ )
+    details['url'] = "#{request.protocol}://#{request.env["HTTP_HOST"]}#{request.uri}"
+
+    email_headers = {
+      :from => 'noreply@schoolyardapp.com',
+      :to => Forge.config(:exception_to_address),
+      :subject => "SchoolYard Exception (#{ details['url']}) #{Merb.env}"
+    }
+ 
+    if (Merb.env != "development")
+     run_later do
+        ErrorNotifyMailer.dispatch_and_deliver(:error,
+                                             email_headers,
+                                             details)
+     end
+    end
+    
+  end
   # handle NotFound exceptions (404)
   def not_found
     render :layout => "excep"
@@ -16,35 +46,12 @@ class Exceptions < Application
     render :format => :html
   end
   
-  # handle all other (500)
-   def standard_error
-     details = {}
-     details['exceptions'] = request.exceptions
-     details['data'] = {
-       'request_controller' => params[:controller],
-       'request_action' => params[:action],
-       'request_params' => params,
-       'app_name' => "School Yard"
-     }
-     details['environment'] = request.env.merge( 'process' => $$ )
-     details['url'] = "#{request.protocol}#{request.env["HTTP_HOST"]}#{request.uri}"
+  def standard_error
+    render :internal_server_error, :format => :html, :layout => "login"
+  end
 
-     email_headers = {
-       :from => 'noreply@schoolyardapp.com',
-       :to => 'it@schoolyardapp.com',
-       :subject => "Error occurred in School Yard"
-     }
-  
-     if Merb.env == "internal_testing"
-        run_later do
-           ErrorNotifyMailer.dispatch_and_deliver(:error,
-                                                email_headers,
-                                                details)
-        end
-       render :internal_server_error, :format => :html, :layout => false
-     else
-       raise request.exceptions.first
-     end
-   end
+  def runtime_error
+    render :internal_server_error, :format => :html, :layout => "login"
+  end
 
 end
