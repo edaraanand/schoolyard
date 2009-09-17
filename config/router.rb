@@ -90,6 +90,7 @@ Merb::Router.prepare do
        resources :captures
        resources :tasks
        resources :directories
+       match("/csv_errors").to(:controller => 'students', :action => 'csv_errors').name(:csv_errors)
        match("/edit_approve").to(:controller => 'approvals', :action => 'edit_approve').name(:edit_approve)
        match("/sms_log_details").to(:controller => 'notifications', :action => 'sms_log_details').name(:sms_log_details)
        match("/approved").to(:controller => 'approvals', :action => 'approved').name(:approved)
@@ -165,6 +166,9 @@ Merb::Router.prepare do
        match("/phone_update").to(:controller => 'users', :action => 'phone_update').name(:phone_update)
        match("/password").to(:controller => 'users', :action => 'password').name(:password)
        match("/change_password").to(:controller => 'users', :action => 'change_password').name(:change_password)
+       
+       match("/check_type").to(:controller => 'homes', :action => 'check_type').name(:check_type)
+       match("/account_type").to(:controller => 'homes', :action => 'account_type').name(:account_type)
    end
    
      
@@ -176,6 +180,6 @@ Merb::Router.prepare do
   
   # Change this for your home page to be available at /
  
-    match('/').to(:controller => 'homes', :action => 'index').name(:homes)
+    match('/').to(:controller => 'homes', :action => 'check_type').name(:check_type)
 
 end
