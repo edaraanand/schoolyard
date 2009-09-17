@@ -17,11 +17,11 @@
                      </ul>
                         <ul class="edit-ext-links" id="link"></ul>                                                                                          
                         <%= hidden_field :name => "label", :value => params[:label] %>
-
+                        <% @edit = 0 %>
                         <input type="hidden" id="id" value="1">
                         <a href="" class="add-more-links" onClick="addFormField(); return false;">Add More</a>
                        <div class="save-cancel">
-                           <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
+                           <input type = 'button' value = '    Preview    ' onclick="preview(<%= params[:id] %>,<%= @edit %>);return false;" />
                            <%= submit "    Publish    " %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
                        </div>
               </fieldset>
@@ -45,11 +45,12 @@
          </ul>
             <ul class="edit-ext-links" id="link"></ul>                                                                                          
             <%= hidden_field :name => "label", :value => params[:label] %>
-
+            <% @edit = 0 %>
+            <% @home = 0 %>
             <input type="hidden" id="id" value="1">
             <a href="" class="add-more-links" onClick="addFormField(); return false;">Add More</a>
            <div class="save-cancel">
-               <input type = 'button' value = '    Preview    ' onclick="preview();return false;" />
+               <input type = 'button' value = '    Preview    ' onclick="preview(<%= @home %>,<%= @edit %>);return false;" />
                <%= submit "    Publish    " %> Or <%= link_to "Cancel", resource(:external_links), :class=>"cancel" %>
            </div>
     </fieldset>
