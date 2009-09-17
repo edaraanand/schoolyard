@@ -71,7 +71,7 @@
            
       
           <% unless params[:class_alerts] %>   
-             <% @current_school.classes.each do |f| %>
+             <% @current_school.active_classrooms.each do |f| %>
                    <% alert_p = AlertPeople.find(:all,:conditions=>["person_id=? and classroom_id=?", session.user.id, f.id]).map{|x| x.classroom_id } %>
                    <% if alert_p.include?(f.id) %>
                        <%= check_box :name => 'class_alerts[' + f.id.to_s + ']', :checked => 'checked' %>
@@ -84,7 +84,7 @@
           <% end %>
           
          <% if params[:class_alerts] %>
-                 <% @current_school.classes.each do |f| %>
+                 <% @current_school.active_classrooms.each do |f| %>
                      <% if params[:class_alerts].has_key?(f.id.to_s) %>
                          <%= check_box :name => 'class_alerts[' + f.id.to_s + ']', :checked => 'checked' %>
                          <%= f.class_name %><br/> <br/>
