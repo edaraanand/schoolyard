@@ -37,7 +37,7 @@ class Person < ActiveRecord::Base
   
   validates_presence_of :first_name, :last_name
   validates_presence_of :email, :if => :email
-  validates_uniqueness_of :email, :if => :email, :scope => [:school_id]
+  validates_uniqueness_of :email, :if => :email, :scope => [:school_id, :type]
   validates_format_of :email, :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i, :if => :email
   validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}, :scope => [:school_id]
   validates_length_of :password, :within => 8..40, :if => :password
