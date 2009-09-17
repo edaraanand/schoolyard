@@ -21,7 +21,7 @@ class Feedbacks < Application
          @announcement.person_id = session.user.id
          @announcement.label = "feedback"
          @announcement.access_name = "unread"
-         @announcement.save
+         @announcement.save!
          redirect url(:homes)
       else
          render :new, :layout => 'home'
@@ -32,7 +32,7 @@ class Feedbacks < Application
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
     @announcement.access_name = "read"
-    @announcement.save
+    @announcement.save!
     render 
   end
   
@@ -43,14 +43,17 @@ class Feedbacks < Application
        @announcement.approve_comments = params[:announcement][:approve_comments]
        @announcement.approved_by = session.user.id  # this is for storing who replied the feedback
        @announcement.approved = @announcement.approve_announcement = false
-       @announcement.save
+       @announcement.expiration = Date.today + 1
+       @announcement.save!
        run_later do
          @announcement.reply_person
        end
     else
-       @announcement.approve_comments = params[:announcement][:approve_comments]
-       @announcement.approved = @announcement.approve_announcement = true
-       @announcement.save
+      @announcement.approve_comments = params[:announcement][:approve_comments]
+      @announcement.approved = @announcement.approve_announcement = true
+      @announcement.approved_by = session.user.id  # this is for storing who replied the feedback
+      @announcement.expiration = Date.today + 1
+      @announcement.save!
        run_later do
          @announcement.feedback_email
        end

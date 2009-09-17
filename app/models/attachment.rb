@@ -27,15 +27,15 @@ class Attachment < ActiveRecord::Base
    
   def self.picture(params, type, id)
       if type == "spot_light"
-        f = params[:spot_light][:image][:filename]
-        size = params[:spot_light][:image][:size]
-        content_type = params[:spot_light][:image][:content_type]
-        temp = params[:spot_light][:image][:tempfile]
+         f = params[:spot_light][:image][:filename]
+         size = params[:spot_light][:image][:size]
+         content_type = params[:spot_light][:image][:content_type]
+         temp = params[:spot_light][:image][:tempfile]
       else
-        f = params[:person][:image][:filename]
-        size = params[:person][:image][:size]
-        content_type = params[:person][:image][:content_type]
-        temp = params[:person][:image][:tempfile]
+         f = params[:person][:image][:filename]
+         size = params[:person][:image][:size]
+         content_type = params[:person][:image][:content_type]
+         temp = params[:person][:image][:tempfile]
       end
       file = File.basename(f.gsub(/\\/, '/'))
       @current_school = School.find_by_id(params[:school_id])

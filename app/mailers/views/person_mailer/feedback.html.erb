@@ -8,4 +8,8 @@ Hello,
             
 <p>Thank you,<br/>
 <p><%= @announcement.school.school_name %></p>    
+<% @person = @current_school.people.find_by_id(@announcement.approved_by) %>
+<p>
+   <%= @person.name %> (<%= @person.email %>)
+</p>
 
