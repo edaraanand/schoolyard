@@ -329,55 +329,64 @@ class Students < Application
       File.makedirs("public/uploads/#{@current_school.id}/CSV_FOLDER")
       FileUtils.mv( params[:file_c][:tempfile].path, "public/uploads/#{@current_school.id}/CSV_FOLDER/#{0}")
       path = "#{Merb.root}/public/uploads/#{@current_school.id}/CSV_FOLDER/0"
+      @valid_students = []
+      @valid_parents = []
+      @invalid = []
       @classes = []
+      @student_ids = []
+      @parent_ids = []
       begin
          FasterCSV.foreach(path) do |row|
             unless q == 1
-               if row.include?(nil)
-                 @classes << nil
+               student = Student.new({:last_name => row[0], :first_name => row[1], :address1 => row[5], 
+                                      :city => row[6], :state => row[7], :zip_code => row[8], :birth_date => row[9],
+                                      :school_id => @current_school.id })
+               protector = Protector.new({:last_name => row[2], :first_name => row[3], :email => row[4], :school_id => @current_school.id })
+               @classroom = @current_school.classrooms.find_by_class_name(row[10])
+               @classes << @classroom
+               if @classes.include?(nil)
+                  @invalid << row
                else
-                 @classroom = @current_school.classrooms.find_by_class_name(row[10])
-                 @classes << @classroom
-               end
-               @student = Student.new({:last_name => row[0], :first_name => row[1], :address1 => row[5], 
-                                           :city => row[6], :state => row[7], :zip_code => row[8], :birth_date => row[9],
-                                           :school_id => @current_school.id })
-               @p1 = Protector.new({:last_name => row[2], :first_name => row[3], :email => row[4], :school_id => @current_school.id })
-               unless @student.valid?
-                 @classes << nil
-               end
-               unless @p1.valid?
-                 @classes << nil
+                  if row.include?(nil) && (!student.valid? && !protector.valid?)
+                     @invalid << row
+                  else
+                     @valid_students << student
+                     @valid_parents << protector
+                  end
                end
             end
             q += 1
          end 
-         if @classes.include?(nil)
-            flash[:error] = "please check the classroom and other details in the CSV file"
-            redirect url(:import)
-         else
-            FasterCSV.foreach(path) do |row|
-               @classroom = @current_school.classrooms.find_by_class_name(row[10])
-               @student = Student.new({:last_name => row[0], :first_name => row[1], :address1 => row[5], 
-                                        :city => row[6], :state => row[7], :zip_code => row[8], :birth_date => row[9],
-                                        :school_id => @current_school.id })
-               @student.save
-               @p1 = Protector.create({:last_name => row[2], :first_name => row[3], :email => row[4], :school_id => @current_school.id })
-               Ancestor.create({:student_id => @student.id, :protector_id => @p1.id })
-               Study.create(:student_id => @student.id, :classroom_id => @classroom.id)
-               redirect resource(:students)
+         if (@invalid.empty?)
+            @valid_students.each do |f|
+              @student = f
+              @student.save
+              @student_ids << @student.id
+              Study.create(:student_id => @student.id, :classroom_id => @classroom.id)
+            end
+            @valid_parents.each do |p|
+              @parent = p
+              @parent.save!
+              @parent_ids << @parent.id
+            end
+            st_parents = @student_ids.zip(@parent_ids)
+            st_parents.each do |t|
+              Ancestor.create({:student_id => t[0], :protector_id => t[1]})
             end
             redirect resource(:students)
+         else
+            flash[:error] = "please check the classroom and other details in the CSV file"
+            render :import
          end
       rescue 
         flash[:error] = "There was an error parsing your CSV file, please check the format"
-        redirect url(:import)
+        render :import
       end
   end
   
   def template_download
      csv_string = FasterCSV.generate do |csv|
-        csv << ["Student Last Name", "Student First Name", "Parent Last Name", "Parent First Name", "Parent Email" "Address", "City", "State", "Zip Code", "Student Birth Date","Current Class Name"]
+        csv << ["Student Last Name", "Student First Name", "Parent Last Name", "Parent First Name", "Parent Email" "Address", "City", "State", "Zip Code", "Student Birth Date", "Current Class Name"]
      end
      filename = "template.csv"
      send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
