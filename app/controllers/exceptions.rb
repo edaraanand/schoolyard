@@ -18,7 +18,7 @@ class Exceptions < Application
 
     email_headers = {
       :from => 'noreply@schoolyardapp.com',
-      :to => Forge.config(:exception_to_address),
+      :to => Schoolapp.config(:exception_to_address),
       :subject => "SchoolYard Exception (#{ details['url']}) #{Merb.env}"
     }
  
