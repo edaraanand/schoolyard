@@ -3,20 +3,27 @@
     <li><%= flash[:error] %> </li>
   <% end %>
 </ul>
-
 <% if @invalid %>
-   <ul class="email-alerts">
-     <% @invalid.each do |i| %>
-         <li>
-              <% i.each do |f| %>
-                     <%= f %>
-              <% end %>
-         </li>   
-     <% end %>
-   </ul>
-   <p class="subText">
-     the above records have few errors please check them in the CSV file
-   </p><br/>
+    <% q = 1 %>
+    <ul class="email-alerts">
+        <% @invalid.each do |i| %>
+            <% if q <= 5 %>
+                 <li>
+                     <% i.each do |f| %>
+                        <%= f %>
+                     <% end %>
+                 </li>   
+            <% end %>
+            <% q += 1 %>
+        <% end %>
+      </ul>
+   <% if @invalid.size > 5 %>
+       <span class="subText">
+          There are more errors in the file that you tried to import. &nbsp;&nbsp;
+       </span>
+       <%= link_to "Display All", url(:csv_errors) %><br/>
+   <% end %>
+   <br/>
 <% end %>
 
 <h2 class="current-page">Students &gt; Import &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

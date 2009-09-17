@@ -329,6 +329,7 @@ class Students < Application
       File.makedirs("public/uploads/#{@current_school.id}/CSV_FOLDER")
       FileUtils.mv( params[:file_c][:tempfile].path, "public/uploads/#{@current_school.id}/CSV_FOLDER/#{0}")
       path = "#{Merb.root}/public/uploads/#{@current_school.id}/CSV_FOLDER/0"
+      @@validations = []
       @valid_students = []
       @valid_parents = []
       @invalid = []
@@ -346,9 +347,11 @@ class Students < Application
                @classes << @classroom
                if @classes.include?(nil)
                   @invalid << row
+                  @@validations << row
                else
                   if row.include?(nil) && (!student.valid? && !protector.valid?)
                      @invalid << row
+                     @@validations << row
                   else
                      @valid_students << student
                      @valid_parents << protector
@@ -375,7 +378,7 @@ class Students < Application
             end
             redirect resource(:students)
          else
-            flash[:error] = "please check the classroom and other details in the CSV file"
+            flash[:error] = "Please check the below details in the CSV file"
             render :import
          end
       rescue 
@@ -390,6 +393,11 @@ class Students < Application
      end
      filename = "template.csv"
      send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
+  end
+  
+  def csv_errors
+    @invalid_rows = @@validations
+    render
   end
 
   private
