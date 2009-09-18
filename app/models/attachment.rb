@@ -31,6 +31,11 @@ class Attachment < ActiveRecord::Base
          size = params[:spot_light][:image][:size]
          content_type = params[:spot_light][:image][:content_type]
          temp = params[:spot_light][:image][:tempfile]
+      elsif type == "principal_image"
+         f = params[:image][:filename]
+         size = params[:image][:size]
+         content_type = params[:image][:content_type]
+         temp = params[:image][:tempfile]
       else
          f = params[:person][:image][:filename]
          size = params[:person][:image][:size]

@@ -1,8 +1,9 @@
 <%= partial 'layout/main' %>
        <div id="sidebar">
       <ul id="menu"><!-- Nested Lists -->
-            <% @access_rights = session.user.access_peoples  %>
-         <% if @access_rights.length == 0 %>
+         <%# @access_rights = session.user.access_peoples  %>
+         <%# if @access_rights.length == 0 %>
+         <% if session.user.type == "Parent" %>
              <li <% if @selected == "parent_profile" %> class="on" <% end %>>
                  <%= link_to "My Profile", resource(:users, :selected => "parent_profile") %>
              </li>
@@ -10,16 +11,13 @@
              <li <% if @selected == "other_family" %> class="on" <% end %>>
                 <%= link_to "Other Family Members", resource(:users, :selected => "parent_profile", :label => "other") %>
              </li>
-             <li <% if @selected == "phone" %> class="on" <% end %>><%= link_to "Phone Alert Settings", url(:phone) %></li>
-             <li <% if @selected == "alerts" %> class="on" <% end %>><%= link_to "Alert Settings", url(:alerts) %></li>
          <% else %>
               <li <% if @selected == "staff_profile" %> class="on" <% end %>>
                   <%= link_to "My Profile", resource(:users, :selected => "staff_profile") %>
               </li>
-              <li <% if @selected == "alerts" %> class="on" <% end %>><%= link_to "Alert Settings", url(:alerts) %></li>
-              <li <% if @selected == "phone" %> class="on" <% end %>><%= link_to "Phone Alert Settings", url(:phone) %></li>
          <% end %>
-  
+         <li <% if @selected == "phone" %> class="on" <% end %>><%= link_to "Phone Alert Settings", url(:phone) %></li>
+         <li <% if @selected == "alerts" %> class="on" <% end %>><%= link_to "Alert Settings", url(:alerts) %></li>
       </ul>
 
     </div><!-- Sidebar Ends -->

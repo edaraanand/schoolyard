@@ -32,6 +32,7 @@ class Feedbacks < Application
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
     @announcement.access_name = "read"
+    @announcement.expiration = Date.today + 1
     @announcement.save!
     render 
   end

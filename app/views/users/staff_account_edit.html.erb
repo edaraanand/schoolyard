@@ -6,7 +6,7 @@
 
 <h2 class="current-page"> My Profile > Edit </h2>
 
-<%= form_for :person, :action => url(:staff_account_update), :id => @person  do  %>
+<%= form_for :person, :action => url(:staff_account_update) do  %>
 
     <fieldset>     
         <ul>
@@ -24,15 +24,12 @@
              </li>
              <li><%= text_field :phone,  :label => "Phone Number (optional)" %></li>
              <li><%= file_field :image,  :label => "Upload a Picture" %>
-                     <% if @pic.nil? %>
-                          <span class="picEdit">
-	                           <img src = "/images/Fotolia_5868614_XS.jpg" alt="Fotolia_5868614_XS.jpg" class ="teacherPic"/>
-	                        </span>
-                     <% else %>
-                          <span class="picEdit">
-	                           <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
-	                        </span>
-                     <% end %>
+                     <% if @pic %>
+                         <span class="picEdit">
+	                          <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
+	                       </span>
+	                       <%= link_to "remove", url(:controller => "users", :id => @staff.id, :action => "delete"), :class => "cancel" %>
+	                   <% end %>
               </li>
               <li><%= text_area :person_bio,  :label => "Your Bio" %></li>
         </ul>

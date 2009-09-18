@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 82) do
+ActiveRecord::Schema.define(:version => 83) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -313,6 +313,7 @@ ActiveRecord::Schema.define(:version => 82) do
     t.string   "fax"
     t.string   "username"
     t.string   "password"
+    t.integer  "principal_id"
   end
 
   create_table "spot_lights", :force => true do |t|

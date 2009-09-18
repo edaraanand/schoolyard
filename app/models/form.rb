@@ -7,8 +7,10 @@ class Form < ActiveRecord::Base
   validates_presence_of :title, :description
    
   def validate
-    if self.class_name == ""
-       self.errors.add("please", "select the class")
+    if self.class_name
+      if self.class_name == ""
+         self.errors.add("please", "select the class")
+      end
     end
   end
   

@@ -95,113 +95,38 @@ class FromPrincipals < Application
   end
 
   def settings
-    @principal = Principal.find(:first, :conditions => ['school_id = ?', @current_school.id])
-    @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ?', "principal_image"])
+    @attachment = @current_school.attachments.find_by_attachable_type("principal_image")
+    p = @current_school.principal_id
+    @principal = @current_school.staff.find_by_id(p)
     render
-  end
-
-  def new_settings
-    @pr = Principal.find_by_school_id(@current_school.id)
-    if @pr.nil?
-       @principal = Principal.new
-       render
-    else
-      raise NotFound
-    end
-  end
-
-  def create_settings
-    @principal = Principal.new(params[:principal].merge(:school_id => @current_school.id ))
-    if @principal.valid? && @principal.save!
-       redirect url(:settings)
-    else
-      render :new_settings
-    end
-  end
-
-  def edit_details
-    @principal = Principal.find_by_school_id(@current_school.id)
-    render
-  end
-
-  def update_details
-    @principal = Principal.find_by_school_id(@current_school.id)
-    if @principal.update_attributes(params[:principal])
-       redirect url(:settings)
-    else
-       render :edit_details
-    end
   end
 
   def settings_update
-    @principal = Principal.find(:first, :conditions => ['school_id = ?', @current_school.id])
-    @attachment = @current_school.attachments.find(:first, :conditions => ['attachable_type = ?', "principal_image"])
+    @staff = @current_school.staff.find_by_id(params[:school_principal])
     @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
-    if params[:image][:filename] != nil
-      if @content_types.include?(params[:image][:content_type])
-        unless @attachment.nil?
-          @attachment.destroy
-        end
-        f = params[:image][:filename]
-        file = File.basename(f.gsub(/\\/, '/'))
-        @attachment = Attachment.create( :attachable_type => "principal_image",
-                                         :filename => file,
-                                         :content_type => params[:image][:content_type],
-                                         :size => params[:image][:size],
-                                         :school_id => @current_school.id
-                                       )
-        unless @principal.nil?
-          if ((params[:principal_email] == "on") || (params[:principal_name] == "on") )
-            if params[:principal_name] == "on"
-              @principal.principal_name = true
-              @principal.principal_email = false
-            end
-            if params[:principal_email] == "on"
-              @principal.principal_email = true
-              @principal.principal_name = false
-            end
-            if (params[:principal_email]) && (params[:principal_name])
-              @principal.principal_email = true
-              @principal.principal_name = true
-            end
-          else
-            @principal.principal_email = false
-            @principal.principal_name = false
-            @principal.save
-          end
-          @principal.save
-        end
-        File.makedirs("public/uploads/#{@current_school.id}/pictures")
-        FileUtils.mv(params[:image][:tempfile].path, "public/uploads/#{@current_school.id}/pictures/#{@attachment.id}")
-        redirect url(:homes)
-      else
-        flash[:error1] = "You can only upload images"
-        render :settings
-      end
+    @current_school.principal_id = @staff.id
+    if @current_school.save
+       if params[:image][:filename] != nil
+          picture = @current_school.attachments.find_by_attachable_type("principal_image")
+          picture.destroy if picture
+          Attachment.picture(params.merge(:school_id => @current_school.id), "principal_image", 0)
+       end
+       if params[:principal_email]
+          @staff.principal_email = true
+       else
+          @staff.principal_email = false if @staff
+       end
+       if params[:principal_name]
+          @staff.principal_name = true
+       else
+          @staff.principal_name = false if @staff
+       end
+       @staff.save
+       redirect url(:settings)
     else
-      unless @principal.nil?
-        if ((params[:principal_email] == "on") || (params[:principal_name] == "on") )
-          if params[:principal_name] == "on"
-            @principal.principal_name = true
-            @principal.principal_email = false
-          end
-          if params[:principal_email] == "on"
-            @principal.principal_email = true
-            @principal.principal_name = false
-          end
-          if (params[:principal_email]) && (params[:principal_name])
-            @principal.principal_email = true
-            @principal.principal_name = true
-          end
-          @principal.save
-        else
-          @principal.principal_email = false
-          @principal.principal_name = false
-          @principal.save
-        end
-      end
-      redirect url(:homes)
+       render :settings
     end
+    
   end
  
  
