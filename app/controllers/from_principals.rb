@@ -72,19 +72,25 @@ class FromPrincipals < Application
   end
 
   def delete
-    if params[:label] == "attachment"
-      @attachment = @current_school.attachments.find(params[:id])
-      @announcement = @current_school.announcements.find_by_id(@attachment.attachable_id)
-      @attachment.destroy
-      @attachments = Attachment.announcements(@announcement.id, @current_school.id)
-      @allowed = 1 - @attachments.size
-      render :edit, :id => @announcement.id
+    if params[:ref]
+       @attachment = @current_school.attachments.find_by_id(params[:id])
+       @attachment.destroy
+       redirect url(:settings)
     else
-      @announcement = @current_school.announcements.find_by_id(params[:id])
-      raise NotFound unless @announcement
-      Attachment.delete_all(['attachable_id = ?', @announcement.id])
-      @announcement.destroy
-      redirect url(:homes)
+      if params[:label] == "attachment"
+         @attachment = @current_school.attachments.find_by_id(params[:id])
+         @announcement = @current_school.announcements.find_by_id(@attachment.attachable_id)
+         @attachment.destroy
+         @attachments = Attachment.announcements(@announcement.id, @current_school.id)
+         @allowed = 1 - @attachments.size
+         render :edit, :id => @announcement.id
+      else
+         @announcement = @current_school.announcements.find_by_id(params[:id])
+         raise NotFound unless @announcement
+         Attachment.delete_all(['attachable_id = ?', @announcement.id])
+         @announcement.destroy
+         redirect url(:homes)
+      end
     end
   end
 
