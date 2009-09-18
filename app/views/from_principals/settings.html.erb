@@ -3,6 +3,13 @@
        <li><%= flash[:error] %> </li>
     <% end %>
 </ul>
+<% if flash[:confirmation] %>
+    <ul class="approved">
+      <li>
+        <%= flash[:confirmation] %>
+      </li>
+    </ul>
+<% end %>
 
 <h2 class="current-page">From the Principal &gt; Settings  </h2> 
        
@@ -28,7 +35,7 @@
                      <span class="subText">(the picture is automatically resized to 220px width)</span>
                 </li>
                 <li>
-                    <label>select a Principal</label>
+                    <label>Select a Principal</label>
                     <%= select :class => "apart required", :name => "school_principal", 
                                :collection => @current_school.staff, 
                                :value_method => :id, :text_method => :name, :selected => "#{@principal.id}", :prompt => "please select" %>
