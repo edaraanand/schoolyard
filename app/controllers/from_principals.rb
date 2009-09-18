@@ -105,7 +105,7 @@ class FromPrincipals < Application
     @staff = @current_school.staff.find_by_id(params[:school_principal])
     @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
     @current_school.principal_id = @staff.id
-    if @current_school.save
+    if @staff && @current_school.save!
        if params[:image][:filename] != nil
           picture = @current_school.attachments.find_by_attachable_type("principal_image")
           picture.destroy if picture
