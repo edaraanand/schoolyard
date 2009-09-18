@@ -8,7 +8,7 @@
                              <li>
                                  <%= text_field :name => "external_link[title][title_#{q}]", :id => "external_link_title_#{q}" ,
                                                 :maxlength => "75", :value => "#{f.title}", :class=>"short text defaultText ext-link-name required"  %> 
-                                 <%= text_field :name => "external_link[url][url_#{q}]", :id => "external_link_url_#{q}", :maxlength => "75", 
+                                 <%= text_field :name => "external_link[url][url_#{q}]", :id => "external_link_url_#{q}", :maxlength => "4000", 
                                                 :value => "#{f.url}", :class=>"long text apart defaultText ext-link-url required" %>
                                  <%= link_to "Delete", url(:delete_external_link, f.id), :class=>"delete delete-btn" %>
                              </li>
@@ -36,7 +36,7 @@
                  <li>
                      <%= text_field :name => "external_link[title][title_#{q}]", :id => "external_link_title_#{q}" ,
                                     :maxlength => "75", :value => "#{f.title}", :class=>"short text defaultText ext-link-name required"  %> 
-                     <%= text_field :name => "external_link[url][url_#{q}]", :id => "external_link_url_#{q}", :maxlength => "75", 
+                     <%= text_field :name => "external_link[url][url_#{q}]", :id => "external_link_url_#{q}", :maxlength => "4000", 
                                     :value => "#{f.url}", :class=>"long text apart defaultText ext-link-url required" %>
                      <%= link_to "Delete", url(:delete_external_link, f.id), :class=>"delete delete-btn" %>
                  </li>
