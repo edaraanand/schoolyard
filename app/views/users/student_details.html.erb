@@ -2,31 +2,31 @@
   
   <h2 class="current-page">Student Details </h2>
  
- <% if @registrations.empty? %>
+ <% if @students.empty? %>
     
-    <% @students.each do |f| %>
-
+      <% @registrations.each do |f| %>
+      
            <ul>
                <li>Name: <%= f.name %></li>
-                <% @study = f.studies.find_by_student_id(f.id) %>
-               <li>Current Class: <%= @study.classroom.class_name %></li>
+               <li>Current Class: <%= f.current_class %></li>
                <li>Birth month & Year: <%= f.birth_date.strftime("%b, %Y") %></li>
            </ul>
              <br class="clear"/>
-      <% end %>
+       <% end %>
       
  <% else %>
-  
-       <% @registrations.each do |f| %>
-       
-            <ul>
-                <li>Name: <%= f.name %></li>
-                <li>Current Class: <%= f.current_class %></li>
-                <li>Birth month & Year: <%= f.birth_date.strftime("%b, %Y") %></li>
-            </ul>
-              <br class="clear"/>
-       <% end %>
-       
+   
+        <% @students.each do |f| %>
+
+              <ul>
+                  <li>Name: <%= f.name %></li>
+                   <% @study = f.studies.find_by_student_id(f.id) %>
+                  <li>Current Class: <%= @study.classroom.class_name %></li>
+                  <li>Birth month & Year: <%= f.birth_date.strftime("%b, %Y") %></li>
+              </ul>
+                <br class="clear"/>
+         <% end %>
+         
  <% end %>
     
     

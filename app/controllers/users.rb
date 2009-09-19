@@ -7,14 +7,15 @@ class Users < Application
    
   def index
     @person = session.user
-    @selected = params[:selected]
     if @person.type == "Staff"
-       @person = session.user
-       @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @person.id)
-    else
+       @staff = session.user
+       @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @staff.id)
+    end
+    if @person.type == "Parent"
        @parent = session.user
        @students = @parent.students
     end
+    @selected = params[:selected]
     render
   end 
   
@@ -209,6 +210,13 @@ class Users < Application
     end
     @person.save!
     redirect url(:phone)
+  end
+  
+  def delete
+    @person = session.user
+    @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @person.id) rescue NotFound
+    @pic.destroy
+    redirect resource(:users)
   end
 
   private

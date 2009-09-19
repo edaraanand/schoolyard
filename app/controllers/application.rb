@@ -2,7 +2,7 @@ class Application < Merb::Controller
 
    require Merb.root / 'app' / 'helpers' / 'global_helpers'
    include Merb::GlobalHelpers
-   
+  
     before :find_school
       
     def find_school

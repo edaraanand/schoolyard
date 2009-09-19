@@ -1,4 +1,5 @@
-<fieldset>
+<h2 class="current-page">Forms &gt; <span class="add-link">Edit</span></h2>
+
   <%= error_messages_for @form %>
    <ul class='error_messages'>
        <% if flash[:error] %>
@@ -6,37 +7,37 @@
        <% end %>
    </ul>
 
-<h2 class="current-page">Forms &gt; <span class="add-link">Edit</span></h2>
-  
-  <%= form_for(@form, :action => resource(@form)) do %>
-     <ul>
-         <li><%= text_field :title,  :label => "Title", :maxlength => "75" %></li>
-         <li><%= select :class_name, :collection => @classrooms, :label => "Classroom", :prompt => "Please Select" %></li>
-         <li><%= text_area  :description, :label => "Description", :rows => "2", :cols => "40" %></li>
-         <li>
-              <% if @attachments.size >= 1 %>
-                  <%= file_field :attachment,  :label => "Upload Form", :disabled => "true" %>
-              <% else %>
-                   <%= file_field :attachment,  :label => "Upload Form" %>
-              <% end %>
-         </li>  
-     </ul>
-          <ul id="pending_files">
-             <% if @attachments.size > 0 %>
-                 <% @attachments.each do |attachment| %>
-                     <li id="attachment_<%= attachment.id %>"><%= attachment.filename %>
-                         <%= link_to "Remove", url(:delete_form, attachment.id, :label => "attachment"), :class => "cancel" %>
-                     </li>
-                 <% end %>
+<%= form_for(@form, :action => resource(@form)) do %>
+
+    <fieldset>
+         <ul>
+             <li><%= text_field :title,  :label => "Title", :maxlength => "75" %></li>
+             <li><%= select :class_name, :collection => @classrooms, :label => "Classroom", :prompt => "Please Select" %></li>
+             <li><%= text_area  :description, :label => "Description", :rows => "2", :cols => "40" %></li>
+             <li>
+                  <% if @attachment %>
+                      <%= file_field :attachment,  :label => "Upload Form", :disabled => "true" %>
+                  <% else %>
+                      <%= file_field :attachment,  :label => "Upload Form" %>
+                  <% end %>
+             </li>  
+         </ul>
+         <ul id="pending_files">
+             <% if @attachment %>
+                   <li id="attachment_<%= @attachment.id %>"><%= @attachment.filename %>
+                       <%= link_to "Remove", url(:delete_form, @attachment.id, :label => "attachment"), :class => "cancel" %>
+                   </li>
              <% end %>
 	        </ul>
            <script type="text/javascript">
 	             	var multi_selector = new MultiSelector($('pending_files'), <%= @allowed %>);
 		            multi_selector.addElement($('form_attachment'));
 	         </script>
+     </fieldset>
             
      <div class="save-cancel">
         <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:forms), :class => "cancel" %>
      </div>
+     
 <% end =%>
-</fieldset>
+

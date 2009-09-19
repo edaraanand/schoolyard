@@ -1,41 +1,44 @@
-<fieldset>
-  <%= error_messages_for @form %>
+<h2 class="current-page">Forms &gt; <span class="add-link">Add New</span></h2>
+
+   <%= error_messages_for @form %>
    <ul class='error_messages'>
        <% if flash[:error] %>
           <li><%= flash[:error] %> </li>
        <% end %>
    </ul>
 
-<h2 class="current-page">Forms &gt; <span class="add-link">Add New</span></h2>
+<%= form_for(@form, :action => resource(:forms), :name => "form", :html => { :multipart => true } ) do %>
   
-  <%= form_for(@form, :action => resource(:forms), :name => "form", :html => { :multipart => true } ) do %>
-     <ul>
-         <li><%= text_field :title,  :label => "Title", :maxlength => "75" %></li>
-         <li>
-	         <% if params[:l] %>
-                   <%= select :class_name, :collection => @classrooms, :label => "Classroom", 
-                              :selected => "#{params[:l]}", :prompt => "Please Select" %>
-             <% else %>
-                   <%= select :class_name, :collection => @classrooms, :label => "Classroom", 
-                              :selected => "#{@c}", :prompt => "Please Select" %>
-             <% end %>
-         </li>
-         <li><%= text_area  :description, :label => "Description", :rows => "2", :cols => "40" %></li>
-         <li><%= file_field :attachment,  :label => "Upload Form" %></li>
-     </ul>
-             <ul id="pending_files"></ul>
-             <script type="text/javascript">
-                 var multi_selector = new MultiSelector($('pending_files'), 1);
-                 multi_selector.addElement($('form_attachment'));
-             </script>
+     <fieldset>
+          <ul>
+              <li><%= text_field :title,  :label => "Title", :maxlength => "75" %></li>
+              <li>
+                  <% if params[:l] %>
+                        <%= select :class_name, :collection => @classrooms, :label => "Classroom", 
+                                   :selected => "#{params[:l]}", :prompt => "Please Select" %>
+                  <% else %>
+                        <%= select :class_name, :collection => @classrooms, :label => "Classroom", 
+                                   :selected => "#{@class_name}", :prompt => "Please Select" %>
+                  <% end %>
+              </li>
+              <li><%= text_area  :description, :label => "Description", :rows => "2", :cols => "40" %></li>
+              <li><%= file_field :attachment,  :label => "Upload Form" %></li>
+          </ul>
+          <ul id="pending_files"></ul>
+           <script type="text/javascript">
+               var multi_selector = new MultiSelector($('pending_files'), 1);
+               multi_selector.addElement($('form_attachment'));
+           </script>
+           
+     </fieldset>
      
-     <div class="save-cancel">
-        <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:forms), :class => "cancel" %>
-     </div>
+      <div class="save-cancel">
+         <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:forms), :class => "cancel" %>
+      </div>
        
-  <% end =%>
+<% end =%>
 
-</fieldset>
+
 
 <script type= "text/javascript">
   

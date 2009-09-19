@@ -1,14 +1,38 @@
+<ul class='error_messages'>
+  <% if flash[:error] %>
+    <li><%= flash[:error] %> </li>
+  <% end %>
+</ul>
+<% if @invalid %>
+    <% q = 1 %>
+    <ul class="email-alerts">
+        <% @invalid.each do |i| %>
+            <% if q <= 5 %>
+                 <li>
+                     <% i.each do |f| %>
+                        <%= f %>
+                     <% end %>
+                 </li>   
+            <% end %>
+            <% q += 1 %>
+        <% end %>
+      </ul>
+   <% if @invalid.size > 5 %>
+       <span class="subText">
+          There are more errors in the file that you tried to import. &nbsp;&nbsp;
+       </span>
+       <%= link_to "Display All", url(:csv_errors) %><br/>
+   <% end %>
+   <br/>
+<% end %>
+
 <h2 class="current-page">Students &gt; Import &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <span class="actions">
       <%= link_to "All Students", resource(:students) %>&nbsp;&nbsp;&nbsp;
       <%= link_to "(download template)", url(:template_download) %>
     </span>
 </h2>
-<ul class='error_messages'>
-  <% if flash[:error] %>
-    <li><%= flash[:error] %> </li>
-  <% end %>
-</ul>
+
 <span class="subText">
    Please select the ﬁle with student records. This ﬁle must be in a CSV format. 
    This format can be saved easily for Excel or similar software. 
@@ -20,26 +44,20 @@
 <div class="container">
 	<ol>
  		<li><label for="nil_class_file_c" class="error">please upload a Csv file</label></li> 
- 	  <!-- <li><label for="classroom_person" class="error">please select the Classroom</label></li> --> 
  	</ol>
 </div><br/>
 
 <%= form_for(@student, :action => url(:import_csv), :id => "import" )  do %>
   
-   <fieldset>
-        <ul>
-            <li><%= file_field :file_c, :label => "Select File to upload:", :class => "required" %></li>
-            <!-- <li> 
-                 <%= select :name => "classroom_id",  :id => "classroom_person", :label => "Upload these to:", 
-                            :collection => @class_rooms.collect{|x| x.class_name }, :prompt => "Please Select",
-                            :class => "required" %>
-            </li> -->
-        </ul>    
-   </fieldset>
-   
-        <div class="save-cancel">
-            <%= submit "    Publish    " %> Or  <%= link_to "Cancel", resource(:students), :class => "cancel" %>
-        </div>
+     <fieldset>
+          <ul>
+              <li><%= file_field :file_c, :label => "Select File to upload:", :class => "required" %></li>
+          </ul>    
+     </fieldset>
+     
+     <div class="save-cancel">
+         <%= submit "    Publish    " %> Or  <%= link_to "Cancel", resource(:students), :class => "cancel" %>
+     </div>
    
 <% end =%>
 

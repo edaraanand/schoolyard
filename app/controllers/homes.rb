@@ -96,10 +96,32 @@ class Homes < Application
   
 
   def pdf_download
-      @announcement = @current_school.announcements.find_by_id(params[:id])
-    raise NotFound unless @announcement
+     @announcement = @current_school.announcements.find_by_id(params[:id])
+     raise NotFound unless @announcement
      pdf = prepare_pdf(@announcement)
      send_data(pdf.render, :filename => "#{@announcement.title}.pdf", :type => "application/pdf")
+  end
+  
+  def check_type
+     @person = session.user
+     @staff = @current_school.staff.find_by_email(@person.email)
+     @parent = @current_school.parents.find_by_email(@person.email)
+     if (@staff && @parent)
+        render :layout => "login"
+     else
+        redirect resource(:homes)
+     end
+  end
+  
+  def account_type    
+    if params[:ref] == "parent"
+       $account_type = params[:ref]
+       session.user =  @current_school.parents.find_by_id(params[:id])
+    else
+       $account_type = params[:ref]
+       session.user =  @current_school.staff.find_by_id(params[:id])
+    end
+    redirect resource(:homes)
   end
   
   private
@@ -129,6 +151,7 @@ class Homes < Application
      @select = "home"
   end
   
+    
 end
 
 

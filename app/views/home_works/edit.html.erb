@@ -1,10 +1,10 @@
 <%= error_messages_for @home_work %>
-<h2 class="current-page">Home Work &gt; Edit</h2>
+<h2 class="current-page">Homework &gt; Edit</h2>
 <%= form_for(@home_work, :action => resource(@home_work), :id => 'home_work') do %>
     <fieldset>
        <ul>
            <li>
-              <label>Home Work for:</label>
+              <label>Homework for:</label>
               <% if @class_id != "" %>
                   <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name.titleize }, 
                          :selected => "#{@home_work.classroom.class_name.titleize}", :prompt => "Please Select" %>

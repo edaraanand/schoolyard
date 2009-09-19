@@ -3,13 +3,16 @@
   <div class="fullpage announcemt"> 
 
            <div class="data-block long-block">
-                   <div class="ddmmm">
-                      <span class="date"><%= @announcement.created_at.strftime("%d") %></span>
-                      <span class="month"><%= @announcement.created_at.strftime("%b") %></span>
-	                 </div>
-              
-                   <h3><%= @announcement.person.name %> said</h3><br/>
-                   <p class="post-content"><%= @announcement.content %></p>
+                <div class="ddmmm">
+                   <span class="date"><%= @announcement.created_at.strftime("%d") %></span>
+                   <span class="month"><%= @announcement.created_at.strftime("%b") %></span>
+	              </div>
+                
+                <h3><%= @announcement.person.name %> said</h3><br/>
+                <p class="post-content"><%= @announcement.content %></p>
+                <p class="post-content">
+                   <%= @announcement.approve_comments %>
+                </p>
            </div> 
            <hr class="clear">
              

@@ -90,6 +90,7 @@ Merb::Router.prepare do
        resources :captures
        resources :tasks
        resources :directories
+       match("/csv_errors").to(:controller => 'students', :action => 'csv_errors').name(:csv_errors)
        match("/edit_approve").to(:controller => 'approvals', :action => 'edit_approve').name(:edit_approve)
        match("/sms_log_details").to(:controller => 'notifications', :action => 'sms_log_details').name(:sms_log_details)
        match("/approved").to(:controller => 'approvals', :action => 'approved').name(:approved)
@@ -146,10 +147,6 @@ Merb::Router.prepare do
        match("/school_admin").to(:controller => 'schools', :action => 'school_admin').name(:school_admin)
        match("/home_spot_light").to(:controller => 'homes', :action => 'home_spot_light').name(:home_spot_light)
        match("/lights").to(:controller => 'homes', :action => 'lights').name(:lights)
-       match("/new_settings").to(:controller => 'from_principals', :action => 'new_settings').name(:new_settings)
-       match("/create_settings").to(:controller => 'from_principals', :action => 'create_settings').name(:create_settings)
-       match("/edit_details").to(:controller => 'from_principals', :action => 'edit_details').name(:edit_details)
-       match("/update_details").to(:controller => 'from_principals', :action => 'update_details').name(:update_details)
        match(:first_subdomain => 'admin').to(:controller => 'admin', :action => 'index') 
      
        match("/parent_account_edit").to(:controller => 'users', :action => 'parent_account_edit').name(:parent_account_edit)
@@ -162,9 +159,10 @@ Merb::Router.prepare do
        match("/subscription").to(:controller => 'users', :action => 'subscription').name(:subscription)
        match("/phone").to(:controller => 'users', :action => 'phone').name(:phone)
        match("/voice_update").to(:controller => 'users', :action => 'voice_update').name(:voice_update)
-       match("/phone_update").to(:controller => 'users', :action => 'phone_update').name(:phone_update)
        match("/password").to(:controller => 'users', :action => 'password').name(:password)
        match("/change_password").to(:controller => 'users', :action => 'change_password').name(:change_password)
+       match("/check_type").to(:controller => 'homes', :action => 'check_type').name(:check_type)
+       match("/account_type").to(:controller => 'homes', :action => 'account_type').name(:account_type)
    end
    
      
@@ -176,6 +174,6 @@ Merb::Router.prepare do
   
   # Change this for your home page to be available at /
  
-    match('/').to(:controller => 'homes', :action => 'index').name(:homes)
+    match('/').to(:controller => 'homes', :action => 'check_type').name(:check_type)
 
 end

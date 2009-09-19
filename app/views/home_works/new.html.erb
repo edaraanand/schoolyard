@@ -4,11 +4,11 @@
         <li><%= flash[:error] %> </li>
      <% end %>
  </ul>
-<h2 class="current-page">Home Work &gt; Add New </h2>
+<h2 class="current-page">Homework &gt; Add New </h2>
 <%= form_for (@home_work, :action => resource(:home_works), :id => 'home_work', :name => "home_work" ) do %>
    <fieldset>
       <ul>
-          <li><label>Home Work for:</label>
+          <li><label>Homework for:</label>
               <% if @class_id != nil %>
                   <%= select :classroom_id, :collection => @classrooms.collect{|x| x.class_name }, :selected => @class_id, :prompt => "Please Select" %>
               <% else %>

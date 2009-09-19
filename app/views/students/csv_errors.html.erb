@@ -1,0 +1,25 @@
+<h2 class="current-page">
+    Import > CSV errors
+    <span class="actions">
+       <%= link_to "Back to Import", url(:import) %> &nbsp; &nbsp;
+       <%= link_to "All Students", resource(:students) %>
+    </span>
+</h2>
+
+<% if @invalid_rows %>
+
+   <fieldset>
+       <ul class="email-alerts">
+           <% @invalid_rows.each do |i| %>
+                <li>
+                    <% i.each do |f| %>
+                       <%= f %>
+                    <% end %>
+                </li>   
+           <% end %>
+       </ul><br/>
+   </fieldset>
+     
+<% end %>
+
+
