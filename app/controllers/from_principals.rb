@@ -129,7 +129,7 @@ class FromPrincipals < Application
           @staff.principal_name = false if @staff
        end
        @staff.save
-       flash[:confirmation] = "Your settings has been saved."
+       flash[:confirmation] = "Your settings have been saved."
        redirect url(:settings)
     else
        redirect url(:settings)
