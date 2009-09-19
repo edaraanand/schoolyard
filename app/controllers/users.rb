@@ -216,7 +216,7 @@ class Users < Application
     @person = session.user
     @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @person.id) rescue NotFound
     @pic.destroy
-    redirect url(:staff_account_edit)
+    redirect resource(:users)
   end
 
   private

@@ -9,7 +9,7 @@
 
 - if @attachment
   = file_image(@current_school.id, @attachment.id, @attachment.attachable_type)
-  = link_to "remove", url(:delete_from_principal, @attachment.id, :ref => "picture"), :class => "cancel"
+  = link_to "remove", url(:delete_from_principal, @attachment.id, :ref => "picture"), :class => "cancel delete"
 - else
   %span{:class => "subText"} 
     Principal's photograph has not been uploaded yet.
@@ -53,4 +53,9 @@
     = submit "    Save   " 
     Or
     = link_to "Cancel", url(:from_principals), :class => "cancel"
+
+
+%script{:type => "text/javascript", :src => "/javascripts/delete_confirmation.js"} 
+
+
 
