@@ -73,7 +73,7 @@ class FromPrincipals < Application
 
   def delete
     if params[:ref]
-       @attachment = @current_school.attachments.find_by_id(params[:id])
+       @attachment = @current_school.attachments.find_by_id(params[:id]) rescue NotFound
        @attachment.destroy
        redirect url(:settings)
     else
@@ -131,9 +131,8 @@ class FromPrincipals < Application
        flash[:confirmation] = "Your settings has been saved."
        redirect url(:settings)
     else
-       render :settings
+       redirect url(:settings)
     end
-    
   end
  
  
