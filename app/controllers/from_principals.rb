@@ -68,6 +68,7 @@ class FromPrincipals < Application
   def show
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
+    @attachment = @current_school.attachments.find_by_attachable_type_and_attachable_id("Announcement", @announcement.id)
     render
   end
 

@@ -1,0 +1,25 @@
+%h2{:class => "current-page"} Feedback
+- if @announcements.empty?
+  %P There are no Feedbacks received yet. 
+- else
+  - for feedback in @announcements
+    %div{:class => "data-block long-block"}
+      %div{:class => "ddmmm"}
+        %span{:class => "date"}
+          = feedback.created_at.strftime("%d")
+        %span{:class => "month"}
+          = feedback.created_at.strftime("%b")
+      %h3
+        = link_to "#{feedback.person.name} said", url(:feedback, feedback.id)
+      %p{:class => "separator"}
+        = snippet(feedback.content,50)
+      %p{:class => "separator"} &nbsp;
+      - if (feedback.approved == true ) && (feedback.approve_announcement == true)
+        %span{:class => "approved-or-not"}
+          Sent to Collabarative Methods on
+          = feedback.created_at.strftime("%B %d")
+      - if feedback.approved_by != nil
+        %p{:class => "approve-comments"}  
+          = feedback.approve_comments
+      
+  
