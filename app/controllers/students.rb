@@ -389,7 +389,7 @@ class Students < Application
   
   def template_download
      csv_string = FasterCSV.generate do |csv|
-        csv << ["Student Last Name", "Student First Name", "Parent Last Name", "Parent First Name", "Parent Email" "Address", "City", "State", "Zip Code", "Student Birth Date", "Current Class Name"]
+        csv << ["Student Last Name", "Student First Name", "Parent Last Name", "Parent First Name", "Parent Email", "Address", "City", "State", "Zip Code", "Student Birth Date", "Current Class Name"]
      end
      filename = "template.csv"
      send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
