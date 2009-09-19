@@ -1,9 +1,10 @@
-<% if params[:id] %>
-<% @classroom = @current_school.classrooms.find_by_id(params[:id]) %>
-<% end %>
-<h2 class="current-page">External Links  &gt; <%= params[:label] %>  <% if params[:id] %> &gt; <%= @classroom.class_name %> <% end %> </h2>
-
-  <% s = (0..13).to_a %>
+<h2 class="current-page">
+    <% if params[:id] %>
+       <% @classroom = @current_school.classrooms.find_by_id(params[:id]) %>
+    <% end %>
+   External Links  &gt; <%= params[:label] %>  <% if params[:id] %> &gt; <%= @classroom.class_name %> <% end %> 
+</h2>
+ <% s = (0..13).to_a %>
  	<div class="container">
 		<ol>
         <% s.each do |f| %>
@@ -14,7 +15,9 @@
         <% end %>
     </ol>
 	</div>
-
+  <p class="subText">
+      please enter the complete url in the box below e.g. http//:www.apple.com
+  </p>
 
 <%= form_for(@external_link, :action => url(:external_links_update, :id => @test), :id => 'links', :class => "cmxform") do %>
 
