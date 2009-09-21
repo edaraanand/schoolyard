@@ -27,28 +27,33 @@ class Notifications < Application
         @announcement.content = content
         @announcement.save!
         makecall(@announcement.id)
-        twitter = Twitter.new(@current_school.username, @current_school.password)
-        twitter.post(params[:announcement][:content])
-        numbers = @current_school.people.find(:all).collect{ |x| x.sms_alert }.compact.delete_if{|x| x == ""}.collect{|x| "1" + x }
-        api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
-        unless numbers.empty?
-          numbers.each do |f|
-             msg_code = api.send_message("#{f}", "#{@announcement.content}")
-             n = f.split(',').flatten
-             i = n[0].split('')
-             l = i.shift
-             sms_numbers << "#{i.join()}"
-             @person = @current_school.people.find_by_sms_alert("#{i.join()}")
-             LoggerMachine.create({:person_id => @person.id, :school_id => @current_school.id, :announcement_id => @announcement.id, :sms_code => "#{msg_code}"})  
-          end
-        end  
         run_later do
-          @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
+           post_announcement(@announcement.id)
         end
         redirect resource(:homes)
      else
         render :new                
      end 
+  end
+  
+  def post_announcement(id)
+    @announcement = @current_school.announcements.find_by_id(params[:id]) rescue NotFound   
+    twitter = Twitter.new(@current_school.username, @current_school.password)
+    twitter.post(@announcement.content)
+    numbers = @current_school.people.find(:all).collect{ |x| x.sms_alert }.compact.delete_if{|x| x == ""}.collect{|x| "1" + x }
+    api = Clickatell::API.authenticate(Schoolapp.config(:clickatell_api), Schoolapp.config(:clickatell_user), Schoolapp.config(:clickatell_password))
+    unless numbers.empty?
+      numbers.each do |f|
+         msg_code = api.send_message("#{f}", "#{@announcement.content}")
+         n = f.split(',').flatten
+         i = n[0].split('')
+         l = i.shift
+         sms_numbers << "#{i.join()}"
+         @person = @current_school.people.find_by_sms_alert("#{i.join()}")
+         LoggerMachine.create({:person_id => @person.id, :school_id => @current_school.id, :announcement_id => @announcement.id, :sms_code => "#{msg_code}"})  
+      end
+    end
+    @announcement.mail(:urgent_announcement, :subject => "Urgent Announcement for " + @current_school.school_name)
   end
   
   def show
@@ -64,7 +69,7 @@ class Notifications < Application
     sms_report = []
     people = []
     @sms_codes = @current_school.logs.find(:all, :select => 'sms_code, person_id', :conditions => ["announcement_id = ?", @announcement.id ])
-    api = Clickatell::API.authenticate('3175693', 'brianbolz', 'brianbolz1')
+    api = Clickatell::API.authenticate(Schoolapp.config(:clickatell_api), Schoolapp.config(:clickatell_user), Schoolapp.config(:clickatell_password))
     @sms_codes.each do |f|
       unless f.sms_code.nil?
         status_codes <<  api.message_status("#{f.sms_code}")
