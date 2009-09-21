@@ -65,16 +65,14 @@ class Announcements < Application
   def edit
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
-    @attachments = Attachment.announcements(@announcement.id, @current_school.id)
-    @allowed = 1 - @attachments.size
+    @attachment =  @current_school.attachments.find_by_attachable_type_and_attachable_id("Announcement", @announcement.id)
     render
   end
   
   def update
      @announcement = @current_school.announcements.find_by_id(params[:id])
      raise NotFound unless @announcement
-     @attachments = Attachment.announcements(@announcement.id, @current_school.id)
-     @allowed = 1 - @attachments.size
+     @attachment =  @current_school.attachments.find_by_attachable_type_and_attachable_id("Announcement", @announcement.id)
      i=0
      if @announcement.update_attributes(params[:announcement])
         @announcement.person_id = session.user.id
@@ -103,11 +101,10 @@ class Announcements < Application
 
   def delete
     if params[:label] == "attachment"
-      @attachment = @current_school.attachments.find(params[:id])
+      @attachment = @current_school.attachments.find_by_id(params[:id])
       @announcement = @current_school.announcements.find_by_id(@attachment.attachable_id)
       @attachment.destroy
-      @attachments = Attachment.announcements(@announcement.id, @current_school.id)
-      @allowed = 1 - @attachments.size
+      @attachment =  @current_school.attachments.find_by_attachable_type_and_attachable_id("Announcement", @announcement.id)
       render :edit, :id => @announcement.id
     else
       @announcement = @current_school.announcements.find_by_id(params[:id])
@@ -118,7 +115,7 @@ class Announcements < Application
       if @page == "Home Page"
          redirect resource(:homes)
       else
-        @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @page ])
+        @classroom = @current_school.classrooms.find_by_class_name(@page)
         redirect url(:class_details, :id => @classroom.id)
       end
     end
@@ -132,7 +129,7 @@ class Announcements < Application
     else
        @selected = "announcements"
        @select =  "classrooms"
-       @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', params[:announcement][:access_name] ])
+       @classroom = @current_school.classrooms.find_by_class_name(params[:announcement][:access_name])
        render :layout => 'class_change', :id => @classroom.id
     end
   end

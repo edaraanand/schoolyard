@@ -4,7 +4,7 @@
     %li
       = flash[:error]
 %h2{:class => "current-page"} Announcements &gt; Add New
-= form_for (@announcement, :action => resource(:announcements), :id => 'announcement', :name => "announce") do
+= form_for(@announcement, :action => resource(:announcements), :id => 'announcement', :name => "announce") do
   %fieldset
     %ul
       %li
@@ -29,7 +29,7 @@
     %input{:type => "button", :value => "    Preview    ", :onclick => "preview();return false;"}
     = submit "    Publish    "
     Or
-    = link_to "Cancel", url(:from_principals), :class => "cancel"   
+    = link_to "Cancel", resource(:announcements), :class => "cancel"   
 
 :javascript
   document.announce.announcement_title.focus();
