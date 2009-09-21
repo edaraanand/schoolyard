@@ -1,0 +1,28 @@
+%h2{:class => "current-page"} Pending Approvals
+%div{:class => "fullpage announcemt"}
+  - if @announcements.empty?
+    %p{:class => "subText"} There is nothing pending your approval right now
+  - else
+    - for announcement in @announcements
+      %div{:class => "data-block long-block"}
+        %div{:class => "ddmmm"}
+          %span{:class => "date"}
+            = announcement.created_at.strftime("%d")
+          %span{:class => "month"}
+            = announcement.created_at.strftime("%b")
+        %h3
+          = link_to "#{announcement.title}", url(:approval, announcement.id)
+        %span{:class => "subText"}
+          Announcement for:
+          = announcement.access_name 
+        %br
+        %span{:class => "subText"}
+          Created by
+          = announcement.person.name
+          expires on
+          = announcement.expiration.strftime("%d %b %Y")
+        %p
+          = snippet(announcement.content.gsub("\r\n", "<br/>"), 50)
+        %p{:class => "separator"} &nbsp;
+      = will_paginate(@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' )  
+
