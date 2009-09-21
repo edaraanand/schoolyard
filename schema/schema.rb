@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 83) do
+ActiveRecord::Schema.define(:version => 84) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -302,7 +302,6 @@ ActiveRecord::Schema.define(:version => 83) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "domain"
     t.string   "folder"
     t.string   "subdomain"
     t.string   "address1"

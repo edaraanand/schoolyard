@@ -56,5 +56,8 @@ class School < ActiveRecord::Base
   validates_uniqueness_of :subdomain, :if => :subdomain
   
 
+  def domain
+    "https://#{subdomain}.#{Schoolapp.config(:app_domain)}"
+  end
 end
 
