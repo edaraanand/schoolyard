@@ -4,6 +4,6 @@ class PrincipalsFieldsMigration < ActiveRecord::Migration
   end
 
   def self.down
-    add_column :schools, :principal_id
+    remove_column :schools, :principal_id
   end
 end
