@@ -6,8 +6,31 @@ class Students < Application
 
  
   def index
-    @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
+    @class_rooms = @current_school.active_classrooms
+    if params[:ref] == "students"
+       letter_filter
+       @s = params[:type].to_s
+    else
+       if params[:label] == "classes"
+          @class = @current_school.classrooms.find_by_id(params[:id]) rescue NotFound
+          @students = @current_school.students.paginate(:all, 
+                                                        :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id],
+                                                        :per_page => 25,  :page => params[:page] )
+          @test = params[:id]
+       else
+          @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
+          @test = "All Students"
+       end
+    end
     render
+  end
+  
+  def letter_filter
+    if params[:type] == "all"
+       @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
+    else
+       @students = @current_school.students.paginate(:all, :conditions => ['last_name LIKE ?', "#{params[:type]}%"], :per_page => 25,  :page => params[:page] )
+    end
   end
 
   def new
