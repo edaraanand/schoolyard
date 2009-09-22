@@ -6,8 +6,10 @@ module Merb
       @announcement = @current_school.announcements.find_by_id(id) rescue NotFound   
 
 
-      # Run everything off the thread; each service needs to run on its own without
+      # Run everything off the thread; each service needs to run on its own thread without
       # interfering with the others
+      #
+      # Plan to have this run for 10k unique phone numbers
       run_later do
         make_call(id)
       end
