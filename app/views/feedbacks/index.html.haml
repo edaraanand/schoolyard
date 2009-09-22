@@ -21,5 +21,6 @@
       - if feedback.approved_by != nil
         %p{:class => "approve-comments"}  
           = feedback.approve_comments
-      
+  %br
+  = will_paginate(@announcements, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => '|')     
   

@@ -5,7 +5,10 @@ class Feedbacks < Application
   before :access_rights, :exclude => [:new, :create]
 
   def index
-    @announcements = @current_school.announcements.find(:all, :conditions => ['label = ?', "feedback"], :order => "created_at DESC")
+    @announcements = @current_school.announcements.paginate(:all, :conditions => ['label = ?', "feedback"], 
+                                                    :per_page => 15,
+                                                    :page => params[:page], 
+                                                    :order => "created_at DESC")
     render :layout => 'default'
   end
   
