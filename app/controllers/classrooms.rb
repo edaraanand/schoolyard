@@ -122,9 +122,8 @@ class Classrooms < Application
     @classroom = @current_school.classrooms.find_by_id(params[:id])
     if @classroom
       if @classroom.activate == true
-         @all_class_calendars = Calendar.all_calendars(@current_school.id)
-         @cals = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @classroom.class_name])
-         @calendars = @cals.concat(@all_class_calendars).sort_by{|my_item| my_item[:start_date]}.uniq
+         @week = (params[:week] || 0).to_i
+         @calendars = Calendar.current_week_calendars(@current_school.id, @classroom.class_name, @week)
          @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true],
                                            :per_page => 10, :page => params[:page], :order => "created_at DESC")
          @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name])

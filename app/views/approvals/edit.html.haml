@@ -32,7 +32,7 @@
     %input{:type => "button", :value => "    Preview    ", :onclick => "preview();return false;"}
     = submit "    Publish    "
     Or
-    = link_to "Cancel", resource(:announcements), :class => "cancel"
+    = link_to "Cancel", url(:approval, @announcement.id), :class => "cancel"
   
 
 :javascript

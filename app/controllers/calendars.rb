@@ -11,12 +11,10 @@ class Calendars < Application
     if params[:label] == "classes"
       @classroom = @current_school.classrooms.find_by_id(params[:id])
       raise NotFound unless @classroom
-      @c = @current_school.calendars.find(:all, :conditions => ["class_name = ? ", @classroom.class_name ]  )   
-      @calendars = @c.concat(@all_class_calendars).sort_by{|my_item| my_item[:start_date]}.uniq
+      @calendars = Calendar.all_calendars(@current_school.id, @classroom.class_name)
       @test = params[:id]
    else
-      @c = @current_school.calendars.find(:all)
-      @calendars = @c.concat(@all_class_calendars).sort_by{|my_item| my_item[:start_date]}.uniq
+      @calendars = @current_school.calendars.find(:all)
       @test = "All Classrooms"
     end
     render
@@ -161,14 +159,12 @@ class Calendars < Application
     @select = "events"
     @selected = "all_events"
     unless params[:id].nil?
-      @class = @current_school.classrooms.find(params[:id])
-      @cal = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @class.class_name])
-      @cls =  @cal.concat(@all_class_calendars).sort_by{|my_item| my_item[:start_date]}.uniq
+      @class = @current_school.classrooms.find_by_id(params[:id]) rescue NotFound
+      @cls = Calendar.all_calendars(@current_school.id, @class.class_name)
       @selected = @class.class_name
     end
     if params[:l] == "all_events"
-       @c = @current_school.calendars.find(:all)
-       @calendars = @c.concat(@all_class_calendars).sort_by{|my_item| my_item[:start_date]}.uniq
+      @calendars = @current_school.calendars.find(:all)
     end
     render :layout => 'directory'
   end
@@ -212,7 +208,6 @@ class Calendars < Application
      classes = @current_school.active_classrooms
      room = classes.collect{|x| x.class_name }
      @class_rooms = room.insert(0, "Schoolwide")
-     @all_class_calendars = Calendar.all_calendars(@current_school.id)
   end
 
   def access_rights

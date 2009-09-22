@@ -26,12 +26,14 @@ class Approvals < Application
     @selected = "approve"
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
+    @attachment =  @current_school.attachments.find_by_attachable_type_and_attachable_id("Announcement", @announcement.id)
     render
   end
  
   def update
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
+    @attachment =  @current_school.attachments.find_by_attachable_type_and_attachable_id("Announcement", @announcement.id)
     if @announcement.update_attributes(params[:announcement])
       @announcement.person_id = session.user.id
       @announcement.approved = false
@@ -39,6 +41,11 @@ class Approvals < Application
       @announcement.school_id = @current_school.id
       @announcement.label = 'parent'
       @announcement.save
+      if params[:attachment]
+         unless params[:attachment]['file_'+i.to_s].empty?
+           Attachment.file(params.merge(:school_id => @current_school.id), "Announcement", @announcement.id)
+         end
+      end
       redirect resource(:approvals)
     else
       render :edit
