@@ -56,10 +56,10 @@
      <% else %>
            New Announcement is Posted to<br/><br/>
      <% end %>
-     
-           <% if params[:home_page_announcement] %>
+    
+          <% if params[:home_page_announcement] %>
                <%= check_box :name => 'home_page_announcement', :checked => 'checked' %>
-                Home Page <br/><br/>
+                   Home Page <br/><br/>
            <% else %>
                 <% if @alert_home.empty? %>
                     <%= check_box :name => 'home_page_announcement' %>
@@ -69,35 +69,43 @@
                 Home Page <br/><br/>
            <% end %>
            
-      
-          <% unless params[:class_alerts] %>   
-             <% @current_school.active_classrooms.each do |f| %>
-                   <% alert_p = AlertPeople.find(:all,:conditions=>["person_id=? and classroom_id=?", session.user.id, f.id]).map{|x| x.classroom_id } %>
-                   <% if alert_p.include?(f.id) %>
-                       <%= check_box :name => 'class_alerts[' + f.id.to_s + ']', :checked => 'checked' %>
-                       <%= f.class_name %><br/> <br/>
-                   <% else %>
-                       <%= check_box :name => 'class_alerts[' + f.id.to_s + ']' %>
-                       <%= f.class_name %><br/> <br/>
-                   <% end %>
-             <% end %>
-          <% end %>
-          
-         <% if params[:class_alerts] %>
-                 <% @current_school.active_classrooms.each do |f| %>
-                     <% if params[:class_alerts].has_key?(f.id.to_s) %>
+       <div id="box" class="section">
+           <h4>Classes & Subjects</h4>
+            <input type="checkbox" class="check" value="Select all" name="select_all" id="select_all"
+                    onclick="Form.getInputs('box', 'checkbox').each(function(box){box.checked= $('select_all').checked})" />
+              Select all <br/><br/>
+            <% unless params[:class_alerts] %>   
+               <% @current_school.active_classrooms.each do |f| %>
+                     <% alert_p = AlertPeople.find(:all,:conditions=>["person_id=? and classroom_id=?", session.user.id, f.id]).map{|x| x.classroom_id } %>
+                     <% if alert_p.include?(f.id) %>
                          <%= check_box :name => 'class_alerts[' + f.id.to_s + ']', :checked => 'checked' %>
                          <%= f.class_name %><br/> <br/>
                      <% else %>
                          <%= check_box :name => 'class_alerts[' + f.id.to_s + ']' %>
                          <%= f.class_name %><br/> <br/>
                      <% end %>
-                 <% end %>
-          <% end %>
+               <% end %>
+            <% end %>
+            
+            <% if params[:class_alerts] %>
+                  <% @current_school.active_classrooms.each do |f| %>
+                      <% if params[:class_alerts].has_key?(f.id.to_s) %>
+                          <%= check_box :name => 'class_alerts[' + f.id.to_s + ']', :checked => 'checked' %>
+                          <%= f.class_name %><br/> <br/>
+                      <% else %>
+                          <%= check_box :name => 'class_alerts[' + f.id.to_s + ']' %>
+                          <%= f.class_name %><br/> <br/>
+                      <% end %>
+                  <% end %>
+            <% end %>
+        </div>
           <div class="save-cancel">
               <%= submit " Save " %> Or 
               <%= link_to "Cancel", url(:alerts), :class => "cancel" %>
           </div>
+          
+     </div>     
+      
     </fieldset>
 <% end =%>
 

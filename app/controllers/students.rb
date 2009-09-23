@@ -4,7 +4,6 @@ class Students < Application
   before :find_school
   before :access_rights, :exclude => [:generate_csv]
 
- 
   def index
     @class_rooms = @current_school.active_classrooms
     if params[:ref] == "students"
@@ -29,7 +28,8 @@ class Students < Application
     if params[:type] == "all"
        @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
     else
-       @students = @current_school.students.paginate(:all, :conditions => ['last_name LIKE ?', "#{params[:type]}%"], :per_page => 25,  :page => params[:page] )
+       @students = @current_school.students.paginate(:all, :conditions => ['last_name LIKE ?', "#{params[:type]}%"], 
+                                                     :per_page => 25,  :page => params[:page] )
     end
   end
 
@@ -412,7 +412,7 @@ class Students < Application
   
   def template_download
      csv_string = FasterCSV.generate do |csv|
-        csv << ["Student Last Name", "Student First Name", "Parent Last Name", "Parent First Name", "Parent Email", "Address", "City", "State", "Zip Code", "Student Birth Date", "Current Class Name"]
+        csv << ["Student LastName", "Student FirstName", "Parent 1 LastName", "Parent 1 FirstName", "Parent Email", "Address", "City", "State", "Zip Code", "Student Birth Date", "Current Class Name"]
      end
      filename = "template.csv"
      send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
