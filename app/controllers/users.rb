@@ -6,17 +6,16 @@ class Users < Application
    before :staff_selected_link, :only => [:staff_account_edit, :staff_account_update]
    
   def index
-    @person = session.user
-    if @person.type == "Staff"
-       @staff = session.user
-       @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @staff.id)
-    end
-    if @person.type == "Parent"
-       @parent = session.user
-       @students = @parent.students
-    end
-    @selected = params[:selected]
-    render
+     @person = session.user
+     @staff = @current_school.staff.find_by_email(@person.email)
+     @parent = @current_school.parents.find_by_email(@person.email)
+     if @staff
+        @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @staff.id)
+     else
+        @students = @parent.students
+     end
+     @selected = params[:selected]
+     render
   end 
   
   def staff_account_edit
@@ -79,7 +78,7 @@ class Users < Application
   
   def parent_account_edit
      @parent = session.user
-     @students = @parent.students
+     @students = @parent.students.find(:all, :conditions => ['school_id = ?', @current_school.id])
      render
   end
   
@@ -94,9 +93,9 @@ class Users < Application
                fname = params[:parent][:fname]["fname_#{f}".intern]
                lname = params[:parent][:lname]["lname_#{f}".intern]
                email = params[:parent][:email]["email_#{g}".intern]
-               @p = @current_school.parents.create({ :first_name => fname, :last_name => lname, :email => email} )
+               @p = @current_school.parents.create({ :first_name => fname, :last_name => lname, :email => email, :approved => 1})
                @students.each do |f|
-                  Guardian.create({:student_id => f.id, :parent_id => @p.id })
+                  Guardian.create({:student_id => f.id, :parent_id => @p.id})
                end
                @people << @p
             end

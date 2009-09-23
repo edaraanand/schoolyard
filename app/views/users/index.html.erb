@@ -1,5 +1,5 @@
 
-<% if @person.type == "Staff" %>
+<% if @staff %>
 
      <h2 class="current-page"> My Profile 
         <%= link_to "Edit", url(:staff_account_edit, :id => @staff.id), :id => @staff, :class=> "edit-btn" %>
@@ -16,9 +16,7 @@
      <p><%= session.user.person_bio.blank? ? "You have not created your bio yet." :  san_content(session.user.person_bio) %></p>
      <hr size="1"/>
 
-<% end %>
-
-<% if @person.type == "Parent" %>
+<% else %>
 
     <%= partial 'parent_account' %>
 

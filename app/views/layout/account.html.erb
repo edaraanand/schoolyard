@@ -3,7 +3,10 @@
       <ul id="menu"><!-- Nested Lists -->
          <%# @access_rights = session.user.access_peoples  %>
          <%# if @access_rights.length == 0 %>
-         <% if session.user.type == "Parent" %>
+         <%  @person = session.user
+             @staff = @current_school.staff.find_by_email(@person.email)
+             @parent = @current_school.parents.find_by_email(@person.email) %>
+         <% if @parent %>
              <li <% if @selected == "parent_profile" %> class="on" <% end %>>
                  <%= link_to "My Profile", resource(:users, :selected => "parent_profile") %>
              </li>
@@ -12,9 +15,11 @@
                 <%= link_to "Other Family Members", resource(:users, :selected => "parent_profile", :label => "other") %>
              </li>
          <% else %>
-              <li <% if @selected == "staff_profile" %> class="on" <% end %>>
-                  <%= link_to "My Profile", resource(:users, :selected => "staff_profile") %>
-              </li>
+             <% if @staff %>
+                 <li <% if @selected == "staff_profile" %> class="on" <% end %>>
+                     <%= link_to "My Profile", resource(:users, :selected => "staff_profile") %>
+                 </li>
+             <% end %>
          <% end %>
          <li <% if @selected == "phone" %> class="on" <% end %>><%= link_to "Phone Alert Settings", url(:phone) %></li>
          <li <% if @selected == "alerts" %> class="on" <% end %>><%= link_to "Alert Settings", url(:alerts) %></li>

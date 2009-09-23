@@ -124,6 +124,9 @@ class Classrooms < Application
       if @classroom.activate == true
          @week = (params[:week] || 0).to_i
          @calendars = Calendar.current_week_calendars(@current_school.id, @classroom.class_name, @week)
+         if @week == 0
+            @today_calendars = Calendar.today_calendars(@current_school.id, @classroom.class_name)
+         end
          @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true],
                                            :per_page => 10, :page => params[:page], :order => "created_at DESC")
          @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
