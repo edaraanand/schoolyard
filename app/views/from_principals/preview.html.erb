@@ -16,7 +16,7 @@
                         <span class="month"><%= @date.strftime("%b") %></span>
                    </div>
              <% end %>
-             <p class="separator"><%= san_content(params[:announcement][:content]) %></p>
+             <p class="separator"><%= pre_announcement(params[:announcement][:content]) %></p>
           </div>
      </div>
 </div>

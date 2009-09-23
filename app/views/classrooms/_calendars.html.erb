@@ -1,20 +1,30 @@
 <div id="content" class="two-col">
     <h2 class="current-page">
         Calendar &nbsp;&nbsp;&nbsp;
-       <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@classroom.class_name}" )) %>
-       <span class="act">  
-          <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id), :class=> "pdf" %>
-          (<%= link_to "Requires acrobat reader", "http://get.adobe.com/reader/", {'target' => '_blank'} %>)
-       </span>
+        <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@classroom.class_name}" )) %>
+        <span class="act">  
+           <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id), :class=> "pdf" %>
+           (<%= link_to "Requires acrobat reader", "http://get.adobe.com/reader/", {'target' => '_blank'} %>)
+        </span>
     </h2>
+      <%= link_to "&larr; previous week", url(:class_details, :id => @classroom.id, :week => @week - 1, :label => "calendars"), 
+                              :class => "alignleft" %>  &#124;
+
+      <%= link_to "Current Week", url(:class_details, :id => @classroom.id, :week => "0", :label => "calendars", :current_week => "current"), :class => "alignleft" %>   &#124;
+
+      <%= link_to "next week &rarr; ", url(:class_details, :id =>  @classroom.id, :week => @week + 1, :label => "calendars"), 
+                            :class => "alignright" %>
+    
     <% if @calendars.empty? %>
          <span class="subText">There are no events planned at this time</span>
     <% else %>
          <br/>
          <% q = 1 %>
-         <%#= partial "today_calendar" %>
-              <% cdate=""
-                   for calendar in @calendars %>
+             <% if @today_calendars %>
+                <%= partial "today_calendar" %>
+             <% end %>
+                <% cdate=""
+                   for calendar in @calendars.delete_if{|x| x.start_date == Date.today} %>
                        <div class="calendar-block" style="width:480px;">
                             <% if(cdate!= calendar.start_date.strftime("%b %d %Y"))
                                   cdate=calendar.start_date.strftime("%b %d %Y") %>
