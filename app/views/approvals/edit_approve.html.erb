@@ -60,7 +60,7 @@ function addFormField()
  {
   if (id == 1)
   {
-    $j('#students').append("<li id='row" + id + "'><select class='required' id='classroom"+id+"' name='class_room[room][room_"+id+"]'><option value=''>Select Class</option><% @classrooms.each do |classroom| %><option value='<%= classroom.id %>'><%= classroom.class_name %></option><% end %></select><select class='apart required' id='student"+id+"' name='student_name[name][name_"+id+"]'><option value=''>Select Student</option><% @students.each do |student| %><option value='<%= student.id %>'><%= student.name %></option><% end %></select></li>");
+    $j('#students').append("<li id='row" + id + "'><select class='required' id='classroom"+id+"' name='class_room[room][room_"+id+"]'><option value=''>Select Class</option><% @classrooms.each do |classroom| %><option value='<%= classroom.id %>'><%= classroom.class_name %></option><% end %></select>&nbsp;<select class='apart required' id='student"+id+"' name='student_name[name][name_"+id+"]'><option value=''>Select Student</option><% @students.each do |student| %><option value='<%= student.id %>'><%= student.name %></option><% end %></select></li>");
     id = (id - 1) + 2;
     $j('#students').append("<br/><li id='row" + id + "'><select id='classroom"+id+"' name='class_room[room][room_"+id+"]'><option value=''>Select Class</option><% @classrooms.each do |classroom| %><option value='<%= classroom.id %>'><%= classroom.class_name %></option><% end %></select><select class='apart' id='student"+id+"' name='student_name[name][name_"+id+"]'><option value=''>Select Student</option><% @students.each do |student| %><option value='<%= student.id %>'><%= student.name %></option><% end %></select></li>");
     id = (id - 1) + 2;

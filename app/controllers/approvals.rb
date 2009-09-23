@@ -124,7 +124,7 @@ class Approvals < Application
     raise NotFound unless @parent
     @classrooms = @current_school.active_classrooms
     @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
-    @students = @current_school.students.find(:all, :conditions => ['activate = ?', true] )
+    @students = @current_school.students.find(:all, :conditions => ['activate = ?', true]).sort_by{|p| p.name}
     render
   end
  
