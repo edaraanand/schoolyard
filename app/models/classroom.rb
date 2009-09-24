@@ -22,6 +22,6 @@ class Classroom < ActiveRecord::Base
  	validates_presence_of :class_name, :if => Proc.new{|c| c.class_type != "Sports" }
   validates_uniqueness_of :class_name, :scope => :school_id
   #validates_presence_of :person_id, :message => "please select Faculty from the list"
-
+  
 
 end

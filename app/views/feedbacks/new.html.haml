@@ -1,0 +1,14 @@
+%h2{:class => "current-page"} Feedback
+= error_messages_for @announcement
+= form_for(@announcement, :action => resource(:feedbacks)) do
+  %fieldset
+    %p
+      %h4 We appreciate your feedback and will try to implement suggestions you give.
+    %p Please list any problems or suggestions you have below
+    %ul
+      %li
+        = text_area  :content, :rows => "20", :cols => "50"
+  %div{:class => 'save-cancel'}
+    =  submit "    Send Feedback    "
+    Or
+    <a href="javascript:history.back();" class="cancel">Cancel</a>

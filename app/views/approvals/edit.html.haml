@@ -1,0 +1,54 @@
+= error_messages_for @announcement
+%h2{:class => "current-page"} Pending Approval &gt; Edit
+= form_for(@announcement, :action => resource(@announcement), :id => 'announcement', :name => "announce") do
+  %fieldset
+    %ul
+      %li
+        %label Announcement for:
+        = select :access_name, :collection => @classrooms, :prompt => "Please Select"
+      %li
+        = text_field  :title,  :label => "Title", :maxlength => "75"
+      %li
+        = text_area  :content,  :label => "Description", :rows => "20", :cols => "50" 
+      %li
+        - if @announcement.expiration
+          = text_field :expiration, :class => "short date", :label => "Expiration", :value => @announcement.expiration.strftime("%m/%d/%Y")
+        - else
+          = text_field :expiration, :class => "short date", :label => "Expiration"
+      %li
+        - if @attachment
+          = file_field :attachment,  :label => "Attach a File", :disabled => "true"
+        - else
+          = file_field :attachment,  :label => "Attach a File"
+    %ul{:id => "pending_files"}   
+      - if @attachment
+        %li{:id => "attachemet_#{@attachment.id}"}
+          = @attachment.filename
+          = link_to "Remove", url(:delete_announcement, @attachment.id, :label => "attachment"), :class => "cancel"
+    :javascript
+      var multi_selector = new MultiSelector($('pending_files'), 1);
+      multi_selector.addElement($('announcement_attachment'));
+  %div{:class => "save-cancel"}
+    %input{:type => "button", :value => "    Preview    ", :onclick => "preview();return false;"}
+    = submit "    Publish    "
+    Or
+    = link_to "Cancel", url(:approval, @announcement.id), :class => "cancel"
+  
+
+:javascript
+  function preview()
+  {
+  var name = document.getElementById('announcement_access_name');
+  if (name.value == "")
+  {
+  alert("Please select the Classroom/Homepage from the dropdown menu");
+  }
+  else
+  {
+  var s = $('announcement').serialize();
+  window.open('/announcements/preview/-/?' + s, 'mywin', 'left=20,top=20,width=1000,height=500,toolbar=1,resizable=0');
+  }
+  }
+  $j(document).ready(function() {
+  $j("input.date").datepicker({minDate:'today + 1'});
+  });

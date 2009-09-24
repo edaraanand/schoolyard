@@ -22,7 +22,11 @@
       <li><%= text_field  :location,  :label => "Location", :maxlength => "75" %></li>
       <li>
 	      <label>&nbsp;</label>
-	      <input type="checkbox" id="calendar_day_event" onclick="dayevent()" value="1" name="calendar[day_event]" class="checkbox"/> 
+	      <% if @check == "1" %>
+	         <input type="checkbox" id="calendar_day_event" onclick="dayevent()" value="1" name="calendar[day_event]" class="checkbox" checked= "true"/>
+	      <% else %>
+	         <input type="checkbox" id="calendar_day_event" onclick="dayevent()" value="1" name="calendar[day_event]" class="checkbox"/> 
+	      <% end %>
 	      All Day Event
       </li>
       <li>

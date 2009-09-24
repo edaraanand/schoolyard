@@ -1,0 +1,84 @@
+<div>
+     <h2 class="current-page">Parent Registrations </h2>
+     
+     <% if (@parent.activate == true && @parent.approved == 1)  %> 
+          <span class="reactive">The Parent has been Approved</span> | 
+          <%= link_to "Deactivate", url(:approved, :id => @parent.id, :ref => "cancel" ), :class => "cancel" %>
+     <% elsif (@parent.activate == false && @parent.approved == 3) %>
+          <span class="deactive">The Parent has been Rejected</span> |
+          <%= link_to "Approve", url(:approved, :id => @parent.id, :approve => "approve" ), :class => "reactive" %>
+          <br/><br/>
+     <% end %>
+     
+     <%= partial 'student_data' %><br/>
+     
+     <%= form_for :parent, :action => url(:approved, :id => @parent), :name => "approveform" do %> 
+
+            <% unless @guardians.empty? %>
+                  <% q = 1 %>
+                  <% @guardians.each do |f| %>
+                  
+                       <% @study = Study.find_by_student_id(f.student_id) %>
+                       <% @class = @current_school.classrooms.find_by_id(@study.classroom_id) %>
+                       <%= select :name => "classes[room][room_#{q}]", :collection => @classrooms.collect{|x| x.class_name}, 
+                                  :value_method => :id, :selected => @class.class_name, :id => "class_name_#{q}", 
+                                  :text_method => :name, :prompt => "Select Class" %>
+                       <%= select :class => "apart", :name => "studs[name][name_#{q}]", :collection => @students, 
+                                  :value_method => :id, :selected => "#{f.student_id}".to_s, :id => "student_name_#{q}",
+                                  :text_method => :name, :prompt => "Select Student" %>
+                       <% q += 1 %>
+                  <% end %>
+            <% end %><br/><br/>
+            
+             <a href="" class="add-more" onClick="addFormField(); return false;">Associate students to this parent</a><br/>
+              <span class="subText">
+                 (this is optional and can be done later)<br/>
+              </span><br/>
+              <span class="subText" id ="note" style="display:none">
+                 If the name that you wish to associate to this parent does not appear in the list,
+                 please add that student by going to the ‘Student Directory’.<br/>
+                 You may than come back and map this parent to the student.
+              </span>
+              <br/><br/>
+              
+              <ul id="students"></ul><br/><br/>
+              <span id="more" style="display:none">
+                  <a href="" class="add-more" onClick="add(); return false;">Add More</a><br/>
+              </span>
+           
+               <br/>
+            <div class="save-cancel">
+                 <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:parent_approvals), :class => "cancel" %>
+            </div>
+      
+     <% end =%> 
+      
+<script type="text/javascript">       
+
+id = 1;
+function addFormField()
+ {
+  if (id == 1)
+  {
+    $j('#students').append("<li id='row" + id + "'><select class='required' id='classroom"+id+"' name='class_room[room][room_"+id+"]'><option value=''>Select Class</option><% @classrooms.each do |classroom| %><option value='<%= classroom.id %>'><%= classroom.class_name %></option><% end %></select>&nbsp;<select class='apart required' id='student"+id+"' name='student_name[name][name_"+id+"]'><option value=''>Select Student</option><% @students.each do |student| %><option value='<%= student.id %>'><%= student.name %></option><% end %></select></li>");
+    id = (id - 1) + 2;
+    $j('#students').append("<br/><li id='row" + id + "'><select id='classroom"+id+"' name='class_room[room][room_"+id+"]'><option value=''>Select Class</option><% @classrooms.each do |classroom| %><option value='<%= classroom.id %>'><%= classroom.class_name %></option><% end %></select><select class='apart' id='student"+id+"' name='student_name[name][name_"+id+"]'><option value=''>Select Student</option><% @students.each do |student| %><option value='<%= student.id %>'><%= student.name %></option><% end %></select></li>");
+    id = (id - 1) + 2;
+    $j('#students').append("<br/><li id='row" + id + "'><select id='classroom"+id+"' name='class_room[room][room_"+id+"]'><option value=''>Select Class</option><% @classrooms.each do |classroom| %><option value='<%= classroom.id %>'><%= classroom.class_name %></option><% end %></select><select class='apart' id='student"+id+"' name='student_name[name][name_"+id+"]'><option value=''>Select Student</option><% @students.each do |student| %><option value='<%= student.id %>'><%= student.name %></option><% end %></select></li>");
+    document.getElementById('more').style.display  =  "block";
+    document.getElementById('note').style.display  =  "block";
+  }
+ }
+
+l = 4;
+function add()
+{
+  $j('#students').append("<br/><li id='row" + l + "'><select id='classroom"+l+"' name='class_room[room][room_"+l+"]'><option value=''>Select Class</option><% @classrooms.each do |classroom| %><option value='<%= classroom.id %>'><%= classroom.class_name %></option><% end %></select><select class='apart' id='student"+l+"' name='student_name[name][name_"+l+"]'><option value=''>Select Student</option><% @students.each do |student| %><option value='<%= student.id %>'><%= student.name %></option><% end %></select></li>");
+  l = (l - 1) + 2;
+  $j('#students').append("<br/><li id='row" + l + "'><select id='classroom"+l+"' name='class_room[room][room_"+l+"]'><option value=''>Select Class</option><% @classrooms.each do |classroom| %><option value='<%= classroom.id %>'><%= classroom.class_name %></option><% end %></select><select class='apart' id='student"+l+"' name='student_name[name][name_"+l+"]'><option value=''>Select Student</option><% @students.each do |student| %><option value='<%= student.id %>'><%= student.name %></option><% end %></select></li>");
+  l = (l - 1) + 2;
+  $j('#students').append("<br/><li id='row" + l + "'><select id='classroom"+l+"' name='class_room[room][room_"+l+"]'><option value=''>Select Class</option><% @classrooms.each do |classroom| %><option value='<%= classroom.id %>'><%= classroom.class_name %></option><% end %></select><select class='apart' id='student"+l+"' name='student_name[name][name_"+l+"]'><option value=''>Select Student</option><% @students.each do |student| %><option value='<%= student.id %>'><%= student.name %></option><% end %></select></li>");
+  l = (l - 1) + 2;
+}
+
+</script>     

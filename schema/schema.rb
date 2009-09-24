@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 80) do
+ActiveRecord::Schema.define(:version => 84) do
 
   create_table "access_peoples", :force => true do |t|
     t.integer  "access_id"
@@ -206,6 +206,16 @@ ActiveRecord::Schema.define(:version => 80) do
     t.integer  "school_id"
   end
 
+  create_table "logger_machines", :force => true do |t|
+    t.string   "twilio_call_id"
+    t.integer  "person_id"
+    t.integer  "school_id"
+    t.integer  "announcement_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "sms_code"
+  end
+
   create_table "people", :force => true do |t|
     t.string   "type"
     t.string   "first_name"
@@ -292,7 +302,6 @@ ActiveRecord::Schema.define(:version => 80) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "domain"
     t.string   "folder"
     t.string   "subdomain"
     t.string   "address1"
@@ -303,6 +312,7 @@ ActiveRecord::Schema.define(:version => 80) do
     t.string   "fax"
     t.string   "username"
     t.string   "password"
+    t.integer  "principal_id"
   end
 
   create_table "spot_lights", :force => true do |t|

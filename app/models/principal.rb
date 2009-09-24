@@ -1,5 +1,5 @@
 class Principal < Person
-  
-    #validates_presence_of :first_name
+ 
+ belongs_to :school
       
 end

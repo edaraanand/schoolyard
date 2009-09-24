@@ -1,18 +1,22 @@
-
-
-
 <div id="classContainer">
-        <div id="sidebar" class="left-block">
-             <%= partial 'common/principal_image' %>
-        </div>
-        <div id="content" class="homes-content">
-             <h2>From the Principal > <%= params[:announcement][:title] %></h2>
-             <div>
+     <div id="sidebar" class="left-block">
+          <%= partial 'common/principal_image' %>
+     </div>
+     <div id="content" class="homes-content">
+          <h2>From the Principal > <%= params[:announcement][:title] %></h2>
+          <div>
+            <% unless params[:announcement][:expiration].nil? %>
+                   <div class="ddmmm">
+                        <span class="date"><%= Time.parse(params[:announcement][:expiration]).strftime("%d") %></span>
+                        <span class="month"><%= Time.parse(params[:announcement][:expiration]).strftime("%b")  %></span>
+                   </div><br/>
+             <% else %>
                    <div class="ddmmm">
                         <span class="date"><%= @date.strftime("%d") %></span>
                         <span class="month"><%= @date.strftime("%b") %></span>
                    </div>
-                   <p class="separator"><%= san_content(params[:announcement][:content]) %></p>
-             </div>
-        </div>
+             <% end %>
+             <p class="separator"><%= pre_announcement(params[:announcement][:content]) %></p>
+          </div>
+     </div>
 </div>

@@ -19,20 +19,15 @@
           <% for announcement in @announcements %>
           
                  <div class="data-block long-block">
-                        <% if announcement.created_at.nil? %>
-                             <div class="ddmmm-x">
-	                           </div>
-                        <% else %>
-                             <div class="ddmmm">
-                                <span class="date"><%= announcement.created_at.strftime("%d") %></span>
-                                <span class="month"><%= announcement.created_at.strftime("%b") %></span>
-	                           </div>
-                        <% end %>
+                        <div class="ddmmm">
+                           <span class="date"><%= announcement.created_at.strftime("%d") %></span>
+                           <span class="month"><%= announcement.created_at.strftime("%b") %></span>
+	                      </div>
                         <h3><%= link_to "#{announcement.title}", url(:announcement, announcement.id) %></h3>
                         <span class="subText">Announcement for: <%= announcement.access_name %></span><br/>
                         <span class="subText">
-	                       Created by <%= announcement.person.name %>, expires on <%= announcement.expiration.strftime("%d %b %Y") %>
-	                    </span>
+	                        Created by <%= announcement.person.name %>, expires on <%= announcement.expiration.strftime("%d %b %Y") %>
+	                      </span>
                         <p class="announce-text"><%= snippet(announcement.content,50) %></p>
                       <% if ( (announcement.approved) && (announcement.approve_announcement)) %>
                              <div class="approval-status">

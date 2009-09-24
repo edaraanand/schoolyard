@@ -1,0 +1,38 @@
+<fieldset>
+  
+  <% if @parent %>  
+  
+        <% if params[:label] == "other" %>
+        
+              <% @selected = "other_family" %>
+              <h2 class="current-page"> Other Family Members
+              <%= link_to "Edit", url(:parent_account_edit, :label => "other"), :id => @parent, :class=> "edit-btn" %></h2>
+              <% unless @students.empty? %>
+                  <% @students.each do |f| %>
+                     <% @parents = f.parents.delete_if{|x| x.name == @parent.name } %>
+                  <% end %>
+                  <% @parents.each do |g| %>
+                      <ul>
+                          <li>Name : <%= g.name %></li>
+                          <li>EMail ID : <%= g.email %></li>
+                      </ul> 
+                  <% end %>
+              <% end %>
+              
+        <% else %>
+         
+              <% @selected = "parent_profile" %>
+              <h2 class="current-page"> My Profile 
+                  <%= link_to "Edit", url(:parent_account_edit), :id => @parent, :class=> "edit-btn" %>
+                  <%= link_to "Change Password", url(:password, :selected => "parent_profile"), :class => "edit-btn" %> 
+              </h2>
+              <ul>
+                  <li>Name : <%= @parent.name %></li>
+                  <li>EMail ID : <%= @parent.email %></li>
+              </ul>        
+            
+        <% end %>
+    
+  <% end %>     
+         
+</fieldset>

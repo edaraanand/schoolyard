@@ -1,0 +1,18 @@
+<div style="margin: 150px auto; width: 890px; text-align:center">
+  
+    <p>Hello <%= @staff.name %>,</p>
+    <p>
+        SchoolYard found that you have more than one account. Where would you like to go today!.
+    </p>  
+     
+    <span style="font-size:14px">
+       <%= link_to "Take me to my Staff Account", url(:account_type, :id => @staff.id, :ref => "staff") %>
+    </span><br/><br/>
+    
+    <span style="font-size:14px">
+       <%= link_to " Take me to my Parent Account", url(:account_type, :id => @parent.id, :ref => "parent") %>
+    </span>
+  
+</div>
+  
+ 

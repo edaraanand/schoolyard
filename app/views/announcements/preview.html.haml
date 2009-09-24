@@ -1,0 +1,20 @@
+%div{:id => "fullpage"}
+  %div
+    %h2 
+      Announcements >
+      = params[:announcement][:title]
+  - unless params[:announcement][:expiration].nil?
+    %div{:class => "ddmmm"}
+      %span{:class => "date"}
+        = Time.parse(params[:announcement][:expiration]).strftime("%d")
+      %span{:class => "month"}
+        = Time.parse(params[:announcement][:expiration]).strftime("%b")
+    %br
+  - else
+    %div{:class => "ddmmm"}
+      %span{:class => "date"}
+        = @date.strftime("%d")
+      %span{:class => "month"}
+        = @date.strftime("%b")
+  %p{:class => "separator"}
+    = pre_announcement(params[:announcement][:content])

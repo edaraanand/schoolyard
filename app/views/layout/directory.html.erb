@@ -17,7 +17,9 @@
                            <li <% if @selected == "all_forms" %> class="on" <% end %> >
 	                           <%= link_to "All Downloadable Forms", url(:form_files, :l => "all_forms", :label => "forms") %>
 	                       </li>
+	                    <% unless Merb.env == "production" %> 
 	                       <%= partial 'layout/capture' %>
+	                    <% end %>
                       </ul>
              <% elsif params[:label] == "calendars" %>
                       <ul id="menu">
@@ -36,8 +38,8 @@
                       </ul>
              <% else %>
                     <ul id="menu"><!-- Nested Lists -->
-                         <li <% if @selected == "current_students" %> class="on" <% end %> ><%= link_to "Students", resource(:directories) %></li>
-                         <li <% if @selected == "school_staff" %> class="on" <% end %> ><%= link_to "School Staff", url(:staff) %></li>
+                         <li <% if @selected == "students" %> class="on" <% end %> ><%= link_to "Students", resource(:directories) %></li>
+                         <li <% if @selected == "staff" %> class="on" <% end %> ><%= link_to "School Staff", url(:staff) %></li>
                     </ul>
              <% end %>  
       </div><!-- Sidebar Ends -->

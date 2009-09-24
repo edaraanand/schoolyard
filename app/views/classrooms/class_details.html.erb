@@ -47,26 +47,24 @@
               <% end %>
          </p>
                <h2 class="current-page">Announcements &amp; Updates </h2>
-        
                <% if @ann.blank? %>
                      <p class="subText">There are no announcements at this time</p>
                <% else %>
-                     <% for announcement in @ann %>
+                    <% for announcement in @ann %>
                           <div class="data-block short-block">
                                <div class="ddmmm">
                                    <span class="date"><%= announcement.created_at.strftime("%d") %></span>
                                    <span class="month"><%= announcement.created_at.strftime("%b") %></span>
                                </div>
                                <h3>
-								<%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann") %>
-								<% unless session.user.type == "Parent" %>
-                                    <span class="admin-links">
-                                         <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> &#124;
-                                         <%= link_to_delete((right = "announcements"), "Delete", resource(announcement, :delete)) %>
-                                    </span>
-                               <% end %>								
-								</h3>
-
+								                 <%= link_to "#{announcement.title}", url(:home, announcement.id, :l => @classroom.id, :label => "class_ann") %>
+								                  <% unless session.user.type == "Parent" %>
+                                       <span class="admin-links">
+                                            <%= link_to_right((right = "announcements"), "Edit", resource(announcement, :edit)) %> &#124;
+                                            <%= link_to_delete((right = "announcements"), "Delete", resource(announcement, :delete)) %>
+                                       </span>
+                                  <% end %>								
+							                 </h3>
                                <p><%= snippet(announcement.content,50) %></p>
                                <% @attachment = @current_school.attachments.find(:first, 
                                          :conditions => ["attachable_id =? and attachable_type =?", announcement.id, "Announcement"] ) %>
@@ -75,42 +73,42 @@
                           </div>
                      <% end %>
               <% end %>
-              <% unless session.user.type == "Parent" %>
                    <div class="admin-links">
-                          <ul>
-                              <li <% if @selected == "announcements" %> class="on" <% end %>>
-                                  <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %> &#124;    
-                                  <%= link_to_right((right = "announcements"), "Add New Announcement", resource(:announcements, :new, :l => "#{@classroom.class_name}")) %>
-                                  <% if session.user.type == "Parent" %>
-                                       &#124; <%= link_to "Submit an announcement", resource(:parents, :new) %>
-                                  <% end %>
-                              </li>
-                          </ul> 
+                       <ul>
+                           <li <% if @selected == "announcements" %> class="on" <% end %>>
+                               <%= link_to "All Announcements", url(:class_details, :id =>  @classroom.id, :label => "announcements") %>  
+                               <% unless session.user.type == "Parent" %> 
+                                    &#124; <%= link_to_right((right = "announcements"), "Add New Announcement",
+                                                        resource(:announcements, :new, :l => "#{@classroom.class_name}")) %>
+                               <% else %>
+                                    &#124; <%= link_to "Submit an announcement", resource(:parents, :new) %>
+                               <% end %>
+                           </li>
+                       </ul> 
                    </div>
-              <% end %>
+              
       </div>
 
        <div class="right-sidebar">
               
               <% unless @sp_light.nil? %>
-
-                    <h3>Spotlight</h3>
-                    <ul class="last">
-                         <% @attachment = @current_school.attachments.find(:first, 
-                                 :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @sp_light.id]) %>
-                         <div class="pic">
-	                          <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) unless @attachment == nil   %>
-	                      </div>
-                         <h6><%= link_to "#{@sp_light.name}", url(:spots, :id => @sp_light.id) %></h6>
-                         <%= snippet(@sp_light.content, 25) %>
-                         <li><%= link_to "All spotlights", url(:class_details, :id => @classroom.id, :label => "spot_light") %></li>
-                    </ul>
+                  <h3>Spotlight</h3>
+                  <ul class="last">
+                       <% @attachment = @current_school.attachments.find(:first, 
+                               :conditions => ['attachable_type = ? and attachable_id = ?', "spot_light", @sp_light.id]) %>
+                       <div class="pic">
+	                        <%= file_image(@current_school.id, @attachment.id, @attachment.attachable_type) unless @attachment == nil   %>
+	                    </div>
+                       <h6><%= link_to "#{@sp_light.name}", url(:spots, :id => @sp_light.id) %></h6>
+                       <%= snippet(@sp_light.content, 25) %>
+                       <li><%= link_to "All spotlights", url(:class_details, :id => @classroom.id, :label => "spot_light") %></li>
+                  </ul>
               <% end %>
               <% unless @classroom.class_type == "Subject" %>
-                 <% unless @home_works.empty? %>
+                  <% unless @h_w.empty? %>
                       <h3>Current Homework</h3>
                       <ul class="last">
-                        <% @h_w = @classroom.home_works.find(:all, :conditions => ['school_id = ? and due_date >= ?', @current_school.id, @date], :order => "due_date ASC" ) %>
+                        
                           <% if @h_w.blank? %>
                                <span class="subText">There are no homework assignments due at this time</span>
                           <% else %>
@@ -125,17 +123,21 @@
                    <h3>External Links </h3>
                    <ul class="last">
                      <% for link in @external_links %>
-                       <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
+                           <% s = "#{link.url}".split("http://") %>
+                           <li><%= link_to ("#{link.title}", "http://#{s}",  {'target' => '_blank'}) %></li>
+                       <!-- <li><%#= link_to ("#{link.title}", "#{link.url}", {'target' => '_blank'}) %></li> -->
                      <% end %>
                    </ul>
               <% end %>
               <% unless @subject_links.blank? %>
-                    <h3>External Links </h3>
-                    <ul class="last">
-                      <% for link in @subject_links %>
-                        <li><%= link_to ("#{link.title}", "http://#{link.url}", {'target' => '_blank'}) %></li>
-                      <% end %>
-                    </ul>
+                  <h3>External Links </h3>
+                  <ul class="last">
+                    <% for link in @subject_links %>
+                         <% s = "#{link.url}".split("http://") %>
+                        <li><%= link_to ("#{link.title}", "http://#{s}",  {'target' => '_blank'}) %></li>
+                        <!-- <li><%#= link_to ("#{link.title}", "#{link.url}", {'target' => '_blank'}) %></li> -->
+                    <% end %>
+                  </ul>
               <% end %>
                           
          </div>

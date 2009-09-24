@@ -23,7 +23,7 @@ class Parent < Person
   end
 
   def send_approve_password
-    deliver_email(:new_password, :subject => "You application is approved at " + self.school.school_name)
+    deliver_email(:new_password, :subject => "Your application is approved at " + self.school.school_name)
   end
 
   def deliver_email(action, params)

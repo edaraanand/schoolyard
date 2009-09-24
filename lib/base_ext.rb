@@ -83,7 +83,7 @@ module ActiveRecord #:nodoc:
     end
     
     
-    # used for home works and Spotlights
+    # used for Homeworks and Spotlights
     def next_common
        @next ||= self.class.find(:first, :select => ['id'],:conditions => ["id > ? and school_id = ?", id, self.school_id], :order => 'id')
        @next ? @next.id : nil

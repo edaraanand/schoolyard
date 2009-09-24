@@ -1,5 +1,7 @@
 class Student < Person
 	    
+	   attr_accessor :file_c
+	   
      belongs_to :school
      has_many :guardians
      has_many :parents, :through => :guardians, :source => :parent
@@ -12,12 +14,6 @@ class Student < Person
      
      has_many :grades
      has_many :assignments, :through => :grades, :source => :assignment
-     
-    # has_many :student_assignments
-    # has_many :assignments, :through => :student_assignments, :source => :assignment
-     
-     #has_one :grade
-    # has_many :grades
      
      has_one :rank
           

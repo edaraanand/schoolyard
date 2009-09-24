@@ -30,7 +30,7 @@ class Person < ActiveRecord::Base
 
   has_many :reports
   
-
+  has_many :logs, :class_name => "LoggerMachine"
 
 
   # Validations
@@ -39,7 +39,7 @@ class Person < ActiveRecord::Base
   validates_presence_of :email, :if => :email
   validates_uniqueness_of :email, :if => :email, :scope => [:school_id, :type]
   validates_format_of :email, :with => %r{^(?:[_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-zA-Z0-9\-\.]+)*(\.[a-z]{2,4})$}i, :if => :email
-  validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}, :scope => [:school_id, :type]
+  validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}, :scope => [:school_id]
   validates_length_of :password, :within => 8..40, :if => :password
   validates_length_of :phone, :is => 10, :message => 'must be 10 digits, excluding special characters such as spaces and dashes.', :if => Proc.new{|o| !o.phone.blank?}
   validates_length_of :voice_alert, :is => 10, :message => 'must be 10 digits', :if => Proc.new{|o| !o.voice_alert.blank?}    

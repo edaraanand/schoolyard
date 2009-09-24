@@ -1,250 +1,81 @@
-
-<ul class='error_messages'>
-     <% if flash[:error2] %> 
-		    <li><%= flash[:error2] %></li>
-     <% end %>
-     <% if flash[:error3] %> 
-		    <li><%= flash[:error3] %></li>
-     <% end %>
-     <% if flash[:error4] %> 
-		    <li><%= flash[:error4] %></li>
-     <% end %>
-</ul>	 
-
 <% if params[:label] == "other" %>
+      <% s = (1..13).to_a %>
+     	<div class="container">
+     		 <ol>
+     	  	  <% s.each do |f| %>
+     	  	      <% r = f + 4 %>
+     			      <li><label for="fname<%= f %>" class="error">please enter firstname</label></li> 
+     			      <li><label for="lname<%= f %>" class="error">please enter lastname</label></li>
+     			      <li><label for="email<%= r %>" class="error">please enter email</label></li>
+     			      <li><label for="guardian_fname_<%= f %>" class="error">please enter firstname</label></li> 
+     			      <li><label for="guardian_lname_<%= f %>" class="error">please enter lastname</label></li>
+     			      <li><label for="guardian_email_<%= f %>" class="error">please enter email</label></li>
+     			  <% end %>
+        </ol>
+     	</div>
       <% @selected = "other_family" %>
       <h2 class="current-page">Other Family Members &gt; <span class="add-link">Edit</span></h2>
-      <fieldset>
-
-
-   <%= form_for :parent, :action => url(:parent_update, :label => "other"), :id => @parent do %>
-
-          <% @students.each do |f| %>
-               <% @guardians = f.parents.delete_if{|x| x.name == @parent.name } %>
-          <% end %>
-       
-          <% @guardians.each do |m| %>
-              <li>     
-                 <%= text_field  :name => 'guardian[first_name][]', :class=>"short", :label => "Name", :value => "#{m.first_name}" %>
-                 <%= text_field  :name => 'guardian[last_name][]', :class=>"short apart", :value => "#{m.last_name}" %>
-             </li>
-             <li>
-                 <%= text_field  :name => 'guardian[email][]', :label => "Email ID", :value => "#{m.email}" %>
-             </li>
-          <% end %>
-       
-       
-        <% if @guardians.length == 0 %>
-                 <% if ((@fname2 != nil || @lname2 != nil ) || (@email2 != nil) ) %>  
-                       <div id="parent2" style="display:block">
-	                      <ul>
-                           <li>
-                               <%= text_field  :name => 'f_name_parent2', :class => "short", :label => "Parents/Guardian", 
-                                               :value => "#{@fname2}" %>
-                               <%= text_field  :name => 'l_name_parent2', :class => "short apart", :value => "#{@lname2}" %>
-                           </li> 
-                           <li>
-                               <%= text_field  :name => 'email_parent2',  :label => "E-Mail", :value => "#{@email2}" %> 
-                           </li>
-                          </ul>
-                       </div>  
-                       <% if( ( (@fname2 != "") && (@lname2 != "") ) && (@email2 != "") )   %>
-                             <% if ( ( (@fname3 != "") || (@lname3 != "" ) ) || (@email3 != "") ) %>
-                                  <div id="am2" style="display:none">
-	                                    <a onclick="add_parent2();return false;" href="#">Add More</a>
-	                                </div>
-                                  <div id="am3" style="display:none">
-	                                    <a onclick="add_parent3();return false;" href="#">Add More</a>
-	                                </div>
-                              <% end %>
-                       <% else %>
-                             <div id="am2" style="display:none">
-	                               <a onclick="add_parent2();return false;" href="#">Add More</a>
-	                           </div>
-                             <div id="am3" style="display:block">
-	                               <a onclick="add_parent3();return false;" href="#">Add More</a>
-	                           </div>
-                       <% end %>
-                 <% else %>
-                       <div id="parent2" style="display:none">
-                          <ul>
-	                        <li>
-                                <%= text_field  :name => 'f_name_parent2', :class => "short", :label => "Parents/Guardian" %>
-                                <%= text_field  :name => 'l_name_parent2', :class => "short apart" %>
-                            </li> 
-                            <li>
-                                <%= text_field  :name => 'email_parent2',  :label => "E-Mail" %> 
-                            </li> 
-                          </ul>
-                        </div> 
-                        <div id="am2" style="display:block">
-	                          <a onclick="add_parent2();return false;" href="#">Add More</a>
-	                      </div>
-                  <% end %>
-           <% end %>
-           <% if @guardians.length == 1 %>
-                 <% unless ((@fname3 != nil || @lname3 != nil ) || (@email3 != nil) ) %>
-                        <div id="am3" style="display:block">
-	                         <a onclick="add_parent3();return false;" href="#">Add More</a>
-	                    </div>
-                 <% end %>
-          <% end %>
-                   <div id="am3" style="display:none">
-                      <a onclick="add_parent3();return false;" href="#">Add More</a>
-	               </div>
-                 <% if ((@fname3 != nil || @lname3 != nil ) || (@email3 != nil) ) %>
-                      <div id="parent3" style="display:block">
-	                    <ul>
-                          <li>
-                              <%= text_field  :name => 'f_name_parent3', :class => "short", :label => "Parents/Guardian", 
-                                              :value => "#{@fname3}" %>
-                              <%= text_field  :name => 'l_name_parent3', :class => "short apart", :value => "#{@lname3}" %>
-                          </li> 
-                          <li>
-                              <%= text_field  :name => 'email_parent3',  :label => "E-Mail", :value => "#{@email3}" %> 
-                          </li>
-                         </ul>
-                      </div>
-                         <% if( ( (@fname3 != "") && (@lname3 != "") ) && (@email3 != "") )   %>
-                               <% if ( ( (@fname4 != "") || (@lname4 != "" ) ) || (@email4 != "") ) %>
-                                    <div id="am3" style="display:none">
-	                                       <a onclick="add_parent3();return false;" href="#">Add More</a>
-	                                  </div>
-                                    <div id="am4" style="display:none">
-	                                       <a onclick="add_parent4();return false;" href="#">Add More</a>
-	                                  </div>
-                               <% end %>
-                        <% else %>
-                                <div id="am3" style="display:none">
-	                                 <a onclick="add_parent3();return false;" href="#">Add More</a>
-	                             </div>
-                                 <div id="am4" style="display:block">
-	                                  <a onclick="add_parent4();return false;" href="#">Add More</a>
-	                             </div>
-                        <% end %>
-                 <% else %>
-                       <div id="parent3" style="display:none">
-	                    <ul>
-                          <li>
-                              <%= text_field  :name => 'f_name_parent3', :class => "short", :label => "Parents/Guardian" %>
-                              <%= text_field  :name => 'l_name_parent3', :class => "short apart" %>
-                          </li> 
-                          <li>
-                              <%= text_field  :name => 'email_parent3',  :label => "E-Mail" %> 
-                          </li>
-                         </ul>
-                       </div>
-                       <div id="am2" style="display:none">
-	                          <a onclick="add_parent2();return false;" href="#">Add More</a>
-	                      </div>
-                        <div id="am3" style="display:none">
-	                          <a onclick="add_parent3();return false;" href="#">Add More</a>
-	                      </div>
-                 <% end %>
+      <%= form_for :parent, :action => url(:parent_update, :label => "other", :id => @parent), :id => "student" do %>
+      
+          <fieldset>
+               <% unless @students.empty? %>
+                   <% @students.each do |f| %>
+                        <% @parents = f.parents.delete_if{|x| x.name == @parent.name } %>
+                   <% end %><% q = 1 %>
+                   <% @parents.each do |m| %>
+                        <li>     
+                            <%= text_field  :name => "guardian[first_name_#{q}]", :class => "short required", :label => "Name", 
+                                            :id => "guardian_fname_#{q}", :value => "#{m.first_name}" %>
+                            <%= text_field  :name => "guardian[last_name_#{q}]", :class => "short apart required", 
+                                            :id => "guardian_lname_#{q}", :value => "#{m.last_name}" %>
+                        </li>
+                        <li>
+                            <%= text_field  :name => "guardian[email_#{q}]", :label => "Email ID", :class => "required email", 
+                                            :id => "guardian_email_#{q}", :value => "#{m.email}" %>
+                        </li>
+                        <% q += 1 %>
+                   <% end %>
+               <% end %>
+               <ul id="students"></ul>
+               <input type="hidden" id="id" value="1">
+               <a href="#" class="add-more" onclick="addFormField(); return false;">Add More</a>
+          </fieldset>
           
-            <% if @guardians.length == 2 %>
-                  <% unless ( ( (@fname4 != nil) || (@lname4 != nil) ) || (@email4 != nil) ) %>
-                        <div id="am4" style="display:block">
-	                         <a onclick="add_parent4();return false;" href="#">Add More</a>
-	                    </div>
-	              <% end %>
-	        <% end %>    
-                        <div id="am4" style="display:none">
-	                        <a onclick="add_parent4();return false;" href="#">Add More</a>
-	                    </div>
-	              <% if ( ( (@fname4 != nil) || (@lname4 != nil) ) || (@email4 != nil) ) %>
-                        <div id="p4" style="display:block">
-	                       <ul>
-                              <li>
-                                 <%= text_field  :name => "f_name_parent4", :class => "short", :label => "Parents/Guardian", 
-                                                 :value => "#{@fname4}" %>
-                                 <%= text_field  :name => "l_name_parent4", :class => "short apart", :value => "#{@lname4}" %>
-                              </li>
-                              <li>
-                                 <%= text_field  :name => "email_parent4",  :label => "E-Mail", :value => "#{@email4}" %> 
-                              </li> 
-                           </ul>
-                       </div>
-                  <% else %>
-                       <div id="parent4" style="display:none">
-	                      <ul>
-                             <li>
-                                 <%= text_field  :name => "f_name_parent4", :class => "short", :label => "Parents/Guardian" %>
-                                 <%= text_field  :name => "l_name_parent4", :class => "short apart" %>
-                             </li>
-                             <li>
-                                 <%= text_field  :name => "email_parent4",  :label => "E-Mail" %> 
-                             </li>
-                           </ul>
-                       </div>
-                  <% end %>
-             
-            
-        <div class="save-cancel">
-              <%= submit " Save " %> Or <%= link_to "Cancel", url(:parent_account, :label => "other"), :class => "cancel" %>
-        </div>
-
-   <% end =%>
-   
-  </fieldset>
-   
+          <div class="save-cancel">
+              <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:users, :selected => "parent_profile", :label => "other"), :class => "cancel" %>
+          </div>
+           
+       <% end =%>
+      
+     
 <% else %>
 
      <%= error_messages_for @parent %>
      <% @selected = "parent_profile" %>
      <h2 class="current-page">My Profile &gt; <span class="add-link">Edit</span></h2>
-     <fieldset>
-
-
-      <%= form_for :parent, :action => url(:parent_update), :id => @parent do %>
-               <ul>
-                   <li>
-                       <%= text_field  :first_name,:class =>"short",  :label => "Name" %>
-                       <%= text_field  :last_name, :class=>"short apart"  %>
-	                 </li>
-                   <li>
-                        <%= text_field  :email, :label => "Email ID" %>
-                   </li>
-               </ul>
-               <div class="save-cancel">
-                   <%= submit "    Save    " %> Or <%= link_to "Cancel", url(:parent_account), :class => "cancel" %>
-               </div>
-      <% end =%>
+     <%= form_for :parent, :action => url(:parent_update), :id => @parent do %>
+     
+         <fieldset>
+             <ul>
+                 <li>
+                     <%= text_field  :first_name,:class =>"short",  :label => "Name" %>
+                     <%= text_field  :last_name, :class=>"short apart"  %>
+	               </li>
+                 <li>
+                      <%= text_field  :email, :label => "Email ID" %>
+                 </li>
+             </ul>
+         </fieldset>
+         <div class="save-cancel">
+             <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:users, :selected => "parent_profile"), :class => "cancel" %>
+         </div>
+               
+     <% end =%>
     
 
 <% end %>
 
        
- <script type= "text/javascript">
-
-   var parent2_obj = document.getElementById('parent2');
-   var parent3_obj = document.getElementById('parent3');
-   var parent4_obj = document.getElementById('parent4');
-   var am2_obj     = document.getElementById('am2');
-   var am3_obj     = document.getElementById('am3');
-   var am4_obj     = document.getElementById('am4');
- 
- function add_parent2()
-   {
-     parent2_obj.style.display  =  "block";
-     am2_obj.style.display      =  "none";
-     am3_obj.style.display      =  "block";
-   }
- function add_parent3()
-   {
-      parent3_obj.style.display  =  "block";
-      am3_obj.style.display      =  "none";
-      am4_obj.style.display      =  "block"; 
-    }
- function add_parent4()
-   {
-      parent4_obj.style.display  =  "block";
-      am4_obj.style.display      =  "none";
-
-     
-    }
-   
-   
-</script>
+ <script type="text/javascript" src='/javascripts/students.js'></script>
 
 

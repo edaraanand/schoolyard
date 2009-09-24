@@ -19,7 +19,7 @@
 			          <%= link_to_if((right = "rights_others"), "School Staff", url(:people) ) %>
 			       </li>
 		           <li <% if @selected == "students" %> class="on" <% end %>>
-			          <%= link_to_if((right = "manage_directories"), "Students", url(:students)) %>
+			          <%= link_to_right((right = "manage_directory"), "Students", url(:students)) %>
 			       </li>
 	
 		             <% @parents = @current_school.parents.find(:all, :conditions => ["approved = ?", 2 ]) %>
@@ -64,7 +64,7 @@
     	                   <%= link_to_if((right = "grades"), "Grades/Reports", url(:reports) ) %>
     	               </li>
   	              <% end %>
-                   <li <% if @selected == "e_links" %> class="on" <% end %>>
+                 <li <% if @selected == "e_links" %> class="on" <% end %>>
 	                   <%= link_to_if((right = "external_links"), "External Links", url(:external_links) ) %>
 	               </li>
                       <% unless @sports_class.nil? %>
@@ -75,9 +75,11 @@
                    <li <% if @selected == "forms" %> class="on" <% end %>>
 	                   <%= link_to_if((right = "forms"), "Upload Forms", url(:forms)  ) %>
 	               </li>
+	               <% unless Merb.env == "production" %> 
                    <li <% if @selected == "capture" %> class="on" <% end %>>
 	                   <%= link_to "Time Capture Forms", resource(:captures) %>
-	               </li>
+	                 </li>
+	               <% end %>
                    <li><%#= link_to "Advertising" %></li>
                 </ul>                                                                                                      
              </li>

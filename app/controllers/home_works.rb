@@ -13,7 +13,7 @@ class HomeWorks < Application
        @test = params[:id]
     else
        @home_works = @current_school.home_works.paginate(:all, :order => "due_date ASC", :per_page => 10, :page => params[:page])
-       @test = "All Homeworks"
+       @test = "All Homework"
     end
     render
   end

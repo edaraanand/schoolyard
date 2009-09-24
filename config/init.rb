@@ -17,6 +17,7 @@ require 'clickatell'
 require 'spreadsheet'
 require 'spreadsheet/excel'
 require 'tlsmail'
+require  Merb.root / 'lib' / 'twiliorest'
 
 
 use_orm :activerecord

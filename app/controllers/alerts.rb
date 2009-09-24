@@ -96,13 +96,15 @@ class Alerts < Application
   
   def find_user
     @person = session.user
-      if @person.type == "Staff"
-         @alerts = Alert.find(:all, :conditions => ['type == ?', "Staff"])
-      else
-         @few_alerts = Alert.find(:all, :conditions =>['type == ?', "Parent"], :order => "id desc", :limit => 2)
-         @alerts = Alert.find(:all, :conditions =>['type == ?', "Parent"], :order => "id ASC", :limit => 2)
-      end
-      @alert_people = AlertPeople.find(:all,:conditions=>['person_id=?', session.user.id]).map{|x| x.alert_id }
+    @staff = @current_school.staff.find_by_email(@person.email)
+    @parent = @current_school.parents.find_by_email(@person.email)
+    if @staff
+       @alerts = Alert.find(:all, :conditions => ['type == ?', "Staff"])
+    else
+       @few_alerts = Alert.find(:all, :conditions =>['type == ?', "Parent"], :order => "id desc", :limit => 2)
+       @alerts = Alert.find(:all, :conditions =>['type == ?', "Parent"], :order => "id ASC", :limit => 2)
+    end
+    @alert_people = AlertPeople.find(:all,:conditions=>['person_id=?', session.user.id]).map{|x| x.alert_id }
   end
 
   def selected_link

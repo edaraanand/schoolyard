@@ -5,6 +5,7 @@
     <span class="subText">There are no events planned at this time</span>
   <%else%>
     <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id) , :class=> "pdf" %>
+    (<%= link_to "Requires acrobat reader", "http://get.adobe.com/reader/", {'target' => '_blank'} %>)
      <br/><br/>
        <% cdate=""
          for calendar in @calendars %>

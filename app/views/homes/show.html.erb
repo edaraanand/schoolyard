@@ -15,7 +15,10 @@
            
 <% else %>
              <h2>Announcements > <%= @announcement.title %></h2>
-             <br/><%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) , :class=> "pdf" %><br/><br/>
+             <br/>
+             <%= link_to "Download as PDF", url(:pdf_download, :id => @announcement.id) , :class=> "pdf" %>
+             (<%= link_to "Requires acrobat reader", "http://get.adobe.com/reader/", {'target' => '_blank'} %>)
+             <br/><br/>
 <% end %>
      
     <div class="ddmmm">

@@ -8,16 +8,10 @@ View :  <select id = 'calendarID'>
                      <%= f.class_name %> 
                   </option>
               <% end %>
-     </select> <br/>
+         </select> <br/>
   
   <% if @calendars.blank? %>
-       <% if @all_class_calendars.empty? %>
-           <p class="subText"> No Events were found. If you applied a filter try changing it.</p>
-       <% else %>    
-            <% if params[:id] %>
-                  <%= partial 'common/all_class_calendars' %>
-             <% end %>
-       <% end %>
+        <p class="subText"> No Events were found. If you applied a filter try changing it.</p>
   <% else %>
        <br/>
         <% cdate=""
@@ -28,29 +22,25 @@ View :  <select id = 'calendarID'>
                          <h3><%= cdate %></h3>
                     <% end %> 
                     <ul class="calendar-items">
-                         <li>
-                              <span class="cal-time">
-                                   <% unless calendar.start_time.nil? %>
-                                        <%= calendar.start_time.strftime("%I:%M %p") %> 
-                                   <%else%>
-                                         All day event
-                                   <% end %>
-                              </span>
-                              <span class="cal-title">
-                                  <%= link_to calendar.title, resource(calendar, :edit)%> <small>(<%= calendar.class_name %>)</small>
-                              </span>
-                              <%= link_to "Edit", resource(calendar, :edit), :class=>"edit-btn" %>
-                              <%= link_to "Delete", resource(calendar, :delete), :class => "delete delete-btn" %> <br/><br/>
-                        </li>
+                       <li>
+                          <span class="cal-time">
+                               <% unless calendar.start_time.nil? %>
+                                    <%= calendar.start_time.strftime("%I:%M %p") %> 
+                               <% else %>
+                                     All day event
+                               <% end %>
+                          </span>
+                          <span class="cal-title">
+                              <%= link_to calendar.title, resource(calendar, :edit)%> <small>(<%= calendar.class_name %>)</small>
+                          </span>
+                          <%= link_to "Edit", resource(calendar, :edit), :class=>"edit-btn" %>
+                          <%= link_to "Delete", resource(calendar, :delete), :class => "delete delete-btn" %> <br/><br/>
+                       </li>
                     </ul>
                 </div>   
         <% end %>
-        <% if params[:id] %>
-            <%= partial 'common/all_class_calendars' %>
-        <% end %>
-        <%= will_paginate (@calendars, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
   <% end %>
-
+    
 </div>
 
 <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>

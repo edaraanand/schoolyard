@@ -7,6 +7,7 @@ class Announcement < ActiveRecord::Base
   
   belongs_to :person
   belongs_to :school
+  has_many :logs, :class_name => "LoggerMachine"
 
   validates_presence_of :title, :if => :title, :scope => :school_id
   validates_presence_of :content, :if => :content, :scope => :school_id
@@ -20,8 +21,16 @@ class Announcement < ActiveRecord::Base
      if self.access_name == ""
          self.errors.add("please", "select the option")
      end
+     if self.image
+        if self.image != ""
+          @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
+          unless @content_types.include?(self.image[:content_type])
+            self.errors.add("please", "upload a image")
+          end 
+        end
+     end
   end
-
+  
     #      
     # def self.home_page(params)
     #    self.paginate(:all, :conditions => ["access_name = ? and label = ?", "Home Page", 'staff' ],
@@ -64,8 +73,11 @@ class Announcement < ActiveRecord::Base
 
   def mail_deliver(action, params)
     from = "noreply@schoolyardapp.com"
-    to = "alok.saini@schoolyardapp.com"
-    PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => to), self )
+    #to = "alok.saini@schoolyardapp.com"
+    to = ["alok.saini@schoolyardapp.com", "eshwar@schoolyardapp.com", "steve.sandbank@collaborativemethods.com", "brian.bolz@insightmethods.com"]
+    to.each do |f|
+       PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => "#{f}"), self )
+    end
   end
  
   # sending the email reply to the person who has sent the feedback

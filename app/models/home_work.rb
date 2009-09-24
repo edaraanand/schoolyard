@@ -23,7 +23,7 @@ class HomeWork < ActiveRecord::Base
       end
   end
   
-## Sending mail for Home Work Alert
+## Sending mail for Homework Alert
 
   def mail(id)
     @current_school = self.school

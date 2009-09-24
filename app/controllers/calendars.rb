@@ -11,16 +11,12 @@ class Calendars < Application
     if params[:label] == "classes"
       @classroom = @current_school.classrooms.find_by_id(params[:id])
       raise NotFound unless @classroom
-      @calendars = @current_school.calendars.paginate(:all, :conditions => ["class_name = ? ", @classroom.class_name ],
-                                                      :per_page => 10,  
-                                                      :page => params[:page], 
-                                                      :order => 'start_date')   
+      @calendars = Calendar.all_calendars(@current_school.id, @classroom.class_name)
       @test = params[:id]
-    else
-      @calendars = @current_school.calendars.paginate(:all, :per_page => 10,  :page => params[:page], :order => 'start_date')
+   else
+      @calendars = @current_school.calendars.find(:all)
       @test = "All Classrooms"
     end
-    @all_class_calendars = Calendar.all_calendars(@current_school.id)
     render
   end
 
@@ -51,6 +47,7 @@ class Calendars < Application
       @start_time = params[:calendar][:start_time]
       @end_time = params[:calendar][:end_time]
       @class = params[:calendar][:class_name]
+      @check = params[:calendar][:day_event]
       render :new
     end
   end  
@@ -128,7 +125,6 @@ class Calendars < Application
           @class =  @calendar.class_name
           @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
        end
-       @event = "All Day Event"
        render :layout => 'class_change', :id => @classroom.id
     end
   end
@@ -162,14 +158,13 @@ class Calendars < Application
   def events
     @select = "events"
     @selected = "all_events"
-      @all_class_calendars = Calendar.all_calendars(@current_school.id)
     unless params[:id].nil?
-      @class = @current_school.classrooms.find(params[:id])
-      @cls = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @class.class_name ], :order => 'start_date')
+      @class = @current_school.classrooms.find_by_id(params[:id]) rescue NotFound
+      @cls = Calendar.all_calendars(@current_school.id, @class.class_name)
       @selected = @class.class_name
     end
     if params[:l] == "all_events"
-      @calendars = @current_school.calendars.paginate(:all, :per_page => 10,  :page => params[:page], :order => 'start_date')
+      @calendars = @current_school.calendars.find(:all)
     end
     render :layout => 'directory'
   end
@@ -194,8 +189,8 @@ class Calendars < Application
     else
       @classroom = @current_school.classrooms.find_by_id(params[:id])
       raise NotFound unless @classroom
-      @calendars = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @classroom.class_name ])
-      @all_class_calendars = Calendar.all_calendars(@current_school.id)
+      @cals = @current_school.calendars.find(:all, :conditions => ["class_name = ?", @classroom.class_name ])
+      @calendars = @cals.concat(@all_class_calendars).sort_by{|my_item| my_item[:start_date]}.uniq
       pdf = pdf_prepare("multiple", @calendars)
       send_data(pdf.render, :filename => "#{@classroom.class_name}.pdf", :type => "application/pdf")
     end
@@ -249,20 +244,6 @@ class Calendars < Application
         pdf.text "<b>Location</b>" + ":" + "" + "#{calendar.location}", :font_size => 10, :justification => :left
         pdf.text "<b>Start Date</b>" + ":" + "" + "#{calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
       end
-       @all_class_calendars.each do |calendar|
-          con = calendar.description
-          con = con.gsub("”", "") 
-          con = con.gsub("“", "")
-          con = con.gsub("’", "")
-          con = con.gsub("‘", "")
-          con = con.gsub("’", "")
-          con = con.gsub("– ", "")
-          con = con.gsub(/[^a-zA-Z0-9-]/, " ")
-          pdf.text "<b>Title</b>"  + ":" + "" + "#{calendar.title}", :font_size => 10, :justification => :left, :spacing => 2
-          pdf.text "<b>Description</b>" + ":" + "" +  con, :font_size => 10, :justification => :left
-          pdf.text "<b>Location</b>" + ":" + "" + "#{calendar.location}", :font_size => 10, :justification => :left
-          pdf.text "<b>Start Date</b>" + ":" + "" + "#{calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
-        end
       pdf
     else
        con = @calendar.description

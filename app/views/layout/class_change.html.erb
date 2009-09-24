@@ -15,13 +15,13 @@
         <li <% if @selected == "calendars" %> class="on" <% end %> >
 	          <%= link_to "Class Calendar", url(:class_details, :id =>  @classroom.id, :label => "calendars") %>
 	      </li>
-	       <% unless Merb.env == "production" %> 
-	           <% unless @classroom.class_type == "Subject" %>
-      	              <li <% if @selected == "grades" %> class="on" <% end %>>
-      	                 <%= link_to "Grades/Reports", url(:class_details, :id =>  @classroom.id, :label => "grades") %>
-      	            </li>
-      	     <% end %>
-      	 <% end %>
+        <% unless Merb.env == "production" %> 
+	          <% unless @classroom.class_type == "Subject" %>
+      	             <li <% if @selected == "grades" %> class="on" <% end %>>
+      	                <%= link_to "Grades/Reports", url(:class_details, :id =>  @classroom.id, :label => "grades") %>
+      	           </li>
+      	    <% end %>
+      	<% end %>
 	    <% unless @classroom.class_type == "Subject" %>
     	    <li <% if @selected == "homeworks" %> class="on" <% end %>>
     	         <%= link_to "Homework Corner", url(:class_details, :id =>  @classroom.id, :label => "homeworks") %>
@@ -41,29 +41,24 @@
         <% s = @classroom.class_peoples.delete_if{ |x| x.team_id != nil } %>
               <% t = s.delete_if{ |x| x.role != "class_teacher" } %>
                  <% t.each do |f| %>
-                     <li>
-                        <table cellpadding="0" cellspacing="0" order="0" class="teach-name">
-                          <tr><td class="teach-name-top"><img src="/images/teach-name-top.gif"/></td></tr>
-                          <tr><td class="teach-name-backgr"><p><%= f.role.titleize %></p></td></tr>
-                          <tr><td  class="teach-name-bottom"><img src="/images/teach-name-bottom.gif"/></td></tr>
-                        </table>
-                     </li>
-                          <% @pic = @current_school.attachments.find(:first, 
-                                     :conditions => ['attachable_type = ? and attachable_id = ? ', "user_picture", f.person.id]) %>
-                          <% if @pic.nil? %>
-                                 <div class="pic">
-	                                <img src = "/images/Fotolia_5868614_XS.jpg" alt="Fotolia_5868614_XS.jpg" class ="teacherPic"/>
-	                             </div>
-	                      <% else %>
-	                           <div class="pic">
-	                                <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
-	                           </div>
-	                      <% end %>
-                     <li><b><%= f.person.name %></b>
+                           <li>
+                              <table cellpadding="0" cellspacing="0" order="0" class="teach-name">
+                                  <tr><td class="teach-name-top"><img src="/images/teach-name-top.gif"/></td></tr>
+                                  <tr><td class="teach-name-backgr"><p><%= f.role.titleize %></p></td></tr>
+                                  <tr><td  class="teach-name-bottom"><img src="/images/teach-name-bottom.gif"/></td></tr>
+                              </table>
+                           </li>
+                           <% @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", f.person.id) %>
+                           <% if @pic %>
+                                <div class="pic">
+   	                                <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
+   	                            </div>
+                           <% end %>
+                            <li><b><%= f.person.name %></b>
                             <% unless f.person.person_bio.blank? %>
                                 | <span <% if @selected == "bio_classes" %> class="on" <% end %> > 
 	                                    <%= link_to "Bio", url(:bio, :id => @classroom.id, :label => "classes") %> 
-                                </span>
+                                  </span>
                             <% end %>
                      </li>
                      <li><%= email(f.person.email) %></li>
