@@ -33,10 +33,10 @@ class Announcement < ActiveRecord::Base
   # sending email to Collaborative Methods on Feedback
     
   def feedback_email
-    mail_deliver(:feedback, :subject => "Feedback from " + self.school.school_name)
+    feedback_delivery(:feedback, :subject => "Feedback from " + self.school.school_name)
   end
 
-  def mail_deliver(action, params)
+  def feedback_delivery(action, params)
     to = ["alok.saini@schoolyardapp.com", "eshwar@schoolyardapp.com", "steve.sandbank@collaborativemethods.com", "brian.bolz@insightmethods.com"]
     to.each do |f|
        PersonMailer.dispatch_and_deliver(action, params.merge(:from => Schoolapp.config(:auth_mailman), :to => "#{f}"), self )
@@ -45,20 +45,20 @@ class Announcement < ActiveRecord::Base
  
   # sending the email reply to the person who has sent the feedback
   def reply_person
-     deliver(:reply_person, :subject => "Feedback Reply from " + self.school.school_name)
+     feedback_reply_to_person(:reply_person, :subject => "Feedback Reply from " + self.school.school_name)
   end
 
-  def deliver(action, params)
+  def feedback_reply_to_person(action, params)
      PersonMailer.dispatch_and_deliver(action, params.merge(:from => Schoolapp.config(:auth_mailman), :to => self.person.email), self )
   end
 
-  ## Sending mail for Announcement Alert
+  ## Sending Emails for Announcement Alerts
   def alert_mail(id)
     @person =  Person.find_by_id_and_school_id(id, self.school.id) 
-    alert_deliver(:alert_details, @person, :subject => "Alert Details " + self.school.school_name)
+    email_alerts_delivery(:alert_details, @person, :subject => "Alert Details " + self.school.school_name)
   end
   
-  def alert_deliver(action, to, params)
+  def email_alerts_delivery(action, to, params)
     @person = to 
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => Schoolapp.config(:auth_mailman), :to => @person.email), self )
   end
