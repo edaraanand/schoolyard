@@ -17,15 +17,18 @@
             <% unless @guardians.empty? %>
                   <% q = 1 %>
                   <% @guardians.each do |f| %>
-                  
                        <% @study = Study.find_by_student_id(f.student_id) %>
                        <% @class = @current_school.classrooms.find_by_id(@study.classroom_id) %>
-                       <%= select :name => "classes[room][room_#{q}]", :collection => @classrooms.collect{|x| x.class_name}, 
-                                  :value_method => :id, :selected => @class.class_name, :id => "class_name_#{q}", 
-                                  :text_method => :name, :prompt => "Select Class" %>
-                       <%= select :class => "apart", :name => "studs[name][name_#{q}]", :collection => @students, 
-                                  :value_method => :id, :selected => "#{f.student_id}".to_s, :id => "student_name_#{q}",
-                                  :text_method => :name, :prompt => "Select Student" %>
+                       <ul id="parent_approval_edit">
+                           <li>
+                               <%= select :name => "classes[room][room_#{q}]", :collection => @classrooms.collect{|x| x.class_name}, 
+                                          :value_method => :id, :selected => @class.class_name, :id => "class_name_#{q}", 
+                                          :text_method => :name, :prompt => "Select Class" %>
+                               <%= select :class => "apart", :name => "studs[name][name_#{q}]", :collection => @students, 
+                                          :value_method => :id, :selected => "#{f.student_id}".to_s, :id => "student_name_#{q}",
+                                          :text_method => :name, :prompt => "Select Student" %>
+                           </li> 
+                       </ul> 
                        <% q += 1 %>
                   <% end %>
             <% end %><br/><br/>

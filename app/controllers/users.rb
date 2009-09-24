@@ -3,64 +3,56 @@ class Users < Application
    before :ensure_authenticated
    layout 'account'
    before :find_school
-   before :staff_selected_link, :only => [:staff_account_edit, :staff_account_update]
-   
+   before :find_user_type
+      
   def index
-     @person = session.user
-     @staff = @current_school.staff.find_by_email(@person.email)
-     @parent = @current_school.parents.find_by_email(@person.email)
      if @staff
         @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @staff.id)
      else
         @students = @parent.students
      end
-     @selected = params[:selected]
      render
   end 
   
   def staff_account_edit
-    @person = session.user
-    @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @person.id)
+    if @staff
+      @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @person.id)
+    end
     render
   end
   
   def staff_account_update
-     @person = session.user
-     if @person.update_attributes(params[:person])
-        if params[:person][:image] != ""
-           @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @person.id)
-           @pic.destroy if @pic
-           Attachment.picture(params.merge(:school_id => @current_school.id), "user_picture", @person.id)
-        end
-        if params[:principal_email] == "on"
-           @person.principal_email = true
-        else
-           @person.principal_email = false
-        end
-        @person.save
-        redirect resource(:users, :selected => "staff_profile")
-     else
-        render :staff_account_edit
-     end
+    if @person.update_attributes(params[:person])
+       if params[:person][:image] != ""
+          @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @person.id)
+          @pic.destroy if @pic
+          Attachment.picture(params.merge(:school_id => @current_school.id), "user_picture", @person.id)
+       end
+       if params[:principal_email] == "on"
+          @person.principal_email = true
+       else
+          @person.principal_email = false
+       end
+       @person.save
+       redirect resource(:users)
+    else
+       render :staff_account_edit
+    end
   end
   
   def password
-    @selected = params[:selected]
-    @person = session.user
     render
   end
   
   def change_password
-    @person = session.user
-    @selected = params[:selected]
-    if @current_school.people.authenticate(@person.email, @current_school.id, params[:person][:old_password])
+     if @current_school.people.authenticate(@person.email, @current_school.id, params[:person][:old_password])
        if ((params[:person][:password] == params[:person][:password_confirmation]) && 
            !params[:person][:password_confirmation].blank?)
            if @person.update_attributes(params[:person])
               if @person.type == "Staff"
-                 redirect resource(:users, :selected => "staff_profile")
+                 redirect resource(:users)
               else
-                 redirect resource(:users, :selected => "parent_profile")
+                 redirect resource(:users)
               end
            else
               flash[:error] = "You should enter Minimum Length of 8 Characters"
@@ -77,8 +69,9 @@ class Users < Application
   end
   
   def parent_account_edit
-     @parent = session.user
-     @students = @parent.students.find(:all, :conditions => ['school_id = ?', @current_school.id])
+     if @parent
+       @students = @parent.students.find(:all, :conditions => ['school_id = ?', @current_school.id])
+     end
      render
   end
   
@@ -124,7 +117,6 @@ class Users < Application
   end
   
   def parent_update
-     @parent = session.user
      @students = @parent.students
      @students.each do |f|
         @guardians = f.parents.delete_if{|x| x.name == @parent.name}
@@ -138,10 +130,10 @@ class Users < Application
             f.send_password_approve
           end
         end
-        redirect resource(:users, :selected => "parent_profile", :label => "other")
+        redirect resource(:users, :label => "other")
      else
         if @parent.update_attributes(params[:parent])
-           redirect resource(:users, :selected => "parent_profile")
+           redirect resource(:users)
         else
            render :parent_account_edit
         end
@@ -150,7 +142,6 @@ class Users < Application
   
   def student_details
      @selected = "s_details"
-     @parent = session.user
      @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
      @students = @parent.students
      render
@@ -158,29 +149,17 @@ class Users < Application
   
   def student_edit
     @selected = "s_details"
-    @parent = session.user
     @students = @parent.students
     @classrooms = @current_school.active_classrooms
     render
   end
   
-  
-  # def student_update
-  #    @parent = session.user
-  #    @students = @parent.students
-  #    @classrooms = @current_school.active_classrooms
-  #    student_id = @students.collect{|x| x.id }
-  #    redirect resource(:users, :selected => "parent_profile")
-  #  end
-  
   def phone
     @selected = "phone"
-    @person = session.user
     render
   end
   
   def voice_update
-    @person = session.user
     @selected = "phone"
     @person.voice_alert = params[:person][:voice_alert]
     @person.sms_alert = params[:person][:sms_alert]
@@ -212,13 +191,19 @@ class Users < Application
   end
   
   def delete
-    @person = session.user
     @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @person.id) rescue NotFound
     @pic.destroy
     redirect resource(:users)
   end
 
   private
+  
+  def find_user_type
+    @person = session.user
+    @staff = @current_school.staff.find_by_email(@person.email)
+    @parent = @current_school.parents.find_by_email(@person.email)
+  end
+  
   
   def staff_selected_link
      @selected = "staff_profile"

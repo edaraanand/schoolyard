@@ -58,9 +58,10 @@ class Feedbacks < Application
       @announcement.approved_by = session.user.id  # this is for storing who replied the feedback
       @announcement.expiration = Date.today + 1
       @announcement.save!
-       run_later do
-         @announcement.feedback_email
-       end
+      run_later do  
+        @announcement.feedback_email
+      end
+      flash[:confirmation] = "your message has been sent to Collaborative Methods"
     end
     redirect url(:feedbacks)
   end
