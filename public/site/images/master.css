@@ -18,6 +18,7 @@ hr{height:1px;}
 em{font-style:italic;}
 .clear{clear:both;}
 strong{font-weight:bold;}
+.more{text-align:right; padding-right:20px;}
 a{color:#235073; padding:2px;}
 a.current{color:#001435; text-decoration:none; background:#fff;}
 
@@ -85,6 +86,7 @@ p.heavy{font-size:14px; line-height:20px;}
 .box-inner .images{width:200px; padding:0 9px; display:inline; float:left;}
 .box-inner .images img{margin:20px 0;}
 .box-inner .description{display:inline; float:left; width:360px;}
+.alerts .box-inner .description{width:520px;}
 
 .find-out-more{display:inline; float:left; margin:50px 20px 0 10px;width:270px;}
 .midbox{display:inline; float:left; margin:20px 0px 0 0px;width:470px; background:url('midbox-top.png') no-repeat 0 0;}
