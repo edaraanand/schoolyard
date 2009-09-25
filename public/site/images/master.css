@@ -74,7 +74,7 @@ body{background:#fff; font:13px/17px "Lucida Grande", "Lucida sans unicode", Luc
 
 .mainimg img{margin:10px 0 0 0; display:block;}
 
-.subheading{background: url('subheading-bg.png') no-repeat 0 0; height:54px; padding:10px 0 0 40px;}
+.subheading{background: url('subheading-bg.png') no-repeat 0 0; height:54px; padding:10px 0 0 40px; margin:12px 0 0 0;}
 .alerts .subheading{background:url('subheading-alerts-bg.png') no-repeat 0 0;}
 .subheading li{float:left; display:inline; width:154px; padding:20px 0;}
 
@@ -104,8 +104,9 @@ p.heavy{font-size:14px; line-height:20px;}
 .footer{background: url('footer-bg.png') no-repeat -4px 0; margin:0 6px 0; height:70px; padding:15px; width:924px; 
       font-size:11px; color:#5a5a5a;}
 
-.footer ul{display:inline; float:right; width:50%; text-align:right;}
-.footer p{display:inline; float:left; width:40%; padding:0 0 0 20px;}
+.footer .footer-contact{display:inline; float:right; width:30%; text-align:right; padding:0 20px 0 0;}
+.footer p{display:inline; float:left; width:50%; padding:0 0 0 20px;}
+.footer p img{position:relative; top:2px;}
 .footer li{display:inline; padding:6px;}
 
 .content{margin:0 0 60px 0; clear:both;}
