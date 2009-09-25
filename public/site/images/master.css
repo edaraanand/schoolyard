@@ -19,7 +19,9 @@ em{font-style:italic;}
 .clear{clear:both;}
 strong{font-weight:bold;}
 .more{text-align:right; padding-right:16px; margin:2px 0!important;}
-a{color:#235073; padding:2px;}
+a{color:#235073; padding:2px; text-decoration:none;}
+a:hover{text-decoration:underline;}
+a:active{color:#5D7A2E;}
 a.current{color:#001435; text-decoration:none; background:#fff;}
 
 input, textarea{font:13px/17px "Lucida Grande", "Lucida sans unicode", Lucida, Arial, sans-serif; border:1px solid #ddd; width:90%; padding:4px; background:url('text-background.png') repeat-x 0 0; margin:4px 4px 4px 0;}
@@ -27,7 +29,7 @@ input, textarea{font:13px/17px "Lucida Grande", "Lucida sans unicode", Lucida, A
 
 .demo{background:url('learn-more.jpg') no-repeat 0 0; bottom:62px;height:43px;  text-indent:-9999px; left:486px;position:absolute;width:165px;}
 address{font-style:normal;}
-address strong{font-size:14px; display:block; padding:20px 0;}
+address strong{font-size:14px; padding:20px 0;}
 
 .home .mainimg {position:relative; clear:both;}
 .default-text{color:#ccc;}
