@@ -1,4 +1,4 @@
-<%= form_for :alert, :action => url(:alerts), :id => 'alert', :name => 'alert_form' do %>
+<%= form_for :alert, :action => url(:total_alerts), :id => 'alert', :name => 'alert_form' do %>
     <fieldset>
     <h2 class="current-page">Alerts &gt; Add New </h2>
     <p>Please select when you would like to be notified on email:</p>
@@ -16,7 +16,7 @@
            
    </dl>
     <div class="save-cancel">
-      <%= submit "    Save    " %> <span>Or <%= link_to "Cancel", url(:alerts), :class => "cancel" %></span>
+      <%= submit "    Save    " %> <span>Or <%= link_to "Cancel", url(:total_alerts), :class => "cancel" %></span>
 	  </div>
     </fieldset> 
 <% end =%>
