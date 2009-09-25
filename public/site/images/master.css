@@ -112,6 +112,7 @@ p.heavy{font-size:14px; line-height:20px;}
 * html .content{margin:0 0 0px 0;}
 
 .story img {display:inline; float:left; margin: 0px 20px 0 0;}
+* html .story img{ margin: 20px 20px 0 0;}
 .story .img-who{float:left; clear:left; width:170px; padding:0 10px; font-weight:bold;}
 .story .img-who span{font-weight:normal; font-size:11px;}
 .stories .box-inner{padding: 18px 18px 12px;}
