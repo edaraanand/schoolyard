@@ -11,7 +11,7 @@ class HomeWork < ActiveRecord::Base
   
   def validate
     if self.due_date != nil
-      self.errors.add(:due_date, "must be greater than today") if self.due_date <= Date.today 
+       self.errors.add(:due_date, "must be greater than today") if self.due_date <= Date.today 
     end
     if self.classroom_id.nil?
        self.errors.add("classroom", "must be selected")
