@@ -34,11 +34,7 @@ input, textarea{font:13px/17px "Lucida Grande", "Lucida sans unicode", Lucida, A
 .subheading li{ list-style-type:none;}
 .subheading a{text-decoration:none; font-family:aller; font-size:14px;}
 
-
-
-h1{}
-h2{font-family:aller; font-size:18px;line-height:1.3; color:#000; margin:8px 0 4px 0; padding:0 0 8px 0;background: url('h2-border-bottom.png') repeat-x 0 100%;
-}
+h2{font-family:aller; font-size:18px;line-height:1.3; color:#000; margin:8px 0 4px 0; padding:0 0 8px 0;background: url('h2-border-bottom.png') repeat-x 0 100%;}
 h2 span{color:#46669f;font-size:16px;}
 h3{font-family:aller; font-size:16px;line-height:1.3; color:#46669f; margin:16px 0 12px 0;}
 
@@ -53,17 +49,22 @@ body{background:#fff; font:13px/17px "Lucida Grande", "Lucida sans unicode", Luc
 .masthead{margin:50px 0 0 0;}
 .logo{text-indent:-9999px; width:151px; height:49px; float:left; display:inline; background: url('schoolyardapp.com.gif') no-repeat 0 0;}
 .navigation{width:600px; float:right; display:inline; height:55px; width:545px; padding:0 0 0 20px;}
-.navigation li{float:left; display:inline; text-align:center; width:200px;}
-.navigation li a{font-size:14px; font-weight:bold; color:#235073; text-decoration:none; text-shadow:0px 1px 0 #fff;padding:15px 34px; display:block; height:17px!important;}
+.navigation li{float:left; display:inline; text-align:center;}
+.navigation li a{font-size:14px; font-weight:bold; color:#235073; text-decoration:none;
+   text-shadow:0px 1px 0 #fff;padding:15px 24px; float:left; height:17px!important;}
 .navigation li{background:url('sep.png') no-repeat right center;}
+
 .navigation li.last{background:none;}
 .navigation li a:hover{color:#06355a;}
 
-/*.navigation li a:hover {background:url('navfx.png') no-repeat 50% -71px;}
-.navigation li a:active {background:url('navfx.png') no-repeat 50% -17px;}
-.navigation li.current a{background:url('navfx.png') no-repeat 50% 38px;}*/
+.navigation .home-link{width:110px;}
+.navigation .features-link{width:220px;}
+.navigation .stories-link{width:200px;}
 
-.mainimg img{margin:10px 0 0 0;}
+
+/*.navigation li.current a{background:url('navfx.png') no-repeat;}*/
+
+.mainimg img{margin:10px 0 0 0; display:block;}
 
 .subheading{background: url('subheading-bg.png') no-repeat 0 0; height:54px; padding:10px 0 0 40px;}
 .alerts .subheading{background:url('subheading-alerts-bg.png') no-repeat 0 0;}
@@ -84,12 +85,12 @@ p.heavy{font-size:14px; line-height:20px;}
 .minibox .box-inner{padding:16px;}
 
 .box-inner .images{width:200px; padding:0 9px; display:inline; float:left;}
+.features .box-inner .images{margin-right:10px;}
 .box-inner .images img{margin:20px 0;}
 .box-inner .description{display:inline; float:left; width:360px;}
-.alerts .box-inner .description{width:520px;}
 
 .find-out-more{display:inline; float:left; margin:50px 20px 0 10px;width:270px;}
-.midbox{display:inline; float:left; margin:20px 0px 0 0px;width:470px; background:url('midbox-top.png') no-repeat 0 0;}
+.midbox{display:inline; float:left; margin:20px 0px 0 0px;width:456px; background:url('midbox-top.png') no-repeat 0 0;}
 .midbox .box-inner{padding:16px 30px 16px 30px;}
 .midbox-bottom{background:url('midbox-bottom.png') no-repeat 0 0; height:27px;}
 .footer{background: url('footer-bg.png') no-repeat -4px 0; margin:0 6px 0; height:100px; padding:15px; width:924px; 
@@ -99,7 +100,8 @@ p.heavy{font-size:14px; line-height:20px;}
 .footer p{display:inline; float:left; width:40%; padding:0 0 0 20px;}
 .footer li{display:inline; padding:6px;}
 
-.content{margin:0 0 60px 0;}
+.content{margin:0 0 60px 0; clear:both;}
+* html .content{margin:0 0 0px 0;}
 
 .story img {display:inline; float:left; margin: 40px 10px 0 0;}
 .stories .box-inner{padding: 18px 18px 12px;}
@@ -107,15 +109,8 @@ p.heavy{font-size:14px; line-height:20px;}
 .story p, .story ul{padding:10px 20px 0 210px}
 .usage{padding:30px 0 0 0; float:left; display:inline; width:270px}
 
-.navigation .home-link{width:100px;}
-.navigation .features-link{width:240px;}
-.navigation .stories-link{width:200px;}
 
-
-
-
-
-/*img, div,a { behavior: url(iepngfix/iepngfix.htc);}*/
+img{ behavior: url(iepngfix/iepngfix.htc);}
 
 
 
