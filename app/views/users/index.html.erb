@@ -1,9 +1,9 @@
 
-<% if @person.type == "Staff" %>
-
+<% if @staff %>
+      <% @selected = "staff_profile" %> 
      <h2 class="current-page"> My Profile 
         <%= link_to "Edit", url(:staff_account_edit, :id => @staff.id), :id => @staff, :class=> "edit-btn" %>
-        <%= link_to "Change Password", url(:password, :selected => "staff_profile"), :class=> "edit-btn" %> 
+        <%= link_to "Change Password", url(:password), :class=> "edit-btn" %> 
      </h2>
      <% if @pic %>
          <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
@@ -16,10 +16,8 @@
      <p><%= session.user.person_bio.blank? ? "You have not created your bio yet." :  san_content(session.user.person_bio) %></p>
      <hr size="1"/>
 
-<% end %>
-
-<% if @person.type == "Parent" %>
-
+<% else %>
+    <% @selected = "parent_profile" %> 
     <%= partial 'parent_account' %>
 
 <% end %>

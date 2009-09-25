@@ -44,6 +44,7 @@
                <th>Contact Number</th>
                <th>Address1</th>
                <th>State</th>
+               <th>Classroom</th>
                <th><div style="width:120px;">Status</div></th>
             </thead>
             <tbody>
@@ -54,6 +55,9 @@
 	                     <td>&nbsp;<%= number_to_phone(student.phone, :area_code => true) %></td>
 	                     <td>&nbsp;<%= student.address1 %></td>
 	                     <td>&nbsp;<%= student.state %></td>
+	                      <% study = Study.find_by_student_id(student.id) %>
+	                      <% classroom = @current_school.classrooms.find_by_id(study.classroom_id) %>
+	                     <td>&nbsp;<%= classroom.class_name %></td>
 	        		         <% if student.activate == true %>
                           <td>&nbsp;<a rel="facebox" href="#<%= student.id %>" class="deactive" >De-Activate </a>
                        <% else %>

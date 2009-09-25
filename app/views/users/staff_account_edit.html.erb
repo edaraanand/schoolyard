@@ -1,9 +1,10 @@
+<%= error_messages_for @person %>
 <ul class='error_messages'>
-     <% if flash[:error] %> 
-		    <li><%= flash[:error] %></li>
-     <% end %>
+    <% if flash[:error] %> 
+		   <li><%= flash[:error] %></li>
+    <% end %>
 </ul>	 
-
+<% @selected = "staff_profile" %>
 <h2 class="current-page"> My Profile > Edit </h2>
 
 <%= form_for :person, :action => url(:staff_account_update) do  %>
@@ -39,7 +40,7 @@
               <li><%= text_area :person_bio,  :label => "Your Bio" %></li>
         </ul>
             <div class="save-cancel">
-                <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:users, :selected => "staff_profile"), :class => "cancel" %>
+                <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:users), :class => "cancel" %>
             </div>
     </fieldset>
      

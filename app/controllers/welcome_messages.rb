@@ -9,13 +9,24 @@ class WelcomeMessages < Application
     classrooms
     if params[:label] == "classes"
        @classroom = @current_school.classrooms.find_by_id(params[:id])
-       @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name =?', @classroom.class_name], :order => "created_at DESC")
+       @welcome_messages = @current_school.welcome_messages.paginate(:all, 
+                                                  :conditions => ['access_name =?', @classroom.class_name],
+                                                  :order => "created_at DESC",
+                                                  :per_page => 5,
+                                                  :page => params[:page])
        @test = params[:id]
     elsif params[:label] == "Home Page"
-       @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name =?', "Home Page"], :order => "created_at DESC")
+       @welcome_messages = @current_school.welcome_messages.paginate(:all, 
+                                                     :conditions => ['access_name =?', "Home Page"],
+                                                     :order => "created_at DESC",
+                                                     :per_page => 5,
+                                                     :page => params[:page])
        @test = "Home Page"
     else
-       @welcome_messages = @current_school.welcome_messages.find(:all, :order => "created_at DESC")
+       @welcome_messages = @current_school.welcome_messages.paginate(:all, 
+                                                      :order => "created_at DESC",
+                                                      :per_page => 5,
+                                                      :page => params[:page])
        @test = "All Messages"
     end
       render

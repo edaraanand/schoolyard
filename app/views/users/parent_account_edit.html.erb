@@ -18,26 +18,27 @@
       <%= form_for :parent, :action => url(:parent_update, :label => "other", :id => @parent), :id => "student" do %>
       
           <fieldset>
-            
-               <% @students.each do |f| %>
-                    <% @parents = f.parents.delete_if{|x| x.name == @parent.name } %>
-               <% end %><% q = 1 %>
-               <% @parents.each do |m| %>
-                    <li>     
-                        <%= text_field  :name => "guardian[first_name_#{q}]", :class => "short required", :label => "Name", 
-                                        :id => "guardian_fname_#{q}", :value => "#{m.first_name}" %>
-                        <%= text_field  :name => "guardian[last_name_#{q}]", :class => "short apart required", 
-                                        :id => "guardian_lname_#{q}", :value => "#{m.last_name}" %>
-                    </li>
-                    <li>
-                        <%= text_field  :name => "guardian[email_#{q}]", :label => "Email ID", :class => "required email", 
-                                        :id => "guardian_email_#{q}", :value => "#{m.email}" %>
-                    </li>
-                    <% q += 1 %>
+               <% unless @students.empty? %>
+                   <% @students.each do |f| %>
+                        <% @parents = f.parents.delete_if{|x| x.name == @parent.name } %>
+                   <% end %><% q = 1 %>
+                   <% @parents.each do |m| %>
+                        <li>     
+                            <%= text_field  :name => "guardian[first_name_#{q}]", :class => "short required", :label => "Name", 
+                                            :id => "guardian_fname_#{q}", :value => "#{m.first_name}" %>
+                            <%= text_field  :name => "guardian[last_name_#{q}]", :class => "short apart required", 
+                                            :id => "guardian_lname_#{q}", :value => "#{m.last_name}" %>
+                        </li>
+                        <li>
+                            <%= text_field  :name => "guardian[email_#{q}]", :label => "Email ID", :class => "required email", 
+                                            :id => "guardian_email_#{q}", :value => "#{m.email}" %>
+                        </li>
+                        <% q += 1 %>
+                   <% end %>
                <% end %>
-                  <ul id="students"></ul>
-                  <input type="hidden" id="id" value="1">
-                  <a href="#" class="add-more" onclick="addFormField(); return false;">Add More</a>
+               <ul id="students"></ul>
+               <input type="hidden" id="id" value="1">
+               <a href="#" class="add-more" onclick="addFormField(); return false;">Add More</a>
           </fieldset>
           
           <div class="save-cancel">
@@ -66,7 +67,7 @@
              </ul>
          </fieldset>
          <div class="save-cancel">
-             <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:users, :selected => "parent_profile"), :class => "cancel" %>
+             <%= submit "    Save    " %> Or <%= link_to "Cancel", resource(:users), :class => "cancel" %>
          </div>
                
      <% end =%>

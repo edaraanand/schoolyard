@@ -1,3 +1,6 @@
+- if flash[:confirmation]
+  %span{:class => "reactive"}
+    = flash[:confirmation]
 %h2{:class => "current-page"} Feedback
 - if @announcements.empty?
   %P There are no Feedbacks received yet. 

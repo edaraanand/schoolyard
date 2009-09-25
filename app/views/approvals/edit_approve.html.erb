@@ -17,15 +17,18 @@
             <% unless @guardians.empty? %>
                   <% q = 1 %>
                   <% @guardians.each do |f| %>
-                  
                        <% @study = Study.find_by_student_id(f.student_id) %>
                        <% @class = @current_school.classrooms.find_by_id(@study.classroom_id) %>
-                       <%= select :name => "classes[room][room_#{q}]", :collection => @classrooms.collect{|x| x.class_name}, 
-                                  :value_method => :id, :selected => @class.class_name, :id => "class_name_#{q}", 
-                                  :text_method => :name, :prompt => "Select Class" %>
-                       <%= select :class => "apart", :name => "studs[name][name_#{q}]", :collection => @students, 
-                                  :value_method => :id, :selected => "#{f.student_id}".to_s, :id => "student_name_#{q}",
-                                  :text_method => :name, :prompt => "Select Student" %>
+                       <ul id="parent_approval_edit">
+                           <li>
+                               <%= select :name => "classes[room][room_#{q}]", :collection => @classrooms.collect{|x| x.class_name}, 
+                                          :value_method => :id, :selected => @class.class_name, :id => "class_name_#{q}", 
+                                          :text_method => :name, :prompt => "Select Class" %>
+                               <%= select :class => "apart", :name => "studs[name][name_#{q}]", :collection => @students, 
+                                          :value_method => :id, :selected => "#{f.student_id}".to_s, :id => "student_name_#{q}",
+                                          :text_method => :name, :prompt => "Select Student" %>
+                           </li> 
+                       </ul> 
                        <% q += 1 %>
                   <% end %>
             <% end %><br/><br/>
@@ -60,7 +63,7 @@ function addFormField()
  {
   if (id == 1)
   {
-    $j('#students').append("<li id='row" + id + "'><select class='required' id='classroom"+id+"' name='class_room[room][room_"+id+"]'><option value=''>Select Class</option><% @classrooms.each do |classroom| %><option value='<%= classroom.id %>'><%= classroom.class_name %></option><% end %></select><select class='apart required' id='student"+id+"' name='student_name[name][name_"+id+"]'><option value=''>Select Student</option><% @students.each do |student| %><option value='<%= student.id %>'><%= student.name %></option><% end %></select></li>");
+    $j('#students').append("<li id='row" + id + "'><select class='required' id='classroom"+id+"' name='class_room[room][room_"+id+"]'><option value=''>Select Class</option><% @classrooms.each do |classroom| %><option value='<%= classroom.id %>'><%= classroom.class_name %></option><% end %></select>&nbsp;<select class='apart required' id='student"+id+"' name='student_name[name][name_"+id+"]'><option value=''>Select Student</option><% @students.each do |student| %><option value='<%= student.id %>'><%= student.name %></option><% end %></select></li>");
     id = (id - 1) + 2;
     $j('#students').append("<br/><li id='row" + id + "'><select id='classroom"+id+"' name='class_room[room][room_"+id+"]'><option value=''>Select Class</option><% @classrooms.each do |classroom| %><option value='<%= classroom.id %>'><%= classroom.class_name %></option><% end %></select><select class='apart' id='student"+id+"' name='student_name[name][name_"+id+"]'><option value=''>Select Student</option><% @students.each do |student| %><option value='<%= student.id %>'><%= student.name %></option><% end %></select></li>");
     id = (id - 1) + 2;

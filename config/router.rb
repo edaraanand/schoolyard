@@ -124,6 +124,7 @@ Merb::Router.prepare do
        match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
        match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
        match("/alerts_edit").to(:controller => 'alerts', :action => 'edit').name(:alert_edit)
+       match("/total_alerts").to(:controller => 'alerts', :action => 'total_alerts').name(:total_alerts)
        match("/alerts_update").to(:controller => 'alerts', :action => 'update').name(:alert_update)
        match("/publish").to(:controller => 'approvals', :action => 'publish').name(:publish)
        match("/parent_approvals").to(:controller => 'approvals', :action => 'parent_approvals').name(:parent_approvals)

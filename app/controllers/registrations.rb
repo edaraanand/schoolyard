@@ -244,25 +244,24 @@ class Registrations < Application
  
   def reset_password_update
     @person = @current_school.people.find_by_password_reset_key(params[:id])
-    if ( !params[:person][:password].blank? ) 
-      if ( params[:person][:password] == params[:person][:password_confirmation] )
-        @person.password = params[:person][:password]
-        @person.password_confirmation = params[:person][:password_confirmation]
-        if @person.save!
-           @person.resetting
-           session.user = @person
-           flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
-           redirect '/'
-        else
-           flash[:error] = "You should enter Minimum Length of 8 Characters"
-           redirect url(:reset_password_edit, :id => @person.password_reset_key)
-        end
-      else
-        flash[:error] = "Your Password doesn't match"
-        redirect url(:reset_password_edit, :id => @person.password_reset_key )
-      end
+    if @current_school.people.authenticate(@person.email, @current_school.id, params[:person][:old_password])
+       if ((params[:person][:password] == params[:person][:password_confirmation]) && 
+           !params[:person][:password_confirmation].blank?)
+          if @person.update_attributes(params[:person]) 
+             @person.resetting
+             session.user = @person
+             flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+             redirect '/'
+          else
+             flash[:error] = "You should enter Minimum Length of 8 Characters"
+             redirect url(:reset_password_edit, :id => @person.password_reset_key)
+          end
+       else
+          flash[:error] = "Your current password doesn't match existing password"
+          redirect url(:reset_password_edit, :id => @person.password_reset_key )
+       end
     else
-      flash[:error] = "Password cant be blank"
+      flash[:error] = "Your current password doesn't match existing password"
       redirect url(:reset_password_edit, :id => @person.password_reset_key )
     end
   end

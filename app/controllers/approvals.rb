@@ -5,7 +5,7 @@ class Approvals < Application
   before :classrooms, :only => [:edit, :update]
   before :ensure_authenticated
   before :access_rights
-  before :parent_registration, :only => [:parent_approvals, :approval_review, :parent_grant, :parent_reject]
+  before :parent_registration, :only => [:parent_approvals, :approval_review, :parent_grant, :edit_approve, :approved]
  
  
   def index
@@ -124,7 +124,7 @@ class Approvals < Application
     raise NotFound unless @parent
     @classrooms = @current_school.active_classrooms
     @registrations = @current_school.registrations.find(:all, :conditions => ['parent_id = ?', @parent.id])
-    @students = @current_school.students.find(:all, :conditions => ['activate = ?', true] )
+    @students = @current_school.students.find(:all, :conditions => ['activate = ?', true]).sort_by{|p| p.name}
     render
   end
  
@@ -159,7 +159,7 @@ class Approvals < Application
                 class_id = params[:class_room][:room]["room_#{f}".intern] 
                 @study = Study.find_by_classroom_id_and_student_id(class_id, student_id)
                 @guardian = Guardian.find_by_student_id_and_parent_id(student_id, @parent.id)
-                Guardian.create({:student_id => student_id, :parent_id => @parent.id }) unless @guardian.nil?
+                Guardian.create({:student_id => student_id, :parent_id => @parent.id }) if @guardian.nil?
                 Study.update(@study.id, {:student_id => student_id, :classroom_id => class_id})
              end
            end
