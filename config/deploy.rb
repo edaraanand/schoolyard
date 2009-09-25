@@ -82,5 +82,6 @@ namespace :vlad do
   desc "migrate app with merb env"
   remote_task :migrate, :roles => :app do
     run "cd #{current_path} && rake db:migrate MERB_ENV=#{merb_env}"
+    run "cd #{current_path} && rake bootstrap:svfs_csv MERB_ENV=#{merb_env}"
   end
 end
