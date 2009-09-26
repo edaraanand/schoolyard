@@ -103,16 +103,16 @@ class FromPrincipals < Application
 
   def settings
     @attachment = @current_school.attachments.find_by_attachable_type("principal_image")
-    p = @current_school.principal_id
-    @principal = @current_school.staff.find_by_id(p)
+    @p = @current_school.principal_id
+    @principal = @current_school.staff.find_by_id(@p)
     render
   end
 
   def settings_update
-    @staff = @current_school.staff.find_by_id(params[:school_principal])
+    @staff = @current_school.staff.find_by_id(params[:school_principal].to_i)
     @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
     @current_school.principal_id = @staff.id
-    if @staff && @current_school.save!
+    if @staff && @current_school.save
        if params[:image][:filename] != nil
           picture = @current_school.attachments.find_by_attachable_type("principal_image")
           picture.destroy if picture
@@ -128,7 +128,7 @@ class FromPrincipals < Application
        else
           @staff.principal_name = false if @staff
        end
-       @staff.save
+       @staff.save!
        flash[:confirmation] = "Your settings have been saved."
        redirect url(:settings)
     else
