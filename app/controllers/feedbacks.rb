@@ -61,7 +61,7 @@ class Feedbacks < Application
       run_later do  
         @announcement.feedback_email
       end
-      flash[:confirmation] = "your message has been sent to Collaborative Methods"
+      flash[:confirmation] = "Thank you, your message has been sent to the CM Schoolyard team."
     end
     redirect url(:feedbacks)
   end

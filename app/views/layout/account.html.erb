@@ -4,7 +4,7 @@
          <%  @person = session.user
              @staff = @current_school.staff.find_by_email(@person.email)
              @parent = @current_school.parents.find_by_email(@person.email) %>
-         <% if @parent %>
+         <% if session.user.type == "Parent" %>
              <li <% if @selected == "parent_profile" %> class="on" <% end %>>
                  <%= link_to "My Profile", resource(:users) %>
              </li>
@@ -13,7 +13,7 @@
                 <%= link_to "Other Family Members", resource(:users, :label => "other") %>
              </li>
          <% else %>
-             <% if @staff %>
+             <% if session.user.type == "Staff" %>
                  <li <% if @selected == "staff_profile" %> class="on" <% end %>>
                      <%= link_to "My Profile", resource(:users) %>
                  </li>

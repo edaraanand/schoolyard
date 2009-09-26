@@ -6,7 +6,7 @@ class Users < Application
    before :find_user_type
       
   def index
-     if @staff
+     if session.user.type == "Staff"
         @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @staff.id)
      else
         @students = @parent.students
@@ -15,7 +15,7 @@ class Users < Application
   end 
   
   def staff_account_edit
-    if @staff
+    if session.user.type == "Staff"
       @pic = @current_school.attachments.find_by_attachable_type_and_attachable_id("user_picture", @person.id)
     end
     render
@@ -69,7 +69,7 @@ class Users < Application
   end
   
   def parent_account_edit
-     if @parent
+     if session.user.type == "Parent"
        @students = @parent.students.find(:all, :conditions => ['school_id = ?', @current_school.id])
      end
      render
@@ -86,9 +86,9 @@ class Users < Application
                fname = params[:parent][:fname]["fname_#{f}".intern]
                lname = params[:parent][:lname]["lname_#{f}".intern]
                email = params[:parent][:email]["email_#{g}".intern]
-               @p = @current_school.parents.create({ :first_name => fname, :last_name => lname, :email => email, :approved => 1})
+               @p = @current_school.parents.create({:first_name => "#{fname}", :last_name => "#{lname}", :email => "#{email}", :approved => 1})
                @students.each do |f|
-                  Guardian.create({:student_id => f.id, :parent_id => @p.id})
+                 Guardian.create({:student_id => f.id, :parent_id => @p.id})
                end
                @people << @p
             end
