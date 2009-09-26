@@ -45,10 +45,10 @@
     $j(id).remove();
   }
  
-  function preview(id, t)
+  function preview(id)
  {
    var s = $('links').serialize();
-   window.open('/external_links/preview/-/?' + s + id + t, 'mywin', 'left=20,top=20,width=1000,height=500,toolbar=1,resizable=0');
+   window.open('/external_links/preview/-/?' + s + id, 'mywin', 'left=20,top=20,width=1000,height=500,toolbar=1,resizable=0');
    
  }
   // Validation for Adding External Links
