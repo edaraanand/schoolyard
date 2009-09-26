@@ -9,19 +9,16 @@
         <% links = t.zip(u) %>
     <% end %>
     <ul class="last"> 
-      <% s.each do |f| %>
-           <% if @edit == "0" %>
+          <% s.each do |f| %>
                 <% a = f.flatten %>
                 <li><%= link_to ("#{a[1]}", "http://#{a[3]}", {'target' => '_blank'}) %></li>
-           <% else %>
-                <li><%= link_to ("#{f[0]}", "http://#{f[1]}", {'target' => '_blank'}) %></li>
-           <% end %>      
-       <% end %>
-       <% if params[:links] %>
-           <% links.each do |p| %>
-               <% a = p.flatten %>
-               <li><%= link_to ("#{a[1]}", "http://#{a[3]}", {'target' => '_blank'}) %></li>
-           <% end %>
-       <% end %>
+                <%#= link_to ("#{f[0]}", "http://#{f[1]}", {'target' => '_blank'}) %>
+          <% end %>
+          <% if params[:links] %>
+              <% links.each do |p| %>
+                  <% a = p.flatten %>
+                  <li><%= link_to ("#{a[1]}", "http://#{a[3]}", {'target' => '_blank'}) %></li>
+              <% end %>
+         <% end %>
     </ul>
 </div>
