@@ -14,7 +14,7 @@ class Directories < Application
       @students = @current_school.students.paginate(:all, :conditions => ['activate = ?', true], :per_page => 25,  :page => params[:page])
       @test = "All Students"
     end
-     @selected = "current_students"
+     @selected = "students"
      render 
   end
   
@@ -25,14 +25,14 @@ class Directories < Application
        else
           @students = @current_school.students.paginate(:all, :conditions => ['last_name LIKE ? and activate = ?',"#{params[:type]}%", true ], :per_page => 25,  :page => params[:page] )
        end
-       @selected = "current_students"
+       @selected = "students"
     else  
        if params[:type] == "all"
          @staff = @current_school.staff.paginate(:all, :per_page => 25,  :page => params[:page])
        else
          @staff = @current_school.staff.paginate(:all, :conditions => ['last_name LIKE ?',"#{params[:type]}%" ], :per_page => 25,  :page => params[:page] )
        end
-       @selected = "school_staff"
+       @selected = "staff"
     end
      @s = params[:type].to_s
      render
@@ -47,19 +47,20 @@ class Directories < Application
       @staff = @current_school.staff.paginate(:all, :per_page => 25,  :page => params[:page])
       @test = "All Staff"
     end
-    @selected = "school_staff"
+    @selected = "staff"
     render 
   end
   
   
   def show
     if params[:label] == "students"
-      @selected = "current_students"
-      @student = @current_school.students.find(params[:id])
+      @selected = "students"
+      @student = @current_school.students.find_by_id(params[:id])
+      raise NotFound unless @student
       @parents = @student.parents
       @protectors = @student.protectors
     elsif params[:label] == "staff"
-      @selected = "school_staff"
+      @selected = "staff"
       @staff = @current_school.staff.find(params[:id])
     else
       raise NotFound

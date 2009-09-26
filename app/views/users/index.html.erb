@@ -1,17 +1,26 @@
- <div id="header"> 
 
-          <h1>School Name</h1>
-     
-		<ul>
-		    <li><%= link_to "Home" %></li>
-		    <li><%= link_to "Class" %></li>
-		    <li><%= link_to "Sport" %></li>
-		    <li><%= link_to "Form" %></li>
-		    <li><%= link_to "Directory" %></li>
-		    <li><%= link_to "Events" %></li>
-		    <li><%= link_to "Announcements" %></li>
-		</ul>
-    </div>
-    
-    
-    <%= @current_user.login %>
+<% if session.user.type == "Staff" %>
+      <% @selected = "staff_profile" %> 
+     <h2 class="current-page"> My Profile 
+        <%= link_to "Edit", url(:staff_account_edit, :id => @staff.id), :id => @staff, :class=> "edit-btn" %>
+        <%= link_to "Change Password", url(:password), :class=> "edit-btn" %> 
+     </h2>
+     <% if @pic %>
+         <%= file_image(@current_school.id, @pic.id, @pic.attachable_type) %>
+         <%= link_to "Remove my profile picture", url(:controller => "users", :id => @staff.id, :action => "delete"), :class => "cancel delete" %>
+     <% end %>
+     <p><%= session.user.email.blank? ? "" :  email(session.user.email) %><br/>
+        <%= session.user.phone.blank? ? "" :  number_to_phone(session.user.phone, :area_code => true) %>
+     </p><br/>
+     <h3>Your Bio</h3>
+     <p><%= session.user.person_bio.blank? ? "You have not created your bio yet." :  san_content(session.user.person_bio) %></p>
+     <hr size="1"/>
+
+<% else %>
+    <% @selected = "parent_profile" %> 
+    <%= partial 'parent_account' %>
+
+<% end %>
+
+
+<script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>

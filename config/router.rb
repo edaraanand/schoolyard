@@ -65,6 +65,7 @@ Merb::Router.prepare do
  
   authenticate do
        resources :parents
+       resources :users
        resources :approvals
        resources :schools
        resources :people
@@ -89,6 +90,13 @@ Merb::Router.prepare do
        resources :captures
        resources :tasks
        resources :directories
+       match("/csv_errors").to(:controller => 'students', :action => 'csv_errors').name(:csv_errors)
+       match("/edit_approve").to(:controller => 'approvals', :action => 'edit_approve').name(:edit_approve)
+       match("/sms_log_details").to(:controller => 'notifications', :action => 'sms_log_details').name(:sms_log_details)
+       match("/approved").to(:controller => 'approvals', :action => 'approved').name(:approved)
+       match("/template_download").to(:controller => 'students', :action => 'template_download').name(:template_download)
+       match("/import").to(:controller => 'students', :action => 'import').name(:import)
+       match("/import_csv").to(:controller => 'students', :action => 'import_csv').name(:import_csv)
        match("/twilio_log").to(:controller => 'notifications', :action => 'twilio_log').name(:twilio_log)
        match("/staff").to(:controller => 'directories', :action => 'staff').name(:staff)
        match("/letters").to(:controller => 'directories', :action => 'letters').name(:letters)
@@ -112,20 +120,10 @@ Merb::Router.prepare do
        match("/score").to(:controller => 'reports', :action => 'score').name(:score)
        match("/grades").to(:controller => 'reports', :action => 'grades').name(:grades)
        match("/assignments").to(:controller => 'reports', :action => 'assignments').name(:assignments)
-       match("/subscription").to(:controller => 'users', :action => 'subscription').name(:subscription)
-       match("/phone").to(:controller => 'users', :action => 'phone').name(:phone)
-       match("/voice_update").to(:controller => 'users', :action => 'voice_update').name(:voice_update)
-       match("/phone_update").to(:controller => 'users', :action => 'phone_update').name(:phone_update)
        match("/feedback_reply").to(:controller => 'feedbacks', :action => 'feedback_reply').name(:feedback_reply)
        match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
        match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
-       match("/alerts_edit").to(:controller => 'alerts', :action => 'edit').name(:alert_edit)
-       match("/alerts_update").to(:controller => 'alerts', :action => 'update').name(:alert_update)
-       match("/staff_account").to(:controller => 'users', :action => 'staff_account').name(:staff_account)
-       match("/staff_account_edit").to(:controller => 'users', :action => 'staff_account_edit').name(:staff_account_edit)
-       match("/staff_account_update").to(:controller => 'users', :action => 'staff_account_update').name(:staff_account_update)
-       match("/staff_password").to(:controller => 'users', :action => 'staff_password').name(:staff_password)
-       match("/staff_password_update").to(:controller => 'users', :action => 'staff_password_update').name(:staff_password_update)
+       
        match("/publish").to(:controller => 'approvals', :action => 'publish').name(:publish)
        match("/parent_approvals").to(:controller => 'approvals', :action => 'parent_approvals').name(:parent_approvals)
        match("/approval_review").to(:controller => 'approvals', :action => 'approval_review').name(:approval_review)
@@ -133,14 +131,6 @@ Merb::Router.prepare do
        match("/principal_articles").to(:controller => 'homes', :action => 'principal_articles').name(:principal_articles)
        match("/class_details").to(:controller => 'classrooms', :action => 'class_details').name(:class_details)
        match("/form_files").to(:controller => 'forms', :action => 'form_files').name(:form_files)
-       match("/parent_account").to(:controller => 'users', :action => 'parent_account').name(:parent_account)
-       match("/parent_password").to(:controller => 'users', :action => 'parent_password').name(:parent_password)
-       match("/parent_password_change").to(:controller => 'users', :action => 'parent_password_change').name(:parent_password_change)
-       match("/parent_account_edit").to(:controller => 'users', :action => 'parent_account_edit').name(:parent_account_edit)
-       match("/parent_update").to(:controller => 'users', :action => 'parent_update').name(:parent_update)
-       match("/student_details").to(:controller => 'users', :action => 'student_details').name(:student_details)
-       match("/student_edit").to(:controller => 'users', :action => 'student_edit').name(:student_edit)
-       match("/student_update").to(:controller => 'users', :action => 'student_update').name(:student_update)
        match("/events").to(:controller => 'calendars', :action => 'events').name(:events)
        match("/help").to(:controller => 'homes', :action => 'help').name(:help)
        match("/bio").to(:controller => 'homes', :action => 'bio').name(:bio)
@@ -156,13 +146,26 @@ Merb::Router.prepare do
        match("/school_admin").to(:controller => 'schools', :action => 'school_admin').name(:school_admin)
        match("/home_spot_light").to(:controller => 'homes', :action => 'home_spot_light').name(:home_spot_light)
        match("/lights").to(:controller => 'homes', :action => 'lights').name(:lights)
-       match("/new_settings").to(:controller => 'from_principals', :action => 'new_settings').name(:new_settings)
-       match("/create_settings").to(:controller => 'from_principals', :action => 'create_settings').name(:create_settings)
-       match("/edit_details").to(:controller => 'from_principals', :action => 'edit_details').name(:edit_details)
-       match("/update_details").to(:controller => 'from_principals', :action => 'update_details').name(:update_details)
        match(:first_subdomain => 'admin').to(:controller => 'admin', :action => 'index') 
-       #match("/uploads/:school_id/static/:id").to(:controller => 'files', :action => 'image')
-       #match("/uploads/:school_id/pictures/:id").to(:controller => 'files', :action => 'image')
+     
+       match("/parent_account_edit").to(:controller => 'users', :action => 'parent_account_edit').name(:parent_account_edit)
+       match("/parent_update").to(:controller => 'users', :action => 'parent_update').name(:parent_update)
+       match("/staff_account_edit").to(:controller => 'users', :action => 'staff_account_edit').name(:staff_account_edit)
+       match("/staff_account_update").to(:controller => 'users', :action => 'staff_account_update').name(:staff_account_update)
+       match("/student_details").to(:controller => 'users', :action => 'student_details').name(:student_details)
+       match("/student_edit").to(:controller => 'users', :action => 'student_edit').name(:student_edit)
+       match("/student_update").to(:controller => 'users', :action => 'student_update').name(:student_update)
+       match("/subscription").to(:controller => 'users', :action => 'subscription').name(:subscription)
+       match("/phone").to(:controller => 'users', :action => 'phone').name(:phone)
+       match("/voice_update").to(:controller => 'users', :action => 'voice_update').name(:voice_update)
+       match("/password").to(:controller => 'users', :action => 'password').name(:password)
+       match("/change_password").to(:controller => 'users', :action => 'change_password').name(:change_password)
+       match("/check_type").to(:controller => 'homes', :action => 'check_type').name(:check_type)
+       match("/account_type").to(:controller => 'homes', :action => 'account_type').name(:account_type)
+       
+       match("/alerts_edit").to(:controller => 'alerts', :action => 'edit').name(:alerts_edit)
+       match("/total_alerts").to(:controller => 'alerts', :action => 'total_alerts').name(:total_alerts)
+       match("/alerts_update").to(:controller => 'alerts', :action => 'update').name(:alerts_update)
    end
    
      
@@ -174,6 +177,6 @@ Merb::Router.prepare do
   
   # Change this for your home page to be available at /
  
-    match('/').to(:controller => 'homes', :action => 'index').name(:homes)
+    match('/').to(:controller => 'homes', :action => 'check_type').name(:check_type)
 
 end

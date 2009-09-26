@@ -5,7 +5,7 @@
 <% end %>
      
         <h2 class="current-page">
-           Class Calendar &nbsp;&nbsp;&nbsp;
+           Calendar &nbsp;&nbsp;&nbsp;
            <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@calendar.class_name}" ) )  %>
            <span class="act">
               <%= link_to "Download as PDF", url(:pdf_events, :id => @calendar.id, :label => "single") , :class=> "pdf" %>

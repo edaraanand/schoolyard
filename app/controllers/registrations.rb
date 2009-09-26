@@ -15,7 +15,7 @@ class Registrations < Application
   end
  
   def create
-    @parent = @current_school.parents.new(params[:parent])
+    @parent = @current_school.parents.new(params[:parent].merge(:activate => false))
     @registration = @current_school.registrations.new(params[:registration])
     if ( ( (params[:f_name_student2] == "") && (params[:l_name_student2] == "") ) &&  ( (params[:current_class2] == "") &&  (params[:birth_date2] == "") ) )
       if (@parent.valid?) && (@registration.valid?)
@@ -158,8 +158,8 @@ class Registrations < Application
     @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
     if @parent
        @parent.approved = 2
+       @parent.password_reset_key = nil
        @parent.save!
-       @parent.reset
        render
     else
        flash[:success] = "Your Approval has been sent to School"
@@ -169,7 +169,7 @@ class Registrations < Application
  
   def new_password
     id = params[:id]
-    @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
+    @parent = @current_school.parents.find_by_password_reset_key(id)
     if @parent
        render
     else
@@ -180,7 +180,7 @@ class Registrations < Application
  
   def password_save
     id = params[:id]
-    @parent = @current_school.parents.find(:first, :conditions => ['password_reset_key = ?', id])
+    @parent = @current_school.parents.find_by_password_reset_key(id)
     if ( !params[:parent][:password].blank? ) && (!params[:parent][:password_confirmation].blank? )
       if ( params[:parent][:password] == params[:parent][:password_confirmation] )
          @parent.password = params[:parent][:password]
@@ -233,7 +233,7 @@ class Registrations < Application
  
   def reset_password_edit
     id = params[:id]
-    @person = @current_school.people.find(:first, :conditions => ['password_reset_key = ?', id])
+    @person = @current_school.people.find_by_password_reset_key(id)
     if @person
        render :layout => 'login'
     else
@@ -244,32 +244,31 @@ class Registrations < Application
  
   def reset_password_update
     @person = @current_school.people.find_by_password_reset_key(params[:id])
-    if ( !params[:person][:password].blank? ) 
-      if ( params[:person][:password] == params[:person][:password_confirmation] )
-        @person.password = params[:person][:password]
-        @person.password_confirmation = params[:person][:password_confirmation]
-        if @person.save!
-           @person.resetting
-           session.user = @person
-           flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
-           redirect '/'
-        else
-           flash[:error] = "You should enter Minimum Length of 8 Characters"
-           redirect url(:reset_password_edit, :id => @person.password_reset_key)
-        end
-      else
-        flash[:error] = "Your Password doesn't match"
-        redirect url(:reset_password_edit, :id => @person.password_reset_key )
-      end
+    if @current_school.people.authenticate(@person.email, @current_school.id, params[:person][:old_password])
+       if ((params[:person][:password] == params[:person][:password_confirmation]) && 
+           !params[:person][:password_confirmation].blank?)
+          if @person.update_attributes(params[:person]) 
+             @person.resetting
+             session.user = @person
+             flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+             redirect '/'
+          else
+             flash[:error] = "You should enter Minimum Length of 8 Characters"
+             redirect url(:reset_password_edit, :id => @person.password_reset_key)
+          end
+       else
+          flash[:error] = "Your current password doesn't match existing password"
+          redirect url(:reset_password_edit, :id => @person.password_reset_key )
+       end
     else
-      flash[:error] = "Password cant be blank"
+      flash[:error] = "Your current password doesn't match existing password"
       redirect url(:reset_password_edit, :id => @person.password_reset_key )
     end
   end
  
   def new_staff_password
     id = params[:id]
-    @person = @current_school.people.find(:first, :conditions => ['password_reset_key = ?', id])
+    @person = @current_school.people.find_by_password_reset_key(params[:id])
     if @person
        render :layout => 'login'
     else

@@ -4,14 +4,22 @@ class Alerts < Application
   before :find_user
   before :selected_link
   
-  def index
-    @alerts = @person.alerts.uniq
-    @alert_people = AlertPeople.find(:all,:conditions=>['person_id=?', session.user.id]).map{|x| x.alert_id }
-    @alert_home = AlertPeople.find(:all,:conditions => ["person_id=? and classroom_id=?", session.user.id, 0])
-    @alert_classes = AlertPeople.find(:all,:conditions =>["person_id=? and classroom_id != ?", session.user.id, 0])
-    render
-  end
+  # def index
+  #     #@alerts = @person.alerts.uniq
+  #     #@alert_people = AlertPeople.find(:all,:conditions=>['person_id=?', session.user.id]).map{|x| x.alert_id }
+  #     #@alert_home = AlertPeople.find(:all,:conditions => ["person_id=? and classroom_id=?", session.user.id, 0])
+  #     #@alert_classes = AlertPeople.find(:all,:conditions =>["person_id=? and classroom_id != ?", session.user.id, 0])
+  #     render
+  #   end
    
+  def total_alerts
+     @alerts = @person.alerts.uniq
+     @alert_people = AlertPeople.find(:all,:conditions=>['person_id=?', session.user.id]).map{|x| x.alert_id }
+     @alert_home = AlertPeople.find(:all,:conditions => ["person_id=? and classroom_id=?", session.user.id, 0])
+     @alert_classes = AlertPeople.find(:all,:conditions =>["person_id=? and classroom_id != ?", session.user.id, 0])
+     render
+  end
+  
   def edit
     @alert_home = AlertPeople.find(:all, :conditions => ["person_id = ? and classroom_id = ?", session.user.id, 0])
     render
@@ -41,7 +49,7 @@ class Alerts < Application
                      people_alert_to_save.classroom_id = 0
                      people_alert_to_save.save
                  end
-                 redirect resource(:alerts)
+                 redirect url(:total_alerts)
           elsif params[:class_alerts].nil? && params[:parent_alerts] != nil
                 flash[:error] = "please check the Classroom or Home Page"
                 render :edit
@@ -64,10 +72,10 @@ class Alerts < Application
                      people_alert_to_save.save
                  end
               end
-              redirect resource(:alerts)
+              redirect url(:total_alerts)
            end
         else
-          redirect resource(:alerts)
+          redirect url(:total_alerts)
         end
     else
        @alert = Alert.find_by_name("announcement")
@@ -87,7 +95,7 @@ class Alerts < Application
           people_alert_to_save.classroom_id = 0
           people_alert_to_save.save
        end
-       redirect resource(:alerts)
+       redirect url(:total_alerts)
      end
   end  
     
@@ -96,13 +104,15 @@ class Alerts < Application
   
   def find_user
     @person = session.user
-      if @person.type == "Staff"
-         @alerts = Alert.find(:all, :conditions => ['type == ?', "Staff"])
-      else
-         @few_alerts = Alert.find(:all, :conditions =>['type == ?', "Parent"], :order => "id desc", :limit => 2)
-         @alerts = Alert.find(:all, :conditions =>['type == ?', "Parent"], :order => "id ASC", :limit => 2)
-      end
-      @alert_people = AlertPeople.find(:all,:conditions=>['person_id=?', session.user.id]).map{|x| x.alert_id }
+    @staff = @current_school.staff.find_by_email(@person.email)
+    @parent = @current_school.parents.find_by_email(@person.email)
+    if session.user.type == "Staff"
+       @alerts = Alert.find(:all, :conditions => ['type == ?', "Staff"])
+    else
+       @few_alerts = Alert.find(:all, :conditions =>['type == ?', "Parent"], :order => "id desc", :limit => 2)
+       @alerts = Alert.find(:all, :conditions =>['type == ?', "Parent"], :order => "id ASC", :limit => 2)
+    end
+    @alert_people = AlertPeople.find(:all,:conditions=>['person_id=?', session.user.id]).map{|x| x.alert_id }
   end
 
   def selected_link

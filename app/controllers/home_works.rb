@@ -13,7 +13,7 @@ class HomeWorks < Application
        @test = params[:id]
     else
        @home_works = @current_school.home_works.paginate(:all, :order => "due_date ASC", :per_page => 10, :page => params[:page])
-       @test = "All Homeworks"
+       @test = "All Homework"
     end
     render
   end
@@ -189,12 +189,15 @@ class HomeWorks < Application
         con = con.gsub("’", "")
         con = con.gsub("– ", "")
         con = con.gsub(/[^a-zA-Z0-9-]/, " ")
-        pdf.text "<b>Due Date</b>" + ":" + "" + "#{homework.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left, :spacing => 2
-        pdf.text "<b>Title</b>" + ":" + "" + "#{homework.title}", :font_size => 10, :justification => :left
-        pdf.text "<b>Description</b>" + ":" + "" 
+        pdf.text "<b>Due Date</b>" + ":" + "" + " " + "#{homework.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left, :spacing => 2
+        pdf.text "<b>Title</b>" + ":" + "" + " " + "#{homework.title}", :font_size => 10, :justification => :left
+        pdf.text "<b>Description</b>" + ":" + "", :spacing => 2 
         con.split('br').map do |c| 
-          pdf.text c, :font_size => 10, :justification => :left
+          pdf.text c.strip, :font_size => 10, :justification => :left
         end
+        pdf.text "<b></b>"
+        pdf.text "---------------------------------------------", :justification => :center
+        pdf.text "<b></b>"
       end
       pdf
     else
@@ -206,11 +209,11 @@ class HomeWorks < Application
       con = con.gsub("’", "")
       con = con.gsub("– ", "")
       con = con.gsub(/[^a-zA-Z0-9-]/, " ")
-      pdf.text "<b>Due Date</b>" + ":" + "" + "#{@home_work.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
-      pdf.text "<b>Title</b>" + ":" + "" + "#{@home_work.title}", :font_size => 10, :justification => :left
-      pdf.text "<b>Description</b>" + ":" + "" 
+      pdf.text "<b>Due Date</b>" + ":" + " " +  " " + "#{@home_work.due_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
+      pdf.text "<b>Title</b>" + ":" + "" + " "  "#{@home_work.title}", :font_size => 10, :justification => :left
+      pdf.text "<b>Description</b>" + ":" + "", :spacing => 2 
       con.split('br').map do |c| 
-        pdf.text c, :font_size => 10, :justification => :left
+        pdf.text c.strip, :font_size => 10, :justification => :left
       end
       pdf
     end

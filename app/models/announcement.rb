@@ -7,12 +7,12 @@ class Announcement < ActiveRecord::Base
   
   belongs_to :person
   belongs_to :school
+  has_many :logs, :class_name => "LoggerMachine"
 
   validates_presence_of :title, :if => :title, :scope => :school_id
   validates_presence_of :content, :if => :content, :scope => :school_id
   validates_presence_of :expiration
-  #validates_presence_of :access_name, :message => "Please select the access from the drop down", :if => :access_name, :scope => :school_id
-   
+     
   def validate
      if self.expiration != nil
         self.errors.add(:expiration, "must be greater than today") if self.expiration <= Date.today 
@@ -20,98 +20,66 @@ class Announcement < ActiveRecord::Base
      if self.access_name == ""
          self.errors.add("please", "select the option")
      end
+     if self.image
+        if self.image != ""
+          @content_types = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
+          unless @content_types.include?(self.image[:content_type])
+            self.errors.add("please", "upload a image")
+          end 
+        end
+     end
   end
-
-    #      
-    # def self.home_page(params)
-    #    self.paginate(:all, :conditions => ["access_name = ? and label = ?", "Home Page", 'staff' ],
-    #                       :order => "created_at DESC",
-    #                       :per_page => 10,
-    #                       :page => params[:page])
-    # end 
-    # 
-    # def self.staff(params)
-    #   self.paginate(:all, :conditions => ['label = ?', 'staff'],
-    #                       :order => "created_at DESC",
-    #                       :per_page => 10,
-    #                       :page => params[:page])
-    # end
-    # 
-    # def self.class_announcement(params)
-    #   @current_school = School.find_by_id(params[:school_id])
-    #   @classroom = @current_school.classrooms.find_by_id(params[:id])
-    #   self.paginate(:all, :conditions => ["access_name = ? and label = ?", @classroom.class_name, 'staff' ],
-    #                       :order => "created_at DESC",
-    #                       :per_page => 10,
-    #                       :page => params[:page])
-    # end
-    # 
-    # def self.class_approved(params)
-    #   @current_school = School.find_by_id(params[:school_id])
-    #   @classroom = @current_school.classrooms.find_by_id(params[:id])
-    #   self.paginate(:all, 
-    #                 :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true],
-    #                 :per_page => 10, :page => params[:page], :order => "created_at DESC")
-    # end
-    
   
-    
+  def save_announcements(label, school_id)
+     self.approved = false
+     self.approve_announcement = true
+     self.label = label
+     self.school_id = school_id
+     self.save
+  end
+  
   # sending email to Collaborative Methods on Feedback
-    
   def feedback_email
-    mail_deliver(:feedback, :subject => "Feedback from " + self.school.school_name)
+    feedback_delivery(:feedback, :subject => "Feedback from " + self.school.school_name)
   end
 
-  def mail_deliver(action, params)
-    from = "noreply@schoolyardapp.com"
-    #to = "alok.saini@schoolyardapp.com"
+  def feedback_delivery(action, params)
     to = ["alok.saini@schoolyardapp.com", "eshwar@schoolyardapp.com", "steve.sandbank@collaborativemethods.com", "brian.bolz@insightmethods.com"]
     to.each do |f|
-       PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => "#{f}"), self )
+       PersonMailer.dispatch_and_deliver(action, params.merge(:from => Schoolapp.config(:auth_mailman), :to => "#{f}"), self )
     end
   end
  
   # sending the email reply to the person who has sent the feedback
-  
   def reply_person
-     deliver(:reply_person, :subject => "Feedback Reply from " + self.school.school_name)
+     feedback_reply_to_person(:reply_person, :subject => "Feedback Reply from " + self.school.school_name)
   end
 
-  def deliver(action, params)
-    from = "noreply@schoolyardapp.com"
-    PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.person.email), self )
+  def feedback_reply_to_person(action, params)
+     PersonMailer.dispatch_and_deliver(action, params.merge(:from => Schoolapp.config(:auth_mailman), :to => self.person.email), self )
   end
 
-  ## Sending mail for Announcement Alert
-
-    def alert_mail(id)
-      @current_school = self.school
-      @person = @current_school.people.find_by_id(id)
-      alert_deliver(:alert_details, @person, :subject => "Alert Details " + self.school.school_name)
-    end
-
-    def alert_deliver(action, to, params)
-      @person = to 
-      from = "noreply@schoolyardapp.com"
-      PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => @person.email), self )
-    end
-    
-    
-  # sending the mail for urgent Announcements
+  ## Sending Emails for Announcement Alerts
+  def alert_mail(id)
+    @person =  Person.find_by_id_and_school_id(id, self.school.id) 
+    email_alerts_delivery(:alert_details, @person, :subject => "Alert Details " + self.school.school_name)
+  end
   
+  def email_alerts_delivery(action, to, params)
+    @person = to 
+    PersonMailer.dispatch_and_deliver(action, params.merge(:from => Schoolapp.config(:auth_mailman), :to => @person.email), self )
+  end
+        
+  # sending the mail for urgent Announcements
   def mail(action, params)
-    from = "noreply@schoolyardapp.com"
-    @current_school = self.school
-    @people = @current_school.people.find(:all)
+    @people = Person.find(:all, :conditions => ['school_id = ?', self.school.id])
     @people.each do |f|
       self.approved_by = f.id
       self.save
       unless f.email.blank?
-        PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => "#{f.email}" ), self )
+        PersonMailer.dispatch_and_deliver(action, params.merge(:from => Schoolapp.config(:auth_mailman), :to => "#{f.email}" ), self )
       end
     end
   end
                                                                                                   
-  
-  
 end

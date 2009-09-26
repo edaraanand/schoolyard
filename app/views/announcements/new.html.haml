@@ -1,0 +1,50 @@
+= error_messages_for @announcement
+%ul{:class => "error_messages"}
+  - if flash[:error]
+    %li
+      = flash[:error]
+%h2{:class => "current-page"} Announcements &gt; Add New
+= form_for(@announcement, :action => resource(:announcements), :id => 'announcement', :name => "announce") do
+  %fieldset
+    %ul
+      %li
+        %label Announcement for:
+        - if params[:l]
+          = select :access_name, :collection => rooms, :prompt => "Please Select", :selected => "#{params[:l]}"
+        - else
+          = select :access_name, :collection => rooms, :selected => "#{@c}", :prompt => "Please Select"
+      %li
+        = text_field  :title,  :label => "Title", :maxlength => "75"
+      %li
+        = text_area  :content,  :label => "Description", :rows => "20", :cols => "50" 
+      %li
+        = text_field  :expiration, :class => "short date", :label => "Expiration", :size => "12"
+      %li
+        = file_field :attachment,  :label => "Attach a File"
+    %ul{:id => "pending_files"}     
+    :javascript
+      var multi_selector = new MultiSelector($('pending_files'), 1);
+      multi_selector.addElement($('announcement_attachment'));
+  %div{:class => "save-cancel"}
+    %input{:type => "button", :value => "    Preview    ", :onclick => "preview();return false;"}
+    = submit "    Publish    "
+    Or
+    = link_to "Cancel", resource(:announcements), :class => "cancel"   
+
+:javascript
+  document.announce.announcement_title.focus();
+  $j(document).ready(function() { $j("input.date").datepicker({minDate:'today + 1'});  });
+  function preview()
+  {
+  var name = document.getElementById('announcement_access_name');
+  if (name.value == "")
+  {
+    alert("Please select the Classroom/Homepage from the dropdown menu");
+  }
+  else
+  {
+  var s = $('announcement').serialize();
+  window.open('/announcements/preview/-/?' + s, 'mywin', 'left=20,top=20,width=1000,height=500,toolbar=1,resizable=yes,location=yes,scrollbars=yes');
+  }
+  }
+  

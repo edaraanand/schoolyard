@@ -1,0 +1,36 @@
+<div>
+    <h2 class="current-page">Urgent Announcements</h2>
+    <div class="data-block long-block">
+         <div class="ddmmm">
+             <span class="date"><%= @announcement.expiration.strftime("%d") %></span>
+	           <span class="month"><%= @announcement.expiration.strftime("%b") %></span>
+	       </div>
+         <p class="post-content"><%= @announcement.content %></p>
+         <p class="separator">&nbsp;</p>
+         <p class="subText">
+            Message Status for SMS Alerts
+         </p>
+         <table id="mytable" class="grades">
+       	    <thead>
+       	        <th class="subjects">Last Name</th>
+       	        <th class="last-upd">First Name</th>  
+       	        <th class="last-upd">Contact Number</th>
+       	        <th class="last-upd">Message Status</th>
+       	    </thead>
+       	    <tbody>
+       	       <% @sms_details.each do |f| %>
+       	             <% @person = @current_school.people.find_by_id(f[1]) %>
+                    <tr>
+          	            <td><%= @person.last_name %> </td>
+          	            <td><%= @person.first_name %></td>
+          	            <td><%= @person.sms_alert %> </td>
+          	            <td><%= f[0] %> </td>
+          	        </tr>
+          	   <% end %>
+       	    </tbody>
+       	 </table>
+         <br/><br/><br/>
+    </div>
+    &larr; <%= link_to "Back to the listing page", resource(:notifications) %>
+</div>
+

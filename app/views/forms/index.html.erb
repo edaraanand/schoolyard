@@ -1,21 +1,19 @@
 <h2 class="current-page">Forms &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:forms, :new) %></h2>
 
-
  View :  <select id = 'formID'>
-               <option value = '/forms' <% if (@test == "All Forms") %> selected <% end %> >All Forms</option>
-                  <% @classes.each do |f| %>
-                      <option value='/forms?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
-                         <%= f.class_name %> 
-                      </option>
-	                <% end %>
+              <option value = '/forms' <% if (@test == "All Forms") %> selected <% end %> >All Forms</option>
+              <% @classes.each do |f| %>
+                  <option value='/forms?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+                     <%= f.class_name %> 
+                  </option>
+	            <% end %>
 	       </select>
 
- 
      <% if @forms.empty? %>
-          	<p class="subText">
-			     No Form was found. If you applied a filter try changing it.
+          <p class="subText">
+			       No Form was found. If you applied a filter try changing it.
 		         <%= link_to "Add New", resource(:forms, :new) %>
-		     </p>
+		      </p>
      <% else %>
           <table id="mytable"  cellspacing="0" cellpadding="0">
                <thead>
@@ -35,7 +33,7 @@
                      <% end %>
                </tbody>
           </table>
-          <%= will_paginate (@forms, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+          <%#= will_paginate (@forms, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
      <% end %>
  
 

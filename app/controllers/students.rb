@@ -4,10 +4,33 @@ class Students < Application
   before :find_school
   before :access_rights, :exclude => [:generate_csv]
 
- 
   def index
-    @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
+    @class_rooms = @current_school.active_classrooms
+    if params[:ref] == "students"
+       letter_filter
+       @s = params[:type].to_s
+    else
+       if params[:label] == "classes"
+          @class = @current_school.classrooms.find_by_id(params[:id]) rescue NotFound
+          @students = @current_school.students.paginate(:all, 
+                                                        :joins => :studies, :conditions => ["studies.classroom_id = ?", @class.id],
+                                                        :per_page => 25,  :page => params[:page] )
+          @test = params[:id]
+       else
+          @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
+          @test = "All Students"
+       end
+    end
     render
+  end
+  
+  def letter_filter
+    if params[:type] == "all"
+       @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
+    else
+       @students = @current_school.students.paginate(:all, :conditions => ['last_name LIKE ?', "#{params[:type]}%"], 
+                                                     :per_page => 25,  :page => params[:page] )
+    end
   end
 
   def new
@@ -318,6 +341,87 @@ class Students < Application
      redirect resource(:students)
   end
  
+  def import
+    @class_rooms = @current_school.active_classrooms
+    render
+  end
+  
+  def import_csv
+      q = 1
+      filename =  params[:file_c][:filename]
+      File.makedirs("public/uploads/#{@current_school.id}/CSV_FOLDER")
+      FileUtils.mv( params[:file_c][:tempfile].path, "public/uploads/#{@current_school.id}/CSV_FOLDER/#{0}")
+      path = "#{Merb.root}/public/uploads/#{@current_school.id}/CSV_FOLDER/0"
+      @@validations = []
+      @valid_students = []
+      @valid_parents = []
+      @invalid = []
+      @classes = []
+      @student_ids = []
+      @parent_ids = []
+      begin
+         FasterCSV.foreach(path) do |row|
+            unless q == 1
+               student = Student.new({:last_name => row[0], :first_name => row[1], :address1 => row[5], 
+                                      :city => row[6], :state => row[7], :zip_code => row[8], :birth_date => row[9],
+                                      :school_id => @current_school.id })
+               protector = Protector.new({:last_name => row[2], :first_name => row[3], :email => row[4], :school_id => @current_school.id })
+               @classroom = @current_school.classrooms.find_by_class_name(row[10])
+               @classes << @classroom
+               if @classes.include?(nil)
+                  @invalid << row
+                  @@validations << row
+               else
+                  if row.include?(nil) && (!student.valid? && !protector.valid?)
+                     @invalid << row
+                     @@validations << row
+                  else
+                     @valid_students << student
+                     @valid_parents << protector
+                  end
+               end
+            end
+            q += 1
+         end 
+         if (@invalid.empty?)
+            @valid_students.each do |f|
+              @student = f
+              @student.save
+              @student_ids << @student.id
+              Study.create(:student_id => @student.id, :classroom_id => @classroom.id)
+            end
+            @valid_parents.each do |p|
+              @parent = p
+              @parent.save!
+              @parent_ids << @parent.id
+            end
+            st_parents = @student_ids.zip(@parent_ids)
+            st_parents.each do |t|
+              Ancestor.create({:student_id => t[0], :protector_id => t[1]})
+            end
+            redirect resource(:students)
+         else
+            flash[:error] = "Please check the below details in the CSV file"
+            render :import
+         end
+      rescue 
+        flash[:error] = "There was an error parsing your CSV file, please check the format"
+        render :import
+      end
+  end
+  
+  def template_download
+     csv_string = FasterCSV.generate do |csv|
+        csv << ["Student LastName", "Student FirstName", "Parent 1 LastName", "Parent 1 FirstName", "Parent Email", "Address", "City", "State", "Zip Code", "Student Birth Date", "Current Class Name"]
+     end
+     filename = "template.csv"
+     send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
+  end
+  
+  def csv_errors
+    @invalid_rows = @@validations
+    render
+  end
 
   private
 

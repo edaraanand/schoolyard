@@ -8,13 +8,13 @@
 
   </h2>
         <select id = 'studentID'>
-                   <option value = '/directories' <% if (@test == "All Students") %> selected <% end %> >All Students</option>
-                   <% @class_rooms.each do |f| %>
-                       <option value='/directories?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
-                          <%= f.class_name %> 
-                       </option>
- 	                <% end %>
- 	       </select>
+             <option value = '/directories' <% if (@test == "All Students") %> selected <% end %> >All Students</option>
+             <% @class_rooms.each do |f| %>
+                 <option value='/directories?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+                    <%= f.class_name %> 
+                 </option>
+ 	           <% end %>
+ 	      </select>
  	          <%= link_to "Download as CSV", url(:generate_csv, :label => "students") %> <br/><br/>
  	          <% array = ('A'..'Z').to_a %>
  	          <% cls = "" %>
@@ -35,16 +35,16 @@
          
 
           <% if @students.empty? %>
-                 	<p class="subText">
-         	    No Student record was found. If you applied a filter try changing it.
-             </p>
-            <% else %>
-              
-                  <table id="mytable"  cellspacing="0" cellpadding="0">
+               <p class="subText">
+         	        No Student record was found. If you applied a filter try changing it.
+               </p>
+          <% else %>
+                <table id="mytable"  cellspacing="0" cellpadding="0">
                         <thead>
                             <th>Last Name</th>
                             <th>First Name</th>
                             <th>Contact Number</th>
+                            <th>Classroom</th>
                             <% unless session.user.type == "Parent" %>
                                <th></th>
                             <% end %>
@@ -55,6 +55,9 @@
                                       <td>&nbsp;<%= link_to "#{student.last_name}", url(:directory, student.id, :label => "students") %></td>
                                       <td>&nbsp;<%= student.first_name %></td>
                                       <td>&nbsp;<%= number_to_phone(student.phone, :area_code => true) %></td>
+                                        <% study = Study.find_by_student_id(student.id) %>
+                	                      <% classroom = @current_school.classrooms.find_by_id(study.classroom_id) %>
+                	                    <td>&nbsp;<%= classroom.class_name %></td>
                                       <% unless session.user.type == "Parent" %>
                                           <td>&nbsp;<%= link_to_right((right = "manage_directory"), "Edit", resource(student, :edit)  ) %></td>
                                       <% end %>
@@ -62,7 +65,7 @@
                               <% end %>
                         </tbody>
                   </table>
-             <%= will_paginate (@students, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
+                  <%= will_paginate (@students, :inner_window => 1, :outer_window => 1, :class => 'header15', :separator => ' | ' ) %>
             <% end %>
  </div>
 

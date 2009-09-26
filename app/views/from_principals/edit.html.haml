@@ -24,7 +24,7 @@
         - @attachments.each do |attachment|
           %li{:id => "attachemet_#{attachment.id}" }
             = attachment.filename
-            = link_to "Remove", url(:delete_from_principal, attachment.id, :label => "attachment"), :class => "cancel"
+            = link_to "Remove", url(:delete_from_principal, attachment.id, :label => "attachment"), :class => "cancel delete"
     :javascript
       var multi_selector = new MultiSelector($('pending_files'), "#{@allowed}" );
       multi_selector.addElement($('announcement_attachment'));

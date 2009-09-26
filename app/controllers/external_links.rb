@@ -25,8 +25,8 @@ class ExternalLinks < Application
         end
         @external_link = @current_school.external_links.create({:title => params[:external_link][:title], :label => label,
                                           :url => params[:external_link][:url], :classroom_id => @classroom.id})
-       links
-       redirect url(:class_details, :id => @classroom.id)
+        links
+        redirect url(:class_details, :id => @classroom.id)
     else
         @external_link = @current_school.external_links.create({:title => params[:external_link][:title], :label => params[:label],
                                      :url => params[:external_link][:url] })
@@ -131,9 +131,23 @@ class ExternalLinks < Application
   end
 
   def preview
-    @title = params[:external_link][:title]
-    @url = params[:external_link][:url]
-    render :layout => 'preview'
+      n = params[:submit].split(',').flatten
+      i = n[0].split('')
+      @edit = i.pop ## edit mode
+      if @edit == "0"
+         @class_id = i.pop
+      else
+         @class_id = @edit
+      end
+       @classroom = @current_school.classrooms.find_by_id("#{@class_id}")
+    if params[:label] == "Home Page"
+       @select = "home"
+       render :layout => 'home'
+    elsif params[:label] == "Classrooms" 
+       render :layout => 'class_change', :id => @classroom.id
+    elsif params[:label] == "Subjects" 
+       render :layout => 'class_change', :id => @classroom.id
+    end
   end
 
   # Adding External Links for new and edit modes

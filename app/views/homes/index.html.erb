@@ -168,6 +168,7 @@
                <% for link in @external_links %>
                  <% s = "#{link.url}".split("http://") %>
                  <li><%= link_to ("#{link.title}", "http://#{s}",  {'target' => '_blank'}) %></li>
+                 <!-- <li><%#= link_to ("#{link.title}", "#{link.url}",  {'target' => '_blank'}) %></li> -->
                <% end %>
            </ul> 
        <% end %>

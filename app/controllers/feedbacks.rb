@@ -5,7 +5,10 @@ class Feedbacks < Application
   before :access_rights, :exclude => [:new, :create]
 
   def index
-    @announcements = @current_school.announcements.find(:all, :conditions => ['label = ?', "feedback"], :order => "created_at DESC")
+    @announcements = @current_school.announcements.paginate(:all, :conditions => ['label = ?', "feedback"], 
+                                                    :per_page => 15,
+                                                    :page => params[:page], 
+                                                    :order => "created_at DESC")
     render :layout => 'default'
   end
   
@@ -21,7 +24,7 @@ class Feedbacks < Application
          @announcement.person_id = session.user.id
          @announcement.label = "feedback"
          @announcement.access_name = "unread"
-         @announcement.save
+         @announcement.save!
          redirect url(:homes)
       else
          render :new, :layout => 'home'
@@ -32,7 +35,8 @@ class Feedbacks < Application
     @announcement = @current_school.announcements.find_by_id(params[:id])
     raise NotFound unless @announcement
     @announcement.access_name = "read"
-    @announcement.save
+    @announcement.expiration = Date.today + 1
+    @announcement.save!
     render 
   end
   
@@ -43,17 +47,21 @@ class Feedbacks < Application
        @announcement.approve_comments = params[:announcement][:approve_comments]
        @announcement.approved_by = session.user.id  # this is for storing who replied the feedback
        @announcement.approved = @announcement.approve_announcement = false
-       @announcement.save
+       @announcement.expiration = Date.today + 1
+       @announcement.save!
        run_later do
          @announcement.reply_person
        end
     else
-       @announcement.approve_comments = params[:announcement][:approve_comments]
-       @announcement.approved = @announcement.approve_announcement = true
-       @announcement.save
-       run_later do
-         @announcement.feedback_email
-       end
+      @announcement.approve_comments = params[:announcement][:approve_comments]
+      @announcement.approved = @announcement.approve_announcement = true
+      @announcement.approved_by = session.user.id  # this is for storing who replied the feedback
+      @announcement.expiration = Date.today + 1
+      @announcement.save!
+      run_later do  
+        @announcement.feedback_email
+      end
+      flash[:confirmation] = "Thank you, your message has been sent to the CM Schoolyard team."
     end
     redirect url(:feedbacks)
   end

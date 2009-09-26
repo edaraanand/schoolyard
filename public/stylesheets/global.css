@@ -618,7 +618,8 @@ div.container{display:none}
 form.cmxform label.error{display:block;margin-left:1em;width:auto;}
 
 
-
+#students select{width:200px;}
+#parent_approval_edit select{width:200px;}
 
 
 

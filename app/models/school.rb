@@ -32,6 +32,9 @@ class School < ActiveRecord::Base
   
   has_many :captures
   has_many :tasks
+  
+  has_many :logs, :class_name => "LoggerMachine"
+  has_one :principal
 
   
   
@@ -53,5 +56,8 @@ class School < ActiveRecord::Base
   validates_uniqueness_of :subdomain, :if => :subdomain
   
 
+  def domain
+    "https://#{subdomain}.#{Schoolapp.config(:app_domain)}"
+  end
 end
 

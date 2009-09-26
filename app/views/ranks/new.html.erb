@@ -1,16 +1,16 @@
 <h2 class="current-page">
      Grades/Reports > Add Grade's Definition 
 </h2>
-<% s = (0..5).to_a %>
-<div class="container">
-	<h4>There are some errors in the form, please fill the details.</h4>
-	<ol>
-	   <% s.each do |f| %>
-			  	<li><label for="rank_from_<%= f %>" class="error">please enter the number</label></li> 
-			    <li><label for="rank_to_<%= f %>" class="error">please enter the number</label></li>
-      <% end %>
-	</ol>
-</div>
+<%# s = (0..5).to_a %>
+<!-- <div class="container">
+  <h4>There are some errors in the form, please fill the details.</h4>
+  <ol>
+     <%# s.each# do |f| %>
+          <li><label for="rank_from_<%#= f %>" class="error">please enter the number</label></li> 
+          <li><label for="rank_to_<%#= f %>" class="error">please enter the number</label></li>
+      <%# end %>
+  </ol>
+</div> -->
 
 <span class="subText">
       These changes affect only the future reports
@@ -65,16 +65,16 @@ function ClearAll()
 
 
 // Validation for Adding Grades Definitions
-
-var container = $j('div.container');
-
-// validate the form when it is submitted
-var validator = $j("#rank").validate({
-	errorContainer: container,
-	errorLabelContainer: $("ol", container),
-	wrapper: 'li',
-	meta: "validate"
-});
+// 
+// var container = $j('div.container');
+// 
+// // validate the form when it is submitted
+// var validator = $j("#rank").validate({
+//  errorContainer: container,
+//  errorLabelContainer: $("ol", container),
+//  wrapper: 'li',
+//  meta: "validate"
+// });
 
 
 // Default Text on focus
