@@ -22,19 +22,20 @@ class Exceptions < Application
        :subject => "SchoolYard Exception (#{ details['url']}) #{Merb.env}"
      }
      
-     if (Merb.env != "development")
-      run_later do
-         ErrorNotifyMailer.dispatch_and_deliver(:error,
-                                              email_headers,
-                                              details)
-      end
-     end
+    run_later do
+       ErrorNotifyMailer.dispatch_and_deliver(:error,
+                                            email_headers,
+                                            details)
+    end
      
    end
    # handle NotFound exceptions (404)
-   def not_found
-     render :layout => "excep"
-   end
+   
+   
+   #this is not needed
+#   def not_found
+#     render :layout => "excep"
+#   end
    
    # handle BadRequest exceptions (400)
     def bad_request
@@ -47,11 +48,11 @@ class Exceptions < Application
    end
    
    def standard_error
-     render :internal_server_error, :format => :html, :layout => "login"
+     render :internal_server_error, :format => :html, :layout => false
    end
      
    def runtime_error
-     render :internal_server_error, :format => :html, :layout => "login"
+     render :internal_server_error, :format => :html, :layout => false
    end
    
     #   
