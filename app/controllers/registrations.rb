@@ -244,7 +244,7 @@ class Registrations < Application
  
   def reset_password_update
     @person = @current_school.people.find_by_password_reset_key(params[:id])
-    if @current_school.people.authenticate(@person.email, @current_school.id, params[:person][:old_password])
+#    if @current_school.people.authenticate(@person.email, @current_school.id, params[:person][:old_password])
        if ((params[:person][:password] == params[:person][:password_confirmation]) && 
            !params[:person][:password_confirmation].blank?)
           if @person.update_attributes(params[:person]) 
@@ -260,10 +260,10 @@ class Registrations < Application
           flash[:error] = "Your current password doesn't match existing password"
           redirect url(:reset_password_edit, :id => @person.password_reset_key )
        end
-    else
-      flash[:error] = "Your current password doesn't match existing password"
-      redirect url(:reset_password_edit, :id => @person.password_reset_key )
-    end
+#    else
+#      flash[:error] = "Your current password doesn't match existing password"
+#      redirect url(:reset_password_edit, :id => @person.password_reset_key )
+#    end
   end
  
   def new_staff_password
