@@ -3,11 +3,11 @@ class Forms < Application
   layout 'wide'
   before :find_school
   before :access_rights, :exclude => [:form_files]
-  before :forms, :only => [:index]
   before :classrooms
 
 
   def index
+    @classes = @current_school.active_classrooms
     if params[:label] == "classes"
        @classroom = @current_school.classrooms.find_by_id(params[:id])
        f = @current_school.forms.find(:all, :conditions => ['class_name = ?', @classroom.class_name])
@@ -54,16 +54,27 @@ class Forms < Application
   def update
     @form = @current_school.forms.find_by_id(params[:id])
     @attachment = @current_school.attachments.find_by_attachable_type_and_attachable_id("Form", @form.id)
-    if @form.update_attributes(params[:form])
-       if params[:form][:attachment] == ""
-          flash[:error] = "please upload a file"
-          render :edit
+    i=0
+    if params[:attachment]
+       if @form.update_attributes(params[:form])
+          unless params[:attachment]['file_'+i.to_s].empty?
+             @form.save!
+             Attachment.file(params.merge(:school_id => @current_school.id), "Form", @form.id)
+             redirect resource(:forms)
+          else
+             flash[:error] = "please upload a file"
+             @class_name = params[:form][:class_name]
+             render :edit
+          end
        else
-          create_attachments
-          redirect url(:form_files, :l => "all_forms", :label => "forms")
+          render :edit
        end
     else
-       render :edit
+       if @form.update_attributes(params[:form])
+          redirect resource(:forms)
+       else
+          render :edit
+       end
     end
   end
   
@@ -103,23 +114,7 @@ class Forms < Application
      render :layout => 'directory'
   end
   
-  def create_attachments
-     @attachment = Attachment.create( :attachable_type => "Form",
-                                      :attachable_id => @form.id,
-                                      :filename => params[:form][:attachment][:filename],
-                                      :content_type => params[:form][:attachment][:content_type],
-                                      :size => params[:form][:attachment][:size],
-                                      :school_id =>  @current_school.id
-                                     )
-     File.makedirs("public/uploads/#{@current_school.id}/files")
-     FileUtils.mv( params[:form][:attachment][:tempfile].path, "public/uploads/#{@current_school.id}/files/#{@attachment.id}")
-  end
-  
   private
-
-  def forms
-    @classes = @current_school.active_classrooms
-  end
 
   def classrooms
     classes = @current_school.active_classrooms
