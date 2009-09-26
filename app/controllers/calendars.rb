@@ -244,6 +244,9 @@ class Calendars < Application
         con.split('br').map do |c| 
           pdf.text c.strip, :font_size => 10, :justification => :left
         end
+        pdf.text "<b></b>"
+        pdf.text "---------------------------------------------", :justification => :center
+        pdf.text "<b></b>"
       end
       pdf
     else
