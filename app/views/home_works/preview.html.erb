@@ -8,6 +8,6 @@
           <h3> <%= params[:home_work][:title] %> </h3> 
           <p class="subText">Assigned on <%= @date.strftime("%b %d, %Y") %>  by <%= session.user.name %></p>
           <p class="post-content">
-             <%= pre_announcement(params[:home_work][:content]) %>
+             <%= pre_calendar(params[:home_work][:content]) %>
           </p>   
 </div>

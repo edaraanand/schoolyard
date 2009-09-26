@@ -239,9 +239,10 @@ class Calendars < Application
         pdf.text "<b>Start Date</b>" + ":" + "" + "#{calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left, :spacing => 2
         pdf.text "<b>Title</b>"  + ":" + "" + "#{calendar.title}", :font_size => 10, :justification => :left
         pdf.text "<b>Location</b>" + ":" + "" + "#{calendar.location}", :font_size => 10, :justification => :left
-        pdf.text "<b>Description</b>" + ":" + "" 
+        pdf.text "<b>Description</b>" + ":", :spacing => 2
+        pdf.text "<b> </b>", :spacing => 2
         con.split('br').map do |c| 
-           pdf.text c, :font_size => 10, :justification => :left
+          pdf.text c.strip, :font_size => 10, :justification => :left
         end
       end
       pdf
@@ -254,12 +255,12 @@ class Calendars < Application
        con = con.gsub("’", "")
        con = con.gsub("– ", "")
        con = con.gsub(/[^a-zA-Z0-9-]/, " ")
-       pdf.text "<b>Start Date</b>" + ":" + "" + "#{@calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left
-       pdf.text "<b>Title</b>"  + ":" + "" + "#{@calendar.title}", :font_size => 10, :justification => :left
-       pdf.text "<b>Location</b>" + ":" + "" + "#{@calendar.location}", :font_size => 10, :justification => :left
-       pdf.text "<b>Description</b>" + ":" + "" 
+       pdf.text "<b>Start Date</b>" + ":" + "" + " " + "#{@calendar.start_date.strftime("%B %d %Y")}", :font_size => 10, :justification => :left, :spacing => 2
+       pdf.text "<b>Title</b>"  + ":" + "" +  " " + "#{@calendar.title}", :font_size => 10, :justification => :left
+       pdf.text "<b>Location</b>" + ":" + "" +  " " + "#{@calendar.location}", :font_size => 10, :justification => :left
+       pdf.text "<b>Description</b>" + ":", :spacing => 2
        con.split('br').map do |c| 
-          pdf.text c, :font_size => 10, :justification => :left
+          pdf.text c.strip, :font_size => 10, :justification => :left
        end
        pdf
     end
