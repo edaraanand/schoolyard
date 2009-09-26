@@ -46,19 +46,14 @@ class Announcements < Application
     @announcement = session.user.announcements.build(params[:announcement])
     i=0
     if @announcement.valid?
-       @announcement.approved = false
-       @announcement.approve_announcement = true
-       @announcement.label = 'staff'
-       @announcement.school_id = @current_school.id
-       @announcement.save
+       @announcement.save_announcements("staff", @current_school.id)
        unless params[:attachment]['file_'+i.to_s].empty?
-          type = "Announcement"
-          Attachment.file(params.merge(:school_id => @current_school.id), type, @announcement.id)
+         Attachment.file(params.merge(:school_id => @current_school.id), "Announcement", @announcement.id)
        end 
        redirect resource(:announcements)
     else
-        @c = params[:announcement][:access_name]
-        render :new
+       @c = params[:announcement][:access_name]
+       render :new
     end
   end
    
@@ -74,17 +69,11 @@ class Announcements < Application
      raise NotFound unless @announcement
      @attachment =  @current_school.attachments.find_by_attachable_type_and_attachable_id("Announcement", @announcement.id)
      i=0
-     if @announcement.update_attributes(params[:announcement])
-        @announcement.person_id = session.user.id
-        @announcement.approved = false
-        @announcement.approve_announcement = true
-        @announcement.label = 'staff'
-        @announcement.school_id = @current_school.id
-        @announcement.save
+     if @announcement.update_attributes(params[:announcement].merge(:person_id => session.user.id))
+        @announcement.save_announcements("staff", @current_school.id)
         if params[:attachment]
           unless params[:attachment]['file_'+i.to_s].empty?
-             type = "Announcement"
-             Attachment.file(params.merge(:school_id => @current_school.id), type, @announcement.id)
+            Attachment.file(params.merge(:school_id => @current_school.id), "Announcement", @announcement.id)
           end
         end
         redirect resource(:announcements)
@@ -114,7 +103,7 @@ class Announcements < Application
       Attachment.delete_all(['attachable_id = ?', @announcement.id])
       @announcement.destroy
       if @page == "Home Page"
-         redirect resource(:homes)
+        redirect resource(:homes)
       else
         @classroom = @current_school.classrooms.find_by_class_name(@page)
         redirect url(:class_details, :id => @classroom.id)

@@ -30,8 +30,15 @@ class Announcement < ActiveRecord::Base
      end
   end
   
+  def save_announcements(label, school_id)
+     self.approved = false
+     self.approve_announcement = true
+     self.label = label
+     self.school_id = school_id
+     self.save
+  end
+  
   # sending email to Collaborative Methods on Feedback
-    
   def feedback_email
     feedback_delivery(:feedback, :subject => "Feedback from " + self.school.school_name)
   end
