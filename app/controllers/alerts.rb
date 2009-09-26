@@ -106,7 +106,7 @@ class Alerts < Application
     @person = session.user
     @staff = @current_school.staff.find_by_email(@person.email)
     @parent = @current_school.parents.find_by_email(@person.email)
-    if @staff
+    if session.user.type == "Staff"
        @alerts = Alert.find(:all, :conditions => ['type == ?', "Staff"])
     else
        @few_alerts = Alert.find(:all, :conditions =>['type == ?', "Parent"], :order => "id desc", :limit => 2)

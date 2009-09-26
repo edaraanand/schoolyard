@@ -1,6 +1,6 @@
 <h2 class="current-page">
     Alerts &nbsp;&nbsp;&nbsp;
-    <%= link_to "change settings", url(:alert_edit), :class=> "edit-btn" %> 
+    <%= link_to "change settings", url(:alerts_edit), :class=> "edit-btn" %> 
 </h2>  
 <p class="subText"> I receive email alerts when: </p> 
 
@@ -38,7 +38,7 @@
     
 <% else %>
 
-      <p class="subtext">You have not set any email alerts yet. (<%= link_to "change settings", url(:alert_edit) %>) </p>
+      <p class="subtext">You have not set any email alerts yet. (<%= link_to "change settings", url(:alerts_edit) %>) </p>
       
 <% end %>
 
