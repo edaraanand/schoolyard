@@ -2,6 +2,8 @@ class Exceptions < Application
    layout 'login'
    
    skip_before :login_required
+   skip_before :find_school
+   
    after :send_exception, :only => [:standard_error, :runtime_error]
    
    def send_exception
