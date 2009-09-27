@@ -13,7 +13,7 @@ class Exceptions < Application
        'request_controller' => params[:controller],
        'request_action' => params[:action],
        'request_params' => params,
-       'app_name' => "SchoolYard"
+       'app_name' => "Schoolyard"
      }
      details['environment'] = request.env.merge( 'process' => $$ )
      details['url'] = "#{request.protocol}://#{request.env["HTTP_HOST"]}#{request.uri}"
@@ -21,7 +21,7 @@ class Exceptions < Application
      email_headers = {
        :from => 'noreply@schoolyardapp.com',
        :to => Schoolapp.config(:exception_to_address),
-       :subject => "SchoolYard Exception (#{ details['url']}) #{Merb.env}"
+       :subject => "Schoolyard Exception (#{ details['url']}) #{Merb.env}"
      }
      
     run_later do
