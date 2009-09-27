@@ -44,10 +44,7 @@ class Announcement < ActiveRecord::Base
   end
 
   def feedback_delivery(action, params)
-    to = ["alok.saini@schoolyardapp.com", "eshwar@schoolyardapp.com", "steve.sandbank@collaborativemethods.com", "brian.bolz@insightmethods.com"]
-    to.each do |f|
-       PersonMailer.dispatch_and_deliver(action, params.merge(:from => Schoolapp.config(:auth_mailman), :to => "#{f}"), self )
-    end
+     PersonMailer.dispatch_and_deliver(action, params.merge(:from => Schoolapp.config(:auth_mailman), :to => "support@schoolyardapp.com"), self )
   end
  
   # sending the email reply to the person who has sent the feedback
