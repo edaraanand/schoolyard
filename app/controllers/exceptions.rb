@@ -2,6 +2,8 @@ class Exceptions < Application
    layout 'login'
    
    skip_before :login_required
+   skip_before :find_school
+   
    after :send_exception, :only => [:standard_error, :runtime_error]
    
    def send_exception
@@ -11,7 +13,7 @@ class Exceptions < Application
        'request_controller' => params[:controller],
        'request_action' => params[:action],
        'request_params' => params,
-       'app_name' => "SchoolYard"
+       'app_name' => "Schoolyard"
      }
      details['environment'] = request.env.merge( 'process' => $$ )
      details['url'] = "#{request.protocol}://#{request.env["HTTP_HOST"]}#{request.uri}"
@@ -19,22 +21,23 @@ class Exceptions < Application
      email_headers = {
        :from => 'noreply@schoolyardapp.com',
        :to => Schoolapp.config(:exception_to_address),
-       :subject => "SchoolYard Exception (#{ details['url']}) #{Merb.env}"
+       :subject => "Schoolyard Exception (#{ details['url']}) #{Merb.env}"
      }
      
-     if (Merb.env != "development")
-      run_later do
-         ErrorNotifyMailer.dispatch_and_deliver(:error,
-                                              email_headers,
-                                              details)
-      end
-     end
+    run_later do
+       ErrorNotifyMailer.dispatch_and_deliver(:error,
+                                            email_headers,
+                                            details)
+    end
      
    end
    # handle NotFound exceptions (404)
-   def not_found
-     render :layout => "excep"
-   end
+   
+   
+   #this is not needed
+#   def not_found
+#     render :layout => "excep"
+#   end
    
    # handle BadRequest exceptions (400)
     def bad_request
@@ -47,11 +50,11 @@ class Exceptions < Application
    end
    
    def standard_error
-     render :internal_server_error, :format => :html, :layout => "login"
+     render :internal_server_error, :format => :html, :layout => false
    end
      
    def runtime_error
-     render :internal_server_error, :format => :html, :layout => "login"
+     render :internal_server_error, :format => :html, :layout => false
    end
    
     #   

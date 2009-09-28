@@ -12,7 +12,9 @@ class Application < Merb::Controller
         elsif  (request.first_subdomain != nil) && (request.first_subdomain != "admin")
             @current_school = School.find(:first, :conditions => ['subdomain = ?', request.first_subdomain ] )
         else
-            @current_school = School.find(:first, :conditions => ['domain = ?', request.domain ] )
+            # what is this supposed to be doing ?? - Brian
+            
+            #@current_school = School.find(:first, :conditions => ['domain = ?', request.domain ] )
         end
     end
     
