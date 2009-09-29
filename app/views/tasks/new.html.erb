@@ -19,28 +19,20 @@ Following form can be filled in until <%= @capture.expiration.strftime("%B %d %Y
 		         <th>comments</th>                                             
 		     </thead>
 	   		 <% @tasks.each do |f| %>
-	                <tr>
-	                     <td><%= f.name %></td>
-	                     <% @p = f.people_tasks.find(:all, :conditions => ['person_id = ?', session.user.id] ) %>
-	                     <% if @p.empty? %>
-	                          <td>
-	                              <%= text_field :name => "hours[]", :class => "short required number" %>
-	                          </td>
-	                          <td>
-	                              <%= text_area  :name => "comments[]", :rows => "2", :cols => "10" %>
-	                          </td>
-	                     <% else %>
-	                          <% @p.each do |g| %>
-	                               <td>
-		                              <%= text_field :name => "hours[]", :class => "short required number", :value => "#{g.hours}" %>
-    	                          </td>
-    	                          <td>
-		                              <%= text_area  :name => "comments[]", :rows => "2", :cols => "20", :value => "#{g.comments}" %>
-		                          </td>
-	                          <% end %>
-	                     <% end %>
-	                </tr>
-             <% end %>
+	             <tr>
+	                 <td><%= f.name %></td>
+	                 <% @p = f.people_tasks.find(:all, :conditions => ['person_id = ?', session.user.id] ) %>
+	                 <% if @p.empty? %>
+	                      <td><%= text_field :name => "hours[]", :class => "short required number" %></td>
+	                      <td><%= text_area  :name => "comments[]", :rows => "2", :cols => "10" %></td>
+	                 <% else %>
+	                      <% @p.each do |g| %>
+	                           <td><%= text_field :name => "hours[]", :class => "short required number", :value => "#{g.hours}" %></td>
+    	                       <td><%= text_area  :name => "comments[]", :rows => "2", :cols => "20", :value => "#{g.comments}" %></td>
+	                      <% end %>
+	                 <% end %>
+	             </tr>
+         <% end %>
 
 	  </table>
 
