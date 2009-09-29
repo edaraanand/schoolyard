@@ -139,12 +139,12 @@ class Captures < Application
       j = 1
       tasks.each do |f|
          sheet1.write(0, j+= 1, "#{f.name}", style[:answer_format] )
-         sheet1.write(0, j+= 1, "Hours", style[:answer_format] )
+        # sheet1.write(0, j+= 1, "Hours", style[:answer_format] )
          sheet1.write(0, j+= 1, "Comments", style[:answer_format] )
       end
       
-     h =3
-     c =4
+     h = 2 #h =3
+     c = 3 #c =4
      tasks.each do |t|
        task_p = t.people_tasks.find(:all, :order => 'created_at DESC')
        task_p.each_with_index do |p, l|
@@ -153,8 +153,8 @@ class Captures < Application
          sheet1.write(l+1, h, p.hours)
          sheet1.write(l+1, c, p.comments)
        end
-       h += 3
-       c += 3
+       h += 2 #h += 3
+       c += 2 #c += 3
      end   
          
      test.write(filepath)
