@@ -56,7 +56,7 @@
 	                     <td>&nbsp;<%= student.address1 %></td>
 	                     <td>&nbsp;<%= student.state %></td>
 	                      <% study = Study.find_by_student_id(student.id) %>
-	                      <% classroom = @current_school.classrooms.find_by_id(study.classroom_id) %>
+	                      <% classroom = @current_school.classrooms.find_by_id(study.classroom_id) if study != nil %>
 	                     <td>&nbsp;<%= classroom.class_name %></td>
 	        		         <% if student.activate == true %>
                           <td>&nbsp;<a rel="facebox" href="#<%= student.id %>" class="deactive" >De-Activate </a>
