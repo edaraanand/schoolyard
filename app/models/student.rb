@@ -17,7 +17,7 @@ class Student < Person
      
      has_one :rank
           
-    # validates_presence_of :birth_date
+     validates_presence_of :birth_date
     # validates_presence_of :address, :if => :address
     # validates_presence_of :address1, :if  => :address1
     # validates_presence_of :city, :if  => :city
