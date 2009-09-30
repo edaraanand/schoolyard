@@ -1,6 +1,6 @@
 class Tasks < Application
 
- layout 'directory'
+ layout 'form'
  before :find_school
  before :selected_tab
   
@@ -20,15 +20,13 @@ class Tasks < Application
   end
   
   def create
-    @capture = @current_school.captures.find_by_id(params[:id])
-    raise NotFound unless @capture
+    @capture = @current_school.captures.find_by_id(params[:id]) rescue NotFound
     @tasks = @capture.tasks
-    @task_ids = @capture.tasks.collect{|x| x.id }
-    s = @task_ids.zip(params[:hours], params[:comments])    
-    s.each do |f|
-       PeopleTask.create({:person_id => session.user.id, :task_id => f[0], :hours => f[1], :comments => f[2] } )
-    end
-    redirect resource(:tasks, :id => @capture.id, :label => "forms")
+    @task = @capture.tasks.find_by_name(params[:task])
+    @peopl_task = PeopleTask.create({:person_id => session.user.id,
+                                     :task_id => @task.id, :hours => params[:hour], 
+                                     :comments => params[:comment], :task_date => params[:date]})
+    redirect resource(:tasks, :new, :id => @capture.id)
   end
   
   def edit
@@ -59,8 +57,15 @@ class Tasks < Application
           test << PeopleTask.update(@p_task.id, {:person_id => session.user.id, :task_id => f[0], :hours => f[1], :comments => f[2] })
        end
     end
-    redirect resource(:tasks, :id => @capture.id, :label => "forms")
+    redirect resource(:tasks, :id => @capture.id)
   end
+  
+  def delete
+    @people_task = PeopleTask.find_by_id(params[:id]) rescue NotFound
+    @task = Task.find_by_id(@people_task.task_id)
+    @people_task.destroy
+    redirect resource(:tasks, :new, :id => @task.capture_id)
+ end
   
   private
   

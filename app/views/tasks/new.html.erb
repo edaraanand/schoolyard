@@ -3,58 +3,54 @@
 Following form can be filled in until <%= @capture.expiration.strftime("%B %d %Y") %>
 
 <div class="container">
-	<h4>There are some errors in the form, please fill the details.</h4>
 	<ol>
-		<li><label for="hours[]" class="error">Please enter Hours and it should be number</label></li> 
-    </ol>
-</div> <br/>
-
+	  	<li><label for="hour" class="error">Hours should be number</label></li> 
+	    <li><label for="task" class="error">please select the Task</label></li> 
+  </ol>
+</div> 
 
 <%= form_for(@capture, :id => "task", :action => url(:create_task, :id => @capture.id) ) do %>
 
-		<table id="mytable" class="capture-time">
-		     <thead>
-		         <th>Tasks</th>
-		         <th>Hours</th>    
-		         <th>comments</th>                                             
-		     </thead>
-	   		 <% @tasks.each do |f| %>
-	                <tr>
-	                     <td><%= f.name %></td>
-	                     <% @p = f.people_tasks.find(:all, :conditions => ['person_id = ?', session.user.id] ) %>
-	                     <% if @p.empty? %>
-	                          <td>
-	                              <%= text_field :name => "hours[]", :class => "short required number" %>
-	                          </td>
-	                          <td>
-	                              <%= text_area  :name => "comments[]", :rows => "2", :cols => "10" %>
-	                          </td>
-	                     <% else %>
-	                          <% @p.each do |g| %>
-	                               <td>
-		                              <%= text_field :name => "hours[]", :class => "short required number", :value => "#{g.hours}" %>
-    	                          </td>
-    	                          <td>
-		                              <%= text_area  :name => "comments[]", :rows => "2", :cols => "20", :value => "#{g.comments}" %>
-		                          </td>
-	                          <% end %>
-	                     <% end %>
-	                </tr>
-             <% end %>
-
-	  </table>
-
-	 <div class="save-cancel">
-          <%= submit "save" %> Or <a href="javascript:history.back();" class="cancel">Cancel</a>
-     </div>
-
+    <table id="mytable" class="capture-time">
+	        <thead>
+     		      <th>Date</th>
+  		        <th>Tasks</th>
+  		        <th>Hours</th>    
+  		        <th>comments</th>                                             
+  		        <th></th> 
+  		    </thead>
+  		    <tr>
+	            <td><%= text_field :name => "date", :class => "short date", :id => "date" %></td>
+    	        <td><%= select :name => "task", :collection => @tasks.collect{|x| x.name}, :id => "task", 
+    	                       :prompt => "Select Task", :class => "required" %></td>
+    	        <td><%= text_field :name => "hour", :class => "short number", :id => "hour" %></td>
+              <td><%= text_area  :name => "comment", :rows => "2", :cols => "10", :id => "comment" %></td>
+              <td><%= submit "Add" %></td>
+          </tr>
+	        <% @tasks.each do |t| %>
+	             <% @people_tasks = t.people_tasks.find(:all, :conditions => ['person_id = ?', session.user.id]) %>  
+	             <% unless @people_tasks.empty? %>
+	                  <% for task in @people_tasks %>
+	                        <tr>
+                   	          <td><%= task.task_date %></td>
+                       	      <td><%= task.task.name %></td>
+                       	      <td><%= task.hours %></td>
+                              <td><%= task.comments %></td>
+                              <td><%= link_to "Delete", url(:delete_task, task.id), :class =>"delete delete-btn" %></td>
+                          </tr>
+	                  <% end %>
+	             <% end %>
+	        <% end %>
+	  </table> 
+	  
 <% end =%>
-
-
 
 <script type= "text/javascript">
 
- 
+$j(document).ready(function() {
+   $j("input.date").datepicker({minDate:'today + 1'});
+});
+
 	 // Validation for Adding Grades
 
 	    var container = $j('div.container');

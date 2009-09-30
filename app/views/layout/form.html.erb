@@ -1,0 +1,39 @@
+ <%= partial 'layout/main' %>
+ 
+ <% @classrooms = @current_school.core_classrooms %>
+ <% @classes = @current_school.active_classrooms %>
+ <% @extracurricular = @current_school.classrooms.find(:all, :conditions =>['class_type = ? and activate = ? ', "Extra Cirrcular", true], :order => "class_name ASC") %>
+
+<div>&nbsp;</div>
+
+<div id="classContainer">      
+      <div id="sidebar">
+            <ul id="menu">
+                 <li <% if @selected == "forms" %> class="on" <% end %> >
+                     <%= link_to "All Downloadable Forms", url(:form_files, :ref => "forms") %>
+                 </li>
+                 <li>
+                    <% unless Merb.env == "production" %> 
+                        <%= partial 'layout/capture' %>
+                    <% end %>
+                 </li> 
+            </ul>
+      </div><!-- Sidebar Ends -->
+    
+    <div id="content-wrap"><!--Wraps The content Area-->
+         <div id="content"><!--Content Area Starts here-->
+           <%= catch_content :for_layout %>
+         </div><!--Content End-->
+    </div><!--Content Wrap End -->
+  
+<%= partial 'common/change' %>
+  
+  <!--Right Sidebar to be inserted here-->
+   
+        <div class="hrule clear hidden "><hr /></div>
+ </div>
+ <%= partial 'common/footer' %>
+</div><!--Pagewrap End -->
+    <script type="text/javascript"> var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E")); </script> <script type="text/javascript"> try { var pageTracker = _gat._getTracker("UA-8953231-1"); pageTracker._trackPageview(); } catch(err) {}</script>                   
+</body>
+</html>
