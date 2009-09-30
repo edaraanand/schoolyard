@@ -89,29 +89,24 @@ class Forms < Application
        @form = @current_school.forms.find_by_id(params[:id]) rescue NotFound
        Attachment.delete_all(['attachable_id = ?', @form.id])
        @form.destroy
-       redirect url(:form_files, :l => "all_forms", :label => "forms")
+       redirect url(:form_files, :ref => "forms")
     end
   end
 
 
   def form_files
      @classes = @current_school.active_classrooms
-     @select = "forms"
-     @selected = "all_forms"
-     unless params[:id].nil?
-       @class = @current_school.classrooms.find_by_id(params[:id])
-       raise NotFound unless @class
-       f = @current_school.forms.find(:all, :conditions => ['class_name = ?', @class.class_name])
-       @forms = f.concat(@all_class_forms).sort_by{|my_item| my_item[:created_at]}.uniq
-       @selected = @class.class_name
-       @test = params[:id]
-       @selected = "all_forms"
-     end
-     if params[:l] == "all_forms"
+     @select = @selected = "forms"
+     if params[:id]
+        @class = @current_school.classrooms.find_by_id(params[:id]) rescue NotFound
+        f = @current_school.forms.find(:all, :conditions => ['class_name = ?', @class.class_name])
+        @forms = f.concat(@all_class_forms).sort_by{|my_item| my_item[:created_at]}.uniq
+        @test = params[:id]
+     else
         f = @current_school.forms.find(:all)
         @forms = f.concat(@all_class_forms).sort_by{|my_item| my_item[:created_at]}.uniq
      end
-     render :layout => 'directory'
+     render :layout => 'form'
   end
   
   private
