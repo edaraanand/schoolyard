@@ -12,7 +12,7 @@
   
 #content
   %p{:class => "post-content"}
-    = params[:welcome_message][:content]
+    = pre_calendar(params[:welcome_message][:content])
   %h2{:class => "current-page"}
     Announcements &amp; Updates
   %p{:class => "subText"}
