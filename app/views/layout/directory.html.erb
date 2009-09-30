@@ -11,17 +11,7 @@
   <div>&nbsp;</div>
   <div id="classContainer">      
         <div id="sidebar">
-           
-             <% if params[:label] == "forms" %>  
-                      <ul id="menu">
-                           <li <% if @selected == "all_forms" %> class="on" <% end %> >
-	                           <%= link_to "All Downloadable Forms", url(:form_files, :l => "all_forms", :label => "forms") %>
-	                       </li>
-	                    <% unless Merb.env == "production" %> 
-	                       <%= partial 'layout/capture' %>
-	                    <% end %>
-                      </ul>
-             <% elsif params[:label] == "calendars" %>
+             <% if params[:label] == "calendars" %>
                       <ul id="menu">
                           <li <% if @selected == "all_events" %> class="on" <% end %> >
 	                            <%= link_to "All Events", url(:events, :l => "all_events", :label => "calendars") %></li>
