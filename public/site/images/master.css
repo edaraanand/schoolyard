@@ -129,6 +129,80 @@ img{ behavior: url(iepngfix/iepngfix.htc);}
 
 
 
+/* Rounded Corners*/
+
+.c-box {
+ position:relative;
+ min-width:8em;
+ max-width:945px; /* based on Images dimensions - not quite consistent with drip styles yet */
+ z-index:1;
+ margin:20px 0 20px 12px; /* default, width of left corner */
+ float:left;
+
+}
+
+.c-box .content,
+.c-box .t,
+.c-box .b,
+.c-box .b div {
+ background:transparent url("c-box.gif") no-repeat top right;
+}
+
+.c-box .content {
+ /*position:relative;*/
+ zoom:1;
+ _overflow-y:hidden;
+ padding:10px;
+  height:370px;
+
+}
+
+.c-box .t {
+ /* top+left vertical slice */
+ position:absolute;
+ left:0px;
+ top:0px;
+ width:10px; /* top slice width */
+ margin:0 0 0 -10px;
+ height:100%;
+ _height:1600px; /* arbitrary long height, IE 6 */
+ background-position:top left;
+ float:left;
+}
+
+.c-box .b {
+ /* bottom */
+ position:relative;
+ width:100%;
+}
+
+.c-box .b,
+.c-box .b div {
+ height:20px; /* height of bottom cap/shade */
+ font-size:1px;
+}
+
+.c-box .b {
+ background-position:bottom right;
+ margin:-70px 0  0 0;
+}
+
+.c-box .b div {
+ position:relative;
+ width:15px; /* bottom corner width */
+ margin:0 0  0 -10px;
+ background-position:bottom left;
+
+}
+
+.c-box .hd,
+.c-box .bd,
+.c-box .ft {
+ position:relative;
+}
+
+
+/* Curved Box end*/
 
 
 
