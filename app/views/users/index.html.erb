@@ -1,5 +1,5 @@
 
-<% if @staff %>
+<% if session.user.type == "Staff" %>
       <% @selected = "staff_profile" %> 
      <h2 class="current-page"> My Profile 
         <%= link_to "Edit", url(:staff_account_edit, :id => @staff.id), :id => @staff, :class=> "edit-btn" %>

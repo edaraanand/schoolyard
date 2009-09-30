@@ -18,12 +18,12 @@ class Student < Person
      has_one :rank
           
      validates_presence_of :birth_date
-     validates_presence_of :address, :if => :address
-     validates_presence_of :address1, :if  => :address1
-     validates_presence_of :city, :if  => :city
-     validates_presence_of :state, :if  => :state
-     validates_presence_of :zip_code, :if  => :zip_code
-     validates_format_of :zip_code, :if  => :zip_code, :with => %r{\d{5}(-\d{4})?}, :message => "should be 12345 or 12345-1234"
+    # validates_presence_of :address, :if => :address
+    # validates_presence_of :address1, :if  => :address1
+    # validates_presence_of :city, :if  => :city
+    # validates_presence_of :state, :if  => :state
+    # validates_presence_of :zip_code, :if  => :zip_code
+    # validates_format_of :zip_code, :if  => :zip_code, :with => %r{\d{5}(-\d{4})?}, :message => "should be 12345 or 12345-1234"
      
   
 end

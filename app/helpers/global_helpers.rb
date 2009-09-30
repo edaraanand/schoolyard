@@ -103,6 +103,10 @@ module Merb
      def pre_announcement(content)
        content.gsub("\n\n","<br/>")
      end
+     
+     def pre_calendar(content)
+       content.gsub("\n","<br/>")
+     end
         
     def email(address)
        '<a href="mailto:'+address+'">'+address+'</a>'

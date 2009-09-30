@@ -30,17 +30,21 @@ class Announcement < ActiveRecord::Base
      end
   end
   
+  def save_announcements(label, school_id)
+     self.approved = false
+     self.approve_announcement = true
+     self.label = label
+     self.school_id = school_id
+     self.save
+  end
+  
   # sending email to Collaborative Methods on Feedback
-    
   def feedback_email
     feedback_delivery(:feedback, :subject => "Feedback from " + self.school.school_name)
   end
 
   def feedback_delivery(action, params)
-    to = ["alok.saini@schoolyardapp.com", "eshwar@schoolyardapp.com", "steve.sandbank@collaborativemethods.com", "brian.bolz@insightmethods.com"]
-    to.each do |f|
-       PersonMailer.dispatch_and_deliver(action, params.merge(:from => Schoolapp.config(:auth_mailman), :to => "#{f}"), self )
-    end
+     PersonMailer.dispatch_and_deliver(action, params.merge(:from => Schoolapp.config(:auth_mailman), :to => "support@schoolyardapp.com"), self )
   end
  
   # sending the email reply to the person who has sent the feedback

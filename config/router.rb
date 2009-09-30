@@ -123,8 +123,7 @@ Merb::Router.prepare do
        match("/feedback_reply").to(:controller => 'feedbacks', :action => 'feedback_reply').name(:feedback_reply)
        match("/externallinks/edit").to(:controller => 'external_links', :action => 'edit').name(:external_links_edit)
        match("/externallinks/update").to(:controller => 'external_links', :action => 'update').name(:external_links_update)
-       match("/alerts_edit").to(:controller => 'alerts', :action => 'edit').name(:alert_edit)
-       match("/alerts_update").to(:controller => 'alerts', :action => 'update').name(:alert_update)
+       
        match("/publish").to(:controller => 'approvals', :action => 'publish').name(:publish)
        match("/parent_approvals").to(:controller => 'approvals', :action => 'parent_approvals').name(:parent_approvals)
        match("/approval_review").to(:controller => 'approvals', :action => 'approval_review').name(:approval_review)
@@ -163,6 +162,10 @@ Merb::Router.prepare do
        match("/change_password").to(:controller => 'users', :action => 'change_password').name(:change_password)
        match("/check_type").to(:controller => 'homes', :action => 'check_type').name(:check_type)
        match("/account_type").to(:controller => 'homes', :action => 'account_type').name(:account_type)
+       
+       match("/alerts_edit").to(:controller => 'alerts', :action => 'edit').name(:alerts_edit)
+       match("/total_alerts").to(:controller => 'alerts', :action => 'total_alerts').name(:total_alerts)
+       match("/alerts_update").to(:controller => 'alerts', :action => 'update').name(:alerts_update)
    end
    
      

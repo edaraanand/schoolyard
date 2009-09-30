@@ -173,7 +173,7 @@ class Registrations < Application
     if @parent
        render
     else
-       flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+       flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using Schoolyard"
        redirect url(:login)
     end
   end
@@ -189,7 +189,7 @@ class Registrations < Application
          if @parent.save
             @parent.reset
             session.user = @parent
-            flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+            flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using Schoolyard"
             redirect '/'
          else
            flash[:error] = "You should enter Minimum Length of 8 Characters"
@@ -237,20 +237,20 @@ class Registrations < Application
     if @person
        render :layout => 'login'
     else
-       flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+       flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using Schoolyard"
        redirect url(:login)
     end
   end
  
   def reset_password_update
     @person = @current_school.people.find_by_password_reset_key(params[:id])
-    if @current_school.people.authenticate(@person.email, @current_school.id, params[:person][:old_password])
+#    if @current_school.people.authenticate(@person.email, @current_school.id, params[:person][:old_password])
        if ((params[:person][:password] == params[:person][:password_confirmation]) && 
            !params[:person][:password_confirmation].blank?)
           if @person.update_attributes(params[:person]) 
              @person.resetting
              session.user = @person
-             flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+             flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using Schoolyard"
              redirect '/'
           else
              flash[:error] = "You should enter Minimum Length of 8 Characters"
@@ -260,10 +260,10 @@ class Registrations < Application
           flash[:error] = "Your current password doesn't match existing password"
           redirect url(:reset_password_edit, :id => @person.password_reset_key )
        end
-    else
-      flash[:error] = "Your current password doesn't match existing password"
-      redirect url(:reset_password_edit, :id => @person.password_reset_key )
-    end
+#    else
+#      flash[:error] = "Your current password doesn't match existing password"
+#      redirect url(:reset_password_edit, :id => @person.password_reset_key )
+#    end
   end
  
   def new_staff_password
@@ -272,7 +272,7 @@ class Registrations < Application
     if @person
        render :layout => 'login'
     else
-       flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+       flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using Schoolyard"
        redirect url(:login)
        #raise NotFound
     end
@@ -289,7 +289,7 @@ class Registrations < Application
              if @person.save
                 @person.resetting
                 session.user = @person
-                flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using SchoolYard"
+                flash[:success] = "Your password has been saved. please enter your mail-ID and password to start using Schoolyard"
                 redirect '/'
              else
                 flash[:error] = "You should enter Minimum Length of 8 Characters"

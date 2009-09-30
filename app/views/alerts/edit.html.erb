@@ -5,7 +5,7 @@
   <% end %>
 </ul>
 
-<%= form_for :alert, :action => url(:alert_update) , :id => 'alert' do %>
+<%= form_for :alert, :action => url(:alerts_update) , :id => 'alert' do %>
    
      <% @alerts.each do |alert| %>
          <% unless @alert_people.blank? %>
@@ -101,7 +101,7 @@
         </div>
           <div class="save-cancel">
               <%= submit " Save " %> Or 
-              <%= link_to "Cancel", url(:alerts), :class => "cancel" %>
+              <%= link_to "Cancel", url(:total_alerts), :class => "cancel" %>
           </div>
           
      </div>     

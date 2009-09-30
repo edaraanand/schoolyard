@@ -11,7 +11,7 @@ class Schoolapp
     :caller_id => "530 554 1373",
     :clickatell_user => "brianbolz",
     :clickatell_password => "brianbolz1",
-    :clickatell_api => 3175693",
+    :clickatell_api => "3175693",
     :exception_to_address => "it@schoolyardapp.com"
   }
   

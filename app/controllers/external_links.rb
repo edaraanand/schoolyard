@@ -131,15 +131,12 @@ class ExternalLinks < Application
   end
 
   def preview
-      n = params[:submit].split(',').flatten
-      i = n[0].split('')
-      @edit = i.pop ## edit mode
-      if @edit == "0"
-         @class_id = i.pop
-      else
-         @class_id = @edit
-      end
-       @classroom = @current_school.classrooms.find_by_id("#{@class_id}")
+    n = params[:submit].split(',').flatten
+    i = n[0].split('')
+    c = i.split(' ').last
+    d = c.to_s
+    @class_id = d.to_i
+    @classroom = @current_school.classrooms.find_by_id("#{@class_id}")
     if params[:label] == "Home Page"
        @select = "home"
        render :layout => 'home'
