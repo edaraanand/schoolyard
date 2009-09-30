@@ -2,7 +2,7 @@ class School < ActiveRecord::Base
 
   has_many :people
   
-  has_many :calendars
+  has_many :calendars, :order => 'start_date, start_time, class_name'
   has_many :staff
   has_many :welcome_messages
   has_many :forms
