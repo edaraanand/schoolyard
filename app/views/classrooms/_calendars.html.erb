@@ -7,7 +7,14 @@
            (<%= link_to "Requires acrobat reader", "http://get.adobe.com/reader/", {'target' => '_blank'} %>)
         </span>
     </h2>
-    
+     <%= link_to "&larr; previous week", url(:class_details, :id => @classroom.id, :week => @week - 1, :label => "calendars"), 
+                              :class => "alignleft" %>  &#124;
+
+      <%= link_to "Current Week", url(:class_details, :id => @classroom.id, :week => "0", :label => "calendars", :current_week => "current"), :class => "alignleft" %>   &#124;
+
+      <%= link_to "next week &rarr; ", url(:class_details, :id =>  @classroom.id, :week => @week + 1, :label => "calendars"), 
+                            :class => "alignright" %>
+        <br/><br/>
     <% if @calendars.empty? %>
          <span class="subText">There are no events planned at this time</span>
     <% else %>
@@ -56,12 +63,5 @@
                  
     <% end %><br/><br/>
    
-    <%= link_to "&larr; previous week", url(:class_details, :id => @classroom.id, :week => @week - 1, :label => "calendars"), 
-                            :class => "alignleft" %>  &#124;
-                        
-    <%= link_to "Current Week", url(:class_details, :id => @classroom.id, :week => "0", :label => "calendars", :current_week => "current"), :class => "alignleft" %>   &#124;
-    
-    <%= link_to "next week &rarr; ", url(:class_details, :id =>  @classroom.id, :week => @week + 1, :label => "calendars"), 
-                          :class => "alignright" %>
-   
+      
 </div>
