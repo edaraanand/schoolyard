@@ -4,7 +4,8 @@ Following form can be filled in until <%= @capture.expiration.strftime("%B %d %Y
 
 <div class="container">
 	<ol>
-	  	<li><label for="hour" class="error">Hours should be number</label></li> 
+	    <li><label for="date" class="error">please enter the date</label></li>
+	  	<li><label for="hour" class="error">please enter the hour and it should be number</label></li> 
 	    <li><label for="task" class="error">please select the Task</label></li> 
   </ol>
 </div> 
@@ -20,10 +21,10 @@ Following form can be filled in until <%= @capture.expiration.strftime("%B %d %Y
   		        <th></th> 
   		    </thead>
   		    <tr>
-	            <td><%= text_field :name => "date", :class => "short date", :id => "date" %></td>
+	            <td><%= text_field :name => "date", :class => "short date required", :id => "date" %></td>
     	        <td><%= select :name => "task", :collection => @tasks.collect{|x| x.name}, :id => "task", 
     	                       :prompt => "Select Task", :class => "required" %></td>
-    	        <td><%= text_field :name => "hour", :class => "short number", :id => "hour" %></td>
+    	        <td><%= text_field :name => "hour", :class => "short required number", :id => "hour" %></td>
               <td><%= text_area  :name => "comment", :rows => "2", :cols => "10", :id => "comment" %></td>
               <td><%= submit "Add" %></td>
           </tr>
