@@ -2,7 +2,7 @@
 	  Time Capture Forms &gt; <%= @capture.title %>
 	    <span class="actions">
 		    <%= link_to "Edit", resource(@capture, :edit) %> &nbsp; 
-	  	    <%= link_to "Download", url(:xls, :id => @capture.id) %> 
+	  	  <%= link_to "Download", url(:xls, :id => @capture.id) %> 
 		</span>
 </h2>
 <% ls = [] %>
@@ -29,8 +29,8 @@ Total Hours Reported : <%= t %> hours
 	               <tr> 
 	                   <td><%= link_to "#{task.name}", url(:task_parents, :id => task.id) %></td>
 	                   <% @p_tasks = task.people_tasks.collect{|x| x.hours } %>
-	     		  	   <% sum=0 %>
-					   <% @p_tasks.each {|l| sum = sum + l.to_f } %>
+	     		  	       <% sum=0 %>
+					           <% @p_tasks.each {|l| sum = sum + l.to_f } %>
 	                   <td><%= sum %></td>
 	               </tr>
 	          <% end %>

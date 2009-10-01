@@ -91,15 +91,13 @@ class Captures < Application
   end
   
   def capture_tasks
-    @capture = @current_school.captures.find_by_id(params[:id])
-    raise NotFound unless @capture
+    @capture = @current_school.captures.find_by_id(params[:id]) rescue NotFound
     @tasks = @capture.tasks
     render
   end
   
   def task_parents
-    @task = @current_school.tasks.find_by_id(params[:id])
-    raise NotFound unless @task
+    @task = @current_school.tasks.find_by_id(params[:id]) rescue NotFound
     @capture = @task.capture
     @test = params[:id]
     render
@@ -124,49 +122,48 @@ class Captures < Application
   end
   
   def  generate_xls(data)
-     capture = @current_school.captures.find_by_id(params[:id])
-     tasks =  capture.tasks
-   
-     filepath="#{Merb.root}/tmp/#{@capture.title}.xls"
-     test = Spreadsheet::Workbook.new
-     sheet1 = test.create_worksheet
-     style = xls_styles
-     
-     sheet1.column(0).width = 30
-     sheet1.column(1).width = 30
-     sheet1.write(0, 0, "Last Name", style[:answer_format] )
-     sheet1.write(0, 1, "First Name", style[:answer_format] )
-      j = 1
-      tasks.each do |f|
-         sheet1.write(0, j+= 1, "#{f.name}", style[:answer_format] )
-        # sheet1.write(0, j+= 1, "Hours", style[:answer_format] )
-         sheet1.write(0, j+= 1, "Comments", style[:answer_format] )
-      end
-      
-     h = 2 #h =3
-     c = 3 #c =4
-     tasks.each do |t|
-       task_p = t.people_tasks.find(:all, :order => 'created_at DESC')
-       task_p.each_with_index do |p, l|
-         sheet1.write(l+1, 0, p.person.last_name, style[:parent])
-         sheet1.write(l+1, 1, p.person.first_name, style[:parent])
-         sheet1.write(l+1, h, p.hours)
-         sheet1.write(l+1, c, p.comments)
-       end
-       h += 2 #h += 3
-       c += 2 #c += 3
-     end   
-         
-     test.write(filepath)
+       capture = @current_school.captures.find_by_id(params[:id])
+       tasks =  capture.tasks
 
-     filepath
-  end
-  
-  def xls_styles
-    styles={}
-    styles[:answer_format] = Spreadsheet::Format.new :horizontal_align=>:CENTER,:color => 'white',:border =>false,:vertical_align=>:TOP,:size =>10,:text_wrap => :true,:vertical_align=>:TOP,:weight => :bold,:pattern => 2 ,:pattern_bg_color=> :blue
-    styles[:parent] = Spreadsheet::Format.new :weight => :bold, :size => 12
-    styles
-  end
+       filepath="#{Merb.root}/tmp/#{@capture.title}.xls"
+       test = Spreadsheet::Workbook.new
+       sheet1 = test.create_worksheet
+       style = xls_styles
 
+       sheet1.column(0).width = 30
+       sheet1.column(1).width = 30
+       sheet1.write(0, 0, "Last Name", style[:answer_format] )
+       sheet1.write(0, 1, "First Name", style[:answer_format] )
+        j = 1
+        tasks.each do |f|
+           sheet1.write(0, j+= 1, "#{f.name}", style[:answer_format] )
+          # sheet1.write(0, j+= 1, "Hours", style[:answer_format] )
+           sheet1.write(0, j+= 1, "Comments", style[:answer_format] )
+        end
+
+       h = 2 #h =3
+       c = 3 #c =4
+       tasks.each do |t|
+         task_p = t.people_tasks.find(:all, :order => 'created_at DESC')
+         task_p.each_with_index do |p, l|
+           sheet1.write(l+1, 0, p.person.last_name, style[:parent])
+           sheet1.write(l+1, 1, p.person.first_name, style[:parent])
+           sheet1.write(l+1, h, p.hours)
+           sheet1.write(l+1, c, p.comments)
+         end
+         h += 2 #h += 3
+         c += 2 #c += 3
+       end   
+
+       test.write(filepath)
+
+       filepath
+    end
+
+    def xls_styles
+      styles={}
+      styles[:answer_format] = Spreadsheet::Format.new :horizontal_align=>:CENTER,:color => 'white',:border =>false,:vertical_align=>:TOP,:size =>10,:text_wrap => :true,:vertical_align=>:TOP,:weight => :bold,:pattern => 2 ,:pattern_bg_color=> :blue
+      styles[:parent] = Spreadsheet::Format.new :weight => :bold, :size => 12
+      styles
+    end
 end
