@@ -128,7 +128,7 @@ class Classrooms < Application
             @today_calendars = Calendar.today_calendars(@current_school.id, @classroom.class_name)
          end
          @announcements = @current_school.announcements.paginate(:all, :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", @classroom.class_name, true, true],
-                                           :per_page => 10, :page => params[:page], :order => "created_at DESC")
+                                           :per_page => 10, :page => params[:page])
          @welcome_messages = @current_school.welcome_messages.find(:all, :conditions => ['access_name = ?', @classroom.class_name])
          @external_links = @current_school.external_links.find(:all, :conditions => ["label = ? and classroom_id = ?", "Classrooms", @classroom.id])
          @subject_links = @current_school.external_links.find(:all, :conditions => ["label = ? and classroom_id = ?", "Subjects", @classroom.id])

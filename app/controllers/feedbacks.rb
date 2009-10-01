@@ -7,8 +7,7 @@ class Feedbacks < Application
   def index
     @announcements = @current_school.announcements.paginate(:all, :conditions => ['label = ?', "feedback"], 
                                                     :per_page => 15,
-                                                    :page => params[:page], 
-                                                    :order => "created_at DESC")
+                                                    :page => params[:page])
     render :layout => 'default'
   end
   

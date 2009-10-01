@@ -143,7 +143,6 @@ class Notifications < Application
   def twilio_status
      @announcements = @current_school.announcements.paginate(:all,
                                                              :conditions => ['label=?', "urgent"],
-                                                             :order => "created_at DESC",
                                                              :per_page => 10,
                                                              :page => params[:page] )
      @announcements.each do |announcement| 

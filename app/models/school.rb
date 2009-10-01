@@ -13,7 +13,7 @@ class School < ActiveRecord::Base
   has_many :classes, :order => :position, :conditions => ["activate = ? and class_type = ?",  true, "Classes" ], :class_name => "Classroom", :foreign_key => :school_id
   has_many :extra_curricular, :order => :position, :conditions => ["activate = ? and class_type = ?",  true, "Subject" ], :class_name => "Classroom", :foreign_key => :school_id
   
-  has_many :announcements
+  has_many :announcements, :order => "created_at DESC"
   has_many :teams
   has_many :external_links
   has_many :protectors

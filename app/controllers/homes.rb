@@ -25,12 +25,10 @@ class Homes < Application
   def principal_articles
       @from_principals = @current_school.announcements.paginate(:all, 
                                                                 :conditions => ['label = ?', 'from_principal'], 
-                                                                :order => "created_at DESC",
                                                                 :per_page => 10,
                                                                 :page => params[:page] )
       @announcements = @current_school.announcements.paginate(:all, 
                                                               :conditions => ["access_name = ? and approved = ? and approve_announcement = ?", 'Home Page', true, true], 
-                                                              :order => "created_at DESC", 
                                                               :per_page => 10,
                                                               :page => params[:page] )
       @urgent_announcements = @current_school.announcements.find(:all, :conditions => ["label = ?", "urgent"], :order => "created_at DESC")

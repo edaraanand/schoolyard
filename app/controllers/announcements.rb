@@ -15,21 +15,18 @@ class Announcements < Application
        @classroom = @current_school.classrooms.find_by_id(params[:id])
        @announcements = @current_school.announcements.paginate(:all,
                                  :conditions => ["access_name = ? and label = ?", @classroom.class_name, 'staff' ],
-                                 :order => "created_at DESC",
                                  :per_page => 10,
                                  :page => params[:page])
        @test = params[:id]
     elsif params[:label] == "Home Page"
        @announcements = @current_school.announcements.paginate(:all,
                                  :conditions => ["access_name = ? and label = ?", "Home Page", 'staff' ],
-                                 :order => "created_at DESC",
                                  :per_page => 10,
                                  :page => params[:page])
        @test = "Home Page"
     else
        @announcements = @current_school.announcements.paginate(:all,
                                  :conditions => ['label = ?', 'staff'],
-                                 :order => "created_at DESC",
                                  :per_page => 10,
                                  :page => params[:page])
        @test =  "All Announcements"
