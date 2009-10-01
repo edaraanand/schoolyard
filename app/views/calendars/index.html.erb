@@ -10,14 +10,13 @@
                     <% end %>
                </select> 
          
-     <br/></br></br><br/></br></br> 
-     
+     <br/><br/>
      <%= link_to "&larr; previous week",  resource(:calendars, :id => params[:id], :week => @week - 1), :class => "alignleft" %>  &#124;
      <%= link_to "Current Week",  resource(:calendars, :week => "0", :id => params[:id], :current_week => "current"), :class => "alignleft" %>&#124; 
      <%= link_to "next week &rarr; ", resource(:calendars, :week => @week + 1, :id => params[:id]), :class => "alignright" %>
-     </br></br><br/></br></br> </br></br><br/></br></br>
-     <b>Showing <%= $from.strftime("%b %d, %Y") %> - <%= $to.strftime("%b %d, %Y") %></b>
-     </br></br><br/></br></br>
+   
+     <h4 style="padding:16px 0 8px 0; text-align:right"><b>Showing <%= $from.strftime("%b %d, %Y") %> - <%= $to.strftime("%b %d, %Y") %></b></h4>
+   
   <% if @calendars.blank? %>
         <p class="subText"> No Events were found. If you applied a filter try changing it.</p>
   <% else %>

@@ -6,16 +6,14 @@
            <%= link_to "Download as PDF", url(:pdf_events, :id => @classroom.id), :class=> "pdf" %>
            (<%= link_to "Requires acrobat reader", "http://get.adobe.com/reader/", {'target' => '_blank'} %>)
         </span>
-    </h2>
-     <%= link_to "&larr; previous week", url(:class_details, :id => @classroom.id, :week => @week - 1, :label => "calendars"), 
+    </h2><br/>
+      <%= link_to "&larr; previous week", url(:class_details, :id => @classroom.id, :week => @week - 1, :label => "calendars"), 
                               :class => "alignleft" %>  &#124;
-
       <%= link_to "Current Week", url(:class_details, :id => @classroom.id, :week => "0", :label => "calendars", :current_week => "current"), :class => "alignleft" %>   &#124;
-
       <%= link_to "next week &rarr; ", url(:class_details, :id =>  @classroom.id, :week => @week + 1, :label => "calendars"), 
                             :class => "alignright" %>
-        <br/><br/>
-      <b>Showing <%= $from.strftime("%b %d, %Y") %> - <%= $to.strftime("%b %d, %Y") %></b>
+   
+    <h4 style="padding:16px 0 8px 0; text-align:right"><b>Showing <%= $from.strftime("%b %d, %Y") %> - <%= $to.strftime("%b %d, %Y") %></b></h4>
     <% if @calendars.empty? %>
          <span class="subText">There are no events planned at this time</span>
     <% else %>
