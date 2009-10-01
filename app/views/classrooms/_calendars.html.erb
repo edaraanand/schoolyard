@@ -15,6 +15,7 @@
       <%= link_to "next week &rarr; ", url(:class_details, :id =>  @classroom.id, :week => @week + 1, :label => "calendars"), 
                             :class => "alignright" %>
         <br/><br/>
+      <b>Showing <%= $from.strftime("%b %d, %Y") %> - <%= $to.strftime("%b %d, %Y") %></b>
     <% if @calendars.empty? %>
          <span class="subText">There are no events planned at this time</span>
     <% else %>

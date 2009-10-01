@@ -44,19 +44,19 @@ class Calendar < ActiveRecord::Base
   def self.current_week_calendars(id, class_name, week)
      @current_school = School.find_by_id(id)
      weeks = Date.today.beginning_of_week + ( 7 * (week.to_i) )
-     from = weeks.beginning_of_week
-     to = weeks.end_of_week
-     school_calendar = @current_school.calendars.find(:all, :conditions => {:start_date => from..to, :class_name => "Schoolwide"})
-     class_calendar =  @current_school.calendars.find(:all, :conditions => {:start_date => from..to, :class_name => "#{class_name}"})
+     $from = weeks.beginning_of_week
+     $to = weeks.end_of_week
+     school_calendar = @current_school.calendars.find(:all, :conditions => {:start_date => $from..$to, :class_name => "Schoolwide"})
+     class_calendar =  @current_school.calendars.find(:all, :conditions => {:start_date => $from..$to, :class_name => "#{class_name}"})
      class_calendar.concat(school_calendar).sort_by{|my_item| my_item[:start_date]}.uniq
   end
   
   def self.all_week_calendars(id, week)
      @current_school = School.find_by_id(id)
      weeks = Date.today.beginning_of_week + ( 7 * (week.to_i) )
-     from = weeks.beginning_of_week
-     to = weeks.end_of_week
-     class_calendar =  @current_school.calendars.find(:all, :conditions => {:start_date => from..to})
+     $from = weeks.beginning_of_week
+     $to = weeks.end_of_week
+     class_calendar =  @current_school.calendars.find(:all, :conditions => {:start_date => $from..$to})
   end
   
   
