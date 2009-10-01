@@ -1,4 +1,4 @@
-<% if params[:l] %>
+<% if params[:ref] %>
    <div>
 <% else %>
    <div id="fullpage">
@@ -39,8 +39,8 @@
           <p class="separator">&nbsp;</p>
     
       <hr size="1"/>
-      <% if params[:l] == "calendar" %>
-            <%= link_to "&larr; Back to All Events", url(:events, :l => "all_events", :label =>  "calendars") %>
+      <% if params[:ref] == "calendars" %>
+            <%= link_to "&larr; Back to All Events", url(:events, :ref =>  "calendars") %>
       <% else %>
           <% if @calendar.class_name == "Schoolwide" %>
               <% @classroom = @current_school.classrooms.find_by_id(params[:class]) %>

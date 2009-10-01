@@ -90,7 +90,7 @@
                    <%= link_to "<span>Directory</span>", resource(:directories) %>
                </li>
                <li <% if @select == "events" %> class="current" <% end %>>
-	                 <%= link_to "<span>Calendars</span>", url(:events, :l => "all_events", :label =>  "calendars") %>
+	                 <%= link_to "<span>Calendars</span>", url(:events, :ref => "calendars") %>
 	             </li>            
                <li <% if @select == "contact" %> class="current" <% end %> >
                    <%= link_to "<span>Contact Us</span>", url(:help) %>

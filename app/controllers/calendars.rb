@@ -8,14 +8,14 @@ class Calendars < Application
   before :classes
 
   def index
+    @week = (params[:week] || 0).to_i
     if params[:label] == "classes"
-      @classroom = @current_school.classrooms.find_by_id(params[:id])
-      raise NotFound unless @classroom
-      @calendars = Calendar.all_calendars(@current_school.id, @classroom.class_name)
-      @test = params[:id]
-   else
-      @calendars = @current_school.calendars.find(:all)
-      @test = "All Classrooms"
+       @classroom = @current_school.classrooms.find_by_id(params[:id]) rescue NotFound
+       @calendars = Calendar.current_week_calendars(@current_school.id, @classroom.class_name, @week)
+       @test = params[:id]
+    else
+       @calendars = Calendar.all_week_calendars(@current_school.id, @week)
+       @test = "All Classrooms"
     end
     render
   end
@@ -107,23 +107,19 @@ class Calendars < Application
   end
   
   def show
-    if params[:l] == "calendar"
+    if params[:ref] == "calendars"
        @select = "events"
-       @calendar = @current_school.calendars.find_by_id(params[:id])
-       raise NotFound unless @calendar
+       @calendar = @current_school.calendars.find_by_id(params[:id]) rescue NotFound
        @selected = @calendar.class_name
        render :layout => 'directory'
     else
        @select = "classrooms"
        @selected = "calendars"
-       @calendar = @current_school.calendars.find_by_id(params[:id])
-       raise NotFound unless @calendar
+       @calendar = @current_school.calendars.find_by_id(params[:id]) rescue NotFound
        if @calendar.class_name == "Schoolwide"
-          @classroom = @current_school.classrooms.find_by_id(params[:class])
-          raise NotFound unless @classroom
+          @classroom = @current_school.classrooms.find_by_id(params[:class]) rescue NotFound
        else
-          @class =  @calendar.class_name
-          @classroom = @current_school.classrooms.find(:first, :conditions => ['class_name = ?', @calendar.class_name])
+          @classroom = @current_school.classrooms.find_by_class_name(@calendar.class_name)
        end
        render :layout => 'class_change', :id => @classroom.id
     end
@@ -156,15 +152,14 @@ class Calendars < Application
   end
 
   def events
-    @select = "events"
-    @selected = "all_events"
-    unless params[:id].nil?
+    @week = (params[:week] || 0).to_i
+    @select = @selected = "events"
+    if params[:id]
       @class = @current_school.classrooms.find_by_id(params[:id]) rescue NotFound
-      @cls = Calendar.all_calendars(@current_school.id, @class.class_name)
+      @calendars = Calendar.current_week_calendars(@current_school.id, @class.class_name, @week)
       @selected = @class.class_name
-    end
-    if params[:l] == "all_events"
-      @calendars = @current_school.calendars.find(:all)
+    else 
+      @calendars = Calendar.all_week_calendars(@current_school.id, @week)
     end
     render :layout => 'directory'
   end

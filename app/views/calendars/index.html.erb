@@ -1,14 +1,21 @@
 <div class="short-block">
-  <h2 class="current-page"> Calendars &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:calendars, :new) %></h2>
+    <h2 class="current-page"> Calendars &nbsp;&nbsp;&nbsp; <%= link_to "Add New", resource(:calendars, :new) %></h2>
   
-View :  <select id = 'calendarID'>
-              <option value = '/calendars' <% if (@test == "All Classrooms") %> selected <% end %> >All Classrooms</option>
-              <% @current_school.active_classrooms.each do |f| %>
-                  <option value='/calendars?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
-                     <%= f.class_name %> 
-                  </option>
-              <% end %>
-         </select> <br/>
+      View :  <select id = 'calendarID'>
+                    <option value = '/calendars' <% if (@test == "All Classrooms") %> selected <% end %> >All Classrooms</option>
+                    <% @current_school.active_classrooms.each do |f| %>
+                        <option value='/calendars?label=classes&id=<%= f.id %>' <% if (@test == f.id.to_s) %> selected <% end %> > 
+                           <%= f.class_name %> 
+                        </option>
+                    <% end %>
+               </select> 
+         
+     <br/></br></br><br/></br></br> 
+     
+     <%= link_to "&larr; previous week",  resource(:calendars, :id => params[:id], :week => @week - 1), :class => "alignleft" %>  &#124;
+     <%= link_to "Current Week",  resource(:calendars, :week => "0", :id => params[:id], :current_week => "current"), :class => "alignleft" %>&#124; 
+     <%= link_to "next week &rarr; ", resource(:calendars, :week => @week + 1, :id => params[:id]), :class => "alignright" %></br></br><br/></br></br> 
+   
   
   <% if @calendars.blank? %>
         <p class="subText"> No Events were found. If you applied a filter try changing it.</p>

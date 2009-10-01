@@ -1,102 +1,55 @@
 <div>
-      <% if params[:l] == "all_events" %>
-           <h2 class="current-page"> 
-               All Events &nbsp;&nbsp;&nbsp;
-               <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new) )  %>
-           </h2>
-      <% elsif params[:id].nil? %>
-           <h2 class="current-page"> 
+     <h2 class="current-page"> 
+         <% if params[:id] %>
+               Events for <%= @class.class_name %> &nbsp;&nbsp;&nbsp;
+              <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@class.class_name}" ) )  %>
+         <% else %>
               All Events &nbsp;&nbsp;&nbsp;
               <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new) )  %>
-           </h2>
-      <% else %> 
-           <h2 class="current-page"> 
-               Events for <%= @class.class_name %> &nbsp;&nbsp;&nbsp;
-               <%= link_to_right((right = "calendar"), "Add New", resource(:calendars, :new, :l => "#{@class.class_name}" ) )  %>
-           </h2>
-      <% end %>
-      
-               
-<% if params[:l] == "all_events" %>
-   
-            <% if @calendars.empty? %>
-                 <p class="subText"> No Events were found. If you applied a filter try changing it.	 </p>
-            <% else %>
-                 <% cdate=""
-                      for calendar in @calendars %>
-                          <div class="calendar-block" style="width:480px;">
-                               <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
-                                     cdate=calendar.start_date.strftime("%B %d %Y") %>
-                                     <h3><%= cdate %></h3>  
-                                     
-                               <% end %>    
-                               <ul class="calendar-items">
-                                  <li>
-                                      <% unless calendar.start_time.nil? %>
-                                           <%= calendar.start_time.strftime("%I:%M %p") %> 
-                                      <%else %>
-                                            All day event
-                                      <% end %>
-    
-                                    <%= link_to "#{calendar.title}", url(:calendar, calendar.id, :l => "calendar", :label => "calendars") %>
-                                      <small>(<%= calendar.class_name %>)</small>
-                                      <% unless session.user.type == "Parent" %>
-                                          <div class="admin-links">
-                                              <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) )  %> &#124;
-                                              <%= link_to_delete((right = "calendar"), "Delete", resource(calendar, :delete) )  %>
-                                          </div>
-                                      <% end %>
-                                    </li>
-                               </ul>
-                          </div>
-                     <% end %>
-              <% end %>
-<% else %>
-
-      <% if @cls.empty? %>
-            <p class="subText"> No Events were found. If you applied a filter try changing it.</p>
+         <% end %>
+     </h2>
+     <br/></br></br>
+     <%= link_to "&larr; previous week", url(:events, :id => params[:id], :week => @week - 1, :ref => "calendars"), :class => "alignleft" %> &#124;
+     <%= link_to "Current Week", url(:events, :week => "0", :id => params[:id], :ref => "calendars", :current_week => "current"), :class => "alignleft" %> &#124;
+     <%= link_to "next week &rarr; ", url(:events, :week => @week + 1, :id => params[:id], :ref => "calendars"), :class => "alignright" %>
+     
+     </br></br><br/></br></br> <br/></br></br> 
+             
+      <% if @calendars.empty? %>
+            <p class="subText"> No Events were found. If you applied a filter try changing it.	 </p>
       <% else %>
-               <% cdate=""
-                  for calendar in @cls %>
-                      <div class="calendar-block" style="width:480px;">
-                         <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
-                               cdate=calendar.start_date.strftime("%B %d %Y") %>
-                               <h3><%= cdate %></h3>  
-                         <% end %>    
-                         <ul class="calendar-items">
-                            <li>
-                                <% unless calendar.start_time.nil? %>
-                                     <%= calendar.start_time.strftime("%I:%M %p") %> 
-                                <%else%>
-                                      All day event
-                                <% end %>
-                                <% unless calendar.end_time.nil? %>
-                                     to <%= calendar.end_time.strftime("%I:%M %p") %>
-                                <% end %>
-                                <%= link_to "#{calendar.title}", url(:calendar, calendar.id, :l => "calendar", 
-                                                                     :label => "calendars") %>
-                                <% @attachments = @current_school.attachments.find(:first, 
-                                             :conditions => ["attachable_id = ? and attachable_type = ?", calendar.id, "Calendar"]) %>
-                                 <%= partial 'common/attachment' %>
-                                 <% unless calendar.location.blank? %>
-                                       (Location: <%= calendar.location %>)
+            <% cdate=""
+                 for calendar in @calendars %>
+                     <div class="calendar-block" style="width:480px;">
+                          <% if(cdate!=calendar.start_date.strftime("%B %d %Y"))
+                                cdate=calendar.start_date.strftime("%B %d %Y") %>
+                                <h3><%= cdate %></h3>  
+
+                          <% end %>    
+                          <ul class="calendar-items">
+                             <li>
+                                 <% unless calendar.start_time.nil? %>
+                                      <%= calendar.start_time.strftime("%I:%M %p") %> 
+                                 <%else %>
+                                       All day event
                                  <% end %>
-                                  <% unless session.user.type == "Parent" %>
-                                      <div class="admin-links">
-                                          <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) )  %> &#124;
-                                          <%= link_to_delete((right = "calendar"), "Delete", resource(calendar, :delete))  %>
-                                      </div>
-                                  <% end %>
-                            </li>
-                         </ul>
-                      </div>
-             <% end %>
-     <% end %>
- <% end %>
+
+                               <%= link_to "#{calendar.title}", url(:calendar, calendar.id, :ref => "calendars") %>
+                                 <small>(<%= calendar.class_name %>)</small>
+                                 <% unless session.user.type == "Parent" %>
+                                     <div class="admin-links">
+                                         <%= link_to_right((right = "calendar"), "Edit", resource(calendar, :edit) )  %> &#124;
+                                         <%= link_to_delete((right = "calendar"), "Delete", resource(calendar, :delete)) %>
+                                     </div>
+                                 <% end %>
+                               </li>
+                          </ul>
+                     </div>
+                <% end %>
+      <% end %>
+  
    
  </div>
 
- </div>
- 
 <script type="text/javascript" src='/javascripts/delete_confirmation.js'></script>
      
