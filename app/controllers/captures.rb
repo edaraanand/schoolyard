@@ -122,48 +122,69 @@ class Captures < Application
   end
   
   def  generate_xls(data)
-       capture = @current_school.captures.find_by_id(params[:id])
-       tasks =  capture.tasks
-
-       filepath="#{Merb.root}/tmp/#{@capture.title}.xls"
-       test = Spreadsheet::Workbook.new
-       sheet1 = test.create_worksheet
-       style = xls_styles
-
-       sheet1.column(0).width = 30
-       sheet1.column(1).width = 30
-       sheet1.write(0, 0, "Last Name", style[:answer_format] )
-       sheet1.write(0, 1, "First Name", style[:answer_format] )
-        j = 1
-        tasks.each do |f|
-           sheet1.write(0, j+= 1, "#{f.name}", style[:answer_format] )
-          # sheet1.write(0, j+= 1, "Hours", style[:answer_format] )
-           sheet1.write(0, j+= 1, "Comments", style[:answer_format] )
-        end
-
-       h = 2 #h =3
-       c = 3 #c =4
-       tasks.each do |t|
-         task_p = t.people_tasks.find(:all, :order => 'created_at DESC')
-         task_p.each_with_index do |p, l|
-           sheet1.write(l+1, 0, p.person.last_name, style[:parent])
-           sheet1.write(l+1, 1, p.person.first_name, style[:parent])
-           sheet1.write(l+1, h, p.hours)
-           sheet1.write(l+1, c, p.comments)
+    capture = @current_school.captures.find_by_id(params[:id])
+    tasks =  capture.tasks
+    filepath="#{Merb.root}/tmp/#{@capture.title}.xls"
+    test = Spreadsheet::Workbook.new
+    sheet1 = test.create_worksheet
+    style = xls_styles
+    sheet1.column(0).width = 30
+    
+    r = 2 
+    j = 1
+    tasks.each do |f|
+       sheet1.write(0, r, ["#{f.name}", "", ""], style[:merge_format])
+       sheet1.write(1, 0, "Last Name", style[:answer_format])
+       sheet1.write(1, 1, "First Name", style[:answer_format])
+       sheet1.write(1, j+= 1, "Total Hours", style[:answer_format] )
+       sheet1.write(1, j+= 1, "Hours", style[:answer_format] )
+       sheet1.write(1, j+= 1, "Date", style[:answer_format] )
+       sheet1.write(1, j+= 1, "Comments", style[:answer_format] )
+       r += 4
+    end
+    
+    total_hour = 2
+    hour = 3
+    date = 4 
+    comment = 5
+    person_id = []
+    total = []
+    tasks.each do |t|
+       task_p = t.people_tasks.find(:all, :order => 'person_id DESC')
+       task_p.each_with_index do |p, l|
+         @hour_collection = t.people_tasks.find(:all, :conditions => ['person_id = ?', p.person_id]).collect{|x| x.hours}
+         sum = 0
+         @hour_collection.each {|m| sum = sum + m.to_f }
+         unless person_id.include?(p.person_id)
+           sheet1.write(l+2, 0, p.person.last_name, style[:parent])
+           sheet1.write(l+2, 1, p.person.first_name, style[:parent])
          end
-         h += 2 #h += 3
-         c += 2 #c += 3
-       end   
+         unless total.include?(sum)
+           sheet1.write(l+2, total_hour, sum)  
+         end
+         sheet1.write(l+2, hour, p.hours)
+         sheet1.write(l+2, date, p.task_date)
+         sheet1.write(l+2, comment, p.comments)
+         person_id << p.person_id
+         total << sum
+       end
+       total_hour += 4
+       hour += 4 
+       date += 4
+       comment += 4
+    end   
+    
+    test.write(filepath)
+    filepath
+  end
 
-       test.write(filepath)
-
-       filepath
-    end
-
-    def xls_styles
-      styles={}
-      styles[:answer_format] = Spreadsheet::Format.new :horizontal_align=>:CENTER,:color => 'white',:border =>false,:vertical_align=>:TOP,:size =>10,:text_wrap => :true,:vertical_align=>:TOP,:weight => :bold,:pattern => 2 ,:pattern_bg_color=> :blue
-      styles[:parent] = Spreadsheet::Format.new :weight => :bold, :size => 12
-      styles
-    end
+  def xls_styles
+    styles={}
+    styles[:answer_format] = Spreadsheet::Format.new :horizontal_align=>:CENTER,:color => 'white',:border =>false,:vertical_align=>:TOP,:size =>10,:text_wrap => :true,:vertical_align=>:TOP,:weight => :bold,:pattern => 2 ,:pattern_bg_color=> :blue
+    styles[:parent] = Spreadsheet::Format.new :weight => :bold, :size => 12
+    styles[:merge_format] = Spreadsheet::Format.new :weight => :bold, :size => 14, :align => :merge
+    styles
+  end
+  
+  
 end
