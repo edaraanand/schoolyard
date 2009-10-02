@@ -8,10 +8,10 @@ class Directories < Application
   def index
     if params[:label] == "classes"
       @class = @current_school.classrooms.find_by_id(params[:id]) rescue NotFound
-      @students = Student.class_students(params.merge(:school_id => @current_school.id), @class.id)
+      @students = @current_school.class_students(params, @class.id)
       @test = params[:id]
     else
-      @students = Student.activated_students(params.merge(:school_id => @current_school.id))
+      @students = @current_school.activated_students(params)
       @test = "All Students"
     end
     @selected = "students"
@@ -21,9 +21,9 @@ class Directories < Application
   def letters
     if params[:ref] == "students"
        if params[:type] == "all"
-          @students = Student.activated_students(params.merge(:school_id => @current_school.id))
+          @students = @current_school.activated_students(params)
        else
-          @students = Student.filters(params.merge(:school_id => @current_school.id))
+          @students = @current_school.filters(params)
        end
        @selected = "students"
     else  

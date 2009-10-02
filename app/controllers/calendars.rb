@@ -11,10 +11,10 @@ class Calendars < Application
     @week = (params[:week] || 0).to_i
     if params[:label] == "classes"
        @classroom = @current_school.classrooms.find_by_id(params[:id]) rescue NotFound
-       @calendars = Calendar.current_week_calendars(@current_school.id, @classroom.class_name, @week)
+       @calendars = @current_school.current_week_calendars(@class.class_name, @week)
        @test = params[:id]
     else
-       @calendars = Calendar.all_week_calendars(@current_school.id, @week)
+       @calendars = @current_school.all_week_calendars(@week)
        @test = "All Classrooms"
     end
     render
@@ -156,10 +156,10 @@ class Calendars < Application
     @select = @selected = "events"
     if params[:id]
       @class = @current_school.classrooms.find_by_id(params[:id]) rescue NotFound
-      @calendars = Calendar.current_week_calendars(@current_school.id, @class.class_name, @week)
+      @calendars = @current_school.current_week_calendars(@class.class_name, @week)
       @selected = @class.class_name
     else 
-      @calendars = Calendar.all_week_calendars(@current_school.id, @week)
+      @calendars = @current_school.all_week_calendars(@week)
     end
     render :layout => 'directory'
   end

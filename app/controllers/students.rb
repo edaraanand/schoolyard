@@ -12,11 +12,10 @@ class Students < Application
     else
        if params[:label] == "classes"
           @class = @current_school.classrooms.find_by_id(params[:id]) rescue NotFound
-          @students = Student.class_students(params.merge(:school_id => @current_school.id), @class.id)
+          @students = @current_school.class_students(params, @class.id)
           @test = params[:id]
        else
           @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
-          #@students = Student.all(params.merge(:school_id => @current_school.id))
           @test = "All Students"
        end
     end
@@ -27,7 +26,7 @@ class Students < Application
     if params[:type] == "all"
        @students = @current_school.students.paginate(:all, :per_page => 25,  :page => params[:page])
     else
-       @students = Student.filters(params.merge(:school_id => @current_school.id))
+       @students = @current_school.filters(params)
     end
   end
 

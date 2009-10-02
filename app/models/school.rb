@@ -19,7 +19,7 @@ class School < ActiveRecord::Base
   has_many :protectors
   
   has_many :home_works
-  has_many :students
+  has_many :students, :order => "last_name"
   has_many :parents
   has_many :registrations
   has_many :spot_lights
@@ -59,5 +59,48 @@ class School < ActiveRecord::Base
   def domain
     "https://#{subdomain}.#{Schoolapp.config(:app_domain)}"
   end
+  
+  # Calendars
+  
+  def current_week_calendars(class_name, week)
+    self.calendars.find(:all, :conditions => {:start_date => from(week)..to(week), :class_name => ["Schoolwide", "#{class_name}"]})
+  end
+  
+  def all_week_calendars(week)
+    self.calendars.find(:all, :conditions => {:start_date => from(week)..to(week)})
+  end
+  
+  def from(week)
+    $from = weeks(week).beginning_of_week
+  end
+    
+  def to(week)
+    $to = weeks(week).end_of_week
+  end
+    
+  def weeks(week)
+    weeks = Date.today.beginning_of_week + ( 7 * (week.to_i) )
+  end
+  
+  
+  # Student Finders
+  
+  def class_students(params, class_id)
+    self.students.paginate(:all, :joins => :studies,
+                           :conditions => ["studies.classroom_id = ? and activate = ?", class_id, true], 
+                           :per_page => 25,  :page => params[:page])
+  end
+  
+  def activated_students(params)
+    self.students.paginate(:all, :conditions => ["activate = ?", true], 
+                           :per_page => 25,  :page => params[:page])
+  end
+  
+  def filters(params)
+    self.students.paginate(:all, :conditions => ["last_name LIKE ? and activate = ?","#{params[:type]}%", true], 
+                           :per_page => 25,  :page => params[:page] )
+  end
+    
+  
 end
 
