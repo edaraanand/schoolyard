@@ -25,7 +25,7 @@ class Student < Person
     # validates_presence_of :zip_code, :if  => :zip_code
     # validates_format_of :zip_code, :if  => :zip_code, :with => %r{\d{5}(-\d{4})?}, :message => "should be 12345 or 12345-1234"
     
-  #  named_scope :all, lambda {|c| {:conditions => ["school_id = ?", c] } }
+    #  named_scope :all, lambda {|c| {:conditions => ["school_id = ?", c] } }
         
     def self.activated_students(params)
       self.paginate(:all, :conditions => ["activate = ? and school_id = ?", true, params[:school_id]], :per_page => 25,  :page => params[:page])
