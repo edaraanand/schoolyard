@@ -128,12 +128,11 @@ class Captures < Application
     test = Spreadsheet::Workbook.new
     sheet1 = test.create_worksheet
     style = xls_styles
-    sheet1.column(0).width = 30
-    
+      
     r = 2 
     j = 1
     tasks.each do |f|
-       sheet1.write(0, r, ["#{f.name}", "", ""], style[:merge_format])
+       sheet1.write(0, r, ["#{f.name}", "", "", ""], style[:merge_format])
        sheet1.write(1, 0, "Last Name", style[:answer_format])
        sheet1.write(1, 1, "First Name", style[:answer_format])
        sheet1.write(1, j+= 1, "Total Hours", style[:answer_format] )
@@ -180,9 +179,9 @@ class Captures < Application
 
   def xls_styles
     styles={}
-    styles[:answer_format] = Spreadsheet::Format.new :horizontal_align=>:CENTER,:color => 'white',:border =>false,:vertical_align=>:TOP,:size =>10,:text_wrap => :true,:vertical_align=>:TOP,:weight => :bold,:pattern => 2 ,:pattern_bg_color=> :blue
+    styles[:answer_format] = Spreadsheet::Format.new :horizontal_align=>:CENTER,:color => 'white',:border =>false,:vertical_align=>:TOP,:size =>10,:text_wrap => :true,:vertical_align=>:TOP,:weight => :bold,:pattern => 2 ,:pattern_bg_color=> :navy
     styles[:parent] = Spreadsheet::Format.new :weight => :bold, :size => 12
-    styles[:merge_format] = Spreadsheet::Format.new :weight => :bold, :size => 14, :align => :merge
+    styles[:merge_format] = Spreadsheet::Format.new :weight => :bold, :size => 12, :align => :merge
     styles
   end
   
