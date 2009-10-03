@@ -4,7 +4,7 @@ set :revision,      "origin/master"
 set :domain,        "schoolyard@dev-schoolyardapp.info"
 set :deploy_to,     "/home/schoolyard/dev-schoolyardapp.info"
 set :port,          5001
-set :processes,     9
+set :processes,     2
 set :merb_env,      "internal_testing"
 
 
@@ -21,6 +21,7 @@ task :production do
   set :domain,        "forge@schoolyardapp.com"
   set :deploy_to,     "/home/forge/schoolyardapp.com"
   set :port,          4000
+  set :processes,     9
   set :merb_env,      "production"
   set :revision,      "origin/production"
 end
